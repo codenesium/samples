@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOSpecialOffer boSpecialOffer);
 
 		List<ApiSpecialOfferResponseModel> MapBOToModel(
-			List<BOSpecialOffer> bos);
+			List<BOSpecialOffer> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0d65350b6f02adbbf647c03dca4b161</Hash>
+    <Hash>7e79a1e854a75bfdb424c555e5c1be98</Hash>
 </Codenesium>*/

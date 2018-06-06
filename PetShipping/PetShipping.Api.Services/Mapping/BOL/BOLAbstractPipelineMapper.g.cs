@@ -11,36 +11,31 @@ namespace PetShippingNS.Api.Services
 			ApiPipelineRequestModel model
 			)
 		{
-			BOPipeline BOPipeline = new BOPipeline();
+			BOPipeline boPipeline = new BOPipeline();
 
-			BOPipeline.SetProperties(
+			boPipeline.SetProperties(
 				id,
 				model.PipelineStatusId,
 				model.SaleId);
-			return BOPipeline;
+			return boPipeline;
 		}
 
 		public virtual ApiPipelineResponseModel MapBOToModel(
-			BOPipeline BOPipeline)
+			BOPipeline boPipeline)
 		{
-			if (BOPipeline == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPipelineResponseModel();
 
-			model.SetProperties(BOPipeline.Id, BOPipeline.PipelineStatusId, BOPipeline.SaleId);
+			model.SetProperties(boPipeline.Id, boPipeline.PipelineStatusId, boPipeline.SaleId);
 
 			return model;
 		}
 
 		public virtual List<ApiPipelineResponseModel> MapBOToModel(
-			List<BOPipeline> BOs)
+			List<BOPipeline> items)
 		{
 			List<ApiPipelineResponseModel> response = new List<ApiPipelineResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5470d27eb3c44bb97865864f53518ee3</Hash>
+    <Hash>cce51920ce29425f2b1844a64696bde9</Hash>
 </Codenesium>*/

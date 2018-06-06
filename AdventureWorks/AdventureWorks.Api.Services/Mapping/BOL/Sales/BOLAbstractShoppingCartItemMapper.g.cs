@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiShoppingCartItemRequestModel model
 			)
 		{
-			BOShoppingCartItem BOShoppingCartItem = new BOShoppingCartItem();
+			BOShoppingCartItem boShoppingCartItem = new BOShoppingCartItem();
 
-			BOShoppingCartItem.SetProperties(
+			boShoppingCartItem.SetProperties(
 				shoppingCartItemID,
 				model.DateCreated,
 				model.ModifiedDate,
 				model.ProductID,
 				model.Quantity,
 				model.ShoppingCartID);
-			return BOShoppingCartItem;
+			return boShoppingCartItem;
 		}
 
 		public virtual ApiShoppingCartItemResponseModel MapBOToModel(
-			BOShoppingCartItem BOShoppingCartItem)
+			BOShoppingCartItem boShoppingCartItem)
 		{
-			if (BOShoppingCartItem == null)
-			{
-				return null;
-			}
-
 			var model = new ApiShoppingCartItemResponseModel();
 
-			model.SetProperties(BOShoppingCartItem.DateCreated, BOShoppingCartItem.ModifiedDate, BOShoppingCartItem.ProductID, BOShoppingCartItem.Quantity, BOShoppingCartItem.ShoppingCartID, BOShoppingCartItem.ShoppingCartItemID);
+			model.SetProperties(boShoppingCartItem.DateCreated, boShoppingCartItem.ModifiedDate, boShoppingCartItem.ProductID, boShoppingCartItem.Quantity, boShoppingCartItem.ShoppingCartID, boShoppingCartItem.ShoppingCartItemID);
 
 			return model;
 		}
 
 		public virtual List<ApiShoppingCartItemResponseModel> MapBOToModel(
-			List<BOShoppingCartItem> BOs)
+			List<BOShoppingCartItem> items)
 		{
 			List<ApiShoppingCartItemResponseModel> response = new List<ApiShoppingCartItemResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3925831e7462f243e629836f690d7997</Hash>
+    <Hash>74b61f2fe353e3caebe5d21d41798652</Hash>
 </Codenesium>*/

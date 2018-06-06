@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IPipelineStepDestinationRepository pipelineStepDestinationRepository;
 		private IApiPipelineStepDestinationRequestModelValidator pipelineStepDestinationModelValidator;
-		private IBOLPipelineStepDestinationMapper BOLPipelineStepDestinationMapper;
-		private IDALPipelineStepDestinationMapper DALPipelineStepDestinationMapper;
+		private IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper;
+		private IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper;
 		private ILogger logger;
 
 		public AbstractPipelineStepDestinationService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.pipelineStepDestinationRepository = pipelineStepDestinationRepository;
 			this.pipelineStepDestinationModelValidator = pipelineStepDestinationModelValidator;
-			this.BOLPipelineStepDestinationMapper = bolpipelineStepDestinationMapper;
-			this.DALPipelineStepDestinationMapper = dalpipelineStepDestinationMapper;
+			this.bolPipelineStepDestinationMapper = bolpipelineStepDestinationMapper;
+			this.dalPipelineStepDestinationMapper = dalpipelineStepDestinationMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.pipelineStepDestinationRepository.All(skip, take, orderClause);
 
-			return this.BOLPipelineStepDestinationMapper.MapBOToModel(this.DALPipelineStepDestinationMapper.MapEFToBO(records));
+			return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPipelineStepDestinationResponseModel> Get(int id)
 		{
 			var record = await pipelineStepDestinationRepository.Get(id);
 
-			return this.BOLPipelineStepDestinationMapper.MapBOToModel(this.DALPipelineStepDestinationMapper.MapEFToBO(record));
+			return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepDestinationResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiPipelineStepDestinationResponseModel> response = new CreateResponse<ApiPipelineStepDestinationResponseModel>(await this.pipelineStepDestinationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLPipelineStepDestinationMapper.MapModelToBO(default (int), model);
-				var record = await this.pipelineStepDestinationRepository.Create(this.DALPipelineStepDestinationMapper.MapBOToEF(bo));
+				var bo = this.bolPipelineStepDestinationMapper.MapModelToBO(default (int), model);
+				var record = await this.pipelineStepDestinationRepository.Create(this.dalPipelineStepDestinationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLPipelineStepDestinationMapper.MapBOToModel(this.DALPipelineStepDestinationMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLPipelineStepDestinationMapper.MapModelToBO(id, model);
-				await this.pipelineStepDestinationRepository.Update(this.DALPipelineStepDestinationMapper.MapBOToEF(bo));
+				var bo = this.bolPipelineStepDestinationMapper.MapModelToBO(id, model);
+				await this.pipelineStepDestinationRepository.Update(this.dalPipelineStepDestinationMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9633e56b2c7e5e9c1d5bb851f9c0a234</Hash>
+    <Hash>5269a7703d5bbf1b81fe8b28e50f98ea</Hash>
 </Codenesium>*/

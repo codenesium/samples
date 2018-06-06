@@ -11,36 +11,31 @@ namespace PetShippingNS.Api.Services
 			ApiCountryRequirementRequestModel model
 			)
 		{
-			BOCountryRequirement BOCountryRequirement = new BOCountryRequirement();
+			BOCountryRequirement boCountryRequirement = new BOCountryRequirement();
 
-			BOCountryRequirement.SetProperties(
+			boCountryRequirement.SetProperties(
 				id,
 				model.CountryId,
 				model.Details);
-			return BOCountryRequirement;
+			return boCountryRequirement;
 		}
 
 		public virtual ApiCountryRequirementResponseModel MapBOToModel(
-			BOCountryRequirement BOCountryRequirement)
+			BOCountryRequirement boCountryRequirement)
 		{
-			if (BOCountryRequirement == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCountryRequirementResponseModel();
 
-			model.SetProperties(BOCountryRequirement.CountryId, BOCountryRequirement.Details, BOCountryRequirement.Id);
+			model.SetProperties(boCountryRequirement.CountryId, boCountryRequirement.Details, boCountryRequirement.Id);
 
 			return model;
 		}
 
 		public virtual List<ApiCountryRequirementResponseModel> MapBOToModel(
-			List<BOCountryRequirement> BOs)
+			List<BOCountryRequirement> items)
 		{
 			List<ApiCountryRequirementResponseModel> response = new List<ApiCountryRequirementResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7b32b8fb3715796b162068876ae708b</Hash>
+    <Hash>8a6c27355a0e5829c7561f5db27ba706</Hash>
 </Codenesium>*/

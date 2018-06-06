@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesPersonQuotaHistoryRequestModel model
 			)
 		{
-			BOSalesPersonQuotaHistory BOSalesPersonQuotaHistory = new BOSalesPersonQuotaHistory();
+			BOSalesPersonQuotaHistory boSalesPersonQuotaHistory = new BOSalesPersonQuotaHistory();
 
-			BOSalesPersonQuotaHistory.SetProperties(
+			boSalesPersonQuotaHistory.SetProperties(
 				businessEntityID,
 				model.ModifiedDate,
 				model.QuotaDate,
 				model.Rowguid,
 				model.SalesQuota);
-			return BOSalesPersonQuotaHistory;
+			return boSalesPersonQuotaHistory;
 		}
 
 		public virtual ApiSalesPersonQuotaHistoryResponseModel MapBOToModel(
-			BOSalesPersonQuotaHistory BOSalesPersonQuotaHistory)
+			BOSalesPersonQuotaHistory boSalesPersonQuotaHistory)
 		{
-			if (BOSalesPersonQuotaHistory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesPersonQuotaHistoryResponseModel();
 
-			model.SetProperties(BOSalesPersonQuotaHistory.BusinessEntityID, BOSalesPersonQuotaHistory.ModifiedDate, BOSalesPersonQuotaHistory.QuotaDate, BOSalesPersonQuotaHistory.Rowguid, BOSalesPersonQuotaHistory.SalesQuota);
+			model.SetProperties(boSalesPersonQuotaHistory.BusinessEntityID, boSalesPersonQuotaHistory.ModifiedDate, boSalesPersonQuotaHistory.QuotaDate, boSalesPersonQuotaHistory.Rowguid, boSalesPersonQuotaHistory.SalesQuota);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesPersonQuotaHistoryResponseModel> MapBOToModel(
-			List<BOSalesPersonQuotaHistory> BOs)
+			List<BOSalesPersonQuotaHistory> items)
 		{
 			List<ApiSalesPersonQuotaHistoryResponseModel> response = new List<ApiSalesPersonQuotaHistoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a12b4d9ad1a743b76a822c9e9dd5f5d2</Hash>
+    <Hash>10756c2c207174cd56fd202ddd6f640b</Hash>
 </Codenesium>*/

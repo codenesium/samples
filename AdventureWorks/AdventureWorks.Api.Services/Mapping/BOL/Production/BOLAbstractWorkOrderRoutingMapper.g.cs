@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiWorkOrderRoutingRequestModel model
 			)
 		{
-			BOWorkOrderRouting BOWorkOrderRouting = new BOWorkOrderRouting();
+			BOWorkOrderRouting boWorkOrderRouting = new BOWorkOrderRouting();
 
-			BOWorkOrderRouting.SetProperties(
+			boWorkOrderRouting.SetProperties(
 				workOrderID,
 				model.ActualCost,
 				model.ActualEndDate,
@@ -26,30 +26,25 @@ namespace AdventureWorksNS.Api.Services
 				model.ProductID,
 				model.ScheduledEndDate,
 				model.ScheduledStartDate);
-			return BOWorkOrderRouting;
+			return boWorkOrderRouting;
 		}
 
 		public virtual ApiWorkOrderRoutingResponseModel MapBOToModel(
-			BOWorkOrderRouting BOWorkOrderRouting)
+			BOWorkOrderRouting boWorkOrderRouting)
 		{
-			if (BOWorkOrderRouting == null)
-			{
-				return null;
-			}
-
 			var model = new ApiWorkOrderRoutingResponseModel();
 
-			model.SetProperties(BOWorkOrderRouting.ActualCost, BOWorkOrderRouting.ActualEndDate, BOWorkOrderRouting.ActualResourceHrs, BOWorkOrderRouting.ActualStartDate, BOWorkOrderRouting.LocationID, BOWorkOrderRouting.ModifiedDate, BOWorkOrderRouting.OperationSequence, BOWorkOrderRouting.PlannedCost, BOWorkOrderRouting.ProductID, BOWorkOrderRouting.ScheduledEndDate, BOWorkOrderRouting.ScheduledStartDate, BOWorkOrderRouting.WorkOrderID);
+			model.SetProperties(boWorkOrderRouting.ActualCost, boWorkOrderRouting.ActualEndDate, boWorkOrderRouting.ActualResourceHrs, boWorkOrderRouting.ActualStartDate, boWorkOrderRouting.LocationID, boWorkOrderRouting.ModifiedDate, boWorkOrderRouting.OperationSequence, boWorkOrderRouting.PlannedCost, boWorkOrderRouting.ProductID, boWorkOrderRouting.ScheduledEndDate, boWorkOrderRouting.ScheduledStartDate, boWorkOrderRouting.WorkOrderID);
 
 			return model;
 		}
 
 		public virtual List<ApiWorkOrderRoutingResponseModel> MapBOToModel(
-			List<BOWorkOrderRouting> BOs)
+			List<BOWorkOrderRouting> items)
 		{
 			List<ApiWorkOrderRoutingResponseModel> response = new List<ApiWorkOrderRoutingResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -60,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3ee96bb3c80c977a289772cfdbfd4bc</Hash>
+    <Hash>7966b5dc4fff10a560e6809ad5953a2e</Hash>
 </Codenesium>*/

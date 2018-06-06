@@ -16,8 +16,8 @@ namespace PetStoreNS.Api.Services
 	{
 		private IPenRepository penRepository;
 		private IApiPenRequestModelValidator penModelValidator;
-		private IBOLPenMapper BOLPenMapper;
-		private IDALPenMapper DALPenMapper;
+		private IBOLPenMapper bolPenMapper;
+		private IDALPenMapper dalPenMapper;
 		private ILogger logger;
 
 		public AbstractPenService(
@@ -31,8 +31,8 @@ namespace PetStoreNS.Api.Services
 		{
 			this.penRepository = penRepository;
 			this.penModelValidator = penModelValidator;
-			this.BOLPenMapper = bolpenMapper;
-			this.DALPenMapper = dalpenMapper;
+			this.bolPenMapper = bolpenMapper;
+			this.dalPenMapper = dalpenMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetStoreNS.Api.Services
 		{
 			var records = await this.penRepository.All(skip, take, orderClause);
 
-			return this.BOLPenMapper.MapBOToModel(this.DALPenMapper.MapEFToBO(records));
+			return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPenResponseModel> Get(int id)
 		{
 			var record = await penRepository.Get(id);
 
-			return this.BOLPenMapper.MapBOToModel(this.DALPenMapper.MapEFToBO(record));
+			return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiPenResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetStoreNS.Api.Services
 			CreateResponse<ApiPenResponseModel> response = new CreateResponse<ApiPenResponseModel>(await this.penModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLPenMapper.MapModelToBO(default (int), model);
-				var record = await this.penRepository.Create(this.DALPenMapper.MapBOToEF(bo));
+				var bo = this.bolPenMapper.MapModelToBO(default (int), model);
+				var record = await this.penRepository.Create(this.dalPenMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLPenMapper.MapBOToModel(this.DALPenMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLPenMapper.MapModelToBO(id, model);
-				await this.penRepository.Update(this.DALPenMapper.MapBOToEF(bo));
+				var bo = this.bolPenMapper.MapModelToBO(id, model);
+				await this.penRepository.Update(this.dalPenMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e0da199045d547db043f03b133ec2870</Hash>
+    <Hash>48ef568a8984b3ede6229d371dc61987</Hash>
 </Codenesium>*/

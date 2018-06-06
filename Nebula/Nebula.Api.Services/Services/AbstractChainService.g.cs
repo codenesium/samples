@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private IChainRepository chainRepository;
 		private IApiChainRequestModelValidator chainModelValidator;
-		private IBOLChainMapper BOLChainMapper;
-		private IDALChainMapper DALChainMapper;
+		private IBOLChainMapper bolChainMapper;
+		private IDALChainMapper dalChainMapper;
 		private ILogger logger;
 
 		public AbstractChainService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.chainRepository = chainRepository;
 			this.chainModelValidator = chainModelValidator;
-			this.BOLChainMapper = bolchainMapper;
-			this.DALChainMapper = dalchainMapper;
+			this.bolChainMapper = bolchainMapper;
+			this.dalChainMapper = dalchainMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.chainRepository.All(skip, take, orderClause);
 
-			return this.BOLChainMapper.MapBOToModel(this.DALChainMapper.MapEFToBO(records));
+			return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiChainResponseModel> Get(int id)
 		{
 			var record = await chainRepository.Get(id);
 
-			return this.BOLChainMapper.MapBOToModel(this.DALChainMapper.MapEFToBO(record));
+			return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiChainResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiChainResponseModel> response = new CreateResponse<ApiChainResponseModel>(await this.chainModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLChainMapper.MapModelToBO(default (int), model);
-				var record = await this.chainRepository.Create(this.DALChainMapper.MapBOToEF(bo));
+				var bo = this.bolChainMapper.MapModelToBO(default (int), model);
+				var record = await this.chainRepository.Create(this.dalChainMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLChainMapper.MapBOToModel(this.DALChainMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLChainMapper.MapModelToBO(id, model);
-				await this.chainRepository.Update(this.DALChainMapper.MapBOToEF(bo));
+				var bo = this.bolChainMapper.MapModelToBO(id, model);
+				await this.chainRepository.Update(this.dalChainMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c984b2930f5fed0d6ac859956f011a50</Hash>
+    <Hash>a8c93d363b83c0ce7eddbc84ceced81a</Hash>
 </Codenesium>*/

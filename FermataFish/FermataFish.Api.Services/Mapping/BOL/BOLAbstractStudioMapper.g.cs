@@ -11,9 +11,9 @@ namespace FermataFishNS.Api.Services
 			ApiStudioRequestModel model
 			)
 		{
-			BOStudio BOStudio = new BOStudio();
+			BOStudio boStudio = new BOStudio();
 
-			BOStudio.SetProperties(
+			boStudio.SetProperties(
 				id,
 				model.Address1,
 				model.Address2,
@@ -22,30 +22,25 @@ namespace FermataFishNS.Api.Services
 				model.StateId,
 				model.Website,
 				model.Zip);
-			return BOStudio;
+			return boStudio;
 		}
 
 		public virtual ApiStudioResponseModel MapBOToModel(
-			BOStudio BOStudio)
+			BOStudio boStudio)
 		{
-			if (BOStudio == null)
-			{
-				return null;
-			}
-
 			var model = new ApiStudioResponseModel();
 
-			model.SetProperties(BOStudio.Address1, BOStudio.Address2, BOStudio.City, BOStudio.Id, BOStudio.Name, BOStudio.StateId, BOStudio.Website, BOStudio.Zip);
+			model.SetProperties(boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Id, boStudio.Name, boStudio.StateId, boStudio.Website, boStudio.Zip);
 
 			return model;
 		}
 
 		public virtual List<ApiStudioResponseModel> MapBOToModel(
-			List<BOStudio> BOs)
+			List<BOStudio> items)
 		{
 			List<ApiStudioResponseModel> response = new List<ApiStudioResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -56,5 +51,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9897933eae26d3efd46576e9ee7d7549</Hash>
+    <Hash>bc331c7e65cebb68112fcae8bd4834be</Hash>
 </Codenesium>*/

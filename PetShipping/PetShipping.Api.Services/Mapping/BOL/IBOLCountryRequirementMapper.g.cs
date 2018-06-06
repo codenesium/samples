@@ -14,10 +14,10 @@ namespace PetShippingNS.Api.Services
 			BOCountryRequirement boCountryRequirement);
 
 		List<ApiCountryRequirementResponseModel> MapBOToModel(
-			List<BOCountryRequirement> bos);
+			List<BOCountryRequirement> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6848f3fc5da8a24580c8c442cd4d406b</Hash>
+    <Hash>03d392cbe97cbc22570c989eb0436386</Hash>
 </Codenesium>*/

@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiTransactionHistoryArchiveRequestModel model
 			)
 		{
-			BOTransactionHistoryArchive BOTransactionHistoryArchive = new BOTransactionHistoryArchive();
+			BOTransactionHistoryArchive boTransactionHistoryArchive = new BOTransactionHistoryArchive();
 
-			BOTransactionHistoryArchive.SetProperties(
+			boTransactionHistoryArchive.SetProperties(
 				transactionID,
 				model.ActualCost,
 				model.ModifiedDate,
@@ -23,30 +23,25 @@ namespace AdventureWorksNS.Api.Services
 				model.ReferenceOrderLineID,
 				model.TransactionDate,
 				model.TransactionType);
-			return BOTransactionHistoryArchive;
+			return boTransactionHistoryArchive;
 		}
 
 		public virtual ApiTransactionHistoryArchiveResponseModel MapBOToModel(
-			BOTransactionHistoryArchive BOTransactionHistoryArchive)
+			BOTransactionHistoryArchive boTransactionHistoryArchive)
 		{
-			if (BOTransactionHistoryArchive == null)
-			{
-				return null;
-			}
-
 			var model = new ApiTransactionHistoryArchiveResponseModel();
 
-			model.SetProperties(BOTransactionHistoryArchive.ActualCost, BOTransactionHistoryArchive.ModifiedDate, BOTransactionHistoryArchive.ProductID, BOTransactionHistoryArchive.Quantity, BOTransactionHistoryArchive.ReferenceOrderID, BOTransactionHistoryArchive.ReferenceOrderLineID, BOTransactionHistoryArchive.TransactionDate, BOTransactionHistoryArchive.TransactionID, BOTransactionHistoryArchive.TransactionType);
+			model.SetProperties(boTransactionHistoryArchive.ActualCost, boTransactionHistoryArchive.ModifiedDate, boTransactionHistoryArchive.ProductID, boTransactionHistoryArchive.Quantity, boTransactionHistoryArchive.ReferenceOrderID, boTransactionHistoryArchive.ReferenceOrderLineID, boTransactionHistoryArchive.TransactionDate, boTransactionHistoryArchive.TransactionID, boTransactionHistoryArchive.TransactionType);
 
 			return model;
 		}
 
 		public virtual List<ApiTransactionHistoryArchiveResponseModel> MapBOToModel(
-			List<BOTransactionHistoryArchive> BOs)
+			List<BOTransactionHistoryArchive> items)
 		{
 			List<ApiTransactionHistoryArchiveResponseModel> response = new List<ApiTransactionHistoryArchiveResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bafe84ffc2896180aed9e41b54618b16</Hash>
+    <Hash>4afbff3af9036571157a49cbdc9e9416</Hash>
 </Codenesium>*/

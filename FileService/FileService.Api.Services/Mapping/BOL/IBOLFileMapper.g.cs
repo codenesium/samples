@@ -14,10 +14,10 @@ namespace FileServiceNS.Api.Services
 			BOFile boFile);
 
 		List<ApiFileResponseModel> MapBOToModel(
-			List<BOFile> bos);
+			List<BOFile> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8242486aa800f3f522a004aaaa5582ce</Hash>
+    <Hash>dcc8cea32769a7f8b98d86bfb787ba79</Hash>
 </Codenesium>*/

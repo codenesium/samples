@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOLinkLog boLinkLog);
 
 		List<ApiLinkLogResponseModel> MapBOToModel(
-			List<BOLinkLog> bos);
+			List<BOLinkLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a538ffac8d9f50ec49321f24168477cd</Hash>
+    <Hash>380227c65efb786c89ad1ff4263285f8</Hash>
 </Codenesium>*/

@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiDatabaseLogRequestModel model
 			)
 		{
-			BODatabaseLog BODatabaseLog = new BODatabaseLog();
+			BODatabaseLog boDatabaseLog = new BODatabaseLog();
 
-			BODatabaseLog.SetProperties(
+			boDatabaseLog.SetProperties(
 				databaseLogID,
 				model.DatabaseUser,
 				model.@Event,
@@ -22,30 +22,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Schema,
 				model.TSQL,
 				model.XmlEvent);
-			return BODatabaseLog;
+			return boDatabaseLog;
 		}
 
 		public virtual ApiDatabaseLogResponseModel MapBOToModel(
-			BODatabaseLog BODatabaseLog)
+			BODatabaseLog boDatabaseLog)
 		{
-			if (BODatabaseLog == null)
-			{
-				return null;
-			}
-
 			var model = new ApiDatabaseLogResponseModel();
 
-			model.SetProperties(BODatabaseLog.DatabaseLogID, BODatabaseLog.DatabaseUser, BODatabaseLog.@Event, BODatabaseLog.@Object, BODatabaseLog.PostTime, BODatabaseLog.Schema, BODatabaseLog.TSQL, BODatabaseLog.XmlEvent);
+			model.SetProperties(boDatabaseLog.DatabaseLogID, boDatabaseLog.DatabaseUser, boDatabaseLog.@Event, boDatabaseLog.@Object, boDatabaseLog.PostTime, boDatabaseLog.Schema, boDatabaseLog.TSQL, boDatabaseLog.XmlEvent);
 
 			return model;
 		}
 
 		public virtual List<ApiDatabaseLogResponseModel> MapBOToModel(
-			List<BODatabaseLog> BOs)
+			List<BODatabaseLog> items)
 		{
 			List<ApiDatabaseLogResponseModel> response = new List<ApiDatabaseLogResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -56,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d147af354107f953bbe005dc1bff41e</Hash>
+    <Hash>c3d2038c08f5f13fa2e8b4d001bfa6e6</Hash>
 </Codenesium>*/

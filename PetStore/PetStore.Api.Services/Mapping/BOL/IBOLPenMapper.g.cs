@@ -14,10 +14,10 @@ namespace PetStoreNS.Api.Services
 			BOPen boPen);
 
 		List<ApiPenResponseModel> MapBOToModel(
-			List<BOPen> bos);
+			List<BOPen> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>26add6a552354552b641a32c4583aeba</Hash>
+    <Hash>99eed9eceb0682d792001fbbe30ffffd</Hash>
 </Codenesium>*/

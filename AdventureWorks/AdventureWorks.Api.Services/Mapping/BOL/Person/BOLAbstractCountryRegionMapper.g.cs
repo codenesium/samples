@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiCountryRegionRequestModel model
 			)
 		{
-			BOCountryRegion BOCountryRegion = new BOCountryRegion();
+			BOCountryRegion boCountryRegion = new BOCountryRegion();
 
-			BOCountryRegion.SetProperties(
+			boCountryRegion.SetProperties(
 				countryRegionCode,
 				model.ModifiedDate,
 				model.Name);
-			return BOCountryRegion;
+			return boCountryRegion;
 		}
 
 		public virtual ApiCountryRegionResponseModel MapBOToModel(
-			BOCountryRegion BOCountryRegion)
+			BOCountryRegion boCountryRegion)
 		{
-			if (BOCountryRegion == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCountryRegionResponseModel();
 
-			model.SetProperties(BOCountryRegion.CountryRegionCode, BOCountryRegion.ModifiedDate, BOCountryRegion.Name);
+			model.SetProperties(boCountryRegion.CountryRegionCode, boCountryRegion.ModifiedDate, boCountryRegion.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiCountryRegionResponseModel> MapBOToModel(
-			List<BOCountryRegion> BOs)
+			List<BOCountryRegion> items)
 		{
 			List<ApiCountryRegionResponseModel> response = new List<ApiCountryRegionResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>46a000dcc34fcdaa8f5f6d6e197ade57</Hash>
+    <Hash>1b1b93fde59717886f9b32a5a221d745</Hash>
 </Codenesium>*/

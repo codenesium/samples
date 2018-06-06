@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductListPriceHistoryRepository productListPriceHistoryRepository;
 		private IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator;
-		private IBOLProductListPriceHistoryMapper BOLProductListPriceHistoryMapper;
-		private IDALProductListPriceHistoryMapper DALProductListPriceHistoryMapper;
+		private IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper;
+		private IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper;
 		private ILogger logger;
 
 		public AbstractProductListPriceHistoryService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productListPriceHistoryRepository = productListPriceHistoryRepository;
 			this.productListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
-			this.BOLProductListPriceHistoryMapper = bolproductListPriceHistoryMapper;
-			this.DALProductListPriceHistoryMapper = dalproductListPriceHistoryMapper;
+			this.bolProductListPriceHistoryMapper = bolproductListPriceHistoryMapper;
+			this.dalProductListPriceHistoryMapper = dalproductListPriceHistoryMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productListPriceHistoryRepository.All(skip, take, orderClause);
 
-			return this.BOLProductListPriceHistoryMapper.MapBOToModel(this.DALProductListPriceHistoryMapper.MapEFToBO(records));
+			return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductListPriceHistoryResponseModel> Get(int productID)
 		{
 			var record = await productListPriceHistoryRepository.Get(productID);
 
-			return this.BOLProductListPriceHistoryMapper.MapBOToModel(this.DALProductListPriceHistoryMapper.MapEFToBO(record));
+			return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductListPriceHistoryResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductListPriceHistoryResponseModel> response = new CreateResponse<ApiProductListPriceHistoryResponseModel>(await this.productListPriceHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductListPriceHistoryMapper.MapModelToBO(default (int), model);
-				var record = await this.productListPriceHistoryRepository.Create(this.DALProductListPriceHistoryMapper.MapBOToEF(bo));
+				var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(default (int), model);
+				var record = await this.productListPriceHistoryRepository.Create(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductListPriceHistoryMapper.MapBOToModel(this.DALProductListPriceHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductListPriceHistoryMapper.MapModelToBO(productID, model);
-				await this.productListPriceHistoryRepository.Update(this.DALProductListPriceHistoryMapper.MapBOToEF(bo));
+				var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(productID, model);
+				await this.productListPriceHistoryRepository.Update(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0a329993b3d223b1268821b42539e77a</Hash>
+    <Hash>8d8b97d06e70fe707d2da9ac8a3354da</Hash>
 </Codenesium>*/

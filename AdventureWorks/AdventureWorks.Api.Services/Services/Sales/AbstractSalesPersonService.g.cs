@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ISalesPersonRepository salesPersonRepository;
 		private IApiSalesPersonRequestModelValidator salesPersonModelValidator;
-		private IBOLSalesPersonMapper BOLSalesPersonMapper;
-		private IDALSalesPersonMapper DALSalesPersonMapper;
+		private IBOLSalesPersonMapper bolSalesPersonMapper;
+		private IDALSalesPersonMapper dalSalesPersonMapper;
 		private ILogger logger;
 
 		public AbstractSalesPersonService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.salesPersonRepository = salesPersonRepository;
 			this.salesPersonModelValidator = salesPersonModelValidator;
-			this.BOLSalesPersonMapper = bolsalesPersonMapper;
-			this.DALSalesPersonMapper = dalsalesPersonMapper;
+			this.bolSalesPersonMapper = bolsalesPersonMapper;
+			this.dalSalesPersonMapper = dalsalesPersonMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.salesPersonRepository.All(skip, take, orderClause);
 
-			return this.BOLSalesPersonMapper.MapBOToModel(this.DALSalesPersonMapper.MapEFToBO(records));
+			return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesPersonResponseModel> Get(int businessEntityID)
 		{
 			var record = await salesPersonRepository.Get(businessEntityID);
 
-			return this.BOLSalesPersonMapper.MapBOToModel(this.DALSalesPersonMapper.MapEFToBO(record));
+			return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesPersonResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiSalesPersonResponseModel> response = new CreateResponse<ApiSalesPersonResponseModel>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSalesPersonMapper.MapModelToBO(default (int), model);
-				var record = await this.salesPersonRepository.Create(this.DALSalesPersonMapper.MapBOToEF(bo));
+				var bo = this.bolSalesPersonMapper.MapModelToBO(default (int), model);
+				var record = await this.salesPersonRepository.Create(this.dalSalesPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSalesPersonMapper.MapBOToModel(this.DALSalesPersonMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSalesPersonMapper.MapModelToBO(businessEntityID, model);
-				await this.salesPersonRepository.Update(this.DALSalesPersonMapper.MapBOToEF(bo));
+				var bo = this.bolSalesPersonMapper.MapModelToBO(businessEntityID, model);
+				await this.salesPersonRepository.Update(this.dalSalesPersonMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0d2c4b402e0206cd82eeb6bc300229c9</Hash>
+    <Hash>34f3dbf86a05077b3409f789554257ce</Hash>
 </Codenesium>*/

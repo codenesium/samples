@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOPersonCreditCard boPersonCreditCard);
 
 		List<ApiPersonCreditCardResponseModel> MapBOToModel(
-			List<BOPersonCreditCard> bos);
+			List<BOPersonCreditCard> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>38e04b278bcecc5a37813af3409ef072</Hash>
+    <Hash>c5d3af21bc7cf3e60f0cc2900ace6589</Hash>
 </Codenesium>*/

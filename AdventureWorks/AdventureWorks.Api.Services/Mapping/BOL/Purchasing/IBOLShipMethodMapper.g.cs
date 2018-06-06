@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOShipMethod boShipMethod);
 
 		List<ApiShipMethodResponseModel> MapBOToModel(
-			List<BOShipMethod> bos);
+			List<BOShipMethod> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b76e0db89ceeaa44b2d643903c0ec3e2</Hash>
+    <Hash>640ea25a17c54b63a00fa662d4bedc9a</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IBusinessEntityRepository businessEntityRepository;
 		private IApiBusinessEntityRequestModelValidator businessEntityModelValidator;
-		private IBOLBusinessEntityMapper BOLBusinessEntityMapper;
-		private IDALBusinessEntityMapper DALBusinessEntityMapper;
+		private IBOLBusinessEntityMapper bolBusinessEntityMapper;
+		private IDALBusinessEntityMapper dalBusinessEntityMapper;
 		private ILogger logger;
 
 		public AbstractBusinessEntityService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.businessEntityRepository = businessEntityRepository;
 			this.businessEntityModelValidator = businessEntityModelValidator;
-			this.BOLBusinessEntityMapper = bolbusinessEntityMapper;
-			this.DALBusinessEntityMapper = dalbusinessEntityMapper;
+			this.bolBusinessEntityMapper = bolbusinessEntityMapper;
+			this.dalBusinessEntityMapper = dalbusinessEntityMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.businessEntityRepository.All(skip, take, orderClause);
 
-			return this.BOLBusinessEntityMapper.MapBOToModel(this.DALBusinessEntityMapper.MapEFToBO(records));
+			return this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBusinessEntityResponseModel> Get(int businessEntityID)
 		{
 			var record = await businessEntityRepository.Get(businessEntityID);
 
-			return this.BOLBusinessEntityMapper.MapBOToModel(this.DALBusinessEntityMapper.MapEFToBO(record));
+			return this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiBusinessEntityResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiBusinessEntityResponseModel> response = new CreateResponse<ApiBusinessEntityResponseModel>(await this.businessEntityModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLBusinessEntityMapper.MapModelToBO(default (int), model);
-				var record = await this.businessEntityRepository.Create(this.DALBusinessEntityMapper.MapBOToEF(bo));
+				var bo = this.bolBusinessEntityMapper.MapModelToBO(default (int), model);
+				var record = await this.businessEntityRepository.Create(this.dalBusinessEntityMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLBusinessEntityMapper.MapBOToModel(this.DALBusinessEntityMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLBusinessEntityMapper.MapModelToBO(businessEntityID, model);
-				await this.businessEntityRepository.Update(this.DALBusinessEntityMapper.MapBOToEF(bo));
+				var bo = this.bolBusinessEntityMapper.MapModelToBO(businessEntityID, model);
+				await this.businessEntityRepository.Update(this.dalBusinessEntityMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82f9f2809bb222d2c193547d3643826b</Hash>
+    <Hash>0a7c6d471815f4bd113ea67146057b77</Hash>
 </Codenesium>*/

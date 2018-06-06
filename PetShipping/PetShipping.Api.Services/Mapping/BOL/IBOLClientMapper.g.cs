@@ -14,10 +14,10 @@ namespace PetShippingNS.Api.Services
 			BOClient boClient);
 
 		List<ApiClientResponseModel> MapBOToModel(
-			List<BOClient> bos);
+			List<BOClient> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5385d10fe1b452303270bec33c6efc50</Hash>
+    <Hash>55f20fc9a93f5c19f553e9e50d44099e</Hash>
 </Codenesium>*/

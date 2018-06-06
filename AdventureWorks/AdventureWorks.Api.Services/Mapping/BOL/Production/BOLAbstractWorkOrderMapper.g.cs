@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiWorkOrderRequestModel model
 			)
 		{
-			BOWorkOrder BOWorkOrder = new BOWorkOrder();
+			BOWorkOrder boWorkOrder = new BOWorkOrder();
 
-			BOWorkOrder.SetProperties(
+			boWorkOrder.SetProperties(
 				workOrderID,
 				model.DueDate,
 				model.EndDate,
@@ -24,30 +24,25 @@ namespace AdventureWorksNS.Api.Services
 				model.ScrapReasonID,
 				model.StartDate,
 				model.StockedQty);
-			return BOWorkOrder;
+			return boWorkOrder;
 		}
 
 		public virtual ApiWorkOrderResponseModel MapBOToModel(
-			BOWorkOrder BOWorkOrder)
+			BOWorkOrder boWorkOrder)
 		{
-			if (BOWorkOrder == null)
-			{
-				return null;
-			}
-
 			var model = new ApiWorkOrderResponseModel();
 
-			model.SetProperties(BOWorkOrder.DueDate, BOWorkOrder.EndDate, BOWorkOrder.ModifiedDate, BOWorkOrder.OrderQty, BOWorkOrder.ProductID, BOWorkOrder.ScrappedQty, BOWorkOrder.ScrapReasonID, BOWorkOrder.StartDate, BOWorkOrder.StockedQty, BOWorkOrder.WorkOrderID);
+			model.SetProperties(boWorkOrder.DueDate, boWorkOrder.EndDate, boWorkOrder.ModifiedDate, boWorkOrder.OrderQty, boWorkOrder.ProductID, boWorkOrder.ScrappedQty, boWorkOrder.ScrapReasonID, boWorkOrder.StartDate, boWorkOrder.StockedQty, boWorkOrder.WorkOrderID);
 
 			return model;
 		}
 
 		public virtual List<ApiWorkOrderResponseModel> MapBOToModel(
-			List<BOWorkOrder> BOs)
+			List<BOWorkOrder> items)
 		{
 			List<ApiWorkOrderResponseModel> response = new List<ApiWorkOrderResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -58,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef0f64c96e3c7ba986482090e77708fa</Hash>
+    <Hash>2df8104c5e75a0bf31a66205d8f8162d</Hash>
 </Codenesium>*/

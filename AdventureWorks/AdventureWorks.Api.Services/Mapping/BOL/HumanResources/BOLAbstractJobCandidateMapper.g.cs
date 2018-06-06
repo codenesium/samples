@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiJobCandidateRequestModel model
 			)
 		{
-			BOJobCandidate BOJobCandidate = new BOJobCandidate();
+			BOJobCandidate boJobCandidate = new BOJobCandidate();
 
-			BOJobCandidate.SetProperties(
+			boJobCandidate.SetProperties(
 				jobCandidateID,
 				model.BusinessEntityID,
 				model.ModifiedDate,
 				model.Resume);
-			return BOJobCandidate;
+			return boJobCandidate;
 		}
 
 		public virtual ApiJobCandidateResponseModel MapBOToModel(
-			BOJobCandidate BOJobCandidate)
+			BOJobCandidate boJobCandidate)
 		{
-			if (BOJobCandidate == null)
-			{
-				return null;
-			}
-
 			var model = new ApiJobCandidateResponseModel();
 
-			model.SetProperties(BOJobCandidate.BusinessEntityID, BOJobCandidate.JobCandidateID, BOJobCandidate.ModifiedDate, BOJobCandidate.Resume);
+			model.SetProperties(boJobCandidate.BusinessEntityID, boJobCandidate.JobCandidateID, boJobCandidate.ModifiedDate, boJobCandidate.Resume);
 
 			return model;
 		}
 
 		public virtual List<ApiJobCandidateResponseModel> MapBOToModel(
-			List<BOJobCandidate> BOs)
+			List<BOJobCandidate> items)
 		{
 			List<ApiJobCandidateResponseModel> response = new List<ApiJobCandidateResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe5d3d2a89a93ea3d66f0fd9149b3a7b</Hash>
+    <Hash>40c131c342a5153dcec511a485635601</Hash>
 </Codenesium>*/

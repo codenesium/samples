@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductRequestModel model
 			)
 		{
-			BOProduct BOProduct = new BOProduct();
+			BOProduct boProduct = new BOProduct();
 
-			BOProduct.SetProperties(
+			boProduct.SetProperties(
 				productID,
 				model.@Class,
 				model.Color,
@@ -39,30 +39,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Style,
 				model.Weight,
 				model.WeightUnitMeasureCode);
-			return BOProduct;
+			return boProduct;
 		}
 
 		public virtual ApiProductResponseModel MapBOToModel(
-			BOProduct BOProduct)
+			BOProduct boProduct)
 		{
-			if (BOProduct == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductResponseModel();
 
-			model.SetProperties(BOProduct.@Class, BOProduct.Color, BOProduct.DaysToManufacture, BOProduct.DiscontinuedDate, BOProduct.FinishedGoodsFlag, BOProduct.ListPrice, BOProduct.MakeFlag, BOProduct.ModifiedDate, BOProduct.Name, BOProduct.ProductID, BOProduct.ProductLine, BOProduct.ProductModelID, BOProduct.ProductNumber, BOProduct.ProductSubcategoryID, BOProduct.ReorderPoint, BOProduct.Rowguid, BOProduct.SafetyStockLevel, BOProduct.SellEndDate, BOProduct.SellStartDate, BOProduct.Size, BOProduct.SizeUnitMeasureCode, BOProduct.StandardCost, BOProduct.Style, BOProduct.Weight, BOProduct.WeightUnitMeasureCode);
+			model.SetProperties(boProduct.@Class, boProduct.Color, boProduct.DaysToManufacture, boProduct.DiscontinuedDate, boProduct.FinishedGoodsFlag, boProduct.ListPrice, boProduct.MakeFlag, boProduct.ModifiedDate, boProduct.Name, boProduct.ProductID, boProduct.ProductLine, boProduct.ProductModelID, boProduct.ProductNumber, boProduct.ProductSubcategoryID, boProduct.ReorderPoint, boProduct.Rowguid, boProduct.SafetyStockLevel, boProduct.SellEndDate, boProduct.SellStartDate, boProduct.Size, boProduct.SizeUnitMeasureCode, boProduct.StandardCost, boProduct.Style, boProduct.Weight, boProduct.WeightUnitMeasureCode);
 
 			return model;
 		}
 
 		public virtual List<ApiProductResponseModel> MapBOToModel(
-			List<BOProduct> BOs)
+			List<BOProduct> items)
 		{
 			List<ApiProductResponseModel> response = new List<ApiProductResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -73,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f55e47b34a6c68b0668145788549f5c</Hash>
+    <Hash>35d2f3a17929a5da1cf71765dd74e5ba</Hash>
 </Codenesium>*/

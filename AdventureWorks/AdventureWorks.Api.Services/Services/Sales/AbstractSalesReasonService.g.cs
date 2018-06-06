@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ISalesReasonRepository salesReasonRepository;
 		private IApiSalesReasonRequestModelValidator salesReasonModelValidator;
-		private IBOLSalesReasonMapper BOLSalesReasonMapper;
-		private IDALSalesReasonMapper DALSalesReasonMapper;
+		private IBOLSalesReasonMapper bolSalesReasonMapper;
+		private IDALSalesReasonMapper dalSalesReasonMapper;
 		private ILogger logger;
 
 		public AbstractSalesReasonService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.salesReasonRepository = salesReasonRepository;
 			this.salesReasonModelValidator = salesReasonModelValidator;
-			this.BOLSalesReasonMapper = bolsalesReasonMapper;
-			this.DALSalesReasonMapper = dalsalesReasonMapper;
+			this.bolSalesReasonMapper = bolsalesReasonMapper;
+			this.dalSalesReasonMapper = dalsalesReasonMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.salesReasonRepository.All(skip, take, orderClause);
 
-			return this.BOLSalesReasonMapper.MapBOToModel(this.DALSalesReasonMapper.MapEFToBO(records));
+			return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesReasonResponseModel> Get(int salesReasonID)
 		{
 			var record = await salesReasonRepository.Get(salesReasonID);
 
-			return this.BOLSalesReasonMapper.MapBOToModel(this.DALSalesReasonMapper.MapEFToBO(record));
+			return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSalesReasonMapper.MapModelToBO(default (int), model);
-				var record = await this.salesReasonRepository.Create(this.DALSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.bolSalesReasonMapper.MapModelToBO(default (int), model);
+				var record = await this.salesReasonRepository.Create(this.dalSalesReasonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSalesReasonMapper.MapBOToModel(this.DALSalesReasonMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSalesReasonMapper.MapModelToBO(salesReasonID, model);
-				await this.salesReasonRepository.Update(this.DALSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.bolSalesReasonMapper.MapModelToBO(salesReasonID, model);
+				await this.salesReasonRepository.Update(this.dalSalesReasonMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20706e728172cd66e4b99ab260a65d89</Hash>
+    <Hash>30f0f1d718b426f6f5e6cae7b76e4351</Hash>
 </Codenesium>*/

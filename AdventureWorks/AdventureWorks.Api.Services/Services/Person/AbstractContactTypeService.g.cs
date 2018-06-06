@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IContactTypeRepository contactTypeRepository;
 		private IApiContactTypeRequestModelValidator contactTypeModelValidator;
-		private IBOLContactTypeMapper BOLContactTypeMapper;
-		private IDALContactTypeMapper DALContactTypeMapper;
+		private IBOLContactTypeMapper bolContactTypeMapper;
+		private IDALContactTypeMapper dalContactTypeMapper;
 		private ILogger logger;
 
 		public AbstractContactTypeService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.contactTypeRepository = contactTypeRepository;
 			this.contactTypeModelValidator = contactTypeModelValidator;
-			this.BOLContactTypeMapper = bolcontactTypeMapper;
-			this.DALContactTypeMapper = dalcontactTypeMapper;
+			this.bolContactTypeMapper = bolcontactTypeMapper;
+			this.dalContactTypeMapper = dalcontactTypeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.contactTypeRepository.All(skip, take, orderClause);
 
-			return this.BOLContactTypeMapper.MapBOToModel(this.DALContactTypeMapper.MapEFToBO(records));
+			return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiContactTypeResponseModel> Get(int contactTypeID)
 		{
 			var record = await contactTypeRepository.Get(contactTypeID);
 
-			return this.BOLContactTypeMapper.MapBOToModel(this.DALContactTypeMapper.MapEFToBO(record));
+			return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiContactTypeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiContactTypeResponseModel> response = new CreateResponse<ApiContactTypeResponseModel>(await this.contactTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLContactTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.contactTypeRepository.Create(this.DALContactTypeMapper.MapBOToEF(bo));
+				var bo = this.bolContactTypeMapper.MapModelToBO(default (int), model);
+				var record = await this.contactTypeRepository.Create(this.dalContactTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLContactTypeMapper.MapBOToModel(this.DALContactTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLContactTypeMapper.MapModelToBO(contactTypeID, model);
-				await this.contactTypeRepository.Update(this.DALContactTypeMapper.MapBOToEF(bo));
+				var bo = this.bolContactTypeMapper.MapModelToBO(contactTypeID, model);
+				await this.contactTypeRepository.Update(this.dalContactTypeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			ContactType record = await this.contactTypeRepository.GetName(name);
 
-			return this.BOLContactTypeMapper.MapBOToModel(this.DALContactTypeMapper.MapEFToBO(record));
+			return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab163456013398632293580705d208af</Hash>
+    <Hash>32caefed79ccb184b0d31dfce720be6b</Hash>
 </Codenesium>*/

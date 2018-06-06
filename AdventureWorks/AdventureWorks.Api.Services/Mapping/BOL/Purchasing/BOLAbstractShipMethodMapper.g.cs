@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiShipMethodRequestModel model
 			)
 		{
-			BOShipMethod BOShipMethod = new BOShipMethod();
+			BOShipMethod boShipMethod = new BOShipMethod();
 
-			BOShipMethod.SetProperties(
+			boShipMethod.SetProperties(
 				shipMethodID,
 				model.ModifiedDate,
 				model.Name,
 				model.Rowguid,
 				model.ShipBase,
 				model.ShipRate);
-			return BOShipMethod;
+			return boShipMethod;
 		}
 
 		public virtual ApiShipMethodResponseModel MapBOToModel(
-			BOShipMethod BOShipMethod)
+			BOShipMethod boShipMethod)
 		{
-			if (BOShipMethod == null)
-			{
-				return null;
-			}
-
 			var model = new ApiShipMethodResponseModel();
 
-			model.SetProperties(BOShipMethod.ModifiedDate, BOShipMethod.Name, BOShipMethod.Rowguid, BOShipMethod.ShipBase, BOShipMethod.ShipMethodID, BOShipMethod.ShipRate);
+			model.SetProperties(boShipMethod.ModifiedDate, boShipMethod.Name, boShipMethod.Rowguid, boShipMethod.ShipBase, boShipMethod.ShipMethodID, boShipMethod.ShipRate);
 
 			return model;
 		}
 
 		public virtual List<ApiShipMethodResponseModel> MapBOToModel(
-			List<BOShipMethod> BOs)
+			List<BOShipMethod> items)
 		{
 			List<ApiShipMethodResponseModel> response = new List<ApiShipMethodResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>748943585b52a496782587c8990b6741</Hash>
+    <Hash>8f9199a7458c084cbf753c9c5fdff277</Hash>
 </Codenesium>*/

@@ -11,38 +11,33 @@ namespace PetShippingNS.Api.Services
 			ApiEmployeeRequestModel model
 			)
 		{
-			BOEmployee BOEmployee = new BOEmployee();
+			BOEmployee boEmployee = new BOEmployee();
 
-			BOEmployee.SetProperties(
+			boEmployee.SetProperties(
 				id,
 				model.FirstName,
 				model.IsSalesPerson,
 				model.IsShipper,
 				model.LastName);
-			return BOEmployee;
+			return boEmployee;
 		}
 
 		public virtual ApiEmployeeResponseModel MapBOToModel(
-			BOEmployee BOEmployee)
+			BOEmployee boEmployee)
 		{
-			if (BOEmployee == null)
-			{
-				return null;
-			}
-
 			var model = new ApiEmployeeResponseModel();
 
-			model.SetProperties(BOEmployee.FirstName, BOEmployee.Id, BOEmployee.IsSalesPerson, BOEmployee.IsShipper, BOEmployee.LastName);
+			model.SetProperties(boEmployee.FirstName, boEmployee.Id, boEmployee.IsSalesPerson, boEmployee.IsShipper, boEmployee.LastName);
 
 			return model;
 		}
 
 		public virtual List<ApiEmployeeResponseModel> MapBOToModel(
-			List<BOEmployee> BOs)
+			List<BOEmployee> items)
 		{
 			List<ApiEmployeeResponseModel> response = new List<ApiEmployeeResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>427ab43358fe23e9c1b3041bfc425c71</Hash>
+    <Hash>65aa51473b37f5419f2043133718194b</Hash>
 </Codenesium>*/

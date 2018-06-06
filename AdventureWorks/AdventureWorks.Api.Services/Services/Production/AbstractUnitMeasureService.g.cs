@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IUnitMeasureRepository unitMeasureRepository;
 		private IApiUnitMeasureRequestModelValidator unitMeasureModelValidator;
-		private IBOLUnitMeasureMapper BOLUnitMeasureMapper;
-		private IDALUnitMeasureMapper DALUnitMeasureMapper;
+		private IBOLUnitMeasureMapper bolUnitMeasureMapper;
+		private IDALUnitMeasureMapper dalUnitMeasureMapper;
 		private ILogger logger;
 
 		public AbstractUnitMeasureService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.unitMeasureRepository = unitMeasureRepository;
 			this.unitMeasureModelValidator = unitMeasureModelValidator;
-			this.BOLUnitMeasureMapper = bolunitMeasureMapper;
-			this.DALUnitMeasureMapper = dalunitMeasureMapper;
+			this.bolUnitMeasureMapper = bolunitMeasureMapper;
+			this.dalUnitMeasureMapper = dalunitMeasureMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.unitMeasureRepository.All(skip, take, orderClause);
 
-			return this.BOLUnitMeasureMapper.MapBOToModel(this.DALUnitMeasureMapper.MapEFToBO(records));
+			return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode)
 		{
 			var record = await unitMeasureRepository.Get(unitMeasureCode);
 
-			return this.BOLUnitMeasureMapper.MapBOToModel(this.DALUnitMeasureMapper.MapEFToBO(record));
+			return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiUnitMeasureResponseModel> response = new CreateResponse<ApiUnitMeasureResponseModel>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLUnitMeasureMapper.MapModelToBO(default (string), model);
-				var record = await this.unitMeasureRepository.Create(this.DALUnitMeasureMapper.MapBOToEF(bo));
+				var bo = this.bolUnitMeasureMapper.MapModelToBO(default (string), model);
+				var record = await this.unitMeasureRepository.Create(this.dalUnitMeasureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLUnitMeasureMapper.MapBOToModel(this.DALUnitMeasureMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
-				await this.unitMeasureRepository.Update(this.DALUnitMeasureMapper.MapBOToEF(bo));
+				var bo = this.bolUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
+				await this.unitMeasureRepository.Update(this.dalUnitMeasureMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			UnitMeasure record = await this.unitMeasureRepository.GetName(name);
 
-			return this.BOLUnitMeasureMapper.MapBOToModel(this.DALUnitMeasureMapper.MapEFToBO(record));
+			return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc7f21a39bd102b3ec0287e850b5de5c</Hash>
+    <Hash>3bce85db791dd979165f56eada990e99</Hash>
 </Codenesium>*/

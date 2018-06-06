@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ILocationRepository locationRepository;
 		private IApiLocationRequestModelValidator locationModelValidator;
-		private IBOLLocationMapper BOLLocationMapper;
-		private IDALLocationMapper DALLocationMapper;
+		private IBOLLocationMapper bolLocationMapper;
+		private IDALLocationMapper dalLocationMapper;
 		private ILogger logger;
 
 		public AbstractLocationService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.locationRepository = locationRepository;
 			this.locationModelValidator = locationModelValidator;
-			this.BOLLocationMapper = bollocationMapper;
-			this.DALLocationMapper = dallocationMapper;
+			this.bolLocationMapper = bollocationMapper;
+			this.dalLocationMapper = dallocationMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.locationRepository.All(skip, take, orderClause);
 
-			return this.BOLLocationMapper.MapBOToModel(this.DALLocationMapper.MapEFToBO(records));
+			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLocationResponseModel> Get(short locationID)
 		{
 			var record = await locationRepository.Get(locationID);
 
-			return this.BOLLocationMapper.MapBOToModel(this.DALLocationMapper.MapEFToBO(record));
+			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.locationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLLocationMapper.MapModelToBO(default (short), model);
-				var record = await this.locationRepository.Create(this.DALLocationMapper.MapBOToEF(bo));
+				var bo = this.bolLocationMapper.MapModelToBO(default (short), model);
+				var record = await this.locationRepository.Create(this.dalLocationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLLocationMapper.MapBOToModel(this.DALLocationMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLLocationMapper.MapModelToBO(locationID, model);
-				await this.locationRepository.Update(this.DALLocationMapper.MapBOToEF(bo));
+				var bo = this.bolLocationMapper.MapModelToBO(locationID, model);
+				await this.locationRepository.Update(this.dalLocationMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			Location record = await this.locationRepository.GetName(name);
 
-			return this.BOLLocationMapper.MapBOToModel(this.DALLocationMapper.MapEFToBO(record));
+			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cea9eea72e7c11b10d31ba1ba0143427</Hash>
+    <Hash>1ac434edb490154d1b7b63daabe1ae96</Hash>
 </Codenesium>*/

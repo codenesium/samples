@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
 		private IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator;
-		private IBOLCountryRegionCurrencyMapper BOLCountryRegionCurrencyMapper;
-		private IDALCountryRegionCurrencyMapper DALCountryRegionCurrencyMapper;
+		private IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper;
+		private IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper;
 		private ILogger logger;
 
 		public AbstractCountryRegionCurrencyService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
 			this.countryRegionCurrencyModelValidator = countryRegionCurrencyModelValidator;
-			this.BOLCountryRegionCurrencyMapper = bolcountryRegionCurrencyMapper;
-			this.DALCountryRegionCurrencyMapper = dalcountryRegionCurrencyMapper;
+			this.bolCountryRegionCurrencyMapper = bolcountryRegionCurrencyMapper;
+			this.dalCountryRegionCurrencyMapper = dalcountryRegionCurrencyMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.countryRegionCurrencyRepository.All(skip, take, orderClause);
 
-			return this.BOLCountryRegionCurrencyMapper.MapBOToModel(this.DALCountryRegionCurrencyMapper.MapEFToBO(records));
+			return this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCountryRegionCurrencyResponseModel> Get(string countryRegionCode)
 		{
 			var record = await countryRegionCurrencyRepository.Get(countryRegionCode);
 
-			return this.BOLCountryRegionCurrencyMapper.MapBOToModel(this.DALCountryRegionCurrencyMapper.MapEFToBO(record));
+			return this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryRegionCurrencyResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiCountryRegionCurrencyResponseModel> response = new CreateResponse<ApiCountryRegionCurrencyResponseModel>(await this.countryRegionCurrencyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLCountryRegionCurrencyMapper.MapModelToBO(default (string), model);
-				var record = await this.countryRegionCurrencyRepository.Create(this.DALCountryRegionCurrencyMapper.MapBOToEF(bo));
+				var bo = this.bolCountryRegionCurrencyMapper.MapModelToBO(default (string), model);
+				var record = await this.countryRegionCurrencyRepository.Create(this.dalCountryRegionCurrencyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLCountryRegionCurrencyMapper.MapBOToModel(this.DALCountryRegionCurrencyMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLCountryRegionCurrencyMapper.MapModelToBO(countryRegionCode, model);
-				await this.countryRegionCurrencyRepository.Update(this.DALCountryRegionCurrencyMapper.MapBOToEF(bo));
+				var bo = this.bolCountryRegionCurrencyMapper.MapModelToBO(countryRegionCode, model);
+				await this.countryRegionCurrencyRepository.Update(this.dalCountryRegionCurrencyMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<CountryRegionCurrency> records = await this.countryRegionCurrencyRepository.GetCurrencyCode(currencyCode);
 
-			return this.BOLCountryRegionCurrencyMapper.MapBOToModel(this.DALCountryRegionCurrencyMapper.MapEFToBO(records));
+			return this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>484ba9afb26006334cbc7452409814c3</Hash>
+    <Hash>30983cc63a59c5b4d02ef147622f5ca1</Hash>
 </Codenesium>*/

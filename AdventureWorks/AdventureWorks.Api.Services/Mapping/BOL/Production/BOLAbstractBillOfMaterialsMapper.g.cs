@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiBillOfMaterialsRequestModel model
 			)
 		{
-			BOBillOfMaterials BOBillOfMaterials = new BOBillOfMaterials();
+			BOBillOfMaterials boBillOfMaterials = new BOBillOfMaterials();
 
-			BOBillOfMaterials.SetProperties(
+			boBillOfMaterials.SetProperties(
 				billOfMaterialsID,
 				model.BOMLevel,
 				model.ComponentID,
@@ -23,30 +23,25 @@ namespace AdventureWorksNS.Api.Services
 				model.ProductAssemblyID,
 				model.StartDate,
 				model.UnitMeasureCode);
-			return BOBillOfMaterials;
+			return boBillOfMaterials;
 		}
 
 		public virtual ApiBillOfMaterialsResponseModel MapBOToModel(
-			BOBillOfMaterials BOBillOfMaterials)
+			BOBillOfMaterials boBillOfMaterials)
 		{
-			if (BOBillOfMaterials == null)
-			{
-				return null;
-			}
-
 			var model = new ApiBillOfMaterialsResponseModel();
 
-			model.SetProperties(BOBillOfMaterials.BillOfMaterialsID, BOBillOfMaterials.BOMLevel, BOBillOfMaterials.ComponentID, BOBillOfMaterials.EndDate, BOBillOfMaterials.ModifiedDate, BOBillOfMaterials.PerAssemblyQty, BOBillOfMaterials.ProductAssemblyID, BOBillOfMaterials.StartDate, BOBillOfMaterials.UnitMeasureCode);
+			model.SetProperties(boBillOfMaterials.BillOfMaterialsID, boBillOfMaterials.BOMLevel, boBillOfMaterials.ComponentID, boBillOfMaterials.EndDate, boBillOfMaterials.ModifiedDate, boBillOfMaterials.PerAssemblyQty, boBillOfMaterials.ProductAssemblyID, boBillOfMaterials.StartDate, boBillOfMaterials.UnitMeasureCode);
 
 			return model;
 		}
 
 		public virtual List<ApiBillOfMaterialsResponseModel> MapBOToModel(
-			List<BOBillOfMaterials> BOs)
+			List<BOBillOfMaterials> items)
 		{
 			List<ApiBillOfMaterialsResponseModel> response = new List<ApiBillOfMaterialsResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20d9bd9ae346263c58fa385d85bf820b</Hash>
+    <Hash>f60cd2077b9a924f67014e450f5fdf7a</Hash>
 </Codenesium>*/

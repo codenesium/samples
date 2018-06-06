@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOSalesTaxRate boSalesTaxRate);
 
 		List<ApiSalesTaxRateResponseModel> MapBOToModel(
-			List<BOSalesTaxRate> bos);
+			List<BOSalesTaxRate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5b459cdb775bb7e1f3bbfb1acb076c88</Hash>
+    <Hash>d90b853bd70c8a293fec6f6a46583f2f</Hash>
 </Codenesium>*/

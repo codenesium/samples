@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IBillOfMaterialsRepository billOfMaterialsRepository;
 		private IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator;
-		private IBOLBillOfMaterialsMapper BOLBillOfMaterialsMapper;
-		private IDALBillOfMaterialsMapper DALBillOfMaterialsMapper;
+		private IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper;
+		private IDALBillOfMaterialsMapper dalBillOfMaterialsMapper;
 		private ILogger logger;
 
 		public AbstractBillOfMaterialsService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.billOfMaterialsRepository = billOfMaterialsRepository;
 			this.billOfMaterialsModelValidator = billOfMaterialsModelValidator;
-			this.BOLBillOfMaterialsMapper = bolbillOfMaterialsMapper;
-			this.DALBillOfMaterialsMapper = dalbillOfMaterialsMapper;
+			this.bolBillOfMaterialsMapper = bolbillOfMaterialsMapper;
+			this.dalBillOfMaterialsMapper = dalbillOfMaterialsMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.billOfMaterialsRepository.All(skip, take, orderClause);
 
-			return this.BOLBillOfMaterialsMapper.MapBOToModel(this.DALBillOfMaterialsMapper.MapEFToBO(records));
+			return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBillOfMaterialsResponseModel> Get(int billOfMaterialsID)
 		{
 			var record = await billOfMaterialsRepository.Get(billOfMaterialsID);
 
-			return this.BOLBillOfMaterialsMapper.MapBOToModel(this.DALBillOfMaterialsMapper.MapEFToBO(record));
+			return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiBillOfMaterialsResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiBillOfMaterialsResponseModel> response = new CreateResponse<ApiBillOfMaterialsResponseModel>(await this.billOfMaterialsModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLBillOfMaterialsMapper.MapModelToBO(default (int), model);
-				var record = await this.billOfMaterialsRepository.Create(this.DALBillOfMaterialsMapper.MapBOToEF(bo));
+				var bo = this.bolBillOfMaterialsMapper.MapModelToBO(default (int), model);
+				var record = await this.billOfMaterialsRepository.Create(this.dalBillOfMaterialsMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLBillOfMaterialsMapper.MapBOToModel(this.DALBillOfMaterialsMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLBillOfMaterialsMapper.MapModelToBO(billOfMaterialsID, model);
-				await this.billOfMaterialsRepository.Update(this.DALBillOfMaterialsMapper.MapBOToEF(bo));
+				var bo = this.bolBillOfMaterialsMapper.MapModelToBO(billOfMaterialsID, model);
+				await this.billOfMaterialsRepository.Update(this.dalBillOfMaterialsMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			BillOfMaterials record = await this.billOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(productAssemblyID,componentID,startDate);
 
-			return this.BOLBillOfMaterialsMapper.MapBOToModel(this.DALBillOfMaterialsMapper.MapEFToBO(record));
+			return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
 		}
 		public async Task<List<ApiBillOfMaterialsResponseModel>> GetUnitMeasureCode(string unitMeasureCode)
 		{
 			List<BillOfMaterials> records = await this.billOfMaterialsRepository.GetUnitMeasureCode(unitMeasureCode);
 
-			return this.BOLBillOfMaterialsMapper.MapBOToModel(this.DALBillOfMaterialsMapper.MapEFToBO(records));
+			return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>73af3779689cab9d0513ae4ecc8dd242</Hash>
+    <Hash>c81b98ec4c7f6595794776113e8a3b2b</Hash>
 </Codenesium>*/

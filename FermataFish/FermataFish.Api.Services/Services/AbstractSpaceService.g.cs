@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private ISpaceRepository spaceRepository;
 		private IApiSpaceRequestModelValidator spaceModelValidator;
-		private IBOLSpaceMapper BOLSpaceMapper;
-		private IDALSpaceMapper DALSpaceMapper;
+		private IBOLSpaceMapper bolSpaceMapper;
+		private IDALSpaceMapper dalSpaceMapper;
 		private ILogger logger;
 
 		public AbstractSpaceService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.spaceRepository = spaceRepository;
 			this.spaceModelValidator = spaceModelValidator;
-			this.BOLSpaceMapper = bolspaceMapper;
-			this.DALSpaceMapper = dalspaceMapper;
+			this.bolSpaceMapper = bolspaceMapper;
+			this.dalSpaceMapper = dalspaceMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.spaceRepository.All(skip, take, orderClause);
 
-			return this.BOLSpaceMapper.MapBOToModel(this.DALSpaceMapper.MapEFToBO(records));
+			return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSpaceResponseModel> Get(int id)
 		{
 			var record = await spaceRepository.Get(id);
 
-			return this.BOLSpaceMapper.MapBOToModel(this.DALSpaceMapper.MapEFToBO(record));
+			return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSpaceResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiSpaceResponseModel> response = new CreateResponse<ApiSpaceResponseModel>(await this.spaceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSpaceMapper.MapModelToBO(default (int), model);
-				var record = await this.spaceRepository.Create(this.DALSpaceMapper.MapBOToEF(bo));
+				var bo = this.bolSpaceMapper.MapModelToBO(default (int), model);
+				var record = await this.spaceRepository.Create(this.dalSpaceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSpaceMapper.MapBOToModel(this.DALSpaceMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSpaceMapper.MapModelToBO(id, model);
-				await this.spaceRepository.Update(this.DALSpaceMapper.MapBOToEF(bo));
+				var bo = this.bolSpaceMapper.MapModelToBO(id, model);
+				await this.spaceRepository.Update(this.dalSpaceMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f1a0b2af4a4c1221d11509c34d3f391</Hash>
+    <Hash>970c610ce41abdf2c683b73f29d05150</Hash>
 </Codenesium>*/

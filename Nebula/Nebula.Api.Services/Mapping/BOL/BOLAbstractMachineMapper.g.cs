@@ -11,39 +11,34 @@ namespace NebulaNS.Api.Services
 			ApiMachineRequestModel model
 			)
 		{
-			BOMachine BOMachine = new BOMachine();
+			BOMachine boMachine = new BOMachine();
 
-			BOMachine.SetProperties(
+			boMachine.SetProperties(
 				id,
 				model.Description,
 				model.JwtKey,
 				model.LastIpAddress,
 				model.MachineGuid,
 				model.Name);
-			return BOMachine;
+			return boMachine;
 		}
 
 		public virtual ApiMachineResponseModel MapBOToModel(
-			BOMachine BOMachine)
+			BOMachine boMachine)
 		{
-			if (BOMachine == null)
-			{
-				return null;
-			}
-
 			var model = new ApiMachineResponseModel();
 
-			model.SetProperties(BOMachine.Description, BOMachine.Id, BOMachine.JwtKey, BOMachine.LastIpAddress, BOMachine.MachineGuid, BOMachine.Name);
+			model.SetProperties(boMachine.Description, boMachine.Id, boMachine.JwtKey, boMachine.LastIpAddress, boMachine.MachineGuid, boMachine.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiMachineResponseModel> MapBOToModel(
-			List<BOMachine> BOs)
+			List<BOMachine> items)
 		{
 			List<ApiMachineResponseModel> response = new List<ApiMachineResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ed764e6ed7f37a1ebbbe83c52e579a4f</Hash>
+    <Hash>302c05cdfa25a00c92a30a54b348f27f</Hash>
 </Codenesium>*/

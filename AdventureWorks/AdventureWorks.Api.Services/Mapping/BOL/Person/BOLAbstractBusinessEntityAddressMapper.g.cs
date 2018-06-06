@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiBusinessEntityAddressRequestModel model
 			)
 		{
-			BOBusinessEntityAddress BOBusinessEntityAddress = new BOBusinessEntityAddress();
+			BOBusinessEntityAddress boBusinessEntityAddress = new BOBusinessEntityAddress();
 
-			BOBusinessEntityAddress.SetProperties(
+			boBusinessEntityAddress.SetProperties(
 				businessEntityID,
 				model.AddressID,
 				model.AddressTypeID,
 				model.ModifiedDate,
 				model.Rowguid);
-			return BOBusinessEntityAddress;
+			return boBusinessEntityAddress;
 		}
 
 		public virtual ApiBusinessEntityAddressResponseModel MapBOToModel(
-			BOBusinessEntityAddress BOBusinessEntityAddress)
+			BOBusinessEntityAddress boBusinessEntityAddress)
 		{
-			if (BOBusinessEntityAddress == null)
-			{
-				return null;
-			}
-
 			var model = new ApiBusinessEntityAddressResponseModel();
 
-			model.SetProperties(BOBusinessEntityAddress.AddressID, BOBusinessEntityAddress.AddressTypeID, BOBusinessEntityAddress.BusinessEntityID, BOBusinessEntityAddress.ModifiedDate, BOBusinessEntityAddress.Rowguid);
+			model.SetProperties(boBusinessEntityAddress.AddressID, boBusinessEntityAddress.AddressTypeID, boBusinessEntityAddress.BusinessEntityID, boBusinessEntityAddress.ModifiedDate, boBusinessEntityAddress.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiBusinessEntityAddressResponseModel> MapBOToModel(
-			List<BOBusinessEntityAddress> BOs)
+			List<BOBusinessEntityAddress> items)
 		{
 			List<ApiBusinessEntityAddressResponseModel> response = new List<ApiBusinessEntityAddressResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0e91dbe3c5b13a01484c8040e63bc13</Hash>
+    <Hash>224d867477d409b40a149063ec44e0a4</Hash>
 </Codenesium>*/

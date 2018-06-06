@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOOrganization boOrganization);
 
 		List<ApiOrganizationResponseModel> MapBOToModel(
-			List<BOOrganization> bos);
+			List<BOOrganization> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f846ea854a4500e54727fc1b89a5ef29</Hash>
+    <Hash>0065f5dd43bb13f9dd0a2401fdafb893</Hash>
 </Codenesium>*/

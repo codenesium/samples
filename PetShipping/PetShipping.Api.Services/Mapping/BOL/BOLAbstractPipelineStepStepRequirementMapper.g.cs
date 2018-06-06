@@ -11,37 +11,32 @@ namespace PetShippingNS.Api.Services
 			ApiPipelineStepStepRequirementRequestModel model
 			)
 		{
-			BOPipelineStepStepRequirement BOPipelineStepStepRequirement = new BOPipelineStepStepRequirement();
+			BOPipelineStepStepRequirement boPipelineStepStepRequirement = new BOPipelineStepStepRequirement();
 
-			BOPipelineStepStepRequirement.SetProperties(
+			boPipelineStepStepRequirement.SetProperties(
 				id,
 				model.Details,
 				model.PipelineStepId,
 				model.RequirementMet);
-			return BOPipelineStepStepRequirement;
+			return boPipelineStepStepRequirement;
 		}
 
 		public virtual ApiPipelineStepStepRequirementResponseModel MapBOToModel(
-			BOPipelineStepStepRequirement BOPipelineStepStepRequirement)
+			BOPipelineStepStepRequirement boPipelineStepStepRequirement)
 		{
-			if (BOPipelineStepStepRequirement == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPipelineStepStepRequirementResponseModel();
 
-			model.SetProperties(BOPipelineStepStepRequirement.Details, BOPipelineStepStepRequirement.Id, BOPipelineStepStepRequirement.PipelineStepId, BOPipelineStepStepRequirement.RequirementMet);
+			model.SetProperties(boPipelineStepStepRequirement.Details, boPipelineStepStepRequirement.Id, boPipelineStepStepRequirement.PipelineStepId, boPipelineStepStepRequirement.RequirementMet);
 
 			return model;
 		}
 
 		public virtual List<ApiPipelineStepStepRequirementResponseModel> MapBOToModel(
-			List<BOPipelineStepStepRequirement> BOs)
+			List<BOPipelineStepStepRequirement> items)
 		{
 			List<ApiPipelineStepStepRequirementResponseModel> response = new List<ApiPipelineStepStepRequirementResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea42c71492a5511349b4040200db73db</Hash>
+    <Hash>6e7ffd61bbb1dd29a3864dd9a2b0a648</Hash>
 </Codenesium>*/

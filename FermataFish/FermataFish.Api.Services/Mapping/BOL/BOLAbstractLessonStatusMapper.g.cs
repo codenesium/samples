@@ -11,36 +11,31 @@ namespace FermataFishNS.Api.Services
 			ApiLessonStatusRequestModel model
 			)
 		{
-			BOLessonStatus BOLessonStatus = new BOLessonStatus();
+			BOLessonStatus boLessonStatus = new BOLessonStatus();
 
-			BOLessonStatus.SetProperties(
+			boLessonStatus.SetProperties(
 				id,
 				model.Name,
 				model.StudioId);
-			return BOLessonStatus;
+			return boLessonStatus;
 		}
 
 		public virtual ApiLessonStatusResponseModel MapBOToModel(
-			BOLessonStatus BOLessonStatus)
+			BOLessonStatus boLessonStatus)
 		{
-			if (BOLessonStatus == null)
-			{
-				return null;
-			}
-
 			var model = new ApiLessonStatusResponseModel();
 
-			model.SetProperties(BOLessonStatus.Id, BOLessonStatus.Name, BOLessonStatus.StudioId);
+			model.SetProperties(boLessonStatus.Id, boLessonStatus.Name, boLessonStatus.StudioId);
 
 			return model;
 		}
 
 		public virtual List<ApiLessonStatusResponseModel> MapBOToModel(
-			List<BOLessonStatus> BOs)
+			List<BOLessonStatus> items)
 		{
 			List<ApiLessonStatusResponseModel> response = new List<ApiLessonStatusResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b7faa7481924d9f68cfea2110658878</Hash>
+    <Hash>94cb98aef0b621e56b272898b391cef8</Hash>
 </Codenesium>*/

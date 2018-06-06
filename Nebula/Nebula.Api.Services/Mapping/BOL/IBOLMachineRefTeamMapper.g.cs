@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOMachineRefTeam boMachineRefTeam);
 
 		List<ApiMachineRefTeamResponseModel> MapBOToModel(
-			List<BOMachineRefTeam> bos);
+			List<BOMachineRefTeam> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>16fa9d55a658eac8b43047bcc93af275</Hash>
+    <Hash>c6553caa68e69656b013197ff487ad78</Hash>
 </Codenesium>*/

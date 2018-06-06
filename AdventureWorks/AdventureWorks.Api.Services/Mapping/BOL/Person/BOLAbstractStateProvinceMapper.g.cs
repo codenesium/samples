@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiStateProvinceRequestModel model
 			)
 		{
-			BOStateProvince BOStateProvince = new BOStateProvince();
+			BOStateProvince boStateProvince = new BOStateProvince();
 
-			BOStateProvince.SetProperties(
+			boStateProvince.SetProperties(
 				stateProvinceID,
 				model.CountryRegionCode,
 				model.IsOnlyStateProvinceFlag,
@@ -22,30 +22,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rowguid,
 				model.StateProvinceCode,
 				model.TerritoryID);
-			return BOStateProvince;
+			return boStateProvince;
 		}
 
 		public virtual ApiStateProvinceResponseModel MapBOToModel(
-			BOStateProvince BOStateProvince)
+			BOStateProvince boStateProvince)
 		{
-			if (BOStateProvince == null)
-			{
-				return null;
-			}
-
 			var model = new ApiStateProvinceResponseModel();
 
-			model.SetProperties(BOStateProvince.CountryRegionCode, BOStateProvince.IsOnlyStateProvinceFlag, BOStateProvince.ModifiedDate, BOStateProvince.Name, BOStateProvince.Rowguid, BOStateProvince.StateProvinceCode, BOStateProvince.StateProvinceID, BOStateProvince.TerritoryID);
+			model.SetProperties(boStateProvince.CountryRegionCode, boStateProvince.IsOnlyStateProvinceFlag, boStateProvince.ModifiedDate, boStateProvince.Name, boStateProvince.Rowguid, boStateProvince.StateProvinceCode, boStateProvince.StateProvinceID, boStateProvince.TerritoryID);
 
 			return model;
 		}
 
 		public virtual List<ApiStateProvinceResponseModel> MapBOToModel(
-			List<BOStateProvince> BOs)
+			List<BOStateProvince> items)
 		{
 			List<ApiStateProvinceResponseModel> response = new List<ApiStateProvinceResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -56,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12e105a829e04ab84f711f081ebf775a</Hash>
+    <Hash>cbbcae947608bf4af5f96a353d3cf0ce</Hash>
 </Codenesium>*/

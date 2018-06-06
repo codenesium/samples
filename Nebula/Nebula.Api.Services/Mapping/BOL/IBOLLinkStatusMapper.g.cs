@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOLinkStatus boLinkStatus);
 
 		List<ApiLinkStatusResponseModel> MapBOToModel(
-			List<BOLinkStatus> bos);
+			List<BOLinkStatus> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>17ba39f6ab3955c3ac5783ec450e5ebe</Hash>
+    <Hash>4c9040433832c3cb4519a36500df2450</Hash>
 </Codenesium>*/

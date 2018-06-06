@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IVendorRepository vendorRepository;
 		private IApiVendorRequestModelValidator vendorModelValidator;
-		private IBOLVendorMapper BOLVendorMapper;
-		private IDALVendorMapper DALVendorMapper;
+		private IBOLVendorMapper bolVendorMapper;
+		private IDALVendorMapper dalVendorMapper;
 		private ILogger logger;
 
 		public AbstractVendorService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.vendorRepository = vendorRepository;
 			this.vendorModelValidator = vendorModelValidator;
-			this.BOLVendorMapper = bolvendorMapper;
-			this.DALVendorMapper = dalvendorMapper;
+			this.bolVendorMapper = bolvendorMapper;
+			this.dalVendorMapper = dalvendorMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.vendorRepository.All(skip, take, orderClause);
 
-			return this.BOLVendorMapper.MapBOToModel(this.DALVendorMapper.MapEFToBO(records));
+			return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiVendorResponseModel> Get(int businessEntityID)
 		{
 			var record = await vendorRepository.Get(businessEntityID);
 
-			return this.BOLVendorMapper.MapBOToModel(this.DALVendorMapper.MapEFToBO(record));
+			return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiVendorResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiVendorResponseModel> response = new CreateResponse<ApiVendorResponseModel>(await this.vendorModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLVendorMapper.MapModelToBO(default (int), model);
-				var record = await this.vendorRepository.Create(this.DALVendorMapper.MapBOToEF(bo));
+				var bo = this.bolVendorMapper.MapModelToBO(default (int), model);
+				var record = await this.vendorRepository.Create(this.dalVendorMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLVendorMapper.MapBOToModel(this.DALVendorMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLVendorMapper.MapModelToBO(businessEntityID, model);
-				await this.vendorRepository.Update(this.DALVendorMapper.MapBOToEF(bo));
+				var bo = this.bolVendorMapper.MapModelToBO(businessEntityID, model);
+				await this.vendorRepository.Update(this.dalVendorMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			Vendor record = await this.vendorRepository.GetAccountNumber(accountNumber);
 
-			return this.BOLVendorMapper.MapBOToModel(this.DALVendorMapper.MapEFToBO(record));
+			return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae24b7b6364adc650b6a0f09c00ef52f</Hash>
+    <Hash>a70bd800ef0471febd763a853b55df4b</Hash>
 </Codenesium>*/

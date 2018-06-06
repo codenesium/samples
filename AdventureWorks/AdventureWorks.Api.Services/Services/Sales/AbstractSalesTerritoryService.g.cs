@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ISalesTerritoryRepository salesTerritoryRepository;
 		private IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator;
-		private IBOLSalesTerritoryMapper BOLSalesTerritoryMapper;
-		private IDALSalesTerritoryMapper DALSalesTerritoryMapper;
+		private IBOLSalesTerritoryMapper bolSalesTerritoryMapper;
+		private IDALSalesTerritoryMapper dalSalesTerritoryMapper;
 		private ILogger logger;
 
 		public AbstractSalesTerritoryService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.salesTerritoryRepository = salesTerritoryRepository;
 			this.salesTerritoryModelValidator = salesTerritoryModelValidator;
-			this.BOLSalesTerritoryMapper = bolsalesTerritoryMapper;
-			this.DALSalesTerritoryMapper = dalsalesTerritoryMapper;
+			this.bolSalesTerritoryMapper = bolsalesTerritoryMapper;
+			this.dalSalesTerritoryMapper = dalsalesTerritoryMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.salesTerritoryRepository.All(skip, take, orderClause);
 
-			return this.BOLSalesTerritoryMapper.MapBOToModel(this.DALSalesTerritoryMapper.MapEFToBO(records));
+			return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesTerritoryResponseModel> Get(int territoryID)
 		{
 			var record = await salesTerritoryRepository.Get(territoryID);
 
-			return this.BOLSalesTerritoryMapper.MapBOToModel(this.DALSalesTerritoryMapper.MapEFToBO(record));
+			return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiSalesTerritoryResponseModel> response = new CreateResponse<ApiSalesTerritoryResponseModel>(await this.salesTerritoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSalesTerritoryMapper.MapModelToBO(default (int), model);
-				var record = await this.salesTerritoryRepository.Create(this.DALSalesTerritoryMapper.MapBOToEF(bo));
+				var bo = this.bolSalesTerritoryMapper.MapModelToBO(default (int), model);
+				var record = await this.salesTerritoryRepository.Create(this.dalSalesTerritoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSalesTerritoryMapper.MapBOToModel(this.DALSalesTerritoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSalesTerritoryMapper.MapModelToBO(territoryID, model);
-				await this.salesTerritoryRepository.Update(this.DALSalesTerritoryMapper.MapBOToEF(bo));
+				var bo = this.bolSalesTerritoryMapper.MapModelToBO(territoryID, model);
+				await this.salesTerritoryRepository.Update(this.dalSalesTerritoryMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			SalesTerritory record = await this.salesTerritoryRepository.GetName(name);
 
-			return this.BOLSalesTerritoryMapper.MapBOToModel(this.DALSalesTerritoryMapper.MapEFToBO(record));
+			return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1611978067a4a91975bbda7668040606</Hash>
+    <Hash>ca5d5165fca866b3c7a988ea225c77fb</Hash>
 </Codenesium>*/

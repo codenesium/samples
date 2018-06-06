@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IShoppingCartItemRepository shoppingCartItemRepository;
 		private IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator;
-		private IBOLShoppingCartItemMapper BOLShoppingCartItemMapper;
-		private IDALShoppingCartItemMapper DALShoppingCartItemMapper;
+		private IBOLShoppingCartItemMapper bolShoppingCartItemMapper;
+		private IDALShoppingCartItemMapper dalShoppingCartItemMapper;
 		private ILogger logger;
 
 		public AbstractShoppingCartItemService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.shoppingCartItemRepository = shoppingCartItemRepository;
 			this.shoppingCartItemModelValidator = shoppingCartItemModelValidator;
-			this.BOLShoppingCartItemMapper = bolshoppingCartItemMapper;
-			this.DALShoppingCartItemMapper = dalshoppingCartItemMapper;
+			this.bolShoppingCartItemMapper = bolshoppingCartItemMapper;
+			this.dalShoppingCartItemMapper = dalshoppingCartItemMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.shoppingCartItemRepository.All(skip, take, orderClause);
 
-			return this.BOLShoppingCartItemMapper.MapBOToModel(this.DALShoppingCartItemMapper.MapEFToBO(records));
+			return this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiShoppingCartItemResponseModel> Get(int shoppingCartItemID)
 		{
 			var record = await shoppingCartItemRepository.Get(shoppingCartItemID);
 
-			return this.BOLShoppingCartItemMapper.MapBOToModel(this.DALShoppingCartItemMapper.MapEFToBO(record));
+			return this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiShoppingCartItemResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiShoppingCartItemResponseModel> response = new CreateResponse<ApiShoppingCartItemResponseModel>(await this.shoppingCartItemModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLShoppingCartItemMapper.MapModelToBO(default (int), model);
-				var record = await this.shoppingCartItemRepository.Create(this.DALShoppingCartItemMapper.MapBOToEF(bo));
+				var bo = this.bolShoppingCartItemMapper.MapModelToBO(default (int), model);
+				var record = await this.shoppingCartItemRepository.Create(this.dalShoppingCartItemMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLShoppingCartItemMapper.MapBOToModel(this.DALShoppingCartItemMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
-				await this.shoppingCartItemRepository.Update(this.DALShoppingCartItemMapper.MapBOToEF(bo));
+				var bo = this.bolShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
+				await this.shoppingCartItemRepository.Update(this.dalShoppingCartItemMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<ShoppingCartItem> records = await this.shoppingCartItemRepository.GetShoppingCartIDProductID(shoppingCartID,productID);
 
-			return this.BOLShoppingCartItemMapper.MapBOToModel(this.DALShoppingCartItemMapper.MapEFToBO(records));
+			return this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b095842becd8a6f5d0fc90709a0c317d</Hash>
+    <Hash>b3a104fc272a88655bec1e8a607614d7</Hash>
 </Codenesium>*/

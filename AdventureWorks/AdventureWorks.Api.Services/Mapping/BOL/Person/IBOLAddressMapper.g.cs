@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOAddress boAddress);
 
 		List<ApiAddressResponseModel> MapBOToModel(
-			List<BOAddress> bos);
+			List<BOAddress> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>49cf97ea17fcef7edd59b336c7d67e8d</Hash>
+    <Hash>daa24836cc2ca09c64d785e213d36f49</Hash>
 </Codenesium>*/

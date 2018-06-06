@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductListPriceHistoryRequestModel model
 			)
 		{
-			BOProductListPriceHistory BOProductListPriceHistory = new BOProductListPriceHistory();
+			BOProductListPriceHistory boProductListPriceHistory = new BOProductListPriceHistory();
 
-			BOProductListPriceHistory.SetProperties(
+			boProductListPriceHistory.SetProperties(
 				productID,
 				model.EndDate,
 				model.ListPrice,
 				model.ModifiedDate,
 				model.StartDate);
-			return BOProductListPriceHistory;
+			return boProductListPriceHistory;
 		}
 
 		public virtual ApiProductListPriceHistoryResponseModel MapBOToModel(
-			BOProductListPriceHistory BOProductListPriceHistory)
+			BOProductListPriceHistory boProductListPriceHistory)
 		{
-			if (BOProductListPriceHistory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductListPriceHistoryResponseModel();
 
-			model.SetProperties(BOProductListPriceHistory.EndDate, BOProductListPriceHistory.ListPrice, BOProductListPriceHistory.ModifiedDate, BOProductListPriceHistory.ProductID, BOProductListPriceHistory.StartDate);
+			model.SetProperties(boProductListPriceHistory.EndDate, boProductListPriceHistory.ListPrice, boProductListPriceHistory.ModifiedDate, boProductListPriceHistory.ProductID, boProductListPriceHistory.StartDate);
 
 			return model;
 		}
 
 		public virtual List<ApiProductListPriceHistoryResponseModel> MapBOToModel(
-			List<BOProductListPriceHistory> BOs)
+			List<BOProductListPriceHistory> items)
 		{
 			List<ApiProductListPriceHistoryResponseModel> response = new List<ApiProductListPriceHistoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3c6c7a721757eeff84a28e2a29985618</Hash>
+    <Hash>b070932a29a12a88d3fbefaafe139e08</Hash>
 </Codenesium>*/

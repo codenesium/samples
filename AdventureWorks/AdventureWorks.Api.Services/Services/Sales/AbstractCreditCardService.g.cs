@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ICreditCardRepository creditCardRepository;
 		private IApiCreditCardRequestModelValidator creditCardModelValidator;
-		private IBOLCreditCardMapper BOLCreditCardMapper;
-		private IDALCreditCardMapper DALCreditCardMapper;
+		private IBOLCreditCardMapper bolCreditCardMapper;
+		private IDALCreditCardMapper dalCreditCardMapper;
 		private ILogger logger;
 
 		public AbstractCreditCardService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.creditCardRepository = creditCardRepository;
 			this.creditCardModelValidator = creditCardModelValidator;
-			this.BOLCreditCardMapper = bolcreditCardMapper;
-			this.DALCreditCardMapper = dalcreditCardMapper;
+			this.bolCreditCardMapper = bolcreditCardMapper;
+			this.dalCreditCardMapper = dalcreditCardMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.creditCardRepository.All(skip, take, orderClause);
 
-			return this.BOLCreditCardMapper.MapBOToModel(this.DALCreditCardMapper.MapEFToBO(records));
+			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCreditCardResponseModel> Get(int creditCardID)
 		{
 			var record = await creditCardRepository.Get(creditCardID);
 
-			return this.BOLCreditCardMapper.MapBOToModel(this.DALCreditCardMapper.MapEFToBO(record));
+			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.creditCardModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLCreditCardMapper.MapModelToBO(default (int), model);
-				var record = await this.creditCardRepository.Create(this.DALCreditCardMapper.MapBOToEF(bo));
+				var bo = this.bolCreditCardMapper.MapModelToBO(default (int), model);
+				var record = await this.creditCardRepository.Create(this.dalCreditCardMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLCreditCardMapper.MapBOToModel(this.DALCreditCardMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLCreditCardMapper.MapModelToBO(creditCardID, model);
-				await this.creditCardRepository.Update(this.DALCreditCardMapper.MapBOToEF(bo));
+				var bo = this.bolCreditCardMapper.MapModelToBO(creditCardID, model);
+				await this.creditCardRepository.Update(this.dalCreditCardMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			CreditCard record = await this.creditCardRepository.GetCardNumber(cardNumber);
 
-			return this.BOLCreditCardMapper.MapBOToModel(this.DALCreditCardMapper.MapEFToBO(record));
+			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9848fcfbcff6441fd01128fa291aeed</Hash>
+    <Hash>bb4ef1ab29a9ee3930370973c27cc82e</Hash>
 </Codenesium>*/

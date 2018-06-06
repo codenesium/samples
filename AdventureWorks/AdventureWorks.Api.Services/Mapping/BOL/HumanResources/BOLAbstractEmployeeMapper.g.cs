@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiEmployeeRequestModel model
 			)
 		{
-			BOEmployee BOEmployee = new BOEmployee();
+			BOEmployee boEmployee = new BOEmployee();
 
-			BOEmployee.SetProperties(
+			boEmployee.SetProperties(
 				businessEntityID,
 				model.BirthDate,
 				model.CurrentFlag,
@@ -30,30 +30,25 @@ namespace AdventureWorksNS.Api.Services
 				model.SalariedFlag,
 				model.SickLeaveHours,
 				model.VacationHours);
-			return BOEmployee;
+			return boEmployee;
 		}
 
 		public virtual ApiEmployeeResponseModel MapBOToModel(
-			BOEmployee BOEmployee)
+			BOEmployee boEmployee)
 		{
-			if (BOEmployee == null)
-			{
-				return null;
-			}
-
 			var model = new ApiEmployeeResponseModel();
 
-			model.SetProperties(BOEmployee.BirthDate, BOEmployee.BusinessEntityID, BOEmployee.CurrentFlag, BOEmployee.Gender, BOEmployee.HireDate, BOEmployee.JobTitle, BOEmployee.LoginID, BOEmployee.MaritalStatus, BOEmployee.ModifiedDate, BOEmployee.NationalIDNumber, BOEmployee.OrganizationLevel, BOEmployee.OrganizationNode, BOEmployee.Rowguid, BOEmployee.SalariedFlag, BOEmployee.SickLeaveHours, BOEmployee.VacationHours);
+			model.SetProperties(boEmployee.BirthDate, boEmployee.BusinessEntityID, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatus, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.OrganizationNode, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHours, boEmployee.VacationHours);
 
 			return model;
 		}
 
 		public virtual List<ApiEmployeeResponseModel> MapBOToModel(
-			List<BOEmployee> BOs)
+			List<BOEmployee> items)
 		{
 			List<ApiEmployeeResponseModel> response = new List<ApiEmployeeResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -64,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bd9b81d82ce80c114daf9150dc230ff</Hash>
+    <Hash>e28df1cbc92b7a5545fc64a2aebfe8db</Hash>
 </Codenesium>*/

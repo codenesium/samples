@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiCustomerRequestModel model
 			)
 		{
-			BOCustomer BOCustomer = new BOCustomer();
+			BOCustomer boCustomer = new BOCustomer();
 
-			BOCustomer.SetProperties(
+			boCustomer.SetProperties(
 				customerID,
 				model.AccountNumber,
 				model.ModifiedDate,
@@ -21,30 +21,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rowguid,
 				model.StoreID,
 				model.TerritoryID);
-			return BOCustomer;
+			return boCustomer;
 		}
 
 		public virtual ApiCustomerResponseModel MapBOToModel(
-			BOCustomer BOCustomer)
+			BOCustomer boCustomer)
 		{
-			if (BOCustomer == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCustomerResponseModel();
 
-			model.SetProperties(BOCustomer.AccountNumber, BOCustomer.CustomerID, BOCustomer.ModifiedDate, BOCustomer.PersonID, BOCustomer.Rowguid, BOCustomer.StoreID, BOCustomer.TerritoryID);
+			model.SetProperties(boCustomer.AccountNumber, boCustomer.CustomerID, boCustomer.ModifiedDate, boCustomer.PersonID, boCustomer.Rowguid, boCustomer.StoreID, boCustomer.TerritoryID);
 
 			return model;
 		}
 
 		public virtual List<ApiCustomerResponseModel> MapBOToModel(
-			List<BOCustomer> BOs)
+			List<BOCustomer> items)
 		{
 			List<ApiCustomerResponseModel> response = new List<ApiCustomerResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>055cd4f2a9305d99e6d6e613582b80a9</Hash>
+    <Hash>1855528487029d65df88019368a51793</Hash>
 </Codenesium>*/

@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOPassword boPassword);
 
 		List<ApiPasswordResponseModel> MapBOToModel(
-			List<BOPassword> bos);
+			List<BOPassword> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ead85bfb7791001ff7c61ab9b0ae904</Hash>
+    <Hash>500843fa3d90762aef0f8547a0209a8a</Hash>
 </Codenesium>*/

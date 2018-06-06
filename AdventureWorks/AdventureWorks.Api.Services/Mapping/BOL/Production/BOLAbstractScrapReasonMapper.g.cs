@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiScrapReasonRequestModel model
 			)
 		{
-			BOScrapReason BOScrapReason = new BOScrapReason();
+			BOScrapReason boScrapReason = new BOScrapReason();
 
-			BOScrapReason.SetProperties(
+			boScrapReason.SetProperties(
 				scrapReasonID,
 				model.ModifiedDate,
 				model.Name);
-			return BOScrapReason;
+			return boScrapReason;
 		}
 
 		public virtual ApiScrapReasonResponseModel MapBOToModel(
-			BOScrapReason BOScrapReason)
+			BOScrapReason boScrapReason)
 		{
-			if (BOScrapReason == null)
-			{
-				return null;
-			}
-
 			var model = new ApiScrapReasonResponseModel();
 
-			model.SetProperties(BOScrapReason.ModifiedDate, BOScrapReason.Name, BOScrapReason.ScrapReasonID);
+			model.SetProperties(boScrapReason.ModifiedDate, boScrapReason.Name, boScrapReason.ScrapReasonID);
 
 			return model;
 		}
 
 		public virtual List<ApiScrapReasonResponseModel> MapBOToModel(
-			List<BOScrapReason> BOs)
+			List<BOScrapReason> items)
 		{
 			List<ApiScrapReasonResponseModel> response = new List<ApiScrapReasonResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5366a9471baed634a57aa79a819a48c</Hash>
+    <Hash>f9ee356df5744610943e94eb56036c07</Hash>
 </Codenesium>*/

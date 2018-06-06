@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private IMachineRepository machineRepository;
 		private IApiMachineRequestModelValidator machineModelValidator;
-		private IBOLMachineMapper BOLMachineMapper;
-		private IDALMachineMapper DALMachineMapper;
+		private IBOLMachineMapper bolMachineMapper;
+		private IDALMachineMapper dalMachineMapper;
 		private ILogger logger;
 
 		public AbstractMachineService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.machineRepository = machineRepository;
 			this.machineModelValidator = machineModelValidator;
-			this.BOLMachineMapper = bolmachineMapper;
-			this.DALMachineMapper = dalmachineMapper;
+			this.bolMachineMapper = bolmachineMapper;
+			this.dalMachineMapper = dalmachineMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.machineRepository.All(skip, take, orderClause);
 
-			return this.BOLMachineMapper.MapBOToModel(this.DALMachineMapper.MapEFToBO(records));
+			return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiMachineResponseModel> Get(int id)
 		{
 			var record = await machineRepository.Get(id);
 
-			return this.BOLMachineMapper.MapBOToModel(this.DALMachineMapper.MapEFToBO(record));
+			return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.machineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLMachineMapper.MapModelToBO(default (int), model);
-				var record = await this.machineRepository.Create(this.DALMachineMapper.MapBOToEF(bo));
+				var bo = this.bolMachineMapper.MapModelToBO(default (int), model);
+				var record = await this.machineRepository.Create(this.dalMachineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLMachineMapper.MapBOToModel(this.DALMachineMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLMachineMapper.MapModelToBO(id, model);
-				await this.machineRepository.Update(this.DALMachineMapper.MapBOToEF(bo));
+				var bo = this.bolMachineMapper.MapModelToBO(id, model);
+				await this.machineRepository.Update(this.dalMachineMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae749c957680a600221f50c59602325b</Hash>
+    <Hash>c93e91208a7a794f162b6ea70b5e9cbe</Hash>
 </Codenesium>*/

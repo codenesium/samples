@@ -11,39 +11,34 @@ namespace PetShippingNS.Api.Services
 			ApiHandlerRequestModel model
 			)
 		{
-			BOHandler BOHandler = new BOHandler();
+			BOHandler boHandler = new BOHandler();
 
-			BOHandler.SetProperties(
+			boHandler.SetProperties(
 				id,
 				model.CountryId,
 				model.Email,
 				model.FirstName,
 				model.LastName,
 				model.Phone);
-			return BOHandler;
+			return boHandler;
 		}
 
 		public virtual ApiHandlerResponseModel MapBOToModel(
-			BOHandler BOHandler)
+			BOHandler boHandler)
 		{
-			if (BOHandler == null)
-			{
-				return null;
-			}
-
 			var model = new ApiHandlerResponseModel();
 
-			model.SetProperties(BOHandler.CountryId, BOHandler.Email, BOHandler.FirstName, BOHandler.Id, BOHandler.LastName, BOHandler.Phone);
+			model.SetProperties(boHandler.CountryId, boHandler.Email, boHandler.FirstName, boHandler.Id, boHandler.LastName, boHandler.Phone);
 
 			return model;
 		}
 
 		public virtual List<ApiHandlerResponseModel> MapBOToModel(
-			List<BOHandler> BOs)
+			List<BOHandler> items)
 		{
 			List<ApiHandlerResponseModel> response = new List<ApiHandlerResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>825f4d7bae7193b1521e4392996eb3ab</Hash>
+    <Hash>83775b4b53041400340681b9f4668304</Hash>
 </Codenesium>*/

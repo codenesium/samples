@@ -11,35 +11,30 @@ namespace PetStoreNS.Api.Services
 			ApiPaymentTypeRequestModel model
 			)
 		{
-			BOPaymentType BOPaymentType = new BOPaymentType();
+			BOPaymentType boPaymentType = new BOPaymentType();
 
-			BOPaymentType.SetProperties(
+			boPaymentType.SetProperties(
 				id,
 				model.Name);
-			return BOPaymentType;
+			return boPaymentType;
 		}
 
 		public virtual ApiPaymentTypeResponseModel MapBOToModel(
-			BOPaymentType BOPaymentType)
+			BOPaymentType boPaymentType)
 		{
-			if (BOPaymentType == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPaymentTypeResponseModel();
 
-			model.SetProperties(BOPaymentType.Id, BOPaymentType.Name);
+			model.SetProperties(boPaymentType.Id, boPaymentType.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiPaymentTypeResponseModel> MapBOToModel(
-			List<BOPaymentType> BOs)
+			List<BOPaymentType> items)
 		{
 			List<ApiPaymentTypeResponseModel> response = new List<ApiPaymentTypeResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d86db6f0f46a5649facb91a1dd31c97</Hash>
+    <Hash>1f1f43a04be9deabefc344460e044200</Hash>
 </Codenesium>*/

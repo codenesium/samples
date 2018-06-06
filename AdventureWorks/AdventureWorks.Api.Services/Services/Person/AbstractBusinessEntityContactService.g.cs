@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IBusinessEntityContactRepository businessEntityContactRepository;
 		private IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator;
-		private IBOLBusinessEntityContactMapper BOLBusinessEntityContactMapper;
-		private IDALBusinessEntityContactMapper DALBusinessEntityContactMapper;
+		private IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper;
+		private IDALBusinessEntityContactMapper dalBusinessEntityContactMapper;
 		private ILogger logger;
 
 		public AbstractBusinessEntityContactService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.businessEntityContactRepository = businessEntityContactRepository;
 			this.businessEntityContactModelValidator = businessEntityContactModelValidator;
-			this.BOLBusinessEntityContactMapper = bolbusinessEntityContactMapper;
-			this.DALBusinessEntityContactMapper = dalbusinessEntityContactMapper;
+			this.bolBusinessEntityContactMapper = bolbusinessEntityContactMapper;
+			this.dalBusinessEntityContactMapper = dalbusinessEntityContactMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.businessEntityContactRepository.All(skip, take, orderClause);
 
-			return this.BOLBusinessEntityContactMapper.MapBOToModel(this.DALBusinessEntityContactMapper.MapEFToBO(records));
+			return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBusinessEntityContactResponseModel> Get(int businessEntityID)
 		{
 			var record = await businessEntityContactRepository.Get(businessEntityID);
 
-			return this.BOLBusinessEntityContactMapper.MapBOToModel(this.DALBusinessEntityContactMapper.MapEFToBO(record));
+			return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiBusinessEntityContactResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiBusinessEntityContactResponseModel> response = new CreateResponse<ApiBusinessEntityContactResponseModel>(await this.businessEntityContactModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLBusinessEntityContactMapper.MapModelToBO(default (int), model);
-				var record = await this.businessEntityContactRepository.Create(this.DALBusinessEntityContactMapper.MapBOToEF(bo));
+				var bo = this.bolBusinessEntityContactMapper.MapModelToBO(default (int), model);
+				var record = await this.businessEntityContactRepository.Create(this.dalBusinessEntityContactMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLBusinessEntityContactMapper.MapBOToModel(this.DALBusinessEntityContactMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLBusinessEntityContactMapper.MapModelToBO(businessEntityID, model);
-				await this.businessEntityContactRepository.Update(this.DALBusinessEntityContactMapper.MapBOToEF(bo));
+				var bo = this.bolBusinessEntityContactMapper.MapModelToBO(businessEntityID, model);
+				await this.businessEntityContactRepository.Update(this.dalBusinessEntityContactMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<BusinessEntityContact> records = await this.businessEntityContactRepository.GetContactTypeID(contactTypeID);
 
-			return this.BOLBusinessEntityContactMapper.MapBOToModel(this.DALBusinessEntityContactMapper.MapEFToBO(records));
+			return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
 		}
 		public async Task<List<ApiBusinessEntityContactResponseModel>> GetPersonID(int personID)
 		{
 			List<BusinessEntityContact> records = await this.businessEntityContactRepository.GetPersonID(personID);
 
-			return this.BOLBusinessEntityContactMapper.MapBOToModel(this.DALBusinessEntityContactMapper.MapEFToBO(records));
+			return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>76d5478fbd91ee468a8131957b904876</Hash>
+    <Hash>1cedb3c7bd5eb46667517a87594e4420</Hash>
 </Codenesium>*/

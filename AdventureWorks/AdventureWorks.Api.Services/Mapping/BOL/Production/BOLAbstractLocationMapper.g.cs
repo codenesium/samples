@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiLocationRequestModel model
 			)
 		{
-			BOLocation BOLocation = new BOLocation();
+			BOLocation boLocation = new BOLocation();
 
-			BOLocation.SetProperties(
+			boLocation.SetProperties(
 				locationID,
 				model.Availability,
 				model.CostRate,
 				model.ModifiedDate,
 				model.Name);
-			return BOLocation;
+			return boLocation;
 		}
 
 		public virtual ApiLocationResponseModel MapBOToModel(
-			BOLocation BOLocation)
+			BOLocation boLocation)
 		{
-			if (BOLocation == null)
-			{
-				return null;
-			}
-
 			var model = new ApiLocationResponseModel();
 
-			model.SetProperties(BOLocation.Availability, BOLocation.CostRate, BOLocation.LocationID, BOLocation.ModifiedDate, BOLocation.Name);
+			model.SetProperties(boLocation.Availability, boLocation.CostRate, boLocation.LocationID, boLocation.ModifiedDate, boLocation.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiLocationResponseModel> MapBOToModel(
-			List<BOLocation> BOs)
+			List<BOLocation> items)
 		{
 			List<ApiLocationResponseModel> response = new List<ApiLocationResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>96692aef8612ede8a2d793e0f8446949</Hash>
+    <Hash>9f59897658ff7659170f207e167daaa0</Hash>
 </Codenesium>*/

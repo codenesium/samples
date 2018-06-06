@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesPersonRequestModel model
 			)
 		{
-			BOSalesPerson BOSalesPerson = new BOSalesPerson();
+			BOSalesPerson boSalesPerson = new BOSalesPerson();
 
-			BOSalesPerson.SetProperties(
+			boSalesPerson.SetProperties(
 				businessEntityID,
 				model.Bonus,
 				model.CommissionPct,
@@ -23,30 +23,25 @@ namespace AdventureWorksNS.Api.Services
 				model.SalesQuota,
 				model.SalesYTD,
 				model.TerritoryID);
-			return BOSalesPerson;
+			return boSalesPerson;
 		}
 
 		public virtual ApiSalesPersonResponseModel MapBOToModel(
-			BOSalesPerson BOSalesPerson)
+			BOSalesPerson boSalesPerson)
 		{
-			if (BOSalesPerson == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesPersonResponseModel();
 
-			model.SetProperties(BOSalesPerson.Bonus, BOSalesPerson.BusinessEntityID, BOSalesPerson.CommissionPct, BOSalesPerson.ModifiedDate, BOSalesPerson.Rowguid, BOSalesPerson.SalesLastYear, BOSalesPerson.SalesQuota, BOSalesPerson.SalesYTD, BOSalesPerson.TerritoryID);
+			model.SetProperties(boSalesPerson.Bonus, boSalesPerson.BusinessEntityID, boSalesPerson.CommissionPct, boSalesPerson.ModifiedDate, boSalesPerson.Rowguid, boSalesPerson.SalesLastYear, boSalesPerson.SalesQuota, boSalesPerson.SalesYTD, boSalesPerson.TerritoryID);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesPersonResponseModel> MapBOToModel(
-			List<BOSalesPerson> BOs)
+			List<BOSalesPerson> items)
 		{
 			List<ApiSalesPersonResponseModel> response = new List<ApiSalesPersonResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ba57102dac93ee88ff2ba66e06109a30</Hash>
+    <Hash>c0e000c138e20d10a3afe969836609bc</Hash>
 </Codenesium>*/

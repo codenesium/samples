@@ -11,36 +11,31 @@ namespace NebulaNS.Api.Services
 			ApiMachineRefTeamRequestModel model
 			)
 		{
-			BOMachineRefTeam BOMachineRefTeam = new BOMachineRefTeam();
+			BOMachineRefTeam boMachineRefTeam = new BOMachineRefTeam();
 
-			BOMachineRefTeam.SetProperties(
+			boMachineRefTeam.SetProperties(
 				id,
 				model.MachineId,
 				model.TeamId);
-			return BOMachineRefTeam;
+			return boMachineRefTeam;
 		}
 
 		public virtual ApiMachineRefTeamResponseModel MapBOToModel(
-			BOMachineRefTeam BOMachineRefTeam)
+			BOMachineRefTeam boMachineRefTeam)
 		{
-			if (BOMachineRefTeam == null)
-			{
-				return null;
-			}
-
 			var model = new ApiMachineRefTeamResponseModel();
 
-			model.SetProperties(BOMachineRefTeam.Id, BOMachineRefTeam.MachineId, BOMachineRefTeam.TeamId);
+			model.SetProperties(boMachineRefTeam.Id, boMachineRefTeam.MachineId, boMachineRefTeam.TeamId);
 
 			return model;
 		}
 
 		public virtual List<ApiMachineRefTeamResponseModel> MapBOToModel(
-			List<BOMachineRefTeam> BOs)
+			List<BOMachineRefTeam> items)
 		{
 			List<ApiMachineRefTeamResponseModel> response = new List<ApiMachineRefTeamResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af191152f4f519b9483fc9940e22382d</Hash>
+    <Hash>76b381f077a802d8ab6cc65ce38ae283</Hash>
 </Codenesium>*/

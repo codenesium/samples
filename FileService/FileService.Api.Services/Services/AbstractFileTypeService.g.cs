@@ -16,8 +16,8 @@ namespace FileServiceNS.Api.Services
 	{
 		private IFileTypeRepository fileTypeRepository;
 		private IApiFileTypeRequestModelValidator fileTypeModelValidator;
-		private IBOLFileTypeMapper BOLFileTypeMapper;
-		private IDALFileTypeMapper DALFileTypeMapper;
+		private IBOLFileTypeMapper bolFileTypeMapper;
+		private IDALFileTypeMapper dalFileTypeMapper;
 		private ILogger logger;
 
 		public AbstractFileTypeService(
@@ -31,8 +31,8 @@ namespace FileServiceNS.Api.Services
 		{
 			this.fileTypeRepository = fileTypeRepository;
 			this.fileTypeModelValidator = fileTypeModelValidator;
-			this.BOLFileTypeMapper = bolfileTypeMapper;
-			this.DALFileTypeMapper = dalfileTypeMapper;
+			this.bolFileTypeMapper = bolfileTypeMapper;
+			this.dalFileTypeMapper = dalfileTypeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FileServiceNS.Api.Services
 		{
 			var records = await this.fileTypeRepository.All(skip, take, orderClause);
 
-			return this.BOLFileTypeMapper.MapBOToModel(this.DALFileTypeMapper.MapEFToBO(records));
+			return this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiFileTypeResponseModel> Get(int id)
 		{
 			var record = await fileTypeRepository.Get(id);
 
-			return this.BOLFileTypeMapper.MapBOToModel(this.DALFileTypeMapper.MapEFToBO(record));
+			return this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiFileTypeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FileServiceNS.Api.Services
 			CreateResponse<ApiFileTypeResponseModel> response = new CreateResponse<ApiFileTypeResponseModel>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLFileTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.fileTypeRepository.Create(this.DALFileTypeMapper.MapBOToEF(bo));
+				var bo = this.bolFileTypeMapper.MapModelToBO(default (int), model);
+				var record = await this.fileTypeRepository.Create(this.dalFileTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLFileTypeMapper.MapBOToModel(this.DALFileTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FileServiceNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLFileTypeMapper.MapModelToBO(id, model);
-				await this.fileTypeRepository.Update(this.DALFileTypeMapper.MapBOToEF(bo));
+				var bo = this.bolFileTypeMapper.MapModelToBO(id, model);
+				await this.fileTypeRepository.Update(this.dalFileTypeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30d209e1143c83640b8231566c9f294c</Hash>
+    <Hash>8b304dc492a3163d627ed8042026cf8b</Hash>
 </Codenesium>*/

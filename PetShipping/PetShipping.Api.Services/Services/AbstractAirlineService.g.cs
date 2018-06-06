@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IAirlineRepository airlineRepository;
 		private IApiAirlineRequestModelValidator airlineModelValidator;
-		private IBOLAirlineMapper BOLAirlineMapper;
-		private IDALAirlineMapper DALAirlineMapper;
+		private IBOLAirlineMapper bolAirlineMapper;
+		private IDALAirlineMapper dalAirlineMapper;
 		private ILogger logger;
 
 		public AbstractAirlineService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.airlineRepository = airlineRepository;
 			this.airlineModelValidator = airlineModelValidator;
-			this.BOLAirlineMapper = bolairlineMapper;
-			this.DALAirlineMapper = dalairlineMapper;
+			this.bolAirlineMapper = bolairlineMapper;
+			this.dalAirlineMapper = dalairlineMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.airlineRepository.All(skip, take, orderClause);
 
-			return this.BOLAirlineMapper.MapBOToModel(this.DALAirlineMapper.MapEFToBO(records));
+			return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiAirlineResponseModel> Get(int id)
 		{
 			var record = await airlineRepository.Get(id);
 
-			return this.BOLAirlineMapper.MapBOToModel(this.DALAirlineMapper.MapEFToBO(record));
+			return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiAirlineResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiAirlineResponseModel> response = new CreateResponse<ApiAirlineResponseModel>(await this.airlineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLAirlineMapper.MapModelToBO(default (int), model);
-				var record = await this.airlineRepository.Create(this.DALAirlineMapper.MapBOToEF(bo));
+				var bo = this.bolAirlineMapper.MapModelToBO(default (int), model);
+				var record = await this.airlineRepository.Create(this.dalAirlineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLAirlineMapper.MapBOToModel(this.DALAirlineMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLAirlineMapper.MapModelToBO(id, model);
-				await this.airlineRepository.Update(this.DALAirlineMapper.MapBOToEF(bo));
+				var bo = this.bolAirlineMapper.MapModelToBO(id, model);
+				await this.airlineRepository.Update(this.dalAirlineMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a2638aa318c586559d0eb1322e817612</Hash>
+    <Hash>646b5503a8f9e644a3fd21b4f17dc2b1</Hash>
 </Codenesium>*/

@@ -11,36 +11,31 @@ namespace NebulaNS.Api.Services
 			ApiTeamRequestModel model
 			)
 		{
-			BOTeam BOTeam = new BOTeam();
+			BOTeam boTeam = new BOTeam();
 
-			BOTeam.SetProperties(
+			boTeam.SetProperties(
 				id,
 				model.Name,
 				model.OrganizationId);
-			return BOTeam;
+			return boTeam;
 		}
 
 		public virtual ApiTeamResponseModel MapBOToModel(
-			BOTeam BOTeam)
+			BOTeam boTeam)
 		{
-			if (BOTeam == null)
-			{
-				return null;
-			}
-
 			var model = new ApiTeamResponseModel();
 
-			model.SetProperties(BOTeam.Id, BOTeam.Name, BOTeam.OrganizationId);
+			model.SetProperties(boTeam.Id, boTeam.Name, boTeam.OrganizationId);
 
 			return model;
 		}
 
 		public virtual List<ApiTeamResponseModel> MapBOToModel(
-			List<BOTeam> BOs)
+			List<BOTeam> items)
 		{
 			List<ApiTeamResponseModel> response = new List<ApiTeamResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae829e0f89e6dd19bdea195c72ce26f6</Hash>
+    <Hash>e94248c05b8d604c5c5d114b295965d2</Hash>
 </Codenesium>*/

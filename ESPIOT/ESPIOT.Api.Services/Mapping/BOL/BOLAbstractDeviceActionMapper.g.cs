@@ -11,37 +11,32 @@ namespace ESPIOTNS.Api.Services
 			ApiDeviceActionRequestModel model
 			)
 		{
-			BODeviceAction BODeviceAction = new BODeviceAction();
+			BODeviceAction boDeviceAction = new BODeviceAction();
 
-			BODeviceAction.SetProperties(
+			boDeviceAction.SetProperties(
 				id,
 				model.DeviceId,
 				model.Name,
 				model.@Value);
-			return BODeviceAction;
+			return boDeviceAction;
 		}
 
 		public virtual ApiDeviceActionResponseModel MapBOToModel(
-			BODeviceAction BODeviceAction)
+			BODeviceAction boDeviceAction)
 		{
-			if (BODeviceAction == null)
-			{
-				return null;
-			}
-
 			var model = new ApiDeviceActionResponseModel();
 
-			model.SetProperties(BODeviceAction.DeviceId, BODeviceAction.Id, BODeviceAction.Name, BODeviceAction.@Value);
+			model.SetProperties(boDeviceAction.DeviceId, boDeviceAction.Id, boDeviceAction.Name, boDeviceAction.@Value);
 
 			return model;
 		}
 
 		public virtual List<ApiDeviceActionResponseModel> MapBOToModel(
-			List<BODeviceAction> BOs)
+			List<BODeviceAction> items)
 		{
 			List<ApiDeviceActionResponseModel> response = new List<ApiDeviceActionResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f21002230489c29e599d21b6e9b8c4e1</Hash>
+    <Hash>d5f4d579a6b34117722fdc106476828b</Hash>
 </Codenesium>*/

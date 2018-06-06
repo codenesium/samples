@@ -14,10 +14,10 @@ namespace FermataFishNS.Api.Services
 			BOTeacher boTeacher);
 
 		List<ApiTeacherResponseModel> MapBOToModel(
-			List<BOTeacher> bos);
+			List<BOTeacher> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ed2badfc735aaad5a0a85df341e3b5d</Hash>
+    <Hash>c5ca07f39bde8e28cf04cc76578aca60</Hash>
 </Codenesium>*/

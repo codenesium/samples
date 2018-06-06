@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOPurchaseOrderHeader boPurchaseOrderHeader);
 
 		List<ApiPurchaseOrderHeaderResponseModel> MapBOToModel(
-			List<BOPurchaseOrderHeader> bos);
+			List<BOPurchaseOrderHeader> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b17dbc9eaa863b0d2050824d9b4ecc6d</Hash>
+    <Hash>3f7aa804307a12f8c311674381917e03</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IStateProvinceRepository stateProvinceRepository;
 		private IApiStateProvinceRequestModelValidator stateProvinceModelValidator;
-		private IBOLStateProvinceMapper BOLStateProvinceMapper;
-		private IDALStateProvinceMapper DALStateProvinceMapper;
+		private IBOLStateProvinceMapper bolStateProvinceMapper;
+		private IDALStateProvinceMapper dalStateProvinceMapper;
 		private ILogger logger;
 
 		public AbstractStateProvinceService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.stateProvinceRepository = stateProvinceRepository;
 			this.stateProvinceModelValidator = stateProvinceModelValidator;
-			this.BOLStateProvinceMapper = bolstateProvinceMapper;
-			this.DALStateProvinceMapper = dalstateProvinceMapper;
+			this.bolStateProvinceMapper = bolstateProvinceMapper;
+			this.dalStateProvinceMapper = dalstateProvinceMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.stateProvinceRepository.All(skip, take, orderClause);
 
-			return this.BOLStateProvinceMapper.MapBOToModel(this.DALStateProvinceMapper.MapEFToBO(records));
+			return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStateProvinceResponseModel> Get(int stateProvinceID)
 		{
 			var record = await stateProvinceRepository.Get(stateProvinceID);
 
-			return this.BOLStateProvinceMapper.MapBOToModel(this.DALStateProvinceMapper.MapEFToBO(record));
+			return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiStateProvinceResponseModel> response = new CreateResponse<ApiStateProvinceResponseModel>(await this.stateProvinceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLStateProvinceMapper.MapModelToBO(default (int), model);
-				var record = await this.stateProvinceRepository.Create(this.DALStateProvinceMapper.MapBOToEF(bo));
+				var bo = this.bolStateProvinceMapper.MapModelToBO(default (int), model);
+				var record = await this.stateProvinceRepository.Create(this.dalStateProvinceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLStateProvinceMapper.MapBOToModel(this.DALStateProvinceMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLStateProvinceMapper.MapModelToBO(stateProvinceID, model);
-				await this.stateProvinceRepository.Update(this.DALStateProvinceMapper.MapBOToEF(bo));
+				var bo = this.bolStateProvinceMapper.MapModelToBO(stateProvinceID, model);
+				await this.stateProvinceRepository.Update(this.dalStateProvinceMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			StateProvince record = await this.stateProvinceRepository.GetName(name);
 
-			return this.BOLStateProvinceMapper.MapBOToModel(this.DALStateProvinceMapper.MapEFToBO(record));
+			return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
 		}
 		public async Task<ApiStateProvinceResponseModel> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
 		{
 			StateProvince record = await this.stateProvinceRepository.GetStateProvinceCodeCountryRegionCode(stateProvinceCode,countryRegionCode);
 
-			return this.BOLStateProvinceMapper.MapBOToModel(this.DALStateProvinceMapper.MapEFToBO(record));
+			return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e5a5994ced3636d8709c158fa500979d</Hash>
+    <Hash>1f29f047602e4bdc8f0652c25f9e8e2f</Hash>
 </Codenesium>*/

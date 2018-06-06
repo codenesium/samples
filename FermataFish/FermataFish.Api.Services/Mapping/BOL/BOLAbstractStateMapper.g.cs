@@ -11,35 +11,30 @@ namespace FermataFishNS.Api.Services
 			ApiStateRequestModel model
 			)
 		{
-			BOState BOState = new BOState();
+			BOState boState = new BOState();
 
-			BOState.SetProperties(
+			boState.SetProperties(
 				id,
 				model.Name);
-			return BOState;
+			return boState;
 		}
 
 		public virtual ApiStateResponseModel MapBOToModel(
-			BOState BOState)
+			BOState boState)
 		{
-			if (BOState == null)
-			{
-				return null;
-			}
-
 			var model = new ApiStateResponseModel();
 
-			model.SetProperties(BOState.Id, BOState.Name);
+			model.SetProperties(boState.Id, boState.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiStateResponseModel> MapBOToModel(
-			List<BOState> BOs)
+			List<BOState> items)
 		{
 			List<ApiStateResponseModel> response = new List<ApiStateResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab3900855f785818fc5cdfba01047ef7</Hash>
+    <Hash>808b6f1fe78c54cb48f93f11418b438e</Hash>
 </Codenesium>*/

@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiEmployeeDepartmentHistoryRequestModel model
 			)
 		{
-			BOEmployeeDepartmentHistory BOEmployeeDepartmentHistory = new BOEmployeeDepartmentHistory();
+			BOEmployeeDepartmentHistory boEmployeeDepartmentHistory = new BOEmployeeDepartmentHistory();
 
-			BOEmployeeDepartmentHistory.SetProperties(
+			boEmployeeDepartmentHistory.SetProperties(
 				businessEntityID,
 				model.DepartmentID,
 				model.EndDate,
 				model.ModifiedDate,
 				model.ShiftID,
 				model.StartDate);
-			return BOEmployeeDepartmentHistory;
+			return boEmployeeDepartmentHistory;
 		}
 
 		public virtual ApiEmployeeDepartmentHistoryResponseModel MapBOToModel(
-			BOEmployeeDepartmentHistory BOEmployeeDepartmentHistory)
+			BOEmployeeDepartmentHistory boEmployeeDepartmentHistory)
 		{
-			if (BOEmployeeDepartmentHistory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiEmployeeDepartmentHistoryResponseModel();
 
-			model.SetProperties(BOEmployeeDepartmentHistory.BusinessEntityID, BOEmployeeDepartmentHistory.DepartmentID, BOEmployeeDepartmentHistory.EndDate, BOEmployeeDepartmentHistory.ModifiedDate, BOEmployeeDepartmentHistory.ShiftID, BOEmployeeDepartmentHistory.StartDate);
+			model.SetProperties(boEmployeeDepartmentHistory.BusinessEntityID, boEmployeeDepartmentHistory.DepartmentID, boEmployeeDepartmentHistory.EndDate, boEmployeeDepartmentHistory.ModifiedDate, boEmployeeDepartmentHistory.ShiftID, boEmployeeDepartmentHistory.StartDate);
 
 			return model;
 		}
 
 		public virtual List<ApiEmployeeDepartmentHistoryResponseModel> MapBOToModel(
-			List<BOEmployeeDepartmentHistory> BOs)
+			List<BOEmployeeDepartmentHistory> items)
 		{
 			List<ApiEmployeeDepartmentHistoryResponseModel> response = new List<ApiEmployeeDepartmentHistoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a192fa53b914a8db9f87cc99a574de33</Hash>
+    <Hash>d5738957c4348b42b0f60969cdf38a0c</Hash>
 </Codenesium>*/

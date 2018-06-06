@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IAddressTypeRepository addressTypeRepository;
 		private IApiAddressTypeRequestModelValidator addressTypeModelValidator;
-		private IBOLAddressTypeMapper BOLAddressTypeMapper;
-		private IDALAddressTypeMapper DALAddressTypeMapper;
+		private IBOLAddressTypeMapper bolAddressTypeMapper;
+		private IDALAddressTypeMapper dalAddressTypeMapper;
 		private ILogger logger;
 
 		public AbstractAddressTypeService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.addressTypeRepository = addressTypeRepository;
 			this.addressTypeModelValidator = addressTypeModelValidator;
-			this.BOLAddressTypeMapper = boladdressTypeMapper;
-			this.DALAddressTypeMapper = daladdressTypeMapper;
+			this.bolAddressTypeMapper = boladdressTypeMapper;
+			this.dalAddressTypeMapper = daladdressTypeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.addressTypeRepository.All(skip, take, orderClause);
 
-			return this.BOLAddressTypeMapper.MapBOToModel(this.DALAddressTypeMapper.MapEFToBO(records));
+			return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiAddressTypeResponseModel> Get(int addressTypeID)
 		{
 			var record = await addressTypeRepository.Get(addressTypeID);
 
-			return this.BOLAddressTypeMapper.MapBOToModel(this.DALAddressTypeMapper.MapEFToBO(record));
+			return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiAddressTypeResponseModel> response = new CreateResponse<ApiAddressTypeResponseModel>(await this.addressTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLAddressTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.addressTypeRepository.Create(this.DALAddressTypeMapper.MapBOToEF(bo));
+				var bo = this.bolAddressTypeMapper.MapModelToBO(default (int), model);
+				var record = await this.addressTypeRepository.Create(this.dalAddressTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLAddressTypeMapper.MapBOToModel(this.DALAddressTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLAddressTypeMapper.MapModelToBO(addressTypeID, model);
-				await this.addressTypeRepository.Update(this.DALAddressTypeMapper.MapBOToEF(bo));
+				var bo = this.bolAddressTypeMapper.MapModelToBO(addressTypeID, model);
+				await this.addressTypeRepository.Update(this.dalAddressTypeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			AddressType record = await this.addressTypeRepository.GetName(name);
 
-			return this.BOLAddressTypeMapper.MapBOToModel(this.DALAddressTypeMapper.MapEFToBO(record));
+			return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f12a934ea4653556801f091efc820aa8</Hash>
+    <Hash>35519736a048bde26b5736cda951bb82</Hash>
 </Codenesium>*/

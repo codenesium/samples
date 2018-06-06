@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IEmployeeRepository employeeRepository;
 		private IApiEmployeeRequestModelValidator employeeModelValidator;
-		private IBOLEmployeeMapper BOLEmployeeMapper;
-		private IDALEmployeeMapper DALEmployeeMapper;
+		private IBOLEmployeeMapper bolEmployeeMapper;
+		private IDALEmployeeMapper dalEmployeeMapper;
 		private ILogger logger;
 
 		public AbstractEmployeeService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.employeeRepository = employeeRepository;
 			this.employeeModelValidator = employeeModelValidator;
-			this.BOLEmployeeMapper = bolemployeeMapper;
-			this.DALEmployeeMapper = dalemployeeMapper;
+			this.bolEmployeeMapper = bolemployeeMapper;
+			this.dalEmployeeMapper = dalemployeeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.employeeRepository.All(skip, take, orderClause);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(records));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEmployeeResponseModel> Get(int businessEntityID)
 		{
 			var record = await employeeRepository.Get(businessEntityID);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(record));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLEmployeeMapper.MapModelToBO(default (int), model);
-				var record = await this.employeeRepository.Create(this.DALEmployeeMapper.MapBOToEF(bo));
+				var bo = this.bolEmployeeMapper.MapModelToBO(default (int), model);
+				var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLEmployeeMapper.MapModelToBO(businessEntityID, model);
-				await this.employeeRepository.Update(this.DALEmployeeMapper.MapBOToEF(bo));
+				var bo = this.bolEmployeeMapper.MapModelToBO(businessEntityID, model);
+				await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,29 +95,29 @@ namespace AdventureWorksNS.Api.Services
 		{
 			Employee record = await this.employeeRepository.GetLoginID(loginID);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(record));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
 		}
 		public async Task<ApiEmployeeResponseModel> GetNationalIDNumber(string nationalIDNumber)
 		{
 			Employee record = await this.employeeRepository.GetNationalIDNumber(nationalIDNumber);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(record));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
 		}
 		public async Task<List<ApiEmployeeResponseModel>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
 		{
 			List<Employee> records = await this.employeeRepository.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(records));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
 		}
 		public async Task<List<ApiEmployeeResponseModel>> GetOrganizationNode(Nullable<Guid> organizationNode)
 		{
 			List<Employee> records = await this.employeeRepository.GetOrganizationNode(organizationNode);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(records));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7761ad4899ae9a9084fe3edbdca1247b</Hash>
+    <Hash>d15c60a7ce849a6df8d78e3eeb764559</Hash>
 </Codenesium>*/

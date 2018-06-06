@@ -11,36 +11,31 @@ namespace PetShippingNS.Api.Services
 			ApiBreedRequestModel model
 			)
 		{
-			BOBreed BOBreed = new BOBreed();
+			BOBreed boBreed = new BOBreed();
 
-			BOBreed.SetProperties(
+			boBreed.SetProperties(
 				id,
 				model.Name,
 				model.SpeciesId);
-			return BOBreed;
+			return boBreed;
 		}
 
 		public virtual ApiBreedResponseModel MapBOToModel(
-			BOBreed BOBreed)
+			BOBreed boBreed)
 		{
-			if (BOBreed == null)
-			{
-				return null;
-			}
-
 			var model = new ApiBreedResponseModel();
 
-			model.SetProperties(BOBreed.Id, BOBreed.Name, BOBreed.SpeciesId);
+			model.SetProperties(boBreed.Id, boBreed.Name, boBreed.SpeciesId);
 
 			return model;
 		}
 
 		public virtual List<ApiBreedResponseModel> MapBOToModel(
-			List<BOBreed> BOs)
+			List<BOBreed> items)
 		{
 			List<ApiBreedResponseModel> response = new List<ApiBreedResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02348b5ef2691682be3cc863cf849ae7</Hash>
+    <Hash>8118564a2191ac348834873c94882c4a</Hash>
 </Codenesium>*/

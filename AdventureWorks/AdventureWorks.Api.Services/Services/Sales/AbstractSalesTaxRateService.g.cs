@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ISalesTaxRateRepository salesTaxRateRepository;
 		private IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator;
-		private IBOLSalesTaxRateMapper BOLSalesTaxRateMapper;
-		private IDALSalesTaxRateMapper DALSalesTaxRateMapper;
+		private IBOLSalesTaxRateMapper bolSalesTaxRateMapper;
+		private IDALSalesTaxRateMapper dalSalesTaxRateMapper;
 		private ILogger logger;
 
 		public AbstractSalesTaxRateService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.salesTaxRateRepository = salesTaxRateRepository;
 			this.salesTaxRateModelValidator = salesTaxRateModelValidator;
-			this.BOLSalesTaxRateMapper = bolsalesTaxRateMapper;
-			this.DALSalesTaxRateMapper = dalsalesTaxRateMapper;
+			this.bolSalesTaxRateMapper = bolsalesTaxRateMapper;
+			this.dalSalesTaxRateMapper = dalsalesTaxRateMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.salesTaxRateRepository.All(skip, take, orderClause);
 
-			return this.BOLSalesTaxRateMapper.MapBOToModel(this.DALSalesTaxRateMapper.MapEFToBO(records));
+			return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesTaxRateResponseModel> Get(int salesTaxRateID)
 		{
 			var record = await salesTaxRateRepository.Get(salesTaxRateID);
 
-			return this.BOLSalesTaxRateMapper.MapBOToModel(this.DALSalesTaxRateMapper.MapEFToBO(record));
+			return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesTaxRateResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiSalesTaxRateResponseModel> response = new CreateResponse<ApiSalesTaxRateResponseModel>(await this.salesTaxRateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSalesTaxRateMapper.MapModelToBO(default (int), model);
-				var record = await this.salesTaxRateRepository.Create(this.DALSalesTaxRateMapper.MapBOToEF(bo));
+				var bo = this.bolSalesTaxRateMapper.MapModelToBO(default (int), model);
+				var record = await this.salesTaxRateRepository.Create(this.dalSalesTaxRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSalesTaxRateMapper.MapBOToModel(this.DALSalesTaxRateMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
-				await this.salesTaxRateRepository.Update(this.DALSalesTaxRateMapper.MapBOToEF(bo));
+				var bo = this.bolSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
+				await this.salesTaxRateRepository.Update(this.dalSalesTaxRateMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			SalesTaxRate record = await this.salesTaxRateRepository.GetStateProvinceIDTaxType(stateProvinceID,taxType);
 
-			return this.BOLSalesTaxRateMapper.MapBOToModel(this.DALSalesTaxRateMapper.MapEFToBO(record));
+			return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>12fa319763cb7994a6505248e038a394</Hash>
+    <Hash>dd5b3357d8b3df72d10f9a7ce82529a6</Hash>
 </Codenesium>*/

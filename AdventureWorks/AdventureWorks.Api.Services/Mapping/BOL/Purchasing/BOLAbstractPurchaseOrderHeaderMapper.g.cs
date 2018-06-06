@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiPurchaseOrderHeaderRequestModel model
 			)
 		{
-			BOPurchaseOrderHeader BOPurchaseOrderHeader = new BOPurchaseOrderHeader();
+			BOPurchaseOrderHeader boPurchaseOrderHeader = new BOPurchaseOrderHeader();
 
-			BOPurchaseOrderHeader.SetProperties(
+			boPurchaseOrderHeader.SetProperties(
 				purchaseOrderID,
 				model.EmployeeID,
 				model.Freight,
@@ -27,30 +27,25 @@ namespace AdventureWorksNS.Api.Services
 				model.TaxAmt,
 				model.TotalDue,
 				model.VendorID);
-			return BOPurchaseOrderHeader;
+			return boPurchaseOrderHeader;
 		}
 
 		public virtual ApiPurchaseOrderHeaderResponseModel MapBOToModel(
-			BOPurchaseOrderHeader BOPurchaseOrderHeader)
+			BOPurchaseOrderHeader boPurchaseOrderHeader)
 		{
-			if (BOPurchaseOrderHeader == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPurchaseOrderHeaderResponseModel();
 
-			model.SetProperties(BOPurchaseOrderHeader.EmployeeID, BOPurchaseOrderHeader.Freight, BOPurchaseOrderHeader.ModifiedDate, BOPurchaseOrderHeader.OrderDate, BOPurchaseOrderHeader.PurchaseOrderID, BOPurchaseOrderHeader.RevisionNumber, BOPurchaseOrderHeader.ShipDate, BOPurchaseOrderHeader.ShipMethodID, BOPurchaseOrderHeader.Status, BOPurchaseOrderHeader.SubTotal, BOPurchaseOrderHeader.TaxAmt, BOPurchaseOrderHeader.TotalDue, BOPurchaseOrderHeader.VendorID);
+			model.SetProperties(boPurchaseOrderHeader.EmployeeID, boPurchaseOrderHeader.Freight, boPurchaseOrderHeader.ModifiedDate, boPurchaseOrderHeader.OrderDate, boPurchaseOrderHeader.PurchaseOrderID, boPurchaseOrderHeader.RevisionNumber, boPurchaseOrderHeader.ShipDate, boPurchaseOrderHeader.ShipMethodID, boPurchaseOrderHeader.Status, boPurchaseOrderHeader.SubTotal, boPurchaseOrderHeader.TaxAmt, boPurchaseOrderHeader.TotalDue, boPurchaseOrderHeader.VendorID);
 
 			return model;
 		}
 
 		public virtual List<ApiPurchaseOrderHeaderResponseModel> MapBOToModel(
-			List<BOPurchaseOrderHeader> BOs)
+			List<BOPurchaseOrderHeader> items)
 		{
 			List<ApiPurchaseOrderHeaderResponseModel> response = new List<ApiPurchaseOrderHeaderResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -61,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f03dab3e54b6b3f43b1b0eee72045b8</Hash>
+    <Hash>d128c383245e0f9a361d93c4c38c655e</Hash>
 </Codenesium>*/

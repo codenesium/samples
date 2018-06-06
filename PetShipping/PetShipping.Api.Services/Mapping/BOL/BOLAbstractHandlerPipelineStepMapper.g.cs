@@ -11,36 +11,31 @@ namespace PetShippingNS.Api.Services
 			ApiHandlerPipelineStepRequestModel model
 			)
 		{
-			BOHandlerPipelineStep BOHandlerPipelineStep = new BOHandlerPipelineStep();
+			BOHandlerPipelineStep boHandlerPipelineStep = new BOHandlerPipelineStep();
 
-			BOHandlerPipelineStep.SetProperties(
+			boHandlerPipelineStep.SetProperties(
 				id,
 				model.HandlerId,
 				model.PipelineStepId);
-			return BOHandlerPipelineStep;
+			return boHandlerPipelineStep;
 		}
 
 		public virtual ApiHandlerPipelineStepResponseModel MapBOToModel(
-			BOHandlerPipelineStep BOHandlerPipelineStep)
+			BOHandlerPipelineStep boHandlerPipelineStep)
 		{
-			if (BOHandlerPipelineStep == null)
-			{
-				return null;
-			}
-
 			var model = new ApiHandlerPipelineStepResponseModel();
 
-			model.SetProperties(BOHandlerPipelineStep.HandlerId, BOHandlerPipelineStep.Id, BOHandlerPipelineStep.PipelineStepId);
+			model.SetProperties(boHandlerPipelineStep.HandlerId, boHandlerPipelineStep.Id, boHandlerPipelineStep.PipelineStepId);
 
 			return model;
 		}
 
 		public virtual List<ApiHandlerPipelineStepResponseModel> MapBOToModel(
-			List<BOHandlerPipelineStep> BOs)
+			List<BOHandlerPipelineStep> items)
 		{
 			List<ApiHandlerPipelineStepResponseModel> response = new List<ApiHandlerPipelineStepResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a30d43e100ea06b6dbae24a380ef3324</Hash>
+    <Hash>7f259af8740e70a0e62db8e944de6204</Hash>
 </Codenesium>*/

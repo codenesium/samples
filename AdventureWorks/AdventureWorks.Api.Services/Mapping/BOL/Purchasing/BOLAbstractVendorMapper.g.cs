@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiVendorRequestModel model
 			)
 		{
-			BOVendor BOVendor = new BOVendor();
+			BOVendor boVendor = new BOVendor();
 
-			BOVendor.SetProperties(
+			boVendor.SetProperties(
 				businessEntityID,
 				model.AccountNumber,
 				model.ActiveFlag,
@@ -22,30 +22,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Name,
 				model.PreferredVendorStatus,
 				model.PurchasingWebServiceURL);
-			return BOVendor;
+			return boVendor;
 		}
 
 		public virtual ApiVendorResponseModel MapBOToModel(
-			BOVendor BOVendor)
+			BOVendor boVendor)
 		{
-			if (BOVendor == null)
-			{
-				return null;
-			}
-
 			var model = new ApiVendorResponseModel();
 
-			model.SetProperties(BOVendor.AccountNumber, BOVendor.ActiveFlag, BOVendor.BusinessEntityID, BOVendor.CreditRating, BOVendor.ModifiedDate, BOVendor.Name, BOVendor.PreferredVendorStatus, BOVendor.PurchasingWebServiceURL);
+			model.SetProperties(boVendor.AccountNumber, boVendor.ActiveFlag, boVendor.BusinessEntityID, boVendor.CreditRating, boVendor.ModifiedDate, boVendor.Name, boVendor.PreferredVendorStatus, boVendor.PurchasingWebServiceURL);
 
 			return model;
 		}
 
 		public virtual List<ApiVendorResponseModel> MapBOToModel(
-			List<BOVendor> BOs)
+			List<BOVendor> items)
 		{
 			List<ApiVendorResponseModel> response = new List<ApiVendorResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -56,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd70cf4d1a5bf394eada600e69c3c1ae</Hash>
+    <Hash>f1108a1b6269aa2fad1fe9d695022dc3</Hash>
 </Codenesium>*/

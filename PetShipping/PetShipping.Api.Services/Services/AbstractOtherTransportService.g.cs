@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IOtherTransportRepository otherTransportRepository;
 		private IApiOtherTransportRequestModelValidator otherTransportModelValidator;
-		private IBOLOtherTransportMapper BOLOtherTransportMapper;
-		private IDALOtherTransportMapper DALOtherTransportMapper;
+		private IBOLOtherTransportMapper bolOtherTransportMapper;
+		private IDALOtherTransportMapper dalOtherTransportMapper;
 		private ILogger logger;
 
 		public AbstractOtherTransportService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.otherTransportRepository = otherTransportRepository;
 			this.otherTransportModelValidator = otherTransportModelValidator;
-			this.BOLOtherTransportMapper = bolotherTransportMapper;
-			this.DALOtherTransportMapper = dalotherTransportMapper;
+			this.bolOtherTransportMapper = bolotherTransportMapper;
+			this.dalOtherTransportMapper = dalotherTransportMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.otherTransportRepository.All(skip, take, orderClause);
 
-			return this.BOLOtherTransportMapper.MapBOToModel(this.DALOtherTransportMapper.MapEFToBO(records));
+			return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiOtherTransportResponseModel> Get(int id)
 		{
 			var record = await otherTransportRepository.Get(id);
 
-			return this.BOLOtherTransportMapper.MapBOToModel(this.DALOtherTransportMapper.MapEFToBO(record));
+			return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiOtherTransportResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiOtherTransportResponseModel> response = new CreateResponse<ApiOtherTransportResponseModel>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLOtherTransportMapper.MapModelToBO(default (int), model);
-				var record = await this.otherTransportRepository.Create(this.DALOtherTransportMapper.MapBOToEF(bo));
+				var bo = this.bolOtherTransportMapper.MapModelToBO(default (int), model);
+				var record = await this.otherTransportRepository.Create(this.dalOtherTransportMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLOtherTransportMapper.MapBOToModel(this.DALOtherTransportMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLOtherTransportMapper.MapModelToBO(id, model);
-				await this.otherTransportRepository.Update(this.DALOtherTransportMapper.MapBOToEF(bo));
+				var bo = this.bolOtherTransportMapper.MapModelToBO(id, model);
+				await this.otherTransportRepository.Update(this.dalOtherTransportMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e528119b50b1e3bc1b813a42d8280cb3</Hash>
+    <Hash>6f37839b93c138795d8150bec79fe131</Hash>
 </Codenesium>*/

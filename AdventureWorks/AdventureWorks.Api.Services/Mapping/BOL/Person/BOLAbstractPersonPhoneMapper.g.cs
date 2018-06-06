@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiPersonPhoneRequestModel model
 			)
 		{
-			BOPersonPhone BOPersonPhone = new BOPersonPhone();
+			BOPersonPhone boPersonPhone = new BOPersonPhone();
 
-			BOPersonPhone.SetProperties(
+			boPersonPhone.SetProperties(
 				businessEntityID,
 				model.ModifiedDate,
 				model.PhoneNumber,
 				model.PhoneNumberTypeID);
-			return BOPersonPhone;
+			return boPersonPhone;
 		}
 
 		public virtual ApiPersonPhoneResponseModel MapBOToModel(
-			BOPersonPhone BOPersonPhone)
+			BOPersonPhone boPersonPhone)
 		{
-			if (BOPersonPhone == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPersonPhoneResponseModel();
 
-			model.SetProperties(BOPersonPhone.BusinessEntityID, BOPersonPhone.ModifiedDate, BOPersonPhone.PhoneNumber, BOPersonPhone.PhoneNumberTypeID);
+			model.SetProperties(boPersonPhone.BusinessEntityID, boPersonPhone.ModifiedDate, boPersonPhone.PhoneNumber, boPersonPhone.PhoneNumberTypeID);
 
 			return model;
 		}
 
 		public virtual List<ApiPersonPhoneResponseModel> MapBOToModel(
-			List<BOPersonPhone> BOs)
+			List<BOPersonPhone> items)
 		{
 			List<ApiPersonPhoneResponseModel> response = new List<ApiPersonPhoneResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>773a908ac8fa801aa5ccd2a31323ee04</Hash>
+    <Hash>45b0a9cf31c82646bbc90b3b2055bda2</Hash>
 </Codenesium>*/

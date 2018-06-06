@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOCurrency boCurrency);
 
 		List<ApiCurrencyResponseModel> MapBOToModel(
-			List<BOCurrency> bos);
+			List<BOCurrency> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e8d5b216a6cb397a2e948d9348f36cf5</Hash>
+    <Hash>63ebf186a297045f926c46605f497dd2</Hash>
 </Codenesium>*/

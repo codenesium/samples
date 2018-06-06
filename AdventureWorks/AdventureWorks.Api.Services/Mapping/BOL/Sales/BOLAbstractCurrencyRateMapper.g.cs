@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiCurrencyRateRequestModel model
 			)
 		{
-			BOCurrencyRate BOCurrencyRate = new BOCurrencyRate();
+			BOCurrencyRate boCurrencyRate = new BOCurrencyRate();
 
-			BOCurrencyRate.SetProperties(
+			boCurrencyRate.SetProperties(
 				currencyRateID,
 				model.AverageRate,
 				model.CurrencyRateDate,
@@ -21,30 +21,25 @@ namespace AdventureWorksNS.Api.Services
 				model.FromCurrencyCode,
 				model.ModifiedDate,
 				model.ToCurrencyCode);
-			return BOCurrencyRate;
+			return boCurrencyRate;
 		}
 
 		public virtual ApiCurrencyRateResponseModel MapBOToModel(
-			BOCurrencyRate BOCurrencyRate)
+			BOCurrencyRate boCurrencyRate)
 		{
-			if (BOCurrencyRate == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCurrencyRateResponseModel();
 
-			model.SetProperties(BOCurrencyRate.AverageRate, BOCurrencyRate.CurrencyRateDate, BOCurrencyRate.CurrencyRateID, BOCurrencyRate.EndOfDayRate, BOCurrencyRate.FromCurrencyCode, BOCurrencyRate.ModifiedDate, BOCurrencyRate.ToCurrencyCode);
+			model.SetProperties(boCurrencyRate.AverageRate, boCurrencyRate.CurrencyRateDate, boCurrencyRate.CurrencyRateID, boCurrencyRate.EndOfDayRate, boCurrencyRate.FromCurrencyCode, boCurrencyRate.ModifiedDate, boCurrencyRate.ToCurrencyCode);
 
 			return model;
 		}
 
 		public virtual List<ApiCurrencyRateResponseModel> MapBOToModel(
-			List<BOCurrencyRate> BOs)
+			List<BOCurrencyRate> items)
 		{
 			List<ApiCurrencyRateResponseModel> response = new List<ApiCurrencyRateResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6df8d728e106ca7d2bbeee488beb39a4</Hash>
+    <Hash>f7b2777d6da900113f81f61d5ae4006a</Hash>
 </Codenesium>*/

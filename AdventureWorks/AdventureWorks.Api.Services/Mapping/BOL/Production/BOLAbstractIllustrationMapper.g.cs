@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiIllustrationRequestModel model
 			)
 		{
-			BOIllustration BOIllustration = new BOIllustration();
+			BOIllustration boIllustration = new BOIllustration();
 
-			BOIllustration.SetProperties(
+			boIllustration.SetProperties(
 				illustrationID,
 				model.Diagram,
 				model.ModifiedDate);
-			return BOIllustration;
+			return boIllustration;
 		}
 
 		public virtual ApiIllustrationResponseModel MapBOToModel(
-			BOIllustration BOIllustration)
+			BOIllustration boIllustration)
 		{
-			if (BOIllustration == null)
-			{
-				return null;
-			}
-
 			var model = new ApiIllustrationResponseModel();
 
-			model.SetProperties(BOIllustration.Diagram, BOIllustration.IllustrationID, BOIllustration.ModifiedDate);
+			model.SetProperties(boIllustration.Diagram, boIllustration.IllustrationID, boIllustration.ModifiedDate);
 
 			return model;
 		}
 
 		public virtual List<ApiIllustrationResponseModel> MapBOToModel(
-			List<BOIllustration> BOs)
+			List<BOIllustration> items)
 		{
 			List<ApiIllustrationResponseModel> response = new List<ApiIllustrationResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>405bebf09855938190ce5496abba262b</Hash>
+    <Hash>c825bd4906f6a499473e940a33f75424</Hash>
 </Codenesium>*/

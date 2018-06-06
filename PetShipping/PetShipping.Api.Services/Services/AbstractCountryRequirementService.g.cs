@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private ICountryRequirementRepository countryRequirementRepository;
 		private IApiCountryRequirementRequestModelValidator countryRequirementModelValidator;
-		private IBOLCountryRequirementMapper BOLCountryRequirementMapper;
-		private IDALCountryRequirementMapper DALCountryRequirementMapper;
+		private IBOLCountryRequirementMapper bolCountryRequirementMapper;
+		private IDALCountryRequirementMapper dalCountryRequirementMapper;
 		private ILogger logger;
 
 		public AbstractCountryRequirementService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.countryRequirementRepository = countryRequirementRepository;
 			this.countryRequirementModelValidator = countryRequirementModelValidator;
-			this.BOLCountryRequirementMapper = bolcountryRequirementMapper;
-			this.DALCountryRequirementMapper = dalcountryRequirementMapper;
+			this.bolCountryRequirementMapper = bolcountryRequirementMapper;
+			this.dalCountryRequirementMapper = dalcountryRequirementMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.countryRequirementRepository.All(skip, take, orderClause);
 
-			return this.BOLCountryRequirementMapper.MapBOToModel(this.DALCountryRequirementMapper.MapEFToBO(records));
+			return this.bolCountryRequirementMapper.MapBOToModel(this.dalCountryRequirementMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCountryRequirementResponseModel> Get(int id)
 		{
 			var record = await countryRequirementRepository.Get(id);
 
-			return this.BOLCountryRequirementMapper.MapBOToModel(this.DALCountryRequirementMapper.MapEFToBO(record));
+			return this.bolCountryRequirementMapper.MapBOToModel(this.dalCountryRequirementMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryRequirementResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiCountryRequirementResponseModel> response = new CreateResponse<ApiCountryRequirementResponseModel>(await this.countryRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLCountryRequirementMapper.MapModelToBO(default (int), model);
-				var record = await this.countryRequirementRepository.Create(this.DALCountryRequirementMapper.MapBOToEF(bo));
+				var bo = this.bolCountryRequirementMapper.MapModelToBO(default (int), model);
+				var record = await this.countryRequirementRepository.Create(this.dalCountryRequirementMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLCountryRequirementMapper.MapBOToModel(this.DALCountryRequirementMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolCountryRequirementMapper.MapBOToModel(this.dalCountryRequirementMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLCountryRequirementMapper.MapModelToBO(id, model);
-				await this.countryRequirementRepository.Update(this.DALCountryRequirementMapper.MapBOToEF(bo));
+				var bo = this.bolCountryRequirementMapper.MapModelToBO(id, model);
+				await this.countryRequirementRepository.Update(this.dalCountryRequirementMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfc59c3e796ce06ab955d090c1fd2a46</Hash>
+    <Hash>43c173ea97656376944fbfbc84e9e9a5</Hash>
 </Codenesium>*/

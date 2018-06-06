@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiShiftRequestModel model
 			)
 		{
-			BOShift BOShift = new BOShift();
+			BOShift boShift = new BOShift();
 
-			BOShift.SetProperties(
+			boShift.SetProperties(
 				shiftID,
 				model.EndTime,
 				model.ModifiedDate,
 				model.Name,
 				model.StartTime);
-			return BOShift;
+			return boShift;
 		}
 
 		public virtual ApiShiftResponseModel MapBOToModel(
-			BOShift BOShift)
+			BOShift boShift)
 		{
-			if (BOShift == null)
-			{
-				return null;
-			}
-
 			var model = new ApiShiftResponseModel();
 
-			model.SetProperties(BOShift.EndTime, BOShift.ModifiedDate, BOShift.Name, BOShift.ShiftID, BOShift.StartTime);
+			model.SetProperties(boShift.EndTime, boShift.ModifiedDate, boShift.Name, boShift.ShiftID, boShift.StartTime);
 
 			return model;
 		}
 
 		public virtual List<ApiShiftResponseModel> MapBOToModel(
-			List<BOShift> BOs)
+			List<BOShift> items)
 		{
 			List<ApiShiftResponseModel> response = new List<ApiShiftResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c56697bb0a10383c09aabf5d16b62fcb</Hash>
+    <Hash>6df08b6bf22fd70a9f84efbcd3439ed8</Hash>
 </Codenesium>*/

@@ -11,36 +11,31 @@ namespace ESPIOTNS.Api.Services
 			ApiDeviceRequestModel model
 			)
 		{
-			BODevice BODevice = new BODevice();
+			BODevice boDevice = new BODevice();
 
-			BODevice.SetProperties(
+			boDevice.SetProperties(
 				id,
 				model.Name,
 				model.PublicId);
-			return BODevice;
+			return boDevice;
 		}
 
 		public virtual ApiDeviceResponseModel MapBOToModel(
-			BODevice BODevice)
+			BODevice boDevice)
 		{
-			if (BODevice == null)
-			{
-				return null;
-			}
-
 			var model = new ApiDeviceResponseModel();
 
-			model.SetProperties(BODevice.Id, BODevice.Name, BODevice.PublicId);
+			model.SetProperties(boDevice.Id, boDevice.Name, boDevice.PublicId);
 
 			return model;
 		}
 
 		public virtual List<ApiDeviceResponseModel> MapBOToModel(
-			List<BODevice> BOs)
+			List<BODevice> items)
 		{
 			List<ApiDeviceResponseModel> response = new List<ApiDeviceResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e08fe59378361aea1aaa6b4cc65497bd</Hash>
+    <Hash>01e329d9259500697141d0a3dd9381b5</Hash>
 </Codenesium>*/

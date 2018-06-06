@@ -14,10 +14,10 @@ namespace FermataFishNS.Api.Services
 			BOSpace boSpace);
 
 		List<ApiSpaceResponseModel> MapBOToModel(
-			List<BOSpace> bos);
+			List<BOSpace> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b3bfebf1c8840fdb3da788efdca245a</Hash>
+    <Hash>45fb8ebc1e2a32c8af6a481285b8d98c</Hash>
 </Codenesium>*/

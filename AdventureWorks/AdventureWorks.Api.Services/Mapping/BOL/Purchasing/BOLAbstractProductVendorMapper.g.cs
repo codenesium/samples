@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductVendorRequestModel model
 			)
 		{
-			BOProductVendor BOProductVendor = new BOProductVendor();
+			BOProductVendor boProductVendor = new BOProductVendor();
 
-			BOProductVendor.SetProperties(
+			boProductVendor.SetProperties(
 				productID,
 				model.AverageLeadTime,
 				model.BusinessEntityID,
@@ -25,30 +25,25 @@ namespace AdventureWorksNS.Api.Services
 				model.OnOrderQty,
 				model.StandardPrice,
 				model.UnitMeasureCode);
-			return BOProductVendor;
+			return boProductVendor;
 		}
 
 		public virtual ApiProductVendorResponseModel MapBOToModel(
-			BOProductVendor BOProductVendor)
+			BOProductVendor boProductVendor)
 		{
-			if (BOProductVendor == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductVendorResponseModel();
 
-			model.SetProperties(BOProductVendor.AverageLeadTime, BOProductVendor.BusinessEntityID, BOProductVendor.LastReceiptCost, BOProductVendor.LastReceiptDate, BOProductVendor.MaxOrderQty, BOProductVendor.MinOrderQty, BOProductVendor.ModifiedDate, BOProductVendor.OnOrderQty, BOProductVendor.ProductID, BOProductVendor.StandardPrice, BOProductVendor.UnitMeasureCode);
+			model.SetProperties(boProductVendor.AverageLeadTime, boProductVendor.BusinessEntityID, boProductVendor.LastReceiptCost, boProductVendor.LastReceiptDate, boProductVendor.MaxOrderQty, boProductVendor.MinOrderQty, boProductVendor.ModifiedDate, boProductVendor.OnOrderQty, boProductVendor.ProductID, boProductVendor.StandardPrice, boProductVendor.UnitMeasureCode);
 
 			return model;
 		}
 
 		public virtual List<ApiProductVendorResponseModel> MapBOToModel(
-			List<BOProductVendor> BOs)
+			List<BOProductVendor> items)
 		{
 			List<ApiProductVendorResponseModel> response = new List<ApiProductVendorResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>496a6681075f8e183bf433b077df3b71</Hash>
+    <Hash>b89912177f5574a9c7b5ac87460c06ce</Hash>
 </Codenesium>*/

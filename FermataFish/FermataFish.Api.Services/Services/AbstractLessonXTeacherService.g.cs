@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private ILessonXTeacherRepository lessonXTeacherRepository;
 		private IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator;
-		private IBOLLessonXTeacherMapper BOLLessonXTeacherMapper;
-		private IDALLessonXTeacherMapper DALLessonXTeacherMapper;
+		private IBOLLessonXTeacherMapper bolLessonXTeacherMapper;
+		private IDALLessonXTeacherMapper dalLessonXTeacherMapper;
 		private ILogger logger;
 
 		public AbstractLessonXTeacherService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.lessonXTeacherRepository = lessonXTeacherRepository;
 			this.lessonXTeacherModelValidator = lessonXTeacherModelValidator;
-			this.BOLLessonXTeacherMapper = bollessonXTeacherMapper;
-			this.DALLessonXTeacherMapper = dallessonXTeacherMapper;
+			this.bolLessonXTeacherMapper = bollessonXTeacherMapper;
+			this.dalLessonXTeacherMapper = dallessonXTeacherMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.lessonXTeacherRepository.All(skip, take, orderClause);
 
-			return this.BOLLessonXTeacherMapper.MapBOToModel(this.DALLessonXTeacherMapper.MapEFToBO(records));
+			return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLessonXTeacherResponseModel> Get(int id)
 		{
 			var record = await lessonXTeacherRepository.Get(id);
 
-			return this.BOLLessonXTeacherMapper.MapBOToModel(this.DALLessonXTeacherMapper.MapEFToBO(record));
+			return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiLessonXTeacherResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiLessonXTeacherResponseModel> response = new CreateResponse<ApiLessonXTeacherResponseModel>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLLessonXTeacherMapper.MapModelToBO(default (int), model);
-				var record = await this.lessonXTeacherRepository.Create(this.DALLessonXTeacherMapper.MapBOToEF(bo));
+				var bo = this.bolLessonXTeacherMapper.MapModelToBO(default (int), model);
+				var record = await this.lessonXTeacherRepository.Create(this.dalLessonXTeacherMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLLessonXTeacherMapper.MapBOToModel(this.DALLessonXTeacherMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLLessonXTeacherMapper.MapModelToBO(id, model);
-				await this.lessonXTeacherRepository.Update(this.DALLessonXTeacherMapper.MapBOToEF(bo));
+				var bo = this.bolLessonXTeacherMapper.MapModelToBO(id, model);
+				await this.lessonXTeacherRepository.Update(this.dalLessonXTeacherMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0adee72f4bff620995eb92ff671c3e48</Hash>
+    <Hash>6aac5ff1d020480fe03a3cae49a68b87</Hash>
 </Codenesium>*/

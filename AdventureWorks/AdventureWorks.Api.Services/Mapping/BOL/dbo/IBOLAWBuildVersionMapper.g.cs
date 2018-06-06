@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOAWBuildVersion boAWBuildVersion);
 
 		List<ApiAWBuildVersionResponseModel> MapBOToModel(
-			List<BOAWBuildVersion> bos);
+			List<BOAWBuildVersion> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9812dfd173f12907346f3feec98d5f3a</Hash>
+    <Hash>e075ea820d5f192afa987df707844299</Hash>
 </Codenesium>*/

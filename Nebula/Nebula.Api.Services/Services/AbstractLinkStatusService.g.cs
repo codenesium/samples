@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private ILinkStatusRepository linkStatusRepository;
 		private IApiLinkStatusRequestModelValidator linkStatusModelValidator;
-		private IBOLLinkStatusMapper BOLLinkStatusMapper;
-		private IDALLinkStatusMapper DALLinkStatusMapper;
+		private IBOLLinkStatusMapper bolLinkStatusMapper;
+		private IDALLinkStatusMapper dalLinkStatusMapper;
 		private ILogger logger;
 
 		public AbstractLinkStatusService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.linkStatusRepository = linkStatusRepository;
 			this.linkStatusModelValidator = linkStatusModelValidator;
-			this.BOLLinkStatusMapper = bollinkStatusMapper;
-			this.DALLinkStatusMapper = dallinkStatusMapper;
+			this.bolLinkStatusMapper = bollinkStatusMapper;
+			this.dalLinkStatusMapper = dallinkStatusMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.linkStatusRepository.All(skip, take, orderClause);
 
-			return this.BOLLinkStatusMapper.MapBOToModel(this.DALLinkStatusMapper.MapEFToBO(records));
+			return this.bolLinkStatusMapper.MapBOToModel(this.dalLinkStatusMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLinkStatusResponseModel> Get(int id)
 		{
 			var record = await linkStatusRepository.Get(id);
 
-			return this.BOLLinkStatusMapper.MapBOToModel(this.DALLinkStatusMapper.MapEFToBO(record));
+			return this.bolLinkStatusMapper.MapBOToModel(this.dalLinkStatusMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkStatusResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiLinkStatusResponseModel> response = new CreateResponse<ApiLinkStatusResponseModel>(await this.linkStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLLinkStatusMapper.MapModelToBO(default (int), model);
-				var record = await this.linkStatusRepository.Create(this.DALLinkStatusMapper.MapBOToEF(bo));
+				var bo = this.bolLinkStatusMapper.MapModelToBO(default (int), model);
+				var record = await this.linkStatusRepository.Create(this.dalLinkStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLLinkStatusMapper.MapBOToModel(this.DALLinkStatusMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolLinkStatusMapper.MapBOToModel(this.dalLinkStatusMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLLinkStatusMapper.MapModelToBO(id, model);
-				await this.linkStatusRepository.Update(this.DALLinkStatusMapper.MapBOToEF(bo));
+				var bo = this.bolLinkStatusMapper.MapModelToBO(id, model);
+				await this.linkStatusRepository.Update(this.dalLinkStatusMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cd8045f5461d4b36b5dca8b7f0f9385</Hash>
+    <Hash>43ad0fc24a4ca3d00173352b41a7ba1e</Hash>
 </Codenesium>*/

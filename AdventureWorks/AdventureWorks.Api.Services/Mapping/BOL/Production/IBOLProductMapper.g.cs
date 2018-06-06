@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOProduct boProduct);
 
 		List<ApiProductResponseModel> MapBOToModel(
-			List<BOProduct> bos);
+			List<BOProduct> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f944d44d8870156942b1f6a247e9e5bc</Hash>
+    <Hash>a7fcb7d74b7bb5e1c0db5105fd710d74</Hash>
 </Codenesium>*/

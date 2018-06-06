@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BODepartment boDepartment);
 
 		List<ApiDepartmentResponseModel> MapBOToModel(
-			List<BODepartment> bos);
+			List<BODepartment> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0fad16fcf53304aca043575dca6fa429</Hash>
+    <Hash>12140ea7a3d927e2734b82356176827f</Hash>
 </Codenesium>*/

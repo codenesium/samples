@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOLocation boLocation);
 
 		List<ApiLocationResponseModel> MapBOToModel(
-			List<BOLocation> bos);
+			List<BOLocation> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6805729d6fdae1df71d54e8bac1ff0b3</Hash>
+    <Hash>2856656d663d94641041a9f749f59a35</Hash>
 </Codenesium>*/

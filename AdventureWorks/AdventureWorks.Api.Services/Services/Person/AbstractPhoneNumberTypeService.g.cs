@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IPhoneNumberTypeRepository phoneNumberTypeRepository;
 		private IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator;
-		private IBOLPhoneNumberTypeMapper BOLPhoneNumberTypeMapper;
-		private IDALPhoneNumberTypeMapper DALPhoneNumberTypeMapper;
+		private IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper;
+		private IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper;
 		private ILogger logger;
 
 		public AbstractPhoneNumberTypeService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
 			this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
-			this.BOLPhoneNumberTypeMapper = bolphoneNumberTypeMapper;
-			this.DALPhoneNumberTypeMapper = dalphoneNumberTypeMapper;
+			this.bolPhoneNumberTypeMapper = bolphoneNumberTypeMapper;
+			this.dalPhoneNumberTypeMapper = dalphoneNumberTypeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.phoneNumberTypeRepository.All(skip, take, orderClause);
 
-			return this.BOLPhoneNumberTypeMapper.MapBOToModel(this.DALPhoneNumberTypeMapper.MapEFToBO(records));
+			return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID)
 		{
 			var record = await phoneNumberTypeRepository.Get(phoneNumberTypeID);
 
-			return this.BOLPhoneNumberTypeMapper.MapBOToModel(this.DALPhoneNumberTypeMapper.MapEFToBO(record));
+			return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiPhoneNumberTypeResponseModel> response = new CreateResponse<ApiPhoneNumberTypeResponseModel>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLPhoneNumberTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.phoneNumberTypeRepository.Create(this.DALPhoneNumberTypeMapper.MapBOToEF(bo));
+				var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(default (int), model);
+				var record = await this.phoneNumberTypeRepository.Create(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLPhoneNumberTypeMapper.MapBOToModel(this.DALPhoneNumberTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
-				await this.phoneNumberTypeRepository.Update(this.DALPhoneNumberTypeMapper.MapBOToEF(bo));
+				var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
+				await this.phoneNumberTypeRepository.Update(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>357e47a43f2e77e35a146f3ad5d7aae7</Hash>
+    <Hash>ffd405c306cd4c13e1e24bbe1e3d5852</Hash>
 </Codenesium>*/

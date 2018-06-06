@@ -16,8 +16,8 @@ namespace PetStoreNS.Api.Services
 	{
 		private IPaymentTypeRepository paymentTypeRepository;
 		private IApiPaymentTypeRequestModelValidator paymentTypeModelValidator;
-		private IBOLPaymentTypeMapper BOLPaymentTypeMapper;
-		private IDALPaymentTypeMapper DALPaymentTypeMapper;
+		private IBOLPaymentTypeMapper bolPaymentTypeMapper;
+		private IDALPaymentTypeMapper dalPaymentTypeMapper;
 		private ILogger logger;
 
 		public AbstractPaymentTypeService(
@@ -31,8 +31,8 @@ namespace PetStoreNS.Api.Services
 		{
 			this.paymentTypeRepository = paymentTypeRepository;
 			this.paymentTypeModelValidator = paymentTypeModelValidator;
-			this.BOLPaymentTypeMapper = bolpaymentTypeMapper;
-			this.DALPaymentTypeMapper = dalpaymentTypeMapper;
+			this.bolPaymentTypeMapper = bolpaymentTypeMapper;
+			this.dalPaymentTypeMapper = dalpaymentTypeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetStoreNS.Api.Services
 		{
 			var records = await this.paymentTypeRepository.All(skip, take, orderClause);
 
-			return this.BOLPaymentTypeMapper.MapBOToModel(this.DALPaymentTypeMapper.MapEFToBO(records));
+			return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPaymentTypeResponseModel> Get(int id)
 		{
 			var record = await paymentTypeRepository.Get(id);
 
-			return this.BOLPaymentTypeMapper.MapBOToModel(this.DALPaymentTypeMapper.MapEFToBO(record));
+			return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetStoreNS.Api.Services
 			CreateResponse<ApiPaymentTypeResponseModel> response = new CreateResponse<ApiPaymentTypeResponseModel>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLPaymentTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.paymentTypeRepository.Create(this.DALPaymentTypeMapper.MapBOToEF(bo));
+				var bo = this.bolPaymentTypeMapper.MapModelToBO(default (int), model);
+				var record = await this.paymentTypeRepository.Create(this.dalPaymentTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLPaymentTypeMapper.MapBOToModel(this.DALPaymentTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLPaymentTypeMapper.MapModelToBO(id, model);
-				await this.paymentTypeRepository.Update(this.DALPaymentTypeMapper.MapBOToEF(bo));
+				var bo = this.bolPaymentTypeMapper.MapModelToBO(id, model);
+				await this.paymentTypeRepository.Update(this.dalPaymentTypeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94064731ad40cee5b11062c652b70335</Hash>
+    <Hash>f75c513e7d770a53d8e15347409c3744</Hash>
 </Codenesium>*/

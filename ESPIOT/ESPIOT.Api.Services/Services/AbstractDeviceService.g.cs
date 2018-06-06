@@ -16,8 +16,8 @@ namespace ESPIOTNS.Api.Services
 	{
 		private IDeviceRepository deviceRepository;
 		private IApiDeviceRequestModelValidator deviceModelValidator;
-		private IBOLDeviceMapper BOLDeviceMapper;
-		private IDALDeviceMapper DALDeviceMapper;
+		private IBOLDeviceMapper bolDeviceMapper;
+		private IDALDeviceMapper dalDeviceMapper;
 		private ILogger logger;
 
 		public AbstractDeviceService(
@@ -31,8 +31,8 @@ namespace ESPIOTNS.Api.Services
 		{
 			this.deviceRepository = deviceRepository;
 			this.deviceModelValidator = deviceModelValidator;
-			this.BOLDeviceMapper = boldeviceMapper;
-			this.DALDeviceMapper = daldeviceMapper;
+			this.bolDeviceMapper = boldeviceMapper;
+			this.dalDeviceMapper = daldeviceMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace ESPIOTNS.Api.Services
 		{
 			var records = await this.deviceRepository.All(skip, take, orderClause);
 
-			return this.BOLDeviceMapper.MapBOToModel(this.DALDeviceMapper.MapEFToBO(records));
+			return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDeviceResponseModel> Get(int id)
 		{
 			var record = await deviceRepository.Get(id);
 
-			return this.BOLDeviceMapper.MapBOToModel(this.DALDeviceMapper.MapEFToBO(record));
+			return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiDeviceResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace ESPIOTNS.Api.Services
 			CreateResponse<ApiDeviceResponseModel> response = new CreateResponse<ApiDeviceResponseModel>(await this.deviceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLDeviceMapper.MapModelToBO(default (int), model);
-				var record = await this.deviceRepository.Create(this.DALDeviceMapper.MapBOToEF(bo));
+				var bo = this.bolDeviceMapper.MapModelToBO(default (int), model);
+				var record = await this.deviceRepository.Create(this.dalDeviceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLDeviceMapper.MapBOToModel(this.DALDeviceMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace ESPIOTNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLDeviceMapper.MapModelToBO(id, model);
-				await this.deviceRepository.Update(this.DALDeviceMapper.MapBOToEF(bo));
+				var bo = this.bolDeviceMapper.MapModelToBO(id, model);
+				await this.deviceRepository.Update(this.dalDeviceMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace ESPIOTNS.Api.Services
 		{
 			Device record = await this.deviceRepository.GetPublicId(publicId);
 
-			return this.BOLDeviceMapper.MapBOToModel(this.DALDeviceMapper.MapEFToBO(record));
+			return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>147da7026f6f51b907eff17afb7b100e</Hash>
+    <Hash>b79448790c8afc8eda9f332c7b28b726</Hash>
 </Codenesium>*/

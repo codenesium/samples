@@ -11,9 +11,9 @@ namespace PetShippingNS.Api.Services
 			ApiAirTransportRequestModel model
 			)
 		{
-			BOAirTransport BOAirTransport = new BOAirTransport();
+			BOAirTransport boAirTransport = new BOAirTransport();
 
-			BOAirTransport.SetProperties(
+			boAirTransport.SetProperties(
 				airlineId,
 				model.FlightNumber,
 				model.HandlerId,
@@ -21,30 +21,25 @@ namespace PetShippingNS.Api.Services
 				model.LandDate,
 				model.PipelineStepId,
 				model.TakeoffDate);
-			return BOAirTransport;
+			return boAirTransport;
 		}
 
 		public virtual ApiAirTransportResponseModel MapBOToModel(
-			BOAirTransport BOAirTransport)
+			BOAirTransport boAirTransport)
 		{
-			if (BOAirTransport == null)
-			{
-				return null;
-			}
-
 			var model = new ApiAirTransportResponseModel();
 
-			model.SetProperties(BOAirTransport.AirlineId, BOAirTransport.FlightNumber, BOAirTransport.HandlerId, BOAirTransport.Id, BOAirTransport.LandDate, BOAirTransport.PipelineStepId, BOAirTransport.TakeoffDate);
+			model.SetProperties(boAirTransport.AirlineId, boAirTransport.FlightNumber, boAirTransport.HandlerId, boAirTransport.Id, boAirTransport.LandDate, boAirTransport.PipelineStepId, boAirTransport.TakeoffDate);
 
 			return model;
 		}
 
 		public virtual List<ApiAirTransportResponseModel> MapBOToModel(
-			List<BOAirTransport> BOs)
+			List<BOAirTransport> items)
 		{
 			List<ApiAirTransportResponseModel> response = new List<ApiAirTransportResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e0ab822966be0027f38211586111cc7</Hash>
+    <Hash>0cfc5a5026a1bd93b8e902d357488a02</Hash>
 </Codenesium>*/

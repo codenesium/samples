@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductSubcategoryRepository productSubcategoryRepository;
 		private IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator;
-		private IBOLProductSubcategoryMapper BOLProductSubcategoryMapper;
-		private IDALProductSubcategoryMapper DALProductSubcategoryMapper;
+		private IBOLProductSubcategoryMapper bolProductSubcategoryMapper;
+		private IDALProductSubcategoryMapper dalProductSubcategoryMapper;
 		private ILogger logger;
 
 		public AbstractProductSubcategoryService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productSubcategoryRepository = productSubcategoryRepository;
 			this.productSubcategoryModelValidator = productSubcategoryModelValidator;
-			this.BOLProductSubcategoryMapper = bolproductSubcategoryMapper;
-			this.DALProductSubcategoryMapper = dalproductSubcategoryMapper;
+			this.bolProductSubcategoryMapper = bolproductSubcategoryMapper;
+			this.dalProductSubcategoryMapper = dalproductSubcategoryMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productSubcategoryRepository.All(skip, take, orderClause);
 
-			return this.BOLProductSubcategoryMapper.MapBOToModel(this.DALProductSubcategoryMapper.MapEFToBO(records));
+			return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductSubcategoryResponseModel> Get(int productSubcategoryID)
 		{
 			var record = await productSubcategoryRepository.Get(productSubcategoryID);
 
-			return this.BOLProductSubcategoryMapper.MapBOToModel(this.DALProductSubcategoryMapper.MapEFToBO(record));
+			return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductSubcategoryResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductSubcategoryResponseModel> response = new CreateResponse<ApiProductSubcategoryResponseModel>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductSubcategoryMapper.MapModelToBO(default (int), model);
-				var record = await this.productSubcategoryRepository.Create(this.DALProductSubcategoryMapper.MapBOToEF(bo));
+				var bo = this.bolProductSubcategoryMapper.MapModelToBO(default (int), model);
+				var record = await this.productSubcategoryRepository.Create(this.dalProductSubcategoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductSubcategoryMapper.MapBOToModel(this.DALProductSubcategoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductSubcategoryMapper.MapModelToBO(productSubcategoryID, model);
-				await this.productSubcategoryRepository.Update(this.DALProductSubcategoryMapper.MapBOToEF(bo));
+				var bo = this.bolProductSubcategoryMapper.MapModelToBO(productSubcategoryID, model);
+				await this.productSubcategoryRepository.Update(this.dalProductSubcategoryMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			ProductSubcategory record = await this.productSubcategoryRepository.GetName(name);
 
-			return this.BOLProductSubcategoryMapper.MapBOToModel(this.DALProductSubcategoryMapper.MapEFToBO(record));
+			return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>702b5979dfddd1f6a42aed2641f0c652</Hash>
+    <Hash>bac9795a6b923e6676804a3a4ea6df1a</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IClientCommunicationRepository clientCommunicationRepository;
 		private IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator;
-		private IBOLClientCommunicationMapper BOLClientCommunicationMapper;
-		private IDALClientCommunicationMapper DALClientCommunicationMapper;
+		private IBOLClientCommunicationMapper bolClientCommunicationMapper;
+		private IDALClientCommunicationMapper dalClientCommunicationMapper;
 		private ILogger logger;
 
 		public AbstractClientCommunicationService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.clientCommunicationRepository = clientCommunicationRepository;
 			this.clientCommunicationModelValidator = clientCommunicationModelValidator;
-			this.BOLClientCommunicationMapper = bolclientCommunicationMapper;
-			this.DALClientCommunicationMapper = dalclientCommunicationMapper;
+			this.bolClientCommunicationMapper = bolclientCommunicationMapper;
+			this.dalClientCommunicationMapper = dalclientCommunicationMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.clientCommunicationRepository.All(skip, take, orderClause);
 
-			return this.BOLClientCommunicationMapper.MapBOToModel(this.DALClientCommunicationMapper.MapEFToBO(records));
+			return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiClientCommunicationResponseModel> Get(int id)
 		{
 			var record = await clientCommunicationRepository.Get(id);
 
-			return this.BOLClientCommunicationMapper.MapBOToModel(this.DALClientCommunicationMapper.MapEFToBO(record));
+			return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiClientCommunicationResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiClientCommunicationResponseModel> response = new CreateResponse<ApiClientCommunicationResponseModel>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLClientCommunicationMapper.MapModelToBO(default (int), model);
-				var record = await this.clientCommunicationRepository.Create(this.DALClientCommunicationMapper.MapBOToEF(bo));
+				var bo = this.bolClientCommunicationMapper.MapModelToBO(default (int), model);
+				var record = await this.clientCommunicationRepository.Create(this.dalClientCommunicationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLClientCommunicationMapper.MapBOToModel(this.DALClientCommunicationMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLClientCommunicationMapper.MapModelToBO(id, model);
-				await this.clientCommunicationRepository.Update(this.DALClientCommunicationMapper.MapBOToEF(bo));
+				var bo = this.bolClientCommunicationMapper.MapModelToBO(id, model);
+				await this.clientCommunicationRepository.Update(this.dalClientCommunicationMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2c9edce80108d2cb7da3786845e8a49f</Hash>
+    <Hash>ff628b75cc71237a3f3275ee4c58c186</Hash>
 </Codenesium>*/

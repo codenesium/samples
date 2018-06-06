@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOCountryRegion boCountryRegion);
 
 		List<ApiCountryRegionResponseModel> MapBOToModel(
-			List<BOCountryRegion> bos);
+			List<BOCountryRegion> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>81b15c003cea6f73f1c83910cdf86d83</Hash>
+    <Hash>b17f0764f188c027455585cf8a9d2ab4</Hash>
 </Codenesium>*/

@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiTransactionHistoryRequestModel model
 			)
 		{
-			BOTransactionHistory BOTransactionHistory = new BOTransactionHistory();
+			BOTransactionHistory boTransactionHistory = new BOTransactionHistory();
 
-			BOTransactionHistory.SetProperties(
+			boTransactionHistory.SetProperties(
 				transactionID,
 				model.ActualCost,
 				model.ModifiedDate,
@@ -23,30 +23,25 @@ namespace AdventureWorksNS.Api.Services
 				model.ReferenceOrderLineID,
 				model.TransactionDate,
 				model.TransactionType);
-			return BOTransactionHistory;
+			return boTransactionHistory;
 		}
 
 		public virtual ApiTransactionHistoryResponseModel MapBOToModel(
-			BOTransactionHistory BOTransactionHistory)
+			BOTransactionHistory boTransactionHistory)
 		{
-			if (BOTransactionHistory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiTransactionHistoryResponseModel();
 
-			model.SetProperties(BOTransactionHistory.ActualCost, BOTransactionHistory.ModifiedDate, BOTransactionHistory.ProductID, BOTransactionHistory.Quantity, BOTransactionHistory.ReferenceOrderID, BOTransactionHistory.ReferenceOrderLineID, BOTransactionHistory.TransactionDate, BOTransactionHistory.TransactionID, BOTransactionHistory.TransactionType);
+			model.SetProperties(boTransactionHistory.ActualCost, boTransactionHistory.ModifiedDate, boTransactionHistory.ProductID, boTransactionHistory.Quantity, boTransactionHistory.ReferenceOrderID, boTransactionHistory.ReferenceOrderLineID, boTransactionHistory.TransactionDate, boTransactionHistory.TransactionID, boTransactionHistory.TransactionType);
 
 			return model;
 		}
 
 		public virtual List<ApiTransactionHistoryResponseModel> MapBOToModel(
-			List<BOTransactionHistory> BOs)
+			List<BOTransactionHistory> items)
 		{
 			List<ApiTransactionHistoryResponseModel> response = new List<ApiTransactionHistoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b03b990c6bd09aac8de042cf3327d3c7</Hash>
+    <Hash>4aa000507a4857b845fd1bea94ed51e4</Hash>
 </Codenesium>*/

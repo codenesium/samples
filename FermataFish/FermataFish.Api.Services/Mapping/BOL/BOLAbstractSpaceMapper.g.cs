@@ -11,37 +11,32 @@ namespace FermataFishNS.Api.Services
 			ApiSpaceRequestModel model
 			)
 		{
-			BOSpace BOSpace = new BOSpace();
+			BOSpace boSpace = new BOSpace();
 
-			BOSpace.SetProperties(
+			boSpace.SetProperties(
 				id,
 				model.Description,
 				model.Name,
 				model.StudioId);
-			return BOSpace;
+			return boSpace;
 		}
 
 		public virtual ApiSpaceResponseModel MapBOToModel(
-			BOSpace BOSpace)
+			BOSpace boSpace)
 		{
-			if (BOSpace == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSpaceResponseModel();
 
-			model.SetProperties(BOSpace.Description, BOSpace.Id, BOSpace.Name, BOSpace.StudioId);
+			model.SetProperties(boSpace.Description, boSpace.Id, boSpace.Name, boSpace.StudioId);
 
 			return model;
 		}
 
 		public virtual List<ApiSpaceResponseModel> MapBOToModel(
-			List<BOSpace> BOs)
+			List<BOSpace> items)
 		{
 			List<ApiSpaceResponseModel> response = new List<ApiSpaceResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>38cb40d36b74e1145bf990212f2e56a3</Hash>
+    <Hash>34f648b1615821ede02508b66f3458c8</Hash>
 </Codenesium>*/

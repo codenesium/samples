@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiEmployeePayHistoryRequestModel model
 			)
 		{
-			BOEmployeePayHistory BOEmployeePayHistory = new BOEmployeePayHistory();
+			BOEmployeePayHistory boEmployeePayHistory = new BOEmployeePayHistory();
 
-			BOEmployeePayHistory.SetProperties(
+			boEmployeePayHistory.SetProperties(
 				businessEntityID,
 				model.ModifiedDate,
 				model.PayFrequency,
 				model.Rate,
 				model.RateChangeDate);
-			return BOEmployeePayHistory;
+			return boEmployeePayHistory;
 		}
 
 		public virtual ApiEmployeePayHistoryResponseModel MapBOToModel(
-			BOEmployeePayHistory BOEmployeePayHistory)
+			BOEmployeePayHistory boEmployeePayHistory)
 		{
-			if (BOEmployeePayHistory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiEmployeePayHistoryResponseModel();
 
-			model.SetProperties(BOEmployeePayHistory.BusinessEntityID, BOEmployeePayHistory.ModifiedDate, BOEmployeePayHistory.PayFrequency, BOEmployeePayHistory.Rate, BOEmployeePayHistory.RateChangeDate);
+			model.SetProperties(boEmployeePayHistory.BusinessEntityID, boEmployeePayHistory.ModifiedDate, boEmployeePayHistory.PayFrequency, boEmployeePayHistory.Rate, boEmployeePayHistory.RateChangeDate);
 
 			return model;
 		}
 
 		public virtual List<ApiEmployeePayHistoryResponseModel> MapBOToModel(
-			List<BOEmployeePayHistory> BOs)
+			List<BOEmployeePayHistory> items)
 		{
 			List<ApiEmployeePayHistoryResponseModel> response = new List<ApiEmployeePayHistoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8e6cf83c97f93acc8410e1b551d80f6</Hash>
+    <Hash>cd26c936c86eb857a1957738f80e4bf2</Hash>
 </Codenesium>*/

@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesTerritoryHistoryRequestModel model
 			)
 		{
-			BOSalesTerritoryHistory BOSalesTerritoryHistory = new BOSalesTerritoryHistory();
+			BOSalesTerritoryHistory boSalesTerritoryHistory = new BOSalesTerritoryHistory();
 
-			BOSalesTerritoryHistory.SetProperties(
+			boSalesTerritoryHistory.SetProperties(
 				businessEntityID,
 				model.EndDate,
 				model.ModifiedDate,
 				model.Rowguid,
 				model.StartDate,
 				model.TerritoryID);
-			return BOSalesTerritoryHistory;
+			return boSalesTerritoryHistory;
 		}
 
 		public virtual ApiSalesTerritoryHistoryResponseModel MapBOToModel(
-			BOSalesTerritoryHistory BOSalesTerritoryHistory)
+			BOSalesTerritoryHistory boSalesTerritoryHistory)
 		{
-			if (BOSalesTerritoryHistory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesTerritoryHistoryResponseModel();
 
-			model.SetProperties(BOSalesTerritoryHistory.BusinessEntityID, BOSalesTerritoryHistory.EndDate, BOSalesTerritoryHistory.ModifiedDate, BOSalesTerritoryHistory.Rowguid, BOSalesTerritoryHistory.StartDate, BOSalesTerritoryHistory.TerritoryID);
+			model.SetProperties(boSalesTerritoryHistory.BusinessEntityID, boSalesTerritoryHistory.EndDate, boSalesTerritoryHistory.ModifiedDate, boSalesTerritoryHistory.Rowguid, boSalesTerritoryHistory.StartDate, boSalesTerritoryHistory.TerritoryID);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesTerritoryHistoryResponseModel> MapBOToModel(
-			List<BOSalesTerritoryHistory> BOs)
+			List<BOSalesTerritoryHistory> items)
 		{
 			List<ApiSalesTerritoryHistoryResponseModel> response = new List<ApiSalesTerritoryHistoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc40d8e0575dfc6639b041ba875cada3</Hash>
+    <Hash>ec209a8ce4f560f603f1d46c714b05af</Hash>
 </Codenesium>*/

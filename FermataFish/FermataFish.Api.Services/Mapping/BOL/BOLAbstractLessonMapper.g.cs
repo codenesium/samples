@@ -11,9 +11,9 @@ namespace FermataFishNS.Api.Services
 			ApiLessonRequestModel model
 			)
 		{
-			BOLesson BOLesson = new BOLesson();
+			BOLesson boLesson = new BOLesson();
 
-			BOLesson.SetProperties(
+			boLesson.SetProperties(
 				id,
 				model.ActualEndDate,
 				model.ActualStartDate,
@@ -24,30 +24,25 @@ namespace FermataFishNS.Api.Services
 				model.StudentNotes,
 				model.StudioId,
 				model.TeacherNotes);
-			return BOLesson;
+			return boLesson;
 		}
 
 		public virtual ApiLessonResponseModel MapBOToModel(
-			BOLesson BOLesson)
+			BOLesson boLesson)
 		{
-			if (BOLesson == null)
-			{
-				return null;
-			}
-
 			var model = new ApiLessonResponseModel();
 
-			model.SetProperties(BOLesson.ActualEndDate, BOLesson.ActualStartDate, BOLesson.BillAmount, BOLesson.Id, BOLesson.LessonStatusId, BOLesson.ScheduledEndDate, BOLesson.ScheduledStartDate, BOLesson.StudentNotes, BOLesson.StudioId, BOLesson.TeacherNotes);
+			model.SetProperties(boLesson.ActualEndDate, boLesson.ActualStartDate, boLesson.BillAmount, boLesson.Id, boLesson.LessonStatusId, boLesson.ScheduledEndDate, boLesson.ScheduledStartDate, boLesson.StudentNotes, boLesson.StudioId, boLesson.TeacherNotes);
 
 			return model;
 		}
 
 		public virtual List<ApiLessonResponseModel> MapBOToModel(
-			List<BOLesson> BOs)
+			List<BOLesson> items)
 		{
 			List<ApiLessonResponseModel> response = new List<ApiLessonResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -58,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cbfd01c114df7caf552d288ded593b39</Hash>
+    <Hash>b704f61d03be491463427e0ce6fc8d5e</Hash>
 </Codenesium>*/

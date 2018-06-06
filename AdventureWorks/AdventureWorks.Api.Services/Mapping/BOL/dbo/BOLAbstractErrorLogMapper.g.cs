@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiErrorLogRequestModel model
 			)
 		{
-			BOErrorLog BOErrorLog = new BOErrorLog();
+			BOErrorLog boErrorLog = new BOErrorLog();
 
-			BOErrorLog.SetProperties(
+			boErrorLog.SetProperties(
 				errorLogID,
 				model.ErrorLine,
 				model.ErrorMessage,
@@ -23,30 +23,25 @@ namespace AdventureWorksNS.Api.Services
 				model.ErrorState,
 				model.ErrorTime,
 				model.UserName);
-			return BOErrorLog;
+			return boErrorLog;
 		}
 
 		public virtual ApiErrorLogResponseModel MapBOToModel(
-			BOErrorLog BOErrorLog)
+			BOErrorLog boErrorLog)
 		{
-			if (BOErrorLog == null)
-			{
-				return null;
-			}
-
 			var model = new ApiErrorLogResponseModel();
 
-			model.SetProperties(BOErrorLog.ErrorLine, BOErrorLog.ErrorLogID, BOErrorLog.ErrorMessage, BOErrorLog.ErrorNumber, BOErrorLog.ErrorProcedure, BOErrorLog.ErrorSeverity, BOErrorLog.ErrorState, BOErrorLog.ErrorTime, BOErrorLog.UserName);
+			model.SetProperties(boErrorLog.ErrorLine, boErrorLog.ErrorLogID, boErrorLog.ErrorMessage, boErrorLog.ErrorNumber, boErrorLog.ErrorProcedure, boErrorLog.ErrorSeverity, boErrorLog.ErrorState, boErrorLog.ErrorTime, boErrorLog.UserName);
 
 			return model;
 		}
 
 		public virtual List<ApiErrorLogResponseModel> MapBOToModel(
-			List<BOErrorLog> BOs)
+			List<BOErrorLog> items)
 		{
 			List<ApiErrorLogResponseModel> response = new List<ApiErrorLogResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a56204202c0308a08508d23b0fbe73a</Hash>
+    <Hash>02f3eee96078c9550096512649f466f7</Hash>
 </Codenesium>*/

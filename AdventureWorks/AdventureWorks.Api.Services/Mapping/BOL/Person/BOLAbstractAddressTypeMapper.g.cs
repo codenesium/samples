@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiAddressTypeRequestModel model
 			)
 		{
-			BOAddressType BOAddressType = new BOAddressType();
+			BOAddressType boAddressType = new BOAddressType();
 
-			BOAddressType.SetProperties(
+			boAddressType.SetProperties(
 				addressTypeID,
 				model.ModifiedDate,
 				model.Name,
 				model.Rowguid);
-			return BOAddressType;
+			return boAddressType;
 		}
 
 		public virtual ApiAddressTypeResponseModel MapBOToModel(
-			BOAddressType BOAddressType)
+			BOAddressType boAddressType)
 		{
-			if (BOAddressType == null)
-			{
-				return null;
-			}
-
 			var model = new ApiAddressTypeResponseModel();
 
-			model.SetProperties(BOAddressType.AddressTypeID, BOAddressType.ModifiedDate, BOAddressType.Name, BOAddressType.Rowguid);
+			model.SetProperties(boAddressType.AddressTypeID, boAddressType.ModifiedDate, boAddressType.Name, boAddressType.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiAddressTypeResponseModel> MapBOToModel(
-			List<BOAddressType> BOs)
+			List<BOAddressType> items)
 		{
 			List<ApiAddressTypeResponseModel> response = new List<ApiAddressTypeResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>899f4762be2ede490033c985381ca759</Hash>
+    <Hash>a67fbb4c06ca4f31692f3aeaa1268704</Hash>
 </Codenesium>*/

@@ -11,36 +11,31 @@ namespace FileServiceNS.Api.Services
 			ApiBucketRequestModel model
 			)
 		{
-			BOBucket BOBucket = new BOBucket();
+			BOBucket boBucket = new BOBucket();
 
-			BOBucket.SetProperties(
+			boBucket.SetProperties(
 				id,
 				model.ExternalId,
 				model.Name);
-			return BOBucket;
+			return boBucket;
 		}
 
 		public virtual ApiBucketResponseModel MapBOToModel(
-			BOBucket BOBucket)
+			BOBucket boBucket)
 		{
-			if (BOBucket == null)
-			{
-				return null;
-			}
-
 			var model = new ApiBucketResponseModel();
 
-			model.SetProperties(BOBucket.ExternalId, BOBucket.Id, BOBucket.Name);
+			model.SetProperties(boBucket.ExternalId, boBucket.Id, boBucket.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiBucketResponseModel> MapBOToModel(
-			List<BOBucket> BOs)
+			List<BOBucket> items)
 		{
 			List<ApiBucketResponseModel> response = new List<ApiBucketResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>19fe7a651dd3a8a38169c531d5ade425</Hash>
+    <Hash>c9e870553fb0d348611c70ec01ac3647</Hash>
 </Codenesium>*/

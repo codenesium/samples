@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private IRateRepository rateRepository;
 		private IApiRateRequestModelValidator rateModelValidator;
-		private IBOLRateMapper BOLRateMapper;
-		private IDALRateMapper DALRateMapper;
+		private IBOLRateMapper bolRateMapper;
+		private IDALRateMapper dalRateMapper;
 		private ILogger logger;
 
 		public AbstractRateService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.rateRepository = rateRepository;
 			this.rateModelValidator = rateModelValidator;
-			this.BOLRateMapper = bolrateMapper;
-			this.DALRateMapper = dalrateMapper;
+			this.bolRateMapper = bolrateMapper;
+			this.dalRateMapper = dalrateMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.rateRepository.All(skip, take, orderClause);
 
-			return this.BOLRateMapper.MapBOToModel(this.DALRateMapper.MapEFToBO(records));
+			return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiRateResponseModel> Get(int id)
 		{
 			var record = await rateRepository.Get(id);
 
-			return this.BOLRateMapper.MapBOToModel(this.DALRateMapper.MapEFToBO(record));
+			return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiRateResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.rateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLRateMapper.MapModelToBO(default (int), model);
-				var record = await this.rateRepository.Create(this.DALRateMapper.MapBOToEF(bo));
+				var bo = this.bolRateMapper.MapModelToBO(default (int), model);
+				var record = await this.rateRepository.Create(this.dalRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLRateMapper.MapBOToModel(this.DALRateMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLRateMapper.MapModelToBO(id, model);
-				await this.rateRepository.Update(this.DALRateMapper.MapBOToEF(bo));
+				var bo = this.bolRateMapper.MapModelToBO(id, model);
+				await this.rateRepository.Update(this.dalRateMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a297e705d3b81cc95fb1c7cab0e0a34a</Hash>
+    <Hash>c24ae6b636489de1fca29b931c697d3e</Hash>
 </Codenesium>*/

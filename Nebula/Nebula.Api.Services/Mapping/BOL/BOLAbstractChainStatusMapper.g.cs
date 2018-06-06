@@ -11,35 +11,30 @@ namespace NebulaNS.Api.Services
 			ApiChainStatusRequestModel model
 			)
 		{
-			BOChainStatus BOChainStatus = new BOChainStatus();
+			BOChainStatus boChainStatus = new BOChainStatus();
 
-			BOChainStatus.SetProperties(
+			boChainStatus.SetProperties(
 				id,
 				model.Name);
-			return BOChainStatus;
+			return boChainStatus;
 		}
 
 		public virtual ApiChainStatusResponseModel MapBOToModel(
-			BOChainStatus BOChainStatus)
+			BOChainStatus boChainStatus)
 		{
-			if (BOChainStatus == null)
-			{
-				return null;
-			}
-
 			var model = new ApiChainStatusResponseModel();
 
-			model.SetProperties(BOChainStatus.Id, BOChainStatus.Name);
+			model.SetProperties(boChainStatus.Id, boChainStatus.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiChainStatusResponseModel> MapBOToModel(
-			List<BOChainStatus> BOs)
+			List<BOChainStatus> items)
 		{
 			List<ApiChainStatusResponseModel> response = new List<ApiChainStatusResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d316214c7680b32f4f2f9edd8dd26a1</Hash>
+    <Hash>a6bd4d6826b2cadc6bc44a84fe83c9a2</Hash>
 </Codenesium>*/

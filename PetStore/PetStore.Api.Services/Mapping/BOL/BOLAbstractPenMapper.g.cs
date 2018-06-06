@@ -11,35 +11,30 @@ namespace PetStoreNS.Api.Services
 			ApiPenRequestModel model
 			)
 		{
-			BOPen BOPen = new BOPen();
+			BOPen boPen = new BOPen();
 
-			BOPen.SetProperties(
+			boPen.SetProperties(
 				id,
 				model.Name);
-			return BOPen;
+			return boPen;
 		}
 
 		public virtual ApiPenResponseModel MapBOToModel(
-			BOPen BOPen)
+			BOPen boPen)
 		{
-			if (BOPen == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPenResponseModel();
 
-			model.SetProperties(BOPen.Id, BOPen.Name);
+			model.SetProperties(boPen.Id, boPen.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiPenResponseModel> MapBOToModel(
-			List<BOPen> BOs)
+			List<BOPen> items)
 		{
 			List<ApiPenResponseModel> response = new List<ApiPenResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>900e38c73c409c1a4c35727d05d65cd6</Hash>
+    <Hash>cc821232f8e93a873993748762a9d2a9</Hash>
 </Codenesium>*/

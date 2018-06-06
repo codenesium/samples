@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesTaxRateRequestModel model
 			)
 		{
-			BOSalesTaxRate BOSalesTaxRate = new BOSalesTaxRate();
+			BOSalesTaxRate boSalesTaxRate = new BOSalesTaxRate();
 
-			BOSalesTaxRate.SetProperties(
+			boSalesTaxRate.SetProperties(
 				salesTaxRateID,
 				model.ModifiedDate,
 				model.Name,
@@ -21,30 +21,25 @@ namespace AdventureWorksNS.Api.Services
 				model.StateProvinceID,
 				model.TaxRate,
 				model.TaxType);
-			return BOSalesTaxRate;
+			return boSalesTaxRate;
 		}
 
 		public virtual ApiSalesTaxRateResponseModel MapBOToModel(
-			BOSalesTaxRate BOSalesTaxRate)
+			BOSalesTaxRate boSalesTaxRate)
 		{
-			if (BOSalesTaxRate == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesTaxRateResponseModel();
 
-			model.SetProperties(BOSalesTaxRate.ModifiedDate, BOSalesTaxRate.Name, BOSalesTaxRate.Rowguid, BOSalesTaxRate.SalesTaxRateID, BOSalesTaxRate.StateProvinceID, BOSalesTaxRate.TaxRate, BOSalesTaxRate.TaxType);
+			model.SetProperties(boSalesTaxRate.ModifiedDate, boSalesTaxRate.Name, boSalesTaxRate.Rowguid, boSalesTaxRate.SalesTaxRateID, boSalesTaxRate.StateProvinceID, boSalesTaxRate.TaxRate, boSalesTaxRate.TaxType);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesTaxRateResponseModel> MapBOToModel(
-			List<BOSalesTaxRate> BOs)
+			List<BOSalesTaxRate> items)
 		{
 			List<ApiSalesTaxRateResponseModel> response = new List<ApiSalesTaxRateResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12b556d0d90d64d685a876fe19c97df2</Hash>
+    <Hash>c6f42c6fce0ddd02032f0696432d97c6</Hash>
 </Codenesium>*/

@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOCountryRegionCurrency boCountryRegionCurrency);
 
 		List<ApiCountryRegionCurrencyResponseModel> MapBOToModel(
-			List<BOCountryRegionCurrency> bos);
+			List<BOCountryRegionCurrency> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff349760428827c5875caae9086165e0</Hash>
+    <Hash>8c511afcf722517466c3487e2ce2da5b</Hash>
 </Codenesium>*/

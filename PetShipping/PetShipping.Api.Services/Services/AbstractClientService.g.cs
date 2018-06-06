@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IClientRepository clientRepository;
 		private IApiClientRequestModelValidator clientModelValidator;
-		private IBOLClientMapper BOLClientMapper;
-		private IDALClientMapper DALClientMapper;
+		private IBOLClientMapper bolClientMapper;
+		private IDALClientMapper dalClientMapper;
 		private ILogger logger;
 
 		public AbstractClientService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.clientRepository = clientRepository;
 			this.clientModelValidator = clientModelValidator;
-			this.BOLClientMapper = bolclientMapper;
-			this.DALClientMapper = dalclientMapper;
+			this.bolClientMapper = bolclientMapper;
+			this.dalClientMapper = dalclientMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.clientRepository.All(skip, take, orderClause);
 
-			return this.BOLClientMapper.MapBOToModel(this.DALClientMapper.MapEFToBO(records));
+			return this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiClientResponseModel> Get(int id)
 		{
 			var record = await clientRepository.Get(id);
 
-			return this.BOLClientMapper.MapBOToModel(this.DALClientMapper.MapEFToBO(record));
+			return this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiClientResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiClientResponseModel> response = new CreateResponse<ApiClientResponseModel>(await this.clientModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLClientMapper.MapModelToBO(default (int), model);
-				var record = await this.clientRepository.Create(this.DALClientMapper.MapBOToEF(bo));
+				var bo = this.bolClientMapper.MapModelToBO(default (int), model);
+				var record = await this.clientRepository.Create(this.dalClientMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLClientMapper.MapBOToModel(this.DALClientMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLClientMapper.MapModelToBO(id, model);
-				await this.clientRepository.Update(this.DALClientMapper.MapBOToEF(bo));
+				var bo = this.bolClientMapper.MapModelToBO(id, model);
+				await this.clientRepository.Update(this.dalClientMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4caf13a4143538f05060e93562561b61</Hash>
+    <Hash>761127b8840510362a4be80ce0fb0eb1</Hash>
 </Codenesium>*/

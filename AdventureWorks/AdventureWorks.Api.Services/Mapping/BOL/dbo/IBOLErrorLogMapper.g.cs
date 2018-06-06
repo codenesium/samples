@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOErrorLog boErrorLog);
 
 		List<ApiErrorLogResponseModel> MapBOToModel(
-			List<BOErrorLog> bos);
+			List<BOErrorLog> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c320dc6f4971d03d04ed8eaed912634</Hash>
+    <Hash>16d6f4a10b36c943b3555a1a4950eb62</Hash>
 </Codenesium>*/

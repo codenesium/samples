@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IBreedRepository breedRepository;
 		private IApiBreedRequestModelValidator breedModelValidator;
-		private IBOLBreedMapper BOLBreedMapper;
-		private IDALBreedMapper DALBreedMapper;
+		private IBOLBreedMapper bolBreedMapper;
+		private IDALBreedMapper dalBreedMapper;
 		private ILogger logger;
 
 		public AbstractBreedService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.breedRepository = breedRepository;
 			this.breedModelValidator = breedModelValidator;
-			this.BOLBreedMapper = bolbreedMapper;
-			this.DALBreedMapper = dalbreedMapper;
+			this.bolBreedMapper = bolbreedMapper;
+			this.dalBreedMapper = dalbreedMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.breedRepository.All(skip, take, orderClause);
 
-			return this.BOLBreedMapper.MapBOToModel(this.DALBreedMapper.MapEFToBO(records));
+			return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBreedResponseModel> Get(int id)
 		{
 			var record = await breedRepository.Get(id);
 
-			return this.BOLBreedMapper.MapBOToModel(this.DALBreedMapper.MapEFToBO(record));
+			return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiBreedResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiBreedResponseModel> response = new CreateResponse<ApiBreedResponseModel>(await this.breedModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLBreedMapper.MapModelToBO(default (int), model);
-				var record = await this.breedRepository.Create(this.DALBreedMapper.MapBOToEF(bo));
+				var bo = this.bolBreedMapper.MapModelToBO(default (int), model);
+				var record = await this.breedRepository.Create(this.dalBreedMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLBreedMapper.MapBOToModel(this.DALBreedMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLBreedMapper.MapModelToBO(id, model);
-				await this.breedRepository.Update(this.DALBreedMapper.MapBOToEF(bo));
+				var bo = this.bolBreedMapper.MapModelToBO(id, model);
+				await this.breedRepository.Update(this.dalBreedMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62265b1d3411ed92f2a20eb4e12d5212</Hash>
+    <Hash>dcb00791c91f88745a481256c9241ecd</Hash>
 </Codenesium>*/

@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOStateProvince boStateProvince);
 
 		List<ApiStateProvinceResponseModel> MapBOToModel(
-			List<BOStateProvince> bos);
+			List<BOStateProvince> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>985a2f6f0084614f8dadd173074856f7</Hash>
+    <Hash>e0d3bc19b0f7ffd14a355f8c1b3254de</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private ILinkLogRepository linkLogRepository;
 		private IApiLinkLogRequestModelValidator linkLogModelValidator;
-		private IBOLLinkLogMapper BOLLinkLogMapper;
-		private IDALLinkLogMapper DALLinkLogMapper;
+		private IBOLLinkLogMapper bolLinkLogMapper;
+		private IDALLinkLogMapper dalLinkLogMapper;
 		private ILogger logger;
 
 		public AbstractLinkLogService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.linkLogRepository = linkLogRepository;
 			this.linkLogModelValidator = linkLogModelValidator;
-			this.BOLLinkLogMapper = bollinkLogMapper;
-			this.DALLinkLogMapper = dallinkLogMapper;
+			this.bolLinkLogMapper = bollinkLogMapper;
+			this.dalLinkLogMapper = dallinkLogMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.linkLogRepository.All(skip, take, orderClause);
 
-			return this.BOLLinkLogMapper.MapBOToModel(this.DALLinkLogMapper.MapEFToBO(records));
+			return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLinkLogResponseModel> Get(int id)
 		{
 			var record = await linkLogRepository.Get(id);
 
-			return this.BOLLinkLogMapper.MapBOToModel(this.DALLinkLogMapper.MapEFToBO(record));
+			return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiLinkLogResponseModel> response = new CreateResponse<ApiLinkLogResponseModel>(await this.linkLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLLinkLogMapper.MapModelToBO(default (int), model);
-				var record = await this.linkLogRepository.Create(this.DALLinkLogMapper.MapBOToEF(bo));
+				var bo = this.bolLinkLogMapper.MapModelToBO(default (int), model);
+				var record = await this.linkLogRepository.Create(this.dalLinkLogMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLLinkLogMapper.MapBOToModel(this.DALLinkLogMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLLinkLogMapper.MapModelToBO(id, model);
-				await this.linkLogRepository.Update(this.DALLinkLogMapper.MapBOToEF(bo));
+				var bo = this.bolLinkLogMapper.MapModelToBO(id, model);
+				await this.linkLogRepository.Update(this.dalLinkLogMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f540c05ae1f26cd0399fd451f2b9a291</Hash>
+    <Hash>dc1ce6bcb719620e400f065c9ae9c695</Hash>
 </Codenesium>*/

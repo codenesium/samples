@@ -11,37 +11,32 @@ namespace FermataFishNS.Api.Services
 			ApiRateRequestModel model
 			)
 		{
-			BORate BORate = new BORate();
+			BORate boRate = new BORate();
 
-			BORate.SetProperties(
+			boRate.SetProperties(
 				id,
 				model.AmountPerMinute,
 				model.TeacherId,
 				model.TeacherSkillId);
-			return BORate;
+			return boRate;
 		}
 
 		public virtual ApiRateResponseModel MapBOToModel(
-			BORate BORate)
+			BORate boRate)
 		{
-			if (BORate == null)
-			{
-				return null;
-			}
-
 			var model = new ApiRateResponseModel();
 
-			model.SetProperties(BORate.AmountPerMinute, BORate.Id, BORate.TeacherId, BORate.TeacherSkillId);
+			model.SetProperties(boRate.AmountPerMinute, boRate.Id, boRate.TeacherId, boRate.TeacherSkillId);
 
 			return model;
 		}
 
 		public virtual List<ApiRateResponseModel> MapBOToModel(
-			List<BORate> BOs)
+			List<BORate> items)
 		{
 			List<ApiRateResponseModel> response = new List<ApiRateResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5dc370d623dc36a43466b80f68199cf7</Hash>
+    <Hash>78a1cd780847eee10f44975999d79c43</Hash>
 </Codenesium>*/

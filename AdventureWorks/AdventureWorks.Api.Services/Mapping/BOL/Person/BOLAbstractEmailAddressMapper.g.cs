@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiEmailAddressRequestModel model
 			)
 		{
-			BOEmailAddress BOEmailAddress = new BOEmailAddress();
+			BOEmailAddress boEmailAddress = new BOEmailAddress();
 
-			BOEmailAddress.SetProperties(
+			boEmailAddress.SetProperties(
 				businessEntityID,
 				model.EmailAddress1,
 				model.EmailAddressID,
 				model.ModifiedDate,
 				model.Rowguid);
-			return BOEmailAddress;
+			return boEmailAddress;
 		}
 
 		public virtual ApiEmailAddressResponseModel MapBOToModel(
-			BOEmailAddress BOEmailAddress)
+			BOEmailAddress boEmailAddress)
 		{
-			if (BOEmailAddress == null)
-			{
-				return null;
-			}
-
 			var model = new ApiEmailAddressResponseModel();
 
-			model.SetProperties(BOEmailAddress.BusinessEntityID, BOEmailAddress.EmailAddress1, BOEmailAddress.EmailAddressID, BOEmailAddress.ModifiedDate, BOEmailAddress.Rowguid);
+			model.SetProperties(boEmailAddress.BusinessEntityID, boEmailAddress.EmailAddress1, boEmailAddress.EmailAddressID, boEmailAddress.ModifiedDate, boEmailAddress.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiEmailAddressResponseModel> MapBOToModel(
-			List<BOEmailAddress> BOs)
+			List<BOEmailAddress> items)
 		{
 			List<ApiEmailAddressResponseModel> response = new List<ApiEmailAddressResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>396473c4aff1ef408d49d2b5cfb97ea5</Hash>
+    <Hash>714c452e0c77331dc9c398d6fb6b0743</Hash>
 </Codenesium>*/

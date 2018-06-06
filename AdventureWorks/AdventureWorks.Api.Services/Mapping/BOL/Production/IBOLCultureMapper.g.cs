@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOCulture boCulture);
 
 		List<ApiCultureResponseModel> MapBOToModel(
-			List<BOCulture> bos);
+			List<BOCulture> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3460d1f93a6d253c22bae412a1a12d38</Hash>
+    <Hash>c5468f3987eeabbef59c9f3c3af5cba9</Hash>
 </Codenesium>*/

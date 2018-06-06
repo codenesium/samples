@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private IEmployeeRepository employeeRepository;
 		private IApiEmployeeRequestModelValidator employeeModelValidator;
-		private IBOLEmployeeMapper BOLEmployeeMapper;
-		private IDALEmployeeMapper DALEmployeeMapper;
+		private IBOLEmployeeMapper bolEmployeeMapper;
+		private IDALEmployeeMapper dalEmployeeMapper;
 		private ILogger logger;
 
 		public AbstractEmployeeService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.employeeRepository = employeeRepository;
 			this.employeeModelValidator = employeeModelValidator;
-			this.BOLEmployeeMapper = bolemployeeMapper;
-			this.DALEmployeeMapper = dalemployeeMapper;
+			this.bolEmployeeMapper = bolemployeeMapper;
+			this.dalEmployeeMapper = dalemployeeMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.employeeRepository.All(skip, take, orderClause);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(records));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEmployeeResponseModel> Get(int id)
 		{
 			var record = await employeeRepository.Get(id);
 
-			return this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(record));
+			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLEmployeeMapper.MapModelToBO(default (int), model);
-				var record = await this.employeeRepository.Create(this.DALEmployeeMapper.MapBOToEF(bo));
+				var bo = this.bolEmployeeMapper.MapModelToBO(default (int), model);
+				var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLEmployeeMapper.MapBOToModel(this.DALEmployeeMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLEmployeeMapper.MapModelToBO(id, model);
-				await this.employeeRepository.Update(this.DALEmployeeMapper.MapBOToEF(bo));
+				var bo = this.bolEmployeeMapper.MapModelToBO(id, model);
+				await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2741a6b85157f88d123ebf13e2a4751d</Hash>
+    <Hash>ff205541e1e3f1ae1e64f84cf45c9999</Hash>
 </Codenesium>*/

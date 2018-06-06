@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private IClaspRepository claspRepository;
 		private IApiClaspRequestModelValidator claspModelValidator;
-		private IBOLClaspMapper BOLClaspMapper;
-		private IDALClaspMapper DALClaspMapper;
+		private IBOLClaspMapper bolClaspMapper;
+		private IDALClaspMapper dalClaspMapper;
 		private ILogger logger;
 
 		public AbstractClaspService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.claspRepository = claspRepository;
 			this.claspModelValidator = claspModelValidator;
-			this.BOLClaspMapper = bolclaspMapper;
-			this.DALClaspMapper = dalclaspMapper;
+			this.bolClaspMapper = bolclaspMapper;
+			this.dalClaspMapper = dalclaspMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.claspRepository.All(skip, take, orderClause);
 
-			return this.BOLClaspMapper.MapBOToModel(this.DALClaspMapper.MapEFToBO(records));
+			return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiClaspResponseModel> Get(int id)
 		{
 			var record = await claspRepository.Get(id);
 
-			return this.BOLClaspMapper.MapBOToModel(this.DALClaspMapper.MapEFToBO(record));
+			return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiClaspResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiClaspResponseModel> response = new CreateResponse<ApiClaspResponseModel>(await this.claspModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLClaspMapper.MapModelToBO(default (int), model);
-				var record = await this.claspRepository.Create(this.DALClaspMapper.MapBOToEF(bo));
+				var bo = this.bolClaspMapper.MapModelToBO(default (int), model);
+				var record = await this.claspRepository.Create(this.dalClaspMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLClaspMapper.MapBOToModel(this.DALClaspMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLClaspMapper.MapModelToBO(id, model);
-				await this.claspRepository.Update(this.DALClaspMapper.MapBOToEF(bo));
+				var bo = this.bolClaspMapper.MapModelToBO(id, model);
+				await this.claspRepository.Update(this.dalClaspMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec94f315f38ec96d98ac6b8b1f994dec</Hash>
+    <Hash>35d9cdab3f81dc93b26eadfdc973fe49</Hash>
 </Codenesium>*/

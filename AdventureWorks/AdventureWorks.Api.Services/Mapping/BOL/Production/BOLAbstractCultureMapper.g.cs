@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiCultureRequestModel model
 			)
 		{
-			BOCulture BOCulture = new BOCulture();
+			BOCulture boCulture = new BOCulture();
 
-			BOCulture.SetProperties(
+			boCulture.SetProperties(
 				cultureID,
 				model.ModifiedDate,
 				model.Name);
-			return BOCulture;
+			return boCulture;
 		}
 
 		public virtual ApiCultureResponseModel MapBOToModel(
-			BOCulture BOCulture)
+			BOCulture boCulture)
 		{
-			if (BOCulture == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCultureResponseModel();
 
-			model.SetProperties(BOCulture.CultureID, BOCulture.ModifiedDate, BOCulture.Name);
+			model.SetProperties(boCulture.CultureID, boCulture.ModifiedDate, boCulture.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiCultureResponseModel> MapBOToModel(
-			List<BOCulture> BOs)
+			List<BOCulture> items)
 		{
 			List<ApiCultureResponseModel> response = new List<ApiCultureResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8394991a1c1e052880958d77d240d19f</Hash>
+    <Hash>9a122186320bf3604d4ffabddcfa227b</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductModelRepository productModelRepository;
 		private IApiProductModelRequestModelValidator productModelModelValidator;
-		private IBOLProductModelMapper BOLProductModelMapper;
-		private IDALProductModelMapper DALProductModelMapper;
+		private IBOLProductModelMapper bolProductModelMapper;
+		private IDALProductModelMapper dalProductModelMapper;
 		private ILogger logger;
 
 		public AbstractProductModelService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productModelRepository = productModelRepository;
 			this.productModelModelValidator = productModelModelValidator;
-			this.BOLProductModelMapper = bolproductModelMapper;
-			this.DALProductModelMapper = dalproductModelMapper;
+			this.bolProductModelMapper = bolproductModelMapper;
+			this.dalProductModelMapper = dalproductModelMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productModelRepository.All(skip, take, orderClause);
 
-			return this.BOLProductModelMapper.MapBOToModel(this.DALProductModelMapper.MapEFToBO(records));
+			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductModelResponseModel> Get(int productModelID)
 		{
 			var record = await productModelRepository.Get(productModelID);
 
-			return this.BOLProductModelMapper.MapBOToModel(this.DALProductModelMapper.MapEFToBO(record));
+			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductModelResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductModelResponseModel> response = new CreateResponse<ApiProductModelResponseModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductModelMapper.MapModelToBO(default (int), model);
-				var record = await this.productModelRepository.Create(this.DALProductModelMapper.MapBOToEF(bo));
+				var bo = this.bolProductModelMapper.MapModelToBO(default (int), model);
+				var record = await this.productModelRepository.Create(this.dalProductModelMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductModelMapper.MapBOToModel(this.DALProductModelMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductModelMapper.MapModelToBO(productModelID, model);
-				await this.productModelRepository.Update(this.DALProductModelMapper.MapBOToEF(bo));
+				var bo = this.bolProductModelMapper.MapModelToBO(productModelID, model);
+				await this.productModelRepository.Update(this.dalProductModelMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,23 +95,23 @@ namespace AdventureWorksNS.Api.Services
 		{
 			ProductModel record = await this.productModelRepository.GetName(name);
 
-			return this.BOLProductModelMapper.MapBOToModel(this.DALProductModelMapper.MapEFToBO(record));
+			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
 		}
 		public async Task<List<ApiProductModelResponseModel>> GetCatalogDescription(string catalogDescription)
 		{
 			List<ProductModel> records = await this.productModelRepository.GetCatalogDescription(catalogDescription);
 
-			return this.BOLProductModelMapper.MapBOToModel(this.DALProductModelMapper.MapEFToBO(records));
+			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
 		}
 		public async Task<List<ApiProductModelResponseModel>> GetInstructions(string instructions)
 		{
 			List<ProductModel> records = await this.productModelRepository.GetInstructions(instructions);
 
-			return this.BOLProductModelMapper.MapBOToModel(this.DALProductModelMapper.MapEFToBO(records));
+			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>198b6652d55fc9020fac157d042ec90d</Hash>
+    <Hash>9ae561edb9032163fc89321addf36946</Hash>
 </Codenesium>*/

@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductSubcategoryRequestModel model
 			)
 		{
-			BOProductSubcategory BOProductSubcategory = new BOProductSubcategory();
+			BOProductSubcategory boProductSubcategory = new BOProductSubcategory();
 
-			BOProductSubcategory.SetProperties(
+			boProductSubcategory.SetProperties(
 				productSubcategoryID,
 				model.ModifiedDate,
 				model.Name,
 				model.ProductCategoryID,
 				model.Rowguid);
-			return BOProductSubcategory;
+			return boProductSubcategory;
 		}
 
 		public virtual ApiProductSubcategoryResponseModel MapBOToModel(
-			BOProductSubcategory BOProductSubcategory)
+			BOProductSubcategory boProductSubcategory)
 		{
-			if (BOProductSubcategory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductSubcategoryResponseModel();
 
-			model.SetProperties(BOProductSubcategory.ModifiedDate, BOProductSubcategory.Name, BOProductSubcategory.ProductCategoryID, BOProductSubcategory.ProductSubcategoryID, BOProductSubcategory.Rowguid);
+			model.SetProperties(boProductSubcategory.ModifiedDate, boProductSubcategory.Name, boProductSubcategory.ProductCategoryID, boProductSubcategory.ProductSubcategoryID, boProductSubcategory.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiProductSubcategoryResponseModel> MapBOToModel(
-			List<BOProductSubcategory> BOs)
+			List<BOProductSubcategory> items)
 		{
 			List<ApiProductSubcategoryResponseModel> response = new List<ApiProductSubcategoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6ad867892c7f4d6f37776c8a3164b5b3</Hash>
+    <Hash>ae0271e91e0f9247a287295952bce7a2</Hash>
 </Codenesium>*/

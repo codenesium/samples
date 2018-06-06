@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiPhoneNumberTypeRequestModel model
 			)
 		{
-			BOPhoneNumberType BOPhoneNumberType = new BOPhoneNumberType();
+			BOPhoneNumberType boPhoneNumberType = new BOPhoneNumberType();
 
-			BOPhoneNumberType.SetProperties(
+			boPhoneNumberType.SetProperties(
 				phoneNumberTypeID,
 				model.ModifiedDate,
 				model.Name);
-			return BOPhoneNumberType;
+			return boPhoneNumberType;
 		}
 
 		public virtual ApiPhoneNumberTypeResponseModel MapBOToModel(
-			BOPhoneNumberType BOPhoneNumberType)
+			BOPhoneNumberType boPhoneNumberType)
 		{
-			if (BOPhoneNumberType == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPhoneNumberTypeResponseModel();
 
-			model.SetProperties(BOPhoneNumberType.ModifiedDate, BOPhoneNumberType.Name, BOPhoneNumberType.PhoneNumberTypeID);
+			model.SetProperties(boPhoneNumberType.ModifiedDate, boPhoneNumberType.Name, boPhoneNumberType.PhoneNumberTypeID);
 
 			return model;
 		}
 
 		public virtual List<ApiPhoneNumberTypeResponseModel> MapBOToModel(
-			List<BOPhoneNumberType> BOs)
+			List<BOPhoneNumberType> items)
 		{
 			List<ApiPhoneNumberTypeResponseModel> response = new List<ApiPhoneNumberTypeResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bab3cc5fd8726050260aee570b225c41</Hash>
+    <Hash>26b85fc77ae87e63415bdd225fb62efc</Hash>
 </Codenesium>*/

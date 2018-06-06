@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductInventoryRepository productInventoryRepository;
 		private IApiProductInventoryRequestModelValidator productInventoryModelValidator;
-		private IBOLProductInventoryMapper BOLProductInventoryMapper;
-		private IDALProductInventoryMapper DALProductInventoryMapper;
+		private IBOLProductInventoryMapper bolProductInventoryMapper;
+		private IDALProductInventoryMapper dalProductInventoryMapper;
 		private ILogger logger;
 
 		public AbstractProductInventoryService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productInventoryRepository = productInventoryRepository;
 			this.productInventoryModelValidator = productInventoryModelValidator;
-			this.BOLProductInventoryMapper = bolproductInventoryMapper;
-			this.DALProductInventoryMapper = dalproductInventoryMapper;
+			this.bolProductInventoryMapper = bolproductInventoryMapper;
+			this.dalProductInventoryMapper = dalproductInventoryMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productInventoryRepository.All(skip, take, orderClause);
 
-			return this.BOLProductInventoryMapper.MapBOToModel(this.DALProductInventoryMapper.MapEFToBO(records));
+			return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductInventoryResponseModel> Get(int productID)
 		{
 			var record = await productInventoryRepository.Get(productID);
 
-			return this.BOLProductInventoryMapper.MapBOToModel(this.DALProductInventoryMapper.MapEFToBO(record));
+			return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductInventoryResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductInventoryResponseModel> response = new CreateResponse<ApiProductInventoryResponseModel>(await this.productInventoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductInventoryMapper.MapModelToBO(default (int), model);
-				var record = await this.productInventoryRepository.Create(this.DALProductInventoryMapper.MapBOToEF(bo));
+				var bo = this.bolProductInventoryMapper.MapModelToBO(default (int), model);
+				var record = await this.productInventoryRepository.Create(this.dalProductInventoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductInventoryMapper.MapBOToModel(this.DALProductInventoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductInventoryMapper.MapModelToBO(productID, model);
-				await this.productInventoryRepository.Update(this.DALProductInventoryMapper.MapBOToEF(bo));
+				var bo = this.bolProductInventoryMapper.MapModelToBO(productID, model);
+				await this.productInventoryRepository.Update(this.dalProductInventoryMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de312be60bbf4bd235be45c355fbc946</Hash>
+    <Hash>11c21b0f0ffd9c076fb84f6fbda06b2a</Hash>
 </Codenesium>*/

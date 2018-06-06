@@ -11,9 +11,9 @@ namespace FermataFishNS.Api.Services
 			ApiTeacherRequestModel model
 			)
 		{
-			BOTeacher BOTeacher = new BOTeacher();
+			BOTeacher boTeacher = new BOTeacher();
 
-			BOTeacher.SetProperties(
+			boTeacher.SetProperties(
 				id,
 				model.Birthday,
 				model.Email,
@@ -21,30 +21,25 @@ namespace FermataFishNS.Api.Services
 				model.LastName,
 				model.Phone,
 				model.StudioId);
-			return BOTeacher;
+			return boTeacher;
 		}
 
 		public virtual ApiTeacherResponseModel MapBOToModel(
-			BOTeacher BOTeacher)
+			BOTeacher boTeacher)
 		{
-			if (BOTeacher == null)
-			{
-				return null;
-			}
-
 			var model = new ApiTeacherResponseModel();
 
-			model.SetProperties(BOTeacher.Birthday, BOTeacher.Email, BOTeacher.FirstName, BOTeacher.Id, BOTeacher.LastName, BOTeacher.Phone, BOTeacher.StudioId);
+			model.SetProperties(boTeacher.Birthday, boTeacher.Email, boTeacher.FirstName, boTeacher.Id, boTeacher.LastName, boTeacher.Phone, boTeacher.StudioId);
 
 			return model;
 		}
 
 		public virtual List<ApiTeacherResponseModel> MapBOToModel(
-			List<BOTeacher> BOs)
+			List<BOTeacher> items)
 		{
 			List<ApiTeacherResponseModel> response = new List<ApiTeacherResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3cf3405ca921e139fe5f3f5bc9ce78e7</Hash>
+    <Hash>407afbfdc16ecbd7791256818eccd871</Hash>
 </Codenesium>*/

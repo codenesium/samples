@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesOrderHeaderRequestModel model
 			)
 		{
-			BOSalesOrderHeader BOSalesOrderHeader = new BOSalesOrderHeader();
+			BOSalesOrderHeader boSalesOrderHeader = new BOSalesOrderHeader();
 
-			BOSalesOrderHeader.SetProperties(
+			boSalesOrderHeader.SetProperties(
 				salesOrderID,
 				model.AccountNumber,
 				model.BillToAddressID,
@@ -40,30 +40,25 @@ namespace AdventureWorksNS.Api.Services
 				model.TaxAmt,
 				model.TerritoryID,
 				model.TotalDue);
-			return BOSalesOrderHeader;
+			return boSalesOrderHeader;
 		}
 
 		public virtual ApiSalesOrderHeaderResponseModel MapBOToModel(
-			BOSalesOrderHeader BOSalesOrderHeader)
+			BOSalesOrderHeader boSalesOrderHeader)
 		{
-			if (BOSalesOrderHeader == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesOrderHeaderResponseModel();
 
-			model.SetProperties(BOSalesOrderHeader.AccountNumber, BOSalesOrderHeader.BillToAddressID, BOSalesOrderHeader.Comment, BOSalesOrderHeader.CreditCardApprovalCode, BOSalesOrderHeader.CreditCardID, BOSalesOrderHeader.CurrencyRateID, BOSalesOrderHeader.CustomerID, BOSalesOrderHeader.DueDate, BOSalesOrderHeader.Freight, BOSalesOrderHeader.ModifiedDate, BOSalesOrderHeader.OnlineOrderFlag, BOSalesOrderHeader.OrderDate, BOSalesOrderHeader.PurchaseOrderNumber, BOSalesOrderHeader.RevisionNumber, BOSalesOrderHeader.Rowguid, BOSalesOrderHeader.SalesOrderID, BOSalesOrderHeader.SalesOrderNumber, BOSalesOrderHeader.SalesPersonID, BOSalesOrderHeader.ShipDate, BOSalesOrderHeader.ShipMethodID, BOSalesOrderHeader.ShipToAddressID, BOSalesOrderHeader.Status, BOSalesOrderHeader.SubTotal, BOSalesOrderHeader.TaxAmt, BOSalesOrderHeader.TerritoryID, BOSalesOrderHeader.TotalDue);
+			model.SetProperties(boSalesOrderHeader.AccountNumber, boSalesOrderHeader.BillToAddressID, boSalesOrderHeader.Comment, boSalesOrderHeader.CreditCardApprovalCode, boSalesOrderHeader.CreditCardID, boSalesOrderHeader.CurrencyRateID, boSalesOrderHeader.CustomerID, boSalesOrderHeader.DueDate, boSalesOrderHeader.Freight, boSalesOrderHeader.ModifiedDate, boSalesOrderHeader.OnlineOrderFlag, boSalesOrderHeader.OrderDate, boSalesOrderHeader.PurchaseOrderNumber, boSalesOrderHeader.RevisionNumber, boSalesOrderHeader.Rowguid, boSalesOrderHeader.SalesOrderID, boSalesOrderHeader.SalesOrderNumber, boSalesOrderHeader.SalesPersonID, boSalesOrderHeader.ShipDate, boSalesOrderHeader.ShipMethodID, boSalesOrderHeader.ShipToAddressID, boSalesOrderHeader.Status, boSalesOrderHeader.SubTotal, boSalesOrderHeader.TaxAmt, boSalesOrderHeader.TerritoryID, boSalesOrderHeader.TotalDue);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesOrderHeaderResponseModel> MapBOToModel(
-			List<BOSalesOrderHeader> BOs)
+			List<BOSalesOrderHeader> items)
 		{
 			List<ApiSalesOrderHeaderResponseModel> response = new List<ApiSalesOrderHeaderResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -74,5 +69,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23e545bb7782a51b83cefa66192081ce</Hash>
+    <Hash>72aa63c086179cc0dd6741a1848a844e</Hash>
 </Codenesium>*/

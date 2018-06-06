@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiSpecialOfferRequestModel model
 			)
 		{
-			BOSpecialOffer BOSpecialOffer = new BOSpecialOffer();
+			BOSpecialOffer boSpecialOffer = new BOSpecialOffer();
 
-			BOSpecialOffer.SetProperties(
+			boSpecialOffer.SetProperties(
 				specialOfferID,
 				model.Category,
 				model.Description,
@@ -25,30 +25,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rowguid,
 				model.StartDate,
 				model.Type);
-			return BOSpecialOffer;
+			return boSpecialOffer;
 		}
 
 		public virtual ApiSpecialOfferResponseModel MapBOToModel(
-			BOSpecialOffer BOSpecialOffer)
+			BOSpecialOffer boSpecialOffer)
 		{
-			if (BOSpecialOffer == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSpecialOfferResponseModel();
 
-			model.SetProperties(BOSpecialOffer.Category, BOSpecialOffer.Description, BOSpecialOffer.DiscountPct, BOSpecialOffer.EndDate, BOSpecialOffer.MaxQty, BOSpecialOffer.MinQty, BOSpecialOffer.ModifiedDate, BOSpecialOffer.Rowguid, BOSpecialOffer.SpecialOfferID, BOSpecialOffer.StartDate, BOSpecialOffer.Type);
+			model.SetProperties(boSpecialOffer.Category, boSpecialOffer.Description, boSpecialOffer.DiscountPct, boSpecialOffer.EndDate, boSpecialOffer.MaxQty, boSpecialOffer.MinQty, boSpecialOffer.ModifiedDate, boSpecialOffer.Rowguid, boSpecialOffer.SpecialOfferID, boSpecialOffer.StartDate, boSpecialOffer.Type);
 
 			return model;
 		}
 
 		public virtual List<ApiSpecialOfferResponseModel> MapBOToModel(
-			List<BOSpecialOffer> BOs)
+			List<BOSpecialOffer> items)
 		{
 			List<ApiSpecialOfferResponseModel> response = new List<ApiSpecialOfferResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5c836b924d4074f8e8fb5eaaf5278c4</Hash>
+    <Hash>aaff5483e737397011cb9c6e77cba584</Hash>
 </Codenesium>*/

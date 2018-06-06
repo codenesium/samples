@@ -11,38 +11,33 @@ namespace PetShippingNS.Api.Services
 			ApiClientCommunicationRequestModel model
 			)
 		{
-			BOClientCommunication BOClientCommunication = new BOClientCommunication();
+			BOClientCommunication boClientCommunication = new BOClientCommunication();
 
-			BOClientCommunication.SetProperties(
+			boClientCommunication.SetProperties(
 				id,
 				model.ClientId,
 				model.DateCreated,
 				model.EmployeeId,
 				model.Notes);
-			return BOClientCommunication;
+			return boClientCommunication;
 		}
 
 		public virtual ApiClientCommunicationResponseModel MapBOToModel(
-			BOClientCommunication BOClientCommunication)
+			BOClientCommunication boClientCommunication)
 		{
-			if (BOClientCommunication == null)
-			{
-				return null;
-			}
-
 			var model = new ApiClientCommunicationResponseModel();
 
-			model.SetProperties(BOClientCommunication.ClientId, BOClientCommunication.DateCreated, BOClientCommunication.EmployeeId, BOClientCommunication.Id, BOClientCommunication.Notes);
+			model.SetProperties(boClientCommunication.ClientId, boClientCommunication.DateCreated, boClientCommunication.EmployeeId, boClientCommunication.Id, boClientCommunication.Notes);
 
 			return model;
 		}
 
 		public virtual List<ApiClientCommunicationResponseModel> MapBOToModel(
-			List<BOClientCommunication> BOs)
+			List<BOClientCommunication> items)
 		{
 			List<ApiClientCommunicationResponseModel> response = new List<ApiClientCommunicationResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ac3a37538aaad7ae9d33cb55870d4ca</Hash>
+    <Hash>1951d8682dea617a3c7f76265b482f01</Hash>
 </Codenesium>*/

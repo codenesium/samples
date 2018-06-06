@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOChain boChain);
 
 		List<ApiChainResponseModel> MapBOToModel(
-			List<BOChain> bos);
+			List<BOChain> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9519245574c1e8659ea8d480cacb32f0</Hash>
+    <Hash>c7dea57c41ac9559a9c1b83ba50a40b0</Hash>
 </Codenesium>*/

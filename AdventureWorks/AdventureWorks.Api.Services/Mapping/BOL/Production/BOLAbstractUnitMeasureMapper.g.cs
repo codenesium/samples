@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiUnitMeasureRequestModel model
 			)
 		{
-			BOUnitMeasure BOUnitMeasure = new BOUnitMeasure();
+			BOUnitMeasure boUnitMeasure = new BOUnitMeasure();
 
-			BOUnitMeasure.SetProperties(
+			boUnitMeasure.SetProperties(
 				unitMeasureCode,
 				model.ModifiedDate,
 				model.Name);
-			return BOUnitMeasure;
+			return boUnitMeasure;
 		}
 
 		public virtual ApiUnitMeasureResponseModel MapBOToModel(
-			BOUnitMeasure BOUnitMeasure)
+			BOUnitMeasure boUnitMeasure)
 		{
-			if (BOUnitMeasure == null)
-			{
-				return null;
-			}
-
 			var model = new ApiUnitMeasureResponseModel();
 
-			model.SetProperties(BOUnitMeasure.ModifiedDate, BOUnitMeasure.Name, BOUnitMeasure.UnitMeasureCode);
+			model.SetProperties(boUnitMeasure.ModifiedDate, boUnitMeasure.Name, boUnitMeasure.UnitMeasureCode);
 
 			return model;
 		}
 
 		public virtual List<ApiUnitMeasureResponseModel> MapBOToModel(
-			List<BOUnitMeasure> BOs)
+			List<BOUnitMeasure> items)
 		{
 			List<ApiUnitMeasureResponseModel> response = new List<ApiUnitMeasureResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de2b71e59668368d3acab57808effcca</Hash>
+    <Hash>301a4cd9513f45f82dffa6b284e766cb</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IAWBuildVersionRepository aWBuildVersionRepository;
 		private IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator;
-		private IBOLAWBuildVersionMapper BOLAWBuildVersionMapper;
-		private IDALAWBuildVersionMapper DALAWBuildVersionMapper;
+		private IBOLAWBuildVersionMapper bolAWBuildVersionMapper;
+		private IDALAWBuildVersionMapper dalAWBuildVersionMapper;
 		private ILogger logger;
 
 		public AbstractAWBuildVersionService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.aWBuildVersionRepository = aWBuildVersionRepository;
 			this.aWBuildVersionModelValidator = aWBuildVersionModelValidator;
-			this.BOLAWBuildVersionMapper = bolaWBuildVersionMapper;
-			this.DALAWBuildVersionMapper = dalaWBuildVersionMapper;
+			this.bolAWBuildVersionMapper = bolaWBuildVersionMapper;
+			this.dalAWBuildVersionMapper = dalaWBuildVersionMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.aWBuildVersionRepository.All(skip, take, orderClause);
 
-			return this.BOLAWBuildVersionMapper.MapBOToModel(this.DALAWBuildVersionMapper.MapEFToBO(records));
+			return this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiAWBuildVersionResponseModel> Get(int systemInformationID)
 		{
 			var record = await aWBuildVersionRepository.Get(systemInformationID);
 
-			return this.BOLAWBuildVersionMapper.MapBOToModel(this.DALAWBuildVersionMapper.MapEFToBO(record));
+			return this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiAWBuildVersionResponseModel> response = new CreateResponse<ApiAWBuildVersionResponseModel>(await this.aWBuildVersionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLAWBuildVersionMapper.MapModelToBO(default (int), model);
-				var record = await this.aWBuildVersionRepository.Create(this.DALAWBuildVersionMapper.MapBOToEF(bo));
+				var bo = this.bolAWBuildVersionMapper.MapModelToBO(default (int), model);
+				var record = await this.aWBuildVersionRepository.Create(this.dalAWBuildVersionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLAWBuildVersionMapper.MapBOToModel(this.DALAWBuildVersionMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLAWBuildVersionMapper.MapModelToBO(systemInformationID, model);
-				await this.aWBuildVersionRepository.Update(this.DALAWBuildVersionMapper.MapBOToEF(bo));
+				var bo = this.bolAWBuildVersionMapper.MapModelToBO(systemInformationID, model);
+				await this.aWBuildVersionRepository.Update(this.dalAWBuildVersionMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45cf38d37af2291fdc7a2e48c0dacaec</Hash>
+    <Hash>9a44861fd226250f543ab6ee68ebbb97</Hash>
 </Codenesium>*/

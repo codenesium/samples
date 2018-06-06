@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IWorkOrderRoutingRepository workOrderRoutingRepository;
 		private IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator;
-		private IBOLWorkOrderRoutingMapper BOLWorkOrderRoutingMapper;
-		private IDALWorkOrderRoutingMapper DALWorkOrderRoutingMapper;
+		private IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper;
+		private IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper;
 		private ILogger logger;
 
 		public AbstractWorkOrderRoutingService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.workOrderRoutingRepository = workOrderRoutingRepository;
 			this.workOrderRoutingModelValidator = workOrderRoutingModelValidator;
-			this.BOLWorkOrderRoutingMapper = bolworkOrderRoutingMapper;
-			this.DALWorkOrderRoutingMapper = dalworkOrderRoutingMapper;
+			this.bolWorkOrderRoutingMapper = bolworkOrderRoutingMapper;
+			this.dalWorkOrderRoutingMapper = dalworkOrderRoutingMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.workOrderRoutingRepository.All(skip, take, orderClause);
 
-			return this.BOLWorkOrderRoutingMapper.MapBOToModel(this.DALWorkOrderRoutingMapper.MapEFToBO(records));
+			return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiWorkOrderRoutingResponseModel> Get(int workOrderID)
 		{
 			var record = await workOrderRoutingRepository.Get(workOrderID);
 
-			return this.BOLWorkOrderRoutingMapper.MapBOToModel(this.DALWorkOrderRoutingMapper.MapEFToBO(record));
+			return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkOrderRoutingResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiWorkOrderRoutingResponseModel> response = new CreateResponse<ApiWorkOrderRoutingResponseModel>(await this.workOrderRoutingModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLWorkOrderRoutingMapper.MapModelToBO(default (int), model);
-				var record = await this.workOrderRoutingRepository.Create(this.DALWorkOrderRoutingMapper.MapBOToEF(bo));
+				var bo = this.bolWorkOrderRoutingMapper.MapModelToBO(default (int), model);
+				var record = await this.workOrderRoutingRepository.Create(this.dalWorkOrderRoutingMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLWorkOrderRoutingMapper.MapBOToModel(this.DALWorkOrderRoutingMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLWorkOrderRoutingMapper.MapModelToBO(workOrderID, model);
-				await this.workOrderRoutingRepository.Update(this.DALWorkOrderRoutingMapper.MapBOToEF(bo));
+				var bo = this.bolWorkOrderRoutingMapper.MapModelToBO(workOrderID, model);
+				await this.workOrderRoutingRepository.Update(this.dalWorkOrderRoutingMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<WorkOrderRouting> records = await this.workOrderRoutingRepository.GetProductID(productID);
 
-			return this.BOLWorkOrderRoutingMapper.MapBOToModel(this.DALWorkOrderRoutingMapper.MapEFToBO(records));
+			return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98917b884d168985fe21ebd5a395e0d0</Hash>
+    <Hash>1c967ef0ba72239a17f5c20b8e3b569b</Hash>
 </Codenesium>*/

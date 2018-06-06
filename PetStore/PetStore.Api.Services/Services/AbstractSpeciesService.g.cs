@@ -16,8 +16,8 @@ namespace PetStoreNS.Api.Services
 	{
 		private ISpeciesRepository speciesRepository;
 		private IApiSpeciesRequestModelValidator speciesModelValidator;
-		private IBOLSpeciesMapper BOLSpeciesMapper;
-		private IDALSpeciesMapper DALSpeciesMapper;
+		private IBOLSpeciesMapper bolSpeciesMapper;
+		private IDALSpeciesMapper dalSpeciesMapper;
 		private ILogger logger;
 
 		public AbstractSpeciesService(
@@ -31,8 +31,8 @@ namespace PetStoreNS.Api.Services
 		{
 			this.speciesRepository = speciesRepository;
 			this.speciesModelValidator = speciesModelValidator;
-			this.BOLSpeciesMapper = bolspeciesMapper;
-			this.DALSpeciesMapper = dalspeciesMapper;
+			this.bolSpeciesMapper = bolspeciesMapper;
+			this.dalSpeciesMapper = dalspeciesMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetStoreNS.Api.Services
 		{
 			var records = await this.speciesRepository.All(skip, take, orderClause);
 
-			return this.BOLSpeciesMapper.MapBOToModel(this.DALSpeciesMapper.MapEFToBO(records));
+			return this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSpeciesResponseModel> Get(int id)
 		{
 			var record = await speciesRepository.Get(id);
 
-			return this.BOLSpeciesMapper.MapBOToModel(this.DALSpeciesMapper.MapEFToBO(record));
+			return this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSpeciesResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetStoreNS.Api.Services
 			CreateResponse<ApiSpeciesResponseModel> response = new CreateResponse<ApiSpeciesResponseModel>(await this.speciesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSpeciesMapper.MapModelToBO(default (int), model);
-				var record = await this.speciesRepository.Create(this.DALSpeciesMapper.MapBOToEF(bo));
+				var bo = this.bolSpeciesMapper.MapModelToBO(default (int), model);
+				var record = await this.speciesRepository.Create(this.dalSpeciesMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSpeciesMapper.MapBOToModel(this.DALSpeciesMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetStoreNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSpeciesMapper.MapModelToBO(id, model);
-				await this.speciesRepository.Update(this.DALSpeciesMapper.MapBOToEF(bo));
+				var bo = this.bolSpeciesMapper.MapModelToBO(id, model);
+				await this.speciesRepository.Update(this.dalSpeciesMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3593346095449ffac578071d0dc3833f</Hash>
+    <Hash>9dd59454aee11480fae5ce3437cdaf40</Hash>
 </Codenesium>*/

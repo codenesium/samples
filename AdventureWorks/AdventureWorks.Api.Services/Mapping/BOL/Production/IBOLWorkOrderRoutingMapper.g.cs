@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOWorkOrderRouting boWorkOrderRouting);
 
 		List<ApiWorkOrderRoutingResponseModel> MapBOToModel(
-			List<BOWorkOrderRouting> bos);
+			List<BOWorkOrderRouting> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>24d8dad561d352d7a3414dce7739c3ca</Hash>
+    <Hash>b41ecb72e8789b44c19390327f32910f</Hash>
 </Codenesium>*/

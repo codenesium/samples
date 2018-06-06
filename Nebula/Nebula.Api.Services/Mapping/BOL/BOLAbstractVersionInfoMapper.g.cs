@@ -11,36 +11,31 @@ namespace NebulaNS.Api.Services
 			ApiVersionInfoRequestModel model
 			)
 		{
-			BOVersionInfo BOVersionInfo = new BOVersionInfo();
+			BOVersionInfo boVersionInfo = new BOVersionInfo();
 
-			BOVersionInfo.SetProperties(
+			boVersionInfo.SetProperties(
 				version,
 				model.AppliedOn,
 				model.Description);
-			return BOVersionInfo;
+			return boVersionInfo;
 		}
 
 		public virtual ApiVersionInfoResponseModel MapBOToModel(
-			BOVersionInfo BOVersionInfo)
+			BOVersionInfo boVersionInfo)
 		{
-			if (BOVersionInfo == null)
-			{
-				return null;
-			}
-
 			var model = new ApiVersionInfoResponseModel();
 
-			model.SetProperties(BOVersionInfo.AppliedOn, BOVersionInfo.Description, BOVersionInfo.Version);
+			model.SetProperties(boVersionInfo.AppliedOn, boVersionInfo.Description, boVersionInfo.Version);
 
 			return model;
 		}
 
 		public virtual List<ApiVersionInfoResponseModel> MapBOToModel(
-			List<BOVersionInfo> BOs)
+			List<BOVersionInfo> items)
 		{
 			List<ApiVersionInfoResponseModel> response = new List<ApiVersionInfoResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27eb5101653a0bb7cfc01a60ec7eba23</Hash>
+    <Hash>21b1c07ebc6f903c508f533e38f31a63</Hash>
 </Codenesium>*/

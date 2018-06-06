@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ICurrencyRepository currencyRepository;
 		private IApiCurrencyRequestModelValidator currencyModelValidator;
-		private IBOLCurrencyMapper BOLCurrencyMapper;
-		private IDALCurrencyMapper DALCurrencyMapper;
+		private IBOLCurrencyMapper bolCurrencyMapper;
+		private IDALCurrencyMapper dalCurrencyMapper;
 		private ILogger logger;
 
 		public AbstractCurrencyService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.currencyRepository = currencyRepository;
 			this.currencyModelValidator = currencyModelValidator;
-			this.BOLCurrencyMapper = bolcurrencyMapper;
-			this.DALCurrencyMapper = dalcurrencyMapper;
+			this.bolCurrencyMapper = bolcurrencyMapper;
+			this.dalCurrencyMapper = dalcurrencyMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.currencyRepository.All(skip, take, orderClause);
 
-			return this.BOLCurrencyMapper.MapBOToModel(this.DALCurrencyMapper.MapEFToBO(records));
+			return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCurrencyResponseModel> Get(string currencyCode)
 		{
 			var record = await currencyRepository.Get(currencyCode);
 
-			return this.BOLCurrencyMapper.MapBOToModel(this.DALCurrencyMapper.MapEFToBO(record));
+			return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiCurrencyResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiCurrencyResponseModel> response = new CreateResponse<ApiCurrencyResponseModel>(await this.currencyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLCurrencyMapper.MapModelToBO(default (string), model);
-				var record = await this.currencyRepository.Create(this.DALCurrencyMapper.MapBOToEF(bo));
+				var bo = this.bolCurrencyMapper.MapModelToBO(default (string), model);
+				var record = await this.currencyRepository.Create(this.dalCurrencyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLCurrencyMapper.MapBOToModel(this.DALCurrencyMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLCurrencyMapper.MapModelToBO(currencyCode, model);
-				await this.currencyRepository.Update(this.DALCurrencyMapper.MapBOToEF(bo));
+				var bo = this.bolCurrencyMapper.MapModelToBO(currencyCode, model);
+				await this.currencyRepository.Update(this.dalCurrencyMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			Currency record = await this.currencyRepository.GetName(name);
 
-			return this.BOLCurrencyMapper.MapBOToModel(this.DALCurrencyMapper.MapEFToBO(record));
+			return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>af6823a89c2ceef2d5880f8b52baf862</Hash>
+    <Hash>50d2a71676929432621fe2e8d2690d96</Hash>
 </Codenesium>*/

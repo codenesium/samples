@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOEmployeePayHistory boEmployeePayHistory);
 
 		List<ApiEmployeePayHistoryResponseModel> MapBOToModel(
-			List<BOEmployeePayHistory> bos);
+			List<BOEmployeePayHistory> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>74862158fa51e5b500e752739208dece</Hash>
+    <Hash>996c44f4b8b2067a0aecae7d019b096e</Hash>
 </Codenesium>*/

@@ -11,35 +11,30 @@ namespace PetShippingNS.Api.Services
 			ApiAirlineRequestModel model
 			)
 		{
-			BOAirline BOAirline = new BOAirline();
+			BOAirline boAirline = new BOAirline();
 
-			BOAirline.SetProperties(
+			boAirline.SetProperties(
 				id,
 				model.Name);
-			return BOAirline;
+			return boAirline;
 		}
 
 		public virtual ApiAirlineResponseModel MapBOToModel(
-			BOAirline BOAirline)
+			BOAirline boAirline)
 		{
-			if (BOAirline == null)
-			{
-				return null;
-			}
-
 			var model = new ApiAirlineResponseModel();
 
-			model.SetProperties(BOAirline.Id, BOAirline.Name);
+			model.SetProperties(boAirline.Id, boAirline.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiAirlineResponseModel> MapBOToModel(
-			List<BOAirline> BOs)
+			List<BOAirline> items)
 		{
 			List<ApiAirlineResponseModel> response = new List<ApiAirlineResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2c3403e2bd8ee8941f4a67ac3a0ccaaa</Hash>
+    <Hash>f774cdef8c6b11e0af6c8b1c8418d5f1</Hash>
 </Codenesium>*/

@@ -11,36 +11,31 @@ namespace FermataFishNS.Api.Services
 			ApiTeacherXTeacherSkillRequestModel model
 			)
 		{
-			BOTeacherXTeacherSkill BOTeacherXTeacherSkill = new BOTeacherXTeacherSkill();
+			BOTeacherXTeacherSkill boTeacherXTeacherSkill = new BOTeacherXTeacherSkill();
 
-			BOTeacherXTeacherSkill.SetProperties(
+			boTeacherXTeacherSkill.SetProperties(
 				id,
 				model.TeacherId,
 				model.TeacherSkillId);
-			return BOTeacherXTeacherSkill;
+			return boTeacherXTeacherSkill;
 		}
 
 		public virtual ApiTeacherXTeacherSkillResponseModel MapBOToModel(
-			BOTeacherXTeacherSkill BOTeacherXTeacherSkill)
+			BOTeacherXTeacherSkill boTeacherXTeacherSkill)
 		{
-			if (BOTeacherXTeacherSkill == null)
-			{
-				return null;
-			}
-
 			var model = new ApiTeacherXTeacherSkillResponseModel();
 
-			model.SetProperties(BOTeacherXTeacherSkill.Id, BOTeacherXTeacherSkill.TeacherId, BOTeacherXTeacherSkill.TeacherSkillId);
+			model.SetProperties(boTeacherXTeacherSkill.Id, boTeacherXTeacherSkill.TeacherId, boTeacherXTeacherSkill.TeacherSkillId);
 
 			return model;
 		}
 
 		public virtual List<ApiTeacherXTeacherSkillResponseModel> MapBOToModel(
-			List<BOTeacherXTeacherSkill> BOs)
+			List<BOTeacherXTeacherSkill> items)
 		{
 			List<ApiTeacherXTeacherSkillResponseModel> response = new List<ApiTeacherXTeacherSkillResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9755fdcdc74fc2c3ccadbebd4806cd07</Hash>
+    <Hash>13ef8c1e552d2f12e09b264d57ab5bbe</Hash>
 </Codenesium>*/

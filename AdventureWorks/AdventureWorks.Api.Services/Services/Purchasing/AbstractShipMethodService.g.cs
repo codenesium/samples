@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IShipMethodRepository shipMethodRepository;
 		private IApiShipMethodRequestModelValidator shipMethodModelValidator;
-		private IBOLShipMethodMapper BOLShipMethodMapper;
-		private IDALShipMethodMapper DALShipMethodMapper;
+		private IBOLShipMethodMapper bolShipMethodMapper;
+		private IDALShipMethodMapper dalShipMethodMapper;
 		private ILogger logger;
 
 		public AbstractShipMethodService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.shipMethodRepository = shipMethodRepository;
 			this.shipMethodModelValidator = shipMethodModelValidator;
-			this.BOLShipMethodMapper = bolshipMethodMapper;
-			this.DALShipMethodMapper = dalshipMethodMapper;
+			this.bolShipMethodMapper = bolshipMethodMapper;
+			this.dalShipMethodMapper = dalshipMethodMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.shipMethodRepository.All(skip, take, orderClause);
 
-			return this.BOLShipMethodMapper.MapBOToModel(this.DALShipMethodMapper.MapEFToBO(records));
+			return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiShipMethodResponseModel> Get(int shipMethodID)
 		{
 			var record = await shipMethodRepository.Get(shipMethodID);
 
-			return this.BOLShipMethodMapper.MapBOToModel(this.DALShipMethodMapper.MapEFToBO(record));
+			return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiShipMethodResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiShipMethodResponseModel> response = new CreateResponse<ApiShipMethodResponseModel>(await this.shipMethodModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLShipMethodMapper.MapModelToBO(default (int), model);
-				var record = await this.shipMethodRepository.Create(this.DALShipMethodMapper.MapBOToEF(bo));
+				var bo = this.bolShipMethodMapper.MapModelToBO(default (int), model);
+				var record = await this.shipMethodRepository.Create(this.dalShipMethodMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLShipMethodMapper.MapBOToModel(this.DALShipMethodMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLShipMethodMapper.MapModelToBO(shipMethodID, model);
-				await this.shipMethodRepository.Update(this.DALShipMethodMapper.MapBOToEF(bo));
+				var bo = this.bolShipMethodMapper.MapModelToBO(shipMethodID, model);
+				await this.shipMethodRepository.Update(this.dalShipMethodMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			ShipMethod record = await this.shipMethodRepository.GetName(name);
 
-			return this.BOLShipMethodMapper.MapBOToModel(this.DALShipMethodMapper.MapEFToBO(record));
+			return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>18b12719100ec76446ffabbd900346d5</Hash>
+    <Hash>7cee49b7f4d345d3aa1754e06ee22ad4</Hash>
 </Codenesium>*/

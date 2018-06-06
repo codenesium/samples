@@ -11,35 +11,30 @@ namespace PetStoreNS.Api.Services
 			ApiBreedRequestModel model
 			)
 		{
-			BOBreed BOBreed = new BOBreed();
+			BOBreed boBreed = new BOBreed();
 
-			BOBreed.SetProperties(
+			boBreed.SetProperties(
 				id,
 				model.Name);
-			return BOBreed;
+			return boBreed;
 		}
 
 		public virtual ApiBreedResponseModel MapBOToModel(
-			BOBreed BOBreed)
+			BOBreed boBreed)
 		{
-			if (BOBreed == null)
-			{
-				return null;
-			}
-
 			var model = new ApiBreedResponseModel();
 
-			model.SetProperties(BOBreed.Id, BOBreed.Name);
+			model.SetProperties(boBreed.Id, boBreed.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiBreedResponseModel> MapBOToModel(
-			List<BOBreed> BOs)
+			List<BOBreed> items)
 		{
 			List<ApiBreedResponseModel> response = new List<ApiBreedResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79ff1a1bd50ac244e8c2c7e0fc5e09da</Hash>
+    <Hash>3651dcbe904867dd329c3577b4c03ccb</Hash>
 </Codenesium>*/

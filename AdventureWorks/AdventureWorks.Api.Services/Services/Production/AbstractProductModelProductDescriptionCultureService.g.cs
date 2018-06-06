@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
 		private IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator;
-		private IBOLProductModelProductDescriptionCultureMapper BOLProductModelProductDescriptionCultureMapper;
-		private IDALProductModelProductDescriptionCultureMapper DALProductModelProductDescriptionCultureMapper;
+		private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
+		private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
 		private ILogger logger;
 
 		public AbstractProductModelProductDescriptionCultureService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
 			this.productModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
-			this.BOLProductModelProductDescriptionCultureMapper = bolproductModelProductDescriptionCultureMapper;
-			this.DALProductModelProductDescriptionCultureMapper = dalproductModelProductDescriptionCultureMapper;
+			this.bolProductModelProductDescriptionCultureMapper = bolproductModelProductDescriptionCultureMapper;
+			this.dalProductModelProductDescriptionCultureMapper = dalproductModelProductDescriptionCultureMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productModelProductDescriptionCultureRepository.All(skip, take, orderClause);
 
-			return this.BOLProductModelProductDescriptionCultureMapper.MapBOToModel(this.DALProductModelProductDescriptionCultureMapper.MapEFToBO(records));
+			return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductModelProductDescriptionCultureResponseModel> Get(int productModelID)
 		{
 			var record = await productModelProductDescriptionCultureRepository.Get(productModelID);
 
-			return this.BOLProductModelProductDescriptionCultureMapper.MapBOToModel(this.DALProductModelProductDescriptionCultureMapper.MapEFToBO(record));
+			return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> response = new CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>(await this.productModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductModelProductDescriptionCultureMapper.MapModelToBO(default (int), model);
-				var record = await this.productModelProductDescriptionCultureRepository.Create(this.DALProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
+				var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(default (int), model);
+				var record = await this.productModelProductDescriptionCultureRepository.Create(this.dalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductModelProductDescriptionCultureMapper.MapBOToModel(this.DALProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductModelProductDescriptionCultureMapper.MapModelToBO(productModelID, model);
-				await this.productModelProductDescriptionCultureRepository.Update(this.DALProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
+				var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(productModelID, model);
+				await this.productModelProductDescriptionCultureRepository.Update(this.dalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d27dc351879eb40138e2f8f9d9ad503f</Hash>
+    <Hash>a6629ed28aa9abb9df06b7699f677572</Hash>
 </Codenesium>*/

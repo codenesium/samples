@@ -14,10 +14,10 @@ namespace FileServiceNS.Api.Services
 			BOVersionInfo boVersionInfo);
 
 		List<ApiVersionInfoResponseModel> MapBOToModel(
-			List<BOVersionInfo> bos);
+			List<BOVersionInfo> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>58a2b5edd752076d576402dffd5bf642</Hash>
+    <Hash>301d1eafb0028d63bcda1a14b2148881</Hash>
 </Codenesium>*/

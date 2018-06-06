@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductDocumentRequestModel model
 			)
 		{
-			BOProductDocument BOProductDocument = new BOProductDocument();
+			BOProductDocument boProductDocument = new BOProductDocument();
 
-			BOProductDocument.SetProperties(
+			boProductDocument.SetProperties(
 				productID,
 				model.DocumentNode,
 				model.ModifiedDate);
-			return BOProductDocument;
+			return boProductDocument;
 		}
 
 		public virtual ApiProductDocumentResponseModel MapBOToModel(
-			BOProductDocument BOProductDocument)
+			BOProductDocument boProductDocument)
 		{
-			if (BOProductDocument == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductDocumentResponseModel();
 
-			model.SetProperties(BOProductDocument.DocumentNode, BOProductDocument.ModifiedDate, BOProductDocument.ProductID);
+			model.SetProperties(boProductDocument.DocumentNode, boProductDocument.ModifiedDate, boProductDocument.ProductID);
 
 			return model;
 		}
 
 		public virtual List<ApiProductDocumentResponseModel> MapBOToModel(
-			List<BOProductDocument> BOs)
+			List<BOProductDocument> items)
 		{
 			List<ApiProductDocumentResponseModel> response = new List<ApiProductDocumentResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24a0519a4911a3341ab0a2ed8904c987</Hash>
+    <Hash>56411a1f33272c2cb2a53134f2195cc2</Hash>
 </Codenesium>*/

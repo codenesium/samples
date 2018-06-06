@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IScrapReasonRepository scrapReasonRepository;
 		private IApiScrapReasonRequestModelValidator scrapReasonModelValidator;
-		private IBOLScrapReasonMapper BOLScrapReasonMapper;
-		private IDALScrapReasonMapper DALScrapReasonMapper;
+		private IBOLScrapReasonMapper bolScrapReasonMapper;
+		private IDALScrapReasonMapper dalScrapReasonMapper;
 		private ILogger logger;
 
 		public AbstractScrapReasonService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.scrapReasonRepository = scrapReasonRepository;
 			this.scrapReasonModelValidator = scrapReasonModelValidator;
-			this.BOLScrapReasonMapper = bolscrapReasonMapper;
-			this.DALScrapReasonMapper = dalscrapReasonMapper;
+			this.bolScrapReasonMapper = bolscrapReasonMapper;
+			this.dalScrapReasonMapper = dalscrapReasonMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.scrapReasonRepository.All(skip, take, orderClause);
 
-			return this.BOLScrapReasonMapper.MapBOToModel(this.DALScrapReasonMapper.MapEFToBO(records));
+			return this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiScrapReasonResponseModel> Get(short scrapReasonID)
 		{
 			var record = await scrapReasonRepository.Get(scrapReasonID);
 
-			return this.BOLScrapReasonMapper.MapBOToModel(this.DALScrapReasonMapper.MapEFToBO(record));
+			return this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiScrapReasonResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiScrapReasonResponseModel> response = new CreateResponse<ApiScrapReasonResponseModel>(await this.scrapReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLScrapReasonMapper.MapModelToBO(default (short), model);
-				var record = await this.scrapReasonRepository.Create(this.DALScrapReasonMapper.MapBOToEF(bo));
+				var bo = this.bolScrapReasonMapper.MapModelToBO(default (short), model);
+				var record = await this.scrapReasonRepository.Create(this.dalScrapReasonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLScrapReasonMapper.MapBOToModel(this.DALScrapReasonMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLScrapReasonMapper.MapModelToBO(scrapReasonID, model);
-				await this.scrapReasonRepository.Update(this.DALScrapReasonMapper.MapBOToEF(bo));
+				var bo = this.bolScrapReasonMapper.MapModelToBO(scrapReasonID, model);
+				await this.scrapReasonRepository.Update(this.dalScrapReasonMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace AdventureWorksNS.Api.Services
 		{
 			ScrapReason record = await this.scrapReasonRepository.GetName(name);
 
-			return this.BOLScrapReasonMapper.MapBOToModel(this.DALScrapReasonMapper.MapEFToBO(record));
+			return this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>568911db94cf3f5c5f9796d01058dcd0</Hash>
+    <Hash>480ff0015b4ac2afb07bd862309881ed</Hash>
 </Codenesium>*/

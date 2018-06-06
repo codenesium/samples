@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOShift boShift);
 
 		List<ApiShiftResponseModel> MapBOToModel(
-			List<BOShift> bos);
+			List<BOShift> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>12c38db8161a876c15e76922e6dec664</Hash>
+    <Hash>23e10ce770234e5b8ab28da45411c030</Hash>
 </Codenesium>*/

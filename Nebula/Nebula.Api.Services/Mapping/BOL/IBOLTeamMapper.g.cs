@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOTeam boTeam);
 
 		List<ApiTeamResponseModel> MapBOToModel(
-			List<BOTeam> bos);
+			List<BOTeam> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>68ee08cdd04f9758749691e9d1cf35a7</Hash>
+    <Hash>5ad1a12ff7dfa02eab8c48c40f6c2225</Hash>
 </Codenesium>*/

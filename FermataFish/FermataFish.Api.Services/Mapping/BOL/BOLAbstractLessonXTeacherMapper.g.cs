@@ -11,36 +11,31 @@ namespace FermataFishNS.Api.Services
 			ApiLessonXTeacherRequestModel model
 			)
 		{
-			BOLessonXTeacher BOLessonXTeacher = new BOLessonXTeacher();
+			BOLessonXTeacher boLessonXTeacher = new BOLessonXTeacher();
 
-			BOLessonXTeacher.SetProperties(
+			boLessonXTeacher.SetProperties(
 				id,
 				model.LessonId,
 				model.StudentId);
-			return BOLessonXTeacher;
+			return boLessonXTeacher;
 		}
 
 		public virtual ApiLessonXTeacherResponseModel MapBOToModel(
-			BOLessonXTeacher BOLessonXTeacher)
+			BOLessonXTeacher boLessonXTeacher)
 		{
-			if (BOLessonXTeacher == null)
-			{
-				return null;
-			}
-
 			var model = new ApiLessonXTeacherResponseModel();
 
-			model.SetProperties(BOLessonXTeacher.Id, BOLessonXTeacher.LessonId, BOLessonXTeacher.StudentId);
+			model.SetProperties(boLessonXTeacher.Id, boLessonXTeacher.LessonId, boLessonXTeacher.StudentId);
 
 			return model;
 		}
 
 		public virtual List<ApiLessonXTeacherResponseModel> MapBOToModel(
-			List<BOLessonXTeacher> BOs)
+			List<BOLessonXTeacher> items)
 		{
 			List<ApiLessonXTeacherResponseModel> response = new List<ApiLessonXTeacherResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>efbf8229a21b54d3dc4af9b710fb9a83</Hash>
+    <Hash>a15d7721fcf2accec8ea4c741bb27e34</Hash>
 </Codenesium>*/

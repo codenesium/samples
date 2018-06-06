@@ -11,36 +11,31 @@ namespace PetShippingNS.Api.Services
 			ApiOtherTransportRequestModel model
 			)
 		{
-			BOOtherTransport BOOtherTransport = new BOOtherTransport();
+			BOOtherTransport boOtherTransport = new BOOtherTransport();
 
-			BOOtherTransport.SetProperties(
+			boOtherTransport.SetProperties(
 				id,
 				model.HandlerId,
 				model.PipelineStepId);
-			return BOOtherTransport;
+			return boOtherTransport;
 		}
 
 		public virtual ApiOtherTransportResponseModel MapBOToModel(
-			BOOtherTransport BOOtherTransport)
+			BOOtherTransport boOtherTransport)
 		{
-			if (BOOtherTransport == null)
-			{
-				return null;
-			}
-
 			var model = new ApiOtherTransportResponseModel();
 
-			model.SetProperties(BOOtherTransport.HandlerId, BOOtherTransport.Id, BOOtherTransport.PipelineStepId);
+			model.SetProperties(boOtherTransport.HandlerId, boOtherTransport.Id, boOtherTransport.PipelineStepId);
 
 			return model;
 		}
 
 		public virtual List<ApiOtherTransportResponseModel> MapBOToModel(
-			List<BOOtherTransport> BOs)
+			List<BOOtherTransport> items)
 		{
 			List<ApiOtherTransportResponseModel> response = new List<ApiOtherTransportResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe8cc0e74d74d76eb75359d53951d9ea</Hash>
+    <Hash>b0b5c174068e34c84c595dd7df157570</Hash>
 </Codenesium>*/

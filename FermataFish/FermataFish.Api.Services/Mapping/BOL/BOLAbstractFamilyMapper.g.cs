@@ -11,9 +11,9 @@ namespace FermataFishNS.Api.Services
 			ApiFamilyRequestModel model
 			)
 		{
-			BOFamily BOFamily = new BOFamily();
+			BOFamily boFamily = new BOFamily();
 
-			BOFamily.SetProperties(
+			boFamily.SetProperties(
 				id,
 				model.Notes,
 				model.PcEmail,
@@ -21,30 +21,25 @@ namespace FermataFishNS.Api.Services
 				model.PcLastName,
 				model.PcPhone,
 				model.StudioId);
-			return BOFamily;
+			return boFamily;
 		}
 
 		public virtual ApiFamilyResponseModel MapBOToModel(
-			BOFamily BOFamily)
+			BOFamily boFamily)
 		{
-			if (BOFamily == null)
-			{
-				return null;
-			}
-
 			var model = new ApiFamilyResponseModel();
 
-			model.SetProperties(BOFamily.Id, BOFamily.Notes, BOFamily.PcEmail, BOFamily.PcFirstName, BOFamily.PcLastName, BOFamily.PcPhone, BOFamily.StudioId);
+			model.SetProperties(boFamily.Id, boFamily.Notes, boFamily.PcEmail, boFamily.PcFirstName, boFamily.PcLastName, boFamily.PcPhone, boFamily.StudioId);
 
 			return model;
 		}
 
 		public virtual List<ApiFamilyResponseModel> MapBOToModel(
-			List<BOFamily> BOs)
+			List<BOFamily> items)
 		{
 			List<ApiFamilyResponseModel> response = new List<ApiFamilyResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>74b60df7129f52ab9e34c070aaab11a9</Hash>
+    <Hash>959b8f807966a9f6ad184077dd595cb1</Hash>
 </Codenesium>*/

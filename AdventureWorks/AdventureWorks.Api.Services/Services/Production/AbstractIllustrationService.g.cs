@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IIllustrationRepository illustrationRepository;
 		private IApiIllustrationRequestModelValidator illustrationModelValidator;
-		private IBOLIllustrationMapper BOLIllustrationMapper;
-		private IDALIllustrationMapper DALIllustrationMapper;
+		private IBOLIllustrationMapper bolIllustrationMapper;
+		private IDALIllustrationMapper dalIllustrationMapper;
 		private ILogger logger;
 
 		public AbstractIllustrationService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.illustrationRepository = illustrationRepository;
 			this.illustrationModelValidator = illustrationModelValidator;
-			this.BOLIllustrationMapper = bolillustrationMapper;
-			this.DALIllustrationMapper = dalillustrationMapper;
+			this.bolIllustrationMapper = bolillustrationMapper;
+			this.dalIllustrationMapper = dalillustrationMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.illustrationRepository.All(skip, take, orderClause);
 
-			return this.BOLIllustrationMapper.MapBOToModel(this.DALIllustrationMapper.MapEFToBO(records));
+			return this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiIllustrationResponseModel> Get(int illustrationID)
 		{
 			var record = await illustrationRepository.Get(illustrationID);
 
-			return this.BOLIllustrationMapper.MapBOToModel(this.DALIllustrationMapper.MapEFToBO(record));
+			return this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiIllustrationResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiIllustrationResponseModel> response = new CreateResponse<ApiIllustrationResponseModel>(await this.illustrationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLIllustrationMapper.MapModelToBO(default (int), model);
-				var record = await this.illustrationRepository.Create(this.DALIllustrationMapper.MapBOToEF(bo));
+				var bo = this.bolIllustrationMapper.MapModelToBO(default (int), model);
+				var record = await this.illustrationRepository.Create(this.dalIllustrationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLIllustrationMapper.MapBOToModel(this.DALIllustrationMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLIllustrationMapper.MapModelToBO(illustrationID, model);
-				await this.illustrationRepository.Update(this.DALIllustrationMapper.MapBOToEF(bo));
+				var bo = this.bolIllustrationMapper.MapModelToBO(illustrationID, model);
+				await this.illustrationRepository.Update(this.dalIllustrationMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0263fa1e21b6a223b84be35efbaba748</Hash>
+    <Hash>c631f6072693aad0226afcd092a66d7e</Hash>
 </Codenesium>*/

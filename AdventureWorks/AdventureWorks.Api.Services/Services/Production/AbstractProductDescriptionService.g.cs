@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductDescriptionRepository productDescriptionRepository;
 		private IApiProductDescriptionRequestModelValidator productDescriptionModelValidator;
-		private IBOLProductDescriptionMapper BOLProductDescriptionMapper;
-		private IDALProductDescriptionMapper DALProductDescriptionMapper;
+		private IBOLProductDescriptionMapper bolProductDescriptionMapper;
+		private IDALProductDescriptionMapper dalProductDescriptionMapper;
 		private ILogger logger;
 
 		public AbstractProductDescriptionService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productDescriptionRepository = productDescriptionRepository;
 			this.productDescriptionModelValidator = productDescriptionModelValidator;
-			this.BOLProductDescriptionMapper = bolproductDescriptionMapper;
-			this.DALProductDescriptionMapper = dalproductDescriptionMapper;
+			this.bolProductDescriptionMapper = bolproductDescriptionMapper;
+			this.dalProductDescriptionMapper = dalproductDescriptionMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productDescriptionRepository.All(skip, take, orderClause);
 
-			return this.BOLProductDescriptionMapper.MapBOToModel(this.DALProductDescriptionMapper.MapEFToBO(records));
+			return this.bolProductDescriptionMapper.MapBOToModel(this.dalProductDescriptionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductDescriptionResponseModel> Get(int productDescriptionID)
 		{
 			var record = await productDescriptionRepository.Get(productDescriptionID);
 
-			return this.BOLProductDescriptionMapper.MapBOToModel(this.DALProductDescriptionMapper.MapEFToBO(record));
+			return this.bolProductDescriptionMapper.MapBOToModel(this.dalProductDescriptionMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductDescriptionResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductDescriptionResponseModel> response = new CreateResponse<ApiProductDescriptionResponseModel>(await this.productDescriptionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductDescriptionMapper.MapModelToBO(default (int), model);
-				var record = await this.productDescriptionRepository.Create(this.DALProductDescriptionMapper.MapBOToEF(bo));
+				var bo = this.bolProductDescriptionMapper.MapModelToBO(default (int), model);
+				var record = await this.productDescriptionRepository.Create(this.dalProductDescriptionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductDescriptionMapper.MapBOToModel(this.DALProductDescriptionMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductDescriptionMapper.MapBOToModel(this.dalProductDescriptionMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductDescriptionMapper.MapModelToBO(productDescriptionID, model);
-				await this.productDescriptionRepository.Update(this.DALProductDescriptionMapper.MapBOToEF(bo));
+				var bo = this.bolProductDescriptionMapper.MapModelToBO(productDescriptionID, model);
+				await this.productDescriptionRepository.Update(this.dalProductDescriptionMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29ddb631d4cb9a012c6969f1dffc145f</Hash>
+    <Hash>6210263c7a37ba2f73c44c9f2be5ea83</Hash>
 </Codenesium>*/

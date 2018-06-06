@@ -11,35 +11,30 @@ namespace NebulaNS.Api.Services
 			ApiOrganizationRequestModel model
 			)
 		{
-			BOOrganization BOOrganization = new BOOrganization();
+			BOOrganization boOrganization = new BOOrganization();
 
-			BOOrganization.SetProperties(
+			boOrganization.SetProperties(
 				id,
 				model.Name);
-			return BOOrganization;
+			return boOrganization;
 		}
 
 		public virtual ApiOrganizationResponseModel MapBOToModel(
-			BOOrganization BOOrganization)
+			BOOrganization boOrganization)
 		{
-			if (BOOrganization == null)
-			{
-				return null;
-			}
-
 			var model = new ApiOrganizationResponseModel();
 
-			model.SetProperties(BOOrganization.Id, BOOrganization.Name);
+			model.SetProperties(boOrganization.Id, boOrganization.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiOrganizationResponseModel> MapBOToModel(
-			List<BOOrganization> BOs)
+			List<BOOrganization> items)
 		{
 			List<ApiOrganizationResponseModel> response = new List<ApiOrganizationResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1389a6436cbb1ee3d996393ef57b1f2b</Hash>
+    <Hash>fbbbb4f8fa673eeb4612a992a438461f</Hash>
 </Codenesium>*/

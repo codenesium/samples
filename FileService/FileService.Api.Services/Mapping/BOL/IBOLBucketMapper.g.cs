@@ -14,10 +14,10 @@ namespace FileServiceNS.Api.Services
 			BOBucket boBucket);
 
 		List<ApiBucketResponseModel> MapBOToModel(
-			List<BOBucket> bos);
+			List<BOBucket> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9760fadaa87d60c8de7784ece811658b</Hash>
+    <Hash>c561d4f3329c1b960ce85d612221b419</Hash>
 </Codenesium>*/

@@ -14,10 +14,10 @@ namespace ESPIOTNS.Api.Services
 			BODeviceAction boDeviceAction);
 
 		List<ApiDeviceActionResponseModel> MapBOToModel(
-			List<BODeviceAction> bos);
+			List<BODeviceAction> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9b7749dc6cbfa5d2be9d66c2235ab67</Hash>
+    <Hash>3ca0925ee2fc5e6a0a8bb651453e644b</Hash>
 </Codenesium>*/

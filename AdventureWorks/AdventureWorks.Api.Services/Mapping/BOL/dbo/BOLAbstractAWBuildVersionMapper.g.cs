@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiAWBuildVersionRequestModel model
 			)
 		{
-			BOAWBuildVersion BOAWBuildVersion = new BOAWBuildVersion();
+			BOAWBuildVersion boAWBuildVersion = new BOAWBuildVersion();
 
-			BOAWBuildVersion.SetProperties(
+			boAWBuildVersion.SetProperties(
 				systemInformationID,
 				model.Database_Version,
 				model.ModifiedDate,
 				model.VersionDate);
-			return BOAWBuildVersion;
+			return boAWBuildVersion;
 		}
 
 		public virtual ApiAWBuildVersionResponseModel MapBOToModel(
-			BOAWBuildVersion BOAWBuildVersion)
+			BOAWBuildVersion boAWBuildVersion)
 		{
-			if (BOAWBuildVersion == null)
-			{
-				return null;
-			}
-
 			var model = new ApiAWBuildVersionResponseModel();
 
-			model.SetProperties(BOAWBuildVersion.Database_Version, BOAWBuildVersion.ModifiedDate, BOAWBuildVersion.SystemInformationID, BOAWBuildVersion.VersionDate);
+			model.SetProperties(boAWBuildVersion.Database_Version, boAWBuildVersion.ModifiedDate, boAWBuildVersion.SystemInformationID, boAWBuildVersion.VersionDate);
 
 			return model;
 		}
 
 		public virtual List<ApiAWBuildVersionResponseModel> MapBOToModel(
-			List<BOAWBuildVersion> BOs)
+			List<BOAWBuildVersion> items)
 		{
 			List<ApiAWBuildVersionResponseModel> response = new List<ApiAWBuildVersionResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c1c658ac9a5b8da2555b225c85c0a10</Hash>
+    <Hash>de9a82bda0a4735d98e024ee616fe0e3</Hash>
 </Codenesium>*/

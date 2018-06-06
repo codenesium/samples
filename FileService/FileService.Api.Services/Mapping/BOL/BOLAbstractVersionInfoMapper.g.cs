@@ -11,36 +11,31 @@ namespace FileServiceNS.Api.Services
 			ApiVersionInfoRequestModel model
 			)
 		{
-			BOVersionInfo BOVersionInfo = new BOVersionInfo();
+			BOVersionInfo boVersionInfo = new BOVersionInfo();
 
-			BOVersionInfo.SetProperties(
+			boVersionInfo.SetProperties(
 				version,
 				model.AppliedOn,
 				model.Description);
-			return BOVersionInfo;
+			return boVersionInfo;
 		}
 
 		public virtual ApiVersionInfoResponseModel MapBOToModel(
-			BOVersionInfo BOVersionInfo)
+			BOVersionInfo boVersionInfo)
 		{
-			if (BOVersionInfo == null)
-			{
-				return null;
-			}
-
 			var model = new ApiVersionInfoResponseModel();
 
-			model.SetProperties(BOVersionInfo.AppliedOn, BOVersionInfo.Description, BOVersionInfo.Version);
+			model.SetProperties(boVersionInfo.AppliedOn, boVersionInfo.Description, boVersionInfo.Version);
 
 			return model;
 		}
 
 		public virtual List<ApiVersionInfoResponseModel> MapBOToModel(
-			List<BOVersionInfo> BOs)
+			List<BOVersionInfo> items)
 		{
 			List<ApiVersionInfoResponseModel> response = new List<ApiVersionInfoResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d16fcc657f10897331fa0e7ba7f4af5f</Hash>
+    <Hash>18964dea4707c1c25e0ce7bb27bd62a0</Hash>
 </Codenesium>*/

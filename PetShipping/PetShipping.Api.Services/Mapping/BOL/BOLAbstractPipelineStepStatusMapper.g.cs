@@ -11,35 +11,30 @@ namespace PetShippingNS.Api.Services
 			ApiPipelineStepStatusRequestModel model
 			)
 		{
-			BOPipelineStepStatus BOPipelineStepStatus = new BOPipelineStepStatus();
+			BOPipelineStepStatus boPipelineStepStatus = new BOPipelineStepStatus();
 
-			BOPipelineStepStatus.SetProperties(
+			boPipelineStepStatus.SetProperties(
 				id,
 				model.Name);
-			return BOPipelineStepStatus;
+			return boPipelineStepStatus;
 		}
 
 		public virtual ApiPipelineStepStatusResponseModel MapBOToModel(
-			BOPipelineStepStatus BOPipelineStepStatus)
+			BOPipelineStepStatus boPipelineStepStatus)
 		{
-			if (BOPipelineStepStatus == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPipelineStepStatusResponseModel();
 
-			model.SetProperties(BOPipelineStepStatus.Id, BOPipelineStepStatus.Name);
+			model.SetProperties(boPipelineStepStatus.Id, boPipelineStepStatus.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiPipelineStepStatusResponseModel> MapBOToModel(
-			List<BOPipelineStepStatus> BOs)
+			List<BOPipelineStepStatus> items)
 		{
 			List<ApiPipelineStepStatusResponseModel> response = new List<ApiPipelineStepStatusResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a41065f7984a2538dd47beb29523881</Hash>
+    <Hash>f3ea389ed5275b9c5eaea35b6a776d32</Hash>
 </Codenesium>*/

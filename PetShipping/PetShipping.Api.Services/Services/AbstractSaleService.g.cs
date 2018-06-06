@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private ISaleRepository saleRepository;
 		private IApiSaleRequestModelValidator saleModelValidator;
-		private IBOLSaleMapper BOLSaleMapper;
-		private IDALSaleMapper DALSaleMapper;
+		private IBOLSaleMapper bolSaleMapper;
+		private IDALSaleMapper dalSaleMapper;
 		private ILogger logger;
 
 		public AbstractSaleService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.saleRepository = saleRepository;
 			this.saleModelValidator = saleModelValidator;
-			this.BOLSaleMapper = bolsaleMapper;
-			this.DALSaleMapper = dalsaleMapper;
+			this.bolSaleMapper = bolsaleMapper;
+			this.dalSaleMapper = dalsaleMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.saleRepository.All(skip, take, orderClause);
 
-			return this.BOLSaleMapper.MapBOToModel(this.DALSaleMapper.MapEFToBO(records));
+			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSaleResponseModel> Get(int id)
 		{
 			var record = await saleRepository.Get(id);
 
-			return this.BOLSaleMapper.MapBOToModel(this.DALSaleMapper.MapEFToBO(record));
+			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSaleMapper.MapModelToBO(default (int), model);
-				var record = await this.saleRepository.Create(this.DALSaleMapper.MapBOToEF(bo));
+				var bo = this.bolSaleMapper.MapModelToBO(default (int), model);
+				var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSaleMapper.MapBOToModel(this.DALSaleMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSaleMapper.MapModelToBO(id, model);
-				await this.saleRepository.Update(this.DALSaleMapper.MapBOToEF(bo));
+				var bo = this.bolSaleMapper.MapModelToBO(id, model);
+				await this.saleRepository.Update(this.dalSaleMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f7b5b23498ac07c600654a34087a04e0</Hash>
+    <Hash>11691f1e42cc23499a1d7b46534bd74f</Hash>
 </Codenesium>*/

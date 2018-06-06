@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private IStudentRepository studentRepository;
 		private IApiStudentRequestModelValidator studentModelValidator;
-		private IBOLStudentMapper BOLStudentMapper;
-		private IDALStudentMapper DALStudentMapper;
+		private IBOLStudentMapper bolStudentMapper;
+		private IDALStudentMapper dalStudentMapper;
 		private ILogger logger;
 
 		public AbstractStudentService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.studentRepository = studentRepository;
 			this.studentModelValidator = studentModelValidator;
-			this.BOLStudentMapper = bolstudentMapper;
-			this.DALStudentMapper = dalstudentMapper;
+			this.bolStudentMapper = bolstudentMapper;
+			this.dalStudentMapper = dalstudentMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.studentRepository.All(skip, take, orderClause);
 
-			return this.BOLStudentMapper.MapBOToModel(this.DALStudentMapper.MapEFToBO(records));
+			return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStudentResponseModel> Get(int id)
 		{
 			var record = await studentRepository.Get(id);
 
-			return this.BOLStudentMapper.MapBOToModel(this.DALStudentMapper.MapEFToBO(record));
+			return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiStudentResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiStudentResponseModel> response = new CreateResponse<ApiStudentResponseModel>(await this.studentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLStudentMapper.MapModelToBO(default (int), model);
-				var record = await this.studentRepository.Create(this.DALStudentMapper.MapBOToEF(bo));
+				var bo = this.bolStudentMapper.MapModelToBO(default (int), model);
+				var record = await this.studentRepository.Create(this.dalStudentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLStudentMapper.MapBOToModel(this.DALStudentMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLStudentMapper.MapModelToBO(id, model);
-				await this.studentRepository.Update(this.DALStudentMapper.MapBOToEF(bo));
+				var bo = this.bolStudentMapper.MapModelToBO(id, model);
+				await this.studentRepository.Update(this.dalStudentMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7fda2273c8c0b2c7376c9b891c52b25</Hash>
+    <Hash>5943d2121dcec840c4f582e666874dca</Hash>
 </Codenesium>*/

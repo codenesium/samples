@@ -16,8 +16,8 @@ namespace FileServiceNS.Api.Services
 	{
 		private IBucketRepository bucketRepository;
 		private IApiBucketRequestModelValidator bucketModelValidator;
-		private IBOLBucketMapper BOLBucketMapper;
-		private IDALBucketMapper DALBucketMapper;
+		private IBOLBucketMapper bolBucketMapper;
+		private IDALBucketMapper dalBucketMapper;
 		private ILogger logger;
 
 		public AbstractBucketService(
@@ -31,8 +31,8 @@ namespace FileServiceNS.Api.Services
 		{
 			this.bucketRepository = bucketRepository;
 			this.bucketModelValidator = bucketModelValidator;
-			this.BOLBucketMapper = bolbucketMapper;
-			this.DALBucketMapper = dalbucketMapper;
+			this.bolBucketMapper = bolbucketMapper;
+			this.dalBucketMapper = dalbucketMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FileServiceNS.Api.Services
 		{
 			var records = await this.bucketRepository.All(skip, take, orderClause);
 
-			return this.BOLBucketMapper.MapBOToModel(this.DALBucketMapper.MapEFToBO(records));
+			return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBucketResponseModel> Get(int id)
 		{
 			var record = await bucketRepository.Get(id);
 
-			return this.BOLBucketMapper.MapBOToModel(this.DALBucketMapper.MapEFToBO(record));
+			return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiBucketResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FileServiceNS.Api.Services
 			CreateResponse<ApiBucketResponseModel> response = new CreateResponse<ApiBucketResponseModel>(await this.bucketModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLBucketMapper.MapModelToBO(default (int), model);
-				var record = await this.bucketRepository.Create(this.DALBucketMapper.MapBOToEF(bo));
+				var bo = this.bolBucketMapper.MapModelToBO(default (int), model);
+				var record = await this.bucketRepository.Create(this.dalBucketMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLBucketMapper.MapBOToModel(this.DALBucketMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FileServiceNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLBucketMapper.MapModelToBO(id, model);
-				await this.bucketRepository.Update(this.DALBucketMapper.MapBOToEF(bo));
+				var bo = this.bolBucketMapper.MapModelToBO(id, model);
+				await this.bucketRepository.Update(this.dalBucketMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace FileServiceNS.Api.Services
 		{
 			Bucket record = await this.bucketRepository.GetExternalId(externalId);
 
-			return this.BOLBucketMapper.MapBOToModel(this.DALBucketMapper.MapEFToBO(record));
+			return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
 		}
 		public async Task<ApiBucketResponseModel> GetName(string name)
 		{
 			Bucket record = await this.bucketRepository.GetName(name);
 
-			return this.BOLBucketMapper.MapBOToModel(this.DALBucketMapper.MapEFToBO(record));
+			return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>64b9d97dd8b7afd1eb75e2c5b63013e6</Hash>
+    <Hash>c789f9bee45a6ed4b6c6509c3e928c80</Hash>
 </Codenesium>*/

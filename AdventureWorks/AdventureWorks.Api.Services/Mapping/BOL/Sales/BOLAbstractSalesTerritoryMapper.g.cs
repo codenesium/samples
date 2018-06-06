@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesTerritoryRequestModel model
 			)
 		{
-			BOSalesTerritory BOSalesTerritory = new BOSalesTerritory();
+			BOSalesTerritory boSalesTerritory = new BOSalesTerritory();
 
-			BOSalesTerritory.SetProperties(
+			boSalesTerritory.SetProperties(
 				territoryID,
 				model.CostLastYear,
 				model.CostYTD,
@@ -24,30 +24,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rowguid,
 				model.SalesLastYear,
 				model.SalesYTD);
-			return BOSalesTerritory;
+			return boSalesTerritory;
 		}
 
 		public virtual ApiSalesTerritoryResponseModel MapBOToModel(
-			BOSalesTerritory BOSalesTerritory)
+			BOSalesTerritory boSalesTerritory)
 		{
-			if (BOSalesTerritory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesTerritoryResponseModel();
 
-			model.SetProperties(BOSalesTerritory.CostLastYear, BOSalesTerritory.CostYTD, BOSalesTerritory.CountryRegionCode, BOSalesTerritory.@Group, BOSalesTerritory.ModifiedDate, BOSalesTerritory.Name, BOSalesTerritory.Rowguid, BOSalesTerritory.SalesLastYear, BOSalesTerritory.SalesYTD, BOSalesTerritory.TerritoryID);
+			model.SetProperties(boSalesTerritory.CostLastYear, boSalesTerritory.CostYTD, boSalesTerritory.CountryRegionCode, boSalesTerritory.@Group, boSalesTerritory.ModifiedDate, boSalesTerritory.Name, boSalesTerritory.Rowguid, boSalesTerritory.SalesLastYear, boSalesTerritory.SalesYTD, boSalesTerritory.TerritoryID);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesTerritoryResponseModel> MapBOToModel(
-			List<BOSalesTerritory> BOs)
+			List<BOSalesTerritory> items)
 		{
 			List<ApiSalesTerritoryResponseModel> response = new List<ApiSalesTerritoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -58,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53c81cb3145a0c169a4bb1b3bb7b2f01</Hash>
+    <Hash>4da5493e63cb83317d2c271a730aa384</Hash>
 </Codenesium>*/

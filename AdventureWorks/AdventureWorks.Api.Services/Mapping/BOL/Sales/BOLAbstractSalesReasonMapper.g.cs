@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesReasonRequestModel model
 			)
 		{
-			BOSalesReason BOSalesReason = new BOSalesReason();
+			BOSalesReason boSalesReason = new BOSalesReason();
 
-			BOSalesReason.SetProperties(
+			boSalesReason.SetProperties(
 				salesReasonID,
 				model.ModifiedDate,
 				model.Name,
 				model.ReasonType);
-			return BOSalesReason;
+			return boSalesReason;
 		}
 
 		public virtual ApiSalesReasonResponseModel MapBOToModel(
-			BOSalesReason BOSalesReason)
+			BOSalesReason boSalesReason)
 		{
-			if (BOSalesReason == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesReasonResponseModel();
 
-			model.SetProperties(BOSalesReason.ModifiedDate, BOSalesReason.Name, BOSalesReason.ReasonType, BOSalesReason.SalesReasonID);
+			model.SetProperties(boSalesReason.ModifiedDate, boSalesReason.Name, boSalesReason.ReasonType, boSalesReason.SalesReasonID);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesReasonResponseModel> MapBOToModel(
-			List<BOSalesReason> BOs)
+			List<BOSalesReason> items)
 		{
 			List<ApiSalesReasonResponseModel> response = new List<ApiSalesReasonResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c77bf2d627b9aaeb78ab616949b15a8d</Hash>
+    <Hash>fd98ea9e2ee0e286ad09adfb25eb1a78</Hash>
 </Codenesium>*/

@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesOrderHeaderSalesReasonRequestModel model
 			)
 		{
-			BOSalesOrderHeaderSalesReason BOSalesOrderHeaderSalesReason = new BOSalesOrderHeaderSalesReason();
+			BOSalesOrderHeaderSalesReason boSalesOrderHeaderSalesReason = new BOSalesOrderHeaderSalesReason();
 
-			BOSalesOrderHeaderSalesReason.SetProperties(
+			boSalesOrderHeaderSalesReason.SetProperties(
 				salesOrderID,
 				model.ModifiedDate,
 				model.SalesReasonID);
-			return BOSalesOrderHeaderSalesReason;
+			return boSalesOrderHeaderSalesReason;
 		}
 
 		public virtual ApiSalesOrderHeaderSalesReasonResponseModel MapBOToModel(
-			BOSalesOrderHeaderSalesReason BOSalesOrderHeaderSalesReason)
+			BOSalesOrderHeaderSalesReason boSalesOrderHeaderSalesReason)
 		{
-			if (BOSalesOrderHeaderSalesReason == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesOrderHeaderSalesReasonResponseModel();
 
-			model.SetProperties(BOSalesOrderHeaderSalesReason.ModifiedDate, BOSalesOrderHeaderSalesReason.SalesOrderID, BOSalesOrderHeaderSalesReason.SalesReasonID);
+			model.SetProperties(boSalesOrderHeaderSalesReason.ModifiedDate, boSalesOrderHeaderSalesReason.SalesOrderID, boSalesOrderHeaderSalesReason.SalesReasonID);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesOrderHeaderSalesReasonResponseModel> MapBOToModel(
-			List<BOSalesOrderHeaderSalesReason> BOs)
+			List<BOSalesOrderHeaderSalesReason> items)
 		{
 			List<ApiSalesOrderHeaderSalesReasonResponseModel> response = new List<ApiSalesOrderHeaderSalesReasonResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05a4008a34bfab134a6a64adc23626b6</Hash>
+    <Hash>6020e5dae3194c4be7cdd6bc5eeb622e</Hash>
 </Codenesium>*/

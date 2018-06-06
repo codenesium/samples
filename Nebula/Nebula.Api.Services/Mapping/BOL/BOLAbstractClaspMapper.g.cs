@@ -11,36 +11,31 @@ namespace NebulaNS.Api.Services
 			ApiClaspRequestModel model
 			)
 		{
-			BOClasp BOClasp = new BOClasp();
+			BOClasp boClasp = new BOClasp();
 
-			BOClasp.SetProperties(
+			boClasp.SetProperties(
 				id,
 				model.NextChainId,
 				model.PreviousChainId);
-			return BOClasp;
+			return boClasp;
 		}
 
 		public virtual ApiClaspResponseModel MapBOToModel(
-			BOClasp BOClasp)
+			BOClasp boClasp)
 		{
-			if (BOClasp == null)
-			{
-				return null;
-			}
-
 			var model = new ApiClaspResponseModel();
 
-			model.SetProperties(BOClasp.Id, BOClasp.NextChainId, BOClasp.PreviousChainId);
+			model.SetProperties(boClasp.Id, boClasp.NextChainId, boClasp.PreviousChainId);
 
 			return model;
 		}
 
 		public virtual List<ApiClaspResponseModel> MapBOToModel(
-			List<BOClasp> BOs)
+			List<BOClasp> items)
 		{
 			List<ApiClaspResponseModel> response = new List<ApiClaspResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d19e4ffe3da8d85adcf0f383332d0d7</Hash>
+    <Hash>0534f48ed0d95ce6dc9178d546f84a67</Hash>
 </Codenesium>*/

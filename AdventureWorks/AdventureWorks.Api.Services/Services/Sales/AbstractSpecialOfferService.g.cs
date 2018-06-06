@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ISpecialOfferRepository specialOfferRepository;
 		private IApiSpecialOfferRequestModelValidator specialOfferModelValidator;
-		private IBOLSpecialOfferMapper BOLSpecialOfferMapper;
-		private IDALSpecialOfferMapper DALSpecialOfferMapper;
+		private IBOLSpecialOfferMapper bolSpecialOfferMapper;
+		private IDALSpecialOfferMapper dalSpecialOfferMapper;
 		private ILogger logger;
 
 		public AbstractSpecialOfferService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.specialOfferRepository = specialOfferRepository;
 			this.specialOfferModelValidator = specialOfferModelValidator;
-			this.BOLSpecialOfferMapper = bolspecialOfferMapper;
-			this.DALSpecialOfferMapper = dalspecialOfferMapper;
+			this.bolSpecialOfferMapper = bolspecialOfferMapper;
+			this.dalSpecialOfferMapper = dalspecialOfferMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.specialOfferRepository.All(skip, take, orderClause);
 
-			return this.BOLSpecialOfferMapper.MapBOToModel(this.DALSpecialOfferMapper.MapEFToBO(records));
+			return this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSpecialOfferResponseModel> Get(int specialOfferID)
 		{
 			var record = await specialOfferRepository.Get(specialOfferID);
 
-			return this.BOLSpecialOfferMapper.MapBOToModel(this.DALSpecialOfferMapper.MapEFToBO(record));
+			return this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiSpecialOfferResponseModel> response = new CreateResponse<ApiSpecialOfferResponseModel>(await this.specialOfferModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSpecialOfferMapper.MapModelToBO(default (int), model);
-				var record = await this.specialOfferRepository.Create(this.DALSpecialOfferMapper.MapBOToEF(bo));
+				var bo = this.bolSpecialOfferMapper.MapModelToBO(default (int), model);
+				var record = await this.specialOfferRepository.Create(this.dalSpecialOfferMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSpecialOfferMapper.MapBOToModel(this.DALSpecialOfferMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSpecialOfferMapper.MapModelToBO(specialOfferID, model);
-				await this.specialOfferRepository.Update(this.DALSpecialOfferMapper.MapBOToEF(bo));
+				var bo = this.bolSpecialOfferMapper.MapModelToBO(specialOfferID, model);
+				await this.specialOfferRepository.Update(this.dalSpecialOfferMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>facc0a5020b65a1edd80f97e00297d45</Hash>
+    <Hash>ca0e22ad5ce83333fb2f3f58e1bdc74f</Hash>
 </Codenesium>*/

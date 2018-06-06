@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductInventoryRequestModel model
 			)
 		{
-			BOProductInventory BOProductInventory = new BOProductInventory();
+			BOProductInventory boProductInventory = new BOProductInventory();
 
-			BOProductInventory.SetProperties(
+			boProductInventory.SetProperties(
 				productID,
 				model.Bin,
 				model.LocationID,
@@ -21,30 +21,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Quantity,
 				model.Rowguid,
 				model.Shelf);
-			return BOProductInventory;
+			return boProductInventory;
 		}
 
 		public virtual ApiProductInventoryResponseModel MapBOToModel(
-			BOProductInventory BOProductInventory)
+			BOProductInventory boProductInventory)
 		{
-			if (BOProductInventory == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductInventoryResponseModel();
 
-			model.SetProperties(BOProductInventory.Bin, BOProductInventory.LocationID, BOProductInventory.ModifiedDate, BOProductInventory.ProductID, BOProductInventory.Quantity, BOProductInventory.Rowguid, BOProductInventory.Shelf);
+			model.SetProperties(boProductInventory.Bin, boProductInventory.LocationID, boProductInventory.ModifiedDate, boProductInventory.ProductID, boProductInventory.Quantity, boProductInventory.Rowguid, boProductInventory.Shelf);
 
 			return model;
 		}
 
 		public virtual List<ApiProductInventoryResponseModel> MapBOToModel(
-			List<BOProductInventory> BOs)
+			List<BOProductInventory> items)
 		{
 			List<ApiProductInventoryResponseModel> response = new List<ApiProductInventoryResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea0bce024d9cb515b8592f7597d096de</Hash>
+    <Hash>9b5228289a3e1908e7b61b697eb5930a</Hash>
 </Codenesium>*/

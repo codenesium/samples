@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
 		private IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator;
-		private IBOLSalesOrderHeaderSalesReasonMapper BOLSalesOrderHeaderSalesReasonMapper;
-		private IDALSalesOrderHeaderSalesReasonMapper DALSalesOrderHeaderSalesReasonMapper;
+		private IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper;
+		private IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper;
 		private ILogger logger;
 
 		public AbstractSalesOrderHeaderSalesReasonService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
 			this.salesOrderHeaderSalesReasonModelValidator = salesOrderHeaderSalesReasonModelValidator;
-			this.BOLSalesOrderHeaderSalesReasonMapper = bolsalesOrderHeaderSalesReasonMapper;
-			this.DALSalesOrderHeaderSalesReasonMapper = dalsalesOrderHeaderSalesReasonMapper;
+			this.bolSalesOrderHeaderSalesReasonMapper = bolsalesOrderHeaderSalesReasonMapper;
+			this.dalSalesOrderHeaderSalesReasonMapper = dalsalesOrderHeaderSalesReasonMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.salesOrderHeaderSalesReasonRepository.All(skip, take, orderClause);
 
-			return this.BOLSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.DALSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
+			return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesOrderHeaderSalesReasonResponseModel> Get(int salesOrderID)
 		{
 			var record = await salesOrderHeaderSalesReasonRepository.Get(salesOrderID);
 
-			return this.BOLSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.DALSalesOrderHeaderSalesReasonMapper.MapEFToBO(record));
+			return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> response = new CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>(await this.salesOrderHeaderSalesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLSalesOrderHeaderSalesReasonMapper.MapModelToBO(default (int), model);
-				var record = await this.salesOrderHeaderSalesReasonRepository.Create(this.DALSalesOrderHeaderSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.bolSalesOrderHeaderSalesReasonMapper.MapModelToBO(default (int), model);
+				var record = await this.salesOrderHeaderSalesReasonRepository.Create(this.dalSalesOrderHeaderSalesReasonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.DALSalesOrderHeaderSalesReasonMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLSalesOrderHeaderSalesReasonMapper.MapModelToBO(salesOrderID, model);
-				await this.salesOrderHeaderSalesReasonRepository.Update(this.DALSalesOrderHeaderSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.bolSalesOrderHeaderSalesReasonMapper.MapModelToBO(salesOrderID, model);
+				await this.salesOrderHeaderSalesReasonRepository.Update(this.dalSalesOrderHeaderSalesReasonMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e0e0356125a62aef1ceae4e0dbd78b8</Hash>
+    <Hash>95e06359ade5564fe7c3c353d3304ca8</Hash>
 </Codenesium>*/

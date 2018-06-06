@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductDocumentRepository productDocumentRepository;
 		private IApiProductDocumentRequestModelValidator productDocumentModelValidator;
-		private IBOLProductDocumentMapper BOLProductDocumentMapper;
-		private IDALProductDocumentMapper DALProductDocumentMapper;
+		private IBOLProductDocumentMapper bolProductDocumentMapper;
+		private IDALProductDocumentMapper dalProductDocumentMapper;
 		private ILogger logger;
 
 		public AbstractProductDocumentService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productDocumentRepository = productDocumentRepository;
 			this.productDocumentModelValidator = productDocumentModelValidator;
-			this.BOLProductDocumentMapper = bolproductDocumentMapper;
-			this.DALProductDocumentMapper = dalproductDocumentMapper;
+			this.bolProductDocumentMapper = bolproductDocumentMapper;
+			this.dalProductDocumentMapper = dalproductDocumentMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productDocumentRepository.All(skip, take, orderClause);
 
-			return this.BOLProductDocumentMapper.MapBOToModel(this.DALProductDocumentMapper.MapEFToBO(records));
+			return this.bolProductDocumentMapper.MapBOToModel(this.dalProductDocumentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductDocumentResponseModel> Get(int productID)
 		{
 			var record = await productDocumentRepository.Get(productID);
 
-			return this.BOLProductDocumentMapper.MapBOToModel(this.DALProductDocumentMapper.MapEFToBO(record));
+			return this.bolProductDocumentMapper.MapBOToModel(this.dalProductDocumentMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductDocumentResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductDocumentResponseModel> response = new CreateResponse<ApiProductDocumentResponseModel>(await this.productDocumentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductDocumentMapper.MapModelToBO(default (int), model);
-				var record = await this.productDocumentRepository.Create(this.DALProductDocumentMapper.MapBOToEF(bo));
+				var bo = this.bolProductDocumentMapper.MapModelToBO(default (int), model);
+				var record = await this.productDocumentRepository.Create(this.dalProductDocumentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductDocumentMapper.MapBOToModel(this.DALProductDocumentMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductDocumentMapper.MapBOToModel(this.dalProductDocumentMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductDocumentMapper.MapModelToBO(productID, model);
-				await this.productDocumentRepository.Update(this.DALProductDocumentMapper.MapBOToEF(bo));
+				var bo = this.bolProductDocumentMapper.MapModelToBO(productID, model);
+				await this.productDocumentRepository.Update(this.dalProductDocumentMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61b75f74e2e567f3e7b11f22fc770c6c</Hash>
+    <Hash>8fc3355e3540d2d4323a8b0e9020214a</Hash>
 </Codenesium>*/

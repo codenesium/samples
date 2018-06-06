@@ -14,10 +14,10 @@ namespace FermataFishNS.Api.Services
 			BORate boRate);
 
 		List<ApiRateResponseModel> MapBOToModel(
-			List<BORate> bos);
+			List<BORate> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae418df333e930ce92e83940d2dbc054</Hash>
+    <Hash>c1572dac4d9cda128350183de8b62c89</Hash>
 </Codenesium>*/

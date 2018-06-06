@@ -14,10 +14,10 @@ namespace PetStoreNS.Api.Services
 			BOSpecies boSpecies);
 
 		List<ApiSpeciesResponseModel> MapBOToModel(
-			List<BOSpecies> bos);
+			List<BOSpecies> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f6781f6398a9981bc44df5972703e350</Hash>
+    <Hash>ec5844b29a26d25dc172ffdf4f50f123</Hash>
 </Codenesium>*/

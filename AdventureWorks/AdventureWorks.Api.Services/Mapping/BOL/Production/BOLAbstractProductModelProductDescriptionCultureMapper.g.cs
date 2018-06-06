@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductModelProductDescriptionCultureRequestModel model
 			)
 		{
-			BOProductModelProductDescriptionCulture BOProductModelProductDescriptionCulture = new BOProductModelProductDescriptionCulture();
+			BOProductModelProductDescriptionCulture boProductModelProductDescriptionCulture = new BOProductModelProductDescriptionCulture();
 
-			BOProductModelProductDescriptionCulture.SetProperties(
+			boProductModelProductDescriptionCulture.SetProperties(
 				productModelID,
 				model.CultureID,
 				model.ModifiedDate,
 				model.ProductDescriptionID);
-			return BOProductModelProductDescriptionCulture;
+			return boProductModelProductDescriptionCulture;
 		}
 
 		public virtual ApiProductModelProductDescriptionCultureResponseModel MapBOToModel(
-			BOProductModelProductDescriptionCulture BOProductModelProductDescriptionCulture)
+			BOProductModelProductDescriptionCulture boProductModelProductDescriptionCulture)
 		{
-			if (BOProductModelProductDescriptionCulture == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductModelProductDescriptionCultureResponseModel();
 
-			model.SetProperties(BOProductModelProductDescriptionCulture.CultureID, BOProductModelProductDescriptionCulture.ModifiedDate, BOProductModelProductDescriptionCulture.ProductDescriptionID, BOProductModelProductDescriptionCulture.ProductModelID);
+			model.SetProperties(boProductModelProductDescriptionCulture.CultureID, boProductModelProductDescriptionCulture.ModifiedDate, boProductModelProductDescriptionCulture.ProductDescriptionID, boProductModelProductDescriptionCulture.ProductModelID);
 
 			return model;
 		}
 
 		public virtual List<ApiProductModelProductDescriptionCultureResponseModel> MapBOToModel(
-			List<BOProductModelProductDescriptionCulture> BOs)
+			List<BOProductModelProductDescriptionCulture> items)
 		{
 			List<ApiProductModelProductDescriptionCultureResponseModel> response = new List<ApiProductModelProductDescriptionCultureResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3591666219a6c6aaddaad5735a3fa02a</Hash>
+    <Hash>e0d4d20da8e39027a15fbc5882ceb4a2</Hash>
 </Codenesium>*/

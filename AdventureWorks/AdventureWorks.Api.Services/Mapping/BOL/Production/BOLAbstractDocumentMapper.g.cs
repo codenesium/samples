@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiDocumentRequestModel model
 			)
 		{
-			BODocument BODocument = new BODocument();
+			BODocument boDocument = new BODocument();
 
-			BODocument.SetProperties(
+			boDocument.SetProperties(
 				documentNode,
 				model.ChangeNumber,
 				model.Document1,
@@ -28,30 +28,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rowguid,
 				model.Status,
 				model.Title);
-			return BODocument;
+			return boDocument;
 		}
 
 		public virtual ApiDocumentResponseModel MapBOToModel(
-			BODocument BODocument)
+			BODocument boDocument)
 		{
-			if (BODocument == null)
-			{
-				return null;
-			}
-
 			var model = new ApiDocumentResponseModel();
 
-			model.SetProperties(BODocument.ChangeNumber, BODocument.Document1, BODocument.DocumentLevel, BODocument.DocumentNode, BODocument.DocumentSummary, BODocument.FileExtension, BODocument.FileName, BODocument.FolderFlag, BODocument.ModifiedDate, BODocument.Owner, BODocument.Revision, BODocument.Rowguid, BODocument.Status, BODocument.Title);
+			model.SetProperties(boDocument.ChangeNumber, boDocument.Document1, boDocument.DocumentLevel, boDocument.DocumentNode, boDocument.DocumentSummary, boDocument.FileExtension, boDocument.FileName, boDocument.FolderFlag, boDocument.ModifiedDate, boDocument.Owner, boDocument.Revision, boDocument.Rowguid, boDocument.Status, boDocument.Title);
 
 			return model;
 		}
 
 		public virtual List<ApiDocumentResponseModel> MapBOToModel(
-			List<BODocument> BOs)
+			List<BODocument> items)
 		{
 			List<ApiDocumentResponseModel> response = new List<ApiDocumentResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -62,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5db7f84eae99f06267df53e6199c09b6</Hash>
+    <Hash>da2a4de4bed0173e398162918da208bb</Hash>
 </Codenesium>*/

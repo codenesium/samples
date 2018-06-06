@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IProductPhotoRepository productPhotoRepository;
 		private IApiProductPhotoRequestModelValidator productPhotoModelValidator;
-		private IBOLProductPhotoMapper BOLProductPhotoMapper;
-		private IDALProductPhotoMapper DALProductPhotoMapper;
+		private IBOLProductPhotoMapper bolProductPhotoMapper;
+		private IDALProductPhotoMapper dalProductPhotoMapper;
 		private ILogger logger;
 
 		public AbstractProductPhotoService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.productPhotoRepository = productPhotoRepository;
 			this.productPhotoModelValidator = productPhotoModelValidator;
-			this.BOLProductPhotoMapper = bolproductPhotoMapper;
-			this.DALProductPhotoMapper = dalproductPhotoMapper;
+			this.bolProductPhotoMapper = bolproductPhotoMapper;
+			this.dalProductPhotoMapper = dalproductPhotoMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.productPhotoRepository.All(skip, take, orderClause);
 
-			return this.BOLProductPhotoMapper.MapBOToModel(this.DALProductPhotoMapper.MapEFToBO(records));
+			return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductPhotoResponseModel> Get(int productPhotoID)
 		{
 			var record = await productPhotoRepository.Get(productPhotoID);
 
-			return this.BOLProductPhotoMapper.MapBOToModel(this.DALProductPhotoMapper.MapEFToBO(record));
+			return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiProductPhotoResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiProductPhotoResponseModel> response = new CreateResponse<ApiProductPhotoResponseModel>(await this.productPhotoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLProductPhotoMapper.MapModelToBO(default (int), model);
-				var record = await this.productPhotoRepository.Create(this.DALProductPhotoMapper.MapBOToEF(bo));
+				var bo = this.bolProductPhotoMapper.MapModelToBO(default (int), model);
+				var record = await this.productPhotoRepository.Create(this.dalProductPhotoMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLProductPhotoMapper.MapBOToModel(this.DALProductPhotoMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLProductPhotoMapper.MapModelToBO(productPhotoID, model);
-				await this.productPhotoRepository.Update(this.DALProductPhotoMapper.MapBOToEF(bo));
+				var bo = this.bolProductPhotoMapper.MapModelToBO(productPhotoID, model);
+				await this.productPhotoRepository.Update(this.dalProductPhotoMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31056e0353daf1efaf2d6db071f311ab</Hash>
+    <Hash>99596bd4cbd771be65e5350637c973f4</Hash>
 </Codenesium>*/

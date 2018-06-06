@@ -14,10 +14,10 @@ namespace PetStoreNS.Api.Services
 			BOPaymentType boPaymentType);
 
 		List<ApiPaymentTypeResponseModel> MapBOToModel(
-			List<BOPaymentType> bos);
+			List<BOPaymentType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>53ed6bf9019e319feb1a793f08a07f6b</Hash>
+    <Hash>0531a9f43335d51735b056bdd5fae2d7</Hash>
 </Codenesium>*/

@@ -11,9 +11,9 @@ namespace NebulaNS.Api.Services
 			ApiLinkRequestModel model
 			)
 		{
-			BOLink BOLink = new BOLink();
+			BOLink boLink = new BOLink();
 
-			BOLink.SetProperties(
+			boLink.SetProperties(
 				id,
 				model.AssignedMachineId,
 				model.ChainId,
@@ -27,30 +27,25 @@ namespace NebulaNS.Api.Services
 				model.Response,
 				model.StaticParameters,
 				model.TimeoutInSeconds);
-			return BOLink;
+			return boLink;
 		}
 
 		public virtual ApiLinkResponseModel MapBOToModel(
-			BOLink BOLink)
+			BOLink boLink)
 		{
-			if (BOLink == null)
-			{
-				return null;
-			}
-
 			var model = new ApiLinkResponseModel();
 
-			model.SetProperties(BOLink.AssignedMachineId, BOLink.ChainId, BOLink.DateCompleted, BOLink.DateStarted, BOLink.DynamicParameters, BOLink.ExternalId, BOLink.Id, BOLink.LinkStatusId, BOLink.Name, BOLink.Order, BOLink.Response, BOLink.StaticParameters, BOLink.TimeoutInSeconds);
+			model.SetProperties(boLink.AssignedMachineId, boLink.ChainId, boLink.DateCompleted, boLink.DateStarted, boLink.DynamicParameters, boLink.ExternalId, boLink.Id, boLink.LinkStatusId, boLink.Name, boLink.Order, boLink.Response, boLink.StaticParameters, boLink.TimeoutInSeconds);
 
 			return model;
 		}
 
 		public virtual List<ApiLinkResponseModel> MapBOToModel(
-			List<BOLink> BOs)
+			List<BOLink> items)
 		{
 			List<ApiLinkResponseModel> response = new List<ApiLinkResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -61,5 +56,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6c3f5f69a8ce1fcb2170f85fab83961</Hash>
+    <Hash>5e9f996ad298f8650632bee5d696d8ff</Hash>
 </Codenesium>*/

@@ -11,36 +11,31 @@ namespace FermataFishNS.Api.Services
 			ApiTeacherSkillRequestModel model
 			)
 		{
-			BOTeacherSkill BOTeacherSkill = new BOTeacherSkill();
+			BOTeacherSkill boTeacherSkill = new BOTeacherSkill();
 
-			BOTeacherSkill.SetProperties(
+			boTeacherSkill.SetProperties(
 				id,
 				model.Name,
 				model.StudioId);
-			return BOTeacherSkill;
+			return boTeacherSkill;
 		}
 
 		public virtual ApiTeacherSkillResponseModel MapBOToModel(
-			BOTeacherSkill BOTeacherSkill)
+			BOTeacherSkill boTeacherSkill)
 		{
-			if (BOTeacherSkill == null)
-			{
-				return null;
-			}
-
 			var model = new ApiTeacherSkillResponseModel();
 
-			model.SetProperties(BOTeacherSkill.Id, BOTeacherSkill.Name, BOTeacherSkill.StudioId);
+			model.SetProperties(boTeacherSkill.Id, boTeacherSkill.Name, boTeacherSkill.StudioId);
 
 			return model;
 		}
 
 		public virtual List<ApiTeacherSkillResponseModel> MapBOToModel(
-			List<BOTeacherSkill> BOs)
+			List<BOTeacherSkill> items)
 		{
 			List<ApiTeacherSkillResponseModel> response = new List<ApiTeacherSkillResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>423a8a11184129b6bc4c9bb558c7e12e</Hash>
+    <Hash>12068fc4cb527edc1524b6b6f964d50b</Hash>
 </Codenesium>*/

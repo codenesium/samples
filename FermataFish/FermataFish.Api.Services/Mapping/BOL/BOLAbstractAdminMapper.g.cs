@@ -11,9 +11,9 @@ namespace FermataFishNS.Api.Services
 			ApiAdminRequestModel model
 			)
 		{
-			BOAdmin BOAdmin = new BOAdmin();
+			BOAdmin boAdmin = new BOAdmin();
 
-			BOAdmin.SetProperties(
+			boAdmin.SetProperties(
 				id,
 				model.Birthday,
 				model.Email,
@@ -21,30 +21,25 @@ namespace FermataFishNS.Api.Services
 				model.LastName,
 				model.Phone,
 				model.StudioId);
-			return BOAdmin;
+			return boAdmin;
 		}
 
 		public virtual ApiAdminResponseModel MapBOToModel(
-			BOAdmin BOAdmin)
+			BOAdmin boAdmin)
 		{
-			if (BOAdmin == null)
-			{
-				return null;
-			}
-
 			var model = new ApiAdminResponseModel();
 
-			model.SetProperties(BOAdmin.Birthday, BOAdmin.Email, BOAdmin.FirstName, BOAdmin.Id, BOAdmin.LastName, BOAdmin.Phone, BOAdmin.StudioId);
+			model.SetProperties(boAdmin.Birthday, boAdmin.Email, boAdmin.FirstName, boAdmin.Id, boAdmin.LastName, boAdmin.Phone, boAdmin.StudioId);
 
 			return model;
 		}
 
 		public virtual List<ApiAdminResponseModel> MapBOToModel(
-			List<BOAdmin> BOs)
+			List<BOAdmin> items)
 		{
 			List<ApiAdminResponseModel> response = new List<ApiAdminResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cf3bd9ac14e645e8000b68e74580e23e</Hash>
+    <Hash>71e50aff80373d9115e5d6a0f0b909eb</Hash>
 </Codenesium>*/

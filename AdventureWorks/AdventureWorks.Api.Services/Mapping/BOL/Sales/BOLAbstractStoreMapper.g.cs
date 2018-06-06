@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiStoreRequestModel model
 			)
 		{
-			BOStore BOStore = new BOStore();
+			BOStore boStore = new BOStore();
 
-			BOStore.SetProperties(
+			boStore.SetProperties(
 				businessEntityID,
 				model.Demographics,
 				model.ModifiedDate,
 				model.Name,
 				model.Rowguid,
 				model.SalesPersonID);
-			return BOStore;
+			return boStore;
 		}
 
 		public virtual ApiStoreResponseModel MapBOToModel(
-			BOStore BOStore)
+			BOStore boStore)
 		{
-			if (BOStore == null)
-			{
-				return null;
-			}
-
 			var model = new ApiStoreResponseModel();
 
-			model.SetProperties(BOStore.BusinessEntityID, BOStore.Demographics, BOStore.ModifiedDate, BOStore.Name, BOStore.Rowguid, BOStore.SalesPersonID);
+			model.SetProperties(boStore.BusinessEntityID, boStore.Demographics, boStore.ModifiedDate, boStore.Name, boStore.Rowguid, boStore.SalesPersonID);
 
 			return model;
 		}
 
 		public virtual List<ApiStoreResponseModel> MapBOToModel(
-			List<BOStore> BOs)
+			List<BOStore> items)
 		{
 			List<ApiStoreResponseModel> response = new List<ApiStoreResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7421cf859c375d01994409b259e9d6ac</Hash>
+    <Hash>88bfad1f0a921ead122a82fb5ea4d6c2</Hash>
 </Codenesium>*/

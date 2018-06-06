@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOShoppingCartItem boShoppingCartItem);
 
 		List<ApiShoppingCartItemResponseModel> MapBOToModel(
-			List<BOShoppingCartItem> bos);
+			List<BOShoppingCartItem> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9942ab60db067c9fed5321de14ae0ed</Hash>
+    <Hash>88f51e3f89f321e1a6145d5f65349020</Hash>
 </Codenesium>*/

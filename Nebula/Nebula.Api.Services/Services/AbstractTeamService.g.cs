@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private ITeamRepository teamRepository;
 		private IApiTeamRequestModelValidator teamModelValidator;
-		private IBOLTeamMapper BOLTeamMapper;
-		private IDALTeamMapper DALTeamMapper;
+		private IBOLTeamMapper bolTeamMapper;
+		private IDALTeamMapper dalTeamMapper;
 		private ILogger logger;
 
 		public AbstractTeamService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.teamRepository = teamRepository;
 			this.teamModelValidator = teamModelValidator;
-			this.BOLTeamMapper = bolteamMapper;
-			this.DALTeamMapper = dalteamMapper;
+			this.bolTeamMapper = bolteamMapper;
+			this.dalTeamMapper = dalteamMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.teamRepository.All(skip, take, orderClause);
 
-			return this.BOLTeamMapper.MapBOToModel(this.DALTeamMapper.MapEFToBO(records));
+			return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTeamResponseModel> Get(int id)
 		{
 			var record = await teamRepository.Get(id);
 
-			return this.BOLTeamMapper.MapBOToModel(this.DALTeamMapper.MapEFToBO(record));
+			return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiTeamResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.teamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLTeamMapper.MapModelToBO(default (int), model);
-				var record = await this.teamRepository.Create(this.DALTeamMapper.MapBOToEF(bo));
+				var bo = this.bolTeamMapper.MapModelToBO(default (int), model);
+				var record = await this.teamRepository.Create(this.dalTeamMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLTeamMapper.MapBOToModel(this.DALTeamMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLTeamMapper.MapModelToBO(id, model);
-				await this.teamRepository.Update(this.DALTeamMapper.MapBOToEF(bo));
+				var bo = this.bolTeamMapper.MapModelToBO(id, model);
+				await this.teamRepository.Update(this.dalTeamMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2b8845113916c9364ee3b047315b32c</Hash>
+    <Hash>07a808d7410e3875e51ca0df9f3da4d3</Hash>
 </Codenesium>*/

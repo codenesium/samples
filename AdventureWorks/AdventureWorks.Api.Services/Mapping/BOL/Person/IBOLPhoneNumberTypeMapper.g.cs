@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOPhoneNumberType boPhoneNumberType);
 
 		List<ApiPhoneNumberTypeResponseModel> MapBOToModel(
-			List<BOPhoneNumberType> bos);
+			List<BOPhoneNumberType> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc9e263607a542d8c98913d2f9be87b2</Hash>
+    <Hash>29b2cb1661efe8257db406a371af194d</Hash>
 </Codenesium>*/

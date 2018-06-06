@@ -16,8 +16,8 @@ namespace NebulaNS.Api.Services
 	{
 		private IVersionInfoRepository versionInfoRepository;
 		private IApiVersionInfoRequestModelValidator versionInfoModelValidator;
-		private IBOLVersionInfoMapper BOLVersionInfoMapper;
-		private IDALVersionInfoMapper DALVersionInfoMapper;
+		private IBOLVersionInfoMapper bolVersionInfoMapper;
+		private IDALVersionInfoMapper dalVersionInfoMapper;
 		private ILogger logger;
 
 		public AbstractVersionInfoService(
@@ -31,8 +31,8 @@ namespace NebulaNS.Api.Services
 		{
 			this.versionInfoRepository = versionInfoRepository;
 			this.versionInfoModelValidator = versionInfoModelValidator;
-			this.BOLVersionInfoMapper = bolversionInfoMapper;
-			this.DALVersionInfoMapper = dalversionInfoMapper;
+			this.bolVersionInfoMapper = bolversionInfoMapper;
+			this.dalVersionInfoMapper = dalversionInfoMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 		{
 			var records = await this.versionInfoRepository.All(skip, take, orderClause);
 
-			return this.BOLVersionInfoMapper.MapBOToModel(this.DALVersionInfoMapper.MapEFToBO(records));
+			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiVersionInfoResponseModel> Get(long version)
 		{
 			var record = await versionInfoRepository.Get(version);
 
-			return this.BOLVersionInfoMapper.MapBOToModel(this.DALVersionInfoMapper.MapEFToBO(record));
+			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace NebulaNS.Api.Services
 			CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLVersionInfoMapper.MapModelToBO(default (long), model);
-				var record = await this.versionInfoRepository.Create(this.DALVersionInfoMapper.MapBOToEF(bo));
+				var bo = this.bolVersionInfoMapper.MapModelToBO(default (long), model);
+				var record = await this.versionInfoRepository.Create(this.dalVersionInfoMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLVersionInfoMapper.MapBOToModel(this.DALVersionInfoMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace NebulaNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLVersionInfoMapper.MapModelToBO(version, model);
-				await this.versionInfoRepository.Update(this.DALVersionInfoMapper.MapBOToEF(bo));
+				var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
+				await this.versionInfoRepository.Update(this.dalVersionInfoMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,11 +95,11 @@ namespace NebulaNS.Api.Services
 		{
 			VersionInfo record = await this.versionInfoRepository.GetVersion(version);
 
-			return this.BOLVersionInfoMapper.MapBOToModel(this.DALVersionInfoMapper.MapEFToBO(record));
+			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0794a1cc58582cdbba581ecac557e44d</Hash>
+    <Hash>525620dcb39169b638874d11e9d51b94</Hash>
 </Codenesium>*/

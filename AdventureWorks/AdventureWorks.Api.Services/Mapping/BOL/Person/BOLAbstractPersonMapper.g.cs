@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiPersonRequestModel model
 			)
 		{
-			BOPerson BOPerson = new BOPerson();
+			BOPerson boPerson = new BOPerson();
 
-			BOPerson.SetProperties(
+			boPerson.SetProperties(
 				businessEntityID,
 				model.AdditionalContactInfo,
 				model.Demographics,
@@ -27,30 +27,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rowguid,
 				model.Suffix,
 				model.Title);
-			return BOPerson;
+			return boPerson;
 		}
 
 		public virtual ApiPersonResponseModel MapBOToModel(
-			BOPerson BOPerson)
+			BOPerson boPerson)
 		{
-			if (BOPerson == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPersonResponseModel();
 
-			model.SetProperties(BOPerson.AdditionalContactInfo, BOPerson.BusinessEntityID, BOPerson.Demographics, BOPerson.EmailPromotion, BOPerson.FirstName, BOPerson.LastName, BOPerson.MiddleName, BOPerson.ModifiedDate, BOPerson.NameStyle, BOPerson.PersonType, BOPerson.Rowguid, BOPerson.Suffix, BOPerson.Title);
+			model.SetProperties(boPerson.AdditionalContactInfo, boPerson.BusinessEntityID, boPerson.Demographics, boPerson.EmailPromotion, boPerson.FirstName, boPerson.LastName, boPerson.MiddleName, boPerson.ModifiedDate, boPerson.NameStyle, boPerson.PersonType, boPerson.Rowguid, boPerson.Suffix, boPerson.Title);
 
 			return model;
 		}
 
 		public virtual List<ApiPersonResponseModel> MapBOToModel(
-			List<BOPerson> BOs)
+			List<BOPerson> items)
 		{
 			List<ApiPersonResponseModel> response = new List<ApiPersonResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -61,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5be2b5eec88f47cf7d49ef4bba550ded</Hash>
+    <Hash>e61088d5798bbc7c684fffd43df641fb</Hash>
 </Codenesium>*/

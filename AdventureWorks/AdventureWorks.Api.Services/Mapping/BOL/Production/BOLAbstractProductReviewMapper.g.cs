@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductReviewRequestModel model
 			)
 		{
-			BOProductReview BOProductReview = new BOProductReview();
+			BOProductReview boProductReview = new BOProductReview();
 
-			BOProductReview.SetProperties(
+			boProductReview.SetProperties(
 				productReviewID,
 				model.Comments,
 				model.EmailAddress,
@@ -22,30 +22,25 @@ namespace AdventureWorksNS.Api.Services
 				model.Rating,
 				model.ReviewDate,
 				model.ReviewerName);
-			return BOProductReview;
+			return boProductReview;
 		}
 
 		public virtual ApiProductReviewResponseModel MapBOToModel(
-			BOProductReview BOProductReview)
+			BOProductReview boProductReview)
 		{
-			if (BOProductReview == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductReviewResponseModel();
 
-			model.SetProperties(BOProductReview.Comments, BOProductReview.EmailAddress, BOProductReview.ModifiedDate, BOProductReview.ProductID, BOProductReview.ProductReviewID, BOProductReview.Rating, BOProductReview.ReviewDate, BOProductReview.ReviewerName);
+			model.SetProperties(boProductReview.Comments, boProductReview.EmailAddress, boProductReview.ModifiedDate, boProductReview.ProductID, boProductReview.ProductReviewID, boProductReview.Rating, boProductReview.ReviewDate, boProductReview.ReviewerName);
 
 			return model;
 		}
 
 		public virtual List<ApiProductReviewResponseModel> MapBOToModel(
-			List<BOProductReview> BOs)
+			List<BOProductReview> items)
 		{
 			List<ApiProductReviewResponseModel> response = new List<ApiProductReviewResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -56,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4876f871bc5c59d6bf5d593b14ede49</Hash>
+    <Hash>eb72d36eea61134958baa79ba5674bc3</Hash>
 </Codenesium>*/

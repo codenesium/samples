@@ -14,10 +14,10 @@ namespace FermataFishNS.Api.Services
 			BOAdmin boAdmin);
 
 		List<ApiAdminResponseModel> MapBOToModel(
-			List<BOAdmin> bos);
+			List<BOAdmin> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5f9424b9225b46ea2fa1a39b9eb800c</Hash>
+    <Hash>354279aea42d3a61b543ee4ed6207103</Hash>
 </Codenesium>*/

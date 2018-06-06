@@ -11,38 +11,33 @@ namespace AdventureWorksNS.Api.Services
 			ApiPasswordRequestModel model
 			)
 		{
-			BOPassword BOPassword = new BOPassword();
+			BOPassword boPassword = new BOPassword();
 
-			BOPassword.SetProperties(
+			boPassword.SetProperties(
 				businessEntityID,
 				model.ModifiedDate,
 				model.PasswordHash,
 				model.PasswordSalt,
 				model.Rowguid);
-			return BOPassword;
+			return boPassword;
 		}
 
 		public virtual ApiPasswordResponseModel MapBOToModel(
-			BOPassword BOPassword)
+			BOPassword boPassword)
 		{
-			if (BOPassword == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPasswordResponseModel();
 
-			model.SetProperties(BOPassword.BusinessEntityID, BOPassword.ModifiedDate, BOPassword.PasswordHash, BOPassword.PasswordSalt, BOPassword.Rowguid);
+			model.SetProperties(boPassword.BusinessEntityID, boPassword.ModifiedDate, boPassword.PasswordHash, boPassword.PasswordSalt, boPassword.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiPasswordResponseModel> MapBOToModel(
-			List<BOPassword> BOs)
+			List<BOPassword> items)
 		{
 			List<ApiPasswordResponseModel> response = new List<ApiPasswordResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e70ec5eba3838cb0fcf319dbb29d316</Hash>
+    <Hash>fc613264f8f3a5f62e5a7477758cf937</Hash>
 </Codenesium>*/

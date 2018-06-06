@@ -11,35 +11,30 @@ namespace NebulaNS.Api.Services
 			ApiLinkStatusRequestModel model
 			)
 		{
-			BOLinkStatus BOLinkStatus = new BOLinkStatus();
+			BOLinkStatus boLinkStatus = new BOLinkStatus();
 
-			BOLinkStatus.SetProperties(
+			boLinkStatus.SetProperties(
 				id,
 				model.Name);
-			return BOLinkStatus;
+			return boLinkStatus;
 		}
 
 		public virtual ApiLinkStatusResponseModel MapBOToModel(
-			BOLinkStatus BOLinkStatus)
+			BOLinkStatus boLinkStatus)
 		{
-			if (BOLinkStatus == null)
-			{
-				return null;
-			}
-
 			var model = new ApiLinkStatusResponseModel();
 
-			model.SetProperties(BOLinkStatus.Id, BOLinkStatus.Name);
+			model.SetProperties(boLinkStatus.Id, boLinkStatus.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiLinkStatusResponseModel> MapBOToModel(
-			List<BOLinkStatus> BOs)
+			List<BOLinkStatus> items)
 		{
 			List<ApiLinkStatusResponseModel> response = new List<ApiLinkStatusResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b21d75003065a0ec759e19409d739270</Hash>
+    <Hash>6aaf457dae68f1b1efbc7dbc1c288752</Hash>
 </Codenesium>*/

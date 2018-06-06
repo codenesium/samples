@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private IStateRepository stateRepository;
 		private IApiStateRequestModelValidator stateModelValidator;
-		private IBOLStateMapper BOLStateMapper;
-		private IDALStateMapper DALStateMapper;
+		private IBOLStateMapper bolStateMapper;
+		private IDALStateMapper dalStateMapper;
 		private ILogger logger;
 
 		public AbstractStateService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.stateRepository = stateRepository;
 			this.stateModelValidator = stateModelValidator;
-			this.BOLStateMapper = bolstateMapper;
-			this.DALStateMapper = dalstateMapper;
+			this.bolStateMapper = bolstateMapper;
+			this.dalStateMapper = dalstateMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.stateRepository.All(skip, take, orderClause);
 
-			return this.BOLStateMapper.MapBOToModel(this.DALStateMapper.MapEFToBO(records));
+			return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStateResponseModel> Get(int id)
 		{
 			var record = await stateRepository.Get(id);
 
-			return this.BOLStateMapper.MapBOToModel(this.DALStateMapper.MapEFToBO(record));
+			return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiStateResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiStateResponseModel> response = new CreateResponse<ApiStateResponseModel>(await this.stateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLStateMapper.MapModelToBO(default (int), model);
-				var record = await this.stateRepository.Create(this.DALStateMapper.MapBOToEF(bo));
+				var bo = this.bolStateMapper.MapModelToBO(default (int), model);
+				var record = await this.stateRepository.Create(this.dalStateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLStateMapper.MapBOToModel(this.DALStateMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLStateMapper.MapModelToBO(id, model);
-				await this.stateRepository.Update(this.DALStateMapper.MapBOToEF(bo));
+				var bo = this.bolStateMapper.MapModelToBO(id, model);
+				await this.stateRepository.Update(this.dalStateMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>09971cf420d05cfb5fd81d9df7b0d38f</Hash>
+    <Hash>81f2dda04a12713a8170af957472a53e</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace PetShippingNS.Api.Services
 	{
 		private ICountryRepository countryRepository;
 		private IApiCountryRequestModelValidator countryModelValidator;
-		private IBOLCountryMapper BOLCountryMapper;
-		private IDALCountryMapper DALCountryMapper;
+		private IBOLCountryMapper bolCountryMapper;
+		private IDALCountryMapper dalCountryMapper;
 		private ILogger logger;
 
 		public AbstractCountryService(
@@ -31,8 +31,8 @@ namespace PetShippingNS.Api.Services
 		{
 			this.countryRepository = countryRepository;
 			this.countryModelValidator = countryModelValidator;
-			this.BOLCountryMapper = bolcountryMapper;
-			this.DALCountryMapper = dalcountryMapper;
+			this.bolCountryMapper = bolcountryMapper;
+			this.dalCountryMapper = dalcountryMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace PetShippingNS.Api.Services
 		{
 			var records = await this.countryRepository.All(skip, take, orderClause);
 
-			return this.BOLCountryMapper.MapBOToModel(this.DALCountryMapper.MapEFToBO(records));
+			return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCountryResponseModel> Get(int id)
 		{
 			var record = await countryRepository.Get(id);
 
-			return this.BOLCountryMapper.MapBOToModel(this.DALCountryMapper.MapEFToBO(record));
+			return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace PetShippingNS.Api.Services
 			CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.countryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLCountryMapper.MapModelToBO(default (int), model);
-				var record = await this.countryRepository.Create(this.DALCountryMapper.MapBOToEF(bo));
+				var bo = this.bolCountryMapper.MapModelToBO(default (int), model);
+				var record = await this.countryRepository.Create(this.dalCountryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLCountryMapper.MapBOToModel(this.DALCountryMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace PetShippingNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLCountryMapper.MapModelToBO(id, model);
-				await this.countryRepository.Update(this.DALCountryMapper.MapBOToEF(bo));
+				var bo = this.bolCountryMapper.MapModelToBO(id, model);
+				await this.countryRepository.Update(this.dalCountryMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8bba9f925b7479d240cd83ffceae68ee</Hash>
+    <Hash>71c1fb7c28461e70b3b8ea75254af449</Hash>
 </Codenesium>*/

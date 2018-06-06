@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IPasswordRepository passwordRepository;
 		private IApiPasswordRequestModelValidator passwordModelValidator;
-		private IBOLPasswordMapper BOLPasswordMapper;
-		private IDALPasswordMapper DALPasswordMapper;
+		private IBOLPasswordMapper bolPasswordMapper;
+		private IDALPasswordMapper dalPasswordMapper;
 		private ILogger logger;
 
 		public AbstractPasswordService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.passwordRepository = passwordRepository;
 			this.passwordModelValidator = passwordModelValidator;
-			this.BOLPasswordMapper = bolpasswordMapper;
-			this.DALPasswordMapper = dalpasswordMapper;
+			this.bolPasswordMapper = bolpasswordMapper;
+			this.dalPasswordMapper = dalpasswordMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.passwordRepository.All(skip, take, orderClause);
 
-			return this.BOLPasswordMapper.MapBOToModel(this.DALPasswordMapper.MapEFToBO(records));
+			return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPasswordResponseModel> Get(int businessEntityID)
 		{
 			var record = await passwordRepository.Get(businessEntityID);
 
-			return this.BOLPasswordMapper.MapBOToModel(this.DALPasswordMapper.MapEFToBO(record));
+			return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiPasswordResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiPasswordResponseModel> response = new CreateResponse<ApiPasswordResponseModel>(await this.passwordModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLPasswordMapper.MapModelToBO(default (int), model);
-				var record = await this.passwordRepository.Create(this.DALPasswordMapper.MapBOToEF(bo));
+				var bo = this.bolPasswordMapper.MapModelToBO(default (int), model);
+				var record = await this.passwordRepository.Create(this.dalPasswordMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLPasswordMapper.MapBOToModel(this.DALPasswordMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLPasswordMapper.MapModelToBO(businessEntityID, model);
-				await this.passwordRepository.Update(this.DALPasswordMapper.MapBOToEF(bo));
+				var bo = this.bolPasswordMapper.MapModelToBO(businessEntityID, model);
+				await this.passwordRepository.Update(this.dalPasswordMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfa42bd1b5933249d5debfbc8e2e8cd4</Hash>
+    <Hash>8a9d4beeab3a464a2f731f1be17d6901</Hash>
 </Codenesium>*/

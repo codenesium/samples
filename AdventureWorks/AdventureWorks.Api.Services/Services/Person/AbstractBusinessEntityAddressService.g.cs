@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IBusinessEntityAddressRepository businessEntityAddressRepository;
 		private IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator;
-		private IBOLBusinessEntityAddressMapper BOLBusinessEntityAddressMapper;
-		private IDALBusinessEntityAddressMapper DALBusinessEntityAddressMapper;
+		private IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper;
+		private IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper;
 		private ILogger logger;
 
 		public AbstractBusinessEntityAddressService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.businessEntityAddressRepository = businessEntityAddressRepository;
 			this.businessEntityAddressModelValidator = businessEntityAddressModelValidator;
-			this.BOLBusinessEntityAddressMapper = bolbusinessEntityAddressMapper;
-			this.DALBusinessEntityAddressMapper = dalbusinessEntityAddressMapper;
+			this.bolBusinessEntityAddressMapper = bolbusinessEntityAddressMapper;
+			this.dalBusinessEntityAddressMapper = dalbusinessEntityAddressMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.businessEntityAddressRepository.All(skip, take, orderClause);
 
-			return this.BOLBusinessEntityAddressMapper.MapBOToModel(this.DALBusinessEntityAddressMapper.MapEFToBO(records));
+			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBusinessEntityAddressResponseModel> Get(int businessEntityID)
 		{
 			var record = await businessEntityAddressRepository.Get(businessEntityID);
 
-			return this.BOLBusinessEntityAddressMapper.MapBOToModel(this.DALBusinessEntityAddressMapper.MapEFToBO(record));
+			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiBusinessEntityAddressResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiBusinessEntityAddressResponseModel> response = new CreateResponse<ApiBusinessEntityAddressResponseModel>(await this.businessEntityAddressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLBusinessEntityAddressMapper.MapModelToBO(default (int), model);
-				var record = await this.businessEntityAddressRepository.Create(this.DALBusinessEntityAddressMapper.MapBOToEF(bo));
+				var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(default (int), model);
+				var record = await this.businessEntityAddressRepository.Create(this.dalBusinessEntityAddressMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLBusinessEntityAddressMapper.MapBOToModel(this.DALBusinessEntityAddressMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLBusinessEntityAddressMapper.MapModelToBO(businessEntityID, model);
-				await this.businessEntityAddressRepository.Update(this.DALBusinessEntityAddressMapper.MapBOToEF(bo));
+				var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(businessEntityID, model);
+				await this.businessEntityAddressRepository.Update(this.dalBusinessEntityAddressMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.GetAddressID(addressID);
 
-			return this.BOLBusinessEntityAddressMapper.MapBOToModel(this.DALBusinessEntityAddressMapper.MapEFToBO(records));
+			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 		public async Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressTypeID(int addressTypeID)
 		{
 			List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.GetAddressTypeID(addressTypeID);
 
-			return this.BOLBusinessEntityAddressMapper.MapBOToModel(this.DALBusinessEntityAddressMapper.MapEFToBO(records));
+			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>594d3af78b961f7b935eb0c7a2d74cf8</Hash>
+    <Hash>a68b16a846ec1421818edfa67e075c9d</Hash>
 </Codenesium>*/

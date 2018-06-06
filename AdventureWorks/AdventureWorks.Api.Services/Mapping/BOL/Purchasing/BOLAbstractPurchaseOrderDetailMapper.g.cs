@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiPurchaseOrderDetailRequestModel model
 			)
 		{
-			BOPurchaseOrderDetail BOPurchaseOrderDetail = new BOPurchaseOrderDetail();
+			BOPurchaseOrderDetail boPurchaseOrderDetail = new BOPurchaseOrderDetail();
 
-			BOPurchaseOrderDetail.SetProperties(
+			boPurchaseOrderDetail.SetProperties(
 				purchaseOrderID,
 				model.DueDate,
 				model.LineTotal,
@@ -25,30 +25,25 @@ namespace AdventureWorksNS.Api.Services
 				model.RejectedQty,
 				model.StockedQty,
 				model.UnitPrice);
-			return BOPurchaseOrderDetail;
+			return boPurchaseOrderDetail;
 		}
 
 		public virtual ApiPurchaseOrderDetailResponseModel MapBOToModel(
-			BOPurchaseOrderDetail BOPurchaseOrderDetail)
+			BOPurchaseOrderDetail boPurchaseOrderDetail)
 		{
-			if (BOPurchaseOrderDetail == null)
-			{
-				return null;
-			}
-
 			var model = new ApiPurchaseOrderDetailResponseModel();
 
-			model.SetProperties(BOPurchaseOrderDetail.DueDate, BOPurchaseOrderDetail.LineTotal, BOPurchaseOrderDetail.ModifiedDate, BOPurchaseOrderDetail.OrderQty, BOPurchaseOrderDetail.ProductID, BOPurchaseOrderDetail.PurchaseOrderDetailID, BOPurchaseOrderDetail.PurchaseOrderID, BOPurchaseOrderDetail.ReceivedQty, BOPurchaseOrderDetail.RejectedQty, BOPurchaseOrderDetail.StockedQty, BOPurchaseOrderDetail.UnitPrice);
+			model.SetProperties(boPurchaseOrderDetail.DueDate, boPurchaseOrderDetail.LineTotal, boPurchaseOrderDetail.ModifiedDate, boPurchaseOrderDetail.OrderQty, boPurchaseOrderDetail.ProductID, boPurchaseOrderDetail.PurchaseOrderDetailID, boPurchaseOrderDetail.PurchaseOrderID, boPurchaseOrderDetail.ReceivedQty, boPurchaseOrderDetail.RejectedQty, boPurchaseOrderDetail.StockedQty, boPurchaseOrderDetail.UnitPrice);
 
 			return model;
 		}
 
 		public virtual List<ApiPurchaseOrderDetailResponseModel> MapBOToModel(
-			List<BOPurchaseOrderDetail> BOs)
+			List<BOPurchaseOrderDetail> items)
 		{
 			List<ApiPurchaseOrderDetailResponseModel> response = new List<ApiPurchaseOrderDetailResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>546895e8403ea71c2af7b438fe4afe15</Hash>
+    <Hash>a971285be56744294e2a02b98f4e72d3</Hash>
 </Codenesium>*/

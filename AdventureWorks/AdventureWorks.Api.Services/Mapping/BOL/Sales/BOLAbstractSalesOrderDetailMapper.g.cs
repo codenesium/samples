@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiSalesOrderDetailRequestModel model
 			)
 		{
-			BOSalesOrderDetail BOSalesOrderDetail = new BOSalesOrderDetail();
+			BOSalesOrderDetail boSalesOrderDetail = new BOSalesOrderDetail();
 
-			BOSalesOrderDetail.SetProperties(
+			boSalesOrderDetail.SetProperties(
 				salesOrderID,
 				model.CarrierTrackingNumber,
 				model.LineTotal,
@@ -25,30 +25,25 @@ namespace AdventureWorksNS.Api.Services
 				model.SpecialOfferID,
 				model.UnitPrice,
 				model.UnitPriceDiscount);
-			return BOSalesOrderDetail;
+			return boSalesOrderDetail;
 		}
 
 		public virtual ApiSalesOrderDetailResponseModel MapBOToModel(
-			BOSalesOrderDetail BOSalesOrderDetail)
+			BOSalesOrderDetail boSalesOrderDetail)
 		{
-			if (BOSalesOrderDetail == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSalesOrderDetailResponseModel();
 
-			model.SetProperties(BOSalesOrderDetail.CarrierTrackingNumber, BOSalesOrderDetail.LineTotal, BOSalesOrderDetail.ModifiedDate, BOSalesOrderDetail.OrderQty, BOSalesOrderDetail.ProductID, BOSalesOrderDetail.Rowguid, BOSalesOrderDetail.SalesOrderDetailID, BOSalesOrderDetail.SalesOrderID, BOSalesOrderDetail.SpecialOfferID, BOSalesOrderDetail.UnitPrice, BOSalesOrderDetail.UnitPriceDiscount);
+			model.SetProperties(boSalesOrderDetail.CarrierTrackingNumber, boSalesOrderDetail.LineTotal, boSalesOrderDetail.ModifiedDate, boSalesOrderDetail.OrderQty, boSalesOrderDetail.ProductID, boSalesOrderDetail.Rowguid, boSalesOrderDetail.SalesOrderDetailID, boSalesOrderDetail.SalesOrderID, boSalesOrderDetail.SpecialOfferID, boSalesOrderDetail.UnitPrice, boSalesOrderDetail.UnitPriceDiscount);
 
 			return model;
 		}
 
 		public virtual List<ApiSalesOrderDetailResponseModel> MapBOToModel(
-			List<BOSalesOrderDetail> BOs)
+			List<BOSalesOrderDetail> items)
 		{
 			List<ApiSalesOrderDetailResponseModel> response = new List<ApiSalesOrderDetailResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff5fc55e960db46a67ca211e16fbc27e</Hash>
+    <Hash>28346d4b8c64ddcab42af83ce9e7465e</Hash>
 </Codenesium>*/

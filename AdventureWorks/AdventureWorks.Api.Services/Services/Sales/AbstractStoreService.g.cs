@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IStoreRepository storeRepository;
 		private IApiStoreRequestModelValidator storeModelValidator;
-		private IBOLStoreMapper BOLStoreMapper;
-		private IDALStoreMapper DALStoreMapper;
+		private IBOLStoreMapper bolStoreMapper;
+		private IDALStoreMapper dalStoreMapper;
 		private ILogger logger;
 
 		public AbstractStoreService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.storeRepository = storeRepository;
 			this.storeModelValidator = storeModelValidator;
-			this.BOLStoreMapper = bolstoreMapper;
-			this.DALStoreMapper = dalstoreMapper;
+			this.bolStoreMapper = bolstoreMapper;
+			this.dalStoreMapper = dalstoreMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.storeRepository.All(skip, take, orderClause);
 
-			return this.BOLStoreMapper.MapBOToModel(this.DALStoreMapper.MapEFToBO(records));
+			return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStoreResponseModel> Get(int businessEntityID)
 		{
 			var record = await storeRepository.Get(businessEntityID);
 
-			return this.BOLStoreMapper.MapBOToModel(this.DALStoreMapper.MapEFToBO(record));
+			return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiStoreResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiStoreResponseModel> response = new CreateResponse<ApiStoreResponseModel>(await this.storeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLStoreMapper.MapModelToBO(default (int), model);
-				var record = await this.storeRepository.Create(this.DALStoreMapper.MapBOToEF(bo));
+				var bo = this.bolStoreMapper.MapModelToBO(default (int), model);
+				var record = await this.storeRepository.Create(this.dalStoreMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLStoreMapper.MapBOToModel(this.DALStoreMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLStoreMapper.MapModelToBO(businessEntityID, model);
-				await this.storeRepository.Update(this.DALStoreMapper.MapBOToEF(bo));
+				var bo = this.bolStoreMapper.MapModelToBO(businessEntityID, model);
+				await this.storeRepository.Update(this.dalStoreMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<Store> records = await this.storeRepository.GetSalesPersonID(salesPersonID);
 
-			return this.BOLStoreMapper.MapBOToModel(this.DALStoreMapper.MapEFToBO(records));
+			return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
 		}
 		public async Task<List<ApiStoreResponseModel>> GetDemographics(string demographics)
 		{
 			List<Store> records = await this.storeRepository.GetDemographics(demographics);
 
-			return this.BOLStoreMapper.MapBOToModel(this.DALStoreMapper.MapEFToBO(records));
+			return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a761005d28ea67602d78e0ac3fcfab06</Hash>
+    <Hash>6a8a580632ff879b16ece75e53249c64</Hash>
 </Codenesium>*/

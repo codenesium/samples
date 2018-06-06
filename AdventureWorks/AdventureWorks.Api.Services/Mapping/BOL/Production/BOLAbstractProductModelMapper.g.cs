@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiProductModelRequestModel model
 			)
 		{
-			BOProductModel BOProductModel = new BOProductModel();
+			BOProductModel boProductModel = new BOProductModel();
 
-			BOProductModel.SetProperties(
+			boProductModel.SetProperties(
 				productModelID,
 				model.CatalogDescription,
 				model.Instructions,
 				model.ModifiedDate,
 				model.Name,
 				model.Rowguid);
-			return BOProductModel;
+			return boProductModel;
 		}
 
 		public virtual ApiProductModelResponseModel MapBOToModel(
-			BOProductModel BOProductModel)
+			BOProductModel boProductModel)
 		{
-			if (BOProductModel == null)
-			{
-				return null;
-			}
-
 			var model = new ApiProductModelResponseModel();
 
-			model.SetProperties(BOProductModel.CatalogDescription, BOProductModel.Instructions, BOProductModel.ModifiedDate, BOProductModel.Name, BOProductModel.ProductModelID, BOProductModel.Rowguid);
+			model.SetProperties(boProductModel.CatalogDescription, boProductModel.Instructions, boProductModel.ModifiedDate, boProductModel.Name, boProductModel.ProductModelID, boProductModel.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiProductModelResponseModel> MapBOToModel(
-			List<BOProductModel> BOs)
+			List<BOProductModel> items)
 		{
 			List<ApiProductModelResponseModel> response = new List<ApiProductModelResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e33b582e21d144d436275ab05ef341b4</Hash>
+    <Hash>25c537bf27d1e77e2c603fcce62cf8d9</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private IFamilyRepository familyRepository;
 		private IApiFamilyRequestModelValidator familyModelValidator;
-		private IBOLFamilyMapper BOLFamilyMapper;
-		private IDALFamilyMapper DALFamilyMapper;
+		private IBOLFamilyMapper bolFamilyMapper;
+		private IDALFamilyMapper dalFamilyMapper;
 		private ILogger logger;
 
 		public AbstractFamilyService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.familyRepository = familyRepository;
 			this.familyModelValidator = familyModelValidator;
-			this.BOLFamilyMapper = bolfamilyMapper;
-			this.DALFamilyMapper = dalfamilyMapper;
+			this.bolFamilyMapper = bolfamilyMapper;
+			this.dalFamilyMapper = dalfamilyMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.familyRepository.All(skip, take, orderClause);
 
-			return this.BOLFamilyMapper.MapBOToModel(this.DALFamilyMapper.MapEFToBO(records));
+			return this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiFamilyResponseModel> Get(int id)
 		{
 			var record = await familyRepository.Get(id);
 
-			return this.BOLFamilyMapper.MapBOToModel(this.DALFamilyMapper.MapEFToBO(record));
+			return this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiFamilyResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiFamilyResponseModel> response = new CreateResponse<ApiFamilyResponseModel>(await this.familyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLFamilyMapper.MapModelToBO(default (int), model);
-				var record = await this.familyRepository.Create(this.DALFamilyMapper.MapBOToEF(bo));
+				var bo = this.bolFamilyMapper.MapModelToBO(default (int), model);
+				var record = await this.familyRepository.Create(this.dalFamilyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLFamilyMapper.MapBOToModel(this.DALFamilyMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLFamilyMapper.MapModelToBO(id, model);
-				await this.familyRepository.Update(this.DALFamilyMapper.MapBOToEF(bo));
+				var bo = this.bolFamilyMapper.MapModelToBO(id, model);
+				await this.familyRepository.Update(this.dalFamilyMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c8ffd23cf087fbc43f4b42139105a815</Hash>
+    <Hash>8a645f3c4ba4a60819c9e3369a3ca557</Hash>
 </Codenesium>*/

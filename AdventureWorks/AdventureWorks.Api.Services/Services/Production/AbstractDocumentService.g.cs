@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IDocumentRepository documentRepository;
 		private IApiDocumentRequestModelValidator documentModelValidator;
-		private IBOLDocumentMapper BOLDocumentMapper;
-		private IDALDocumentMapper DALDocumentMapper;
+		private IBOLDocumentMapper bolDocumentMapper;
+		private IDALDocumentMapper dalDocumentMapper;
 		private ILogger logger;
 
 		public AbstractDocumentService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.documentRepository = documentRepository;
 			this.documentModelValidator = documentModelValidator;
-			this.BOLDocumentMapper = boldocumentMapper;
-			this.DALDocumentMapper = daldocumentMapper;
+			this.bolDocumentMapper = boldocumentMapper;
+			this.dalDocumentMapper = daldocumentMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.documentRepository.All(skip, take, orderClause);
 
-			return this.BOLDocumentMapper.MapBOToModel(this.DALDocumentMapper.MapEFToBO(records));
+			return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDocumentResponseModel> Get(Guid documentNode)
 		{
 			var record = await documentRepository.Get(documentNode);
 
-			return this.BOLDocumentMapper.MapBOToModel(this.DALDocumentMapper.MapEFToBO(record));
+			return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiDocumentResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiDocumentResponseModel> response = new CreateResponse<ApiDocumentResponseModel>(await this.documentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLDocumentMapper.MapModelToBO(default (Guid), model);
-				var record = await this.documentRepository.Create(this.DALDocumentMapper.MapBOToEF(bo));
+				var bo = this.bolDocumentMapper.MapModelToBO(default (Guid), model);
+				var record = await this.documentRepository.Create(this.dalDocumentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLDocumentMapper.MapBOToModel(this.DALDocumentMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLDocumentMapper.MapModelToBO(documentNode, model);
-				await this.documentRepository.Update(this.DALDocumentMapper.MapBOToEF(bo));
+				var bo = this.bolDocumentMapper.MapModelToBO(documentNode, model);
+				await this.documentRepository.Update(this.dalDocumentMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			Document record = await this.documentRepository.GetDocumentLevelDocumentNode(documentLevel,documentNode);
 
-			return this.BOLDocumentMapper.MapBOToModel(this.DALDocumentMapper.MapEFToBO(record));
+			return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record));
 		}
 		public async Task<List<ApiDocumentResponseModel>> GetFileNameRevision(string fileName,string revision)
 		{
 			List<Document> records = await this.documentRepository.GetFileNameRevision(fileName,revision);
 
-			return this.BOLDocumentMapper.MapBOToModel(this.DALDocumentMapper.MapEFToBO(records));
+			return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c494920d2dd95a63e35e9b891ad3573a</Hash>
+    <Hash>2896033facbd4b28571f3e9dc510be19</Hash>
 </Codenesium>*/

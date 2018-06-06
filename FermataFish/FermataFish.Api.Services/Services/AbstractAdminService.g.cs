@@ -16,8 +16,8 @@ namespace FermataFishNS.Api.Services
 	{
 		private IAdminRepository adminRepository;
 		private IApiAdminRequestModelValidator adminModelValidator;
-		private IBOLAdminMapper BOLAdminMapper;
-		private IDALAdminMapper DALAdminMapper;
+		private IBOLAdminMapper bolAdminMapper;
+		private IDALAdminMapper dalAdminMapper;
 		private ILogger logger;
 
 		public AbstractAdminService(
@@ -31,8 +31,8 @@ namespace FermataFishNS.Api.Services
 		{
 			this.adminRepository = adminRepository;
 			this.adminModelValidator = adminModelValidator;
-			this.BOLAdminMapper = boladminMapper;
-			this.DALAdminMapper = daladminMapper;
+			this.bolAdminMapper = boladminMapper;
+			this.dalAdminMapper = daladminMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace FermataFishNS.Api.Services
 		{
 			var records = await this.adminRepository.All(skip, take, orderClause);
 
-			return this.BOLAdminMapper.MapBOToModel(this.DALAdminMapper.MapEFToBO(records));
+			return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiAdminResponseModel> Get(int id)
 		{
 			var record = await adminRepository.Get(id);
 
-			return this.BOLAdminMapper.MapBOToModel(this.DALAdminMapper.MapEFToBO(record));
+			return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace FermataFishNS.Api.Services
 			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLAdminMapper.MapModelToBO(default (int), model);
-				var record = await this.adminRepository.Create(this.DALAdminMapper.MapBOToEF(bo));
+				var bo = this.bolAdminMapper.MapModelToBO(default (int), model);
+				var record = await this.adminRepository.Create(this.dalAdminMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLAdminMapper.MapBOToModel(this.DALAdminMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace FermataFishNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLAdminMapper.MapModelToBO(id, model);
-				await this.adminRepository.Update(this.DALAdminMapper.MapBOToEF(bo));
+				var bo = this.bolAdminMapper.MapModelToBO(id, model);
+				await this.adminRepository.Update(this.dalAdminMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -94,5 +94,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e19fb8121d01d6afe76c2a341b0a4f5</Hash>
+    <Hash>cde2b588b2285711110ca8a90a0438af</Hash>
 </Codenesium>*/

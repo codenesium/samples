@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOEmailAddress boEmailAddress);
 
 		List<ApiEmailAddressResponseModel> MapBOToModel(
-			List<BOEmailAddress> bos);
+			List<BOEmailAddress> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>22463c092fab4f9c4e0df4bbbea088ed</Hash>
+    <Hash>c060f92b887ae629a4a91cab9025f918</Hash>
 </Codenesium>*/

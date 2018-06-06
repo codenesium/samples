@@ -14,10 +14,10 @@ namespace NebulaNS.Api.Services
 			BOClasp boClasp);
 
 		List<ApiClaspResponseModel> MapBOToModel(
-			List<BOClasp> bos);
+			List<BOClasp> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8252544d1576b57c26ba9b5508de7ce4</Hash>
+    <Hash>85d4be1443443e50743b83a48364f849</Hash>
 </Codenesium>*/

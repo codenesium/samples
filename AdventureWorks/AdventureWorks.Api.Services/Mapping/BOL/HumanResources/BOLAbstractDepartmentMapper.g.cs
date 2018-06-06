@@ -11,37 +11,32 @@ namespace AdventureWorksNS.Api.Services
 			ApiDepartmentRequestModel model
 			)
 		{
-			BODepartment BODepartment = new BODepartment();
+			BODepartment boDepartment = new BODepartment();
 
-			BODepartment.SetProperties(
+			boDepartment.SetProperties(
 				departmentID,
 				model.GroupName,
 				model.ModifiedDate,
 				model.Name);
-			return BODepartment;
+			return boDepartment;
 		}
 
 		public virtual ApiDepartmentResponseModel MapBOToModel(
-			BODepartment BODepartment)
+			BODepartment boDepartment)
 		{
-			if (BODepartment == null)
-			{
-				return null;
-			}
-
 			var model = new ApiDepartmentResponseModel();
 
-			model.SetProperties(BODepartment.DepartmentID, BODepartment.GroupName, BODepartment.ModifiedDate, BODepartment.Name);
+			model.SetProperties(boDepartment.DepartmentID, boDepartment.GroupName, boDepartment.ModifiedDate, boDepartment.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiDepartmentResponseModel> MapBOToModel(
-			List<BODepartment> BOs)
+			List<BODepartment> items)
 		{
 			List<ApiDepartmentResponseModel> response = new List<ApiDepartmentResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -52,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c443669f8b61a3f51c039d76150d6cb9</Hash>
+    <Hash>3130d07d8977446ae68c06106c6fc50c</Hash>
 </Codenesium>*/

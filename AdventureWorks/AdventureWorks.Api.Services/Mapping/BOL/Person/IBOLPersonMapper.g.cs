@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOPerson boPerson);
 
 		List<ApiPersonResponseModel> MapBOToModel(
-			List<BOPerson> bos);
+			List<BOPerson> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>121427a3876567fbf95a6afb2263aac4</Hash>
+    <Hash>aa24950dc08846c464391eca30096dfd</Hash>
 </Codenesium>*/

@@ -16,8 +16,8 @@ namespace AdventureWorksNS.Api.Services
 	{
 		private IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
 		private IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator;
-		private IBOLEmployeeDepartmentHistoryMapper BOLEmployeeDepartmentHistoryMapper;
-		private IDALEmployeeDepartmentHistoryMapper DALEmployeeDepartmentHistoryMapper;
+		private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+		private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
 		private ILogger logger;
 
 		public AbstractEmployeeDepartmentHistoryService(
@@ -31,8 +31,8 @@ namespace AdventureWorksNS.Api.Services
 		{
 			this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
 			this.employeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
-			this.BOLEmployeeDepartmentHistoryMapper = bolemployeeDepartmentHistoryMapper;
-			this.DALEmployeeDepartmentHistoryMapper = dalemployeeDepartmentHistoryMapper;
+			this.bolEmployeeDepartmentHistoryMapper = bolemployeeDepartmentHistoryMapper;
+			this.dalEmployeeDepartmentHistoryMapper = dalemployeeDepartmentHistoryMapper;
 			this.logger = logger;
 		}
 
@@ -40,14 +40,14 @@ namespace AdventureWorksNS.Api.Services
 		{
 			var records = await this.employeeDepartmentHistoryRepository.All(skip, take, orderClause);
 
-			return this.BOLEmployeeDepartmentHistoryMapper.MapBOToModel(this.DALEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID)
 		{
 			var record = await employeeDepartmentHistoryRepository.Get(businessEntityID);
 
-			return this.BOLEmployeeDepartmentHistoryMapper.MapBOToModel(this.DALEmployeeDepartmentHistoryMapper.MapEFToBO(record));
+			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record));
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
@@ -56,10 +56,10 @@ namespace AdventureWorksNS.Api.Services
 			CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> response = new CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>(await this.employeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.BOLEmployeeDepartmentHistoryMapper.MapModelToBO(default (int), model);
-				var record = await this.employeeDepartmentHistoryRepository.Create(this.DALEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
+				var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(default (int), model);
+				var record = await this.employeeDepartmentHistoryRepository.Create(this.dalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.BOLEmployeeDepartmentHistoryMapper.MapBOToModel(this.DALEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
 			}
 			return response;
 		}
@@ -72,8 +72,8 @@ namespace AdventureWorksNS.Api.Services
 
 			if (response.Success)
 			{
-				var bo = this.BOLEmployeeDepartmentHistoryMapper.MapModelToBO(businessEntityID, model);
-				await this.employeeDepartmentHistoryRepository.Update(this.DALEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
+				var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(businessEntityID, model);
+				await this.employeeDepartmentHistoryRepository.Update(this.dalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
 			}
 
 			return response;
@@ -95,17 +95,17 @@ namespace AdventureWorksNS.Api.Services
 		{
 			List<EmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.GetDepartmentID(departmentID);
 
-			return this.BOLEmployeeDepartmentHistoryMapper.MapBOToModel(this.DALEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetShiftID(int shiftID)
 		{
 			List<EmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.GetShiftID(shiftID);
 
-			return this.BOLEmployeeDepartmentHistoryMapper.MapBOToModel(this.DALEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c9ebf46abf80658a4b2d172b69d50588</Hash>
+    <Hash>0db9d87921d1390a30d3f7a229d8015c</Hash>
 </Codenesium>*/

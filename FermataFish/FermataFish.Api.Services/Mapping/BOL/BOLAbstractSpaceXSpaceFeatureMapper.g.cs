@@ -11,36 +11,31 @@ namespace FermataFishNS.Api.Services
 			ApiSpaceXSpaceFeatureRequestModel model
 			)
 		{
-			BOSpaceXSpaceFeature BOSpaceXSpaceFeature = new BOSpaceXSpaceFeature();
+			BOSpaceXSpaceFeature boSpaceXSpaceFeature = new BOSpaceXSpaceFeature();
 
-			BOSpaceXSpaceFeature.SetProperties(
+			boSpaceXSpaceFeature.SetProperties(
 				id,
 				model.SpaceFeatureId,
 				model.SpaceId);
-			return BOSpaceXSpaceFeature;
+			return boSpaceXSpaceFeature;
 		}
 
 		public virtual ApiSpaceXSpaceFeatureResponseModel MapBOToModel(
-			BOSpaceXSpaceFeature BOSpaceXSpaceFeature)
+			BOSpaceXSpaceFeature boSpaceXSpaceFeature)
 		{
-			if (BOSpaceXSpaceFeature == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSpaceXSpaceFeatureResponseModel();
 
-			model.SetProperties(BOSpaceXSpaceFeature.Id, BOSpaceXSpaceFeature.SpaceFeatureId, BOSpaceXSpaceFeature.SpaceId);
+			model.SetProperties(boSpaceXSpaceFeature.Id, boSpaceXSpaceFeature.SpaceFeatureId, boSpaceXSpaceFeature.SpaceId);
 
 			return model;
 		}
 
 		public virtual List<ApiSpaceXSpaceFeatureResponseModel> MapBOToModel(
-			List<BOSpaceXSpaceFeature> BOs)
+			List<BOSpaceXSpaceFeature> items)
 		{
 			List<ApiSpaceXSpaceFeatureResponseModel> response = new List<ApiSpaceXSpaceFeatureResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a9a8d3b94a8f23dde6a29ae99436d4e</Hash>
+    <Hash>de45a9968263e059c150979b875abbfa</Hash>
 </Codenesium>*/

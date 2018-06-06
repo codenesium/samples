@@ -11,9 +11,9 @@ namespace AdventureWorksNS.Api.Services
 			ApiAddressRequestModel model
 			)
 		{
-			BOAddress BOAddress = new BOAddress();
+			BOAddress boAddress = new BOAddress();
 
-			BOAddress.SetProperties(
+			boAddress.SetProperties(
 				addressID,
 				model.AddressLine1,
 				model.AddressLine2,
@@ -22,30 +22,25 @@ namespace AdventureWorksNS.Api.Services
 				model.PostalCode,
 				model.Rowguid,
 				model.StateProvinceID);
-			return BOAddress;
+			return boAddress;
 		}
 
 		public virtual ApiAddressResponseModel MapBOToModel(
-			BOAddress BOAddress)
+			BOAddress boAddress)
 		{
-			if (BOAddress == null)
-			{
-				return null;
-			}
-
 			var model = new ApiAddressResponseModel();
 
-			model.SetProperties(BOAddress.AddressID, BOAddress.AddressLine1, BOAddress.AddressLine2, BOAddress.City, BOAddress.ModifiedDate, BOAddress.PostalCode, BOAddress.Rowguid, BOAddress.StateProvinceID);
+			model.SetProperties(boAddress.AddressID, boAddress.AddressLine1, boAddress.AddressLine2, boAddress.City, boAddress.ModifiedDate, boAddress.PostalCode, boAddress.Rowguid, boAddress.StateProvinceID);
 
 			return model;
 		}
 
 		public virtual List<ApiAddressResponseModel> MapBOToModel(
-			List<BOAddress> BOs)
+			List<BOAddress> items)
 		{
 			List<ApiAddressResponseModel> response = new List<ApiAddressResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -56,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>367de6c9895ce457d5dee65e91142e3c</Hash>
+    <Hash>339f23a14e816316e96a11f98fa74b4a</Hash>
 </Codenesium>*/

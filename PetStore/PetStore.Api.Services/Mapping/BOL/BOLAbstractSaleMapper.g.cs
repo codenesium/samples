@@ -11,9 +11,9 @@ namespace PetStoreNS.Api.Services
 			ApiSaleRequestModel model
 			)
 		{
-			BOSale BOSale = new BOSale();
+			BOSale boSale = new BOSale();
 
-			BOSale.SetProperties(
+			boSale.SetProperties(
 				id,
 				model.Amount,
 				model.FirstName,
@@ -21,30 +21,25 @@ namespace PetStoreNS.Api.Services
 				model.PaymentTypeId,
 				model.PetId,
 				model.Phone);
-			return BOSale;
+			return boSale;
 		}
 
 		public virtual ApiSaleResponseModel MapBOToModel(
-			BOSale BOSale)
+			BOSale boSale)
 		{
-			if (BOSale == null)
-			{
-				return null;
-			}
-
 			var model = new ApiSaleResponseModel();
 
-			model.SetProperties(BOSale.Amount, BOSale.FirstName, BOSale.Id, BOSale.LastName, BOSale.PaymentTypeId, BOSale.PetId, BOSale.Phone);
+			model.SetProperties(boSale.Amount, boSale.FirstName, boSale.Id, boSale.LastName, boSale.PaymentTypeId, boSale.PetId, boSale.Phone);
 
 			return model;
 		}
 
 		public virtual List<ApiSaleResponseModel> MapBOToModel(
-			List<BOSale> BOs)
+			List<BOSale> items)
 		{
 			List<ApiSaleResponseModel> response = new List<ApiSaleResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -55,5 +50,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>80fbb88ef5ec9b3965a7da521b307f9e</Hash>
+    <Hash>69216d7c210bf238946c19f5df01f559</Hash>
 </Codenesium>*/

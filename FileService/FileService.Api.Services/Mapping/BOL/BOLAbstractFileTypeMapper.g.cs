@@ -11,35 +11,30 @@ namespace FileServiceNS.Api.Services
 			ApiFileTypeRequestModel model
 			)
 		{
-			BOFileType BOFileType = new BOFileType();
+			BOFileType boFileType = new BOFileType();
 
-			BOFileType.SetProperties(
+			boFileType.SetProperties(
 				id,
 				model.Name);
-			return BOFileType;
+			return boFileType;
 		}
 
 		public virtual ApiFileTypeResponseModel MapBOToModel(
-			BOFileType BOFileType)
+			BOFileType boFileType)
 		{
-			if (BOFileType == null)
-			{
-				return null;
-			}
-
 			var model = new ApiFileTypeResponseModel();
 
-			model.SetProperties(BOFileType.Id, BOFileType.Name);
+			model.SetProperties(boFileType.Id, boFileType.Name);
 
 			return model;
 		}
 
 		public virtual List<ApiFileTypeResponseModel> MapBOToModel(
-			List<BOFileType> BOs)
+			List<BOFileType> items)
 		{
 			List<ApiFileTypeResponseModel> response = new List<ApiFileTypeResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -50,5 +45,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d83858115131db9b494f5b204b3f114</Hash>
+    <Hash>e3f0c81218e5039090dd12f788064d57</Hash>
 </Codenesium>*/

@@ -11,39 +11,34 @@ namespace AdventureWorksNS.Api.Services
 			ApiCreditCardRequestModel model
 			)
 		{
-			BOCreditCard BOCreditCard = new BOCreditCard();
+			BOCreditCard boCreditCard = new BOCreditCard();
 
-			BOCreditCard.SetProperties(
+			boCreditCard.SetProperties(
 				creditCardID,
 				model.CardNumber,
 				model.CardType,
 				model.ExpMonth,
 				model.ExpYear,
 				model.ModifiedDate);
-			return BOCreditCard;
+			return boCreditCard;
 		}
 
 		public virtual ApiCreditCardResponseModel MapBOToModel(
-			BOCreditCard BOCreditCard)
+			BOCreditCard boCreditCard)
 		{
-			if (BOCreditCard == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCreditCardResponseModel();
 
-			model.SetProperties(BOCreditCard.CardNumber, BOCreditCard.CardType, BOCreditCard.CreditCardID, BOCreditCard.ExpMonth, BOCreditCard.ExpYear, BOCreditCard.ModifiedDate);
+			model.SetProperties(boCreditCard.CardNumber, boCreditCard.CardType, boCreditCard.CreditCardID, boCreditCard.ExpMonth, boCreditCard.ExpYear, boCreditCard.ModifiedDate);
 
 			return model;
 		}
 
 		public virtual List<ApiCreditCardResponseModel> MapBOToModel(
-			List<BOCreditCard> BOs)
+			List<BOCreditCard> items)
 		{
 			List<ApiCreditCardResponseModel> response = new List<ApiCreditCardResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -54,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c35ed4b198d479c95a336547f8a9ffff</Hash>
+    <Hash>4b6d13b184a07581a3514ec5262af9dc</Hash>
 </Codenesium>*/

@@ -14,10 +14,10 @@ namespace AdventureWorksNS.Api.Services
 			BOUnitMeasure boUnitMeasure);
 
 		List<ApiUnitMeasureResponseModel> MapBOToModel(
-			List<BOUnitMeasure> bos);
+			List<BOUnitMeasure> items);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b17393597b15994b065fd437047f1e46</Hash>
+    <Hash>0f080c3e59f66210e40e0257b2afa642</Hash>
 </Codenesium>*/

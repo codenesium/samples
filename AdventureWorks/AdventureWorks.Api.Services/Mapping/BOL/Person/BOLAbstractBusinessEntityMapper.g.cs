@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiBusinessEntityRequestModel model
 			)
 		{
-			BOBusinessEntity BOBusinessEntity = new BOBusinessEntity();
+			BOBusinessEntity boBusinessEntity = new BOBusinessEntity();
 
-			BOBusinessEntity.SetProperties(
+			boBusinessEntity.SetProperties(
 				businessEntityID,
 				model.ModifiedDate,
 				model.Rowguid);
-			return BOBusinessEntity;
+			return boBusinessEntity;
 		}
 
 		public virtual ApiBusinessEntityResponseModel MapBOToModel(
-			BOBusinessEntity BOBusinessEntity)
+			BOBusinessEntity boBusinessEntity)
 		{
-			if (BOBusinessEntity == null)
-			{
-				return null;
-			}
-
 			var model = new ApiBusinessEntityResponseModel();
 
-			model.SetProperties(BOBusinessEntity.BusinessEntityID, BOBusinessEntity.ModifiedDate, BOBusinessEntity.Rowguid);
+			model.SetProperties(boBusinessEntity.BusinessEntityID, boBusinessEntity.ModifiedDate, boBusinessEntity.Rowguid);
 
 			return model;
 		}
 
 		public virtual List<ApiBusinessEntityResponseModel> MapBOToModel(
-			List<BOBusinessEntity> BOs)
+			List<BOBusinessEntity> items)
 		{
 			List<ApiBusinessEntityResponseModel> response = new List<ApiBusinessEntityResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb1f78bb8806c5266df4058b322606b2</Hash>
+    <Hash>eefe5953e776f9e69844f8b91482650e</Hash>
 </Codenesium>*/

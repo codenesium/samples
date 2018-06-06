@@ -11,36 +11,31 @@ namespace AdventureWorksNS.Api.Services
 			ApiCountryRegionCurrencyRequestModel model
 			)
 		{
-			BOCountryRegionCurrency BOCountryRegionCurrency = new BOCountryRegionCurrency();
+			BOCountryRegionCurrency boCountryRegionCurrency = new BOCountryRegionCurrency();
 
-			BOCountryRegionCurrency.SetProperties(
+			boCountryRegionCurrency.SetProperties(
 				countryRegionCode,
 				model.CurrencyCode,
 				model.ModifiedDate);
-			return BOCountryRegionCurrency;
+			return boCountryRegionCurrency;
 		}
 
 		public virtual ApiCountryRegionCurrencyResponseModel MapBOToModel(
-			BOCountryRegionCurrency BOCountryRegionCurrency)
+			BOCountryRegionCurrency boCountryRegionCurrency)
 		{
-			if (BOCountryRegionCurrency == null)
-			{
-				return null;
-			}
-
 			var model = new ApiCountryRegionCurrencyResponseModel();
 
-			model.SetProperties(BOCountryRegionCurrency.CountryRegionCode, BOCountryRegionCurrency.CurrencyCode, BOCountryRegionCurrency.ModifiedDate);
+			model.SetProperties(boCountryRegionCurrency.CountryRegionCode, boCountryRegionCurrency.CurrencyCode, boCountryRegionCurrency.ModifiedDate);
 
 			return model;
 		}
 
 		public virtual List<ApiCountryRegionCurrencyResponseModel> MapBOToModel(
-			List<BOCountryRegionCurrency> BOs)
+			List<BOCountryRegionCurrency> items)
 		{
 			List<ApiCountryRegionCurrencyResponseModel> response = new List<ApiCountryRegionCurrencyResponseModel>();
 
-			BOs.ForEach(d =>
+			items.ForEach(d =>
 			{
 				response.Add(this.MapBOToModel(d));
 			});
@@ -51,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91fda97db9087fe0f2f10273cd3c73fd</Hash>
+    <Hash>33073e2a7502a8c67b9bb65411a703ec</Hash>
 </Codenesium>*/
