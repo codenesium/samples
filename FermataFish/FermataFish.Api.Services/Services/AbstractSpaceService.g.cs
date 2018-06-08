@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractSpaceService: AbstractService
-	{
-		private ISpaceRepository spaceRepository;
-		private IApiSpaceRequestModelValidator spaceModelValidator;
-		private IBOLSpaceMapper bolSpaceMapper;
-		private IDALSpaceMapper dalSpaceMapper;
-		private ILogger logger;
+        public abstract class AbstractSpaceService: AbstractService
+        {
+                private ISpaceRepository spaceRepository;
 
-		public AbstractSpaceService(
-			ILogger logger,
-			ISpaceRepository spaceRepository,
-			IApiSpaceRequestModelValidator spaceModelValidator,
-			IBOLSpaceMapper bolspaceMapper,
-			IDALSpaceMapper dalspaceMapper)
-			: base()
+                private IApiSpaceRequestModelValidator spaceModelValidator;
 
-		{
-			this.spaceRepository = spaceRepository;
-			this.spaceModelValidator = spaceModelValidator;
-			this.bolSpaceMapper = bolspaceMapper;
-			this.dalSpaceMapper = dalspaceMapper;
-			this.logger = logger;
-		}
+                private IBOLSpaceMapper bolSpaceMapper;
 
-		public virtual async Task<List<ApiSpaceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.spaceRepository.All(skip, take, orderClause);
+                private IDALSpaceMapper dalSpaceMapper;
 
-			return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiSpaceResponseModel> Get(int id)
-		{
-			var record = await spaceRepository.Get(id);
+                public AbstractSpaceService(
+                        ILogger logger,
+                        ISpaceRepository spaceRepository,
+                        IApiSpaceRequestModelValidator spaceModelValidator,
+                        IBOLSpaceMapper bolspaceMapper,
+                        IDALSpaceMapper dalspaceMapper)
+                        : base()
 
-			return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record));
-		}
+                {
+                        this.spaceRepository = spaceRepository;
+                        this.spaceModelValidator = spaceModelValidator;
+                        this.bolSpaceMapper = bolspaceMapper;
+                        this.dalSpaceMapper = dalspaceMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiSpaceResponseModel>> Create(
-			ApiSpaceRequestModel model)
-		{
-			CreateResponse<ApiSpaceResponseModel> response = new CreateResponse<ApiSpaceResponseModel>(await this.spaceModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolSpaceMapper.MapModelToBO(default (int), model);
-				var record = await this.spaceRepository.Create(this.dalSpaceMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiSpaceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.spaceRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiSpaceRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiSpaceResponseModel> Get(int id)
+                {
+                        var record = await this.spaceRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolSpaceMapper.MapModelToBO(id, model);
-				await this.spaceRepository.Update(this.dalSpaceMapper.MapBOToEF(bo));
-			}
+                        return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiSpaceResponseModel>> Create(
+                        ApiSpaceRequestModel model)
+                {
+                        CreateResponse<ApiSpaceResponseModel> response = new CreateResponse<ApiSpaceResponseModel>(await this.spaceModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolSpaceMapper.MapModelToBO(default (int), model);
+                                var record = await this.spaceRepository.Create(this.dalSpaceMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.spaceRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiSpaceRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolSpaceMapper.MapModelToBO(id, model);
+                                await this.spaceRepository.Update(this.dalSpaceMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.spaceRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>970c610ce41abdf2c683b73f29d05150</Hash>
+    <Hash>30a740bb0cfa10233a3d362890caa5e5</Hash>
 </Codenesium>*/

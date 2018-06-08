@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ScrapReasonService: AbstractScrapReasonService, IScrapReasonService
-	{
-		public ScrapReasonService(
-			ILogger<ScrapReasonRepository> logger,
-			IScrapReasonRepository scrapReasonRepository,
-			IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
-			IBOLScrapReasonMapper BOLscrapReasonMapper,
-			IDALScrapReasonMapper DALscrapReasonMapper)
-			: base(logger, scrapReasonRepository,
-			       scrapReasonModelValidator,
-			       BOLscrapReasonMapper,
-			       DALscrapReasonMapper)
-		{}
-	}
+        public class ScrapReasonService: AbstractScrapReasonService, IScrapReasonService
+        {
+                public ScrapReasonService(
+                        ILogger<ScrapReasonRepository> logger,
+                        IScrapReasonRepository scrapReasonRepository,
+                        IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
+                        IBOLScrapReasonMapper bolscrapReasonMapper,
+                        IDALScrapReasonMapper dalscrapReasonMapper)
+                        : base(logger,
+                               scrapReasonRepository,
+                               scrapReasonModelValidator,
+                               bolscrapReasonMapper,
+                               dalscrapReasonMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f074e8cc42db998d2cb92934539e9b10</Hash>
+    <Hash>d1b90b93d8a66d74573d802b6e163fc3</Hash>
 </Codenesium>*/

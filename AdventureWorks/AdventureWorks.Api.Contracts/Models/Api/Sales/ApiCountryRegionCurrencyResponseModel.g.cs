@@ -4,63 +4,68 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiCountryRegionCurrencyResponseModel: AbstractApiResponseModel
-	{
-		public ApiCountryRegionCurrencyResponseModel() : base()
-		{}
+        public partial class ApiCountryRegionCurrencyResponseModel: AbstractApiResponseModel
+        {
+                public ApiCountryRegionCurrencyResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string countryRegionCode,
-			string currencyCode,
-			DateTime modifiedDate)
-		{
-			this.CountryRegionCode = countryRegionCode;
-			this.CurrencyCode = currencyCode;
-			this.ModifiedDate = modifiedDate.ToDateTime();
+                public void SetProperties(
+                        string countryRegionCode,
+                        string currencyCode,
+                        DateTime modifiedDate)
+                {
+                        this.CountryRegionCode = countryRegionCode;
+                        this.CurrencyCode = currencyCode;
+                        this.ModifiedDate = modifiedDate;
 
-			this.CurrencyCodeEntity = nameof(ApiResponse.Currencies);
-		}
+                        this.CurrencyCodeEntity = nameof(ApiResponse.Currencies);
+                }
 
-		public string CountryRegionCode { get; private set; }
-		public string CurrencyCode { get; private set; }
-		public string CurrencyCodeEntity { get; set; }
-		public DateTime ModifiedDate { get; private set; }
+                public string CountryRegionCode { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
+                public string CurrencyCode { get; private set; }
 
-		public bool ShouldSerializeCountryRegionCode()
-		{
-			return this.ShouldSerializeCountryRegionCodeValue;
-		}
+                public string CurrencyCodeEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCurrencyCodeValue { get; set; } = true;
+                public DateTime ModifiedDate { get; private set; }
 
-		public bool ShouldSerializeCurrencyCode()
-		{
-			return this.ShouldSerializeCurrencyCodeValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public bool ShouldSerializeCountryRegionCode()
+                {
+                        return this.ShouldSerializeCountryRegionCodeValue;
+                }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCurrencyCodeValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeCountryRegionCodeValue = false;
-			this.ShouldSerializeCurrencyCodeValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-		}
-	}
+                public bool ShouldSerializeCurrencyCode()
+                {
+                        return this.ShouldSerializeCurrencyCodeValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeCountryRegionCodeValue = false;
+                        this.ShouldSerializeCurrencyCodeValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>da023f75d58beef04fc48a18155bd71c</Hash>
+    <Hash>0aa07eaaf9da58b5e53bea18f0ed5a59</Hash>
 </Codenesium>*/

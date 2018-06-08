@@ -3,26 +3,29 @@ using System;
 
 namespace ESPIOTNS.Api.Services
 {
-	public partial class BODevice: AbstractBusinessObject
-	{
-		public BODevice() : base()
-		{}
+        public partial class BODevice: AbstractBusinessObject
+        {
+                public BODevice() : base()
+                {
+                }
 
-		public void SetProperties(int id,
-		                          string name,
-		                          Guid publicId)
-		{
-			this.Id = id.ToInt();
-			this.Name = name;
-			this.PublicId = publicId.ToGuid();
-		}
+                public void SetProperties(int id,
+                                          string name,
+                                          Guid publicId)
+                {
+                        this.Id = id;
+                        this.Name = name;
+                        this.PublicId = publicId;
+                }
 
-		public int Id { get; private set; }
-		public string Name { get; private set; }
-		public Guid PublicId { get; private set; }
-	}
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                public Guid PublicId { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>39ba5e8d48002e053a889300af4c1c40</Hash>
+    <Hash>7f02e0773d2c291f00f0160042fb1d2c</Hash>
 </Codenesium>*/

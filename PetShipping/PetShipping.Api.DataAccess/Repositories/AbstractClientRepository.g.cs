@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public abstract class AbstractClientRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractClientRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractClientRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<Client>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractClientRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<Client> Get(int id)
-		{
-			return await this.GetById(id);
-		}
+                public virtual Task<List<Client>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<Client> Create(Client item)
-		{
-			this.Context.Set<Client>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<Client> Get(int id)
+                {
+                        return await this.GetById(id);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<Client> Create(Client item)
+                {
+                        this.Context.Set<Client>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(Client item)
-		{
-			var entity = this.Context.Set<Client>().Local.FirstOrDefault(x => x.Id == item.Id);
-			if (entity == null)
-			{
-				this.Context.Set<Client>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(Client item)
+                {
+                        var entity = this.Context.Set<Client>().Local.FirstOrDefault(x => x.Id == item.Id);
+                        if (entity == null)
+                        {
+                                this.Context.Set<Client>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int id)
-		{
-			Client record = await this.GetById(id);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<Client>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int id)
+                {
+                        Client record = await this.GetById(id);
 
-		protected async Task<List<Client>> Where(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<Client> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<Client>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<Client>> Where(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<Client> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<Client>> SearchLinqEF(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Client.Id)} ASC";
-			}
-			return await this.Context.Set<Client>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Client>();
-		}
+                        return records;
+                }
 
-		private async Task<List<Client>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Client.Id)} ASC";
-			}
+                private async Task<List<Client>> SearchLinqEF(Expression<Func<Client, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Client.Id)} ASC";
+                        }
 
-			return await this.Context.Set<Client>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Client>();
-		}
+                        return await this.Context.Set<Client>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Client>();
+                }
 
-		private async Task<Client> GetById(int id)
-		{
-			List<Client> records = await this.SearchLinqEF(x => x.Id == id);
+                private async Task<List<Client>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Client.Id)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<Client>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Client>();
+                }
+
+                private async Task<Client> GetById(int id)
+                {
+                        List<Client> records = await this.SearchLinqEF(x => x.Id == id);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e23e1dfc4c22c10c88062b054c72eb14</Hash>
+    <Hash>087c64724eacb0c736bdf00093dc5bb6</Hash>
 </Codenesium>*/

@@ -7,22 +7,22 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface ISpaceXSpaceFeatureService
-	{
-		Task<CreateResponse<ApiSpaceXSpaceFeatureResponseModel>> Create(
-			ApiSpaceXSpaceFeatureRequestModel model);
+        public interface ISpaceXSpaceFeatureService
+        {
+                Task<CreateResponse<ApiSpaceXSpaceFeatureResponseModel>> Create(
+                        ApiSpaceXSpaceFeatureRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiSpaceXSpaceFeatureRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiSpaceXSpaceFeatureRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiSpaceXSpaceFeatureResponseModel> Get(int id);
+                Task<ApiSpaceXSpaceFeatureResponseModel> Get(int id);
 
-		Task<List<ApiSpaceXSpaceFeatureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiSpaceXSpaceFeatureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>191d6f5bf4c4cdf01cae85ab081baf1d</Hash>
+    <Hash>a69632d7730df8836bb86d9e98a5c6ba</Hash>
 </Codenesium>*/

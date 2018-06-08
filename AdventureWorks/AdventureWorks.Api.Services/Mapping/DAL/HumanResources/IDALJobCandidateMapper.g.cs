@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALJobCandidateMapper
-	{
-		JobCandidate MapBOToEF(
-			BOJobCandidate bo);
+        public interface IDALJobCandidateMapper
+        {
+                JobCandidate MapBOToEF(
+                        BOJobCandidate bo);
 
-		BOJobCandidate MapEFToBO(
-			JobCandidate efJobCandidate);
+                BOJobCandidate MapEFToBO(
+                        JobCandidate efJobCandidate);
 
-		List<BOJobCandidate> MapEFToBO(
-			List<JobCandidate> records);
-	}
+                List<BOJobCandidate> MapEFToBO(
+                        List<JobCandidate> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>c380547bce9c7e0290df57b7b89fbf23</Hash>
+    <Hash>ed532d3123ceefb5335f9470a4d57d84</Hash>
 </Codenesium>*/

@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public abstract class AbstractVersionInfoRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractVersionInfoRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractVersionInfoRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<VersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractVersionInfoRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<VersionInfo> Get(long version)
-		{
-			return await this.GetById(version);
-		}
+                public virtual Task<List<VersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<VersionInfo> Create(VersionInfo item)
-		{
-			this.Context.Set<VersionInfo>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<VersionInfo> Get(long version)
+                {
+                        return await this.GetById(version);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<VersionInfo> Create(VersionInfo item)
+                {
+                        this.Context.Set<VersionInfo>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(VersionInfo item)
-		{
-			var entity = this.Context.Set<VersionInfo>().Local.FirstOrDefault(x => x.Version == item.Version);
-			if (entity == null)
-			{
-				this.Context.Set<VersionInfo>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(VersionInfo item)
+                {
+                        var entity = this.Context.Set<VersionInfo>().Local.FirstOrDefault(x => x.Version == item.Version);
+                        if (entity == null)
+                        {
+                                this.Context.Set<VersionInfo>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			long version)
-		{
-			VersionInfo record = await this.GetById(version);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<VersionInfo>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        long version)
+                {
+                        VersionInfo record = await this.GetById(version);
 
-		public async Task<VersionInfo> GetVersion(long version)
-		{
-			var records = await this.SearchLinqEF(x => x.Version == version);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<VersionInfo>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
+                public async Task<VersionInfo> GetVersion(long version)
+                {
+                        var records = await this.SearchLinqEF(x => x.Version == version);
 
-		protected async Task<List<VersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<VersionInfo> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<VersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<VersionInfo> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<VersionInfo>> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(VersionInfo.Version)} ASC";
-			}
-			return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
-		}
+                        return records;
+                }
 
-		private async Task<List<VersionInfo>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(VersionInfo.Version)} ASC";
-			}
+                private async Task<List<VersionInfo>> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(VersionInfo.Version)} ASC";
+                        }
 
-			return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
-		}
+                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
+                }
 
-		private async Task<VersionInfo> GetById(long version)
-		{
-			List<VersionInfo> records = await this.SearchLinqEF(x => x.Version == version);
+                private async Task<List<VersionInfo>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(VersionInfo.Version)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
+                }
+
+                private async Task<VersionInfo> GetById(long version)
+                {
+                        List<VersionInfo> records = await this.SearchLinqEF(x => x.Version == version);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d513fc0cf90490448c095d59e808289c</Hash>
+    <Hash>70195728a50ffb2d0d26f2c65c493f2e</Hash>
 </Codenesium>*/

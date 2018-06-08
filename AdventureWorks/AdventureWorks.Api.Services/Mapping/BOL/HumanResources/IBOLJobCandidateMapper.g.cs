@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLJobCandidateMapper
-	{
-		BOJobCandidate MapModelToBO(
-			int jobCandidateID,
-			ApiJobCandidateRequestModel model);
+        public interface IBOLJobCandidateMapper
+        {
+                BOJobCandidate MapModelToBO(
+                        int jobCandidateID,
+                        ApiJobCandidateRequestModel model);
 
-		ApiJobCandidateResponseModel MapBOToModel(
-			BOJobCandidate boJobCandidate);
+                ApiJobCandidateResponseModel MapBOToModel(
+                        BOJobCandidate boJobCandidate);
 
-		List<ApiJobCandidateResponseModel> MapBOToModel(
-			List<BOJobCandidate> items);
-	}
+                List<ApiJobCandidateResponseModel> MapBOToModel(
+                        List<BOJobCandidate> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>b4d3b8e171bfa6cddb27a6eba512d123</Hash>
+    <Hash>1518663f6131d95ede8a6d8ff3e4d058</Hash>
 </Codenesium>*/

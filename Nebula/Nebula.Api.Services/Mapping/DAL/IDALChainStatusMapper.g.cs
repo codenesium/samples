@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public interface IDALChainStatusMapper
-	{
-		ChainStatus MapBOToEF(
-			BOChainStatus bo);
+        public interface IDALChainStatusMapper
+        {
+                ChainStatus MapBOToEF(
+                        BOChainStatus bo);
 
-		BOChainStatus MapEFToBO(
-			ChainStatus efChainStatus);
+                BOChainStatus MapEFToBO(
+                        ChainStatus efChainStatus);
 
-		List<BOChainStatus> MapEFToBO(
-			List<ChainStatus> records);
-	}
+                List<BOChainStatus> MapEFToBO(
+                        List<ChainStatus> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>8efb7645f48b000729e72731f897e28a</Hash>
+    <Hash>1fd149986f1b8db8d7aec60ab12893c2</Hash>
 </Codenesium>*/

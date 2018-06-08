@@ -3,23 +3,25 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-	public partial class BOPipelineStatus: AbstractBusinessObject
-	{
-		public BOPipelineStatus() : base()
-		{}
+        public partial class BOPipelineStatus: AbstractBusinessObject
+        {
+                public BOPipelineStatus() : base()
+                {
+                }
 
-		public void SetProperties(int id,
-		                          string name)
-		{
-			this.Id = id.ToInt();
-			this.Name = name;
-		}
+                public void SetProperties(int id,
+                                          string name)
+                {
+                        this.Id = id;
+                        this.Name = name;
+                }
 
-		public int Id { get; private set; }
-		public string Name { get; private set; }
-	}
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>37386f9f5e29a422aaa42f41b92cf3ab</Hash>
+    <Hash>572a938c9ef99f0aab4b103e5b1c19ef</Hash>
 </Codenesium>*/

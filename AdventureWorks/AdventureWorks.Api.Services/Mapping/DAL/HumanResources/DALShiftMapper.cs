@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALShiftMapper: AbstractDALShiftMapper, IDALShiftMapper
-	{
-		public DALShiftMapper()
-		{}
-	}
+        public class DALShiftMapper: DALAbstractShiftMapper, IDALShiftMapper
+        {
+                public DALShiftMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e4f1c5b16a3cb03ace76ee9e2ac44dbf</Hash>
+    <Hash>379bc86d1a81dcd4f4f281a7efd778cb</Hash>
 </Codenesium>*/

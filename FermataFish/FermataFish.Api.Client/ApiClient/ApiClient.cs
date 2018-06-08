@@ -7,18 +7,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
+
 namespace FermataFishNS.Api.Client
 {
-	public class ApiClient: AbstractApiClient
-	{
-		public ApiClient(string apiUrl) : base(apiUrl,"1.0")
-		{}
+        public class ApiClient: AbstractApiClient
+        {
+                public ApiClient(string apiUrl) : base(apiUrl, "1.0")
+                {
+                }
 
-		public ApiClient(HttpClient client) : base(client)
-		{}
-	}
+                public ApiClient(HttpClient client) : base(client)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cf46efdbded799aac8de1f21cdc95bc8</Hash>
+    <Hash>09d35ded91c6da7d8bc57377074e8e0c</Hash>
 </Codenesium>*/

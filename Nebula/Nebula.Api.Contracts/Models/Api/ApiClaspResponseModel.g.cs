@@ -4,65 +4,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiClaspResponseModel: AbstractApiResponseModel
-	{
-		public ApiClaspResponseModel() : base()
-		{}
+        public partial class ApiClaspResponseModel: AbstractApiResponseModel
+        {
+                public ApiClaspResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int id,
-			int nextChainId,
-			int previousChainId)
-		{
-			this.Id = id.ToInt();
-			this.NextChainId = nextChainId.ToInt();
-			this.PreviousChainId = previousChainId.ToInt();
+                public void SetProperties(
+                        int id,
+                        int nextChainId,
+                        int previousChainId)
+                {
+                        this.Id = id;
+                        this.NextChainId = nextChainId;
+                        this.PreviousChainId = previousChainId;
 
-			this.NextChainIdEntity = nameof(ApiResponse.Chains);
-			this.PreviousChainIdEntity = nameof(ApiResponse.Chains);
-		}
+                        this.NextChainIdEntity = nameof(ApiResponse.Chains);
+                        this.PreviousChainIdEntity = nameof(ApiResponse.Chains);
+                }
 
-		public int Id { get; private set; }
-		public int NextChainId { get; private set; }
-		public string NextChainIdEntity { get; set; }
-		public int PreviousChainId { get; private set; }
-		public string PreviousChainIdEntity { get; set; }
+                public int Id { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+                public int NextChainId { get; private set; }
 
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+                public string NextChainIdEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeNextChainIdValue { get; set; } = true;
+                public int PreviousChainId { get; private set; }
 
-		public bool ShouldSerializeNextChainId()
-		{
-			return this.ShouldSerializeNextChainIdValue;
-		}
+                public string PreviousChainIdEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
-		public bool ShouldSerializePreviousChainId()
-		{
-			return this.ShouldSerializePreviousChainIdValue;
-		}
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeNextChainIdValue = false;
-			this.ShouldSerializePreviousChainIdValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeNextChainIdValue { get; set; } = true;
+
+                public bool ShouldSerializeNextChainId()
+                {
+                        return this.ShouldSerializeNextChainIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
+
+                public bool ShouldSerializePreviousChainId()
+                {
+                        return this.ShouldSerializePreviousChainIdValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNextChainIdValue = false;
+                        this.ShouldSerializePreviousChainIdValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9599c26b2501a7a993a539f4334e3152</Hash>
+    <Hash>7888f5680742dcbcdf6958e0bb026782</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class PhoneNumberTypeService: AbstractPhoneNumberTypeService, IPhoneNumberTypeService
-	{
-		public PhoneNumberTypeService(
-			ILogger<PhoneNumberTypeRepository> logger,
-			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
-			IBOLPhoneNumberTypeMapper BOLphoneNumberTypeMapper,
-			IDALPhoneNumberTypeMapper DALphoneNumberTypeMapper)
-			: base(logger, phoneNumberTypeRepository,
-			       phoneNumberTypeModelValidator,
-			       BOLphoneNumberTypeMapper,
-			       DALphoneNumberTypeMapper)
-		{}
-	}
+        public class PhoneNumberTypeService: AbstractPhoneNumberTypeService, IPhoneNumberTypeService
+        {
+                public PhoneNumberTypeService(
+                        ILogger<PhoneNumberTypeRepository> logger,
+                        IPhoneNumberTypeRepository phoneNumberTypeRepository,
+                        IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
+                        IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
+                        IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper)
+                        : base(logger,
+                               phoneNumberTypeRepository,
+                               phoneNumberTypeModelValidator,
+                               bolphoneNumberTypeMapper,
+                               dalphoneNumberTypeMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e4ae2d259c98b34a22d0f7cd88a5bb4e</Hash>
+    <Hash>2cb7f251e6ae13bb919703a56fe533ea</Hash>
 </Codenesium>*/

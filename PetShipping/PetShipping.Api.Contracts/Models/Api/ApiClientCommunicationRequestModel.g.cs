@@ -3,91 +3,93 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace PetShippingNS.Api.Contracts
 {
-	public partial class ApiClientCommunicationRequestModel: AbstractApiRequestModel
-	{
-		public ApiClientCommunicationRequestModel() : base()
-		{}
+        public partial class ApiClientCommunicationRequestModel: AbstractApiRequestModel
+        {
+                public ApiClientCommunicationRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int clientId,
-			DateTime dateCreated,
-			int employeeId,
-			string notes)
-		{
-			this.ClientId = clientId.ToInt();
-			this.DateCreated = dateCreated.ToDateTime();
-			this.EmployeeId = employeeId.ToInt();
-			this.Notes = notes;
-		}
+                public void SetProperties(
+                        int clientId,
+                        DateTime dateCreated,
+                        int employeeId,
+                        string notes)
+                {
+                        this.ClientId = clientId;
+                        this.DateCreated = dateCreated;
+                        this.EmployeeId = employeeId;
+                        this.Notes = notes;
+                }
 
-		private int clientId;
+                private int clientId;
 
-		[Required]
-		public int ClientId
-		{
-			get
-			{
-				return this.clientId;
-			}
+                [Required]
+                public int ClientId
+                {
+                        get
+                        {
+                                return this.clientId;
+                        }
 
-			set
-			{
-				this.clientId = value;
-			}
-		}
+                        set
+                        {
+                                this.clientId = value;
+                        }
+                }
 
-		private DateTime dateCreated;
+                private DateTime dateCreated;
 
-		[Required]
-		public DateTime DateCreated
-		{
-			get
-			{
-				return this.dateCreated;
-			}
+                [Required]
+                public DateTime DateCreated
+                {
+                        get
+                        {
+                                return this.dateCreated;
+                        }
 
-			set
-			{
-				this.dateCreated = value;
-			}
-		}
+                        set
+                        {
+                                this.dateCreated = value;
+                        }
+                }
 
-		private int employeeId;
+                private int employeeId;
 
-		[Required]
-		public int EmployeeId
-		{
-			get
-			{
-				return this.employeeId;
-			}
+                [Required]
+                public int EmployeeId
+                {
+                        get
+                        {
+                                return this.employeeId;
+                        }
 
-			set
-			{
-				this.employeeId = value;
-			}
-		}
+                        set
+                        {
+                                this.employeeId = value;
+                        }
+                }
 
-		private string notes;
+                private string notes;
 
-		[Required]
-		public string Notes
-		{
-			get
-			{
-				return this.notes;
-			}
+                [Required]
+                public string Notes
+                {
+                        get
+                        {
+                                return this.notes;
+                        }
 
-			set
-			{
-				this.notes = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.notes = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c94c4db6becfe6aa07de935f636cbb92</Hash>
+    <Hash>fe781dd7fa480c845c6206dd3b1b1d12</Hash>
 </Codenesium>*/

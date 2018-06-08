@@ -4,65 +4,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiMachineRefTeamResponseModel: AbstractApiResponseModel
-	{
-		public ApiMachineRefTeamResponseModel() : base()
-		{}
+        public partial class ApiMachineRefTeamResponseModel: AbstractApiResponseModel
+        {
+                public ApiMachineRefTeamResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int id,
-			int machineId,
-			int teamId)
-		{
-			this.Id = id.ToInt();
-			this.MachineId = machineId.ToInt();
-			this.TeamId = teamId.ToInt();
+                public void SetProperties(
+                        int id,
+                        int machineId,
+                        int teamId)
+                {
+                        this.Id = id;
+                        this.MachineId = machineId;
+                        this.TeamId = teamId;
 
-			this.MachineIdEntity = nameof(ApiResponse.Machines);
-			this.TeamIdEntity = nameof(ApiResponse.Teams);
-		}
+                        this.MachineIdEntity = nameof(ApiResponse.Machines);
+                        this.TeamIdEntity = nameof(ApiResponse.Teams);
+                }
 
-		public int Id { get; private set; }
-		public int MachineId { get; private set; }
-		public string MachineIdEntity { get; set; }
-		public int TeamId { get; private set; }
-		public string TeamIdEntity { get; set; }
+                public int Id { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+                public int MachineId { get; private set; }
 
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+                public string MachineIdEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeMachineIdValue { get; set; } = true;
+                public int TeamId { get; private set; }
 
-		public bool ShouldSerializeMachineId()
-		{
-			return this.ShouldSerializeMachineIdValue;
-		}
+                public string TeamIdEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeTeamIdValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
-		public bool ShouldSerializeTeamId()
-		{
-			return this.ShouldSerializeTeamIdValue;
-		}
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeMachineIdValue = false;
-			this.ShouldSerializeTeamIdValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeMachineIdValue { get; set; } = true;
+
+                public bool ShouldSerializeMachineId()
+                {
+                        return this.ShouldSerializeMachineIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeTeamIdValue { get; set; } = true;
+
+                public bool ShouldSerializeTeamId()
+                {
+                        return this.ShouldSerializeTeamIdValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeMachineIdValue = false;
+                        this.ShouldSerializeTeamIdValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>716c0743d91e50e6ec93d64635384197</Hash>
+    <Hash>c9b9f3fa05526ae57d2bb000e49e14f3</Hash>
 </Codenesium>*/

@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
-	{
-		public MachineRefTeamRepository(
-			ILogger<MachineRefTeamRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
+        {
+                public MachineRefTeamRepository(
+                        ILogger<MachineRefTeamRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c1b3f45c4a485096f387b9bcd89ff864</Hash>
+    <Hash>2ac5a5cdd277b7f42503557e65727c04</Hash>
 </Codenesium>*/

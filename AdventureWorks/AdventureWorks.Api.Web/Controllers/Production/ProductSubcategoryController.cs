@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/productSubcategories")]
-	[ApiVersion("1.0")]
-	public class ProductSubcategoryController: AbstractProductSubcategoryController
-	{
-		public ProductSubcategoryController(
-			ServiceSettings settings,
-			ILogger<ProductSubcategoryController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IProductSubcategoryService productSubcategoryService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       productSubcategoryService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/productSubcategories")]
+        [ApiVersion("1.0")]
+        public class ProductSubcategoryController: AbstractProductSubcategoryController
+        {
+                public ProductSubcategoryController(
+                        ServiceSettings settings,
+                        ILogger<ProductSubcategoryController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IProductSubcategoryService productSubcategoryService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               productSubcategoryService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>2f8d657d18160c8d15ec9ad34aea84f9</Hash>
+    <Hash>1a2ebe6729555dedd42865e35b2b1f22</Hash>
 </Codenesium>*/

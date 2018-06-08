@@ -7,24 +7,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ICreditCardService
-	{
-		Task<CreateResponse<ApiCreditCardResponseModel>> Create(
-			ApiCreditCardRequestModel model);
+        public interface ICreditCardService
+        {
+                Task<CreateResponse<ApiCreditCardResponseModel>> Create(
+                        ApiCreditCardRequestModel model);
 
-		Task<ActionResponse> Update(int creditCardID,
-		                            ApiCreditCardRequestModel model);
+                Task<ActionResponse> Update(int creditCardID,
+                                            ApiCreditCardRequestModel model);
 
-		Task<ActionResponse> Delete(int creditCardID);
+                Task<ActionResponse> Delete(int creditCardID);
 
-		Task<ApiCreditCardResponseModel> Get(int creditCardID);
+                Task<ApiCreditCardResponseModel> Get(int creditCardID);
 
-		Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber);
-	}
+                Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber);
+        }
 }
 
 /*<Codenesium>
-    <Hash>af1b45653f3a66103ec581ec2b23a1a3</Hash>
+    <Hash>bd9dbd850bda11bb3dd7f59ce64494ab</Hash>
 </Codenesium>*/

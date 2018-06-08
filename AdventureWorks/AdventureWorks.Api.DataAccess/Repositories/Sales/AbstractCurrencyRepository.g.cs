@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCurrencyRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractCurrencyRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractCurrencyRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<Currency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractCurrencyRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<Currency> Get(string currencyCode)
-		{
-			return await this.GetById(currencyCode);
-		}
+                public virtual Task<List<Currency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<Currency> Create(Currency item)
-		{
-			this.Context.Set<Currency>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<Currency> Get(string currencyCode)
+                {
+                        return await this.GetById(currencyCode);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<Currency> Create(Currency item)
+                {
+                        this.Context.Set<Currency>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(Currency item)
-		{
-			var entity = this.Context.Set<Currency>().Local.FirstOrDefault(x => x.CurrencyCode == item.CurrencyCode);
-			if (entity == null)
-			{
-				this.Context.Set<Currency>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(Currency item)
+                {
+                        var entity = this.Context.Set<Currency>().Local.FirstOrDefault(x => x.CurrencyCode == item.CurrencyCode);
+                        if (entity == null)
+                        {
+                                this.Context.Set<Currency>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			string currencyCode)
-		{
-			Currency record = await this.GetById(currencyCode);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<Currency>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        string currencyCode)
+                {
+                        Currency record = await this.GetById(currencyCode);
 
-		public async Task<Currency> GetName(string name)
-		{
-			var records = await this.SearchLinqEF(x => x.Name == name);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<Currency>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
+                public async Task<Currency> GetName(string name)
+                {
+                        var records = await this.SearchLinqEF(x => x.Name == name);
 
-		protected async Task<List<Currency>> Where(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<Currency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<Currency>> Where(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<Currency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<Currency>> SearchLinqEF(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Currency.CurrencyCode)} ASC";
-			}
-			return await this.Context.Set<Currency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Currency>();
-		}
+                        return records;
+                }
 
-		private async Task<List<Currency>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Currency.CurrencyCode)} ASC";
-			}
+                private async Task<List<Currency>> SearchLinqEF(Expression<Func<Currency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Currency.CurrencyCode)} ASC";
+                        }
 
-			return await this.Context.Set<Currency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Currency>();
-		}
+                        return await this.Context.Set<Currency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Currency>();
+                }
 
-		private async Task<Currency> GetById(string currencyCode)
-		{
-			List<Currency> records = await this.SearchLinqEF(x => x.CurrencyCode == currencyCode);
+                private async Task<List<Currency>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Currency.CurrencyCode)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<Currency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Currency>();
+                }
+
+                private async Task<Currency> GetById(string currencyCode)
+                {
+                        List<Currency> records = await this.SearchLinqEF(x => x.CurrencyCode == currencyCode);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4fbaf5c9af7371a9e6dbd2ccda5ccfc5</Hash>
+    <Hash>65b76cced77a8021712cb73e0cf54e48</Hash>
 </Codenesium>*/

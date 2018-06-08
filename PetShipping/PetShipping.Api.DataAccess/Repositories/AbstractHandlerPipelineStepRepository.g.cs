@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public abstract class AbstractHandlerPipelineStepRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractHandlerPipelineStepRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractHandlerPipelineStepRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<HandlerPipelineStep>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractHandlerPipelineStepRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<HandlerPipelineStep> Get(int id)
-		{
-			return await this.GetById(id);
-		}
+                public virtual Task<List<HandlerPipelineStep>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<HandlerPipelineStep> Create(HandlerPipelineStep item)
-		{
-			this.Context.Set<HandlerPipelineStep>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<HandlerPipelineStep> Get(int id)
+                {
+                        return await this.GetById(id);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<HandlerPipelineStep> Create(HandlerPipelineStep item)
+                {
+                        this.Context.Set<HandlerPipelineStep>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(HandlerPipelineStep item)
-		{
-			var entity = this.Context.Set<HandlerPipelineStep>().Local.FirstOrDefault(x => x.Id == item.Id);
-			if (entity == null)
-			{
-				this.Context.Set<HandlerPipelineStep>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(HandlerPipelineStep item)
+                {
+                        var entity = this.Context.Set<HandlerPipelineStep>().Local.FirstOrDefault(x => x.Id == item.Id);
+                        if (entity == null)
+                        {
+                                this.Context.Set<HandlerPipelineStep>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int id)
-		{
-			HandlerPipelineStep record = await this.GetById(id);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<HandlerPipelineStep>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int id)
+                {
+                        HandlerPipelineStep record = await this.GetById(id);
 
-		protected async Task<List<HandlerPipelineStep>> Where(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<HandlerPipelineStep> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<HandlerPipelineStep>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<HandlerPipelineStep>> Where(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<HandlerPipelineStep> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<HandlerPipelineStep>> SearchLinqEF(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(HandlerPipelineStep.Id)} ASC";
-			}
-			return await this.Context.Set<HandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<HandlerPipelineStep>();
-		}
+                        return records;
+                }
 
-		private async Task<List<HandlerPipelineStep>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(HandlerPipelineStep.Id)} ASC";
-			}
+                private async Task<List<HandlerPipelineStep>> SearchLinqEF(Expression<Func<HandlerPipelineStep, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(HandlerPipelineStep.Id)} ASC";
+                        }
 
-			return await this.Context.Set<HandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<HandlerPipelineStep>();
-		}
+                        return await this.Context.Set<HandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<HandlerPipelineStep>();
+                }
 
-		private async Task<HandlerPipelineStep> GetById(int id)
-		{
-			List<HandlerPipelineStep> records = await this.SearchLinqEF(x => x.Id == id);
+                private async Task<List<HandlerPipelineStep>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(HandlerPipelineStep.Id)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<HandlerPipelineStep>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<HandlerPipelineStep>();
+                }
+
+                private async Task<HandlerPipelineStep> GetById(int id)
+                {
+                        List<HandlerPipelineStep> records = await this.SearchLinqEF(x => x.Id == id);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>71cc4cf0100ab083045e61be3175fe29</Hash>
+    <Hash>8605726629d244808284e1682e668254</Hash>
 </Codenesium>*/

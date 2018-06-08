@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class PipelineStepStepRequirementService: AbstractPipelineStepStepRequirementService, IPipelineStepStepRequirementService
-	{
-		public PipelineStepStepRequirementService(
-			ILogger<PipelineStepStepRequirementRepository> logger,
-			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
-			IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator,
-			IBOLPipelineStepStepRequirementMapper BOLpipelineStepStepRequirementMapper,
-			IDALPipelineStepStepRequirementMapper DALpipelineStepStepRequirementMapper)
-			: base(logger, pipelineStepStepRequirementRepository,
-			       pipelineStepStepRequirementModelValidator,
-			       BOLpipelineStepStepRequirementMapper,
-			       DALpipelineStepStepRequirementMapper)
-		{}
-	}
+        public class PipelineStepStepRequirementService: AbstractPipelineStepStepRequirementService, IPipelineStepStepRequirementService
+        {
+                public PipelineStepStepRequirementService(
+                        ILogger<PipelineStepStepRequirementRepository> logger,
+                        IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
+                        IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator,
+                        IBOLPipelineStepStepRequirementMapper bolpipelineStepStepRequirementMapper,
+                        IDALPipelineStepStepRequirementMapper dalpipelineStepStepRequirementMapper)
+                        : base(logger,
+                               pipelineStepStepRequirementRepository,
+                               pipelineStepStepRequirementModelValidator,
+                               bolpipelineStepStepRequirementMapper,
+                               dalpipelineStepStepRequirementMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>335cd91bfc6d13a0603748a42a4722d6</Hash>
+    <Hash>5e05e9d5a32d223d7dbda4672e54cd99</Hash>
 </Codenesium>*/

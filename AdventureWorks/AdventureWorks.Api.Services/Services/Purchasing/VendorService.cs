@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class VendorService: AbstractVendorService, IVendorService
-	{
-		public VendorService(
-			ILogger<VendorRepository> logger,
-			IVendorRepository vendorRepository,
-			IApiVendorRequestModelValidator vendorModelValidator,
-			IBOLVendorMapper BOLvendorMapper,
-			IDALVendorMapper DALvendorMapper)
-			: base(logger, vendorRepository,
-			       vendorModelValidator,
-			       BOLvendorMapper,
-			       DALvendorMapper)
-		{}
-	}
+        public class VendorService: AbstractVendorService, IVendorService
+        {
+                public VendorService(
+                        ILogger<VendorRepository> logger,
+                        IVendorRepository vendorRepository,
+                        IApiVendorRequestModelValidator vendorModelValidator,
+                        IBOLVendorMapper bolvendorMapper,
+                        IDALVendorMapper dalvendorMapper)
+                        : base(logger,
+                               vendorRepository,
+                               vendorModelValidator,
+                               bolvendorMapper,
+                               dalvendorMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cd40b295c00f86119a4796a10bf2369e</Hash>
+    <Hash>1378d3c90b6f42a2f1833c164ea1b97a</Hash>
 </Codenesium>*/

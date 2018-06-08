@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractAirlineService: AbstractService
-	{
-		private IAirlineRepository airlineRepository;
-		private IApiAirlineRequestModelValidator airlineModelValidator;
-		private IBOLAirlineMapper bolAirlineMapper;
-		private IDALAirlineMapper dalAirlineMapper;
-		private ILogger logger;
+        public abstract class AbstractAirlineService: AbstractService
+        {
+                private IAirlineRepository airlineRepository;
 
-		public AbstractAirlineService(
-			ILogger logger,
-			IAirlineRepository airlineRepository,
-			IApiAirlineRequestModelValidator airlineModelValidator,
-			IBOLAirlineMapper bolairlineMapper,
-			IDALAirlineMapper dalairlineMapper)
-			: base()
+                private IApiAirlineRequestModelValidator airlineModelValidator;
 
-		{
-			this.airlineRepository = airlineRepository;
-			this.airlineModelValidator = airlineModelValidator;
-			this.bolAirlineMapper = bolairlineMapper;
-			this.dalAirlineMapper = dalairlineMapper;
-			this.logger = logger;
-		}
+                private IBOLAirlineMapper bolAirlineMapper;
 
-		public virtual async Task<List<ApiAirlineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.airlineRepository.All(skip, take, orderClause);
+                private IDALAirlineMapper dalAirlineMapper;
 
-			return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiAirlineResponseModel> Get(int id)
-		{
-			var record = await airlineRepository.Get(id);
+                public AbstractAirlineService(
+                        ILogger logger,
+                        IAirlineRepository airlineRepository,
+                        IApiAirlineRequestModelValidator airlineModelValidator,
+                        IBOLAirlineMapper bolairlineMapper,
+                        IDALAirlineMapper dalairlineMapper)
+                        : base()
 
-			return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(record));
-		}
+                {
+                        this.airlineRepository = airlineRepository;
+                        this.airlineModelValidator = airlineModelValidator;
+                        this.bolAirlineMapper = bolairlineMapper;
+                        this.dalAirlineMapper = dalairlineMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiAirlineResponseModel>> Create(
-			ApiAirlineRequestModel model)
-		{
-			CreateResponse<ApiAirlineResponseModel> response = new CreateResponse<ApiAirlineResponseModel>(await this.airlineModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolAirlineMapper.MapModelToBO(default (int), model);
-				var record = await this.airlineRepository.Create(this.dalAirlineMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiAirlineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.airlineRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiAirlineRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.airlineModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiAirlineResponseModel> Get(int id)
+                {
+                        var record = await this.airlineRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolAirlineMapper.MapModelToBO(id, model);
-				await this.airlineRepository.Update(this.dalAirlineMapper.MapBOToEF(bo));
-			}
+                        return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiAirlineResponseModel>> Create(
+                        ApiAirlineRequestModel model)
+                {
+                        CreateResponse<ApiAirlineResponseModel> response = new CreateResponse<ApiAirlineResponseModel>(await this.airlineModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolAirlineMapper.MapModelToBO(default (int), model);
+                                var record = await this.airlineRepository.Create(this.dalAirlineMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.airlineModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.airlineRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiAirlineRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.airlineModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolAirlineMapper.MapModelToBO(id, model);
+                                await this.airlineRepository.Update(this.dalAirlineMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.airlineModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.airlineRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>646b5503a8f9e644a3fd21b4f17dc2b1</Hash>
+    <Hash>77620eb57f31abe703549f94f44ed9cd</Hash>
 </Codenesium>*/

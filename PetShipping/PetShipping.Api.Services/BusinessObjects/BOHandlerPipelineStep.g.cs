@@ -3,26 +3,29 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-	public partial class BOHandlerPipelineStep: AbstractBusinessObject
-	{
-		public BOHandlerPipelineStep() : base()
-		{}
+        public partial class BOHandlerPipelineStep: AbstractBusinessObject
+        {
+                public BOHandlerPipelineStep() : base()
+                {
+                }
 
-		public void SetProperties(int id,
-		                          int handlerId,
-		                          int pipelineStepId)
-		{
-			this.HandlerId = handlerId.ToInt();
-			this.Id = id.ToInt();
-			this.PipelineStepId = pipelineStepId.ToInt();
-		}
+                public void SetProperties(int id,
+                                          int handlerId,
+                                          int pipelineStepId)
+                {
+                        this.HandlerId = handlerId;
+                        this.Id = id;
+                        this.PipelineStepId = pipelineStepId;
+                }
 
-		public int HandlerId { get; private set; }
-		public int Id { get; private set; }
-		public int PipelineStepId { get; private set; }
-	}
+                public int HandlerId { get; private set; }
+
+                public int Id { get; private set; }
+
+                public int PipelineStepId { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f0373ad8dd872d5885c2525112f09725</Hash>
+    <Hash>5163d08053a6909043af696bc9a1f33e</Hash>
 </Codenesium>*/

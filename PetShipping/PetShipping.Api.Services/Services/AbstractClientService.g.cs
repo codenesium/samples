@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractClientService: AbstractService
-	{
-		private IClientRepository clientRepository;
-		private IApiClientRequestModelValidator clientModelValidator;
-		private IBOLClientMapper bolClientMapper;
-		private IDALClientMapper dalClientMapper;
-		private ILogger logger;
+        public abstract class AbstractClientService: AbstractService
+        {
+                private IClientRepository clientRepository;
 
-		public AbstractClientService(
-			ILogger logger,
-			IClientRepository clientRepository,
-			IApiClientRequestModelValidator clientModelValidator,
-			IBOLClientMapper bolclientMapper,
-			IDALClientMapper dalclientMapper)
-			: base()
+                private IApiClientRequestModelValidator clientModelValidator;
 
-		{
-			this.clientRepository = clientRepository;
-			this.clientModelValidator = clientModelValidator;
-			this.bolClientMapper = bolclientMapper;
-			this.dalClientMapper = dalclientMapper;
-			this.logger = logger;
-		}
+                private IBOLClientMapper bolClientMapper;
 
-		public virtual async Task<List<ApiClientResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.clientRepository.All(skip, take, orderClause);
+                private IDALClientMapper dalClientMapper;
 
-			return this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiClientResponseModel> Get(int id)
-		{
-			var record = await clientRepository.Get(id);
+                public AbstractClientService(
+                        ILogger logger,
+                        IClientRepository clientRepository,
+                        IApiClientRequestModelValidator clientModelValidator,
+                        IBOLClientMapper bolclientMapper,
+                        IDALClientMapper dalclientMapper)
+                        : base()
 
-			return this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record));
-		}
+                {
+                        this.clientRepository = clientRepository;
+                        this.clientModelValidator = clientModelValidator;
+                        this.bolClientMapper = bolclientMapper;
+                        this.dalClientMapper = dalclientMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiClientResponseModel>> Create(
-			ApiClientRequestModel model)
-		{
-			CreateResponse<ApiClientResponseModel> response = new CreateResponse<ApiClientResponseModel>(await this.clientModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolClientMapper.MapModelToBO(default (int), model);
-				var record = await this.clientRepository.Create(this.dalClientMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiClientResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.clientRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiClientRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiClientResponseModel> Get(int id)
+                {
+                        var record = await this.clientRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolClientMapper.MapModelToBO(id, model);
-				await this.clientRepository.Update(this.dalClientMapper.MapBOToEF(bo));
-			}
+                        return this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiClientResponseModel>> Create(
+                        ApiClientRequestModel model)
+                {
+                        CreateResponse<ApiClientResponseModel> response = new CreateResponse<ApiClientResponseModel>(await this.clientModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolClientMapper.MapModelToBO(default (int), model);
+                                var record = await this.clientRepository.Create(this.dalClientMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.clientRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiClientRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolClientMapper.MapModelToBO(id, model);
+                                await this.clientRepository.Update(this.dalClientMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.clientRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>761127b8840510362a4be80ce0fb0eb1</Hash>
+    <Hash>91493da8a5f5f706e684f5ceb20a66a0</Hash>
 </Codenesium>*/

@@ -14,155 +14,155 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	public abstract class AbstractStateController: AbstractApiController
-	{
-		protected IStateService stateService;
+        public abstract class AbstractStateController: AbstractApiController
+        {
+                protected IStateService StateService { get; private set; }
 
-		protected int BulkInsertLimit { get; set; }
+                protected int BulkInsertLimit { get; set; }
 
-		protected int MaxLimit { get; set; }
+                protected int MaxLimit { get; set; }
 
-		protected int DefaultLimit { get; set; }
+                protected int DefaultLimit { get; set; }
 
-		public AbstractStateController(
-			ServiceSettings settings,
-			ILogger<AbstractStateController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IStateService stateService
-			)
-			: base(settings, logger, transactionCoordinator)
-		{
-			this.stateService = stateService;
-		}
+                public AbstractStateController(
+                        ServiceSettings settings,
+                        ILogger<AbstractStateController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IStateService stateService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.StateService = stateService;
+                }
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<ApiStateResponseModel> response = await this.stateService.All(query.Offset, query.Limit);
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiStateResponseModel> response = await this.StateService.All(query.Offset, query.Limit);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("{id}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiStateResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(int id)
-		{
-			ApiStateResponseModel response = await this.stateService.Get(id);
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiStateResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(int id)
+                {
+                        ApiStateResponseModel response = await this.StateService.Get(id);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpPost]
-		[Route("")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiStateResponseModel), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiStateRequestModel model)
-		{
-			CreateResponse<ApiStateResponseModel> result = await this.stateService.Create(model);
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiStateResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiStateRequestModel model)
+                {
+                        CreateResponse<ApiStateResponseModel> result = await this.StateService.Create(model);
 
-			if (result.Success)
-			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/States/{result.Record.Id.ToString()}");
-				return this.Ok(result.Record);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/States/{result.Record.Id.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpPost]
-		[Route("BulkInsert")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
-		[ProducesResponseType(typeof(void), 413)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateRequestModel> models)
-		{
-			if (models.Count > this.BulkInsertLimit)
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-			}
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiStateRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
 
-			List<ApiStateResponseModel> records = new List<ApiStateResponseModel>();
-			foreach (var model in models)
-			{
-				CreateResponse<ApiStateResponseModel> result = await this.stateService.Create(model);
+                        List<ApiStateResponseModel> records = new List<ApiStateResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiStateResponseModel> result = await this.StateService.Create(model);
 
-				if(result.Success)
-				{
-					records.Add(result.Record);
-				}
-				else
-				{
-					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-				}
-			}
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
 
-			return this.Ok(records);
-		}
+                        return this.Ok(records);
+                }
 
-		[HttpPut]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiStateResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateRequestModel model)
-		{
-			ActionResponse result = await this.stateService.Update(id, model);
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiStateResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiStateRequestModel model)
+                {
+                        ActionResponse result = await this.StateService.Update(id, model);
 
-			if (result.Success)
-			{
-				ApiStateResponseModel response = await this.stateService.Get(id);
+                        if (result.Success)
+                        {
+                                ApiStateResponseModel response = await this.StateService.Get(id);
 
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpDelete]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(int id)
-		{
-			ActionResponse result = await this.stateService.Delete(id);
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(int id)
+                {
+                        ActionResponse result = await this.StateService.Delete(id);
 
-			if (result.Success)
-			{
-				return this.NoContent();
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
-	}
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>96aeb9baf0540c3f4b95fa3278600200</Hash>
+    <Hash>e360eec9e58ce649fec27beb99a28b7a</Hash>
 </Codenesium>*/

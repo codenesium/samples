@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public abstract class AbstractFileTypeRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractFileTypeRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractFileTypeRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<FileType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractFileTypeRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<FileType> Get(int id)
-		{
-			return await this.GetById(id);
-		}
+                public virtual Task<List<FileType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<FileType> Create(FileType item)
-		{
-			this.Context.Set<FileType>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<FileType> Get(int id)
+                {
+                        return await this.GetById(id);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<FileType> Create(FileType item)
+                {
+                        this.Context.Set<FileType>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(FileType item)
-		{
-			var entity = this.Context.Set<FileType>().Local.FirstOrDefault(x => x.Id == item.Id);
-			if (entity == null)
-			{
-				this.Context.Set<FileType>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(FileType item)
+                {
+                        var entity = this.Context.Set<FileType>().Local.FirstOrDefault(x => x.Id == item.Id);
+                        if (entity == null)
+                        {
+                                this.Context.Set<FileType>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int id)
-		{
-			FileType record = await this.GetById(id);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<FileType>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int id)
+                {
+                        FileType record = await this.GetById(id);
 
-		protected async Task<List<FileType>> Where(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<FileType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<FileType>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<FileType>> Where(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<FileType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<FileType>> SearchLinqEF(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(FileType.Id)} ASC";
-			}
-			return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<FileType>();
-		}
+                        return records;
+                }
 
-		private async Task<List<FileType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(FileType.Id)} ASC";
-			}
+                private async Task<List<FileType>> SearchLinqEF(Expression<Func<FileType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(FileType.Id)} ASC";
+                        }
 
-			return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<FileType>();
-		}
+                        return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<FileType>();
+                }
 
-		private async Task<FileType> GetById(int id)
-		{
-			List<FileType> records = await this.SearchLinqEF(x => x.Id == id);
+                private async Task<List<FileType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(FileType.Id)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<FileType>();
+                }
+
+                private async Task<FileType> GetById(int id)
+                {
+                        List<FileType> records = await this.SearchLinqEF(x => x.Id == id);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>832164cb04f54d960d4f31b91f10a05a</Hash>
+    <Hash>4d82e6d87b0f916f774673dd4e8b2d20</Hash>
 </Codenesium>*/

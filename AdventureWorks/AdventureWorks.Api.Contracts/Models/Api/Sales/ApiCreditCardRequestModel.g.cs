@@ -3,109 +3,111 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiCreditCardRequestModel: AbstractApiRequestModel
-	{
-		public ApiCreditCardRequestModel() : base()
-		{}
+        public partial class ApiCreditCardRequestModel: AbstractApiRequestModel
+        {
+                public ApiCreditCardRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string cardNumber,
-			string cardType,
-			int expMonth,
-			short expYear,
-			DateTime modifiedDate)
-		{
-			this.CardNumber = cardNumber;
-			this.CardType = cardType;
-			this.ExpMonth = expMonth.ToInt();
-			this.ExpYear = expYear;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
+                public void SetProperties(
+                        string cardNumber,
+                        string cardType,
+                        int expMonth,
+                        short expYear,
+                        DateTime modifiedDate)
+                {
+                        this.CardNumber = cardNumber;
+                        this.CardType = cardType;
+                        this.ExpMonth = expMonth;
+                        this.ExpYear = expYear;
+                        this.ModifiedDate = modifiedDate;
+                }
 
-		private string cardNumber;
+                private string cardNumber;
 
-		[Required]
-		public string CardNumber
-		{
-			get
-			{
-				return this.cardNumber;
-			}
+                [Required]
+                public string CardNumber
+                {
+                        get
+                        {
+                                return this.cardNumber;
+                        }
 
-			set
-			{
-				this.cardNumber = value;
-			}
-		}
+                        set
+                        {
+                                this.cardNumber = value;
+                        }
+                }
 
-		private string cardType;
+                private string cardType;
 
-		[Required]
-		public string CardType
-		{
-			get
-			{
-				return this.cardType;
-			}
+                [Required]
+                public string CardType
+                {
+                        get
+                        {
+                                return this.cardType;
+                        }
 
-			set
-			{
-				this.cardType = value;
-			}
-		}
+                        set
+                        {
+                                this.cardType = value;
+                        }
+                }
 
-		private int expMonth;
+                private int expMonth;
 
-		[Required]
-		public int ExpMonth
-		{
-			get
-			{
-				return this.expMonth;
-			}
+                [Required]
+                public int ExpMonth
+                {
+                        get
+                        {
+                                return this.expMonth;
+                        }
 
-			set
-			{
-				this.expMonth = value;
-			}
-		}
+                        set
+                        {
+                                this.expMonth = value;
+                        }
+                }
 
-		private short expYear;
+                private short expYear;
 
-		[Required]
-		public short ExpYear
-		{
-			get
-			{
-				return this.expYear;
-			}
+                [Required]
+                public short ExpYear
+                {
+                        get
+                        {
+                                return this.expYear;
+                        }
 
-			set
-			{
-				this.expYear = value;
-			}
-		}
+                        set
+                        {
+                                this.expYear = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8178961e82f77d21169ca9b067fe71a8</Hash>
+    <Hash>d7d0fd0b86667c17e48fb90171cf8d40</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using FileServiceNS.Api.Services;
 
 namespace FileServiceNS.Api.Web
 {
-	[Route("api/buckets")]
-	[ApiVersion("1.0")]
-	public class BucketController: AbstractBucketController
-	{
-		public BucketController(
-			ServiceSettings settings,
-			ILogger<BucketController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IBucketService bucketService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       bucketService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/buckets")]
+        [ApiVersion("1.0")]
+        public class BucketController: AbstractBucketController
+        {
+                public BucketController(
+                        ServiceSettings settings,
+                        ILogger<BucketController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IBucketService bucketService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               bucketService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>449ee182d868940358181f1da9d62c73</Hash>
+    <Hash>337300f98884c9922f0edaf632c2afe6</Hash>
 </Codenesium>*/

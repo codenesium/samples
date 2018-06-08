@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractSaleService: AbstractService
-	{
-		private ISaleRepository saleRepository;
-		private IApiSaleRequestModelValidator saleModelValidator;
-		private IBOLSaleMapper bolSaleMapper;
-		private IDALSaleMapper dalSaleMapper;
-		private ILogger logger;
+        public abstract class AbstractSaleService: AbstractService
+        {
+                private ISaleRepository saleRepository;
 
-		public AbstractSaleService(
-			ILogger logger,
-			ISaleRepository saleRepository,
-			IApiSaleRequestModelValidator saleModelValidator,
-			IBOLSaleMapper bolsaleMapper,
-			IDALSaleMapper dalsaleMapper)
-			: base()
+                private IApiSaleRequestModelValidator saleModelValidator;
 
-		{
-			this.saleRepository = saleRepository;
-			this.saleModelValidator = saleModelValidator;
-			this.bolSaleMapper = bolsaleMapper;
-			this.dalSaleMapper = dalsaleMapper;
-			this.logger = logger;
-		}
+                private IBOLSaleMapper bolSaleMapper;
 
-		public virtual async Task<List<ApiSaleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.saleRepository.All(skip, take, orderClause);
+                private IDALSaleMapper dalSaleMapper;
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiSaleResponseModel> Get(int id)
-		{
-			var record = await saleRepository.Get(id);
+                public AbstractSaleService(
+                        ILogger logger,
+                        ISaleRepository saleRepository,
+                        IApiSaleRequestModelValidator saleModelValidator,
+                        IBOLSaleMapper bolsaleMapper,
+                        IDALSaleMapper dalsaleMapper)
+                        : base()
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record));
-		}
+                {
+                        this.saleRepository = saleRepository;
+                        this.saleModelValidator = saleModelValidator;
+                        this.bolSaleMapper = bolsaleMapper;
+                        this.dalSaleMapper = dalsaleMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
-			ApiSaleRequestModel model)
-		{
-			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolSaleMapper.MapModelToBO(default (int), model);
-				var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiSaleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.saleRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiSaleRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiSaleResponseModel> Get(int id)
+                {
+                        var record = await this.saleRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolSaleMapper.MapModelToBO(id, model);
-				await this.saleRepository.Update(this.dalSaleMapper.MapBOToEF(bo));
-			}
+                        return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
+                        ApiSaleRequestModel model)
+                {
+                        CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolSaleMapper.MapModelToBO(default (int), model);
+                                var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.saleRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiSaleRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolSaleMapper.MapModelToBO(id, model);
+                                await this.saleRepository.Update(this.dalSaleMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.saleRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>11691f1e42cc23499a1d7b46534bd74f</Hash>
+    <Hash>a69e4d61da00470c21ca49778edcfd1a</Hash>
 </Codenesium>*/

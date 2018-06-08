@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ShoppingCartItemService: AbstractShoppingCartItemService, IShoppingCartItemService
-	{
-		public ShoppingCartItemService(
-			ILogger<ShoppingCartItemRepository> logger,
-			IShoppingCartItemRepository shoppingCartItemRepository,
-			IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
-			IBOLShoppingCartItemMapper BOLshoppingCartItemMapper,
-			IDALShoppingCartItemMapper DALshoppingCartItemMapper)
-			: base(logger, shoppingCartItemRepository,
-			       shoppingCartItemModelValidator,
-			       BOLshoppingCartItemMapper,
-			       DALshoppingCartItemMapper)
-		{}
-	}
+        public class ShoppingCartItemService: AbstractShoppingCartItemService, IShoppingCartItemService
+        {
+                public ShoppingCartItemService(
+                        ILogger<ShoppingCartItemRepository> logger,
+                        IShoppingCartItemRepository shoppingCartItemRepository,
+                        IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
+                        IBOLShoppingCartItemMapper bolshoppingCartItemMapper,
+                        IDALShoppingCartItemMapper dalshoppingCartItemMapper)
+                        : base(logger,
+                               shoppingCartItemRepository,
+                               shoppingCartItemModelValidator,
+                               bolshoppingCartItemMapper,
+                               dalshoppingCartItemMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a3e9ae494349b88ab49d92312e62b289</Hash>
+    <Hash>37676e64854d2543dc4ee70fec9aa53b</Hash>
 </Codenesium>*/

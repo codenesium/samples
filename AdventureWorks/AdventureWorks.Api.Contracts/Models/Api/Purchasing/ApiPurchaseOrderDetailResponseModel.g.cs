@@ -4,156 +4,168 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPurchaseOrderDetailResponseModel: AbstractApiResponseModel
-	{
-		public ApiPurchaseOrderDetailResponseModel() : base()
-		{}
+        public partial class ApiPurchaseOrderDetailResponseModel: AbstractApiResponseModel
+        {
+                public ApiPurchaseOrderDetailResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime dueDate,
-			decimal lineTotal,
-			DateTime modifiedDate,
-			short orderQty,
-			int productID,
-			int purchaseOrderDetailID,
-			int purchaseOrderID,
-			decimal receivedQty,
-			decimal rejectedQty,
-			decimal stockedQty,
-			decimal unitPrice)
-		{
-			this.DueDate = dueDate.ToDateTime();
-			this.LineTotal = lineTotal.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.OrderQty = orderQty;
-			this.ProductID = productID.ToInt();
-			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
-			this.PurchaseOrderID = purchaseOrderID.ToInt();
-			this.ReceivedQty = receivedQty.ToDecimal();
-			this.RejectedQty = rejectedQty.ToDecimal();
-			this.StockedQty = stockedQty.ToDecimal();
-			this.UnitPrice = unitPrice.ToDecimal();
-		}
+                public void SetProperties(
+                        DateTime dueDate,
+                        decimal lineTotal,
+                        DateTime modifiedDate,
+                        short orderQty,
+                        int productID,
+                        int purchaseOrderDetailID,
+                        int purchaseOrderID,
+                        decimal receivedQty,
+                        decimal rejectedQty,
+                        decimal stockedQty,
+                        decimal unitPrice)
+                {
+                        this.DueDate = dueDate;
+                        this.LineTotal = lineTotal;
+                        this.ModifiedDate = modifiedDate;
+                        this.OrderQty = orderQty;
+                        this.ProductID = productID;
+                        this.PurchaseOrderDetailID = purchaseOrderDetailID;
+                        this.PurchaseOrderID = purchaseOrderID;
+                        this.ReceivedQty = receivedQty;
+                        this.RejectedQty = rejectedQty;
+                        this.StockedQty = stockedQty;
+                        this.UnitPrice = unitPrice;
+                }
 
-		public DateTime DueDate { get; private set; }
-		public decimal LineTotal { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public short OrderQty { get; private set; }
-		public int ProductID { get; private set; }
-		public int PurchaseOrderDetailID { get; private set; }
-		public int PurchaseOrderID { get; private set; }
-		public decimal ReceivedQty { get; private set; }
-		public decimal RejectedQty { get; private set; }
-		public decimal StockedQty { get; private set; }
-		public decimal UnitPrice { get; private set; }
+                public DateTime DueDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeDueDateValue { get; set; } = true;
+                public decimal LineTotal { get; private set; }
 
-		public bool ShouldSerializeDueDate()
-		{
-			return this.ShouldSerializeDueDateValue;
-		}
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeLineTotalValue { get; set; } = true;
+                public short OrderQty { get; private set; }
 
-		public bool ShouldSerializeLineTotal()
-		{
-			return this.ShouldSerializeLineTotalValue;
-		}
+                public int ProductID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public int PurchaseOrderDetailID { get; private set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public int PurchaseOrderID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeOrderQtyValue { get; set; } = true;
+                public decimal ReceivedQty { get; private set; }
 
-		public bool ShouldSerializeOrderQty()
-		{
-			return this.ShouldSerializeOrderQtyValue;
-		}
+                public decimal RejectedQty { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
+                public decimal StockedQty { get; private set; }
 
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
+                public decimal UnitPrice { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderDetailIDValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeDueDateValue { get; set; } = true;
 
-		public bool ShouldSerializePurchaseOrderDetailID()
-		{
-			return this.ShouldSerializePurchaseOrderDetailIDValue;
-		}
+                public bool ShouldSerializeDueDate()
+                {
+                        return this.ShouldSerializeDueDateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializePurchaseOrderIDValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeLineTotalValue { get; set; } = true;
 
-		public bool ShouldSerializePurchaseOrderID()
-		{
-			return this.ShouldSerializePurchaseOrderIDValue;
-		}
+                public bool ShouldSerializeLineTotal()
+                {
+                        return this.ShouldSerializeLineTotalValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeReceivedQtyValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeReceivedQty()
-		{
-			return this.ShouldSerializeReceivedQtyValue;
-		}
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeRejectedQtyValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeOrderQtyValue { get; set; } = true;
 
-		public bool ShouldSerializeRejectedQty()
-		{
-			return this.ShouldSerializeRejectedQtyValue;
-		}
+                public bool ShouldSerializeOrderQty()
+                {
+                        return this.ShouldSerializeOrderQtyValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeStockedQtyValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
 
-		public bool ShouldSerializeStockedQty()
-		{
-			return this.ShouldSerializeStockedQtyValue;
-		}
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeUnitPriceValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializePurchaseOrderDetailIDValue { get; set; } = true;
 
-		public bool ShouldSerializeUnitPrice()
-		{
-			return this.ShouldSerializeUnitPriceValue;
-		}
+                public bool ShouldSerializePurchaseOrderDetailID()
+                {
+                        return this.ShouldSerializePurchaseOrderDetailIDValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeDueDateValue = false;
-			this.ShouldSerializeLineTotalValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeOrderQtyValue = false;
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializePurchaseOrderDetailIDValue = false;
-			this.ShouldSerializePurchaseOrderIDValue = false;
-			this.ShouldSerializeReceivedQtyValue = false;
-			this.ShouldSerializeRejectedQtyValue = false;
-			this.ShouldSerializeStockedQtyValue = false;
-			this.ShouldSerializeUnitPriceValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializePurchaseOrderIDValue { get; set; } = true;
+
+                public bool ShouldSerializePurchaseOrderID()
+                {
+                        return this.ShouldSerializePurchaseOrderIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeReceivedQtyValue { get; set; } = true;
+
+                public bool ShouldSerializeReceivedQty()
+                {
+                        return this.ShouldSerializeReceivedQtyValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeRejectedQtyValue { get; set; } = true;
+
+                public bool ShouldSerializeRejectedQty()
+                {
+                        return this.ShouldSerializeRejectedQtyValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeStockedQtyValue { get; set; } = true;
+
+                public bool ShouldSerializeStockedQty()
+                {
+                        return this.ShouldSerializeStockedQtyValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeUnitPriceValue { get; set; } = true;
+
+                public bool ShouldSerializeUnitPrice()
+                {
+                        return this.ShouldSerializeUnitPriceValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeDueDateValue = false;
+                        this.ShouldSerializeLineTotalValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeOrderQtyValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializePurchaseOrderDetailIDValue = false;
+                        this.ShouldSerializePurchaseOrderIDValue = false;
+                        this.ShouldSerializeReceivedQtyValue = false;
+                        this.ShouldSerializeRejectedQtyValue = false;
+                        this.ShouldSerializeStockedQtyValue = false;
+                        this.ShouldSerializeUnitPriceValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>fb4ef74d147d52c3fd9eb148d1be3510</Hash>
+    <Hash>aed764d8f2314a49a5a89f11c871b491</Hash>
 </Codenesium>*/

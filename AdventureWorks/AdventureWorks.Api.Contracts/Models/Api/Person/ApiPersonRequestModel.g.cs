@@ -3,230 +3,232 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPersonRequestModel: AbstractApiRequestModel
-	{
-		public ApiPersonRequestModel() : base()
-		{}
+        public partial class ApiPersonRequestModel: AbstractApiRequestModel
+        {
+                public ApiPersonRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string additionalContactInfo,
-			string demographics,
-			int emailPromotion,
-			string firstName,
-			string lastName,
-			string middleName,
-			DateTime modifiedDate,
-			bool nameStyle,
-			string personType,
-			Guid rowguid,
-			string suffix,
-			string title)
-		{
-			this.AdditionalContactInfo = additionalContactInfo;
-			this.Demographics = demographics;
-			this.EmailPromotion = emailPromotion.ToInt();
-			this.FirstName = firstName;
-			this.LastName = lastName;
-			this.MiddleName = middleName;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.NameStyle = nameStyle.ToBoolean();
-			this.PersonType = personType;
-			this.Rowguid = rowguid.ToGuid();
-			this.Suffix = suffix;
-			this.Title = title;
-		}
+                public void SetProperties(
+                        string additionalContactInfo,
+                        string demographics,
+                        int emailPromotion,
+                        string firstName,
+                        string lastName,
+                        string middleName,
+                        DateTime modifiedDate,
+                        bool nameStyle,
+                        string personType,
+                        Guid rowguid,
+                        string suffix,
+                        string title)
+                {
+                        this.AdditionalContactInfo = additionalContactInfo;
+                        this.Demographics = demographics;
+                        this.EmailPromotion = emailPromotion;
+                        this.FirstName = firstName;
+                        this.LastName = lastName;
+                        this.MiddleName = middleName;
+                        this.ModifiedDate = modifiedDate;
+                        this.NameStyle = nameStyle;
+                        this.PersonType = personType;
+                        this.Rowguid = rowguid;
+                        this.Suffix = suffix;
+                        this.Title = title;
+                }
 
-		private string additionalContactInfo;
+                private string additionalContactInfo;
 
-		public string AdditionalContactInfo
-		{
-			get
-			{
-				return this.additionalContactInfo.IsEmptyOrZeroOrNull() ? null : this.additionalContactInfo;
-			}
+                public string AdditionalContactInfo
+                {
+                        get
+                        {
+                                return this.additionalContactInfo.IsEmptyOrZeroOrNull() ? null : this.additionalContactInfo;
+                        }
 
-			set
-			{
-				this.additionalContactInfo = value;
-			}
-		}
+                        set
+                        {
+                                this.additionalContactInfo = value;
+                        }
+                }
 
-		private string demographics;
+                private string demographics;
 
-		public string Demographics
-		{
-			get
-			{
-				return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
-			}
+                public string Demographics
+                {
+                        get
+                        {
+                                return this.demographics.IsEmptyOrZeroOrNull() ? null : this.demographics;
+                        }
 
-			set
-			{
-				this.demographics = value;
-			}
-		}
+                        set
+                        {
+                                this.demographics = value;
+                        }
+                }
 
-		private int emailPromotion;
+                private int emailPromotion;
 
-		[Required]
-		public int EmailPromotion
-		{
-			get
-			{
-				return this.emailPromotion;
-			}
+                [Required]
+                public int EmailPromotion
+                {
+                        get
+                        {
+                                return this.emailPromotion;
+                        }
 
-			set
-			{
-				this.emailPromotion = value;
-			}
-		}
+                        set
+                        {
+                                this.emailPromotion = value;
+                        }
+                }
 
-		private string firstName;
+                private string firstName;
 
-		[Required]
-		public string FirstName
-		{
-			get
-			{
-				return this.firstName;
-			}
+                [Required]
+                public string FirstName
+                {
+                        get
+                        {
+                                return this.firstName;
+                        }
 
-			set
-			{
-				this.firstName = value;
-			}
-		}
+                        set
+                        {
+                                this.firstName = value;
+                        }
+                }
 
-		private string lastName;
+                private string lastName;
 
-		[Required]
-		public string LastName
-		{
-			get
-			{
-				return this.lastName;
-			}
+                [Required]
+                public string LastName
+                {
+                        get
+                        {
+                                return this.lastName;
+                        }
 
-			set
-			{
-				this.lastName = value;
-			}
-		}
+                        set
+                        {
+                                this.lastName = value;
+                        }
+                }
 
-		private string middleName;
+                private string middleName;
 
-		public string MiddleName
-		{
-			get
-			{
-				return this.middleName.IsEmptyOrZeroOrNull() ? null : this.middleName;
-			}
+                public string MiddleName
+                {
+                        get
+                        {
+                                return this.middleName.IsEmptyOrZeroOrNull() ? null : this.middleName;
+                        }
 
-			set
-			{
-				this.middleName = value;
-			}
-		}
+                        set
+                        {
+                                this.middleName = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private bool nameStyle;
+                private bool nameStyle;
 
-		[Required]
-		public bool NameStyle
-		{
-			get
-			{
-				return this.nameStyle;
-			}
+                [Required]
+                public bool NameStyle
+                {
+                        get
+                        {
+                                return this.nameStyle;
+                        }
 
-			set
-			{
-				this.nameStyle = value;
-			}
-		}
+                        set
+                        {
+                                this.nameStyle = value;
+                        }
+                }
 
-		private string personType;
+                private string personType;
 
-		[Required]
-		public string PersonType
-		{
-			get
-			{
-				return this.personType;
-			}
+                [Required]
+                public string PersonType
+                {
+                        get
+                        {
+                                return this.personType;
+                        }
 
-			set
-			{
-				this.personType = value;
-			}
-		}
+                        set
+                        {
+                                this.personType = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
 
-		private string suffix;
+                private string suffix;
 
-		public string Suffix
-		{
-			get
-			{
-				return this.suffix.IsEmptyOrZeroOrNull() ? null : this.suffix;
-			}
+                public string Suffix
+                {
+                        get
+                        {
+                                return this.suffix.IsEmptyOrZeroOrNull() ? null : this.suffix;
+                        }
 
-			set
-			{
-				this.suffix = value;
-			}
-		}
+                        set
+                        {
+                                this.suffix = value;
+                        }
+                }
 
-		private string title;
+                private string title;
 
-		public string Title
-		{
-			get
-			{
-				return this.title.IsEmptyOrZeroOrNull() ? null : this.title;
-			}
+                public string Title
+                {
+                        get
+                        {
+                                return this.title.IsEmptyOrZeroOrNull() ? null : this.title;
+                        }
 
-			set
-			{
-				this.title = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.title = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>04d25ce816555406fac0f639dcce9b26</Hash>
+    <Hash>796d469489a94060ec0ab82637ca2cb0</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/productReviews")]
-	[ApiVersion("1.0")]
-	public class ProductReviewController: AbstractProductReviewController
-	{
-		public ProductReviewController(
-			ServiceSettings settings,
-			ILogger<ProductReviewController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IProductReviewService productReviewService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       productReviewService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/productReviews")]
+        [ApiVersion("1.0")]
+        public class ProductReviewController: AbstractProductReviewController
+        {
+                public ProductReviewController(
+                        ServiceSettings settings,
+                        ILogger<ProductReviewController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IProductReviewService productReviewService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               productReviewService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0361c0788d631c2e8f6470fdacfe00a0</Hash>
+    <Hash>c461a976b06a5b9815a7f5bba7196dc2</Hash>
 </Codenesium>*/

@@ -7,24 +7,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IAddressTypeService
-	{
-		Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
-			ApiAddressTypeRequestModel model);
+        public interface IAddressTypeService
+        {
+                Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
+                        ApiAddressTypeRequestModel model);
 
-		Task<ActionResponse> Update(int addressTypeID,
-		                            ApiAddressTypeRequestModel model);
+                Task<ActionResponse> Update(int addressTypeID,
+                                            ApiAddressTypeRequestModel model);
 
-		Task<ActionResponse> Delete(int addressTypeID);
+                Task<ActionResponse> Delete(int addressTypeID);
 
-		Task<ApiAddressTypeResponseModel> Get(int addressTypeID);
+                Task<ApiAddressTypeResponseModel> Get(int addressTypeID);
 
-		Task<List<ApiAddressTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiAddressTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<ApiAddressTypeResponseModel> GetName(string name);
-	}
+                Task<ApiAddressTypeResponseModel> GetName(string name);
+        }
 }
 
 /*<Codenesium>
-    <Hash>cd2f672d386c8eb89544fbf6311bb73d</Hash>
+    <Hash>fc794de7c65403e092a430dd12931886</Hash>
 </Codenesium>*/

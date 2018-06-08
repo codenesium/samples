@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-	public interface ISpeciesRepository
-	{
-		Task<Species> Create(Species item);
+        public interface ISpeciesRepository
+        {
+                Task<Species> Create(Species item);
 
-		Task Update(Species item);
+                Task Update(Species item);
 
-		Task Delete(int id);
+                Task Delete(int id);
 
-		Task<Species> Get(int id);
+                Task<Species> Get(int id);
 
-		Task<List<Species>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<Species>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>f7231d002ee4142159ee812d078ed36f</Hash>
+    <Hash>1d56dc8aa3dfc8c8b7402020b1885c9b</Hash>
 </Codenesium>*/

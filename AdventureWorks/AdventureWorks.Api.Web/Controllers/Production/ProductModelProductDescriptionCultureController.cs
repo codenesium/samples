@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/productModelProductDescriptionCultures")]
-	[ApiVersion("1.0")]
-	public class ProductModelProductDescriptionCultureController: AbstractProductModelProductDescriptionCultureController
-	{
-		public ProductModelProductDescriptionCultureController(
-			ServiceSettings settings,
-			ILogger<ProductModelProductDescriptionCultureController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IProductModelProductDescriptionCultureService productModelProductDescriptionCultureService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       productModelProductDescriptionCultureService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/productModelProductDescriptionCultures")]
+        [ApiVersion("1.0")]
+        public class ProductModelProductDescriptionCultureController: AbstractProductModelProductDescriptionCultureController
+        {
+                public ProductModelProductDescriptionCultureController(
+                        ServiceSettings settings,
+                        ILogger<ProductModelProductDescriptionCultureController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IProductModelProductDescriptionCultureService productModelProductDescriptionCultureService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               productModelProductDescriptionCultureService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8cfe0a85bcbc0a350feb6dd78c64767d</Hash>
+    <Hash>ac6e224478ff3d20920cef3942ad47f7</Hash>
 </Codenesium>*/

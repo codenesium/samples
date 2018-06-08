@@ -3,70 +3,72 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+
 namespace ESPIOTNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext: DbContext
-	{
-		public Guid UserId { get; private set; }
+        public partial class ApplicationDbContext: DbContext
+        {
+                public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+                public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
-			: base(options)
-		{}
+                public ApplicationDbContext(DbContextOptions options)
+                        : base(options)
+                {
+                }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder options)
-		{
-			base.OnConfiguring(options);
-		}
+                protected override void OnConfiguring(DbContextOptionsBuilder options)
+                {
+                        base.OnConfiguring(options);
+                }
 
-		public void SetUserId(Guid userId)
-		{
-			if(userId == default (Guid))
-			{
-				throw new ArgumentException("UserId cannot be a default value");
-			}
-			this.UserId = userId;
-		}
+                public void SetUserId(Guid userId)
+                {
+                        if (userId == default (Guid))
+                        {
+                                throw new ArgumentException("UserId cannot be a default value");
+                        }
+                        this.UserId = userId;
+                }
 
-		public void SetTenantId(int tenantId)
-		{
-			if(tenantId <= 0)
-			{
-				throw new ArgumentException("TenantId must be greater than 0");
-			}
-			this.TenantId = tenantId;
-		}
+                public void SetTenantId(int tenantId)
+                {
+                        if (tenantId <= 0)
+                        {
+                                throw new ArgumentException("TenantId must be greater than 0");
+                        }
+                        this.TenantId = tenantId;
+                }
 
-		public virtual DbSet<Device> Devices { get; set; }
+                public virtual DbSet<Device> Devices { get; set; }
 
-		public virtual DbSet<DeviceAction> DeviceActions { get; set; }
-	}
+                public virtual DbSet<DeviceAction> DeviceActions { get; set; }
+        }
 
-	public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
-	{
-		public ApplicationDbContext CreateDbContext(string[] args)
-		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Web");
+        public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+        {
+                public ApplicationDbContext CreateDbContext(string[] args)
+                {
+                        string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Web");
 
-			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                        string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-			IConfigurationRoot configuration = new ConfigurationBuilder()
-			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
-			                                   .Build();
+                        IConfigurationRoot configuration = new ConfigurationBuilder()
+                                                           .SetBasePath(settingsDirectory)
+                                                           .AddJsonFile($"appsettings.{environment}.json")
+                                                           .Build();
 
-			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                        var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-			var connectionString = configuration.GetConnectionString("ApplicationDbContext");
+                        var connectionString = configuration.GetConnectionString("ApplicationDbContext");
 
-			builder.UseSqlServer(connectionString);
+                        builder.UseSqlServer(connectionString);
 
-			return new ApplicationDbContext(builder.Options);
-		}
-	}
+                        return new ApplicationDbContext(builder.Options);
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>300a8ac1c5701926ad27d576175457d2</Hash>
+    <Hash>53a43df90ca6f5236c8bdcd9d2b1076c</Hash>
 </Codenesium>*/

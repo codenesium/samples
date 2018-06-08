@@ -10,22 +10,24 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-	public class BreedService: AbstractBreedService, IBreedService
-	{
-		public BreedService(
-			ILogger<BreedRepository> logger,
-			IBreedRepository breedRepository,
-			IApiBreedRequestModelValidator breedModelValidator,
-			IBOLBreedMapper BOLbreedMapper,
-			IDALBreedMapper DALbreedMapper)
-			: base(logger, breedRepository,
-			       breedModelValidator,
-			       BOLbreedMapper,
-			       DALbreedMapper)
-		{}
-	}
+        public class BreedService: AbstractBreedService, IBreedService
+        {
+                public BreedService(
+                        ILogger<BreedRepository> logger,
+                        IBreedRepository breedRepository,
+                        IApiBreedRequestModelValidator breedModelValidator,
+                        IBOLBreedMapper bolbreedMapper,
+                        IDALBreedMapper dalbreedMapper)
+                        : base(logger,
+                               breedRepository,
+                               breedModelValidator,
+                               bolbreedMapper,
+                               dalbreedMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cf6a3ea92df37cfdd9fb8ad7b8b941ce</Hash>
+    <Hash>301b368b0be95ef1baced27ec2e88fa0</Hash>
 </Codenesium>*/

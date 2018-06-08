@@ -12,100 +12,106 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractCustomerService: AbstractService
-	{
-		private ICustomerRepository customerRepository;
-		private IApiCustomerRequestModelValidator customerModelValidator;
-		private IBOLCustomerMapper bolCustomerMapper;
-		private IDALCustomerMapper dalCustomerMapper;
-		private ILogger logger;
+        public abstract class AbstractCustomerService: AbstractService
+        {
+                private ICustomerRepository customerRepository;
 
-		public AbstractCustomerService(
-			ILogger logger,
-			ICustomerRepository customerRepository,
-			IApiCustomerRequestModelValidator customerModelValidator,
-			IBOLCustomerMapper bolcustomerMapper,
-			IDALCustomerMapper dalcustomerMapper)
-			: base()
+                private IApiCustomerRequestModelValidator customerModelValidator;
 
-		{
-			this.customerRepository = customerRepository;
-			this.customerModelValidator = customerModelValidator;
-			this.bolCustomerMapper = bolcustomerMapper;
-			this.dalCustomerMapper = dalcustomerMapper;
-			this.logger = logger;
-		}
+                private IBOLCustomerMapper bolCustomerMapper;
 
-		public virtual async Task<List<ApiCustomerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.customerRepository.All(skip, take, orderClause);
+                private IDALCustomerMapper dalCustomerMapper;
 
-			return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiCustomerResponseModel> Get(int customerID)
-		{
-			var record = await customerRepository.Get(customerID);
+                public AbstractCustomerService(
+                        ILogger logger,
+                        ICustomerRepository customerRepository,
+                        IApiCustomerRequestModelValidator customerModelValidator,
+                        IBOLCustomerMapper bolcustomerMapper,
+                        IDALCustomerMapper dalcustomerMapper)
+                        : base()
 
-			return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record));
-		}
+                {
+                        this.customerRepository = customerRepository;
+                        this.customerModelValidator = customerModelValidator;
+                        this.bolCustomerMapper = bolcustomerMapper;
+                        this.dalCustomerMapper = dalcustomerMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiCustomerResponseModel>> Create(
-			ApiCustomerRequestModel model)
-		{
-			CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.customerModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolCustomerMapper.MapModelToBO(default (int), model);
-				var record = await this.customerRepository.Create(this.dalCustomerMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiCustomerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.customerRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int customerID,
-			ApiCustomerRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateUpdateAsync(customerID, model));
+                public virtual async Task<ApiCustomerResponseModel> Get(int customerID)
+                {
+                        var record = await this.customerRepository.Get(customerID);
 
-			if (response.Success)
-			{
-				var bo = this.bolCustomerMapper.MapModelToBO(customerID, model);
-				await this.customerRepository.Update(this.dalCustomerMapper.MapBOToEF(bo));
-			}
+                        return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiCustomerResponseModel>> Create(
+                        ApiCustomerRequestModel model)
+                {
+                        CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.customerModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolCustomerMapper.MapModelToBO(default (int), model);
+                                var record = await this.customerRepository.Create(this.dalCustomerMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int customerID)
-		{
-			ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateDeleteAsync(customerID));
+                                response.SetRecord(this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.customerRepository.Delete(customerID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiCustomerResponseModel> GetAccountNumber(string accountNumber)
-		{
-			Customer record = await this.customerRepository.GetAccountNumber(accountNumber);
+                public virtual async Task<ActionResponse> Update(
+                        int customerID,
+                        ApiCustomerRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateUpdateAsync(customerID, model));
 
-			return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record));
-		}
-		public async Task<List<ApiCustomerResponseModel>> GetTerritoryID(Nullable<int> territoryID)
-		{
-			List<Customer> records = await this.customerRepository.GetTerritoryID(territoryID);
+                        if (response.Success)
+                        {
+                                var bo = this.bolCustomerMapper.MapModelToBO(customerID, model);
+                                await this.customerRepository.Update(this.dalCustomerMapper.MapBOToEF(bo));
+                        }
 
-			return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int customerID)
+                {
+                        ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateDeleteAsync(customerID));
+
+                        if (response.Success)
+                        {
+                                await this.customerRepository.Delete(customerID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiCustomerResponseModel> GetAccountNumber(string accountNumber)
+                {
+                        Customer record = await this.customerRepository.GetAccountNumber(accountNumber);
+
+                        return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record));
+                }
+                public async Task<List<ApiCustomerResponseModel>> GetTerritoryID(Nullable<int> territoryID)
+                {
+                        List<Customer> records = await this.customerRepository.GetTerritoryID(territoryID);
+
+                        return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>85f54138c99cc28514e8dcd23e9bf151</Hash>
+    <Hash>0f86a172c1faf00d53c3e3c42f3c4832</Hash>
 </Codenesium>*/

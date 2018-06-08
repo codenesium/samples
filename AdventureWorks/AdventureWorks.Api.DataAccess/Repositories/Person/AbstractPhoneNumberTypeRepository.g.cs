@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractPhoneNumberTypeRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractPhoneNumberTypeRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractPhoneNumberTypeRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<PhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractPhoneNumberTypeRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<PhoneNumberType> Get(int phoneNumberTypeID)
-		{
-			return await this.GetById(phoneNumberTypeID);
-		}
+                public virtual Task<List<PhoneNumberType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<PhoneNumberType> Create(PhoneNumberType item)
-		{
-			this.Context.Set<PhoneNumberType>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<PhoneNumberType> Get(int phoneNumberTypeID)
+                {
+                        return await this.GetById(phoneNumberTypeID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<PhoneNumberType> Create(PhoneNumberType item)
+                {
+                        this.Context.Set<PhoneNumberType>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(PhoneNumberType item)
-		{
-			var entity = this.Context.Set<PhoneNumberType>().Local.FirstOrDefault(x => x.PhoneNumberTypeID == item.PhoneNumberTypeID);
-			if (entity == null)
-			{
-				this.Context.Set<PhoneNumberType>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(PhoneNumberType item)
+                {
+                        var entity = this.Context.Set<PhoneNumberType>().Local.FirstOrDefault(x => x.PhoneNumberTypeID == item.PhoneNumberTypeID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<PhoneNumberType>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int phoneNumberTypeID)
-		{
-			PhoneNumberType record = await this.GetById(phoneNumberTypeID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<PhoneNumberType>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int phoneNumberTypeID)
+                {
+                        PhoneNumberType record = await this.GetById(phoneNumberTypeID);
 
-		protected async Task<List<PhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<PhoneNumberType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<PhoneNumberType>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<PhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<PhoneNumberType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<PhoneNumberType>> SearchLinqEF(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(PhoneNumberType.PhoneNumberTypeID)} ASC";
-			}
-			return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PhoneNumberType>();
-		}
+                        return records;
+                }
 
-		private async Task<List<PhoneNumberType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(PhoneNumberType.PhoneNumberTypeID)} ASC";
-			}
+                private async Task<List<PhoneNumberType>> SearchLinqEF(Expression<Func<PhoneNumberType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(PhoneNumberType.PhoneNumberTypeID)} ASC";
+                        }
 
-			return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PhoneNumberType>();
-		}
+                        return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PhoneNumberType>();
+                }
 
-		private async Task<PhoneNumberType> GetById(int phoneNumberTypeID)
-		{
-			List<PhoneNumberType> records = await this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID);
+                private async Task<List<PhoneNumberType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(PhoneNumberType.PhoneNumberTypeID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PhoneNumberType>();
+                }
+
+                private async Task<PhoneNumberType> GetById(int phoneNumberTypeID)
+                {
+                        List<PhoneNumberType> records = await this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c27a0368a5ef7c6f619c0b1722effceb</Hash>
+    <Hash>fd344880f386f5eac3b887381c969f5c</Hash>
 </Codenesium>*/

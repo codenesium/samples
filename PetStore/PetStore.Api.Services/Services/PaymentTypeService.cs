@@ -10,22 +10,24 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-	public class PaymentTypeService: AbstractPaymentTypeService, IPaymentTypeService
-	{
-		public PaymentTypeService(
-			ILogger<PaymentTypeRepository> logger,
-			IPaymentTypeRepository paymentTypeRepository,
-			IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
-			IBOLPaymentTypeMapper BOLpaymentTypeMapper,
-			IDALPaymentTypeMapper DALpaymentTypeMapper)
-			: base(logger, paymentTypeRepository,
-			       paymentTypeModelValidator,
-			       BOLpaymentTypeMapper,
-			       DALpaymentTypeMapper)
-		{}
-	}
+        public class PaymentTypeService: AbstractPaymentTypeService, IPaymentTypeService
+        {
+                public PaymentTypeService(
+                        ILogger<PaymentTypeRepository> logger,
+                        IPaymentTypeRepository paymentTypeRepository,
+                        IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
+                        IBOLPaymentTypeMapper bolpaymentTypeMapper,
+                        IDALPaymentTypeMapper dalpaymentTypeMapper)
+                        : base(logger,
+                               paymentTypeRepository,
+                               paymentTypeModelValidator,
+                               bolpaymentTypeMapper,
+                               dalpaymentTypeMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>055829574ab053f87acc2c8a38a3736c</Hash>
+    <Hash>b939252e9b7ad227c2ab24b286e8a591</Hash>
 </Codenesium>*/

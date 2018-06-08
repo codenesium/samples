@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public class PipelineStepStepRequirementRepository: AbstractPipelineStepStepRequirementRepository, IPipelineStepStepRequirementRepository
-	{
-		public PipelineStepStepRequirementRepository(
-			ILogger<PipelineStepStepRequirementRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class PipelineStepStepRequirementRepository: AbstractPipelineStepStepRequirementRepository, IPipelineStepStepRequirementRepository
+        {
+                public PipelineStepStepRequirementRepository(
+                        ILogger<PipelineStepStepRequirementRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>97e6aaa88a3144aabf2c69b452387fc6</Hash>
+    <Hash>9313714fa5fe66d4b30025e170a9f6db</Hash>
 </Codenesium>*/

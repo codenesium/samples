@@ -3,199 +3,201 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPurchaseOrderDetailRequestModel: AbstractApiRequestModel
-	{
-		public ApiPurchaseOrderDetailRequestModel() : base()
-		{}
+        public partial class ApiPurchaseOrderDetailRequestModel: AbstractApiRequestModel
+        {
+                public ApiPurchaseOrderDetailRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime dueDate,
-			decimal lineTotal,
-			DateTime modifiedDate,
-			short orderQty,
-			int productID,
-			int purchaseOrderDetailID,
-			decimal receivedQty,
-			decimal rejectedQty,
-			decimal stockedQty,
-			decimal unitPrice)
-		{
-			this.DueDate = dueDate.ToDateTime();
-			this.LineTotal = lineTotal.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.OrderQty = orderQty;
-			this.ProductID = productID.ToInt();
-			this.PurchaseOrderDetailID = purchaseOrderDetailID.ToInt();
-			this.ReceivedQty = receivedQty.ToDecimal();
-			this.RejectedQty = rejectedQty.ToDecimal();
-			this.StockedQty = stockedQty.ToDecimal();
-			this.UnitPrice = unitPrice.ToDecimal();
-		}
+                public void SetProperties(
+                        DateTime dueDate,
+                        decimal lineTotal,
+                        DateTime modifiedDate,
+                        short orderQty,
+                        int productID,
+                        int purchaseOrderDetailID,
+                        decimal receivedQty,
+                        decimal rejectedQty,
+                        decimal stockedQty,
+                        decimal unitPrice)
+                {
+                        this.DueDate = dueDate;
+                        this.LineTotal = lineTotal;
+                        this.ModifiedDate = modifiedDate;
+                        this.OrderQty = orderQty;
+                        this.ProductID = productID;
+                        this.PurchaseOrderDetailID = purchaseOrderDetailID;
+                        this.ReceivedQty = receivedQty;
+                        this.RejectedQty = rejectedQty;
+                        this.StockedQty = stockedQty;
+                        this.UnitPrice = unitPrice;
+                }
 
-		private DateTime dueDate;
+                private DateTime dueDate;
 
-		[Required]
-		public DateTime DueDate
-		{
-			get
-			{
-				return this.dueDate;
-			}
+                [Required]
+                public DateTime DueDate
+                {
+                        get
+                        {
+                                return this.dueDate;
+                        }
 
-			set
-			{
-				this.dueDate = value;
-			}
-		}
+                        set
+                        {
+                                this.dueDate = value;
+                        }
+                }
 
-		private decimal lineTotal;
+                private decimal lineTotal;
 
-		[Required]
-		public decimal LineTotal
-		{
-			get
-			{
-				return this.lineTotal;
-			}
+                [Required]
+                public decimal LineTotal
+                {
+                        get
+                        {
+                                return this.lineTotal;
+                        }
 
-			set
-			{
-				this.lineTotal = value;
-			}
-		}
+                        set
+                        {
+                                this.lineTotal = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private short orderQty;
+                private short orderQty;
 
-		[Required]
-		public short OrderQty
-		{
-			get
-			{
-				return this.orderQty;
-			}
+                [Required]
+                public short OrderQty
+                {
+                        get
+                        {
+                                return this.orderQty;
+                        }
 
-			set
-			{
-				this.orderQty = value;
-			}
-		}
+                        set
+                        {
+                                this.orderQty = value;
+                        }
+                }
 
-		private int productID;
+                private int productID;
 
-		[Required]
-		public int ProductID
-		{
-			get
-			{
-				return this.productID;
-			}
+                [Required]
+                public int ProductID
+                {
+                        get
+                        {
+                                return this.productID;
+                        }
 
-			set
-			{
-				this.productID = value;
-			}
-		}
+                        set
+                        {
+                                this.productID = value;
+                        }
+                }
 
-		private int purchaseOrderDetailID;
+                private int purchaseOrderDetailID;
 
-		[Required]
-		public int PurchaseOrderDetailID
-		{
-			get
-			{
-				return this.purchaseOrderDetailID;
-			}
+                [Required]
+                public int PurchaseOrderDetailID
+                {
+                        get
+                        {
+                                return this.purchaseOrderDetailID;
+                        }
 
-			set
-			{
-				this.purchaseOrderDetailID = value;
-			}
-		}
+                        set
+                        {
+                                this.purchaseOrderDetailID = value;
+                        }
+                }
 
-		private decimal receivedQty;
+                private decimal receivedQty;
 
-		[Required]
-		public decimal ReceivedQty
-		{
-			get
-			{
-				return this.receivedQty;
-			}
+                [Required]
+                public decimal ReceivedQty
+                {
+                        get
+                        {
+                                return this.receivedQty;
+                        }
 
-			set
-			{
-				this.receivedQty = value;
-			}
-		}
+                        set
+                        {
+                                this.receivedQty = value;
+                        }
+                }
 
-		private decimal rejectedQty;
+                private decimal rejectedQty;
 
-		[Required]
-		public decimal RejectedQty
-		{
-			get
-			{
-				return this.rejectedQty;
-			}
+                [Required]
+                public decimal RejectedQty
+                {
+                        get
+                        {
+                                return this.rejectedQty;
+                        }
 
-			set
-			{
-				this.rejectedQty = value;
-			}
-		}
+                        set
+                        {
+                                this.rejectedQty = value;
+                        }
+                }
 
-		private decimal stockedQty;
+                private decimal stockedQty;
 
-		[Required]
-		public decimal StockedQty
-		{
-			get
-			{
-				return this.stockedQty;
-			}
+                [Required]
+                public decimal StockedQty
+                {
+                        get
+                        {
+                                return this.stockedQty;
+                        }
 
-			set
-			{
-				this.stockedQty = value;
-			}
-		}
+                        set
+                        {
+                                this.stockedQty = value;
+                        }
+                }
 
-		private decimal unitPrice;
+                private decimal unitPrice;
 
-		[Required]
-		public decimal UnitPrice
-		{
-			get
-			{
-				return this.unitPrice;
-			}
+                [Required]
+                public decimal UnitPrice
+                {
+                        get
+                        {
+                                return this.unitPrice;
+                        }
 
-			set
-			{
-				this.unitPrice = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.unitPrice = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>62699bb804307cddffa29de42e1cd6d9</Hash>
+    <Hash>511669354f6484c97a3f60dfaf46b6e3</Hash>
 </Codenesium>*/

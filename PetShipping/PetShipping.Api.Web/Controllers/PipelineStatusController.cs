@@ -12,28 +12,28 @@ using PetShippingNS.Api.Services;
 
 namespace PetShippingNS.Api.Web
 {
-	[Route("api/pipelineStatus")]
-	[ApiVersion("1.0")]
-	public class PipelineStatusController: AbstractPipelineStatusController
-	{
-		public PipelineStatusController(
-			ServiceSettings settings,
-			ILogger<PipelineStatusController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IPipelineStatusService pipelineStatusService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       pipelineStatusService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/pipelineStatus")]
+        [ApiVersion("1.0")]
+        public class PipelineStatusController: AbstractPipelineStatusController
+        {
+                public PipelineStatusController(
+                        ServiceSettings settings,
+                        ILogger<PipelineStatusController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IPipelineStatusService pipelineStatusService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               pipelineStatusService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>985253f5230b8a5506703dbdb10786b4</Hash>
+    <Hash>ce0bf6479835df40bde974baab27ff26</Hash>
 </Codenesium>*/

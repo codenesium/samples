@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class StateProvinceService: AbstractStateProvinceService, IStateProvinceService
-	{
-		public StateProvinceService(
-			ILogger<StateProvinceRepository> logger,
-			IStateProvinceRepository stateProvinceRepository,
-			IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
-			IBOLStateProvinceMapper BOLstateProvinceMapper,
-			IDALStateProvinceMapper DALstateProvinceMapper)
-			: base(logger, stateProvinceRepository,
-			       stateProvinceModelValidator,
-			       BOLstateProvinceMapper,
-			       DALstateProvinceMapper)
-		{}
-	}
+        public class StateProvinceService: AbstractStateProvinceService, IStateProvinceService
+        {
+                public StateProvinceService(
+                        ILogger<StateProvinceRepository> logger,
+                        IStateProvinceRepository stateProvinceRepository,
+                        IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
+                        IBOLStateProvinceMapper bolstateProvinceMapper,
+                        IDALStateProvinceMapper dalstateProvinceMapper)
+                        : base(logger,
+                               stateProvinceRepository,
+                               stateProvinceModelValidator,
+                               bolstateProvinceMapper,
+                               dalstateProvinceMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>44ea2da7a7c9057bf5e7293f680209a3</Hash>
+    <Hash>ec28982512542d7f6bc8852dd536fe4c</Hash>
 </Codenesium>*/

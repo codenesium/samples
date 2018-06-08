@@ -6,32 +6,33 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public class ApiBucketRequestModelValidator: AbstractApiBucketRequestModelValidator, IApiBucketRequestModelValidator
-	{
-		public ApiBucketRequestModelValidator()
-		{   }
+        public class ApiBucketRequestModelValidator: AbstractApiBucketRequestModelValidator, IApiBucketRequestModelValidator
+        {
+                public ApiBucketRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiBucketRequestModel model)
-		{
-			this.ExternalIdRules();
-			this.NameRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiBucketRequestModel model)
+                {
+                        this.ExternalIdRules();
+                        this.NameRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiBucketRequestModel model)
-		{
-			this.ExternalIdRules();
-			this.NameRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiBucketRequestModel model)
+                {
+                        this.ExternalIdRules();
+                        this.NameRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>77426bf2bae5a804fc1eb24f7cb9c08f</Hash>
+    <Hash>ce1f4bddd8aa3c69ea8db24a0604f10b</Hash>
 </Codenesium>*/

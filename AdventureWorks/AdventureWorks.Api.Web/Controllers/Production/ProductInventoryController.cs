@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/productInventories")]
-	[ApiVersion("1.0")]
-	public class ProductInventoryController: AbstractProductInventoryController
-	{
-		public ProductInventoryController(
-			ServiceSettings settings,
-			ILogger<ProductInventoryController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IProductInventoryService productInventoryService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       productInventoryService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/productInventories")]
+        [ApiVersion("1.0")]
+        public class ProductInventoryController: AbstractProductInventoryController
+        {
+                public ProductInventoryController(
+                        ServiceSettings settings,
+                        ILogger<ProductInventoryController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IProductInventoryService productInventoryService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               productInventoryService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f1ee69063a5107afe03960fc8b410757</Hash>
+    <Hash>87990dfd691138cd9cb80be63e80b71b</Hash>
 </Codenesium>*/

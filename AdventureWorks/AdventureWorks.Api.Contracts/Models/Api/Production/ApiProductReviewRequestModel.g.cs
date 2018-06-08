@@ -3,144 +3,146 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductReviewRequestModel: AbstractApiRequestModel
-	{
-		public ApiProductReviewRequestModel() : base()
-		{}
+        public partial class ApiProductReviewRequestModel: AbstractApiRequestModel
+        {
+                public ApiProductReviewRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string comments,
-			string emailAddress,
-			DateTime modifiedDate,
-			int productID,
-			int rating,
-			DateTime reviewDate,
-			string reviewerName)
-		{
-			this.Comments = comments;
-			this.EmailAddress = emailAddress;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ProductID = productID.ToInt();
-			this.Rating = rating.ToInt();
-			this.ReviewDate = reviewDate.ToDateTime();
-			this.ReviewerName = reviewerName;
-		}
+                public void SetProperties(
+                        string comments,
+                        string emailAddress,
+                        DateTime modifiedDate,
+                        int productID,
+                        int rating,
+                        DateTime reviewDate,
+                        string reviewerName)
+                {
+                        this.Comments = comments;
+                        this.EmailAddress = emailAddress;
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductID = productID;
+                        this.Rating = rating;
+                        this.ReviewDate = reviewDate;
+                        this.ReviewerName = reviewerName;
+                }
 
-		private string comments;
+                private string comments;
 
-		public string Comments
-		{
-			get
-			{
-				return this.comments.IsEmptyOrZeroOrNull() ? null : this.comments;
-			}
+                public string Comments
+                {
+                        get
+                        {
+                                return this.comments.IsEmptyOrZeroOrNull() ? null : this.comments;
+                        }
 
-			set
-			{
-				this.comments = value;
-			}
-		}
+                        set
+                        {
+                                this.comments = value;
+                        }
+                }
 
-		private string emailAddress;
+                private string emailAddress;
 
-		[Required]
-		public string EmailAddress
-		{
-			get
-			{
-				return this.emailAddress;
-			}
+                [Required]
+                public string EmailAddress
+                {
+                        get
+                        {
+                                return this.emailAddress;
+                        }
 
-			set
-			{
-				this.emailAddress = value;
-			}
-		}
+                        set
+                        {
+                                this.emailAddress = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private int productID;
+                private int productID;
 
-		[Required]
-		public int ProductID
-		{
-			get
-			{
-				return this.productID;
-			}
+                [Required]
+                public int ProductID
+                {
+                        get
+                        {
+                                return this.productID;
+                        }
 
-			set
-			{
-				this.productID = value;
-			}
-		}
+                        set
+                        {
+                                this.productID = value;
+                        }
+                }
 
-		private int rating;
+                private int rating;
 
-		[Required]
-		public int Rating
-		{
-			get
-			{
-				return this.rating;
-			}
+                [Required]
+                public int Rating
+                {
+                        get
+                        {
+                                return this.rating;
+                        }
 
-			set
-			{
-				this.rating = value;
-			}
-		}
+                        set
+                        {
+                                this.rating = value;
+                        }
+                }
 
-		private DateTime reviewDate;
+                private DateTime reviewDate;
 
-		[Required]
-		public DateTime ReviewDate
-		{
-			get
-			{
-				return this.reviewDate;
-			}
+                [Required]
+                public DateTime ReviewDate
+                {
+                        get
+                        {
+                                return this.reviewDate;
+                        }
 
-			set
-			{
-				this.reviewDate = value;
-			}
-		}
+                        set
+                        {
+                                this.reviewDate = value;
+                        }
+                }
 
-		private string reviewerName;
+                private string reviewerName;
 
-		[Required]
-		public string ReviewerName
-		{
-			get
-			{
-				return this.reviewerName;
-			}
+                [Required]
+                public string ReviewerName
+                {
+                        get
+                        {
+                                return this.reviewerName;
+                        }
 
-			set
-			{
-				this.reviewerName = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.reviewerName = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>1c5f96b987dcbd38217874671ab2fa7a</Hash>
+    <Hash>b0862ecf8f64f532697858af62c7b2a0</Hash>
 </Codenesium>*/

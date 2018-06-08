@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public interface ISpaceFeatureRepository
-	{
-		Task<SpaceFeature> Create(SpaceFeature item);
+        public interface ISpaceFeatureRepository
+        {
+                Task<SpaceFeature> Create(SpaceFeature item);
 
-		Task Update(SpaceFeature item);
+                Task Update(SpaceFeature item);
 
-		Task Delete(int id);
+                Task Delete(int id);
 
-		Task<SpaceFeature> Get(int id);
+                Task<SpaceFeature> Get(int id);
 
-		Task<List<SpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<SpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>46bfa8d9f13197cde76d9688f8e369f0</Hash>
+    <Hash>a8f870d39ee44bf021409113657c1bbe</Hash>
 </Codenesium>*/

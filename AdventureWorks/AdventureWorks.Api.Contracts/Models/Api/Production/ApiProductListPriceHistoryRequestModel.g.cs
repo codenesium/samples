@@ -3,90 +3,92 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductListPriceHistoryRequestModel: AbstractApiRequestModel
-	{
-		public ApiProductListPriceHistoryRequestModel() : base()
-		{}
+        public partial class ApiProductListPriceHistoryRequestModel: AbstractApiRequestModel
+        {
+                public ApiProductListPriceHistoryRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<DateTime> endDate,
-			decimal listPrice,
-			DateTime modifiedDate,
-			DateTime startDate)
-		{
-			this.EndDate = endDate.ToNullableDateTime();
-			this.ListPrice = listPrice.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.StartDate = startDate.ToDateTime();
-		}
+                public void SetProperties(
+                        Nullable<DateTime> endDate,
+                        decimal listPrice,
+                        DateTime modifiedDate,
+                        DateTime startDate)
+                {
+                        this.EndDate = endDate;
+                        this.ListPrice = listPrice;
+                        this.ModifiedDate = modifiedDate;
+                        this.StartDate = startDate;
+                }
 
-		private Nullable<DateTime> endDate;
+                private Nullable<DateTime> endDate;
 
-		public Nullable<DateTime> EndDate
-		{
-			get
-			{
-				return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
-			}
+                public Nullable<DateTime> EndDate
+                {
+                        get
+                        {
+                                return this.endDate.IsEmptyOrZeroOrNull() ? null : this.endDate;
+                        }
 
-			set
-			{
-				this.endDate = value;
-			}
-		}
+                        set
+                        {
+                                this.endDate = value;
+                        }
+                }
 
-		private decimal listPrice;
+                private decimal listPrice;
 
-		[Required]
-		public decimal ListPrice
-		{
-			get
-			{
-				return this.listPrice;
-			}
+                [Required]
+                public decimal ListPrice
+                {
+                        get
+                        {
+                                return this.listPrice;
+                        }
 
-			set
-			{
-				this.listPrice = value;
-			}
-		}
+                        set
+                        {
+                                this.listPrice = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private DateTime startDate;
+                private DateTime startDate;
 
-		[Required]
-		public DateTime StartDate
-		{
-			get
-			{
-				return this.startDate;
-			}
+                [Required]
+                public DateTime StartDate
+                {
+                        get
+                        {
+                                return this.startDate;
+                        }
 
-			set
-			{
-				this.startDate = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.startDate = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>934abe4cb400c9a246a17a0aef099e82</Hash>
+    <Hash>d84e167384f33f5bfe09371666cacc90</Hash>
 </Codenesium>*/

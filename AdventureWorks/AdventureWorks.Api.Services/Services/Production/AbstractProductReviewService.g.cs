@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractProductReviewService: AbstractService
-	{
-		private IProductReviewRepository productReviewRepository;
-		private IApiProductReviewRequestModelValidator productReviewModelValidator;
-		private IBOLProductReviewMapper bolProductReviewMapper;
-		private IDALProductReviewMapper dalProductReviewMapper;
-		private ILogger logger;
+        public abstract class AbstractProductReviewService: AbstractService
+        {
+                private IProductReviewRepository productReviewRepository;
 
-		public AbstractProductReviewService(
-			ILogger logger,
-			IProductReviewRepository productReviewRepository,
-			IApiProductReviewRequestModelValidator productReviewModelValidator,
-			IBOLProductReviewMapper bolproductReviewMapper,
-			IDALProductReviewMapper dalproductReviewMapper)
-			: base()
+                private IApiProductReviewRequestModelValidator productReviewModelValidator;
 
-		{
-			this.productReviewRepository = productReviewRepository;
-			this.productReviewModelValidator = productReviewModelValidator;
-			this.bolProductReviewMapper = bolproductReviewMapper;
-			this.dalProductReviewMapper = dalproductReviewMapper;
-			this.logger = logger;
-		}
+                private IBOLProductReviewMapper bolProductReviewMapper;
 
-		public virtual async Task<List<ApiProductReviewResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.productReviewRepository.All(skip, take, orderClause);
+                private IDALProductReviewMapper dalProductReviewMapper;
 
-			return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiProductReviewResponseModel> Get(int productReviewID)
-		{
-			var record = await productReviewRepository.Get(productReviewID);
+                public AbstractProductReviewService(
+                        ILogger logger,
+                        IProductReviewRepository productReviewRepository,
+                        IApiProductReviewRequestModelValidator productReviewModelValidator,
+                        IBOLProductReviewMapper bolproductReviewMapper,
+                        IDALProductReviewMapper dalproductReviewMapper)
+                        : base()
 
-			return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(record));
-		}
+                {
+                        this.productReviewRepository = productReviewRepository;
+                        this.productReviewModelValidator = productReviewModelValidator;
+                        this.bolProductReviewMapper = bolproductReviewMapper;
+                        this.dalProductReviewMapper = dalproductReviewMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiProductReviewResponseModel>> Create(
-			ApiProductReviewRequestModel model)
-		{
-			CreateResponse<ApiProductReviewResponseModel> response = new CreateResponse<ApiProductReviewResponseModel>(await this.productReviewModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolProductReviewMapper.MapModelToBO(default (int), model);
-				var record = await this.productReviewRepository.Create(this.dalProductReviewMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiProductReviewResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.productReviewRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int productReviewID,
-			ApiProductReviewRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateUpdateAsync(productReviewID, model));
+                public virtual async Task<ApiProductReviewResponseModel> Get(int productReviewID)
+                {
+                        var record = await this.productReviewRepository.Get(productReviewID);
 
-			if (response.Success)
-			{
-				var bo = this.bolProductReviewMapper.MapModelToBO(productReviewID, model);
-				await this.productReviewRepository.Update(this.dalProductReviewMapper.MapBOToEF(bo));
-			}
+                        return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiProductReviewResponseModel>> Create(
+                        ApiProductReviewRequestModel model)
+                {
+                        CreateResponse<ApiProductReviewResponseModel> response = new CreateResponse<ApiProductReviewResponseModel>(await this.productReviewModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductReviewMapper.MapModelToBO(default (int), model);
+                                var record = await this.productReviewRepository.Create(this.dalProductReviewMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int productReviewID)
-		{
-			ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateDeleteAsync(productReviewID));
+                                response.SetRecord(this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.productReviewRepository.Delete(productReviewID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<List<ApiProductReviewResponseModel>> GetCommentsProductIDReviewerName(string comments,int productID,string reviewerName)
-		{
-			List<ProductReview> records = await this.productReviewRepository.GetCommentsProductIDReviewerName(comments,productID,reviewerName);
+                public virtual async Task<ActionResponse> Update(
+                        int productReviewID,
+                        ApiProductReviewRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateUpdateAsync(productReviewID, model));
 
-			return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductReviewMapper.MapModelToBO(productReviewID, model);
+                                await this.productReviewRepository.Update(this.dalProductReviewMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int productReviewID)
+                {
+                        ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateDeleteAsync(productReviewID));
+
+                        if (response.Success)
+                        {
+                                await this.productReviewRepository.Delete(productReviewID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<List<ApiProductReviewResponseModel>> GetCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                {
+                        List<ProductReview> records = await this.productReviewRepository.GetCommentsProductIDReviewerName(comments, productID, reviewerName);
+
+                        return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a80411c5497ca1f56415e14643ff8d36</Hash>
+    <Hash>3ed7a7374f9b56463be897ae35c27243</Hash>
 </Codenesium>*/

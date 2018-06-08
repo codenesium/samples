@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public class PhoneNumberTypeRepository: AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
-	{
-		public PhoneNumberTypeRepository(
-			ILogger<PhoneNumberTypeRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class PhoneNumberTypeRepository: AbstractPhoneNumberTypeRepository, IPhoneNumberTypeRepository
+        {
+                public PhoneNumberTypeRepository(
+                        ILogger<PhoneNumberTypeRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e02c3a77ece9f45538e9e8b48411dccf</Hash>
+    <Hash>ab150b3ef97a738e8eea0c096889d648</Hash>
 </Codenesium>*/

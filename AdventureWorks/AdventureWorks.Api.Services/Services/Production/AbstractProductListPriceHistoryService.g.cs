@@ -12,87 +12,93 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractProductListPriceHistoryService: AbstractService
-	{
-		private IProductListPriceHistoryRepository productListPriceHistoryRepository;
-		private IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator;
-		private IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper;
-		private IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper;
-		private ILogger logger;
+        public abstract class AbstractProductListPriceHistoryService: AbstractService
+        {
+                private IProductListPriceHistoryRepository productListPriceHistoryRepository;
 
-		public AbstractProductListPriceHistoryService(
-			ILogger logger,
-			IProductListPriceHistoryRepository productListPriceHistoryRepository,
-			IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
-			IBOLProductListPriceHistoryMapper bolproductListPriceHistoryMapper,
-			IDALProductListPriceHistoryMapper dalproductListPriceHistoryMapper)
-			: base()
+                private IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator;
 
-		{
-			this.productListPriceHistoryRepository = productListPriceHistoryRepository;
-			this.productListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
-			this.bolProductListPriceHistoryMapper = bolproductListPriceHistoryMapper;
-			this.dalProductListPriceHistoryMapper = dalproductListPriceHistoryMapper;
-			this.logger = logger;
-		}
+                private IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper;
 
-		public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.productListPriceHistoryRepository.All(skip, take, orderClause);
+                private IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper;
 
-			return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiProductListPriceHistoryResponseModel> Get(int productID)
-		{
-			var record = await productListPriceHistoryRepository.Get(productID);
+                public AbstractProductListPriceHistoryService(
+                        ILogger logger,
+                        IProductListPriceHistoryRepository productListPriceHistoryRepository,
+                        IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
+                        IBOLProductListPriceHistoryMapper bolproductListPriceHistoryMapper,
+                        IDALProductListPriceHistoryMapper dalproductListPriceHistoryMapper)
+                        : base()
 
-			return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record));
-		}
+                {
+                        this.productListPriceHistoryRepository = productListPriceHistoryRepository;
+                        this.productListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
+                        this.bolProductListPriceHistoryMapper = bolproductListPriceHistoryMapper;
+                        this.dalProductListPriceHistoryMapper = dalproductListPriceHistoryMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiProductListPriceHistoryResponseModel>> Create(
-			ApiProductListPriceHistoryRequestModel model)
-		{
-			CreateResponse<ApiProductListPriceHistoryResponseModel> response = new CreateResponse<ApiProductListPriceHistoryResponseModel>(await this.productListPriceHistoryModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(default (int), model);
-				var record = await this.productListPriceHistoryRepository.Create(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.productListPriceHistoryRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int productID,
-			ApiProductListPriceHistoryRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model));
+                public virtual async Task<ApiProductListPriceHistoryResponseModel> Get(int productID)
+                {
+                        var record = await this.productListPriceHistoryRepository.Get(productID);
 
-			if (response.Success)
-			{
-				var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(productID, model);
-				await this.productListPriceHistoryRepository.Update(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
-			}
+                        return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiProductListPriceHistoryResponseModel>> Create(
+                        ApiProductListPriceHistoryRequestModel model)
+                {
+                        CreateResponse<ApiProductListPriceHistoryResponseModel> response = new CreateResponse<ApiProductListPriceHistoryResponseModel>(await this.productListPriceHistoryModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(default (int), model);
+                                var record = await this.productListPriceHistoryRepository.Create(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int productID)
-		{
-			ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateDeleteAsync(productID));
+                                response.SetRecord(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.productListPriceHistoryRepository.Delete(productID);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int productID,
+                        ApiProductListPriceHistoryRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(productID, model);
+                                await this.productListPriceHistoryRepository.Update(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int productID)
+                {
+                        ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateDeleteAsync(productID));
+
+                        if (response.Success)
+                        {
+                                await this.productListPriceHistoryRepository.Delete(productID);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8d8b97d06e70fe707d2da9ac8a3354da</Hash>
+    <Hash>d59a140c93fd3a380046cf1012633df8</Hash>
 </Codenesium>*/

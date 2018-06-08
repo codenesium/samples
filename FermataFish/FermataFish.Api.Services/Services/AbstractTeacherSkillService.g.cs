@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractTeacherSkillService: AbstractService
-	{
-		private ITeacherSkillRepository teacherSkillRepository;
-		private IApiTeacherSkillRequestModelValidator teacherSkillModelValidator;
-		private IBOLTeacherSkillMapper bolTeacherSkillMapper;
-		private IDALTeacherSkillMapper dalTeacherSkillMapper;
-		private ILogger logger;
+        public abstract class AbstractTeacherSkillService: AbstractService
+        {
+                private ITeacherSkillRepository teacherSkillRepository;
 
-		public AbstractTeacherSkillService(
-			ILogger logger,
-			ITeacherSkillRepository teacherSkillRepository,
-			IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
-			IBOLTeacherSkillMapper bolteacherSkillMapper,
-			IDALTeacherSkillMapper dalteacherSkillMapper)
-			: base()
+                private IApiTeacherSkillRequestModelValidator teacherSkillModelValidator;
 
-		{
-			this.teacherSkillRepository = teacherSkillRepository;
-			this.teacherSkillModelValidator = teacherSkillModelValidator;
-			this.bolTeacherSkillMapper = bolteacherSkillMapper;
-			this.dalTeacherSkillMapper = dalteacherSkillMapper;
-			this.logger = logger;
-		}
+                private IBOLTeacherSkillMapper bolTeacherSkillMapper;
 
-		public virtual async Task<List<ApiTeacherSkillResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.teacherSkillRepository.All(skip, take, orderClause);
+                private IDALTeacherSkillMapper dalTeacherSkillMapper;
 
-			return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiTeacherSkillResponseModel> Get(int id)
-		{
-			var record = await teacherSkillRepository.Get(id);
+                public AbstractTeacherSkillService(
+                        ILogger logger,
+                        ITeacherSkillRepository teacherSkillRepository,
+                        IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
+                        IBOLTeacherSkillMapper bolteacherSkillMapper,
+                        IDALTeacherSkillMapper dalteacherSkillMapper)
+                        : base()
 
-			return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record));
-		}
+                {
+                        this.teacherSkillRepository = teacherSkillRepository;
+                        this.teacherSkillModelValidator = teacherSkillModelValidator;
+                        this.bolTeacherSkillMapper = bolteacherSkillMapper;
+                        this.dalTeacherSkillMapper = dalteacherSkillMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiTeacherSkillResponseModel>> Create(
-			ApiTeacherSkillRequestModel model)
-		{
-			CreateResponse<ApiTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherSkillResponseModel>(await this.teacherSkillModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolTeacherSkillMapper.MapModelToBO(default (int), model);
-				var record = await this.teacherSkillRepository.Create(this.dalTeacherSkillMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiTeacherSkillResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.teacherSkillRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiTeacherSkillRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.teacherSkillModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiTeacherSkillResponseModel> Get(int id)
+                {
+                        var record = await this.teacherSkillRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolTeacherSkillMapper.MapModelToBO(id, model);
-				await this.teacherSkillRepository.Update(this.dalTeacherSkillMapper.MapBOToEF(bo));
-			}
+                        return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiTeacherSkillResponseModel>> Create(
+                        ApiTeacherSkillRequestModel model)
+                {
+                        CreateResponse<ApiTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherSkillResponseModel>(await this.teacherSkillModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolTeacherSkillMapper.MapModelToBO(default (int), model);
+                                var record = await this.teacherSkillRepository.Create(this.dalTeacherSkillMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.teacherSkillModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.teacherSkillRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiTeacherSkillRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.teacherSkillModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolTeacherSkillMapper.MapModelToBO(id, model);
+                                await this.teacherSkillRepository.Update(this.dalTeacherSkillMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.teacherSkillModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.teacherSkillRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7f260bf6baf17cbd6d87c5539e29f0e3</Hash>
+    <Hash>63899b2bd564ea2197876e12b1d2423b</Hash>
 </Codenesium>*/

@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractEmployeeService: AbstractService
-	{
-		private IEmployeeRepository employeeRepository;
-		private IApiEmployeeRequestModelValidator employeeModelValidator;
-		private IBOLEmployeeMapper bolEmployeeMapper;
-		private IDALEmployeeMapper dalEmployeeMapper;
-		private ILogger logger;
+        public abstract class AbstractEmployeeService: AbstractService
+        {
+                private IEmployeeRepository employeeRepository;
 
-		public AbstractEmployeeService(
-			ILogger logger,
-			IEmployeeRepository employeeRepository,
-			IApiEmployeeRequestModelValidator employeeModelValidator,
-			IBOLEmployeeMapper bolemployeeMapper,
-			IDALEmployeeMapper dalemployeeMapper)
-			: base()
+                private IApiEmployeeRequestModelValidator employeeModelValidator;
 
-		{
-			this.employeeRepository = employeeRepository;
-			this.employeeModelValidator = employeeModelValidator;
-			this.bolEmployeeMapper = bolemployeeMapper;
-			this.dalEmployeeMapper = dalemployeeMapper;
-			this.logger = logger;
-		}
+                private IBOLEmployeeMapper bolEmployeeMapper;
 
-		public virtual async Task<List<ApiEmployeeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.employeeRepository.All(skip, take, orderClause);
+                private IDALEmployeeMapper dalEmployeeMapper;
 
-			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiEmployeeResponseModel> Get(int id)
-		{
-			var record = await employeeRepository.Get(id);
+                public AbstractEmployeeService(
+                        ILogger logger,
+                        IEmployeeRepository employeeRepository,
+                        IApiEmployeeRequestModelValidator employeeModelValidator,
+                        IBOLEmployeeMapper bolemployeeMapper,
+                        IDALEmployeeMapper dalemployeeMapper)
+                        : base()
 
-			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
-		}
+                {
+                        this.employeeRepository = employeeRepository;
+                        this.employeeModelValidator = employeeModelValidator;
+                        this.bolEmployeeMapper = bolemployeeMapper;
+                        this.dalEmployeeMapper = dalemployeeMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
-			ApiEmployeeRequestModel model)
-		{
-			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolEmployeeMapper.MapModelToBO(default (int), model);
-				var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiEmployeeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.employeeRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiEmployeeRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiEmployeeResponseModel> Get(int id)
+                {
+                        var record = await this.employeeRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolEmployeeMapper.MapModelToBO(id, model);
-				await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
-			}
+                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
+                        ApiEmployeeRequestModel model)
+                {
+                        CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolEmployeeMapper.MapModelToBO(default (int), model);
+                                var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.employeeRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiEmployeeRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolEmployeeMapper.MapModelToBO(id, model);
+                                await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.employeeRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ff205541e1e3f1ae1e64f84cf45c9999</Hash>
+    <Hash>8337a717ce74413ee4d2a18792f9d812</Hash>
 </Codenesium>*/

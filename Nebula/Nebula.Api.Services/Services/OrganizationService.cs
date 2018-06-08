@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class OrganizationService: AbstractOrganizationService, IOrganizationService
-	{
-		public OrganizationService(
-			ILogger<OrganizationRepository> logger,
-			IOrganizationRepository organizationRepository,
-			IApiOrganizationRequestModelValidator organizationModelValidator,
-			IBOLOrganizationMapper BOLorganizationMapper,
-			IDALOrganizationMapper DALorganizationMapper)
-			: base(logger, organizationRepository,
-			       organizationModelValidator,
-			       BOLorganizationMapper,
-			       DALorganizationMapper)
-		{}
-	}
+        public class OrganizationService: AbstractOrganizationService, IOrganizationService
+        {
+                public OrganizationService(
+                        ILogger<OrganizationRepository> logger,
+                        IOrganizationRepository organizationRepository,
+                        IApiOrganizationRequestModelValidator organizationModelValidator,
+                        IBOLOrganizationMapper bolorganizationMapper,
+                        IDALOrganizationMapper dalorganizationMapper)
+                        : base(logger,
+                               organizationRepository,
+                               organizationModelValidator,
+                               bolorganizationMapper,
+                               dalorganizationMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e3f0c3be72a7d228f7c7cf63ab0fe0cb</Hash>
+    <Hash>182f5a76a4791e65c9cb0a479d3f78c5</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using PetStoreNS.Api.Services;
 
 namespace PetStoreNS.Api.Web
 {
-	[Route("api/breeds")]
-	[ApiVersion("1.0")]
-	public class BreedController: AbstractBreedController
-	{
-		public BreedController(
-			ServiceSettings settings,
-			ILogger<BreedController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IBreedService breedService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       breedService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/breeds")]
+        [ApiVersion("1.0")]
+        public class BreedController: AbstractBreedController
+        {
+                public BreedController(
+                        ServiceSettings settings,
+                        ILogger<BreedController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IBreedService breedService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               breedService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d9b4190ee1afb751c7ce6c910934db83</Hash>
+    <Hash>383069f630beb9f895c1fc9939c19d7b</Hash>
 </Codenesium>*/

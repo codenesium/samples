@@ -2,49 +2,50 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractCurrencyMapper
-	{
-		public virtual BOCurrency MapModelToBO(
-			string currencyCode,
-			ApiCurrencyRequestModel model
-			)
-		{
-			BOCurrency boCurrency = new BOCurrency();
+        public abstract class BOLAbstractCurrencyMapper
+        {
+                public virtual BOCurrency MapModelToBO(
+                        string currencyCode,
+                        ApiCurrencyRequestModel model
+                        )
+                {
+                        BOCurrency boCurrency = new BOCurrency();
 
-			boCurrency.SetProperties(
-				currencyCode,
-				model.ModifiedDate,
-				model.Name);
-			return boCurrency;
-		}
+                        boCurrency.SetProperties(
+                                currencyCode,
+                                model.ModifiedDate,
+                                model.Name);
+                        return boCurrency;
+                }
 
-		public virtual ApiCurrencyResponseModel MapBOToModel(
-			BOCurrency boCurrency)
-		{
-			var model = new ApiCurrencyResponseModel();
+                public virtual ApiCurrencyResponseModel MapBOToModel(
+                        BOCurrency boCurrency)
+                {
+                        var model = new ApiCurrencyResponseModel();
 
-			model.SetProperties(boCurrency.CurrencyCode, boCurrency.ModifiedDate, boCurrency.Name);
+                        model.SetProperties(boCurrency.CurrencyCode, boCurrency.ModifiedDate, boCurrency.Name);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiCurrencyResponseModel> MapBOToModel(
-			List<BOCurrency> items)
-		{
-			List<ApiCurrencyResponseModel> response = new List<ApiCurrencyResponseModel>();
+                public virtual List<ApiCurrencyResponseModel> MapBOToModel(
+                        List<BOCurrency> items)
+                {
+                        List<ApiCurrencyResponseModel> response = new List<ApiCurrencyResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>20600cc4b90910bdd39685a113e98adb</Hash>
+    <Hash>cc6b2d70665733ac54c19fc8db2aa957</Hash>
 </Codenesium>*/

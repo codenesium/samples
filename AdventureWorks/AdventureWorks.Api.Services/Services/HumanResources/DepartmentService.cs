@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class DepartmentService: AbstractDepartmentService, IDepartmentService
-	{
-		public DepartmentService(
-			ILogger<DepartmentRepository> logger,
-			IDepartmentRepository departmentRepository,
-			IApiDepartmentRequestModelValidator departmentModelValidator,
-			IBOLDepartmentMapper BOLdepartmentMapper,
-			IDALDepartmentMapper DALdepartmentMapper)
-			: base(logger, departmentRepository,
-			       departmentModelValidator,
-			       BOLdepartmentMapper,
-			       DALdepartmentMapper)
-		{}
-	}
+        public class DepartmentService: AbstractDepartmentService, IDepartmentService
+        {
+                public DepartmentService(
+                        ILogger<DepartmentRepository> logger,
+                        IDepartmentRepository departmentRepository,
+                        IApiDepartmentRequestModelValidator departmentModelValidator,
+                        IBOLDepartmentMapper boldepartmentMapper,
+                        IDALDepartmentMapper daldepartmentMapper)
+                        : base(logger,
+                               departmentRepository,
+                               departmentModelValidator,
+                               boldepartmentMapper,
+                               daldepartmentMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>71d26fb5e54c587913da062e54b115c4</Hash>
+    <Hash>a0676beb863a26e9f0d2272ebcb4f029</Hash>
 </Codenesium>*/

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using FluentValidation.Results;
+
 namespace PetStoreNS.Api.Services
 {
-
     public class ValidationError
     {
         public ValidationError(string errorCode, string errorMessage, string propertyName)
@@ -24,7 +24,8 @@ namespace PetStoreNS.Api.Services
     public class CreateResponse<T> : ActionResponse
     {
         public T Record { get; private set; }
-        public CreateResponse(FluentValidation.Results.ValidationResult result)
+
+        public CreateResponse (FluentValidation.Results.ValidationResult result)
             : base(result)
         {
         }

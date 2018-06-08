@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class PetService: AbstractPetService, IPetService
-	{
-		public PetService(
-			ILogger<PetRepository> logger,
-			IPetRepository petRepository,
-			IApiPetRequestModelValidator petModelValidator,
-			IBOLPetMapper BOLpetMapper,
-			IDALPetMapper DALpetMapper)
-			: base(logger, petRepository,
-			       petModelValidator,
-			       BOLpetMapper,
-			       DALpetMapper)
-		{}
-	}
+        public class PetService: AbstractPetService, IPetService
+        {
+                public PetService(
+                        ILogger<PetRepository> logger,
+                        IPetRepository petRepository,
+                        IApiPetRequestModelValidator petModelValidator,
+                        IBOLPetMapper bolpetMapper,
+                        IDALPetMapper dalpetMapper)
+                        : base(logger,
+                               petRepository,
+                               petModelValidator,
+                               bolpetMapper,
+                               dalpetMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ba5e01628c12b126d30dd7c787a851ae</Hash>
+    <Hash>e7a26d590253ab4e4327d37d069100b5</Hash>
 </Codenesium>*/

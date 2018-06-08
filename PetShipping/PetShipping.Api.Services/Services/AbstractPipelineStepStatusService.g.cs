@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractPipelineStepStatusService: AbstractService
-	{
-		private IPipelineStepStatusRepository pipelineStepStatusRepository;
-		private IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator;
-		private IBOLPipelineStepStatusMapper bolPipelineStepStatusMapper;
-		private IDALPipelineStepStatusMapper dalPipelineStepStatusMapper;
-		private ILogger logger;
+        public abstract class AbstractPipelineStepStatusService: AbstractService
+        {
+                private IPipelineStepStatusRepository pipelineStepStatusRepository;
 
-		public AbstractPipelineStepStatusService(
-			ILogger logger,
-			IPipelineStepStatusRepository pipelineStepStatusRepository,
-			IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator,
-			IBOLPipelineStepStatusMapper bolpipelineStepStatusMapper,
-			IDALPipelineStepStatusMapper dalpipelineStepStatusMapper)
-			: base()
+                private IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator;
 
-		{
-			this.pipelineStepStatusRepository = pipelineStepStatusRepository;
-			this.pipelineStepStatusModelValidator = pipelineStepStatusModelValidator;
-			this.bolPipelineStepStatusMapper = bolpipelineStepStatusMapper;
-			this.dalPipelineStepStatusMapper = dalpipelineStepStatusMapper;
-			this.logger = logger;
-		}
+                private IBOLPipelineStepStatusMapper bolPipelineStepStatusMapper;
 
-		public virtual async Task<List<ApiPipelineStepStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.pipelineStepStatusRepository.All(skip, take, orderClause);
+                private IDALPipelineStepStatusMapper dalPipelineStepStatusMapper;
 
-			return this.bolPipelineStepStatusMapper.MapBOToModel(this.dalPipelineStepStatusMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPipelineStepStatusResponseModel> Get(int id)
-		{
-			var record = await pipelineStepStatusRepository.Get(id);
+                public AbstractPipelineStepStatusService(
+                        ILogger logger,
+                        IPipelineStepStatusRepository pipelineStepStatusRepository,
+                        IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator,
+                        IBOLPipelineStepStatusMapper bolpipelineStepStatusMapper,
+                        IDALPipelineStepStatusMapper dalpipelineStepStatusMapper)
+                        : base()
 
-			return this.bolPipelineStepStatusMapper.MapBOToModel(this.dalPipelineStepStatusMapper.MapEFToBO(record));
-		}
+                {
+                        this.pipelineStepStatusRepository = pipelineStepStatusRepository;
+                        this.pipelineStepStatusModelValidator = pipelineStepStatusModelValidator;
+                        this.bolPipelineStepStatusMapper = bolpipelineStepStatusMapper;
+                        this.dalPipelineStepStatusMapper = dalpipelineStepStatusMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPipelineStepStatusResponseModel>> Create(
-			ApiPipelineStepStatusRequestModel model)
-		{
-			CreateResponse<ApiPipelineStepStatusResponseModel> response = new CreateResponse<ApiPipelineStepStatusResponseModel>(await this.pipelineStepStatusModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPipelineStepStatusMapper.MapModelToBO(default (int), model);
-				var record = await this.pipelineStepStatusRepository.Create(this.dalPipelineStepStatusMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPipelineStepStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.pipelineStepStatusRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPipelineStepStatusMapper.MapBOToModel(this.dalPipelineStepStatusMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPipelineStepStatusMapper.MapBOToModel(this.dalPipelineStepStatusMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiPipelineStepStatusRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.pipelineStepStatusModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiPipelineStepStatusResponseModel> Get(int id)
+                {
+                        var record = await this.pipelineStepStatusRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolPipelineStepStatusMapper.MapModelToBO(id, model);
-				await this.pipelineStepStatusRepository.Update(this.dalPipelineStepStatusMapper.MapBOToEF(bo));
-			}
+                        return this.bolPipelineStepStatusMapper.MapBOToModel(this.dalPipelineStepStatusMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPipelineStepStatusResponseModel>> Create(
+                        ApiPipelineStepStatusRequestModel model)
+                {
+                        CreateResponse<ApiPipelineStepStatusResponseModel> response = new CreateResponse<ApiPipelineStepStatusResponseModel>(await this.pipelineStepStatusModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPipelineStepStatusMapper.MapModelToBO(default (int), model);
+                                var record = await this.pipelineStepStatusRepository.Create(this.dalPipelineStepStatusMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.pipelineStepStatusModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolPipelineStepStatusMapper.MapBOToModel(this.dalPipelineStepStatusMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.pipelineStepStatusRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiPipelineStepStatusRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.pipelineStepStatusModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPipelineStepStatusMapper.MapModelToBO(id, model);
+                                await this.pipelineStepStatusRepository.Update(this.dalPipelineStepStatusMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.pipelineStepStatusModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.pipelineStepStatusRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>84f7850a1a4e05fd39bea68c619df40a</Hash>
+    <Hash>17019e4a4ebfc6e8b3d00c9fd4454b20</Hash>
 </Codenesium>*/

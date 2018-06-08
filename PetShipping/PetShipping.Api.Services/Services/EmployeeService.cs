@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class EmployeeService: AbstractEmployeeService, IEmployeeService
-	{
-		public EmployeeService(
-			ILogger<EmployeeRepository> logger,
-			IEmployeeRepository employeeRepository,
-			IApiEmployeeRequestModelValidator employeeModelValidator,
-			IBOLEmployeeMapper BOLemployeeMapper,
-			IDALEmployeeMapper DALemployeeMapper)
-			: base(logger, employeeRepository,
-			       employeeModelValidator,
-			       BOLemployeeMapper,
-			       DALemployeeMapper)
-		{}
-	}
+        public class EmployeeService: AbstractEmployeeService, IEmployeeService
+        {
+                public EmployeeService(
+                        ILogger<EmployeeRepository> logger,
+                        IEmployeeRepository employeeRepository,
+                        IApiEmployeeRequestModelValidator employeeModelValidator,
+                        IBOLEmployeeMapper bolemployeeMapper,
+                        IDALEmployeeMapper dalemployeeMapper)
+                        : base(logger,
+                               employeeRepository,
+                               employeeModelValidator,
+                               bolemployeeMapper,
+                               dalemployeeMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5a6f51180a24a616760b8cbd57f218f4</Hash>
+    <Hash>d5e4bd0f545693211029dd3bfbe48d04</Hash>
 </Codenesium>*/

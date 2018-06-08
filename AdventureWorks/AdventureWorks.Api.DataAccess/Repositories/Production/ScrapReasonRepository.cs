@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public class ScrapReasonRepository: AbstractScrapReasonRepository, IScrapReasonRepository
-	{
-		public ScrapReasonRepository(
-			ILogger<ScrapReasonRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class ScrapReasonRepository: AbstractScrapReasonRepository, IScrapReasonRepository
+        {
+                public ScrapReasonRepository(
+                        ILogger<ScrapReasonRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a3147d1892e86a7e10d1a47309e8307e</Hash>
+    <Hash>11b8aecaabc47737b8a7059a3dfee741</Hash>
 </Codenesium>*/

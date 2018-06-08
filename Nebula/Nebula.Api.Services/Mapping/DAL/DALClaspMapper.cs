@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public class DALClaspMapper: AbstractDALClaspMapper, IDALClaspMapper
-	{
-		public DALClaspMapper()
-		{}
-	}
+        public class DALClaspMapper: DALAbstractClaspMapper, IDALClaspMapper
+        {
+                public DALClaspMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>1e8cf4a8edefe50142d21371407784fa</Hash>
+    <Hash>6d22319cbdf112281c5911fb3b5969cd</Hash>
 </Codenesium>*/

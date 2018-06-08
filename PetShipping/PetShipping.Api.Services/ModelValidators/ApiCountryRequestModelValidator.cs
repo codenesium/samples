@@ -6,30 +6,31 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class ApiCountryRequestModelValidator: AbstractApiCountryRequestModelValidator, IApiCountryRequestModelValidator
-	{
-		public ApiCountryRequestModelValidator()
-		{   }
+        public class ApiCountryRequestModelValidator: AbstractApiCountryRequestModelValidator, IApiCountryRequestModelValidator
+        {
+                public ApiCountryRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiCountryRequestModel model)
-		{
-			this.NameRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiCountryRequestModel model)
+                {
+                        this.NameRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiCountryRequestModel model)
-		{
-			this.NameRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiCountryRequestModel model)
+                {
+                        this.NameRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>35fc5b55fc22f36c973ffa8c3107279d</Hash>
+    <Hash>291d710b62ce7956c3c64fdd27dc8803</Hash>
 </Codenesium>*/

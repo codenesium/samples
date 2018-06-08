@@ -2,50 +2,51 @@ using System;
 using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+
 namespace FermataFishNS.Api.Services
 {
-	public abstract class BOLAbstractRateMapper
-	{
-		public virtual BORate MapModelToBO(
-			int id,
-			ApiRateRequestModel model
-			)
-		{
-			BORate boRate = new BORate();
+        public abstract class BOLAbstractRateMapper
+        {
+                public virtual BORate MapModelToBO(
+                        int id,
+                        ApiRateRequestModel model
+                        )
+                {
+                        BORate boRate = new BORate();
 
-			boRate.SetProperties(
-				id,
-				model.AmountPerMinute,
-				model.TeacherId,
-				model.TeacherSkillId);
-			return boRate;
-		}
+                        boRate.SetProperties(
+                                id,
+                                model.AmountPerMinute,
+                                model.TeacherId,
+                                model.TeacherSkillId);
+                        return boRate;
+                }
 
-		public virtual ApiRateResponseModel MapBOToModel(
-			BORate boRate)
-		{
-			var model = new ApiRateResponseModel();
+                public virtual ApiRateResponseModel MapBOToModel(
+                        BORate boRate)
+                {
+                        var model = new ApiRateResponseModel();
 
-			model.SetProperties(boRate.AmountPerMinute, boRate.Id, boRate.TeacherId, boRate.TeacherSkillId);
+                        model.SetProperties(boRate.AmountPerMinute, boRate.Id, boRate.TeacherId, boRate.TeacherSkillId);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiRateResponseModel> MapBOToModel(
-			List<BORate> items)
-		{
-			List<ApiRateResponseModel> response = new List<ApiRateResponseModel>();
+                public virtual List<ApiRateResponseModel> MapBOToModel(
+                        List<BORate> items)
+                {
+                        List<ApiRateResponseModel> response = new List<ApiRateResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>78a1cd780847eee10f44975999d79c43</Hash>
+    <Hash>e9cfabf099b973e7fc6cdbf4a32ea9c0</Hash>
 </Codenesium>*/

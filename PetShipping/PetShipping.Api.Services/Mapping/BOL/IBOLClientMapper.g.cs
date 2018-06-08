@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public interface IBOLClientMapper
-	{
-		BOClient MapModelToBO(
-			int id,
-			ApiClientRequestModel model);
+        public interface IBOLClientMapper
+        {
+                BOClient MapModelToBO(
+                        int id,
+                        ApiClientRequestModel model);
 
-		ApiClientResponseModel MapBOToModel(
-			BOClient boClient);
+                ApiClientResponseModel MapBOToModel(
+                        BOClient boClient);
 
-		List<ApiClientResponseModel> MapBOToModel(
-			List<BOClient> items);
-	}
+                List<ApiClientResponseModel> MapBOToModel(
+                        List<BOClient> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>55f20fc9a93f5c19f553e9e50d44099e</Hash>
+    <Hash>b63ad6da75ed17502e96a51c2289181e</Hash>
 </Codenesium>*/

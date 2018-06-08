@@ -4,132 +4,142 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiBillOfMaterialsResponseModel: AbstractApiResponseModel
-	{
-		public ApiBillOfMaterialsResponseModel() : base()
-		{}
+        public partial class ApiBillOfMaterialsResponseModel: AbstractApiResponseModel
+        {
+                public ApiBillOfMaterialsResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int billOfMaterialsID,
-			short bOMLevel,
-			int componentID,
-			Nullable<DateTime> endDate,
-			DateTime modifiedDate,
-			decimal perAssemblyQty,
-			Nullable<int> productAssemblyID,
-			DateTime startDate,
-			string unitMeasureCode)
-		{
-			this.BillOfMaterialsID = billOfMaterialsID.ToInt();
-			this.BOMLevel = bOMLevel;
-			this.ComponentID = componentID.ToInt();
-			this.EndDate = endDate.ToNullableDateTime();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PerAssemblyQty = perAssemblyQty.ToDecimal();
-			this.ProductAssemblyID = productAssemblyID.ToNullableInt();
-			this.StartDate = startDate.ToDateTime();
-			this.UnitMeasureCode = unitMeasureCode;
-		}
+                public void SetProperties(
+                        int billOfMaterialsID,
+                        short bOMLevel,
+                        int componentID,
+                        Nullable<DateTime> endDate,
+                        DateTime modifiedDate,
+                        decimal perAssemblyQty,
+                        Nullable<int> productAssemblyID,
+                        DateTime startDate,
+                        string unitMeasureCode)
+                {
+                        this.BillOfMaterialsID = billOfMaterialsID;
+                        this.BOMLevel = bOMLevel;
+                        this.ComponentID = componentID;
+                        this.EndDate = endDate;
+                        this.ModifiedDate = modifiedDate;
+                        this.PerAssemblyQty = perAssemblyQty;
+                        this.ProductAssemblyID = productAssemblyID;
+                        this.StartDate = startDate;
+                        this.UnitMeasureCode = unitMeasureCode;
+                }
 
-		public int BillOfMaterialsID { get; private set; }
-		public short BOMLevel { get; private set; }
-		public int ComponentID { get; private set; }
-		public Nullable<DateTime> EndDate { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public decimal PerAssemblyQty { get; private set; }
-		public Nullable<int> ProductAssemblyID { get; private set; }
-		public DateTime StartDate { get; private set; }
-		public string UnitMeasureCode { get; private set; }
+                public int BillOfMaterialsID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeBillOfMaterialsIDValue { get; set; } = true;
+                public short BOMLevel { get; private set; }
 
-		public bool ShouldSerializeBillOfMaterialsID()
-		{
-			return this.ShouldSerializeBillOfMaterialsIDValue;
-		}
+                public int ComponentID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeBOMLevelValue { get; set; } = true;
+                public Nullable<DateTime> EndDate { get; private set; }
 
-		public bool ShouldSerializeBOMLevel()
-		{
-			return this.ShouldSerializeBOMLevelValue;
-		}
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeComponentIDValue { get; set; } = true;
+                public decimal PerAssemblyQty { get; private set; }
 
-		public bool ShouldSerializeComponentID()
-		{
-			return this.ShouldSerializeComponentIDValue;
-		}
+                public Nullable<int> ProductAssemblyID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeEndDateValue { get; set; } = true;
+                public DateTime StartDate { get; private set; }
 
-		public bool ShouldSerializeEndDate()
-		{
-			return this.ShouldSerializeEndDateValue;
-		}
+                public string UnitMeasureCode { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeBillOfMaterialsIDValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public bool ShouldSerializeBillOfMaterialsID()
+                {
+                        return this.ShouldSerializeBillOfMaterialsIDValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializePerAssemblyQtyValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeBOMLevelValue { get; set; } = true;
 
-		public bool ShouldSerializePerAssemblyQty()
-		{
-			return this.ShouldSerializePerAssemblyQtyValue;
-		}
+                public bool ShouldSerializeBOMLevel()
+                {
+                        return this.ShouldSerializeBOMLevelValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductAssemblyIDValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeComponentIDValue { get; set; } = true;
 
-		public bool ShouldSerializeProductAssemblyID()
-		{
-			return this.ShouldSerializeProductAssemblyIDValue;
-		}
+                public bool ShouldSerializeComponentID()
+                {
+                        return this.ShouldSerializeComponentIDValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeEndDateValue { get; set; } = true;
 
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
-		}
+                public bool ShouldSerializeEndDate()
+                {
+                        return this.ShouldSerializeEndDateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeUnitMeasureCode()
-		{
-			return this.ShouldSerializeUnitMeasureCodeValue;
-		}
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeBillOfMaterialsIDValue = false;
-			this.ShouldSerializeBOMLevelValue = false;
-			this.ShouldSerializeComponentIDValue = false;
-			this.ShouldSerializeEndDateValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializePerAssemblyQtyValue = false;
-			this.ShouldSerializeProductAssemblyIDValue = false;
-			this.ShouldSerializeStartDateValue = false;
-			this.ShouldSerializeUnitMeasureCodeValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializePerAssemblyQtyValue { get; set; } = true;
+
+                public bool ShouldSerializePerAssemblyQty()
+                {
+                        return this.ShouldSerializePerAssemblyQtyValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProductAssemblyIDValue { get; set; } = true;
+
+                public bool ShouldSerializeProductAssemblyID()
+                {
+                        return this.ShouldSerializeProductAssemblyIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeStartDateValue { get; set; } = true;
+
+                public bool ShouldSerializeStartDate()
+                {
+                        return this.ShouldSerializeStartDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
+
+                public bool ShouldSerializeUnitMeasureCode()
+                {
+                        return this.ShouldSerializeUnitMeasureCodeValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeBillOfMaterialsIDValue = false;
+                        this.ShouldSerializeBOMLevelValue = false;
+                        this.ShouldSerializeComponentIDValue = false;
+                        this.ShouldSerializeEndDateValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializePerAssemblyQtyValue = false;
+                        this.ShouldSerializeProductAssemblyIDValue = false;
+                        this.ShouldSerializeStartDateValue = false;
+                        this.ShouldSerializeUnitMeasureCodeValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3940dc92d8acacc05adb3dd185e1a02c</Hash>
+    <Hash>ded30e560aa76d368adeb33ca64c77c1</Hash>
 </Codenesium>*/

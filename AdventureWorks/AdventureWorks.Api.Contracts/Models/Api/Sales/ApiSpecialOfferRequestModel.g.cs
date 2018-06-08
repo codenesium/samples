@@ -3,198 +3,200 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSpecialOfferRequestModel: AbstractApiRequestModel
-	{
-		public ApiSpecialOfferRequestModel() : base()
-		{}
+        public partial class ApiSpecialOfferRequestModel: AbstractApiRequestModel
+        {
+                public ApiSpecialOfferRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string category,
-			string description,
-			decimal discountPct,
-			DateTime endDate,
-			Nullable<int> maxQty,
-			int minQty,
-			DateTime modifiedDate,
-			Guid rowguid,
-			DateTime startDate,
-			string type)
-		{
-			this.Category = category;
-			this.Description = description;
-			this.DiscountPct = discountPct.ToDecimal();
-			this.EndDate = endDate.ToDateTime();
-			this.MaxQty = maxQty.ToNullableInt();
-			this.MinQty = minQty.ToInt();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Rowguid = rowguid.ToGuid();
-			this.StartDate = startDate.ToDateTime();
-			this.Type = type;
-		}
+                public void SetProperties(
+                        string category,
+                        string description,
+                        decimal discountPct,
+                        DateTime endDate,
+                        Nullable<int> maxQty,
+                        int minQty,
+                        DateTime modifiedDate,
+                        Guid rowguid,
+                        DateTime startDate,
+                        string type)
+                {
+                        this.Category = category;
+                        this.Description = description;
+                        this.DiscountPct = discountPct;
+                        this.EndDate = endDate;
+                        this.MaxQty = maxQty;
+                        this.MinQty = minQty;
+                        this.ModifiedDate = modifiedDate;
+                        this.Rowguid = rowguid;
+                        this.StartDate = startDate;
+                        this.Type = type;
+                }
 
-		private string category;
+                private string category;
 
-		[Required]
-		public string Category
-		{
-			get
-			{
-				return this.category;
-			}
+                [Required]
+                public string Category
+                {
+                        get
+                        {
+                                return this.category;
+                        }
 
-			set
-			{
-				this.category = value;
-			}
-		}
+                        set
+                        {
+                                this.category = value;
+                        }
+                }
 
-		private string description;
+                private string description;
 
-		[Required]
-		public string Description
-		{
-			get
-			{
-				return this.description;
-			}
+                [Required]
+                public string Description
+                {
+                        get
+                        {
+                                return this.description;
+                        }
 
-			set
-			{
-				this.description = value;
-			}
-		}
+                        set
+                        {
+                                this.description = value;
+                        }
+                }
 
-		private decimal discountPct;
+                private decimal discountPct;
 
-		[Required]
-		public decimal DiscountPct
-		{
-			get
-			{
-				return this.discountPct;
-			}
+                [Required]
+                public decimal DiscountPct
+                {
+                        get
+                        {
+                                return this.discountPct;
+                        }
 
-			set
-			{
-				this.discountPct = value;
-			}
-		}
+                        set
+                        {
+                                this.discountPct = value;
+                        }
+                }
 
-		private DateTime endDate;
+                private DateTime endDate;
 
-		[Required]
-		public DateTime EndDate
-		{
-			get
-			{
-				return this.endDate;
-			}
+                [Required]
+                public DateTime EndDate
+                {
+                        get
+                        {
+                                return this.endDate;
+                        }
 
-			set
-			{
-				this.endDate = value;
-			}
-		}
+                        set
+                        {
+                                this.endDate = value;
+                        }
+                }
 
-		private Nullable<int> maxQty;
+                private Nullable<int> maxQty;
 
-		public Nullable<int> MaxQty
-		{
-			get
-			{
-				return this.maxQty.IsEmptyOrZeroOrNull() ? null : this.maxQty;
-			}
+                public Nullable<int> MaxQty
+                {
+                        get
+                        {
+                                return this.maxQty.IsEmptyOrZeroOrNull() ? null : this.maxQty;
+                        }
 
-			set
-			{
-				this.maxQty = value;
-			}
-		}
+                        set
+                        {
+                                this.maxQty = value;
+                        }
+                }
 
-		private int minQty;
+                private int minQty;
 
-		[Required]
-		public int MinQty
-		{
-			get
-			{
-				return this.minQty;
-			}
+                [Required]
+                public int MinQty
+                {
+                        get
+                        {
+                                return this.minQty;
+                        }
 
-			set
-			{
-				this.minQty = value;
-			}
-		}
+                        set
+                        {
+                                this.minQty = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
 
-		private DateTime startDate;
+                private DateTime startDate;
 
-		[Required]
-		public DateTime StartDate
-		{
-			get
-			{
-				return this.startDate;
-			}
+                [Required]
+                public DateTime StartDate
+                {
+                        get
+                        {
+                                return this.startDate;
+                        }
 
-			set
-			{
-				this.startDate = value;
-			}
-		}
+                        set
+                        {
+                                this.startDate = value;
+                        }
+                }
 
-		private string type;
+                private string type;
 
-		[Required]
-		public string Type
-		{
-			get
-			{
-				return this.type;
-			}
+                [Required]
+                public string Type
+                {
+                        get
+                        {
+                                return this.type;
+                        }
 
-			set
-			{
-				this.type = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.type = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>143fcf7b101146991645a9e0c3d53810</Hash>
+    <Hash>a4e296e0b85bc78315c3eaf510d0ea2d</Hash>
 </Codenesium>*/

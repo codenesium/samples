@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IPasswordRepository
-	{
-		Task<Password> Create(Password item);
+        public interface IPasswordRepository
+        {
+                Task<Password> Create(Password item);
 
-		Task Update(Password item);
+                Task Update(Password item);
 
-		Task Delete(int businessEntityID);
+                Task Delete(int businessEntityID);
 
-		Task<Password> Get(int businessEntityID);
+                Task<Password> Get(int businessEntityID);
 
-		Task<List<Password>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<Password>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>4475df4a3f6f1add402b6e42e3154084</Hash>
+    <Hash>fa44494c80159f395a132b80ee25da0f</Hash>
 </Codenesium>*/

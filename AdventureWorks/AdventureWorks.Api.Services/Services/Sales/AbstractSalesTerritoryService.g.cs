@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractSalesTerritoryService: AbstractService
-	{
-		private ISalesTerritoryRepository salesTerritoryRepository;
-		private IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator;
-		private IBOLSalesTerritoryMapper bolSalesTerritoryMapper;
-		private IDALSalesTerritoryMapper dalSalesTerritoryMapper;
-		private ILogger logger;
+        public abstract class AbstractSalesTerritoryService: AbstractService
+        {
+                private ISalesTerritoryRepository salesTerritoryRepository;
 
-		public AbstractSalesTerritoryService(
-			ILogger logger,
-			ISalesTerritoryRepository salesTerritoryRepository,
-			IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
-			IBOLSalesTerritoryMapper bolsalesTerritoryMapper,
-			IDALSalesTerritoryMapper dalsalesTerritoryMapper)
-			: base()
+                private IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator;
 
-		{
-			this.salesTerritoryRepository = salesTerritoryRepository;
-			this.salesTerritoryModelValidator = salesTerritoryModelValidator;
-			this.bolSalesTerritoryMapper = bolsalesTerritoryMapper;
-			this.dalSalesTerritoryMapper = dalsalesTerritoryMapper;
-			this.logger = logger;
-		}
+                private IBOLSalesTerritoryMapper bolSalesTerritoryMapper;
 
-		public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.salesTerritoryRepository.All(skip, take, orderClause);
+                private IDALSalesTerritoryMapper dalSalesTerritoryMapper;
 
-			return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiSalesTerritoryResponseModel> Get(int territoryID)
-		{
-			var record = await salesTerritoryRepository.Get(territoryID);
+                public AbstractSalesTerritoryService(
+                        ILogger logger,
+                        ISalesTerritoryRepository salesTerritoryRepository,
+                        IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
+                        IBOLSalesTerritoryMapper bolsalesTerritoryMapper,
+                        IDALSalesTerritoryMapper dalsalesTerritoryMapper)
+                        : base()
 
-			return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
-		}
+                {
+                        this.salesTerritoryRepository = salesTerritoryRepository;
+                        this.salesTerritoryModelValidator = salesTerritoryModelValidator;
+                        this.bolSalesTerritoryMapper = bolsalesTerritoryMapper;
+                        this.dalSalesTerritoryMapper = dalsalesTerritoryMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
-			ApiSalesTerritoryRequestModel model)
-		{
-			CreateResponse<ApiSalesTerritoryResponseModel> response = new CreateResponse<ApiSalesTerritoryResponseModel>(await this.salesTerritoryModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolSalesTerritoryMapper.MapModelToBO(default (int), model);
-				var record = await this.salesTerritoryRepository.Create(this.dalSalesTerritoryMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.salesTerritoryRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int territoryID,
-			ApiSalesTerritoryRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.salesTerritoryModelValidator.ValidateUpdateAsync(territoryID, model));
+                public virtual async Task<ApiSalesTerritoryResponseModel> Get(int territoryID)
+                {
+                        var record = await this.salesTerritoryRepository.Get(territoryID);
 
-			if (response.Success)
-			{
-				var bo = this.bolSalesTerritoryMapper.MapModelToBO(territoryID, model);
-				await this.salesTerritoryRepository.Update(this.dalSalesTerritoryMapper.MapBOToEF(bo));
-			}
+                        return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
+                        ApiSalesTerritoryRequestModel model)
+                {
+                        CreateResponse<ApiSalesTerritoryResponseModel> response = new CreateResponse<ApiSalesTerritoryResponseModel>(await this.salesTerritoryModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolSalesTerritoryMapper.MapModelToBO(default (int), model);
+                                var record = await this.salesTerritoryRepository.Create(this.dalSalesTerritoryMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int territoryID)
-		{
-			ActionResponse response = new ActionResponse(await this.salesTerritoryModelValidator.ValidateDeleteAsync(territoryID));
+                                response.SetRecord(this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.salesTerritoryRepository.Delete(territoryID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiSalesTerritoryResponseModel> GetName(string name)
-		{
-			SalesTerritory record = await this.salesTerritoryRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        int territoryID,
+                        ApiSalesTerritoryRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.salesTerritoryModelValidator.ValidateUpdateAsync(territoryID, model));
 
-			return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolSalesTerritoryMapper.MapModelToBO(territoryID, model);
+                                await this.salesTerritoryRepository.Update(this.dalSalesTerritoryMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int territoryID)
+                {
+                        ActionResponse response = new ActionResponse(await this.salesTerritoryModelValidator.ValidateDeleteAsync(territoryID));
+
+                        if (response.Success)
+                        {
+                                await this.salesTerritoryRepository.Delete(territoryID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiSalesTerritoryResponseModel> GetName(string name)
+                {
+                        SalesTerritory record = await this.salesTerritoryRepository.GetName(name);
+
+                        return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ca5d5165fca866b3c7a988ea225c77fb</Hash>
+    <Hash>ac75c52c3edb350c5fbfb8aa5b2c36ab</Hash>
 </Codenesium>*/

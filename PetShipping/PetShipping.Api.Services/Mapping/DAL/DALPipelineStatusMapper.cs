@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public class DALPipelineStatusMapper: AbstractDALPipelineStatusMapper, IDALPipelineStatusMapper
-	{
-		public DALPipelineStatusMapper()
-		{}
-	}
+        public class DALPipelineStatusMapper: DALAbstractPipelineStatusMapper, IDALPipelineStatusMapper
+        {
+                public DALPipelineStatusMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>42b84a11a36da0b43c7a1f18fac93eba</Hash>
+    <Hash>cd7d1bf96c286cf80ae9c5f4e0ddf612</Hash>
 </Codenesium>*/

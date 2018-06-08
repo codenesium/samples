@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/productModelIllustrations")]
-	[ApiVersion("1.0")]
-	public class ProductModelIllustrationController: AbstractProductModelIllustrationController
-	{
-		public ProductModelIllustrationController(
-			ServiceSettings settings,
-			ILogger<ProductModelIllustrationController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IProductModelIllustrationService productModelIllustrationService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       productModelIllustrationService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/productModelIllustrations")]
+        [ApiVersion("1.0")]
+        public class ProductModelIllustrationController: AbstractProductModelIllustrationController
+        {
+                public ProductModelIllustrationController(
+                        ServiceSettings settings,
+                        ILogger<ProductModelIllustrationController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IProductModelIllustrationService productModelIllustrationService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               productModelIllustrationService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d87fc57c5e8ba488bb5d7151d95b156b</Hash>
+    <Hash>215450fd96c8f392989deb0f92f9f676</Hash>
 </Codenesium>*/

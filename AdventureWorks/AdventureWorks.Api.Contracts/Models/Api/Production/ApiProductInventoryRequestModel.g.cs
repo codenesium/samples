@@ -3,127 +3,129 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductInventoryRequestModel: AbstractApiRequestModel
-	{
-		public ApiProductInventoryRequestModel() : base()
-		{}
+        public partial class ApiProductInventoryRequestModel: AbstractApiRequestModel
+        {
+                public ApiProductInventoryRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int bin,
-			short locationID,
-			DateTime modifiedDate,
-			short quantity,
-			Guid rowguid,
-			string shelf)
-		{
-			this.Bin = bin.ToInt();
-			this.LocationID = locationID;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Quantity = quantity;
-			this.Rowguid = rowguid.ToGuid();
-			this.Shelf = shelf;
-		}
+                public void SetProperties(
+                        int bin,
+                        short locationID,
+                        DateTime modifiedDate,
+                        short quantity,
+                        Guid rowguid,
+                        string shelf)
+                {
+                        this.Bin = bin;
+                        this.LocationID = locationID;
+                        this.ModifiedDate = modifiedDate;
+                        this.Quantity = quantity;
+                        this.Rowguid = rowguid;
+                        this.Shelf = shelf;
+                }
 
-		private int bin;
+                private int bin;
 
-		[Required]
-		public int Bin
-		{
-			get
-			{
-				return this.bin;
-			}
+                [Required]
+                public int Bin
+                {
+                        get
+                        {
+                                return this.bin;
+                        }
 
-			set
-			{
-				this.bin = value;
-			}
-		}
+                        set
+                        {
+                                this.bin = value;
+                        }
+                }
 
-		private short locationID;
+                private short locationID;
 
-		[Required]
-		public short LocationID
-		{
-			get
-			{
-				return this.locationID;
-			}
+                [Required]
+                public short LocationID
+                {
+                        get
+                        {
+                                return this.locationID;
+                        }
 
-			set
-			{
-				this.locationID = value;
-			}
-		}
+                        set
+                        {
+                                this.locationID = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private short quantity;
+                private short quantity;
 
-		[Required]
-		public short Quantity
-		{
-			get
-			{
-				return this.quantity;
-			}
+                [Required]
+                public short Quantity
+                {
+                        get
+                        {
+                                return this.quantity;
+                        }
 
-			set
-			{
-				this.quantity = value;
-			}
-		}
+                        set
+                        {
+                                this.quantity = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
 
-		private string shelf;
+                private string shelf;
 
-		[Required]
-		public string Shelf
-		{
-			get
-			{
-				return this.shelf;
-			}
+                [Required]
+                public string Shelf
+                {
+                        get
+                        {
+                                return this.shelf;
+                        }
 
-			set
-			{
-				this.shelf = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.shelf = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>901a3ae5bdcec905acb917dcec8a611d</Hash>
+    <Hash>3ff5494a452781ec4bb2efaf54e4e55c</Hash>
 </Codenesium>*/

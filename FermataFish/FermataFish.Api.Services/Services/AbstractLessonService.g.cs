@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractLessonService: AbstractService
-	{
-		private ILessonRepository lessonRepository;
-		private IApiLessonRequestModelValidator lessonModelValidator;
-		private IBOLLessonMapper bolLessonMapper;
-		private IDALLessonMapper dalLessonMapper;
-		private ILogger logger;
+        public abstract class AbstractLessonService: AbstractService
+        {
+                private ILessonRepository lessonRepository;
 
-		public AbstractLessonService(
-			ILogger logger,
-			ILessonRepository lessonRepository,
-			IApiLessonRequestModelValidator lessonModelValidator,
-			IBOLLessonMapper bollessonMapper,
-			IDALLessonMapper dallessonMapper)
-			: base()
+                private IApiLessonRequestModelValidator lessonModelValidator;
 
-		{
-			this.lessonRepository = lessonRepository;
-			this.lessonModelValidator = lessonModelValidator;
-			this.bolLessonMapper = bollessonMapper;
-			this.dalLessonMapper = dallessonMapper;
-			this.logger = logger;
-		}
+                private IBOLLessonMapper bolLessonMapper;
 
-		public virtual async Task<List<ApiLessonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.lessonRepository.All(skip, take, orderClause);
+                private IDALLessonMapper dalLessonMapper;
 
-			return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiLessonResponseModel> Get(int id)
-		{
-			var record = await lessonRepository.Get(id);
+                public AbstractLessonService(
+                        ILogger logger,
+                        ILessonRepository lessonRepository,
+                        IApiLessonRequestModelValidator lessonModelValidator,
+                        IBOLLessonMapper bollessonMapper,
+                        IDALLessonMapper dallessonMapper)
+                        : base()
 
-			return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(record));
-		}
+                {
+                        this.lessonRepository = lessonRepository;
+                        this.lessonModelValidator = lessonModelValidator;
+                        this.bolLessonMapper = bollessonMapper;
+                        this.dalLessonMapper = dallessonMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiLessonResponseModel>> Create(
-			ApiLessonRequestModel model)
-		{
-			CreateResponse<ApiLessonResponseModel> response = new CreateResponse<ApiLessonResponseModel>(await this.lessonModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolLessonMapper.MapModelToBO(default (int), model);
-				var record = await this.lessonRepository.Create(this.dalLessonMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiLessonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.lessonRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiLessonRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.lessonModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiLessonResponseModel> Get(int id)
+                {
+                        var record = await this.lessonRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolLessonMapper.MapModelToBO(id, model);
-				await this.lessonRepository.Update(this.dalLessonMapper.MapBOToEF(bo));
-			}
+                        return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiLessonResponseModel>> Create(
+                        ApiLessonRequestModel model)
+                {
+                        CreateResponse<ApiLessonResponseModel> response = new CreateResponse<ApiLessonResponseModel>(await this.lessonModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolLessonMapper.MapModelToBO(default (int), model);
+                                var record = await this.lessonRepository.Create(this.dalLessonMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.lessonModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.lessonRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiLessonRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.lessonModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolLessonMapper.MapModelToBO(id, model);
+                                await this.lessonRepository.Update(this.dalLessonMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.lessonModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.lessonRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>36bebacea0676800e98e8f08146840e3</Hash>
+    <Hash>a3595b8510739f01ac789d4891a7b447</Hash>
 </Codenesium>*/

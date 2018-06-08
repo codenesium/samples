@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALSalesReasonMapper
-	{
-		SalesReason MapBOToEF(
-			BOSalesReason bo);
+        public interface IDALSalesReasonMapper
+        {
+                SalesReason MapBOToEF(
+                        BOSalesReason bo);
 
-		BOSalesReason MapEFToBO(
-			SalesReason efSalesReason);
+                BOSalesReason MapEFToBO(
+                        SalesReason efSalesReason);
 
-		List<BOSalesReason> MapEFToBO(
-			List<SalesReason> records);
-	}
+                List<BOSalesReason> MapEFToBO(
+                        List<SalesReason> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>dca48f7630d94151e320db6c037a2b9a</Hash>
+    <Hash>97526cebff131811273e8a681f45db94</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class HandlerService: AbstractHandlerService, IHandlerService
-	{
-		public HandlerService(
-			ILogger<HandlerRepository> logger,
-			IHandlerRepository handlerRepository,
-			IApiHandlerRequestModelValidator handlerModelValidator,
-			IBOLHandlerMapper BOLhandlerMapper,
-			IDALHandlerMapper DALhandlerMapper)
-			: base(logger, handlerRepository,
-			       handlerModelValidator,
-			       BOLhandlerMapper,
-			       DALhandlerMapper)
-		{}
-	}
+        public class HandlerService: AbstractHandlerService, IHandlerService
+        {
+                public HandlerService(
+                        ILogger<HandlerRepository> logger,
+                        IHandlerRepository handlerRepository,
+                        IApiHandlerRequestModelValidator handlerModelValidator,
+                        IBOLHandlerMapper bolhandlerMapper,
+                        IDALHandlerMapper dalhandlerMapper)
+                        : base(logger,
+                               handlerRepository,
+                               handlerModelValidator,
+                               bolhandlerMapper,
+                               dalhandlerMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>1db9ba86dfdec823ac75b37527236588</Hash>
+    <Hash>bf9692fc14aa118454afe67ed9abd902</Hash>
 </Codenesium>*/

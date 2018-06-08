@@ -4,60 +4,64 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace FileServiceNS.Api.Contracts
 {
-	public partial class ApiBucketResponseModel: AbstractApiResponseModel
-	{
-		public ApiBucketResponseModel() : base()
-		{}
+        public partial class ApiBucketResponseModel: AbstractApiResponseModel
+        {
+                public ApiBucketResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Guid externalId,
-			int id,
-			string name)
-		{
-			this.ExternalId = externalId.ToGuid();
-			this.Id = id.ToInt();
-			this.Name = name;
-		}
+                public void SetProperties(
+                        Guid externalId,
+                        int id,
+                        string name)
+                {
+                        this.ExternalId = externalId;
+                        this.Id = id;
+                        this.Name = name;
+                }
 
-		public Guid ExternalId { get; private set; }
-		public int Id { get; private set; }
-		public string Name { get; private set; }
+                public Guid ExternalId { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeExternalIdValue { get; set; } = false;
+                public int Id { get; private set; }
 
-		public bool ShouldSerializeExternalId()
-		{
-			return this.ShouldSerializeExternalIdValue;
-		}
+                public string Name { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = false;
+                [JsonIgnore]
+                public bool ShouldSerializeExternalIdValue { get; set; } = false;
 
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+                public bool ShouldSerializeExternalId()
+                {
+                        return this.ShouldSerializeExternalIdValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = false;
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = false;
 
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeExternalIdValue = false;
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeNameValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = false;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeExternalIdValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>94374d77a5f8492218b7ecefaa5dee9b</Hash>
+    <Hash>2feb3c418823307f0e85f73a6c02dd06</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class WorkOrderRoutingService: AbstractWorkOrderRoutingService, IWorkOrderRoutingService
-	{
-		public WorkOrderRoutingService(
-			ILogger<WorkOrderRoutingRepository> logger,
-			IWorkOrderRoutingRepository workOrderRoutingRepository,
-			IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
-			IBOLWorkOrderRoutingMapper BOLworkOrderRoutingMapper,
-			IDALWorkOrderRoutingMapper DALworkOrderRoutingMapper)
-			: base(logger, workOrderRoutingRepository,
-			       workOrderRoutingModelValidator,
-			       BOLworkOrderRoutingMapper,
-			       DALworkOrderRoutingMapper)
-		{}
-	}
+        public class WorkOrderRoutingService: AbstractWorkOrderRoutingService, IWorkOrderRoutingService
+        {
+                public WorkOrderRoutingService(
+                        ILogger<WorkOrderRoutingRepository> logger,
+                        IWorkOrderRoutingRepository workOrderRoutingRepository,
+                        IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
+                        IBOLWorkOrderRoutingMapper bolworkOrderRoutingMapper,
+                        IDALWorkOrderRoutingMapper dalworkOrderRoutingMapper)
+                        : base(logger,
+                               workOrderRoutingRepository,
+                               workOrderRoutingModelValidator,
+                               bolworkOrderRoutingMapper,
+                               dalworkOrderRoutingMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5b8b5e4671e7d2712a85d11f784c46a7</Hash>
+    <Hash>dd737efabddb9d1ffb53a79f0816e029</Hash>
 </Codenesium>*/

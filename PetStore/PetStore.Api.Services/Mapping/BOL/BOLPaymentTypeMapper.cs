@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+
 namespace PetStoreNS.Api.Services
 {
-	public class BOLPaymentTypeMapper: BOLAbstractPaymentTypeMapper, IBOLPaymentTypeMapper
-	{
-		public BOLPaymentTypeMapper()
-		{}
-	}
+        public class BOLPaymentTypeMapper: BOLAbstractPaymentTypeMapper, IBOLPaymentTypeMapper
+        {
+                public BOLPaymentTypeMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7f510806c6f54c4f3f285d639e4ba9f3</Hash>
+    <Hash>c0a94fd00d05ef40c271cdea89a7f460</Hash>
 </Codenesium>*/

@@ -3,32 +3,37 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public partial class BOSalesPersonQuotaHistory: AbstractBusinessObject
-	{
-		public BOSalesPersonQuotaHistory() : base()
-		{}
+        public partial class BOSalesPersonQuotaHistory: AbstractBusinessObject
+        {
+                public BOSalesPersonQuotaHistory() : base()
+                {
+                }
 
-		public void SetProperties(int businessEntityID,
-		                          DateTime modifiedDate,
-		                          DateTime quotaDate,
-		                          Guid rowguid,
-		                          decimal salesQuota)
-		{
-			this.BusinessEntityID = businessEntityID.ToInt();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.QuotaDate = quotaDate.ToDateTime();
-			this.Rowguid = rowguid.ToGuid();
-			this.SalesQuota = salesQuota.ToDecimal();
-		}
+                public void SetProperties(int businessEntityID,
+                                          DateTime modifiedDate,
+                                          DateTime quotaDate,
+                                          Guid rowguid,
+                                          decimal salesQuota)
+                {
+                        this.BusinessEntityID = businessEntityID;
+                        this.ModifiedDate = modifiedDate;
+                        this.QuotaDate = quotaDate;
+                        this.Rowguid = rowguid;
+                        this.SalesQuota = salesQuota;
+                }
 
-		public int BusinessEntityID { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public DateTime QuotaDate { get; private set; }
-		public Guid Rowguid { get; private set; }
-		public decimal SalesQuota { get; private set; }
-	}
+                public int BusinessEntityID { get; private set; }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public DateTime QuotaDate { get; private set; }
+
+                public Guid Rowguid { get; private set; }
+
+                public decimal SalesQuota { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4abbdf842d57c1ce086f438b4c89b214</Hash>
+    <Hash>ce7486badbbcd89a1f67114774effb12</Hash>
 </Codenesium>*/

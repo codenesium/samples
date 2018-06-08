@@ -12,87 +12,93 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-	public abstract class AbstractPenService: AbstractService
-	{
-		private IPenRepository penRepository;
-		private IApiPenRequestModelValidator penModelValidator;
-		private IBOLPenMapper bolPenMapper;
-		private IDALPenMapper dalPenMapper;
-		private ILogger logger;
+        public abstract class AbstractPenService: AbstractService
+        {
+                private IPenRepository penRepository;
 
-		public AbstractPenService(
-			ILogger logger,
-			IPenRepository penRepository,
-			IApiPenRequestModelValidator penModelValidator,
-			IBOLPenMapper bolpenMapper,
-			IDALPenMapper dalpenMapper)
-			: base()
+                private IApiPenRequestModelValidator penModelValidator;
 
-		{
-			this.penRepository = penRepository;
-			this.penModelValidator = penModelValidator;
-			this.bolPenMapper = bolpenMapper;
-			this.dalPenMapper = dalpenMapper;
-			this.logger = logger;
-		}
+                private IBOLPenMapper bolPenMapper;
 
-		public virtual async Task<List<ApiPenResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.penRepository.All(skip, take, orderClause);
+                private IDALPenMapper dalPenMapper;
 
-			return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPenResponseModel> Get(int id)
-		{
-			var record = await penRepository.Get(id);
+                public AbstractPenService(
+                        ILogger logger,
+                        IPenRepository penRepository,
+                        IApiPenRequestModelValidator penModelValidator,
+                        IBOLPenMapper bolpenMapper,
+                        IDALPenMapper dalpenMapper)
+                        : base()
 
-			return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record));
-		}
+                {
+                        this.penRepository = penRepository;
+                        this.penModelValidator = penModelValidator;
+                        this.bolPenMapper = bolpenMapper;
+                        this.dalPenMapper = dalpenMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPenResponseModel>> Create(
-			ApiPenRequestModel model)
-		{
-			CreateResponse<ApiPenResponseModel> response = new CreateResponse<ApiPenResponseModel>(await this.penModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPenMapper.MapModelToBO(default (int), model);
-				var record = await this.penRepository.Create(this.dalPenMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPenResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.penRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiPenRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiPenResponseModel> Get(int id)
+                {
+                        var record = await this.penRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolPenMapper.MapModelToBO(id, model);
-				await this.penRepository.Update(this.dalPenMapper.MapBOToEF(bo));
-			}
+                        return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPenResponseModel>> Create(
+                        ApiPenRequestModel model)
+                {
+                        CreateResponse<ApiPenResponseModel> response = new CreateResponse<ApiPenResponseModel>(await this.penModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPenMapper.MapModelToBO(default (int), model);
+                                var record = await this.penRepository.Create(this.dalPenMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.penRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiPenRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPenMapper.MapModelToBO(id, model);
+                                await this.penRepository.Update(this.dalPenMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.penRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>48ef568a8984b3ede6229d371dc61987</Hash>
+    <Hash>de4d915b2ea3b8584ef144838f8294b8</Hash>
 </Codenesium>*/

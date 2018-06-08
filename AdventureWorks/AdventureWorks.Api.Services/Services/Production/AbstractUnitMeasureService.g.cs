@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractUnitMeasureService: AbstractService
-	{
-		private IUnitMeasureRepository unitMeasureRepository;
-		private IApiUnitMeasureRequestModelValidator unitMeasureModelValidator;
-		private IBOLUnitMeasureMapper bolUnitMeasureMapper;
-		private IDALUnitMeasureMapper dalUnitMeasureMapper;
-		private ILogger logger;
+        public abstract class AbstractUnitMeasureService: AbstractService
+        {
+                private IUnitMeasureRepository unitMeasureRepository;
 
-		public AbstractUnitMeasureService(
-			ILogger logger,
-			IUnitMeasureRepository unitMeasureRepository,
-			IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
-			IBOLUnitMeasureMapper bolunitMeasureMapper,
-			IDALUnitMeasureMapper dalunitMeasureMapper)
-			: base()
+                private IApiUnitMeasureRequestModelValidator unitMeasureModelValidator;
 
-		{
-			this.unitMeasureRepository = unitMeasureRepository;
-			this.unitMeasureModelValidator = unitMeasureModelValidator;
-			this.bolUnitMeasureMapper = bolunitMeasureMapper;
-			this.dalUnitMeasureMapper = dalunitMeasureMapper;
-			this.logger = logger;
-		}
+                private IBOLUnitMeasureMapper bolUnitMeasureMapper;
 
-		public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.unitMeasureRepository.All(skip, take, orderClause);
+                private IDALUnitMeasureMapper dalUnitMeasureMapper;
 
-			return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode)
-		{
-			var record = await unitMeasureRepository.Get(unitMeasureCode);
+                public AbstractUnitMeasureService(
+                        ILogger logger,
+                        IUnitMeasureRepository unitMeasureRepository,
+                        IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
+                        IBOLUnitMeasureMapper bolunitMeasureMapper,
+                        IDALUnitMeasureMapper dalunitMeasureMapper)
+                        : base()
 
-			return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
-		}
+                {
+                        this.unitMeasureRepository = unitMeasureRepository;
+                        this.unitMeasureModelValidator = unitMeasureModelValidator;
+                        this.bolUnitMeasureMapper = bolunitMeasureMapper;
+                        this.dalUnitMeasureMapper = dalunitMeasureMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
-			ApiUnitMeasureRequestModel model)
-		{
-			CreateResponse<ApiUnitMeasureResponseModel> response = new CreateResponse<ApiUnitMeasureResponseModel>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolUnitMeasureMapper.MapModelToBO(default (string), model);
-				var record = await this.unitMeasureRepository.Create(this.dalUnitMeasureMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.unitMeasureRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			string unitMeasureCode,
-			ApiUnitMeasureRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model));
+                public virtual async Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode)
+                {
+                        var record = await this.unitMeasureRepository.Get(unitMeasureCode);
 
-			if (response.Success)
-			{
-				var bo = this.bolUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
-				await this.unitMeasureRepository.Update(this.dalUnitMeasureMapper.MapBOToEF(bo));
-			}
+                        return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
+                        ApiUnitMeasureRequestModel model)
+                {
+                        CreateResponse<ApiUnitMeasureResponseModel> response = new CreateResponse<ApiUnitMeasureResponseModel>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolUnitMeasureMapper.MapModelToBO(default (string), model);
+                                var record = await this.unitMeasureRepository.Create(this.dalUnitMeasureMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			string unitMeasureCode)
-		{
-			ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateDeleteAsync(unitMeasureCode));
+                                response.SetRecord(this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.unitMeasureRepository.Delete(unitMeasureCode);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiUnitMeasureResponseModel> GetName(string name)
-		{
-			UnitMeasure record = await this.unitMeasureRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        string unitMeasureCode,
+                        ApiUnitMeasureRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model));
 
-			return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
+                                await this.unitMeasureRepository.Update(this.dalUnitMeasureMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        string unitMeasureCode)
+                {
+                        ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateDeleteAsync(unitMeasureCode));
+
+                        if (response.Success)
+                        {
+                                await this.unitMeasureRepository.Delete(unitMeasureCode);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiUnitMeasureResponseModel> GetName(string name)
+                {
+                        UnitMeasure record = await this.unitMeasureRepository.GetName(name);
+
+                        return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3bce85db791dd979165f56eada990e99</Hash>
+    <Hash>42fefd0a630a04be9e981d63df75cc47</Hash>
 </Codenesium>*/

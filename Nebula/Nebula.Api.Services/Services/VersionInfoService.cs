@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
-	{
-		public VersionInfoService(
-			ILogger<VersionInfoRepository> logger,
-			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
-			IBOLVersionInfoMapper BOLversionInfoMapper,
-			IDALVersionInfoMapper DALversionInfoMapper)
-			: base(logger, versionInfoRepository,
-			       versionInfoModelValidator,
-			       BOLversionInfoMapper,
-			       DALversionInfoMapper)
-		{}
-	}
+        public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
+        {
+                public VersionInfoService(
+                        ILogger<VersionInfoRepository> logger,
+                        IVersionInfoRepository versionInfoRepository,
+                        IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+                        IBOLVersionInfoMapper bolversionInfoMapper,
+                        IDALVersionInfoMapper dalversionInfoMapper)
+                        : base(logger,
+                               versionInfoRepository,
+                               versionInfoModelValidator,
+                               bolversionInfoMapper,
+                               dalversionInfoMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>df574b09b158f172f77e681c46218759</Hash>
+    <Hash>14b3fca08706988637127efd42c03806</Hash>
 </Codenesium>*/

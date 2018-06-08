@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALUnitMeasureMapper
-	{
-		UnitMeasure MapBOToEF(
-			BOUnitMeasure bo);
+        public interface IDALUnitMeasureMapper
+        {
+                UnitMeasure MapBOToEF(
+                        BOUnitMeasure bo);
 
-		BOUnitMeasure MapEFToBO(
-			UnitMeasure efUnitMeasure);
+                BOUnitMeasure MapEFToBO(
+                        UnitMeasure efUnitMeasure);
 
-		List<BOUnitMeasure> MapEFToBO(
-			List<UnitMeasure> records);
-	}
+                List<BOUnitMeasure> MapEFToBO(
+                        List<UnitMeasure> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>c25bcd91a720bb13366ef5934f883cdb</Hash>
+    <Hash>aa4c1de507c81d036938dd975cba61ef</Hash>
 </Codenesium>*/

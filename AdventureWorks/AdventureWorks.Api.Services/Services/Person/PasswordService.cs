@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class PasswordService: AbstractPasswordService, IPasswordService
-	{
-		public PasswordService(
-			ILogger<PasswordRepository> logger,
-			IPasswordRepository passwordRepository,
-			IApiPasswordRequestModelValidator passwordModelValidator,
-			IBOLPasswordMapper BOLpasswordMapper,
-			IDALPasswordMapper DALpasswordMapper)
-			: base(logger, passwordRepository,
-			       passwordModelValidator,
-			       BOLpasswordMapper,
-			       DALpasswordMapper)
-		{}
-	}
+        public class PasswordService: AbstractPasswordService, IPasswordService
+        {
+                public PasswordService(
+                        ILogger<PasswordRepository> logger,
+                        IPasswordRepository passwordRepository,
+                        IApiPasswordRequestModelValidator passwordModelValidator,
+                        IBOLPasswordMapper bolpasswordMapper,
+                        IDALPasswordMapper dalpasswordMapper)
+                        : base(logger,
+                               passwordRepository,
+                               passwordModelValidator,
+                               bolpasswordMapper,
+                               dalpasswordMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ef5e6215a7ad1aff9302fa84648b0094</Hash>
+    <Hash>94b984a6965c039a84433dea859f876e</Hash>
 </Codenesium>*/

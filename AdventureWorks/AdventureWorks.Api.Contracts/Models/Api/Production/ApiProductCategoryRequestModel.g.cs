@@ -3,73 +3,75 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductCategoryRequestModel: AbstractApiRequestModel
-	{
-		public ApiProductCategoryRequestModel() : base()
-		{}
+        public partial class ApiProductCategoryRequestModel: AbstractApiRequestModel
+        {
+                public ApiProductCategoryRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			string name,
-			Guid rowguid)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name;
-			this.Rowguid = rowguid.ToGuid();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        string name,
+                        Guid rowguid)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                        this.Rowguid = rowguid;
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private string name;
+                private string name;
 
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
+                [Required]
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
 
-			set
-			{
-				this.name = value;
-			}
-		}
+                        set
+                        {
+                                this.name = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>24a4c7e492f9a2d6fa74879ac4d1a71d</Hash>
+    <Hash>ed3c0ffb6f08dd8386a6cc173d26ee59</Hash>
 </Codenesium>*/

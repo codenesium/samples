@@ -12,28 +12,28 @@ using NebulaNS.Api.Services;
 
 namespace NebulaNS.Api.Web
 {
-	[Route("api/organizations")]
-	[ApiVersion("1.0")]
-	public class OrganizationController: AbstractOrganizationController
-	{
-		public OrganizationController(
-			ServiceSettings settings,
-			ILogger<OrganizationController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IOrganizationService organizationService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       organizationService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/organizations")]
+        [ApiVersion("1.0")]
+        public class OrganizationController: AbstractOrganizationController
+        {
+                public OrganizationController(
+                        ServiceSettings settings,
+                        ILogger<OrganizationController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IOrganizationService organizationService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               organizationService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f51fa6230153b50b1e40bddf5cf5a7e2</Hash>
+    <Hash>ed4af7ebf01229d5ab5a2a65363fa665</Hash>
 </Codenesium>*/

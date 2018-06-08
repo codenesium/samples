@@ -6,32 +6,33 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class ApiTeacherXTeacherSkillRequestModelValidator: AbstractApiTeacherXTeacherSkillRequestModelValidator, IApiTeacherXTeacherSkillRequestModelValidator
-	{
-		public ApiTeacherXTeacherSkillRequestModelValidator()
-		{   }
+        public class ApiTeacherXTeacherSkillRequestModelValidator: AbstractApiTeacherXTeacherSkillRequestModelValidator, IApiTeacherXTeacherSkillRequestModelValidator
+        {
+                public ApiTeacherXTeacherSkillRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiTeacherXTeacherSkillRequestModel model)
-		{
-			this.TeacherIdRules();
-			this.TeacherSkillIdRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiTeacherXTeacherSkillRequestModel model)
+                {
+                        this.TeacherIdRules();
+                        this.TeacherSkillIdRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTeacherXTeacherSkillRequestModel model)
-		{
-			this.TeacherIdRules();
-			this.TeacherSkillIdRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTeacherXTeacherSkillRequestModel model)
+                {
+                        this.TeacherIdRules();
+                        this.TeacherSkillIdRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f9767282874661ea351278bbc2a25f84</Hash>
+    <Hash>2a2e1f0ae7931de463abcc9efc2d846b</Hash>
 </Codenesium>*/

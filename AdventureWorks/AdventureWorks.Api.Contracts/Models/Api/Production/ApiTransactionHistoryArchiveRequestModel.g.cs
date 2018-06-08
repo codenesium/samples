@@ -3,163 +3,165 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiTransactionHistoryArchiveRequestModel: AbstractApiRequestModel
-	{
-		public ApiTransactionHistoryArchiveRequestModel() : base()
-		{}
+        public partial class ApiTransactionHistoryArchiveRequestModel: AbstractApiRequestModel
+        {
+                public ApiTransactionHistoryArchiveRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			decimal actualCost,
-			DateTime modifiedDate,
-			int productID,
-			int quantity,
-			int referenceOrderID,
-			int referenceOrderLineID,
-			DateTime transactionDate,
-			string transactionType)
-		{
-			this.ActualCost = actualCost.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ProductID = productID.ToInt();
-			this.Quantity = quantity.ToInt();
-			this.ReferenceOrderID = referenceOrderID.ToInt();
-			this.ReferenceOrderLineID = referenceOrderLineID.ToInt();
-			this.TransactionDate = transactionDate.ToDateTime();
-			this.TransactionType = transactionType;
-		}
+                public void SetProperties(
+                        decimal actualCost,
+                        DateTime modifiedDate,
+                        int productID,
+                        int quantity,
+                        int referenceOrderID,
+                        int referenceOrderLineID,
+                        DateTime transactionDate,
+                        string transactionType)
+                {
+                        this.ActualCost = actualCost;
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductID = productID;
+                        this.Quantity = quantity;
+                        this.ReferenceOrderID = referenceOrderID;
+                        this.ReferenceOrderLineID = referenceOrderLineID;
+                        this.TransactionDate = transactionDate;
+                        this.TransactionType = transactionType;
+                }
 
-		private decimal actualCost;
+                private decimal actualCost;
 
-		[Required]
-		public decimal ActualCost
-		{
-			get
-			{
-				return this.actualCost;
-			}
+                [Required]
+                public decimal ActualCost
+                {
+                        get
+                        {
+                                return this.actualCost;
+                        }
 
-			set
-			{
-				this.actualCost = value;
-			}
-		}
+                        set
+                        {
+                                this.actualCost = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private int productID;
+                private int productID;
 
-		[Required]
-		public int ProductID
-		{
-			get
-			{
-				return this.productID;
-			}
+                [Required]
+                public int ProductID
+                {
+                        get
+                        {
+                                return this.productID;
+                        }
 
-			set
-			{
-				this.productID = value;
-			}
-		}
+                        set
+                        {
+                                this.productID = value;
+                        }
+                }
 
-		private int quantity;
+                private int quantity;
 
-		[Required]
-		public int Quantity
-		{
-			get
-			{
-				return this.quantity;
-			}
+                [Required]
+                public int Quantity
+                {
+                        get
+                        {
+                                return this.quantity;
+                        }
 
-			set
-			{
-				this.quantity = value;
-			}
-		}
+                        set
+                        {
+                                this.quantity = value;
+                        }
+                }
 
-		private int referenceOrderID;
+                private int referenceOrderID;
 
-		[Required]
-		public int ReferenceOrderID
-		{
-			get
-			{
-				return this.referenceOrderID;
-			}
+                [Required]
+                public int ReferenceOrderID
+                {
+                        get
+                        {
+                                return this.referenceOrderID;
+                        }
 
-			set
-			{
-				this.referenceOrderID = value;
-			}
-		}
+                        set
+                        {
+                                this.referenceOrderID = value;
+                        }
+                }
 
-		private int referenceOrderLineID;
+                private int referenceOrderLineID;
 
-		[Required]
-		public int ReferenceOrderLineID
-		{
-			get
-			{
-				return this.referenceOrderLineID;
-			}
+                [Required]
+                public int ReferenceOrderLineID
+                {
+                        get
+                        {
+                                return this.referenceOrderLineID;
+                        }
 
-			set
-			{
-				this.referenceOrderLineID = value;
-			}
-		}
+                        set
+                        {
+                                this.referenceOrderLineID = value;
+                        }
+                }
 
-		private DateTime transactionDate;
+                private DateTime transactionDate;
 
-		[Required]
-		public DateTime TransactionDate
-		{
-			get
-			{
-				return this.transactionDate;
-			}
+                [Required]
+                public DateTime TransactionDate
+                {
+                        get
+                        {
+                                return this.transactionDate;
+                        }
 
-			set
-			{
-				this.transactionDate = value;
-			}
-		}
+                        set
+                        {
+                                this.transactionDate = value;
+                        }
+                }
 
-		private string transactionType;
+                private string transactionType;
 
-		[Required]
-		public string TransactionType
-		{
-			get
-			{
-				return this.transactionType;
-			}
+                [Required]
+                public string TransactionType
+                {
+                        get
+                        {
+                                return this.transactionType;
+                        }
 
-			set
-			{
-				this.transactionType = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.transactionType = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>675a4772670fa1ae6effec26aee3e378</Hash>
+    <Hash>165f8f6a594a0d81d64b08cb4da8380f</Hash>
 </Codenesium>*/

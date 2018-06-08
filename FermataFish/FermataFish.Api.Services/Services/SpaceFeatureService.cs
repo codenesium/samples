@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class SpaceFeatureService: AbstractSpaceFeatureService, ISpaceFeatureService
-	{
-		public SpaceFeatureService(
-			ILogger<SpaceFeatureRepository> logger,
-			ISpaceFeatureRepository spaceFeatureRepository,
-			IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
-			IBOLSpaceFeatureMapper BOLspaceFeatureMapper,
-			IDALSpaceFeatureMapper DALspaceFeatureMapper)
-			: base(logger, spaceFeatureRepository,
-			       spaceFeatureModelValidator,
-			       BOLspaceFeatureMapper,
-			       DALspaceFeatureMapper)
-		{}
-	}
+        public class SpaceFeatureService: AbstractSpaceFeatureService, ISpaceFeatureService
+        {
+                public SpaceFeatureService(
+                        ILogger<SpaceFeatureRepository> logger,
+                        ISpaceFeatureRepository spaceFeatureRepository,
+                        IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
+                        IBOLSpaceFeatureMapper bolspaceFeatureMapper,
+                        IDALSpaceFeatureMapper dalspaceFeatureMapper)
+                        : base(logger,
+                               spaceFeatureRepository,
+                               spaceFeatureModelValidator,
+                               bolspaceFeatureMapper,
+                               dalspaceFeatureMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>64643e9c107eccabf021c955c8821bea</Hash>
+    <Hash>170d960671d6d8be77eedd47841beb10</Hash>
 </Codenesium>*/

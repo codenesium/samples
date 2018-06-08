@@ -3,26 +3,29 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-	public partial class BOMachineRefTeam: AbstractBusinessObject
-	{
-		public BOMachineRefTeam() : base()
-		{}
+        public partial class BOMachineRefTeam: AbstractBusinessObject
+        {
+                public BOMachineRefTeam() : base()
+                {
+                }
 
-		public void SetProperties(int id,
-		                          int machineId,
-		                          int teamId)
-		{
-			this.Id = id.ToInt();
-			this.MachineId = machineId.ToInt();
-			this.TeamId = teamId.ToInt();
-		}
+                public void SetProperties(int id,
+                                          int machineId,
+                                          int teamId)
+                {
+                        this.Id = id;
+                        this.MachineId = machineId;
+                        this.TeamId = teamId;
+                }
 
-		public int Id { get; private set; }
-		public int MachineId { get; private set; }
-		public int TeamId { get; private set; }
-	}
+                public int Id { get; private set; }
+
+                public int MachineId { get; private set; }
+
+                public int TeamId { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a34aa7249dd613b87c152123a6662f94</Hash>
+    <Hash>026350311e199654bc1a0cdb8b13144b</Hash>
 </Codenesium>*/

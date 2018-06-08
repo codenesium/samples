@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class TeacherXTeacherSkillService: AbstractTeacherXTeacherSkillService, ITeacherXTeacherSkillService
-	{
-		public TeacherXTeacherSkillService(
-			ILogger<TeacherXTeacherSkillRepository> logger,
-			ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
-			IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
-			IBOLTeacherXTeacherSkillMapper BOLteacherXTeacherSkillMapper,
-			IDALTeacherXTeacherSkillMapper DALteacherXTeacherSkillMapper)
-			: base(logger, teacherXTeacherSkillRepository,
-			       teacherXTeacherSkillModelValidator,
-			       BOLteacherXTeacherSkillMapper,
-			       DALteacherXTeacherSkillMapper)
-		{}
-	}
+        public class TeacherXTeacherSkillService: AbstractTeacherXTeacherSkillService, ITeacherXTeacherSkillService
+        {
+                public TeacherXTeacherSkillService(
+                        ILogger<TeacherXTeacherSkillRepository> logger,
+                        ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
+                        IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
+                        IBOLTeacherXTeacherSkillMapper bolteacherXTeacherSkillMapper,
+                        IDALTeacherXTeacherSkillMapper dalteacherXTeacherSkillMapper)
+                        : base(logger,
+                               teacherXTeacherSkillRepository,
+                               teacherXTeacherSkillModelValidator,
+                               bolteacherXTeacherSkillMapper,
+                               dalteacherXTeacherSkillMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4a98209fddf242afb41372cfead47d68</Hash>
+    <Hash>895cfec7b3115d3f1d16106d7ceb9e8f</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/lessonStatus")]
-	[ApiVersion("1.0")]
-	public class LessonStatusController: AbstractLessonStatusController
-	{
-		public LessonStatusController(
-			ServiceSettings settings,
-			ILogger<LessonStatusController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ILessonStatusService lessonStatusService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       lessonStatusService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/lessonStatus")]
+        [ApiVersion("1.0")]
+        public class LessonStatusController: AbstractLessonStatusController
+        {
+                public LessonStatusController(
+                        ServiceSettings settings,
+                        ILogger<LessonStatusController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ILessonStatusService lessonStatusService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               lessonStatusService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3aeeccc41dc90297046e57a9ebb60bfc</Hash>
+    <Hash>1171b7a0dc40a9d82aea849db94daf4f</Hash>
 </Codenesium>*/

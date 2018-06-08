@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class RateService: AbstractRateService, IRateService
-	{
-		public RateService(
-			ILogger<RateRepository> logger,
-			IRateRepository rateRepository,
-			IApiRateRequestModelValidator rateModelValidator,
-			IBOLRateMapper BOLrateMapper,
-			IDALRateMapper DALrateMapper)
-			: base(logger, rateRepository,
-			       rateModelValidator,
-			       BOLrateMapper,
-			       DALrateMapper)
-		{}
-	}
+        public class RateService: AbstractRateService, IRateService
+        {
+                public RateService(
+                        ILogger<RateRepository> logger,
+                        IRateRepository rateRepository,
+                        IApiRateRequestModelValidator rateModelValidator,
+                        IBOLRateMapper bolrateMapper,
+                        IDALRateMapper dalrateMapper)
+                        : base(logger,
+                               rateRepository,
+                               rateModelValidator,
+                               bolrateMapper,
+                               dalrateMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>62b6e1ff88455e192049919802689cc1</Hash>
+    <Hash>1aa232da36130352ddd4fece615fec99</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class EmailAddressService: AbstractEmailAddressService, IEmailAddressService
-	{
-		public EmailAddressService(
-			ILogger<EmailAddressRepository> logger,
-			IEmailAddressRepository emailAddressRepository,
-			IApiEmailAddressRequestModelValidator emailAddressModelValidator,
-			IBOLEmailAddressMapper BOLemailAddressMapper,
-			IDALEmailAddressMapper DALemailAddressMapper)
-			: base(logger, emailAddressRepository,
-			       emailAddressModelValidator,
-			       BOLemailAddressMapper,
-			       DALemailAddressMapper)
-		{}
-	}
+        public class EmailAddressService: AbstractEmailAddressService, IEmailAddressService
+        {
+                public EmailAddressService(
+                        ILogger<EmailAddressRepository> logger,
+                        IEmailAddressRepository emailAddressRepository,
+                        IApiEmailAddressRequestModelValidator emailAddressModelValidator,
+                        IBOLEmailAddressMapper bolemailAddressMapper,
+                        IDALEmailAddressMapper dalemailAddressMapper)
+                        : base(logger,
+                               emailAddressRepository,
+                               emailAddressModelValidator,
+                               bolemailAddressMapper,
+                               dalemailAddressMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ca6787f5cffc932b45219a5d29ea9f6c</Hash>
+    <Hash>0d0174f3e44459506f60d2d9f1eeba36</Hash>
 </Codenesium>*/

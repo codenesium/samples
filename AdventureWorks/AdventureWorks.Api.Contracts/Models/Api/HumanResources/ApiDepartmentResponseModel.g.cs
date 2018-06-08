@@ -4,72 +4,77 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiDepartmentResponseModel: AbstractApiResponseModel
-	{
-		public ApiDepartmentResponseModel() : base()
-		{}
+        public partial class ApiDepartmentResponseModel: AbstractApiResponseModel
+        {
+                public ApiDepartmentResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			short departmentID,
-			string groupName,
-			DateTime modifiedDate,
-			string name)
-		{
-			this.DepartmentID = departmentID;
-			this.GroupName = groupName;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name;
-		}
+                public void SetProperties(
+                        short departmentID,
+                        string groupName,
+                        DateTime modifiedDate,
+                        string name)
+                {
+                        this.DepartmentID = departmentID;
+                        this.GroupName = groupName;
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                }
 
-		public short DepartmentID { get; private set; }
-		public string GroupName { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public string Name { get; private set; }
+                public short DepartmentID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeDepartmentIDValue { get; set; } = true;
+                public string GroupName { get; private set; }
 
-		public bool ShouldSerializeDepartmentID()
-		{
-			return this.ShouldSerializeDepartmentIDValue;
-		}
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeGroupNameValue { get; set; } = true;
+                public string Name { get; private set; }
 
-		public bool ShouldSerializeGroupName()
-		{
-			return this.ShouldSerializeGroupNameValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeDepartmentIDValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public bool ShouldSerializeDepartmentID()
+                {
+                        return this.ShouldSerializeDepartmentIDValue;
+                }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeGroupNameValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
+                public bool ShouldSerializeGroupName()
+                {
+                        return this.ShouldSerializeGroupNameValue;
+                }
 
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeDepartmentIDValue = false;
-			this.ShouldSerializeGroupNameValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeNameValue = false;
-		}
-	}
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeDepartmentIDValue = false;
+                        this.ShouldSerializeGroupNameValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeNameValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5cae535aca6e056a69d7de50d120d8f7</Hash>
+    <Hash>91e08a004afd50d4eb4d438eb55d7cb3</Hash>
 </Codenesium>*/

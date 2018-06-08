@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class PersonPhoneService: AbstractPersonPhoneService, IPersonPhoneService
-	{
-		public PersonPhoneService(
-			ILogger<PersonPhoneRepository> logger,
-			IPersonPhoneRepository personPhoneRepository,
-			IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
-			IBOLPersonPhoneMapper BOLpersonPhoneMapper,
-			IDALPersonPhoneMapper DALpersonPhoneMapper)
-			: base(logger, personPhoneRepository,
-			       personPhoneModelValidator,
-			       BOLpersonPhoneMapper,
-			       DALpersonPhoneMapper)
-		{}
-	}
+        public class PersonPhoneService: AbstractPersonPhoneService, IPersonPhoneService
+        {
+                public PersonPhoneService(
+                        ILogger<PersonPhoneRepository> logger,
+                        IPersonPhoneRepository personPhoneRepository,
+                        IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
+                        IBOLPersonPhoneMapper bolpersonPhoneMapper,
+                        IDALPersonPhoneMapper dalpersonPhoneMapper)
+                        : base(logger,
+                               personPhoneRepository,
+                               personPhoneModelValidator,
+                               bolpersonPhoneMapper,
+                               dalpersonPhoneMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3870df69192b87bd71394b9288622c64</Hash>
+    <Hash>f471f19d696ffc605ad0014610b70ae0</Hash>
 </Codenesium>*/

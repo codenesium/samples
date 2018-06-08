@@ -7,22 +7,22 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IPhoneNumberTypeService
-	{
-		Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
-			ApiPhoneNumberTypeRequestModel model);
+        public interface IPhoneNumberTypeService
+        {
+                Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
+                        ApiPhoneNumberTypeRequestModel model);
 
-		Task<ActionResponse> Update(int phoneNumberTypeID,
-		                            ApiPhoneNumberTypeRequestModel model);
+                Task<ActionResponse> Update(int phoneNumberTypeID,
+                                            ApiPhoneNumberTypeRequestModel model);
 
-		Task<ActionResponse> Delete(int phoneNumberTypeID);
+                Task<ActionResponse> Delete(int phoneNumberTypeID);
 
-		Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID);
+                Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID);
 
-		Task<List<ApiPhoneNumberTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiPhoneNumberTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>b91b8f6aff41dd704907667a2ba5eedf</Hash>
+    <Hash>578209470e5823eed8a288c02c04d085</Hash>
 </Codenesium>*/

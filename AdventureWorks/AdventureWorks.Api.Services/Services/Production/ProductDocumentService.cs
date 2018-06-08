@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ProductDocumentService: AbstractProductDocumentService, IProductDocumentService
-	{
-		public ProductDocumentService(
-			ILogger<ProductDocumentRepository> logger,
-			IProductDocumentRepository productDocumentRepository,
-			IApiProductDocumentRequestModelValidator productDocumentModelValidator,
-			IBOLProductDocumentMapper BOLproductDocumentMapper,
-			IDALProductDocumentMapper DALproductDocumentMapper)
-			: base(logger, productDocumentRepository,
-			       productDocumentModelValidator,
-			       BOLproductDocumentMapper,
-			       DALproductDocumentMapper)
-		{}
-	}
+        public class ProductDocumentService: AbstractProductDocumentService, IProductDocumentService
+        {
+                public ProductDocumentService(
+                        ILogger<ProductDocumentRepository> logger,
+                        IProductDocumentRepository productDocumentRepository,
+                        IApiProductDocumentRequestModelValidator productDocumentModelValidator,
+                        IBOLProductDocumentMapper bolproductDocumentMapper,
+                        IDALProductDocumentMapper dalproductDocumentMapper)
+                        : base(logger,
+                               productDocumentRepository,
+                               productDocumentModelValidator,
+                               bolproductDocumentMapper,
+                               dalproductDocumentMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>83eef3a1a56d6c20ee1666f8c953de27</Hash>
+    <Hash>71c87a3dd1b9a294d736315d9348ed71</Hash>
 </Codenesium>*/

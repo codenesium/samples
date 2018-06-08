@@ -14,174 +14,174 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	public abstract class AbstractCurrencyController: AbstractApiController
-	{
-		protected ICurrencyService currencyService;
+        public abstract class AbstractCurrencyController: AbstractApiController
+        {
+                protected ICurrencyService CurrencyService { get; private set; }
 
-		protected int BulkInsertLimit { get; set; }
+                protected int BulkInsertLimit { get; set; }
 
-		protected int MaxLimit { get; set; }
+                protected int MaxLimit { get; set; }
 
-		protected int DefaultLimit { get; set; }
+                protected int DefaultLimit { get; set; }
 
-		public AbstractCurrencyController(
-			ServiceSettings settings,
-			ILogger<AbstractCurrencyController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ICurrencyService currencyService
-			)
-			: base(settings, logger, transactionCoordinator)
-		{
-			this.currencyService = currencyService;
-		}
+                public AbstractCurrencyController(
+                        ServiceSettings settings,
+                        ILogger<AbstractCurrencyController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ICurrencyService currencyService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.CurrencyService = currencyService;
+                }
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<ApiCurrencyResponseModel> response = await this.currencyService.All(query.Offset, query.Limit);
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiCurrencyResponseModel> response = await this.CurrencyService.All(query.Offset, query.Limit);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("{id}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(string id)
-		{
-			ApiCurrencyResponseModel response = await this.currencyService.Get(id);
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(string id)
+                {
+                        ApiCurrencyResponseModel response = await this.CurrencyService.Get(id);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpPost]
-		[Route("")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
-		[ProducesResponseType(typeof(CreateResponse<string>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRequestModel model)
-		{
-			CreateResponse<ApiCurrencyResponseModel> result = await this.currencyService.Create(model);
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRequestModel model)
+                {
+                        CreateResponse<ApiCurrencyResponseModel> result = await this.CurrencyService.Create(model);
 
-			if (result.Success)
-			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.CurrencyCode.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Currencies/{result.Record.CurrencyCode.ToString()}");
-				return this.Ok(result.Record);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.CurrencyCode.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Currencies/{result.Record.CurrencyCode.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpPost]
-		[Route("BulkInsert")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
-		[ProducesResponseType(typeof(void), 413)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCurrencyRequestModel> models)
-		{
-			if (models.Count > this.BulkInsertLimit)
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-			}
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiCurrencyRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
 
-			List<ApiCurrencyResponseModel> records = new List<ApiCurrencyResponseModel>();
-			foreach (var model in models)
-			{
-				CreateResponse<ApiCurrencyResponseModel> result = await this.currencyService.Create(model);
+                        List<ApiCurrencyResponseModel> records = new List<ApiCurrencyResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiCurrencyResponseModel> result = await this.CurrencyService.Create(model);
 
-				if(result.Success)
-				{
-					records.Add(result.Record);
-				}
-				else
-				{
-					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-				}
-			}
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
 
-			return this.Ok(records);
-		}
+                        return this.Ok(records);
+                }
 
-		[HttpPut]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCurrencyRequestModel model)
-		{
-			ActionResponse result = await this.currencyService.Update(id, model);
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(string id, [FromBody] ApiCurrencyRequestModel model)
+                {
+                        ActionResponse result = await this.CurrencyService.Update(id, model);
 
-			if (result.Success)
-			{
-				ApiCurrencyResponseModel response = await this.currencyService.Get(id);
+                        if (result.Success)
+                        {
+                                ApiCurrencyResponseModel response = await this.CurrencyService.Get(id);
 
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpDelete]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(string id)
-		{
-			ActionResponse result = await this.currencyService.Delete(id);
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(string id)
+                {
+                        ActionResponse result = await this.CurrencyService.Delete(id);
 
-			if (result.Success)
-			{
-				return this.NoContent();
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpGet]
-		[Route("getName/{name}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> GetName(string name)
-		{
-			ApiCurrencyResponseModel response = await this.currencyService.GetName(name);
+                [HttpGet]
+                [Route("getName/{name}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> GetName(string name)
+                {
+                        ApiCurrencyResponseModel response = await this.CurrencyService.GetName(name);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
-	}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b2945b4d147514ac6a396d21ab882901</Hash>
+    <Hash>4868c32fa25e358157ff146bb7271730</Hash>
 </Codenesium>*/

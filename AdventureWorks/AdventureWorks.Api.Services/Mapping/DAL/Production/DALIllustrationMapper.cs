@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALIllustrationMapper: AbstractDALIllustrationMapper, IDALIllustrationMapper
-	{
-		public DALIllustrationMapper()
-		{}
-	}
+        public class DALIllustrationMapper: DALAbstractIllustrationMapper, IDALIllustrationMapper
+        {
+                public DALIllustrationMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a8d11bbaa00333e8f9124ab479444307</Hash>
+    <Hash>a1d5a2d284d264d58031c8d76a66eeae</Hash>
 </Codenesium>*/

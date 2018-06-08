@@ -7,24 +7,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IJobCandidateService
-	{
-		Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
-			ApiJobCandidateRequestModel model);
+        public interface IJobCandidateService
+        {
+                Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
+                        ApiJobCandidateRequestModel model);
 
-		Task<ActionResponse> Update(int jobCandidateID,
-		                            ApiJobCandidateRequestModel model);
+                Task<ActionResponse> Update(int jobCandidateID,
+                                            ApiJobCandidateRequestModel model);
 
-		Task<ActionResponse> Delete(int jobCandidateID);
+                Task<ActionResponse> Delete(int jobCandidateID);
 
-		Task<ApiJobCandidateResponseModel> Get(int jobCandidateID);
+                Task<ApiJobCandidateResponseModel> Get(int jobCandidateID);
 
-		Task<List<ApiJobCandidateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiJobCandidateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<ApiJobCandidateResponseModel>> GetBusinessEntityID(Nullable<int> businessEntityID);
-	}
+                Task<List<ApiJobCandidateResponseModel>> GetBusinessEntityID(Nullable<int> businessEntityID);
+        }
 }
 
 /*<Codenesium>
-    <Hash>c3540781859e4cc5a01b00caf4fbe4ee</Hash>
+    <Hash>a6955d479f87ad5bdb84bbac6120dde5</Hash>
 </Codenesium>*/

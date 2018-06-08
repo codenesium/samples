@@ -5,40 +5,41 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	[Table("LessonXTeacher", Schema="dbo")]
-	public partial class LessonXTeacher: AbstractEntity
-	{
-		public LessonXTeacher()
-		{}
+        [Table("LessonXTeacher", Schema="dbo")]
+        public partial class LessonXTeacher: AbstractEntity
+        {
+                public LessonXTeacher()
+                {
+                }
 
-		public void SetProperties(
-			int id,
-			int lessonId,
-			int studentId)
-		{
-			this.Id = id.ToInt();
-			this.LessonId = lessonId.ToInt();
-			this.StudentId = studentId.ToInt();
-		}
+                public void SetProperties(
+                        int id,
+                        int lessonId,
+                        int studentId)
+                {
+                        this.Id = id;
+                        this.LessonId = lessonId;
+                        this.StudentId = studentId;
+                }
 
-		[Key]
-		[Column("id", TypeName="int")]
-		public int Id { get; private set; }
+                [Key]
+                [Column("id", TypeName="int")]
+                public int Id { get; private set; }
 
-		[Column("lessonId", TypeName="int")]
-		public int LessonId { get; private set; }
+                [Column("lessonId", TypeName="int")]
+                public int LessonId { get; private set; }
 
-		[Column("studentId", TypeName="int")]
-		public int StudentId { get; private set; }
+                [Column("studentId", TypeName="int")]
+                public int StudentId { get; private set; }
 
-		[ForeignKey("LessonId")]
-		public virtual Lesson Lesson { get; set; }
+                [ForeignKey("LessonId")]
+                public virtual Lesson Lesson { get; set; }
 
-		[ForeignKey("StudentId")]
-		public virtual Student Student { get; set; }
-	}
+                [ForeignKey("StudentId")]
+                public virtual Student Student { get; set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a0df7c7656914fcd0d35c2512562e619</Hash>
+    <Hash>2bf2871660202a4b8168a5c64f819f0a</Hash>
 </Codenesium>*/

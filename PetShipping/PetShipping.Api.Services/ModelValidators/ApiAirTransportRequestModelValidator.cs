@@ -6,40 +6,41 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class ApiAirTransportRequestModelValidator: AbstractApiAirTransportRequestModelValidator, IApiAirTransportRequestModelValidator
-	{
-		public ApiAirTransportRequestModelValidator()
-		{   }
+        public class ApiAirTransportRequestModelValidator: AbstractApiAirTransportRequestModelValidator, IApiAirTransportRequestModelValidator
+        {
+                public ApiAirTransportRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiAirTransportRequestModel model)
-		{
-			this.FlightNumberRules();
-			this.HandlerIdRules();
-			this.IdRules();
-			this.LandDateRules();
-			this.PipelineStepIdRules();
-			this.TakeoffDateRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiAirTransportRequestModel model)
+                {
+                        this.FlightNumberRules();
+                        this.HandlerIdRules();
+                        this.IdRules();
+                        this.LandDateRules();
+                        this.PipelineStepIdRules();
+                        this.TakeoffDateRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiAirTransportRequestModel model)
-		{
-			this.FlightNumberRules();
-			this.HandlerIdRules();
-			this.IdRules();
-			this.LandDateRules();
-			this.PipelineStepIdRules();
-			this.TakeoffDateRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiAirTransportRequestModel model)
+                {
+                        this.FlightNumberRules();
+                        this.HandlerIdRules();
+                        this.IdRules();
+                        this.LandDateRules();
+                        this.PipelineStepIdRules();
+                        this.TakeoffDateRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>02696b982601d1d72f0c4d103d60c042</Hash>
+    <Hash>dc4e178791e783a8a8297fdd85498dd8</Hash>
 </Codenesium>*/

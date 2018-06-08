@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class CurrencyService: AbstractCurrencyService, ICurrencyService
-	{
-		public CurrencyService(
-			ILogger<CurrencyRepository> logger,
-			ICurrencyRepository currencyRepository,
-			IApiCurrencyRequestModelValidator currencyModelValidator,
-			IBOLCurrencyMapper BOLcurrencyMapper,
-			IDALCurrencyMapper DALcurrencyMapper)
-			: base(logger, currencyRepository,
-			       currencyModelValidator,
-			       BOLcurrencyMapper,
-			       DALcurrencyMapper)
-		{}
-	}
+        public class CurrencyService: AbstractCurrencyService, ICurrencyService
+        {
+                public CurrencyService(
+                        ILogger<CurrencyRepository> logger,
+                        ICurrencyRepository currencyRepository,
+                        IApiCurrencyRequestModelValidator currencyModelValidator,
+                        IBOLCurrencyMapper bolcurrencyMapper,
+                        IDALCurrencyMapper dalcurrencyMapper)
+                        : base(logger,
+                               currencyRepository,
+                               currencyModelValidator,
+                               bolcurrencyMapper,
+                               dalcurrencyMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>aa193a615b36a16bf6ee5dbfcd3305fb</Hash>
+    <Hash>3f42437b3049bac701f1c1e536379469</Hash>
 </Codenesium>*/

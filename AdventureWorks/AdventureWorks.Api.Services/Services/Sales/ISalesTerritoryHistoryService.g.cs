@@ -7,22 +7,22 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ISalesTerritoryHistoryService
-	{
-		Task<CreateResponse<ApiSalesTerritoryHistoryResponseModel>> Create(
-			ApiSalesTerritoryHistoryRequestModel model);
+        public interface ISalesTerritoryHistoryService
+        {
+                Task<CreateResponse<ApiSalesTerritoryHistoryResponseModel>> Create(
+                        ApiSalesTerritoryHistoryRequestModel model);
 
-		Task<ActionResponse> Update(int businessEntityID,
-		                            ApiSalesTerritoryHistoryRequestModel model);
+                Task<ActionResponse> Update(int businessEntityID,
+                                            ApiSalesTerritoryHistoryRequestModel model);
 
-		Task<ActionResponse> Delete(int businessEntityID);
+                Task<ActionResponse> Delete(int businessEntityID);
 
-		Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID);
+                Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID);
 
-		Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>fd37b527953a7cec46a5e323f63942f8</Hash>
+    <Hash>16cdfc7585584babbf9ca9b499a73ecf</Hash>
 </Codenesium>*/

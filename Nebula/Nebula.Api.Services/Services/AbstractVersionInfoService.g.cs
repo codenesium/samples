@@ -12,94 +12,100 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public abstract class AbstractVersionInfoService: AbstractService
-	{
-		private IVersionInfoRepository versionInfoRepository;
-		private IApiVersionInfoRequestModelValidator versionInfoModelValidator;
-		private IBOLVersionInfoMapper bolVersionInfoMapper;
-		private IDALVersionInfoMapper dalVersionInfoMapper;
-		private ILogger logger;
+        public abstract class AbstractVersionInfoService: AbstractService
+        {
+                private IVersionInfoRepository versionInfoRepository;
 
-		public AbstractVersionInfoService(
-			ILogger logger,
-			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
-			IBOLVersionInfoMapper bolversionInfoMapper,
-			IDALVersionInfoMapper dalversionInfoMapper)
-			: base()
+                private IApiVersionInfoRequestModelValidator versionInfoModelValidator;
 
-		{
-			this.versionInfoRepository = versionInfoRepository;
-			this.versionInfoModelValidator = versionInfoModelValidator;
-			this.bolVersionInfoMapper = bolversionInfoMapper;
-			this.dalVersionInfoMapper = dalversionInfoMapper;
-			this.logger = logger;
-		}
+                private IBOLVersionInfoMapper bolVersionInfoMapper;
 
-		public virtual async Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.versionInfoRepository.All(skip, take, orderClause);
+                private IDALVersionInfoMapper dalVersionInfoMapper;
 
-			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiVersionInfoResponseModel> Get(long version)
-		{
-			var record = await versionInfoRepository.Get(version);
+                public AbstractVersionInfoService(
+                        ILogger logger,
+                        IVersionInfoRepository versionInfoRepository,
+                        IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+                        IBOLVersionInfoMapper bolversionInfoMapper,
+                        IDALVersionInfoMapper dalversionInfoMapper)
+                        : base()
 
-			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
-		}
+                {
+                        this.versionInfoRepository = versionInfoRepository;
+                        this.versionInfoModelValidator = versionInfoModelValidator;
+                        this.bolVersionInfoMapper = bolversionInfoMapper;
+                        this.dalVersionInfoMapper = dalversionInfoMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
-			ApiVersionInfoRequestModel model)
-		{
-			CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolVersionInfoMapper.MapModelToBO(default (long), model);
-				var record = await this.versionInfoRepository.Create(this.dalVersionInfoMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.versionInfoRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			long version,
-			ApiVersionInfoRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
+                public virtual async Task<ApiVersionInfoResponseModel> Get(long version)
+                {
+                        var record = await this.versionInfoRepository.Get(version);
 
-			if (response.Success)
-			{
-				var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
-				await this.versionInfoRepository.Update(this.dalVersionInfoMapper.MapBOToEF(bo));
-			}
+                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
+                        ApiVersionInfoRequestModel model)
+                {
+                        CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolVersionInfoMapper.MapModelToBO(default (long), model);
+                                var record = await this.versionInfoRepository.Create(this.dalVersionInfoMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			long version)
-		{
-			ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateDeleteAsync(version));
+                                response.SetRecord(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.versionInfoRepository.Delete(version);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiVersionInfoResponseModel> GetVersion(long version)
-		{
-			VersionInfo record = await this.versionInfoRepository.GetVersion(version);
+                public virtual async Task<ActionResponse> Update(
+                        long version,
+                        ApiVersionInfoRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
 
-			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
+                                await this.versionInfoRepository.Update(this.dalVersionInfoMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        long version)
+                {
+                        ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateDeleteAsync(version));
+
+                        if (response.Success)
+                        {
+                                await this.versionInfoRepository.Delete(version);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiVersionInfoResponseModel> GetVersion(long version)
+                {
+                        VersionInfo record = await this.versionInfoRepository.GetVersion(version);
+
+                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>525620dcb39169b638874d11e9d51b94</Hash>
+    <Hash>32f47b0473267c4bd18536970b9a6c71</Hash>
 </Codenesium>*/

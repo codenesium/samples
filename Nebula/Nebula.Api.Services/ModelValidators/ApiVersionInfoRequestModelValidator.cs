@@ -6,32 +6,33 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class ApiVersionInfoRequestModelValidator: AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
-	{
-		public ApiVersionInfoRequestModelValidator()
-		{   }
+        public class ApiVersionInfoRequestModelValidator: AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
+        {
+                public ApiVersionInfoRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiVersionInfoRequestModel model)
-		{
-			this.AppliedOnRules();
-			this.DescriptionRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiVersionInfoRequestModel model)
+                {
+                        this.AppliedOnRules();
+                        this.DescriptionRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(long id, ApiVersionInfoRequestModel model)
-		{
-			this.AppliedOnRules();
-			this.DescriptionRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(long id, ApiVersionInfoRequestModel model)
+                {
+                        this.AppliedOnRules();
+                        this.DescriptionRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(long id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(long id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0b1bd3747373b0e22aa29b118d6910c9</Hash>
+    <Hash>8dd0e8b652f20406f5fbd48a5ccad81a</Hash>
 </Codenesium>*/

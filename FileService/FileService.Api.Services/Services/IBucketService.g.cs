@@ -7,25 +7,25 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IBucketService
-	{
-		Task<CreateResponse<ApiBucketResponseModel>> Create(
-			ApiBucketRequestModel model);
+        public interface IBucketService
+        {
+                Task<CreateResponse<ApiBucketResponseModel>> Create(
+                        ApiBucketRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiBucketRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiBucketRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiBucketResponseModel> Get(int id);
+                Task<ApiBucketResponseModel> Get(int id);
 
-		Task<List<ApiBucketResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiBucketResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<ApiBucketResponseModel> GetExternalId(Guid externalId);
-		Task<ApiBucketResponseModel> GetName(string name);
-	}
+                Task<ApiBucketResponseModel> GetExternalId(Guid externalId);
+                Task<ApiBucketResponseModel> GetName(string name);
+        }
 }
 
 /*<Codenesium>
-    <Hash>01a3739987aa250eea3bcce7202caeb1</Hash>
+    <Hash>5ba726b2a4c2a23371f32d41818b73c2</Hash>
 </Codenesium>*/

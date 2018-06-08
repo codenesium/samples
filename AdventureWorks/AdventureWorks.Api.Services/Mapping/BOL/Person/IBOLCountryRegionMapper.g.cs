@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLCountryRegionMapper
-	{
-		BOCountryRegion MapModelToBO(
-			string countryRegionCode,
-			ApiCountryRegionRequestModel model);
+        public interface IBOLCountryRegionMapper
+        {
+                BOCountryRegion MapModelToBO(
+                        string countryRegionCode,
+                        ApiCountryRegionRequestModel model);
 
-		ApiCountryRegionResponseModel MapBOToModel(
-			BOCountryRegion boCountryRegion);
+                ApiCountryRegionResponseModel MapBOToModel(
+                        BOCountryRegion boCountryRegion);
 
-		List<ApiCountryRegionResponseModel> MapBOToModel(
-			List<BOCountryRegion> items);
-	}
+                List<ApiCountryRegionResponseModel> MapBOToModel(
+                        List<BOCountryRegion> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>b17f0764f188c027455585cf8a9d2ab4</Hash>
+    <Hash>6b63ca6136a6b1979e660ebc8a6f8b16</Hash>
 </Codenesium>*/

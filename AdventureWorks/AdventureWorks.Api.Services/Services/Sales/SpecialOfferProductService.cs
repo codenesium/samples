@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SpecialOfferProductService: AbstractSpecialOfferProductService, ISpecialOfferProductService
-	{
-		public SpecialOfferProductService(
-			ILogger<SpecialOfferProductRepository> logger,
-			ISpecialOfferProductRepository specialOfferProductRepository,
-			IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator,
-			IBOLSpecialOfferProductMapper BOLspecialOfferProductMapper,
-			IDALSpecialOfferProductMapper DALspecialOfferProductMapper)
-			: base(logger, specialOfferProductRepository,
-			       specialOfferProductModelValidator,
-			       BOLspecialOfferProductMapper,
-			       DALspecialOfferProductMapper)
-		{}
-	}
+        public class SpecialOfferProductService: AbstractSpecialOfferProductService, ISpecialOfferProductService
+        {
+                public SpecialOfferProductService(
+                        ILogger<SpecialOfferProductRepository> logger,
+                        ISpecialOfferProductRepository specialOfferProductRepository,
+                        IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator,
+                        IBOLSpecialOfferProductMapper bolspecialOfferProductMapper,
+                        IDALSpecialOfferProductMapper dalspecialOfferProductMapper)
+                        : base(logger,
+                               specialOfferProductRepository,
+                               specialOfferProductModelValidator,
+                               bolspecialOfferProductMapper,
+                               dalspecialOfferProductMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8fb2d9a2098ff8821ca6d33fd1bba55c</Hash>
+    <Hash>7cb65a10d6d4238d432d3bee361b5daa</Hash>
 </Codenesium>*/

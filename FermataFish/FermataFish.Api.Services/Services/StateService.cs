@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class StateService: AbstractStateService, IStateService
-	{
-		public StateService(
-			ILogger<StateRepository> logger,
-			IStateRepository stateRepository,
-			IApiStateRequestModelValidator stateModelValidator,
-			IBOLStateMapper BOLstateMapper,
-			IDALStateMapper DALstateMapper)
-			: base(logger, stateRepository,
-			       stateModelValidator,
-			       BOLstateMapper,
-			       DALstateMapper)
-		{}
-	}
+        public class StateService: AbstractStateService, IStateService
+        {
+                public StateService(
+                        ILogger<StateRepository> logger,
+                        IStateRepository stateRepository,
+                        IApiStateRequestModelValidator stateModelValidator,
+                        IBOLStateMapper bolstateMapper,
+                        IDALStateMapper dalstateMapper)
+                        : base(logger,
+                               stateRepository,
+                               stateModelValidator,
+                               bolstateMapper,
+                               dalstateMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cfd4efa442bd0ae0379945068807c4da</Hash>
+    <Hash>02837e84498e3fd1b4dc728b6e97891d</Hash>
 </Codenesium>*/

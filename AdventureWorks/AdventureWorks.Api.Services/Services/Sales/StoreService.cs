@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class StoreService: AbstractStoreService, IStoreService
-	{
-		public StoreService(
-			ILogger<StoreRepository> logger,
-			IStoreRepository storeRepository,
-			IApiStoreRequestModelValidator storeModelValidator,
-			IBOLStoreMapper BOLstoreMapper,
-			IDALStoreMapper DALstoreMapper)
-			: base(logger, storeRepository,
-			       storeModelValidator,
-			       BOLstoreMapper,
-			       DALstoreMapper)
-		{}
-	}
+        public class StoreService: AbstractStoreService, IStoreService
+        {
+                public StoreService(
+                        ILogger<StoreRepository> logger,
+                        IStoreRepository storeRepository,
+                        IApiStoreRequestModelValidator storeModelValidator,
+                        IBOLStoreMapper bolstoreMapper,
+                        IDALStoreMapper dalstoreMapper)
+                        : base(logger,
+                               storeRepository,
+                               storeModelValidator,
+                               bolstoreMapper,
+                               dalstoreMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3f29be5fea18cefd7229a33590479796</Hash>
+    <Hash>cc1bb2845d640a23022d5ae267f99ec4</Hash>
 </Codenesium>*/

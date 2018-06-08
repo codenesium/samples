@@ -3,84 +3,84 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using System;
 using Xunit;
-
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-	[Trait("Integration", " ProductModel")]
-	public class ProductModelTests
-	{
-		private TestServer server;
-		private ApiClient client;
+        [Trait("Integration", " ProductModel")]
+        public class ProductModelTests
+        {
+                private TestServer server;
+                private ApiClient client;
 
-		public ProductModelTests()
-		{}
+                public ProductModelTests()
+                {
+                }
 
-		[Fact]
-		public async void TestCreate()
-		{
-			// setup
-			this.server = new TestServer(new WebHostBuilder()
-			                             .UseStartup<TestStartup>());
+                [Fact]
+                public async void TestCreate()
+                {
+                        // setup
+                        this.server = new TestServer(new WebHostBuilder()
+                                                     .UseStartup<TestStartup>());
 
-			this.client = new ApiClient(this.server.CreateClient());
-		}
+                        this.client = new ApiClient(this.server.CreateClient());
+                }
 
-		[Fact]
-		public async void TestUpdate()
-		{
-			// setup
-			this.server = new TestServer(new WebHostBuilder()
-			                             .UseStartup<TestStartup>());
+                [Fact]
+                public async void TestUpdate()
+                {
+                        // setup
+                        this.server = new TestServer(new WebHostBuilder()
+                                                     .UseStartup<TestStartup>());
 
-			this.client = new ApiClient(this.server.CreateClient());
-		}
+                        this.client = new ApiClient(this.server.CreateClient());
+                }
 
-		[Fact]
-		public async void TestDelete()
-		{
-			// setup
-			this.server = new TestServer(new WebHostBuilder()
-			                             .UseStartup<TestStartup>());
+                [Fact]
+                public async void TestDelete()
+                {
+                        // setup
+                        this.server = new TestServer(new WebHostBuilder()
+                                                     .UseStartup<TestStartup>());
 
-			this.client = new ApiClient(this.server.CreateClient());
-		}
+                        this.client = new ApiClient(this.server.CreateClient());
+                }
 
-		[Fact]
-		public async void TestGetById()
-		{
-			// setup
-			this.server = new TestServer(new WebHostBuilder()
-			                             .UseStartup<TestStartup>());
+                [Fact]
+                public async void TestGetById()
+                {
+                        // setup
+                        this.server = new TestServer(new WebHostBuilder()
+                                                     .UseStartup<TestStartup>());
 
-			this.client = new ApiClient(this.server.CreateClient());
-		}
+                        this.client = new ApiClient(this.server.CreateClient());
+                }
 
-		[Fact]
-		public async void TestSearch()
-		{
-			// setup
-			this.server = new TestServer(new WebHostBuilder()
-			                             .UseStartup<TestStartup>());
+                [Fact]
+                public async void TestSearch()
+                {
+                        // setup
+                        this.server = new TestServer(new WebHostBuilder()
+                                                     .UseStartup<TestStartup>());
 
-			this.client = new ApiClient(this.server.CreateClient());
-		}
+                        this.client = new ApiClient(this.server.CreateClient());
+                }
 
-		[Fact]
-		public async void TestBulkInsert()
-		{
-			// setup
-			this.server = new TestServer(new WebHostBuilder()
-			                             .UseStartup<TestStartup>());
+                [Fact]
+                public async void TestBulkInsert()
+                {
+                        // setup
+                        this.server = new TestServer(new WebHostBuilder()
+                                                     .UseStartup<TestStartup>());
 
-			this.client = new ApiClient(this.server.CreateClient());
-		}
-	}
+                        this.client = new ApiClient(this.server.CreateClient());
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>57c3f481d3fff4f9034e0a0f55b241d8</Hash>
+    <Hash>540780a7be98208d3f4e3d536e6e32d5</Hash>
 </Codenesium>*/

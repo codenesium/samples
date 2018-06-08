@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductCostHistoryRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractProductCostHistoryRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractProductCostHistoryRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<ProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractProductCostHistoryRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<ProductCostHistory> Get(int productID)
-		{
-			return await this.GetById(productID);
-		}
+                public virtual Task<List<ProductCostHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<ProductCostHistory> Create(ProductCostHistory item)
-		{
-			this.Context.Set<ProductCostHistory>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<ProductCostHistory> Get(int productID)
+                {
+                        return await this.GetById(productID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<ProductCostHistory> Create(ProductCostHistory item)
+                {
+                        this.Context.Set<ProductCostHistory>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(ProductCostHistory item)
-		{
-			var entity = this.Context.Set<ProductCostHistory>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
-			if (entity == null)
-			{
-				this.Context.Set<ProductCostHistory>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(ProductCostHistory item)
+                {
+                        var entity = this.Context.Set<ProductCostHistory>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<ProductCostHistory>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int productID)
-		{
-			ProductCostHistory record = await this.GetById(productID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<ProductCostHistory>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int productID)
+                {
+                        ProductCostHistory record = await this.GetById(productID);
 
-		protected async Task<List<ProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<ProductCostHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<ProductCostHistory>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<ProductCostHistory>> Where(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<ProductCostHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<ProductCostHistory>> SearchLinqEF(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductCostHistory.ProductID)} ASC";
-			}
-			return await this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCostHistory>();
-		}
+                        return records;
+                }
 
-		private async Task<List<ProductCostHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductCostHistory.ProductID)} ASC";
-			}
+                private async Task<List<ProductCostHistory>> SearchLinqEF(Expression<Func<ProductCostHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductCostHistory.ProductID)} ASC";
+                        }
 
-			return await this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCostHistory>();
-		}
+                        return await this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCostHistory>();
+                }
 
-		private async Task<ProductCostHistory> GetById(int productID)
-		{
-			List<ProductCostHistory> records = await this.SearchLinqEF(x => x.ProductID == productID);
+                private async Task<List<ProductCostHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductCostHistory.ProductID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<ProductCostHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductCostHistory>();
+                }
+
+                private async Task<ProductCostHistory> GetById(int productID)
+                {
+                        List<ProductCostHistory> records = await this.SearchLinqEF(x => x.ProductID == productID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cb58ca7b41e55e7e75cfeb73d37e356c</Hash>
+    <Hash>d8ab08cc5c0c262ea3548778bf0ded86</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class CountryRequirementService: AbstractCountryRequirementService, ICountryRequirementService
-	{
-		public CountryRequirementService(
-			ILogger<CountryRequirementRepository> logger,
-			ICountryRequirementRepository countryRequirementRepository,
-			IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
-			IBOLCountryRequirementMapper BOLcountryRequirementMapper,
-			IDALCountryRequirementMapper DALcountryRequirementMapper)
-			: base(logger, countryRequirementRepository,
-			       countryRequirementModelValidator,
-			       BOLcountryRequirementMapper,
-			       DALcountryRequirementMapper)
-		{}
-	}
+        public class CountryRequirementService: AbstractCountryRequirementService, ICountryRequirementService
+        {
+                public CountryRequirementService(
+                        ILogger<CountryRequirementRepository> logger,
+                        ICountryRequirementRepository countryRequirementRepository,
+                        IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
+                        IBOLCountryRequirementMapper bolcountryRequirementMapper,
+                        IDALCountryRequirementMapper dalcountryRequirementMapper)
+                        : base(logger,
+                               countryRequirementRepository,
+                               countryRequirementModelValidator,
+                               bolcountryRequirementMapper,
+                               dalcountryRequirementMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a74f3e9fbd277042b0e2d484de8a074c</Hash>
+    <Hash>0cd2e23e2d001f0156ad7404ded0ed25</Hash>
 </Codenesium>*/

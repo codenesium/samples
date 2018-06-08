@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractProductSubcategoryService: AbstractService
-	{
-		private IProductSubcategoryRepository productSubcategoryRepository;
-		private IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator;
-		private IBOLProductSubcategoryMapper bolProductSubcategoryMapper;
-		private IDALProductSubcategoryMapper dalProductSubcategoryMapper;
-		private ILogger logger;
+        public abstract class AbstractProductSubcategoryService: AbstractService
+        {
+                private IProductSubcategoryRepository productSubcategoryRepository;
 
-		public AbstractProductSubcategoryService(
-			ILogger logger,
-			IProductSubcategoryRepository productSubcategoryRepository,
-			IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator,
-			IBOLProductSubcategoryMapper bolproductSubcategoryMapper,
-			IDALProductSubcategoryMapper dalproductSubcategoryMapper)
-			: base()
+                private IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator;
 
-		{
-			this.productSubcategoryRepository = productSubcategoryRepository;
-			this.productSubcategoryModelValidator = productSubcategoryModelValidator;
-			this.bolProductSubcategoryMapper = bolproductSubcategoryMapper;
-			this.dalProductSubcategoryMapper = dalproductSubcategoryMapper;
-			this.logger = logger;
-		}
+                private IBOLProductSubcategoryMapper bolProductSubcategoryMapper;
 
-		public virtual async Task<List<ApiProductSubcategoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.productSubcategoryRepository.All(skip, take, orderClause);
+                private IDALProductSubcategoryMapper dalProductSubcategoryMapper;
 
-			return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiProductSubcategoryResponseModel> Get(int productSubcategoryID)
-		{
-			var record = await productSubcategoryRepository.Get(productSubcategoryID);
+                public AbstractProductSubcategoryService(
+                        ILogger logger,
+                        IProductSubcategoryRepository productSubcategoryRepository,
+                        IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator,
+                        IBOLProductSubcategoryMapper bolproductSubcategoryMapper,
+                        IDALProductSubcategoryMapper dalproductSubcategoryMapper)
+                        : base()
 
-			return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
-		}
+                {
+                        this.productSubcategoryRepository = productSubcategoryRepository;
+                        this.productSubcategoryModelValidator = productSubcategoryModelValidator;
+                        this.bolProductSubcategoryMapper = bolproductSubcategoryMapper;
+                        this.dalProductSubcategoryMapper = dalproductSubcategoryMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiProductSubcategoryResponseModel>> Create(
-			ApiProductSubcategoryRequestModel model)
-		{
-			CreateResponse<ApiProductSubcategoryResponseModel> response = new CreateResponse<ApiProductSubcategoryResponseModel>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolProductSubcategoryMapper.MapModelToBO(default (int), model);
-				var record = await this.productSubcategoryRepository.Create(this.dalProductSubcategoryMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiProductSubcategoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.productSubcategoryRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int productSubcategoryID,
-			ApiProductSubcategoryRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateUpdateAsync(productSubcategoryID, model));
+                public virtual async Task<ApiProductSubcategoryResponseModel> Get(int productSubcategoryID)
+                {
+                        var record = await this.productSubcategoryRepository.Get(productSubcategoryID);
 
-			if (response.Success)
-			{
-				var bo = this.bolProductSubcategoryMapper.MapModelToBO(productSubcategoryID, model);
-				await this.productSubcategoryRepository.Update(this.dalProductSubcategoryMapper.MapBOToEF(bo));
-			}
+                        return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiProductSubcategoryResponseModel>> Create(
+                        ApiProductSubcategoryRequestModel model)
+                {
+                        CreateResponse<ApiProductSubcategoryResponseModel> response = new CreateResponse<ApiProductSubcategoryResponseModel>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductSubcategoryMapper.MapModelToBO(default (int), model);
+                                var record = await this.productSubcategoryRepository.Create(this.dalProductSubcategoryMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int productSubcategoryID)
-		{
-			ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateDeleteAsync(productSubcategoryID));
+                                response.SetRecord(this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.productSubcategoryRepository.Delete(productSubcategoryID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiProductSubcategoryResponseModel> GetName(string name)
-		{
-			ProductSubcategory record = await this.productSubcategoryRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        int productSubcategoryID,
+                        ApiProductSubcategoryRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateUpdateAsync(productSubcategoryID, model));
 
-			return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductSubcategoryMapper.MapModelToBO(productSubcategoryID, model);
+                                await this.productSubcategoryRepository.Update(this.dalProductSubcategoryMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int productSubcategoryID)
+                {
+                        ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateDeleteAsync(productSubcategoryID));
+
+                        if (response.Success)
+                        {
+                                await this.productSubcategoryRepository.Delete(productSubcategoryID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiProductSubcategoryResponseModel> GetName(string name)
+                {
+                        ProductSubcategory record = await this.productSubcategoryRepository.GetName(name);
+
+                        return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bac9795a6b923e6676804a3a4ea6df1a</Hash>
+    <Hash>5a9a8a20f65e15f58af8dcf0733e1b1d</Hash>
 </Codenesium>*/

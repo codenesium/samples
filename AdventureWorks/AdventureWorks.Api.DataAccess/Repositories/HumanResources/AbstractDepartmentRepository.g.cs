@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractDepartmentRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractDepartmentRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractDepartmentRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<Department>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractDepartmentRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<Department> Get(short departmentID)
-		{
-			return await this.GetById(departmentID);
-		}
+                public virtual Task<List<Department>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<Department> Create(Department item)
-		{
-			this.Context.Set<Department>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<Department> Get(short departmentID)
+                {
+                        return await this.GetById(departmentID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<Department> Create(Department item)
+                {
+                        this.Context.Set<Department>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(Department item)
-		{
-			var entity = this.Context.Set<Department>().Local.FirstOrDefault(x => x.DepartmentID == item.DepartmentID);
-			if (entity == null)
-			{
-				this.Context.Set<Department>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(Department item)
+                {
+                        var entity = this.Context.Set<Department>().Local.FirstOrDefault(x => x.DepartmentID == item.DepartmentID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<Department>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			short departmentID)
-		{
-			Department record = await this.GetById(departmentID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<Department>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        short departmentID)
+                {
+                        Department record = await this.GetById(departmentID);
 
-		public async Task<Department> GetName(string name)
-		{
-			var records = await this.SearchLinqEF(x => x.Name == name);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<Department>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
+                public async Task<Department> GetName(string name)
+                {
+                        var records = await this.SearchLinqEF(x => x.Name == name);
 
-		protected async Task<List<Department>> Where(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<Department> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<Department>> Where(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<Department> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<Department>> SearchLinqEF(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Department.DepartmentID)} ASC";
-			}
-			return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Department>();
-		}
+                        return records;
+                }
 
-		private async Task<List<Department>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Department.DepartmentID)} ASC";
-			}
+                private async Task<List<Department>> SearchLinqEF(Expression<Func<Department, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Department.DepartmentID)} ASC";
+                        }
 
-			return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Department>();
-		}
+                        return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Department>();
+                }
 
-		private async Task<Department> GetById(short departmentID)
-		{
-			List<Department> records = await this.SearchLinqEF(x => x.DepartmentID == departmentID);
+                private async Task<List<Department>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Department.DepartmentID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<Department>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Department>();
+                }
+
+                private async Task<Department> GetById(short departmentID)
+                {
+                        List<Department> records = await this.SearchLinqEF(x => x.DepartmentID == departmentID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>26407cc6fd8dbca15207e7c00e9abad2</Hash>
+    <Hash>fa17604a6bd62a621b92b3f87874a4ff</Hash>
 </Codenesium>*/

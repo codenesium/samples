@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public class DALChainMapper: AbstractDALChainMapper, IDALChainMapper
-	{
-		public DALChainMapper()
-		{}
-	}
+        public class DALChainMapper: DALAbstractChainMapper, IDALChainMapper
+        {
+                public DALChainMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>fe86f93c7f3422a9914340528180d459</Hash>
+    <Hash>37166a0c5c04c96d9f4c75e3d84e0aea</Hash>
 </Codenesium>*/

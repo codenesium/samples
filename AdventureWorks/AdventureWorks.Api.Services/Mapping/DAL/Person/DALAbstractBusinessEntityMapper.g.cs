@@ -3,54 +3,55 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractDALBusinessEntityMapper
-	{
-		public virtual BusinessEntity MapBOToEF(
-			BOBusinessEntity bo)
-		{
-			BusinessEntity efBusinessEntity = new BusinessEntity ();
+        public abstract class DALAbstractBusinessEntityMapper
+        {
+                public virtual BusinessEntity MapBOToEF(
+                        BOBusinessEntity bo)
+                {
+                        BusinessEntity efBusinessEntity = new BusinessEntity();
 
-			efBusinessEntity.SetProperties(
-				bo.BusinessEntityID,
-				bo.ModifiedDate,
-				bo.Rowguid);
-			return efBusinessEntity;
-		}
+                        efBusinessEntity.SetProperties(
+                                bo.BusinessEntityID,
+                                bo.ModifiedDate,
+                                bo.Rowguid);
+                        return efBusinessEntity;
+                }
 
-		public virtual BOBusinessEntity MapEFToBO(
-			BusinessEntity ef)
-		{
-			if (ef == null)
-			{
-				return null;
-			}
+                public virtual BOBusinessEntity MapEFToBO(
+                        BusinessEntity ef)
+                {
+                        if (ef == null)
+                        {
+                                return null;
+                        }
 
-			var bo = new BOBusinessEntity();
+                        var bo = new BOBusinessEntity();
 
-			bo.SetProperties(
-				ef.BusinessEntityID,
-				ef.ModifiedDate,
-				ef.Rowguid);
-			return bo;
-		}
+                        bo.SetProperties(
+                                ef.BusinessEntityID,
+                                ef.ModifiedDate,
+                                ef.Rowguid);
+                        return bo;
+                }
 
-		public virtual List<BOBusinessEntity> MapEFToBO(
-			List<BusinessEntity> records)
-		{
-			List<BOBusinessEntity> response = new List<BOBusinessEntity>();
+                public virtual List<BOBusinessEntity> MapEFToBO(
+                        List<BusinessEntity> records)
+                {
+                        List<BOBusinessEntity> response = new List<BOBusinessEntity>();
 
-			records.ForEach(r =>
-			{
-				response.Add(this.MapEFToBO(r));
-			});
+                        records.ForEach(r =>
+                        {
+                                response.Add(this.MapEFToBO(r));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7299436f3ea789ff47aba86064038b4a</Hash>
+    <Hash>412eff9f267c4cfdac62891ebe590ce2</Hash>
 </Codenesium>*/

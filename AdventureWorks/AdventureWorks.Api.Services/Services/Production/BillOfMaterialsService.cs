@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class BillOfMaterialsService: AbstractBillOfMaterialsService, IBillOfMaterialsService
-	{
-		public BillOfMaterialsService(
-			ILogger<BillOfMaterialsRepository> logger,
-			IBillOfMaterialsRepository billOfMaterialsRepository,
-			IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
-			IBOLBillOfMaterialsMapper BOLbillOfMaterialsMapper,
-			IDALBillOfMaterialsMapper DALbillOfMaterialsMapper)
-			: base(logger, billOfMaterialsRepository,
-			       billOfMaterialsModelValidator,
-			       BOLbillOfMaterialsMapper,
-			       DALbillOfMaterialsMapper)
-		{}
-	}
+        public class BillOfMaterialsService: AbstractBillOfMaterialsService, IBillOfMaterialsService
+        {
+                public BillOfMaterialsService(
+                        ILogger<BillOfMaterialsRepository> logger,
+                        IBillOfMaterialsRepository billOfMaterialsRepository,
+                        IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
+                        IBOLBillOfMaterialsMapper bolbillOfMaterialsMapper,
+                        IDALBillOfMaterialsMapper dalbillOfMaterialsMapper)
+                        : base(logger,
+                               billOfMaterialsRepository,
+                               billOfMaterialsModelValidator,
+                               bolbillOfMaterialsMapper,
+                               dalbillOfMaterialsMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7a05d1b7b68ac189b12390f3a6d0acdb</Hash>
+    <Hash>9cd7bb02d629e9df4e23f98ab19be1ea</Hash>
 </Codenesium>*/

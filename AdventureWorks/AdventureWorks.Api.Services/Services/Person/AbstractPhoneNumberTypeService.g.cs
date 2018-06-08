@@ -12,87 +12,93 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractPhoneNumberTypeService: AbstractService
-	{
-		private IPhoneNumberTypeRepository phoneNumberTypeRepository;
-		private IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator;
-		private IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper;
-		private IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper;
-		private ILogger logger;
+        public abstract class AbstractPhoneNumberTypeService: AbstractService
+        {
+                private IPhoneNumberTypeRepository phoneNumberTypeRepository;
 
-		public AbstractPhoneNumberTypeService(
-			ILogger logger,
-			IPhoneNumberTypeRepository phoneNumberTypeRepository,
-			IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
-			IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
-			IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper)
-			: base()
+                private IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator;
 
-		{
-			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
-			this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
-			this.bolPhoneNumberTypeMapper = bolphoneNumberTypeMapper;
-			this.dalPhoneNumberTypeMapper = dalphoneNumberTypeMapper;
-			this.logger = logger;
-		}
+                private IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper;
 
-		public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.phoneNumberTypeRepository.All(skip, take, orderClause);
+                private IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper;
 
-			return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID)
-		{
-			var record = await phoneNumberTypeRepository.Get(phoneNumberTypeID);
+                public AbstractPhoneNumberTypeService(
+                        ILogger logger,
+                        IPhoneNumberTypeRepository phoneNumberTypeRepository,
+                        IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
+                        IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
+                        IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper)
+                        : base()
 
-			return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record));
-		}
+                {
+                        this.phoneNumberTypeRepository = phoneNumberTypeRepository;
+                        this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
+                        this.bolPhoneNumberTypeMapper = bolphoneNumberTypeMapper;
+                        this.dalPhoneNumberTypeMapper = dalphoneNumberTypeMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
-			ApiPhoneNumberTypeRequestModel model)
-		{
-			CreateResponse<ApiPhoneNumberTypeResponseModel> response = new CreateResponse<ApiPhoneNumberTypeResponseModel>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.phoneNumberTypeRepository.Create(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.phoneNumberTypeRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int phoneNumberTypeID,
-			ApiPhoneNumberTypeRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model));
+                public virtual async Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID)
+                {
+                        var record = await this.phoneNumberTypeRepository.Get(phoneNumberTypeID);
 
-			if (response.Success)
-			{
-				var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
-				await this.phoneNumberTypeRepository.Update(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
-			}
+                        return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
+                        ApiPhoneNumberTypeRequestModel model)
+                {
+                        CreateResponse<ApiPhoneNumberTypeResponseModel> response = new CreateResponse<ApiPhoneNumberTypeResponseModel>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(default (int), model);
+                                var record = await this.phoneNumberTypeRepository.Create(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int phoneNumberTypeID)
-		{
-			ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateDeleteAsync(phoneNumberTypeID));
+                                response.SetRecord(this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.phoneNumberTypeRepository.Delete(phoneNumberTypeID);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int phoneNumberTypeID,
+                        ApiPhoneNumberTypeRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
+                                await this.phoneNumberTypeRepository.Update(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int phoneNumberTypeID)
+                {
+                        ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateDeleteAsync(phoneNumberTypeID));
+
+                        if (response.Success)
+                        {
+                                await this.phoneNumberTypeRepository.Delete(phoneNumberTypeID);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ffd405c306cd4c13e1e24bbe1e3d5852</Hash>
+    <Hash>010194781666f153f0ad23372e02df0a</Hash>
 </Codenesium>*/

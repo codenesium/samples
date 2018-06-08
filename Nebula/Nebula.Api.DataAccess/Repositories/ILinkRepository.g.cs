@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface ILinkRepository
-	{
-		Task<Link> Create(Link item);
+        public interface ILinkRepository
+        {
+                Task<Link> Create(Link item);
 
-		Task Update(Link item);
+                Task Update(Link item);
 
-		Task Delete(int id);
+                Task Delete(int id);
 
-		Task<Link> Get(int id);
+                Task<Link> Get(int id);
 
-		Task<List<Link>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<Link>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>d4d9d6434049f896d4bdacf1155c9bf1</Hash>
+    <Hash>0245ac53aec44f21cf3803df99635c79</Hash>
 </Codenesium>*/

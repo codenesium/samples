@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCountryRegionRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractCountryRegionRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractCountryRegionRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<CountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractCountryRegionRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<CountryRegion> Get(string countryRegionCode)
-		{
-			return await this.GetById(countryRegionCode);
-		}
+                public virtual Task<List<CountryRegion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<CountryRegion> Create(CountryRegion item)
-		{
-			this.Context.Set<CountryRegion>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<CountryRegion> Get(string countryRegionCode)
+                {
+                        return await this.GetById(countryRegionCode);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<CountryRegion> Create(CountryRegion item)
+                {
+                        this.Context.Set<CountryRegion>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(CountryRegion item)
-		{
-			var entity = this.Context.Set<CountryRegion>().Local.FirstOrDefault(x => x.CountryRegionCode == item.CountryRegionCode);
-			if (entity == null)
-			{
-				this.Context.Set<CountryRegion>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(CountryRegion item)
+                {
+                        var entity = this.Context.Set<CountryRegion>().Local.FirstOrDefault(x => x.CountryRegionCode == item.CountryRegionCode);
+                        if (entity == null)
+                        {
+                                this.Context.Set<CountryRegion>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			string countryRegionCode)
-		{
-			CountryRegion record = await this.GetById(countryRegionCode);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<CountryRegion>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        string countryRegionCode)
+                {
+                        CountryRegion record = await this.GetById(countryRegionCode);
 
-		public async Task<CountryRegion> GetName(string name)
-		{
-			var records = await this.SearchLinqEF(x => x.Name == name);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<CountryRegion>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
+                public async Task<CountryRegion> GetName(string name)
+                {
+                        var records = await this.SearchLinqEF(x => x.Name == name);
 
-		protected async Task<List<CountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<CountryRegion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<CountryRegion>> Where(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<CountryRegion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<CountryRegion>> SearchLinqEF(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(CountryRegion.CountryRegionCode)} ASC";
-			}
-			return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegion>();
-		}
+                        return records;
+                }
 
-		private async Task<List<CountryRegion>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(CountryRegion.CountryRegionCode)} ASC";
-			}
+                private async Task<List<CountryRegion>> SearchLinqEF(Expression<Func<CountryRegion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(CountryRegion.CountryRegionCode)} ASC";
+                        }
 
-			return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegion>();
-		}
+                        return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegion>();
+                }
 
-		private async Task<CountryRegion> GetById(string countryRegionCode)
-		{
-			List<CountryRegion> records = await this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode);
+                private async Task<List<CountryRegion>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(CountryRegion.CountryRegionCode)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<CountryRegion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegion>();
+                }
+
+                private async Task<CountryRegion> GetById(string countryRegionCode)
+                {
+                        List<CountryRegion> records = await this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5b0a1e9afa63744540d0b5bb442e2100</Hash>
+    <Hash>96ddf99fe0f3b51a20e3045f681a41bc</Hash>
 </Codenesium>*/

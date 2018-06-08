@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLSpecialOfferProductMapper
-	{
-		BOSpecialOfferProduct MapModelToBO(
-			int specialOfferID,
-			ApiSpecialOfferProductRequestModel model);
+        public interface IBOLSpecialOfferProductMapper
+        {
+                BOSpecialOfferProduct MapModelToBO(
+                        int specialOfferID,
+                        ApiSpecialOfferProductRequestModel model);
 
-		ApiSpecialOfferProductResponseModel MapBOToModel(
-			BOSpecialOfferProduct boSpecialOfferProduct);
+                ApiSpecialOfferProductResponseModel MapBOToModel(
+                        BOSpecialOfferProduct boSpecialOfferProduct);
 
-		List<ApiSpecialOfferProductResponseModel> MapBOToModel(
-			List<BOSpecialOfferProduct> items);
-	}
+                List<ApiSpecialOfferProductResponseModel> MapBOToModel(
+                        List<BOSpecialOfferProduct> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>7e4cb2457bf3b5689f74ef6daa887d98</Hash>
+    <Hash>0d74e751195102974d69c631781925a8</Hash>
 </Codenesium>*/

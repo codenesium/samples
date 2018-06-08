@@ -3,161 +3,163 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSalesPersonRequestModel: AbstractApiRequestModel
-	{
-		public ApiSalesPersonRequestModel() : base()
-		{}
+        public partial class ApiSalesPersonRequestModel: AbstractApiRequestModel
+        {
+                public ApiSalesPersonRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			decimal bonus,
-			decimal commissionPct,
-			DateTime modifiedDate,
-			Guid rowguid,
-			decimal salesLastYear,
-			Nullable<decimal> salesQuota,
-			decimal salesYTD,
-			Nullable<int> territoryID)
-		{
-			this.Bonus = bonus.ToDecimal();
-			this.CommissionPct = commissionPct.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Rowguid = rowguid.ToGuid();
-			this.SalesLastYear = salesLastYear.ToDecimal();
-			this.SalesQuota = salesQuota.ToNullableDecimal();
-			this.SalesYTD = salesYTD.ToDecimal();
-			this.TerritoryID = territoryID.ToNullableInt();
-		}
+                public void SetProperties(
+                        decimal bonus,
+                        decimal commissionPct,
+                        DateTime modifiedDate,
+                        Guid rowguid,
+                        decimal salesLastYear,
+                        Nullable<decimal> salesQuota,
+                        decimal salesYTD,
+                        Nullable<int> territoryID)
+                {
+                        this.Bonus = bonus;
+                        this.CommissionPct = commissionPct;
+                        this.ModifiedDate = modifiedDate;
+                        this.Rowguid = rowguid;
+                        this.SalesLastYear = salesLastYear;
+                        this.SalesQuota = salesQuota;
+                        this.SalesYTD = salesYTD;
+                        this.TerritoryID = territoryID;
+                }
 
-		private decimal bonus;
+                private decimal bonus;
 
-		[Required]
-		public decimal Bonus
-		{
-			get
-			{
-				return this.bonus;
-			}
+                [Required]
+                public decimal Bonus
+                {
+                        get
+                        {
+                                return this.bonus;
+                        }
 
-			set
-			{
-				this.bonus = value;
-			}
-		}
+                        set
+                        {
+                                this.bonus = value;
+                        }
+                }
 
-		private decimal commissionPct;
+                private decimal commissionPct;
 
-		[Required]
-		public decimal CommissionPct
-		{
-			get
-			{
-				return this.commissionPct;
-			}
+                [Required]
+                public decimal CommissionPct
+                {
+                        get
+                        {
+                                return this.commissionPct;
+                        }
 
-			set
-			{
-				this.commissionPct = value;
-			}
-		}
+                        set
+                        {
+                                this.commissionPct = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
 
-		private decimal salesLastYear;
+                private decimal salesLastYear;
 
-		[Required]
-		public decimal SalesLastYear
-		{
-			get
-			{
-				return this.salesLastYear;
-			}
+                [Required]
+                public decimal SalesLastYear
+                {
+                        get
+                        {
+                                return this.salesLastYear;
+                        }
 
-			set
-			{
-				this.salesLastYear = value;
-			}
-		}
+                        set
+                        {
+                                this.salesLastYear = value;
+                        }
+                }
 
-		private Nullable<decimal> salesQuota;
+                private Nullable<decimal> salesQuota;
 
-		public Nullable<decimal> SalesQuota
-		{
-			get
-			{
-				return this.salesQuota.IsEmptyOrZeroOrNull() ? null : this.salesQuota;
-			}
+                public Nullable<decimal> SalesQuota
+                {
+                        get
+                        {
+                                return this.salesQuota.IsEmptyOrZeroOrNull() ? null : this.salesQuota;
+                        }
 
-			set
-			{
-				this.salesQuota = value;
-			}
-		}
+                        set
+                        {
+                                this.salesQuota = value;
+                        }
+                }
 
-		private decimal salesYTD;
+                private decimal salesYTD;
 
-		[Required]
-		public decimal SalesYTD
-		{
-			get
-			{
-				return this.salesYTD;
-			}
+                [Required]
+                public decimal SalesYTD
+                {
+                        get
+                        {
+                                return this.salesYTD;
+                        }
 
-			set
-			{
-				this.salesYTD = value;
-			}
-		}
+                        set
+                        {
+                                this.salesYTD = value;
+                        }
+                }
 
-		private Nullable<int> territoryID;
+                private Nullable<int> territoryID;
 
-		public Nullable<int> TerritoryID
-		{
-			get
-			{
-				return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
-			}
+                public Nullable<int> TerritoryID
+                {
+                        get
+                        {
+                                return this.territoryID.IsEmptyOrZeroOrNull() ? null : this.territoryID;
+                        }
 
-			set
-			{
-				this.territoryID = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.territoryID = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d10e0acabc4ac266ec5f126a4ccbb6f1</Hash>
+    <Hash>e478ea8e8f0ccbac02375943db89c0be</Hash>
 </Codenesium>*/

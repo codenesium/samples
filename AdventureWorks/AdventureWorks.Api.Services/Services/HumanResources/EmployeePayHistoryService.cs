@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class EmployeePayHistoryService: AbstractEmployeePayHistoryService, IEmployeePayHistoryService
-	{
-		public EmployeePayHistoryService(
-			ILogger<EmployeePayHistoryRepository> logger,
-			IEmployeePayHistoryRepository employeePayHistoryRepository,
-			IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
-			IBOLEmployeePayHistoryMapper BOLemployeePayHistoryMapper,
-			IDALEmployeePayHistoryMapper DALemployeePayHistoryMapper)
-			: base(logger, employeePayHistoryRepository,
-			       employeePayHistoryModelValidator,
-			       BOLemployeePayHistoryMapper,
-			       DALemployeePayHistoryMapper)
-		{}
-	}
+        public class EmployeePayHistoryService: AbstractEmployeePayHistoryService, IEmployeePayHistoryService
+        {
+                public EmployeePayHistoryService(
+                        ILogger<EmployeePayHistoryRepository> logger,
+                        IEmployeePayHistoryRepository employeePayHistoryRepository,
+                        IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
+                        IBOLEmployeePayHistoryMapper bolemployeePayHistoryMapper,
+                        IDALEmployeePayHistoryMapper dalemployeePayHistoryMapper)
+                        : base(logger,
+                               employeePayHistoryRepository,
+                               employeePayHistoryModelValidator,
+                               bolemployeePayHistoryMapper,
+                               dalemployeePayHistoryMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7dede1f4a728d58ea7a164eaeb1ab0ec</Hash>
+    <Hash>fddf78d53784c0da262a9cf16d93f069</Hash>
 </Codenesium>*/

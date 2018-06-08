@@ -12,28 +12,28 @@ using NebulaNS.Api.Services;
 
 namespace NebulaNS.Api.Web
 {
-	[Route("api/teams")]
-	[ApiVersion("1.0")]
-	public class TeamController: AbstractTeamController
-	{
-		public TeamController(
-			ServiceSettings settings,
-			ILogger<TeamController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ITeamService teamService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       teamService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/teams")]
+        [ApiVersion("1.0")]
+        public class TeamController: AbstractTeamController
+        {
+                public TeamController(
+                        ServiceSettings settings,
+                        ILogger<TeamController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ITeamService teamService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               teamService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>74ba2cb855b5450d6c6592b6548f253d</Hash>
+    <Hash>ddd5a65543c8a82454a896856a9279eb</Hash>
 </Codenesium>*/

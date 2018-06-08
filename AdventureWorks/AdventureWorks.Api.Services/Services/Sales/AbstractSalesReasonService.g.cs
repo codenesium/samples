@@ -12,87 +12,93 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractSalesReasonService: AbstractService
-	{
-		private ISalesReasonRepository salesReasonRepository;
-		private IApiSalesReasonRequestModelValidator salesReasonModelValidator;
-		private IBOLSalesReasonMapper bolSalesReasonMapper;
-		private IDALSalesReasonMapper dalSalesReasonMapper;
-		private ILogger logger;
+        public abstract class AbstractSalesReasonService: AbstractService
+        {
+                private ISalesReasonRepository salesReasonRepository;
 
-		public AbstractSalesReasonService(
-			ILogger logger,
-			ISalesReasonRepository salesReasonRepository,
-			IApiSalesReasonRequestModelValidator salesReasonModelValidator,
-			IBOLSalesReasonMapper bolsalesReasonMapper,
-			IDALSalesReasonMapper dalsalesReasonMapper)
-			: base()
+                private IApiSalesReasonRequestModelValidator salesReasonModelValidator;
 
-		{
-			this.salesReasonRepository = salesReasonRepository;
-			this.salesReasonModelValidator = salesReasonModelValidator;
-			this.bolSalesReasonMapper = bolsalesReasonMapper;
-			this.dalSalesReasonMapper = dalsalesReasonMapper;
-			this.logger = logger;
-		}
+                private IBOLSalesReasonMapper bolSalesReasonMapper;
 
-		public virtual async Task<List<ApiSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.salesReasonRepository.All(skip, take, orderClause);
+                private IDALSalesReasonMapper dalSalesReasonMapper;
 
-			return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiSalesReasonResponseModel> Get(int salesReasonID)
-		{
-			var record = await salesReasonRepository.Get(salesReasonID);
+                public AbstractSalesReasonService(
+                        ILogger logger,
+                        ISalesReasonRepository salesReasonRepository,
+                        IApiSalesReasonRequestModelValidator salesReasonModelValidator,
+                        IBOLSalesReasonMapper bolsalesReasonMapper,
+                        IDALSalesReasonMapper dalsalesReasonMapper)
+                        : base()
 
-			return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record));
-		}
+                {
+                        this.salesReasonRepository = salesReasonRepository;
+                        this.salesReasonModelValidator = salesReasonModelValidator;
+                        this.bolSalesReasonMapper = bolsalesReasonMapper;
+                        this.dalSalesReasonMapper = dalsalesReasonMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
-			ApiSalesReasonRequestModel model)
-		{
-			CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolSalesReasonMapper.MapModelToBO(default (int), model);
-				var record = await this.salesReasonRepository.Create(this.dalSalesReasonMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.salesReasonRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int salesReasonID,
-			ApiSalesReasonRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.salesReasonModelValidator.ValidateUpdateAsync(salesReasonID, model));
+                public virtual async Task<ApiSalesReasonResponseModel> Get(int salesReasonID)
+                {
+                        var record = await this.salesReasonRepository.Get(salesReasonID);
 
-			if (response.Success)
-			{
-				var bo = this.bolSalesReasonMapper.MapModelToBO(salesReasonID, model);
-				await this.salesReasonRepository.Update(this.dalSalesReasonMapper.MapBOToEF(bo));
-			}
+                        return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
+                        ApiSalesReasonRequestModel model)
+                {
+                        CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolSalesReasonMapper.MapModelToBO(default (int), model);
+                                var record = await this.salesReasonRepository.Create(this.dalSalesReasonMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int salesReasonID)
-		{
-			ActionResponse response = new ActionResponse(await this.salesReasonModelValidator.ValidateDeleteAsync(salesReasonID));
+                                response.SetRecord(this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.salesReasonRepository.Delete(salesReasonID);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int salesReasonID,
+                        ApiSalesReasonRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.salesReasonModelValidator.ValidateUpdateAsync(salesReasonID, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolSalesReasonMapper.MapModelToBO(salesReasonID, model);
+                                await this.salesReasonRepository.Update(this.dalSalesReasonMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int salesReasonID)
+                {
+                        ActionResponse response = new ActionResponse(await this.salesReasonModelValidator.ValidateDeleteAsync(salesReasonID));
+
+                        if (response.Success)
+                        {
+                                await this.salesReasonRepository.Delete(salesReasonID);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>30f0f1d718b426f6f5e6cae7b76e4351</Hash>
+    <Hash>7e9acb465dd9346bfb3659090be86bdd</Hash>
 </Codenesium>*/

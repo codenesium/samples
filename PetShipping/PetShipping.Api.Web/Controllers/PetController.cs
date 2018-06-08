@@ -12,28 +12,28 @@ using PetShippingNS.Api.Services;
 
 namespace PetShippingNS.Api.Web
 {
-	[Route("api/pets")]
-	[ApiVersion("1.0")]
-	public class PetController: AbstractPetController
-	{
-		public PetController(
-			ServiceSettings settings,
-			ILogger<PetController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IPetService petService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       petService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/pets")]
+        [ApiVersion("1.0")]
+        public class PetController: AbstractPetController
+        {
+                public PetController(
+                        ServiceSettings settings,
+                        ILogger<PetController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IPetService petService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               petService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>38c05a5d995fbbcf732acdd6e05a6178</Hash>
+    <Hash>11933d407c7a7d7ecb39a7a5419844be</Hash>
 </Codenesium>*/

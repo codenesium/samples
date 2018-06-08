@@ -3,127 +3,129 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class ApiFamilyRequestModel: AbstractApiRequestModel
-	{
-		public ApiFamilyRequestModel() : base()
-		{}
+        public partial class ApiFamilyRequestModel: AbstractApiRequestModel
+        {
+                public ApiFamilyRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string notes,
-			string pcEmail,
-			string pcFirstName,
-			string pcLastName,
-			string pcPhone,
-			int studioId)
-		{
-			this.Notes = notes;
-			this.PcEmail = pcEmail;
-			this.PcFirstName = pcFirstName;
-			this.PcLastName = pcLastName;
-			this.PcPhone = pcPhone;
-			this.StudioId = studioId.ToInt();
-		}
+                public void SetProperties(
+                        string notes,
+                        string pcEmail,
+                        string pcFirstName,
+                        string pcLastName,
+                        string pcPhone,
+                        int studioId)
+                {
+                        this.Notes = notes;
+                        this.PcEmail = pcEmail;
+                        this.PcFirstName = pcFirstName;
+                        this.PcLastName = pcLastName;
+                        this.PcPhone = pcPhone;
+                        this.StudioId = studioId;
+                }
 
-		private string notes;
+                private string notes;
 
-		[Required]
-		public string Notes
-		{
-			get
-			{
-				return this.notes;
-			}
+                [Required]
+                public string Notes
+                {
+                        get
+                        {
+                                return this.notes;
+                        }
 
-			set
-			{
-				this.notes = value;
-			}
-		}
+                        set
+                        {
+                                this.notes = value;
+                        }
+                }
 
-		private string pcEmail;
+                private string pcEmail;
 
-		[Required]
-		public string PcEmail
-		{
-			get
-			{
-				return this.pcEmail;
-			}
+                [Required]
+                public string PcEmail
+                {
+                        get
+                        {
+                                return this.pcEmail;
+                        }
 
-			set
-			{
-				this.pcEmail = value;
-			}
-		}
+                        set
+                        {
+                                this.pcEmail = value;
+                        }
+                }
 
-		private string pcFirstName;
+                private string pcFirstName;
 
-		[Required]
-		public string PcFirstName
-		{
-			get
-			{
-				return this.pcFirstName;
-			}
+                [Required]
+                public string PcFirstName
+                {
+                        get
+                        {
+                                return this.pcFirstName;
+                        }
 
-			set
-			{
-				this.pcFirstName = value;
-			}
-		}
+                        set
+                        {
+                                this.pcFirstName = value;
+                        }
+                }
 
-		private string pcLastName;
+                private string pcLastName;
 
-		[Required]
-		public string PcLastName
-		{
-			get
-			{
-				return this.pcLastName;
-			}
+                [Required]
+                public string PcLastName
+                {
+                        get
+                        {
+                                return this.pcLastName;
+                        }
 
-			set
-			{
-				this.pcLastName = value;
-			}
-		}
+                        set
+                        {
+                                this.pcLastName = value;
+                        }
+                }
 
-		private string pcPhone;
+                private string pcPhone;
 
-		[Required]
-		public string PcPhone
-		{
-			get
-			{
-				return this.pcPhone;
-			}
+                [Required]
+                public string PcPhone
+                {
+                        get
+                        {
+                                return this.pcPhone;
+                        }
 
-			set
-			{
-				this.pcPhone = value;
-			}
-		}
+                        set
+                        {
+                                this.pcPhone = value;
+                        }
+                }
 
-		private int studioId;
+                private int studioId;
 
-		[Required]
-		public int StudioId
-		{
-			get
-			{
-				return this.studioId;
-			}
+                [Required]
+                public int StudioId
+                {
+                        get
+                        {
+                                return this.studioId;
+                        }
 
-			set
-			{
-				this.studioId = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.studioId = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3f97b5c35dba64811394e4ab95f13426</Hash>
+    <Hash>5c615a21c062ab9b7c27e409f7f771fb</Hash>
 </Codenesium>*/

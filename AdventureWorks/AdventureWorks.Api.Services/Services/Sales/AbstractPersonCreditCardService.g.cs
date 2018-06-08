@@ -12,87 +12,93 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractPersonCreditCardService: AbstractService
-	{
-		private IPersonCreditCardRepository personCreditCardRepository;
-		private IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator;
-		private IBOLPersonCreditCardMapper bolPersonCreditCardMapper;
-		private IDALPersonCreditCardMapper dalPersonCreditCardMapper;
-		private ILogger logger;
+        public abstract class AbstractPersonCreditCardService: AbstractService
+        {
+                private IPersonCreditCardRepository personCreditCardRepository;
 
-		public AbstractPersonCreditCardService(
-			ILogger logger,
-			IPersonCreditCardRepository personCreditCardRepository,
-			IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator,
-			IBOLPersonCreditCardMapper bolpersonCreditCardMapper,
-			IDALPersonCreditCardMapper dalpersonCreditCardMapper)
-			: base()
+                private IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator;
 
-		{
-			this.personCreditCardRepository = personCreditCardRepository;
-			this.personCreditCardModelValidator = personCreditCardModelValidator;
-			this.bolPersonCreditCardMapper = bolpersonCreditCardMapper;
-			this.dalPersonCreditCardMapper = dalpersonCreditCardMapper;
-			this.logger = logger;
-		}
+                private IBOLPersonCreditCardMapper bolPersonCreditCardMapper;
 
-		public virtual async Task<List<ApiPersonCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.personCreditCardRepository.All(skip, take, orderClause);
+                private IDALPersonCreditCardMapper dalPersonCreditCardMapper;
 
-			return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPersonCreditCardResponseModel> Get(int businessEntityID)
-		{
-			var record = await personCreditCardRepository.Get(businessEntityID);
+                public AbstractPersonCreditCardService(
+                        ILogger logger,
+                        IPersonCreditCardRepository personCreditCardRepository,
+                        IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator,
+                        IBOLPersonCreditCardMapper bolpersonCreditCardMapper,
+                        IDALPersonCreditCardMapper dalpersonCreditCardMapper)
+                        : base()
 
-			return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record));
-		}
+                {
+                        this.personCreditCardRepository = personCreditCardRepository;
+                        this.personCreditCardModelValidator = personCreditCardModelValidator;
+                        this.bolPersonCreditCardMapper = bolpersonCreditCardMapper;
+                        this.dalPersonCreditCardMapper = dalpersonCreditCardMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPersonCreditCardResponseModel>> Create(
-			ApiPersonCreditCardRequestModel model)
-		{
-			CreateResponse<ApiPersonCreditCardResponseModel> response = new CreateResponse<ApiPersonCreditCardResponseModel>(await this.personCreditCardModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPersonCreditCardMapper.MapModelToBO(default (int), model);
-				var record = await this.personCreditCardRepository.Create(this.dalPersonCreditCardMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPersonCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.personCreditCardRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int businessEntityID,
-			ApiPersonCreditCardRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model));
+                public virtual async Task<ApiPersonCreditCardResponseModel> Get(int businessEntityID)
+                {
+                        var record = await this.personCreditCardRepository.Get(businessEntityID);
 
-			if (response.Success)
-			{
-				var bo = this.bolPersonCreditCardMapper.MapModelToBO(businessEntityID, model);
-				await this.personCreditCardRepository.Update(this.dalPersonCreditCardMapper.MapBOToEF(bo));
-			}
+                        return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPersonCreditCardResponseModel>> Create(
+                        ApiPersonCreditCardRequestModel model)
+                {
+                        CreateResponse<ApiPersonCreditCardResponseModel> response = new CreateResponse<ApiPersonCreditCardResponseModel>(await this.personCreditCardModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPersonCreditCardMapper.MapModelToBO(default (int), model);
+                                var record = await this.personCreditCardRepository.Create(this.dalPersonCreditCardMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int businessEntityID)
-		{
-			ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateDeleteAsync(businessEntityID));
+                                response.SetRecord(this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.personCreditCardRepository.Delete(businessEntityID);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int businessEntityID,
+                        ApiPersonCreditCardRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPersonCreditCardMapper.MapModelToBO(businessEntityID, model);
+                                await this.personCreditCardRepository.Update(this.dalPersonCreditCardMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int businessEntityID)
+                {
+                        ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateDeleteAsync(businessEntityID));
+
+                        if (response.Success)
+                        {
+                                await this.personCreditCardRepository.Delete(businessEntityID);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>267ec9248cd8169d1ff63e245a75aa9b</Hash>
+    <Hash>f065c9236f95cf31e958ef6b8be97ca1</Hash>
 </Codenesium>*/

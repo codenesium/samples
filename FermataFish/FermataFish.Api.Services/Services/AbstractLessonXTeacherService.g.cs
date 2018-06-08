@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractLessonXTeacherService: AbstractService
-	{
-		private ILessonXTeacherRepository lessonXTeacherRepository;
-		private IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator;
-		private IBOLLessonXTeacherMapper bolLessonXTeacherMapper;
-		private IDALLessonXTeacherMapper dalLessonXTeacherMapper;
-		private ILogger logger;
+        public abstract class AbstractLessonXTeacherService: AbstractService
+        {
+                private ILessonXTeacherRepository lessonXTeacherRepository;
 
-		public AbstractLessonXTeacherService(
-			ILogger logger,
-			ILessonXTeacherRepository lessonXTeacherRepository,
-			IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
-			IBOLLessonXTeacherMapper bollessonXTeacherMapper,
-			IDALLessonXTeacherMapper dallessonXTeacherMapper)
-			: base()
+                private IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator;
 
-		{
-			this.lessonXTeacherRepository = lessonXTeacherRepository;
-			this.lessonXTeacherModelValidator = lessonXTeacherModelValidator;
-			this.bolLessonXTeacherMapper = bollessonXTeacherMapper;
-			this.dalLessonXTeacherMapper = dallessonXTeacherMapper;
-			this.logger = logger;
-		}
+                private IBOLLessonXTeacherMapper bolLessonXTeacherMapper;
 
-		public virtual async Task<List<ApiLessonXTeacherResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.lessonXTeacherRepository.All(skip, take, orderClause);
+                private IDALLessonXTeacherMapper dalLessonXTeacherMapper;
 
-			return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiLessonXTeacherResponseModel> Get(int id)
-		{
-			var record = await lessonXTeacherRepository.Get(id);
+                public AbstractLessonXTeacherService(
+                        ILogger logger,
+                        ILessonXTeacherRepository lessonXTeacherRepository,
+                        IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
+                        IBOLLessonXTeacherMapper bollessonXTeacherMapper,
+                        IDALLessonXTeacherMapper dallessonXTeacherMapper)
+                        : base()
 
-			return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record));
-		}
+                {
+                        this.lessonXTeacherRepository = lessonXTeacherRepository;
+                        this.lessonXTeacherModelValidator = lessonXTeacherModelValidator;
+                        this.bolLessonXTeacherMapper = bollessonXTeacherMapper;
+                        this.dalLessonXTeacherMapper = dallessonXTeacherMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiLessonXTeacherResponseModel>> Create(
-			ApiLessonXTeacherRequestModel model)
-		{
-			CreateResponse<ApiLessonXTeacherResponseModel> response = new CreateResponse<ApiLessonXTeacherResponseModel>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolLessonXTeacherMapper.MapModelToBO(default (int), model);
-				var record = await this.lessonXTeacherRepository.Create(this.dalLessonXTeacherMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiLessonXTeacherResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.lessonXTeacherRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiLessonXTeacherRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiLessonXTeacherResponseModel> Get(int id)
+                {
+                        var record = await this.lessonXTeacherRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolLessonXTeacherMapper.MapModelToBO(id, model);
-				await this.lessonXTeacherRepository.Update(this.dalLessonXTeacherMapper.MapBOToEF(bo));
-			}
+                        return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiLessonXTeacherResponseModel>> Create(
+                        ApiLessonXTeacherRequestModel model)
+                {
+                        CreateResponse<ApiLessonXTeacherResponseModel> response = new CreateResponse<ApiLessonXTeacherResponseModel>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolLessonXTeacherMapper.MapModelToBO(default (int), model);
+                                var record = await this.lessonXTeacherRepository.Create(this.dalLessonXTeacherMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.lessonXTeacherRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiLessonXTeacherRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolLessonXTeacherMapper.MapModelToBO(id, model);
+                                await this.lessonXTeacherRepository.Update(this.dalLessonXTeacherMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.lessonXTeacherRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6aac5ff1d020480fe03a3cae49a68b87</Hash>
+    <Hash>7764f7219ff5317838f6113334a4b821</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class MachineRefTeamService: AbstractMachineRefTeamService, IMachineRefTeamService
-	{
-		public MachineRefTeamService(
-			ILogger<MachineRefTeamRepository> logger,
-			IMachineRefTeamRepository machineRefTeamRepository,
-			IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
-			IBOLMachineRefTeamMapper BOLmachineRefTeamMapper,
-			IDALMachineRefTeamMapper DALmachineRefTeamMapper)
-			: base(logger, machineRefTeamRepository,
-			       machineRefTeamModelValidator,
-			       BOLmachineRefTeamMapper,
-			       DALmachineRefTeamMapper)
-		{}
-	}
+        public class MachineRefTeamService: AbstractMachineRefTeamService, IMachineRefTeamService
+        {
+                public MachineRefTeamService(
+                        ILogger<MachineRefTeamRepository> logger,
+                        IMachineRefTeamRepository machineRefTeamRepository,
+                        IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
+                        IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
+                        IDALMachineRefTeamMapper dalmachineRefTeamMapper)
+                        : base(logger,
+                               machineRefTeamRepository,
+                               machineRefTeamModelValidator,
+                               bolmachineRefTeamMapper,
+                               dalmachineRefTeamMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8879139435e8b20ca885a8a98c14e072</Hash>
+    <Hash>33484fb545c267b322840d220dc4299b</Hash>
 </Codenesium>*/

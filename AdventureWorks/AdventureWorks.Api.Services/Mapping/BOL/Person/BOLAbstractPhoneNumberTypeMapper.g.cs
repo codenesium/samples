@@ -2,49 +2,50 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractPhoneNumberTypeMapper
-	{
-		public virtual BOPhoneNumberType MapModelToBO(
-			int phoneNumberTypeID,
-			ApiPhoneNumberTypeRequestModel model
-			)
-		{
-			BOPhoneNumberType boPhoneNumberType = new BOPhoneNumberType();
+        public abstract class BOLAbstractPhoneNumberTypeMapper
+        {
+                public virtual BOPhoneNumberType MapModelToBO(
+                        int phoneNumberTypeID,
+                        ApiPhoneNumberTypeRequestModel model
+                        )
+                {
+                        BOPhoneNumberType boPhoneNumberType = new BOPhoneNumberType();
 
-			boPhoneNumberType.SetProperties(
-				phoneNumberTypeID,
-				model.ModifiedDate,
-				model.Name);
-			return boPhoneNumberType;
-		}
+                        boPhoneNumberType.SetProperties(
+                                phoneNumberTypeID,
+                                model.ModifiedDate,
+                                model.Name);
+                        return boPhoneNumberType;
+                }
 
-		public virtual ApiPhoneNumberTypeResponseModel MapBOToModel(
-			BOPhoneNumberType boPhoneNumberType)
-		{
-			var model = new ApiPhoneNumberTypeResponseModel();
+                public virtual ApiPhoneNumberTypeResponseModel MapBOToModel(
+                        BOPhoneNumberType boPhoneNumberType)
+                {
+                        var model = new ApiPhoneNumberTypeResponseModel();
 
-			model.SetProperties(boPhoneNumberType.ModifiedDate, boPhoneNumberType.Name, boPhoneNumberType.PhoneNumberTypeID);
+                        model.SetProperties(boPhoneNumberType.ModifiedDate, boPhoneNumberType.Name, boPhoneNumberType.PhoneNumberTypeID);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiPhoneNumberTypeResponseModel> MapBOToModel(
-			List<BOPhoneNumberType> items)
-		{
-			List<ApiPhoneNumberTypeResponseModel> response = new List<ApiPhoneNumberTypeResponseModel>();
+                public virtual List<ApiPhoneNumberTypeResponseModel> MapBOToModel(
+                        List<BOPhoneNumberType> items)
+                {
+                        List<ApiPhoneNumberTypeResponseModel> response = new List<ApiPhoneNumberTypeResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>26b85fc77ae87e63415bdd225fb62efc</Hash>
+    <Hash>b157175e09184204239445040ee59259</Hash>
 </Codenesium>*/

@@ -12,87 +12,93 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public abstract class AbstractLinkLogService: AbstractService
-	{
-		private ILinkLogRepository linkLogRepository;
-		private IApiLinkLogRequestModelValidator linkLogModelValidator;
-		private IBOLLinkLogMapper bolLinkLogMapper;
-		private IDALLinkLogMapper dalLinkLogMapper;
-		private ILogger logger;
+        public abstract class AbstractLinkLogService: AbstractService
+        {
+                private ILinkLogRepository linkLogRepository;
 
-		public AbstractLinkLogService(
-			ILogger logger,
-			ILinkLogRepository linkLogRepository,
-			IApiLinkLogRequestModelValidator linkLogModelValidator,
-			IBOLLinkLogMapper bollinkLogMapper,
-			IDALLinkLogMapper dallinkLogMapper)
-			: base()
+                private IApiLinkLogRequestModelValidator linkLogModelValidator;
 
-		{
-			this.linkLogRepository = linkLogRepository;
-			this.linkLogModelValidator = linkLogModelValidator;
-			this.bolLinkLogMapper = bollinkLogMapper;
-			this.dalLinkLogMapper = dallinkLogMapper;
-			this.logger = logger;
-		}
+                private IBOLLinkLogMapper bolLinkLogMapper;
 
-		public virtual async Task<List<ApiLinkLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.linkLogRepository.All(skip, take, orderClause);
+                private IDALLinkLogMapper dalLinkLogMapper;
 
-			return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiLinkLogResponseModel> Get(int id)
-		{
-			var record = await linkLogRepository.Get(id);
+                public AbstractLinkLogService(
+                        ILogger logger,
+                        ILinkLogRepository linkLogRepository,
+                        IApiLinkLogRequestModelValidator linkLogModelValidator,
+                        IBOLLinkLogMapper bollinkLogMapper,
+                        IDALLinkLogMapper dallinkLogMapper)
+                        : base()
 
-			return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record));
-		}
+                {
+                        this.linkLogRepository = linkLogRepository;
+                        this.linkLogModelValidator = linkLogModelValidator;
+                        this.bolLinkLogMapper = bollinkLogMapper;
+                        this.dalLinkLogMapper = dallinkLogMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> Create(
-			ApiLinkLogRequestModel model)
-		{
-			CreateResponse<ApiLinkLogResponseModel> response = new CreateResponse<ApiLinkLogResponseModel>(await this.linkLogModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolLinkLogMapper.MapModelToBO(default (int), model);
-				var record = await this.linkLogRepository.Create(this.dalLinkLogMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiLinkLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.linkLogRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiLinkLogRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.linkLogModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiLinkLogResponseModel> Get(int id)
+                {
+                        var record = await this.linkLogRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolLinkLogMapper.MapModelToBO(id, model);
-				await this.linkLogRepository.Update(this.dalLinkLogMapper.MapBOToEF(bo));
-			}
+                        return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> Create(
+                        ApiLinkLogRequestModel model)
+                {
+                        CreateResponse<ApiLinkLogResponseModel> response = new CreateResponse<ApiLinkLogResponseModel>(await this.linkLogModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolLinkLogMapper.MapModelToBO(default (int), model);
+                                var record = await this.linkLogRepository.Create(this.dalLinkLogMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.linkLogModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.linkLogRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiLinkLogRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.linkLogModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolLinkLogMapper.MapModelToBO(id, model);
+                                await this.linkLogRepository.Update(this.dalLinkLogMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.linkLogModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.linkLogRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>dc1ce6bcb719620e400f065c9ae9c695</Hash>
+    <Hash>55a928bc9a80ab3bb3c7a52695e9de5f</Hash>
 </Codenesium>*/

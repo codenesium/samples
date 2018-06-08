@@ -10,118 +10,120 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractProductRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractProductRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<Product>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractProductRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<Product> Get(int productID)
-		{
-			return await this.GetById(productID);
-		}
+                public virtual Task<List<Product>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<Product> Create(Product item)
-		{
-			this.Context.Set<Product>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<Product> Get(int productID)
+                {
+                        return await this.GetById(productID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<Product> Create(Product item)
+                {
+                        this.Context.Set<Product>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(Product item)
-		{
-			var entity = this.Context.Set<Product>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
-			if (entity == null)
-			{
-				this.Context.Set<Product>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(Product item)
+                {
+                        var entity = this.Context.Set<Product>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<Product>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int productID)
-		{
-			Product record = await this.GetById(productID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<Product>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int productID)
+                {
+                        Product record = await this.GetById(productID);
 
-		public async Task<Product> GetName(string name)
-		{
-			var records = await this.SearchLinqEF(x => x.Name == name);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<Product>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
-		public async Task<Product> GetProductNumber(string productNumber)
-		{
-			var records = await this.SearchLinqEF(x => x.ProductNumber == productNumber);
+                public async Task<Product> GetName(string name)
+                {
+                        var records = await this.SearchLinqEF(x => x.Name == name);
 
-			return records.FirstOrDefault();
-		}
+                        return records.FirstOrDefault();
+                }
+                public async Task<Product> GetProductNumber(string productNumber)
+                {
+                        var records = await this.SearchLinqEF(x => x.ProductNumber == productNumber);
 
-		protected async Task<List<Product>> Where(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<Product> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<Product>> Where(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<Product> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<Product>> SearchLinqEF(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Product.ProductID)} ASC";
-			}
-			return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Product>();
-		}
+                        return records;
+                }
 
-		private async Task<List<Product>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Product.ProductID)} ASC";
-			}
+                private async Task<List<Product>> SearchLinqEF(Expression<Func<Product, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Product.ProductID)} ASC";
+                        }
 
-			return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Product>();
-		}
+                        return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Product>();
+                }
 
-		private async Task<Product> GetById(int productID)
-		{
-			List<Product> records = await this.SearchLinqEF(x => x.ProductID == productID);
+                private async Task<List<Product>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Product.ProductID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<Product>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Product>();
+                }
+
+                private async Task<Product> GetById(int productID)
+                {
+                        List<Product> records = await this.SearchLinqEF(x => x.ProductID == productID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>12a1158388a177cb5edcb6b45b060ef4</Hash>
+    <Hash>f2c85ad094fdefbb91e8d9b539c75f35</Hash>
 </Codenesium>*/

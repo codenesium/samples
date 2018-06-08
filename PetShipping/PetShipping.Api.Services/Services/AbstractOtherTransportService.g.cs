@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractOtherTransportService: AbstractService
-	{
-		private IOtherTransportRepository otherTransportRepository;
-		private IApiOtherTransportRequestModelValidator otherTransportModelValidator;
-		private IBOLOtherTransportMapper bolOtherTransportMapper;
-		private IDALOtherTransportMapper dalOtherTransportMapper;
-		private ILogger logger;
+        public abstract class AbstractOtherTransportService: AbstractService
+        {
+                private IOtherTransportRepository otherTransportRepository;
 
-		public AbstractOtherTransportService(
-			ILogger logger,
-			IOtherTransportRepository otherTransportRepository,
-			IApiOtherTransportRequestModelValidator otherTransportModelValidator,
-			IBOLOtherTransportMapper bolotherTransportMapper,
-			IDALOtherTransportMapper dalotherTransportMapper)
-			: base()
+                private IApiOtherTransportRequestModelValidator otherTransportModelValidator;
 
-		{
-			this.otherTransportRepository = otherTransportRepository;
-			this.otherTransportModelValidator = otherTransportModelValidator;
-			this.bolOtherTransportMapper = bolotherTransportMapper;
-			this.dalOtherTransportMapper = dalotherTransportMapper;
-			this.logger = logger;
-		}
+                private IBOLOtherTransportMapper bolOtherTransportMapper;
 
-		public virtual async Task<List<ApiOtherTransportResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.otherTransportRepository.All(skip, take, orderClause);
+                private IDALOtherTransportMapper dalOtherTransportMapper;
 
-			return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiOtherTransportResponseModel> Get(int id)
-		{
-			var record = await otherTransportRepository.Get(id);
+                public AbstractOtherTransportService(
+                        ILogger logger,
+                        IOtherTransportRepository otherTransportRepository,
+                        IApiOtherTransportRequestModelValidator otherTransportModelValidator,
+                        IBOLOtherTransportMapper bolotherTransportMapper,
+                        IDALOtherTransportMapper dalotherTransportMapper)
+                        : base()
 
-			return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record));
-		}
+                {
+                        this.otherTransportRepository = otherTransportRepository;
+                        this.otherTransportModelValidator = otherTransportModelValidator;
+                        this.bolOtherTransportMapper = bolotherTransportMapper;
+                        this.dalOtherTransportMapper = dalotherTransportMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiOtherTransportResponseModel>> Create(
-			ApiOtherTransportRequestModel model)
-		{
-			CreateResponse<ApiOtherTransportResponseModel> response = new CreateResponse<ApiOtherTransportResponseModel>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolOtherTransportMapper.MapModelToBO(default (int), model);
-				var record = await this.otherTransportRepository.Create(this.dalOtherTransportMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiOtherTransportResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.otherTransportRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiOtherTransportRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiOtherTransportResponseModel> Get(int id)
+                {
+                        var record = await this.otherTransportRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolOtherTransportMapper.MapModelToBO(id, model);
-				await this.otherTransportRepository.Update(this.dalOtherTransportMapper.MapBOToEF(bo));
-			}
+                        return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiOtherTransportResponseModel>> Create(
+                        ApiOtherTransportRequestModel model)
+                {
+                        CreateResponse<ApiOtherTransportResponseModel> response = new CreateResponse<ApiOtherTransportResponseModel>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolOtherTransportMapper.MapModelToBO(default (int), model);
+                                var record = await this.otherTransportRepository.Create(this.dalOtherTransportMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.otherTransportRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiOtherTransportRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolOtherTransportMapper.MapModelToBO(id, model);
+                                await this.otherTransportRepository.Update(this.dalOtherTransportMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.otherTransportRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6f37839b93c138795d8150bec79fe131</Hash>
+    <Hash>f3df7e938750442662a3c23159118f1b</Hash>
 </Codenesium>*/

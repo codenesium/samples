@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractDestinationService: AbstractService
-	{
-		private IDestinationRepository destinationRepository;
-		private IApiDestinationRequestModelValidator destinationModelValidator;
-		private IBOLDestinationMapper bolDestinationMapper;
-		private IDALDestinationMapper dalDestinationMapper;
-		private ILogger logger;
+        public abstract class AbstractDestinationService: AbstractService
+        {
+                private IDestinationRepository destinationRepository;
 
-		public AbstractDestinationService(
-			ILogger logger,
-			IDestinationRepository destinationRepository,
-			IApiDestinationRequestModelValidator destinationModelValidator,
-			IBOLDestinationMapper boldestinationMapper,
-			IDALDestinationMapper daldestinationMapper)
-			: base()
+                private IApiDestinationRequestModelValidator destinationModelValidator;
 
-		{
-			this.destinationRepository = destinationRepository;
-			this.destinationModelValidator = destinationModelValidator;
-			this.bolDestinationMapper = boldestinationMapper;
-			this.dalDestinationMapper = daldestinationMapper;
-			this.logger = logger;
-		}
+                private IBOLDestinationMapper bolDestinationMapper;
 
-		public virtual async Task<List<ApiDestinationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.destinationRepository.All(skip, take, orderClause);
+                private IDALDestinationMapper dalDestinationMapper;
 
-			return this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiDestinationResponseModel> Get(int id)
-		{
-			var record = await destinationRepository.Get(id);
+                public AbstractDestinationService(
+                        ILogger logger,
+                        IDestinationRepository destinationRepository,
+                        IApiDestinationRequestModelValidator destinationModelValidator,
+                        IBOLDestinationMapper boldestinationMapper,
+                        IDALDestinationMapper daldestinationMapper)
+                        : base()
 
-			return this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(record));
-		}
+                {
+                        this.destinationRepository = destinationRepository;
+                        this.destinationModelValidator = destinationModelValidator;
+                        this.bolDestinationMapper = boldestinationMapper;
+                        this.dalDestinationMapper = daldestinationMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiDestinationResponseModel>> Create(
-			ApiDestinationRequestModel model)
-		{
-			CreateResponse<ApiDestinationResponseModel> response = new CreateResponse<ApiDestinationResponseModel>(await this.destinationModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolDestinationMapper.MapModelToBO(default (int), model);
-				var record = await this.destinationRepository.Create(this.dalDestinationMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiDestinationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.destinationRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiDestinationRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiDestinationResponseModel> Get(int id)
+                {
+                        var record = await this.destinationRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolDestinationMapper.MapModelToBO(id, model);
-				await this.destinationRepository.Update(this.dalDestinationMapper.MapBOToEF(bo));
-			}
+                        return this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiDestinationResponseModel>> Create(
+                        ApiDestinationRequestModel model)
+                {
+                        CreateResponse<ApiDestinationResponseModel> response = new CreateResponse<ApiDestinationResponseModel>(await this.destinationModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolDestinationMapper.MapModelToBO(default (int), model);
+                                var record = await this.destinationRepository.Create(this.dalDestinationMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.destinationRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiDestinationRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolDestinationMapper.MapModelToBO(id, model);
+                                await this.destinationRepository.Update(this.dalDestinationMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.destinationRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a7baf7249e7423ea8206200dcddd5ed6</Hash>
+    <Hash>cfa7245f09179ab847605228cd6bc2c3</Hash>
 </Codenesium>*/

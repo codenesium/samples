@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+
 namespace FermataFishNS.Api.Services
 {
-	public class BOLRateMapper: BOLAbstractRateMapper, IBOLRateMapper
-	{
-		public BOLRateMapper()
-		{}
-	}
+        public class BOLRateMapper: BOLAbstractRateMapper, IBOLRateMapper
+        {
+                public BOLRateMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>02d983dc898712456840153880fe7d40</Hash>
+    <Hash>47c21cd2d6d0fa3bcaff42739470f05a</Hash>
 </Codenesium>*/

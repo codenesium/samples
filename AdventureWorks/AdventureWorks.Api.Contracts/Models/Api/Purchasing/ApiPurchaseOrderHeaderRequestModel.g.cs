@@ -3,234 +3,236 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPurchaseOrderHeaderRequestModel: AbstractApiRequestModel
-	{
-		public ApiPurchaseOrderHeaderRequestModel() : base()
-		{}
+        public partial class ApiPurchaseOrderHeaderRequestModel: AbstractApiRequestModel
+        {
+                public ApiPurchaseOrderHeaderRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int employeeID,
-			decimal freight,
-			DateTime modifiedDate,
-			DateTime orderDate,
-			int revisionNumber,
-			Nullable<DateTime> shipDate,
-			int shipMethodID,
-			int status,
-			decimal subTotal,
-			decimal taxAmt,
-			decimal totalDue,
-			int vendorID)
-		{
-			this.EmployeeID = employeeID.ToInt();
-			this.Freight = freight.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.OrderDate = orderDate.ToDateTime();
-			this.RevisionNumber = revisionNumber.ToInt();
-			this.ShipDate = shipDate.ToNullableDateTime();
-			this.ShipMethodID = shipMethodID.ToInt();
-			this.Status = status.ToInt();
-			this.SubTotal = subTotal.ToDecimal();
-			this.TaxAmt = taxAmt.ToDecimal();
-			this.TotalDue = totalDue.ToDecimal();
-			this.VendorID = vendorID.ToInt();
-		}
+                public void SetProperties(
+                        int employeeID,
+                        decimal freight,
+                        DateTime modifiedDate,
+                        DateTime orderDate,
+                        int revisionNumber,
+                        Nullable<DateTime> shipDate,
+                        int shipMethodID,
+                        int status,
+                        decimal subTotal,
+                        decimal taxAmt,
+                        decimal totalDue,
+                        int vendorID)
+                {
+                        this.EmployeeID = employeeID;
+                        this.Freight = freight;
+                        this.ModifiedDate = modifiedDate;
+                        this.OrderDate = orderDate;
+                        this.RevisionNumber = revisionNumber;
+                        this.ShipDate = shipDate;
+                        this.ShipMethodID = shipMethodID;
+                        this.Status = status;
+                        this.SubTotal = subTotal;
+                        this.TaxAmt = taxAmt;
+                        this.TotalDue = totalDue;
+                        this.VendorID = vendorID;
+                }
 
-		private int employeeID;
+                private int employeeID;
 
-		[Required]
-		public int EmployeeID
-		{
-			get
-			{
-				return this.employeeID;
-			}
+                [Required]
+                public int EmployeeID
+                {
+                        get
+                        {
+                                return this.employeeID;
+                        }
 
-			set
-			{
-				this.employeeID = value;
-			}
-		}
+                        set
+                        {
+                                this.employeeID = value;
+                        }
+                }
 
-		private decimal freight;
+                private decimal freight;
 
-		[Required]
-		public decimal Freight
-		{
-			get
-			{
-				return this.freight;
-			}
+                [Required]
+                public decimal Freight
+                {
+                        get
+                        {
+                                return this.freight;
+                        }
 
-			set
-			{
-				this.freight = value;
-			}
-		}
+                        set
+                        {
+                                this.freight = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private DateTime orderDate;
+                private DateTime orderDate;
 
-		[Required]
-		public DateTime OrderDate
-		{
-			get
-			{
-				return this.orderDate;
-			}
+                [Required]
+                public DateTime OrderDate
+                {
+                        get
+                        {
+                                return this.orderDate;
+                        }
 
-			set
-			{
-				this.orderDate = value;
-			}
-		}
+                        set
+                        {
+                                this.orderDate = value;
+                        }
+                }
 
-		private int revisionNumber;
+                private int revisionNumber;
 
-		[Required]
-		public int RevisionNumber
-		{
-			get
-			{
-				return this.revisionNumber;
-			}
+                [Required]
+                public int RevisionNumber
+                {
+                        get
+                        {
+                                return this.revisionNumber;
+                        }
 
-			set
-			{
-				this.revisionNumber = value;
-			}
-		}
+                        set
+                        {
+                                this.revisionNumber = value;
+                        }
+                }
 
-		private Nullable<DateTime> shipDate;
+                private Nullable<DateTime> shipDate;
 
-		public Nullable<DateTime> ShipDate
-		{
-			get
-			{
-				return this.shipDate.IsEmptyOrZeroOrNull() ? null : this.shipDate;
-			}
+                public Nullable<DateTime> ShipDate
+                {
+                        get
+                        {
+                                return this.shipDate.IsEmptyOrZeroOrNull() ? null : this.shipDate;
+                        }
 
-			set
-			{
-				this.shipDate = value;
-			}
-		}
+                        set
+                        {
+                                this.shipDate = value;
+                        }
+                }
 
-		private int shipMethodID;
+                private int shipMethodID;
 
-		[Required]
-		public int ShipMethodID
-		{
-			get
-			{
-				return this.shipMethodID;
-			}
+                [Required]
+                public int ShipMethodID
+                {
+                        get
+                        {
+                                return this.shipMethodID;
+                        }
 
-			set
-			{
-				this.shipMethodID = value;
-			}
-		}
+                        set
+                        {
+                                this.shipMethodID = value;
+                        }
+                }
 
-		private int status;
+                private int status;
 
-		[Required]
-		public int Status
-		{
-			get
-			{
-				return this.status;
-			}
+                [Required]
+                public int Status
+                {
+                        get
+                        {
+                                return this.status;
+                        }
 
-			set
-			{
-				this.status = value;
-			}
-		}
+                        set
+                        {
+                                this.status = value;
+                        }
+                }
 
-		private decimal subTotal;
+                private decimal subTotal;
 
-		[Required]
-		public decimal SubTotal
-		{
-			get
-			{
-				return this.subTotal;
-			}
+                [Required]
+                public decimal SubTotal
+                {
+                        get
+                        {
+                                return this.subTotal;
+                        }
 
-			set
-			{
-				this.subTotal = value;
-			}
-		}
+                        set
+                        {
+                                this.subTotal = value;
+                        }
+                }
 
-		private decimal taxAmt;
+                private decimal taxAmt;
 
-		[Required]
-		public decimal TaxAmt
-		{
-			get
-			{
-				return this.taxAmt;
-			}
+                [Required]
+                public decimal TaxAmt
+                {
+                        get
+                        {
+                                return this.taxAmt;
+                        }
 
-			set
-			{
-				this.taxAmt = value;
-			}
-		}
+                        set
+                        {
+                                this.taxAmt = value;
+                        }
+                }
 
-		private decimal totalDue;
+                private decimal totalDue;
 
-		[Required]
-		public decimal TotalDue
-		{
-			get
-			{
-				return this.totalDue;
-			}
+                [Required]
+                public decimal TotalDue
+                {
+                        get
+                        {
+                                return this.totalDue;
+                        }
 
-			set
-			{
-				this.totalDue = value;
-			}
-		}
+                        set
+                        {
+                                this.totalDue = value;
+                        }
+                }
 
-		private int vendorID;
+                private int vendorID;
 
-		[Required]
-		public int VendorID
-		{
-			get
-			{
-				return this.vendorID;
-			}
+                [Required]
+                public int VendorID
+                {
+                        get
+                        {
+                                return this.vendorID;
+                        }
 
-			set
-			{
-				this.vendorID = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.vendorID = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>803b026634e96b8b24e2ab1bc36bdd8d</Hash>
+    <Hash>f2fe6b2a808ed3f4ee8e05d756e05b93</Hash>
 </Codenesium>*/

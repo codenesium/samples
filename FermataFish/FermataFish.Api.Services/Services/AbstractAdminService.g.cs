@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractAdminService: AbstractService
-	{
-		private IAdminRepository adminRepository;
-		private IApiAdminRequestModelValidator adminModelValidator;
-		private IBOLAdminMapper bolAdminMapper;
-		private IDALAdminMapper dalAdminMapper;
-		private ILogger logger;
+        public abstract class AbstractAdminService: AbstractService
+        {
+                private IAdminRepository adminRepository;
 
-		public AbstractAdminService(
-			ILogger logger,
-			IAdminRepository adminRepository,
-			IApiAdminRequestModelValidator adminModelValidator,
-			IBOLAdminMapper boladminMapper,
-			IDALAdminMapper daladminMapper)
-			: base()
+                private IApiAdminRequestModelValidator adminModelValidator;
 
-		{
-			this.adminRepository = adminRepository;
-			this.adminModelValidator = adminModelValidator;
-			this.bolAdminMapper = boladminMapper;
-			this.dalAdminMapper = daladminMapper;
-			this.logger = logger;
-		}
+                private IBOLAdminMapper bolAdminMapper;
 
-		public virtual async Task<List<ApiAdminResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.adminRepository.All(skip, take, orderClause);
+                private IDALAdminMapper dalAdminMapper;
 
-			return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiAdminResponseModel> Get(int id)
-		{
-			var record = await adminRepository.Get(id);
+                public AbstractAdminService(
+                        ILogger logger,
+                        IAdminRepository adminRepository,
+                        IApiAdminRequestModelValidator adminModelValidator,
+                        IBOLAdminMapper boladminMapper,
+                        IDALAdminMapper daladminMapper)
+                        : base()
 
-			return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record));
-		}
+                {
+                        this.adminRepository = adminRepository;
+                        this.adminModelValidator = adminModelValidator;
+                        this.bolAdminMapper = boladminMapper;
+                        this.dalAdminMapper = daladminMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
-			ApiAdminRequestModel model)
-		{
-			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolAdminMapper.MapModelToBO(default (int), model);
-				var record = await this.adminRepository.Create(this.dalAdminMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiAdminResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.adminRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiAdminRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiAdminResponseModel> Get(int id)
+                {
+                        var record = await this.adminRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolAdminMapper.MapModelToBO(id, model);
-				await this.adminRepository.Update(this.dalAdminMapper.MapBOToEF(bo));
-			}
+                        return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
+                        ApiAdminRequestModel model)
+                {
+                        CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolAdminMapper.MapModelToBO(default (int), model);
+                                var record = await this.adminRepository.Create(this.dalAdminMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.adminRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiAdminRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolAdminMapper.MapModelToBO(id, model);
+                                await this.adminRepository.Update(this.dalAdminMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.adminRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cde2b588b2285711110ca8a90a0438af</Hash>
+    <Hash>5fe2300b2ce90dc06a2364244c93d1c4</Hash>
 </Codenesium>*/

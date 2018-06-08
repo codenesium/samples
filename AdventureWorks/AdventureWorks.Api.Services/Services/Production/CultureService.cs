@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class CultureService: AbstractCultureService, ICultureService
-	{
-		public CultureService(
-			ILogger<CultureRepository> logger,
-			ICultureRepository cultureRepository,
-			IApiCultureRequestModelValidator cultureModelValidator,
-			IBOLCultureMapper BOLcultureMapper,
-			IDALCultureMapper DALcultureMapper)
-			: base(logger, cultureRepository,
-			       cultureModelValidator,
-			       BOLcultureMapper,
-			       DALcultureMapper)
-		{}
-	}
+        public class CultureService: AbstractCultureService, ICultureService
+        {
+                public CultureService(
+                        ILogger<CultureRepository> logger,
+                        ICultureRepository cultureRepository,
+                        IApiCultureRequestModelValidator cultureModelValidator,
+                        IBOLCultureMapper bolcultureMapper,
+                        IDALCultureMapper dalcultureMapper)
+                        : base(logger,
+                               cultureRepository,
+                               cultureModelValidator,
+                               bolcultureMapper,
+                               dalcultureMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>93a02b59662c9a9c235b6bd128a1f049</Hash>
+    <Hash>bc5301e592c6fe5c45108b0753b56014</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/salesPersons")]
-	[ApiVersion("1.0")]
-	public class SalesPersonController: AbstractSalesPersonController
-	{
-		public SalesPersonController(
-			ServiceSettings settings,
-			ILogger<SalesPersonController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ISalesPersonService salesPersonService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       salesPersonService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/salesPersons")]
+        [ApiVersion("1.0")]
+        public class SalesPersonController: AbstractSalesPersonController
+        {
+                public SalesPersonController(
+                        ServiceSettings settings,
+                        ILogger<SalesPersonController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ISalesPersonService salesPersonService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               salesPersonService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>153a67b876a5587018b34cdfa0bad547</Hash>
+    <Hash>4058f83f42ad9b399728a1af6f4f4b90</Hash>
 </Codenesium>*/

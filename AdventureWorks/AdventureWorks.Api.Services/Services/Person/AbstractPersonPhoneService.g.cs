@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractPersonPhoneService: AbstractService
-	{
-		private IPersonPhoneRepository personPhoneRepository;
-		private IApiPersonPhoneRequestModelValidator personPhoneModelValidator;
-		private IBOLPersonPhoneMapper bolPersonPhoneMapper;
-		private IDALPersonPhoneMapper dalPersonPhoneMapper;
-		private ILogger logger;
+        public abstract class AbstractPersonPhoneService: AbstractService
+        {
+                private IPersonPhoneRepository personPhoneRepository;
 
-		public AbstractPersonPhoneService(
-			ILogger logger,
-			IPersonPhoneRepository personPhoneRepository,
-			IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
-			IBOLPersonPhoneMapper bolpersonPhoneMapper,
-			IDALPersonPhoneMapper dalpersonPhoneMapper)
-			: base()
+                private IApiPersonPhoneRequestModelValidator personPhoneModelValidator;
 
-		{
-			this.personPhoneRepository = personPhoneRepository;
-			this.personPhoneModelValidator = personPhoneModelValidator;
-			this.bolPersonPhoneMapper = bolpersonPhoneMapper;
-			this.dalPersonPhoneMapper = dalpersonPhoneMapper;
-			this.logger = logger;
-		}
+                private IBOLPersonPhoneMapper bolPersonPhoneMapper;
 
-		public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.personPhoneRepository.All(skip, take, orderClause);
+                private IDALPersonPhoneMapper dalPersonPhoneMapper;
 
-			return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPersonPhoneResponseModel> Get(int businessEntityID)
-		{
-			var record = await personPhoneRepository.Get(businessEntityID);
+                public AbstractPersonPhoneService(
+                        ILogger logger,
+                        IPersonPhoneRepository personPhoneRepository,
+                        IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
+                        IBOLPersonPhoneMapper bolpersonPhoneMapper,
+                        IDALPersonPhoneMapper dalpersonPhoneMapper)
+                        : base()
 
-			return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record));
-		}
+                {
+                        this.personPhoneRepository = personPhoneRepository;
+                        this.personPhoneModelValidator = personPhoneModelValidator;
+                        this.bolPersonPhoneMapper = bolpersonPhoneMapper;
+                        this.dalPersonPhoneMapper = dalpersonPhoneMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPersonPhoneResponseModel>> Create(
-			ApiPersonPhoneRequestModel model)
-		{
-			CreateResponse<ApiPersonPhoneResponseModel> response = new CreateResponse<ApiPersonPhoneResponseModel>(await this.personPhoneModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPersonPhoneMapper.MapModelToBO(default (int), model);
-				var record = await this.personPhoneRepository.Create(this.dalPersonPhoneMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.personPhoneRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int businessEntityID,
-			ApiPersonPhoneRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateUpdateAsync(businessEntityID, model));
+                public virtual async Task<ApiPersonPhoneResponseModel> Get(int businessEntityID)
+                {
+                        var record = await this.personPhoneRepository.Get(businessEntityID);
 
-			if (response.Success)
-			{
-				var bo = this.bolPersonPhoneMapper.MapModelToBO(businessEntityID, model);
-				await this.personPhoneRepository.Update(this.dalPersonPhoneMapper.MapBOToEF(bo));
-			}
+                        return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPersonPhoneResponseModel>> Create(
+                        ApiPersonPhoneRequestModel model)
+                {
+                        CreateResponse<ApiPersonPhoneResponseModel> response = new CreateResponse<ApiPersonPhoneResponseModel>(await this.personPhoneModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPersonPhoneMapper.MapModelToBO(default (int), model);
+                                var record = await this.personPhoneRepository.Create(this.dalPersonPhoneMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int businessEntityID)
-		{
-			ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateDeleteAsync(businessEntityID));
+                                response.SetRecord(this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.personPhoneRepository.Delete(businessEntityID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<List<ApiPersonPhoneResponseModel>> GetPhoneNumber(string phoneNumber)
-		{
-			List<PersonPhone> records = await this.personPhoneRepository.GetPhoneNumber(phoneNumber);
+                public virtual async Task<ActionResponse> Update(
+                        int businessEntityID,
+                        ApiPersonPhoneRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
-			return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolPersonPhoneMapper.MapModelToBO(businessEntityID, model);
+                                await this.personPhoneRepository.Update(this.dalPersonPhoneMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int businessEntityID)
+                {
+                        ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateDeleteAsync(businessEntityID));
+
+                        if (response.Success)
+                        {
+                                await this.personPhoneRepository.Delete(businessEntityID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<List<ApiPersonPhoneResponseModel>> GetPhoneNumber(string phoneNumber)
+                {
+                        List<PersonPhone> records = await this.personPhoneRepository.GetPhoneNumber(phoneNumber);
+
+                        return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4dbb67ea9522997542c91f54b1ca067a</Hash>
+    <Hash>841ef554b3f1ad85bb2d747e77a7b5e1</Hash>
 </Codenesium>*/

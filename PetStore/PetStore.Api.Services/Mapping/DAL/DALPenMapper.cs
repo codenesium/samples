@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+
 namespace PetStoreNS.Api.Services
 {
-	public class DALPenMapper: AbstractDALPenMapper, IDALPenMapper
-	{
-		public DALPenMapper()
-		{}
-	}
+        public class DALPenMapper: DALAbstractPenMapper, IDALPenMapper
+        {
+                public DALPenMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>42106da17fb23370946e17d73279fad6</Hash>
+    <Hash>9db285dde320899e12b16b2480cfbbe0</Hash>
 </Codenesium>*/

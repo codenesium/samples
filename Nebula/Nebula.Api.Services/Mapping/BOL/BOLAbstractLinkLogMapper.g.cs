@@ -2,50 +2,51 @@ using System;
 using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public abstract class BOLAbstractLinkLogMapper
-	{
-		public virtual BOLinkLog MapModelToBO(
-			int id,
-			ApiLinkLogRequestModel model
-			)
-		{
-			BOLinkLog boLinkLog = new BOLinkLog();
+        public abstract class BOLAbstractLinkLogMapper
+        {
+                public virtual BOLinkLog MapModelToBO(
+                        int id,
+                        ApiLinkLogRequestModel model
+                        )
+                {
+                        BOLinkLog boLinkLog = new BOLinkLog();
 
-			boLinkLog.SetProperties(
-				id,
-				model.DateEntered,
-				model.LinkId,
-				model.Log);
-			return boLinkLog;
-		}
+                        boLinkLog.SetProperties(
+                                id,
+                                model.DateEntered,
+                                model.LinkId,
+                                model.Log);
+                        return boLinkLog;
+                }
 
-		public virtual ApiLinkLogResponseModel MapBOToModel(
-			BOLinkLog boLinkLog)
-		{
-			var model = new ApiLinkLogResponseModel();
+                public virtual ApiLinkLogResponseModel MapBOToModel(
+                        BOLinkLog boLinkLog)
+                {
+                        var model = new ApiLinkLogResponseModel();
 
-			model.SetProperties(boLinkLog.DateEntered, boLinkLog.Id, boLinkLog.LinkId, boLinkLog.Log);
+                        model.SetProperties(boLinkLog.DateEntered, boLinkLog.Id, boLinkLog.LinkId, boLinkLog.Log);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiLinkLogResponseModel> MapBOToModel(
-			List<BOLinkLog> items)
-		{
-			List<ApiLinkLogResponseModel> response = new List<ApiLinkLogResponseModel>();
+                public virtual List<ApiLinkLogResponseModel> MapBOToModel(
+                        List<BOLinkLog> items)
+                {
+                        List<ApiLinkLogResponseModel> response = new List<ApiLinkLogResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>61062c660ed06b8f38811ca6c59da2ae</Hash>
+    <Hash>f34ea589bec8fa5d2c52e133c7632341</Hash>
 </Codenesium>*/

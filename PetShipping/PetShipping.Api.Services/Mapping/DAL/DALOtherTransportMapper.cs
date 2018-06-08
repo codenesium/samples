@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public class DALOtherTransportMapper: AbstractDALOtherTransportMapper, IDALOtherTransportMapper
-	{
-		public DALOtherTransportMapper()
-		{}
-	}
+        public class DALOtherTransportMapper: DALAbstractOtherTransportMapper, IDALOtherTransportMapper
+        {
+                public DALOtherTransportMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>93dfbde8bd0ea2842ca62ac3c8c77b48</Hash>
+    <Hash>209b58e8cdcf3a4f8b7325732a3bdae1</Hash>
 </Codenesium>*/

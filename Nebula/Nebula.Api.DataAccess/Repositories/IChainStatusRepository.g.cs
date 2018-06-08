@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IChainStatusRepository
-	{
-		Task<ChainStatus> Create(ChainStatus item);
+        public interface IChainStatusRepository
+        {
+                Task<ChainStatus> Create(ChainStatus item);
 
-		Task Update(ChainStatus item);
+                Task Update(ChainStatus item);
 
-		Task Delete(int id);
+                Task Delete(int id);
 
-		Task<ChainStatus> Get(int id);
+                Task<ChainStatus> Get(int id);
 
-		Task<List<ChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ChainStatus>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>3f72a86ba9c5c5432623c9ca943c920c</Hash>
+    <Hash>761e4f80168d75877d1140dbf13724f6</Hash>
 </Codenesium>*/

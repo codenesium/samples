@@ -3,26 +3,29 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-	public partial class BOStudentXFamily: AbstractBusinessObject
-	{
-		public BOStudentXFamily() : base()
-		{}
+        public partial class BOStudentXFamily: AbstractBusinessObject
+        {
+                public BOStudentXFamily() : base()
+                {
+                }
 
-		public void SetProperties(int id,
-		                          int familyId,
-		                          int studentId)
-		{
-			this.FamilyId = familyId.ToInt();
-			this.Id = id.ToInt();
-			this.StudentId = studentId.ToInt();
-		}
+                public void SetProperties(int id,
+                                          int familyId,
+                                          int studentId)
+                {
+                        this.FamilyId = familyId;
+                        this.Id = id;
+                        this.StudentId = studentId;
+                }
 
-		public int FamilyId { get; private set; }
-		public int Id { get; private set; }
-		public int StudentId { get; private set; }
-	}
+                public int FamilyId { get; private set; }
+
+                public int Id { get; private set; }
+
+                public int StudentId { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>275a111cd133f33566faf4401016ab58</Hash>
+    <Hash>179360135a68fc88f1085c23b67236a5</Hash>
 </Codenesium>*/

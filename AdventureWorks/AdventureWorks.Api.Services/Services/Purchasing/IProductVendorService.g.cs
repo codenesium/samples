@@ -7,25 +7,25 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IProductVendorService
-	{
-		Task<CreateResponse<ApiProductVendorResponseModel>> Create(
-			ApiProductVendorRequestModel model);
+        public interface IProductVendorService
+        {
+                Task<CreateResponse<ApiProductVendorResponseModel>> Create(
+                        ApiProductVendorRequestModel model);
 
-		Task<ActionResponse> Update(int productID,
-		                            ApiProductVendorRequestModel model);
+                Task<ActionResponse> Update(int productID,
+                                            ApiProductVendorRequestModel model);
 
-		Task<ActionResponse> Delete(int productID);
+                Task<ActionResponse> Delete(int productID);
 
-		Task<ApiProductVendorResponseModel> Get(int productID);
+                Task<ApiProductVendorResponseModel> Get(int productID);
 
-		Task<List<ApiProductVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiProductVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<ApiProductVendorResponseModel>> GetBusinessEntityID(int businessEntityID);
-		Task<List<ApiProductVendorResponseModel>> GetUnitMeasureCode(string unitMeasureCode);
-	}
+                Task<List<ApiProductVendorResponseModel>> GetBusinessEntityID(int businessEntityID);
+                Task<List<ApiProductVendorResponseModel>> GetUnitMeasureCode(string unitMeasureCode);
+        }
 }
 
 /*<Codenesium>
-    <Hash>e807138eadd97869393f8102542ddec4</Hash>
+    <Hash>05630fd6ad3771c06d9eec2059a70de4</Hash>
 </Codenesium>*/

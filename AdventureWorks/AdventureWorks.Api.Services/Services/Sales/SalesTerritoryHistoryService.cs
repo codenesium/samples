@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SalesTerritoryHistoryService: AbstractSalesTerritoryHistoryService, ISalesTerritoryHistoryService
-	{
-		public SalesTerritoryHistoryService(
-			ILogger<SalesTerritoryHistoryRepository> logger,
-			ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
-			IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
-			IBOLSalesTerritoryHistoryMapper BOLsalesTerritoryHistoryMapper,
-			IDALSalesTerritoryHistoryMapper DALsalesTerritoryHistoryMapper)
-			: base(logger, salesTerritoryHistoryRepository,
-			       salesTerritoryHistoryModelValidator,
-			       BOLsalesTerritoryHistoryMapper,
-			       DALsalesTerritoryHistoryMapper)
-		{}
-	}
+        public class SalesTerritoryHistoryService: AbstractSalesTerritoryHistoryService, ISalesTerritoryHistoryService
+        {
+                public SalesTerritoryHistoryService(
+                        ILogger<SalesTerritoryHistoryRepository> logger,
+                        ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
+                        IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
+                        IBOLSalesTerritoryHistoryMapper bolsalesTerritoryHistoryMapper,
+                        IDALSalesTerritoryHistoryMapper dalsalesTerritoryHistoryMapper)
+                        : base(logger,
+                               salesTerritoryHistoryRepository,
+                               salesTerritoryHistoryModelValidator,
+                               bolsalesTerritoryHistoryMapper,
+                               dalsalesTerritoryHistoryMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b3c808a0acb2dc62c9b52f6f877e8cd7</Hash>
+    <Hash>4df040d9b340bf87eea48e2ff76100cb</Hash>
 </Codenesium>*/

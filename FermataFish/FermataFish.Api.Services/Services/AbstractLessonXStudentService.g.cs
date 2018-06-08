@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractLessonXStudentService: AbstractService
-	{
-		private ILessonXStudentRepository lessonXStudentRepository;
-		private IApiLessonXStudentRequestModelValidator lessonXStudentModelValidator;
-		private IBOLLessonXStudentMapper bolLessonXStudentMapper;
-		private IDALLessonXStudentMapper dalLessonXStudentMapper;
-		private ILogger logger;
+        public abstract class AbstractLessonXStudentService: AbstractService
+        {
+                private ILessonXStudentRepository lessonXStudentRepository;
 
-		public AbstractLessonXStudentService(
-			ILogger logger,
-			ILessonXStudentRepository lessonXStudentRepository,
-			IApiLessonXStudentRequestModelValidator lessonXStudentModelValidator,
-			IBOLLessonXStudentMapper bollessonXStudentMapper,
-			IDALLessonXStudentMapper dallessonXStudentMapper)
-			: base()
+                private IApiLessonXStudentRequestModelValidator lessonXStudentModelValidator;
 
-		{
-			this.lessonXStudentRepository = lessonXStudentRepository;
-			this.lessonXStudentModelValidator = lessonXStudentModelValidator;
-			this.bolLessonXStudentMapper = bollessonXStudentMapper;
-			this.dalLessonXStudentMapper = dallessonXStudentMapper;
-			this.logger = logger;
-		}
+                private IBOLLessonXStudentMapper bolLessonXStudentMapper;
 
-		public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.lessonXStudentRepository.All(skip, take, orderClause);
+                private IDALLessonXStudentMapper dalLessonXStudentMapper;
 
-			return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiLessonXStudentResponseModel> Get(int id)
-		{
-			var record = await lessonXStudentRepository.Get(id);
+                public AbstractLessonXStudentService(
+                        ILogger logger,
+                        ILessonXStudentRepository lessonXStudentRepository,
+                        IApiLessonXStudentRequestModelValidator lessonXStudentModelValidator,
+                        IBOLLessonXStudentMapper bollessonXStudentMapper,
+                        IDALLessonXStudentMapper dallessonXStudentMapper)
+                        : base()
 
-			return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record));
-		}
+                {
+                        this.lessonXStudentRepository = lessonXStudentRepository;
+                        this.lessonXStudentModelValidator = lessonXStudentModelValidator;
+                        this.bolLessonXStudentMapper = bollessonXStudentMapper;
+                        this.dalLessonXStudentMapper = dallessonXStudentMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiLessonXStudentResponseModel>> Create(
-			ApiLessonXStudentRequestModel model)
-		{
-			CreateResponse<ApiLessonXStudentResponseModel> response = new CreateResponse<ApiLessonXStudentResponseModel>(await this.lessonXStudentModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolLessonXStudentMapper.MapModelToBO(default (int), model);
-				var record = await this.lessonXStudentRepository.Create(this.dalLessonXStudentMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.lessonXStudentRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiLessonXStudentRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.lessonXStudentModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiLessonXStudentResponseModel> Get(int id)
+                {
+                        var record = await this.lessonXStudentRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolLessonXStudentMapper.MapModelToBO(id, model);
-				await this.lessonXStudentRepository.Update(this.dalLessonXStudentMapper.MapBOToEF(bo));
-			}
+                        return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiLessonXStudentResponseModel>> Create(
+                        ApiLessonXStudentRequestModel model)
+                {
+                        CreateResponse<ApiLessonXStudentResponseModel> response = new CreateResponse<ApiLessonXStudentResponseModel>(await this.lessonXStudentModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolLessonXStudentMapper.MapModelToBO(default (int), model);
+                                var record = await this.lessonXStudentRepository.Create(this.dalLessonXStudentMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.lessonXStudentModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.lessonXStudentRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiLessonXStudentRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.lessonXStudentModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolLessonXStudentMapper.MapModelToBO(id, model);
+                                await this.lessonXStudentRepository.Update(this.dalLessonXStudentMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.lessonXStudentModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.lessonXStudentRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>cf85e0e526c002716749f5a947a8c7c9</Hash>
+    <Hash>cfb06b78c48d254e366cc1c82c4779ba</Hash>
 </Codenesium>*/

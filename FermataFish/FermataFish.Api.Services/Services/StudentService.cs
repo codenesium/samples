@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class StudentService: AbstractStudentService, IStudentService
-	{
-		public StudentService(
-			ILogger<StudentRepository> logger,
-			IStudentRepository studentRepository,
-			IApiStudentRequestModelValidator studentModelValidator,
-			IBOLStudentMapper BOLstudentMapper,
-			IDALStudentMapper DALstudentMapper)
-			: base(logger, studentRepository,
-			       studentModelValidator,
-			       BOLstudentMapper,
-			       DALstudentMapper)
-		{}
-	}
+        public class StudentService: AbstractStudentService, IStudentService
+        {
+                public StudentService(
+                        ILogger<StudentRepository> logger,
+                        IStudentRepository studentRepository,
+                        IApiStudentRequestModelValidator studentModelValidator,
+                        IBOLStudentMapper bolstudentMapper,
+                        IDALStudentMapper dalstudentMapper)
+                        : base(logger,
+                               studentRepository,
+                               studentModelValidator,
+                               bolstudentMapper,
+                               dalstudentMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c896bfd8a37c73625348e8ccd89a74ad</Hash>
+    <Hash>54c7dab7590e39e1324526a37b8b37f1</Hash>
 </Codenesium>*/

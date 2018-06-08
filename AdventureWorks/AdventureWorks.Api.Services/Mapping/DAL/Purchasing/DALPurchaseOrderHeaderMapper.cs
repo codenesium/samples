@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALPurchaseOrderHeaderMapper: AbstractDALPurchaseOrderHeaderMapper, IDALPurchaseOrderHeaderMapper
-	{
-		public DALPurchaseOrderHeaderMapper()
-		{}
-	}
+        public class DALPurchaseOrderHeaderMapper: DALAbstractPurchaseOrderHeaderMapper, IDALPurchaseOrderHeaderMapper
+        {
+                public DALPurchaseOrderHeaderMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>97daa191894f2adf1b1b0ccb63cdf343</Hash>
+    <Hash>7bb2856837f9220b9b629fb5d5c96be2</Hash>
 </Codenesium>*/

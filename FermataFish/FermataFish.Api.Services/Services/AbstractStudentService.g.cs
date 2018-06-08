@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractStudentService: AbstractService
-	{
-		private IStudentRepository studentRepository;
-		private IApiStudentRequestModelValidator studentModelValidator;
-		private IBOLStudentMapper bolStudentMapper;
-		private IDALStudentMapper dalStudentMapper;
-		private ILogger logger;
+        public abstract class AbstractStudentService: AbstractService
+        {
+                private IStudentRepository studentRepository;
 
-		public AbstractStudentService(
-			ILogger logger,
-			IStudentRepository studentRepository,
-			IApiStudentRequestModelValidator studentModelValidator,
-			IBOLStudentMapper bolstudentMapper,
-			IDALStudentMapper dalstudentMapper)
-			: base()
+                private IApiStudentRequestModelValidator studentModelValidator;
 
-		{
-			this.studentRepository = studentRepository;
-			this.studentModelValidator = studentModelValidator;
-			this.bolStudentMapper = bolstudentMapper;
-			this.dalStudentMapper = dalstudentMapper;
-			this.logger = logger;
-		}
+                private IBOLStudentMapper bolStudentMapper;
 
-		public virtual async Task<List<ApiStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.studentRepository.All(skip, take, orderClause);
+                private IDALStudentMapper dalStudentMapper;
 
-			return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiStudentResponseModel> Get(int id)
-		{
-			var record = await studentRepository.Get(id);
+                public AbstractStudentService(
+                        ILogger logger,
+                        IStudentRepository studentRepository,
+                        IApiStudentRequestModelValidator studentModelValidator,
+                        IBOLStudentMapper bolstudentMapper,
+                        IDALStudentMapper dalstudentMapper)
+                        : base()
 
-			return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record));
-		}
+                {
+                        this.studentRepository = studentRepository;
+                        this.studentModelValidator = studentModelValidator;
+                        this.bolStudentMapper = bolstudentMapper;
+                        this.dalStudentMapper = dalstudentMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiStudentResponseModel>> Create(
-			ApiStudentRequestModel model)
-		{
-			CreateResponse<ApiStudentResponseModel> response = new CreateResponse<ApiStudentResponseModel>(await this.studentModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolStudentMapper.MapModelToBO(default (int), model);
-				var record = await this.studentRepository.Create(this.dalStudentMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.studentRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiStudentRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiStudentResponseModel> Get(int id)
+                {
+                        var record = await this.studentRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolStudentMapper.MapModelToBO(id, model);
-				await this.studentRepository.Update(this.dalStudentMapper.MapBOToEF(bo));
-			}
+                        return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiStudentResponseModel>> Create(
+                        ApiStudentRequestModel model)
+                {
+                        CreateResponse<ApiStudentResponseModel> response = new CreateResponse<ApiStudentResponseModel>(await this.studentModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolStudentMapper.MapModelToBO(default (int), model);
+                                var record = await this.studentRepository.Create(this.dalStudentMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.studentRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiStudentRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolStudentMapper.MapModelToBO(id, model);
+                                await this.studentRepository.Update(this.dalStudentMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.studentRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5943d2121dcec840c4f582e666874dca</Hash>
+    <Hash>4c4716ec3fcd32875476e8d5cd0e993f</Hash>
 </Codenesium>*/

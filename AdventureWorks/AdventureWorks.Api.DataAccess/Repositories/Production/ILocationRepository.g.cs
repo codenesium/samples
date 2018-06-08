@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ILocationRepository
-	{
-		Task<Location> Create(Location item);
+        public interface ILocationRepository
+        {
+                Task<Location> Create(Location item);
 
-		Task Update(Location item);
+                Task Update(Location item);
 
-		Task Delete(short locationID);
+                Task Delete(short locationID);
 
-		Task<Location> Get(short locationID);
+                Task<Location> Get(short locationID);
 
-		Task<List<Location>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Location>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<Location> GetName(string name);
-	}
+                Task<Location> GetName(string name);
+        }
 }
 
 /*<Codenesium>
-    <Hash>55f540979d57db150b6ef0e479da7c54</Hash>
+    <Hash>5ee34bc3a18e3a2f1c7a003d13a14c66</Hash>
 </Codenesium>*/

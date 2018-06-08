@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IStateProvinceRepository
-	{
-		Task<StateProvince> Create(StateProvince item);
+        public interface IStateProvinceRepository
+        {
+                Task<StateProvince> Create(StateProvince item);
 
-		Task Update(StateProvince item);
+                Task Update(StateProvince item);
 
-		Task Delete(int stateProvinceID);
+                Task Delete(int stateProvinceID);
 
-		Task<StateProvince> Get(int stateProvinceID);
+                Task<StateProvince> Get(int stateProvinceID);
 
-		Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<StateProvince> GetName(string name);
-		Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode);
-	}
+                Task<StateProvince> GetName(string name);
+                Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
+        }
 }
 
 /*<Codenesium>
-    <Hash>04653f9027c7cdbf5226013947a71d9f</Hash>
+    <Hash>d6a0fd7b04b0e0d42bcb3cab3eff4793</Hash>
 </Codenesium>*/

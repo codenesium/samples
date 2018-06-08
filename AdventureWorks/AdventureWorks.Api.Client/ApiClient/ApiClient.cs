@@ -7,18 +7,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
+
 namespace AdventureWorksNS.Api.Client
 {
-	public class ApiClient: AbstractApiClient
-	{
-		public ApiClient(string apiUrl) : base(apiUrl,"1.0")
-		{}
+        public class ApiClient: AbstractApiClient
+        {
+                public ApiClient(string apiUrl) : base(apiUrl, "1.0")
+                {
+                }
 
-		public ApiClient(HttpClient client) : base(client)
-		{}
-	}
+                public ApiClient(HttpClient client) : base(client)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8e013ba4cc2fe66ce64dbc5ddc922123</Hash>
+    <Hash>27effc33ed3da77f7537abccec216472</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SalesOrderHeaderSalesReasonService: AbstractSalesOrderHeaderSalesReasonService, ISalesOrderHeaderSalesReasonService
-	{
-		public SalesOrderHeaderSalesReasonService(
-			ILogger<SalesOrderHeaderSalesReasonRepository> logger,
-			ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
-			IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
-			IBOLSalesOrderHeaderSalesReasonMapper BOLsalesOrderHeaderSalesReasonMapper,
-			IDALSalesOrderHeaderSalesReasonMapper DALsalesOrderHeaderSalesReasonMapper)
-			: base(logger, salesOrderHeaderSalesReasonRepository,
-			       salesOrderHeaderSalesReasonModelValidator,
-			       BOLsalesOrderHeaderSalesReasonMapper,
-			       DALsalesOrderHeaderSalesReasonMapper)
-		{}
-	}
+        public class SalesOrderHeaderSalesReasonService: AbstractSalesOrderHeaderSalesReasonService, ISalesOrderHeaderSalesReasonService
+        {
+                public SalesOrderHeaderSalesReasonService(
+                        ILogger<SalesOrderHeaderSalesReasonRepository> logger,
+                        ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
+                        IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
+                        IBOLSalesOrderHeaderSalesReasonMapper bolsalesOrderHeaderSalesReasonMapper,
+                        IDALSalesOrderHeaderSalesReasonMapper dalsalesOrderHeaderSalesReasonMapper)
+                        : base(logger,
+                               salesOrderHeaderSalesReasonRepository,
+                               salesOrderHeaderSalesReasonModelValidator,
+                               bolsalesOrderHeaderSalesReasonMapper,
+                               dalsalesOrderHeaderSalesReasonMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e3d08b82773e2100fa6e7271ebbbdb03</Hash>
+    <Hash>ad02c92f8bf262ff63e068420c75a936</Hash>
 </Codenesium>*/

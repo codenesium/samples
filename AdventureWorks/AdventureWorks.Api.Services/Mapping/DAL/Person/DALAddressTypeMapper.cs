@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALAddressTypeMapper: AbstractDALAddressTypeMapper, IDALAddressTypeMapper
-	{
-		public DALAddressTypeMapper()
-		{}
-	}
+        public class DALAddressTypeMapper: DALAbstractAddressTypeMapper, IDALAddressTypeMapper
+        {
+                public DALAddressTypeMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f9dde1fd9078ed109c1516678f1dfc28</Hash>
+    <Hash>84703b1ac17cac4034eb89d73a875bf3</Hash>
 </Codenesium>*/

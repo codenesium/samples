@@ -14,193 +14,193 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	public abstract class AbstractShiftController: AbstractApiController
-	{
-		protected IShiftService shiftService;
+        public abstract class AbstractShiftController: AbstractApiController
+        {
+                protected IShiftService ShiftService { get; private set; }
 
-		protected int BulkInsertLimit { get; set; }
+                protected int BulkInsertLimit { get; set; }
 
-		protected int MaxLimit { get; set; }
+                protected int MaxLimit { get; set; }
 
-		protected int DefaultLimit { get; set; }
+                protected int DefaultLimit { get; set; }
 
-		public AbstractShiftController(
-			ServiceSettings settings,
-			ILogger<AbstractShiftController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IShiftService shiftService
-			)
-			: base(settings, logger, transactionCoordinator)
-		{
-			this.shiftService = shiftService;
-		}
+                public AbstractShiftController(
+                        ServiceSettings settings,
+                        ILogger<AbstractShiftController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IShiftService shiftService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.ShiftService = shiftService;
+                }
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<ApiShiftResponseModel> response = await this.shiftService.All(query.Offset, query.Limit);
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiShiftResponseModel> response = await this.ShiftService.All(query.Offset, query.Limit);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("{id}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(int id)
-		{
-			ApiShiftResponseModel response = await this.shiftService.Get(id);
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(int id)
+                {
+                        ApiShiftResponseModel response = await this.ShiftService.Get(id);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpPost]
-		[Route("")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiShiftRequestModel model)
-		{
-			CreateResponse<ApiShiftResponseModel> result = await this.shiftService.Create(model);
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiShiftRequestModel model)
+                {
+                        CreateResponse<ApiShiftResponseModel> result = await this.ShiftService.Create(model);
 
-			if (result.Success)
-			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.ShiftID.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Record.ShiftID.ToString()}");
-				return this.Ok(result.Record);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.ShiftID.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Record.ShiftID.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpPost]
-		[Route("BulkInsert")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
-		[ProducesResponseType(typeof(void), 413)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShiftRequestModel> models)
-		{
-			if (models.Count > this.BulkInsertLimit)
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-			}
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiShiftResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiShiftRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
 
-			List<ApiShiftResponseModel> records = new List<ApiShiftResponseModel>();
-			foreach (var model in models)
-			{
-				CreateResponse<ApiShiftResponseModel> result = await this.shiftService.Create(model);
+                        List<ApiShiftResponseModel> records = new List<ApiShiftResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiShiftResponseModel> result = await this.ShiftService.Create(model);
 
-				if(result.Success)
-				{
-					records.Add(result.Record);
-				}
-				else
-				{
-					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-				}
-			}
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
 
-			return this.Ok(records);
-		}
+                        return this.Ok(records);
+                }
 
-		[HttpPut]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftRequestModel model)
-		{
-			ActionResponse result = await this.shiftService.Update(id, model);
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiShiftRequestModel model)
+                {
+                        ActionResponse result = await this.ShiftService.Update(id, model);
 
-			if (result.Success)
-			{
-				ApiShiftResponseModel response = await this.shiftService.Get(id);
+                        if (result.Success)
+                        {
+                                ApiShiftResponseModel response = await this.ShiftService.Get(id);
 
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpDelete]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(int id)
-		{
-			ActionResponse result = await this.shiftService.Delete(id);
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(int id)
+                {
+                        ActionResponse result = await this.ShiftService.Delete(id);
 
-			if (result.Success)
-			{
-				return this.NoContent();
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpGet]
-		[Route("getName/{name}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> GetName(string name)
-		{
-			ApiShiftResponseModel response = await this.shiftService.GetName(name);
+                [HttpGet]
+                [Route("getName/{name}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> GetName(string name)
+                {
+                        ApiShiftResponseModel response = await this.ShiftService.GetName(name);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpGet]
-		[Route("getStartTimeEndTime/{startTime}/{endTime}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
-		{
-			ApiShiftResponseModel response = await this.shiftService.GetStartTimeEndTime(startTime,endTime);
+                [HttpGet]
+                [Route("getStartTimeEndTime/{startTime}/{endTime}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> GetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
+                {
+                        ApiShiftResponseModel response = await this.ShiftService.GetStartTimeEndTime(startTime, endTime);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
-	}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8c83b6ca9d57896d8980978f9369b190</Hash>
+    <Hash>dc92e1eff3ff0b9284c8c73c55000848</Hash>
 </Codenesium>*/

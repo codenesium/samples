@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class DatabaseLogService: AbstractDatabaseLogService, IDatabaseLogService
-	{
-		public DatabaseLogService(
-			ILogger<DatabaseLogRepository> logger,
-			IDatabaseLogRepository databaseLogRepository,
-			IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
-			IBOLDatabaseLogMapper BOLdatabaseLogMapper,
-			IDALDatabaseLogMapper DALdatabaseLogMapper)
-			: base(logger, databaseLogRepository,
-			       databaseLogModelValidator,
-			       BOLdatabaseLogMapper,
-			       DALdatabaseLogMapper)
-		{}
-	}
+        public class DatabaseLogService: AbstractDatabaseLogService, IDatabaseLogService
+        {
+                public DatabaseLogService(
+                        ILogger<DatabaseLogRepository> logger,
+                        IDatabaseLogRepository databaseLogRepository,
+                        IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
+                        IBOLDatabaseLogMapper boldatabaseLogMapper,
+                        IDALDatabaseLogMapper daldatabaseLogMapper)
+                        : base(logger,
+                               databaseLogRepository,
+                               databaseLogModelValidator,
+                               boldatabaseLogMapper,
+                               daldatabaseLogMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e189a431cf207e9baebb93527945be7e</Hash>
+    <Hash>94c162ba0d6050330dfe11b17497c9c6</Hash>
 </Codenesium>*/

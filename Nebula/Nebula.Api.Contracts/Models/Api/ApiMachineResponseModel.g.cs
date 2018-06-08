@@ -4,96 +4,103 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiMachineResponseModel: AbstractApiResponseModel
-	{
-		public ApiMachineResponseModel() : base()
-		{}
+        public partial class ApiMachineResponseModel: AbstractApiResponseModel
+        {
+                public ApiMachineResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string description,
-			int id,
-			string jwtKey,
-			string lastIpAddress,
-			Guid machineGuid,
-			string name)
-		{
-			this.Description = description;
-			this.Id = id.ToInt();
-			this.JwtKey = jwtKey;
-			this.LastIpAddress = lastIpAddress;
-			this.MachineGuid = machineGuid.ToGuid();
-			this.Name = name;
-		}
+                public void SetProperties(
+                        string description,
+                        int id,
+                        string jwtKey,
+                        string lastIpAddress,
+                        Guid machineGuid,
+                        string name)
+                {
+                        this.Description = description;
+                        this.Id = id;
+                        this.JwtKey = jwtKey;
+                        this.LastIpAddress = lastIpAddress;
+                        this.MachineGuid = machineGuid;
+                        this.Name = name;
+                }
 
-		public string Description { get; private set; }
-		public int Id { get; private set; }
-		public string JwtKey { get; private set; }
-		public string LastIpAddress { get; private set; }
-		public Guid MachineGuid { get; private set; }
-		public string Name { get; private set; }
+                public string Description { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeDescriptionValue { get; set; } = true;
+                public int Id { get; private set; }
 
-		public bool ShouldSerializeDescription()
-		{
-			return this.ShouldSerializeDescriptionValue;
-		}
+                public string JwtKey { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+                public string LastIpAddress { get; private set; }
 
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+                public Guid MachineGuid { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeJwtKeyValue { get; set; } = true;
+                public string Name { get; private set; }
 
-		public bool ShouldSerializeJwtKey()
-		{
-			return this.ShouldSerializeJwtKeyValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeDescriptionValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeLastIpAddressValue { get; set; } = true;
+                public bool ShouldSerializeDescription()
+                {
+                        return this.ShouldSerializeDescriptionValue;
+                }
 
-		public bool ShouldSerializeLastIpAddress()
-		{
-			return this.ShouldSerializeLastIpAddressValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeMachineGuidValue { get; set; } = true;
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
 
-		public bool ShouldSerializeMachineGuid()
-		{
-			return this.ShouldSerializeMachineGuidValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeJwtKeyValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
+                public bool ShouldSerializeJwtKey()
+                {
+                        return this.ShouldSerializeJwtKeyValue;
+                }
 
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeLastIpAddressValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeDescriptionValue = false;
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeJwtKeyValue = false;
-			this.ShouldSerializeLastIpAddressValue = false;
-			this.ShouldSerializeMachineGuidValue = false;
-			this.ShouldSerializeNameValue = false;
-		}
-	}
+                public bool ShouldSerializeLastIpAddress()
+                {
+                        return this.ShouldSerializeLastIpAddressValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeMachineGuidValue { get; set; } = true;
+
+                public bool ShouldSerializeMachineGuid()
+                {
+                        return this.ShouldSerializeMachineGuidValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeDescriptionValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeJwtKeyValue = false;
+                        this.ShouldSerializeLastIpAddressValue = false;
+                        this.ShouldSerializeMachineGuidValue = false;
+                        this.ShouldSerializeNameValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>36206b61d6d96dcfd767f9b603bca3dd</Hash>
+    <Hash>5baf7c641eab25cbb8bc412b63fb2179</Hash>
 </Codenesium>*/

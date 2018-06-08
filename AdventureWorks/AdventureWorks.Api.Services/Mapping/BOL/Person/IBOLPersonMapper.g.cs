@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLPersonMapper
-	{
-		BOPerson MapModelToBO(
-			int businessEntityID,
-			ApiPersonRequestModel model);
+        public interface IBOLPersonMapper
+        {
+                BOPerson MapModelToBO(
+                        int businessEntityID,
+                        ApiPersonRequestModel model);
 
-		ApiPersonResponseModel MapBOToModel(
-			BOPerson boPerson);
+                ApiPersonResponseModel MapBOToModel(
+                        BOPerson boPerson);
 
-		List<ApiPersonResponseModel> MapBOToModel(
-			List<BOPerson> items);
-	}
+                List<ApiPersonResponseModel> MapBOToModel(
+                        List<BOPerson> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>aa24950dc08846c464391eca30096dfd</Hash>
+    <Hash>9a40c0c40560259c9cf78ae0102ad822</Hash>
 </Codenesium>*/

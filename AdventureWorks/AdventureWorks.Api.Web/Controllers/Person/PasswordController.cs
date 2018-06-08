@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/passwords")]
-	[ApiVersion("1.0")]
-	public class PasswordController: AbstractPasswordController
-	{
-		public PasswordController(
-			ServiceSettings settings,
-			ILogger<PasswordController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IPasswordService passwordService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       passwordService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/passwords")]
+        [ApiVersion("1.0")]
+        public class PasswordController: AbstractPasswordController
+        {
+                public PasswordController(
+                        ServiceSettings settings,
+                        ILogger<PasswordController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IPasswordService passwordService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               passwordService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>2da6993f4d0ab23e98f092902b406b45</Hash>
+    <Hash>046dd691493c26c4cffef362813b55a7</Hash>
 </Codenesium>*/

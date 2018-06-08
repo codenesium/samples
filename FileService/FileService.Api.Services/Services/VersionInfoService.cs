@@ -10,22 +10,24 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
-	{
-		public VersionInfoService(
-			ILogger<VersionInfoRepository> logger,
-			IVersionInfoRepository versionInfoRepository,
-			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
-			IBOLVersionInfoMapper BOLversionInfoMapper,
-			IDALVersionInfoMapper DALversionInfoMapper)
-			: base(logger, versionInfoRepository,
-			       versionInfoModelValidator,
-			       BOLversionInfoMapper,
-			       DALversionInfoMapper)
-		{}
-	}
+        public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
+        {
+                public VersionInfoService(
+                        ILogger<VersionInfoRepository> logger,
+                        IVersionInfoRepository versionInfoRepository,
+                        IApiVersionInfoRequestModelValidator versionInfoModelValidator,
+                        IBOLVersionInfoMapper bolversionInfoMapper,
+                        IDALVersionInfoMapper dalversionInfoMapper)
+                        : base(logger,
+                               versionInfoRepository,
+                               versionInfoModelValidator,
+                               bolversionInfoMapper,
+                               dalversionInfoMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4e1dd209aa8eea9dc4888db373ed2d31</Hash>
+    <Hash>aa8921b8f1579efdaee3124e083fd8dd</Hash>
 </Codenesium>*/

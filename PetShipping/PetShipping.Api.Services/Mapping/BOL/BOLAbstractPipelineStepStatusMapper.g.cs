@@ -2,48 +2,49 @@ using System;
 using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public abstract class BOLAbstractPipelineStepStatusMapper
-	{
-		public virtual BOPipelineStepStatus MapModelToBO(
-			int id,
-			ApiPipelineStepStatusRequestModel model
-			)
-		{
-			BOPipelineStepStatus boPipelineStepStatus = new BOPipelineStepStatus();
+        public abstract class BOLAbstractPipelineStepStatusMapper
+        {
+                public virtual BOPipelineStepStatus MapModelToBO(
+                        int id,
+                        ApiPipelineStepStatusRequestModel model
+                        )
+                {
+                        BOPipelineStepStatus boPipelineStepStatus = new BOPipelineStepStatus();
 
-			boPipelineStepStatus.SetProperties(
-				id,
-				model.Name);
-			return boPipelineStepStatus;
-		}
+                        boPipelineStepStatus.SetProperties(
+                                id,
+                                model.Name);
+                        return boPipelineStepStatus;
+                }
 
-		public virtual ApiPipelineStepStatusResponseModel MapBOToModel(
-			BOPipelineStepStatus boPipelineStepStatus)
-		{
-			var model = new ApiPipelineStepStatusResponseModel();
+                public virtual ApiPipelineStepStatusResponseModel MapBOToModel(
+                        BOPipelineStepStatus boPipelineStepStatus)
+                {
+                        var model = new ApiPipelineStepStatusResponseModel();
 
-			model.SetProperties(boPipelineStepStatus.Id, boPipelineStepStatus.Name);
+                        model.SetProperties(boPipelineStepStatus.Id, boPipelineStepStatus.Name);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiPipelineStepStatusResponseModel> MapBOToModel(
-			List<BOPipelineStepStatus> items)
-		{
-			List<ApiPipelineStepStatusResponseModel> response = new List<ApiPipelineStepStatusResponseModel>();
+                public virtual List<ApiPipelineStepStatusResponseModel> MapBOToModel(
+                        List<BOPipelineStepStatus> items)
+                {
+                        List<ApiPipelineStepStatusResponseModel> response = new List<ApiPipelineStepStatusResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f3ea389ed5275b9c5eaea35b6a776d32</Hash>
+    <Hash>6ddab1d65fc62cc31449d10a4ab0f994</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SalesTaxRateService: AbstractSalesTaxRateService, ISalesTaxRateService
-	{
-		public SalesTaxRateService(
-			ILogger<SalesTaxRateRepository> logger,
-			ISalesTaxRateRepository salesTaxRateRepository,
-			IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
-			IBOLSalesTaxRateMapper BOLsalesTaxRateMapper,
-			IDALSalesTaxRateMapper DALsalesTaxRateMapper)
-			: base(logger, salesTaxRateRepository,
-			       salesTaxRateModelValidator,
-			       BOLsalesTaxRateMapper,
-			       DALsalesTaxRateMapper)
-		{}
-	}
+        public class SalesTaxRateService: AbstractSalesTaxRateService, ISalesTaxRateService
+        {
+                public SalesTaxRateService(
+                        ILogger<SalesTaxRateRepository> logger,
+                        ISalesTaxRateRepository salesTaxRateRepository,
+                        IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
+                        IBOLSalesTaxRateMapper bolsalesTaxRateMapper,
+                        IDALSalesTaxRateMapper dalsalesTaxRateMapper)
+                        : base(logger,
+                               salesTaxRateRepository,
+                               salesTaxRateModelValidator,
+                               bolsalesTaxRateMapper,
+                               dalsalesTaxRateMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>720f16f0b04c28bc22638dd26f04a5d8</Hash>
+    <Hash>4b7eb9b133457ec33117bea8442a735b</Hash>
 </Codenesium>*/

@@ -4,48 +4,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class ApiStateResponseModel: AbstractApiResponseModel
-	{
-		public ApiStateResponseModel() : base()
-		{}
+        public partial class ApiStateResponseModel: AbstractApiResponseModel
+        {
+                public ApiStateResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int id,
-			string name)
-		{
-			this.Id = id.ToInt();
-			this.Name = name;
-		}
+                public void SetProperties(
+                        int id,
+                        string name)
+                {
+                        this.Id = id;
+                        this.Name = name;
+                }
 
-		public int Id { get; private set; }
-		public string Name { get; private set; }
+                public int Id { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+                public string Name { get; private set; }
 
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
 
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeNameValue = false;
-		}
-	}
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0cc7632949ff1e760895f29f68fae09a</Hash>
+    <Hash>5289fcda7cd66baf905e8a38024cdfba</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class ClaspService: AbstractClaspService, IClaspService
-	{
-		public ClaspService(
-			ILogger<ClaspRepository> logger,
-			IClaspRepository claspRepository,
-			IApiClaspRequestModelValidator claspModelValidator,
-			IBOLClaspMapper BOLclaspMapper,
-			IDALClaspMapper DALclaspMapper)
-			: base(logger, claspRepository,
-			       claspModelValidator,
-			       BOLclaspMapper,
-			       DALclaspMapper)
-		{}
-	}
+        public class ClaspService: AbstractClaspService, IClaspService
+        {
+                public ClaspService(
+                        ILogger<ClaspRepository> logger,
+                        IClaspRepository claspRepository,
+                        IApiClaspRequestModelValidator claspModelValidator,
+                        IBOLClaspMapper bolclaspMapper,
+                        IDALClaspMapper dalclaspMapper)
+                        : base(logger,
+                               claspRepository,
+                               claspModelValidator,
+                               bolclaspMapper,
+                               dalclaspMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b3fffbf2eb58108234051083bae9fda7</Hash>
+    <Hash>37a5c7768a71cd3627678de40964d824</Hash>
 </Codenesium>*/

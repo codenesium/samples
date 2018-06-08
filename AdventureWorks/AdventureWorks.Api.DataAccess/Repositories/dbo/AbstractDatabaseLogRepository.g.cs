@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractDatabaseLogRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractDatabaseLogRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractDatabaseLogRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<DatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractDatabaseLogRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<DatabaseLog> Get(int databaseLogID)
-		{
-			return await this.GetById(databaseLogID);
-		}
+                public virtual Task<List<DatabaseLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<DatabaseLog> Create(DatabaseLog item)
-		{
-			this.Context.Set<DatabaseLog>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<DatabaseLog> Get(int databaseLogID)
+                {
+                        return await this.GetById(databaseLogID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<DatabaseLog> Create(DatabaseLog item)
+                {
+                        this.Context.Set<DatabaseLog>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(DatabaseLog item)
-		{
-			var entity = this.Context.Set<DatabaseLog>().Local.FirstOrDefault(x => x.DatabaseLogID == item.DatabaseLogID);
-			if (entity == null)
-			{
-				this.Context.Set<DatabaseLog>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(DatabaseLog item)
+                {
+                        var entity = this.Context.Set<DatabaseLog>().Local.FirstOrDefault(x => x.DatabaseLogID == item.DatabaseLogID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<DatabaseLog>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int databaseLogID)
-		{
-			DatabaseLog record = await this.GetById(databaseLogID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<DatabaseLog>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int databaseLogID)
+                {
+                        DatabaseLog record = await this.GetById(databaseLogID);
 
-		protected async Task<List<DatabaseLog>> Where(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<DatabaseLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<DatabaseLog>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<DatabaseLog>> Where(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<DatabaseLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<DatabaseLog>> SearchLinqEF(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(DatabaseLog.DatabaseLogID)} ASC";
-			}
-			return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DatabaseLog>();
-		}
+                        return records;
+                }
 
-		private async Task<List<DatabaseLog>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(DatabaseLog.DatabaseLogID)} ASC";
-			}
+                private async Task<List<DatabaseLog>> SearchLinqEF(Expression<Func<DatabaseLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(DatabaseLog.DatabaseLogID)} ASC";
+                        }
 
-			return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DatabaseLog>();
-		}
+                        return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DatabaseLog>();
+                }
 
-		private async Task<DatabaseLog> GetById(int databaseLogID)
-		{
-			List<DatabaseLog> records = await this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID);
+                private async Task<List<DatabaseLog>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(DatabaseLog.DatabaseLogID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DatabaseLog>();
+                }
+
+                private async Task<DatabaseLog> GetById(int databaseLogID)
+                {
+                        List<DatabaseLog> records = await this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3eb3f2ade7e9902fb5d27992d973d88c</Hash>
+    <Hash>b87524c70f607be7baf722843e566741</Hash>
 </Codenesium>*/

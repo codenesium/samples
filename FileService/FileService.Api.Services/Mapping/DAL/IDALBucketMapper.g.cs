@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+
 namespace FileServiceNS.Api.Services
 {
-	public interface IDALBucketMapper
-	{
-		Bucket MapBOToEF(
-			BOBucket bo);
+        public interface IDALBucketMapper
+        {
+                Bucket MapBOToEF(
+                        BOBucket bo);
 
-		BOBucket MapEFToBO(
-			Bucket efBucket);
+                BOBucket MapEFToBO(
+                        Bucket efBucket);
 
-		List<BOBucket> MapEFToBO(
-			List<Bucket> records);
-	}
+                List<BOBucket> MapEFToBO(
+                        List<Bucket> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>b13df9927037921c3ab2f6f445a7e8af</Hash>
+    <Hash>a98bb08864a64225dea5c184dd01082f</Hash>
 </Codenesium>*/

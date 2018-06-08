@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public class LinkLogRepository: AbstractLinkLogRepository, ILinkLogRepository
-	{
-		public LinkLogRepository(
-			ILogger<LinkLogRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class LinkLogRepository: AbstractLinkLogRepository, ILinkLogRepository
+        {
+                public LinkLogRepository(
+                        ILogger<LinkLogRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>486159488d2b2d2aff3499c716d28cb4</Hash>
+    <Hash>7a7d80f8742c43db246ce5f90feb04dd</Hash>
 </Codenesium>*/

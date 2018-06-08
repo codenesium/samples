@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public class BOLMachineMapper: BOLAbstractMachineMapper, IBOLMachineMapper
-	{
-		public BOLMachineMapper()
-		{}
-	}
+        public class BOLMachineMapper: BOLAbstractMachineMapper, IBOLMachineMapper
+        {
+                public BOLMachineMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b2a77a5361b8623711c4889af9f46063</Hash>
+    <Hash>a28018a6956d4fd4b0f5b7e589882022</Hash>
 </Codenesium>*/

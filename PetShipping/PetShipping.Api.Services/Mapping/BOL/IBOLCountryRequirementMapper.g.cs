@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public interface IBOLCountryRequirementMapper
-	{
-		BOCountryRequirement MapModelToBO(
-			int id,
-			ApiCountryRequirementRequestModel model);
+        public interface IBOLCountryRequirementMapper
+        {
+                BOCountryRequirement MapModelToBO(
+                        int id,
+                        ApiCountryRequirementRequestModel model);
 
-		ApiCountryRequirementResponseModel MapBOToModel(
-			BOCountryRequirement boCountryRequirement);
+                ApiCountryRequirementResponseModel MapBOToModel(
+                        BOCountryRequirement boCountryRequirement);
 
-		List<ApiCountryRequirementResponseModel> MapBOToModel(
-			List<BOCountryRequirement> items);
-	}
+                List<ApiCountryRequirementResponseModel> MapBOToModel(
+                        List<BOCountryRequirement> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>03d392cbe97cbc22570c989eb0436386</Hash>
+    <Hash>f122845f8153c335cdfceffbb3659204</Hash>
 </Codenesium>*/

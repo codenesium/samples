@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/scrapReasons")]
-	[ApiVersion("1.0")]
-	public class ScrapReasonController: AbstractScrapReasonController
-	{
-		public ScrapReasonController(
-			ServiceSettings settings,
-			ILogger<ScrapReasonController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IScrapReasonService scrapReasonService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       scrapReasonService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/scrapReasons")]
+        [ApiVersion("1.0")]
+        public class ScrapReasonController: AbstractScrapReasonController
+        {
+                public ScrapReasonController(
+                        ServiceSettings settings,
+                        ILogger<ScrapReasonController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IScrapReasonService scrapReasonService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               scrapReasonService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e3f75a17eb8342d79022168f02050a6a</Hash>
+    <Hash>41eee607cf0b837655d367cf85fbbaf4</Hash>
 </Codenesium>*/

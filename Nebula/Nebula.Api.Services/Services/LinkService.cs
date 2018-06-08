@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class LinkService: AbstractLinkService, ILinkService
-	{
-		public LinkService(
-			ILogger<LinkRepository> logger,
-			ILinkRepository linkRepository,
-			IApiLinkRequestModelValidator linkModelValidator,
-			IBOLLinkMapper BOLlinkMapper,
-			IDALLinkMapper DALlinkMapper)
-			: base(logger, linkRepository,
-			       linkModelValidator,
-			       BOLlinkMapper,
-			       DALlinkMapper)
-		{}
-	}
+        public class LinkService: AbstractLinkService, ILinkService
+        {
+                public LinkService(
+                        ILogger<LinkRepository> logger,
+                        ILinkRepository linkRepository,
+                        IApiLinkRequestModelValidator linkModelValidator,
+                        IBOLLinkMapper bollinkMapper,
+                        IDALLinkMapper dallinkMapper)
+                        : base(logger,
+                               linkRepository,
+                               linkModelValidator,
+                               bollinkMapper,
+                               dallinkMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5613c59a0b60ec9a25db589e5c8381e8</Hash>
+    <Hash>0f81e4a3ab14963c802172e2db1ed506</Hash>
 </Codenesium>*/

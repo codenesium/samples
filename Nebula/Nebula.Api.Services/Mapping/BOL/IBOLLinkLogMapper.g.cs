@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public interface IBOLLinkLogMapper
-	{
-		BOLinkLog MapModelToBO(
-			int id,
-			ApiLinkLogRequestModel model);
+        public interface IBOLLinkLogMapper
+        {
+                BOLinkLog MapModelToBO(
+                        int id,
+                        ApiLinkLogRequestModel model);
 
-		ApiLinkLogResponseModel MapBOToModel(
-			BOLinkLog boLinkLog);
+                ApiLinkLogResponseModel MapBOToModel(
+                        BOLinkLog boLinkLog);
 
-		List<ApiLinkLogResponseModel> MapBOToModel(
-			List<BOLinkLog> items);
-	}
+                List<ApiLinkLogResponseModel> MapBOToModel(
+                        List<BOLinkLog> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>380227c65efb786c89ad1ff4263285f8</Hash>
+    <Hash>a7612b95ee53f100a72b40146abe5aba</Hash>
 </Codenesium>*/

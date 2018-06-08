@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class CountryRegionCurrencyService: AbstractCountryRegionCurrencyService, ICountryRegionCurrencyService
-	{
-		public CountryRegionCurrencyService(
-			ILogger<CountryRegionCurrencyRepository> logger,
-			ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
-			IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
-			IBOLCountryRegionCurrencyMapper BOLcountryRegionCurrencyMapper,
-			IDALCountryRegionCurrencyMapper DALcountryRegionCurrencyMapper)
-			: base(logger, countryRegionCurrencyRepository,
-			       countryRegionCurrencyModelValidator,
-			       BOLcountryRegionCurrencyMapper,
-			       DALcountryRegionCurrencyMapper)
-		{}
-	}
+        public class CountryRegionCurrencyService: AbstractCountryRegionCurrencyService, ICountryRegionCurrencyService
+        {
+                public CountryRegionCurrencyService(
+                        ILogger<CountryRegionCurrencyRepository> logger,
+                        ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
+                        IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
+                        IBOLCountryRegionCurrencyMapper bolcountryRegionCurrencyMapper,
+                        IDALCountryRegionCurrencyMapper dalcountryRegionCurrencyMapper)
+                        : base(logger,
+                               countryRegionCurrencyRepository,
+                               countryRegionCurrencyModelValidator,
+                               bolcountryRegionCurrencyMapper,
+                               dalcountryRegionCurrencyMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0277e15d7ad514071431f31efcba10c1</Hash>
+    <Hash>4fec83e0e14de620bb08c044373af6b7</Hash>
 </Codenesium>*/

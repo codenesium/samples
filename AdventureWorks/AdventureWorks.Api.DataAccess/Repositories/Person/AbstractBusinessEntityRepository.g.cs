@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractBusinessEntityRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractBusinessEntityRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractBusinessEntityRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<BusinessEntity>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractBusinessEntityRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<BusinessEntity> Get(int businessEntityID)
-		{
-			return await this.GetById(businessEntityID);
-		}
+                public virtual Task<List<BusinessEntity>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<BusinessEntity> Create(BusinessEntity item)
-		{
-			this.Context.Set<BusinessEntity>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<BusinessEntity> Get(int businessEntityID)
+                {
+                        return await this.GetById(businessEntityID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<BusinessEntity> Create(BusinessEntity item)
+                {
+                        this.Context.Set<BusinessEntity>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(BusinessEntity item)
-		{
-			var entity = this.Context.Set<BusinessEntity>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
-			if (entity == null)
-			{
-				this.Context.Set<BusinessEntity>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(BusinessEntity item)
+                {
+                        var entity = this.Context.Set<BusinessEntity>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<BusinessEntity>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int businessEntityID)
-		{
-			BusinessEntity record = await this.GetById(businessEntityID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<BusinessEntity>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int businessEntityID)
+                {
+                        BusinessEntity record = await this.GetById(businessEntityID);
 
-		protected async Task<List<BusinessEntity>> Where(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<BusinessEntity> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<BusinessEntity>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<BusinessEntity>> Where(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<BusinessEntity> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<BusinessEntity>> SearchLinqEF(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(BusinessEntity.BusinessEntityID)} ASC";
-			}
-			return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<BusinessEntity>();
-		}
+                        return records;
+                }
 
-		private async Task<List<BusinessEntity>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(BusinessEntity.BusinessEntityID)} ASC";
-			}
+                private async Task<List<BusinessEntity>> SearchLinqEF(Expression<Func<BusinessEntity, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(BusinessEntity.BusinessEntityID)} ASC";
+                        }
 
-			return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<BusinessEntity>();
-		}
+                        return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<BusinessEntity>();
+                }
 
-		private async Task<BusinessEntity> GetById(int businessEntityID)
-		{
-			List<BusinessEntity> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                private async Task<List<BusinessEntity>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(BusinessEntity.BusinessEntityID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<BusinessEntity>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<BusinessEntity>();
+                }
+
+                private async Task<BusinessEntity> GetById(int businessEntityID)
+                {
+                        List<BusinessEntity> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>98b39b5c5534710620e1bdd1fd1c570b</Hash>
+    <Hash>82d47c5022b714b3ac42c1c54a4c1e6c</Hash>
 </Codenesium>*/

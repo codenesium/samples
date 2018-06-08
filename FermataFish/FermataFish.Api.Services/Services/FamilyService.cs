@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class FamilyService: AbstractFamilyService, IFamilyService
-	{
-		public FamilyService(
-			ILogger<FamilyRepository> logger,
-			IFamilyRepository familyRepository,
-			IApiFamilyRequestModelValidator familyModelValidator,
-			IBOLFamilyMapper BOLfamilyMapper,
-			IDALFamilyMapper DALfamilyMapper)
-			: base(logger, familyRepository,
-			       familyModelValidator,
-			       BOLfamilyMapper,
-			       DALfamilyMapper)
-		{}
-	}
+        public class FamilyService: AbstractFamilyService, IFamilyService
+        {
+                public FamilyService(
+                        ILogger<FamilyRepository> logger,
+                        IFamilyRepository familyRepository,
+                        IApiFamilyRequestModelValidator familyModelValidator,
+                        IBOLFamilyMapper bolfamilyMapper,
+                        IDALFamilyMapper dalfamilyMapper)
+                        : base(logger,
+                               familyRepository,
+                               familyModelValidator,
+                               bolfamilyMapper,
+                               dalfamilyMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ae699eed7dbdf9d74507925ce6b57340</Hash>
+    <Hash>4f69cef4a72e6d70b67e4e0c47238c86</Hash>
 </Codenesium>*/

@@ -3,54 +3,55 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractDALOtherTransportMapper
-	{
-		public virtual OtherTransport MapBOToEF(
-			BOOtherTransport bo)
-		{
-			OtherTransport efOtherTransport = new OtherTransport ();
+        public abstract class DALAbstractOtherTransportMapper
+        {
+                public virtual OtherTransport MapBOToEF(
+                        BOOtherTransport bo)
+                {
+                        OtherTransport efOtherTransport = new OtherTransport();
 
-			efOtherTransport.SetProperties(
-				bo.HandlerId,
-				bo.Id,
-				bo.PipelineStepId);
-			return efOtherTransport;
-		}
+                        efOtherTransport.SetProperties(
+                                bo.HandlerId,
+                                bo.Id,
+                                bo.PipelineStepId);
+                        return efOtherTransport;
+                }
 
-		public virtual BOOtherTransport MapEFToBO(
-			OtherTransport ef)
-		{
-			if (ef == null)
-			{
-				return null;
-			}
+                public virtual BOOtherTransport MapEFToBO(
+                        OtherTransport ef)
+                {
+                        if (ef == null)
+                        {
+                                return null;
+                        }
 
-			var bo = new BOOtherTransport();
+                        var bo = new BOOtherTransport();
 
-			bo.SetProperties(
-				ef.Id,
-				ef.HandlerId,
-				ef.PipelineStepId);
-			return bo;
-		}
+                        bo.SetProperties(
+                                ef.Id,
+                                ef.HandlerId,
+                                ef.PipelineStepId);
+                        return bo;
+                }
 
-		public virtual List<BOOtherTransport> MapEFToBO(
-			List<OtherTransport> records)
-		{
-			List<BOOtherTransport> response = new List<BOOtherTransport>();
+                public virtual List<BOOtherTransport> MapEFToBO(
+                        List<OtherTransport> records)
+                {
+                        List<BOOtherTransport> response = new List<BOOtherTransport>();
 
-			records.ForEach(r =>
-			{
-				response.Add(this.MapEFToBO(r));
-			});
+                        records.ForEach(r =>
+                        {
+                                response.Add(this.MapEFToBO(r));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a23c137c6d44a6f65ad9f2622c834e29</Hash>
+    <Hash>6174f4347d9b7824f07308981cf6fd36</Hash>
 </Codenesium>*/

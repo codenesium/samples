@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLCultureMapper
-	{
-		BOCulture MapModelToBO(
-			string cultureID,
-			ApiCultureRequestModel model);
+        public interface IBOLCultureMapper
+        {
+                BOCulture MapModelToBO(
+                        string cultureID,
+                        ApiCultureRequestModel model);
 
-		ApiCultureResponseModel MapBOToModel(
-			BOCulture boCulture);
+                ApiCultureResponseModel MapBOToModel(
+                        BOCulture boCulture);
 
-		List<ApiCultureResponseModel> MapBOToModel(
-			List<BOCulture> items);
-	}
+                List<ApiCultureResponseModel> MapBOToModel(
+                        List<BOCulture> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>c5468f3987eeabbef59c9f3c3af5cba9</Hash>
+    <Hash>57f3af21b4ee5871b275ee92549d9bcf</Hash>
 </Codenesium>*/

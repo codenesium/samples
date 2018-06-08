@@ -12,28 +12,28 @@ using FileServiceNS.Api.Services;
 
 namespace FileServiceNS.Api.Web
 {
-	[Route("api/versionInfoes")]
-	[ApiVersion("1.0")]
-	public class VersionInfoController: AbstractVersionInfoController
-	{
-		public VersionInfoController(
-			ServiceSettings settings,
-			ILogger<VersionInfoController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IVersionInfoService versionInfoService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       versionInfoService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/versionInfoes")]
+        [ApiVersion("1.0")]
+        public class VersionInfoController: AbstractVersionInfoController
+        {
+                public VersionInfoController(
+                        ServiceSettings settings,
+                        ILogger<VersionInfoController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IVersionInfoService versionInfoService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               versionInfoService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>75aeb04b0947a4f4cbef79c0dbd3a5fe</Hash>
+    <Hash>7664c942f5c0bc555310221b2b51f273</Hash>
 </Codenesium>*/

@@ -7,22 +7,22 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface ICountryRequirementService
-	{
-		Task<CreateResponse<ApiCountryRequirementResponseModel>> Create(
-			ApiCountryRequirementRequestModel model);
+        public interface ICountryRequirementService
+        {
+                Task<CreateResponse<ApiCountryRequirementResponseModel>> Create(
+                        ApiCountryRequirementRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiCountryRequirementRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiCountryRequirementRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiCountryRequirementResponseModel> Get(int id);
+                Task<ApiCountryRequirementResponseModel> Get(int id);
 
-		Task<List<ApiCountryRequirementResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiCountryRequirementResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>dac981176086f53696d6096977a986b7</Hash>
+    <Hash>57c6c5fa72035a6b219d876513230c25</Hash>
 </Codenesium>*/

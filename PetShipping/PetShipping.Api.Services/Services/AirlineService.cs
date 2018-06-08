@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class AirlineService: AbstractAirlineService, IAirlineService
-	{
-		public AirlineService(
-			ILogger<AirlineRepository> logger,
-			IAirlineRepository airlineRepository,
-			IApiAirlineRequestModelValidator airlineModelValidator,
-			IBOLAirlineMapper BOLairlineMapper,
-			IDALAirlineMapper DALairlineMapper)
-			: base(logger, airlineRepository,
-			       airlineModelValidator,
-			       BOLairlineMapper,
-			       DALairlineMapper)
-		{}
-	}
+        public class AirlineService: AbstractAirlineService, IAirlineService
+        {
+                public AirlineService(
+                        ILogger<AirlineRepository> logger,
+                        IAirlineRepository airlineRepository,
+                        IApiAirlineRequestModelValidator airlineModelValidator,
+                        IBOLAirlineMapper bolairlineMapper,
+                        IDALAirlineMapper dalairlineMapper)
+                        : base(logger,
+                               airlineRepository,
+                               airlineModelValidator,
+                               bolairlineMapper,
+                               dalairlineMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>22937a37dcea8ee5137ac5bf024aece2</Hash>
+    <Hash>83e10fc3e1f3a3d678ece01f57f2c170</Hash>
 </Codenesium>*/

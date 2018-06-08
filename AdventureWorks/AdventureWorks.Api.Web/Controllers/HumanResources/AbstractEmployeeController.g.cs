@@ -14,215 +14,215 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	public abstract class AbstractEmployeeController: AbstractApiController
-	{
-		protected IEmployeeService employeeService;
+        public abstract class AbstractEmployeeController: AbstractApiController
+        {
+                protected IEmployeeService EmployeeService { get; private set; }
 
-		protected int BulkInsertLimit { get; set; }
+                protected int BulkInsertLimit { get; set; }
 
-		protected int MaxLimit { get; set; }
+                protected int MaxLimit { get; set; }
 
-		protected int DefaultLimit { get; set; }
+                protected int DefaultLimit { get; set; }
 
-		public AbstractEmployeeController(
-			ServiceSettings settings,
-			ILogger<AbstractEmployeeController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IEmployeeService employeeService
-			)
-			: base(settings, logger, transactionCoordinator)
-		{
-			this.employeeService = employeeService;
-		}
+                public AbstractEmployeeController(
+                        ServiceSettings settings,
+                        ILogger<AbstractEmployeeController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IEmployeeService employeeService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.EmployeeService = employeeService;
+                }
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<ApiEmployeeResponseModel> response = await this.employeeService.All(query.Offset, query.Limit);
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.All(query.Offset, query.Limit);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("{id}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(int id)
-		{
-			ApiEmployeeResponseModel response = await this.employeeService.Get(id);
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(int id)
+                {
+                        ApiEmployeeResponseModel response = await this.EmployeeService.Get(id);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpPost]
-		[Route("")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeRequestModel model)
-		{
-			CreateResponse<ApiEmployeeResponseModel> result = await this.employeeService.Create(model);
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiEmployeeRequestModel model)
+                {
+                        CreateResponse<ApiEmployeeResponseModel> result = await this.EmployeeService.Create(model);
 
-			if (result.Success)
-			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.BusinessEntityID.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Employees/{result.Record.BusinessEntityID.ToString()}");
-				return this.Ok(result.Record);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.BusinessEntityID.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Employees/{result.Record.BusinessEntityID.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpPost]
-		[Route("BulkInsert")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
-		[ProducesResponseType(typeof(void), 413)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeeRequestModel> models)
-		{
-			if (models.Count > this.BulkInsertLimit)
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-			}
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiEmployeeRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
 
-			List<ApiEmployeeResponseModel> records = new List<ApiEmployeeResponseModel>();
-			foreach (var model in models)
-			{
-				CreateResponse<ApiEmployeeResponseModel> result = await this.employeeService.Create(model);
+                        List<ApiEmployeeResponseModel> records = new List<ApiEmployeeResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiEmployeeResponseModel> result = await this.EmployeeService.Create(model);
 
-				if(result.Success)
-				{
-					records.Add(result.Record);
-				}
-				else
-				{
-					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-				}
-			}
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
 
-			return this.Ok(records);
-		}
+                        return this.Ok(records);
+                }
 
-		[HttpPut]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeRequestModel model)
-		{
-			ActionResponse result = await this.employeeService.Update(id, model);
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiEmployeeRequestModel model)
+                {
+                        ActionResponse result = await this.EmployeeService.Update(id, model);
 
-			if (result.Success)
-			{
-				ApiEmployeeResponseModel response = await this.employeeService.Get(id);
+                        if (result.Success)
+                        {
+                                ApiEmployeeResponseModel response = await this.EmployeeService.Get(id);
 
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpDelete]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(int id)
-		{
-			ActionResponse result = await this.employeeService.Delete(id);
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(int id)
+                {
+                        ActionResponse result = await this.EmployeeService.Delete(id);
 
-			if (result.Success)
-			{
-				return this.NoContent();
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpGet]
-		[Route("getLoginID/{loginID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> GetLoginID(string loginID)
-		{
-			ApiEmployeeResponseModel response = await this.employeeService.GetLoginID(loginID);
+                [HttpGet]
+                [Route("getLoginID/{loginID}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> GetLoginID(string loginID)
+                {
+                        ApiEmployeeResponseModel response = await this.EmployeeService.GetLoginID(loginID);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpGet]
-		[Route("getNationalIDNumber/{nationalIDNumber}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> GetNationalIDNumber(string nationalIDNumber)
-		{
-			ApiEmployeeResponseModel response = await this.employeeService.GetNationalIDNumber(nationalIDNumber);
+                [HttpGet]
+                [Route("getNationalIDNumber/{nationalIDNumber}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> GetNationalIDNumber(string nationalIDNumber)
+                {
+                        ApiEmployeeResponseModel response = await this.EmployeeService.GetNationalIDNumber(nationalIDNumber);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpGet]
-		[Route("getOrganizationLevelOrganizationNode/{organizationLevel}/{organizationNode}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
-		public async virtual Task<IActionResult> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel,Nullable<Guid> organizationNode)
-		{
-			List<ApiEmployeeResponseModel> response = await this.employeeService.GetOrganizationLevelOrganizationNode(organizationLevel,organizationNode);
+                [HttpGet]
+                [Route("getOrganizationLevelOrganizationNode/{organizationLevel}/{organizationNode}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                public async virtual Task<IActionResult> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel, Nullable<Guid> organizationNode)
+                {
+                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.GetOrganizationLevelOrganizationNode(organizationLevel, organizationNode);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("getOrganizationNode/{organizationNode}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
-		public async virtual Task<IActionResult> GetOrganizationNode(Nullable<Guid> organizationNode)
-		{
-			List<ApiEmployeeResponseModel> response = await this.employeeService.GetOrganizationNode(organizationNode);
+                [HttpGet]
+                [Route("getOrganizationNode/{organizationNode}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                public async virtual Task<IActionResult> GetOrganizationNode(Nullable<Guid> organizationNode)
+                {
+                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.GetOrganizationNode(organizationNode);
 
-			return this.Ok(response);
-		}
-	}
+                        return this.Ok(response);
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9984fe72b60db43af95e7e31b838633d</Hash>
+    <Hash>1d5c7870a6ace5defd9de752b45c4463</Hash>
 </Codenesium>*/

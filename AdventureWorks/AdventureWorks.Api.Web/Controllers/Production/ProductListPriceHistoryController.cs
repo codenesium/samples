@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/productListPriceHistories")]
-	[ApiVersion("1.0")]
-	public class ProductListPriceHistoryController: AbstractProductListPriceHistoryController
-	{
-		public ProductListPriceHistoryController(
-			ServiceSettings settings,
-			ILogger<ProductListPriceHistoryController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IProductListPriceHistoryService productListPriceHistoryService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       productListPriceHistoryService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/productListPriceHistories")]
+        [ApiVersion("1.0")]
+        public class ProductListPriceHistoryController: AbstractProductListPriceHistoryController
+        {
+                public ProductListPriceHistoryController(
+                        ServiceSettings settings,
+                        ILogger<ProductListPriceHistoryController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IProductListPriceHistoryService productListPriceHistoryService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               productListPriceHistoryService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>37bc4e31e405d8d89e8aa48fc9f3fc72</Hash>
+    <Hash>e0faddf75fa62e69e35bbc22f43e6c4e</Hash>
 </Codenesium>*/

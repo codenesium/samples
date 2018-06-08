@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLWorkOrderMapper
-	{
-		BOWorkOrder MapModelToBO(
-			int workOrderID,
-			ApiWorkOrderRequestModel model);
+        public interface IBOLWorkOrderMapper
+        {
+                BOWorkOrder MapModelToBO(
+                        int workOrderID,
+                        ApiWorkOrderRequestModel model);
 
-		ApiWorkOrderResponseModel MapBOToModel(
-			BOWorkOrder boWorkOrder);
+                ApiWorkOrderResponseModel MapBOToModel(
+                        BOWorkOrder boWorkOrder);
 
-		List<ApiWorkOrderResponseModel> MapBOToModel(
-			List<BOWorkOrder> items);
-	}
+                List<ApiWorkOrderResponseModel> MapBOToModel(
+                        List<BOWorkOrder> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>66300d0a313112fcc546dd55f35ee818</Hash>
+    <Hash>a2ea88a34e29f7b9dae9b7625b7e8381</Hash>
 </Codenesium>*/

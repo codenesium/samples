@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALStateProvinceMapper
-	{
-		StateProvince MapBOToEF(
-			BOStateProvince bo);
+        public interface IDALStateProvinceMapper
+        {
+                StateProvince MapBOToEF(
+                        BOStateProvince bo);
 
-		BOStateProvince MapEFToBO(
-			StateProvince efStateProvince);
+                BOStateProvince MapEFToBO(
+                        StateProvince efStateProvince);
 
-		List<BOStateProvince> MapEFToBO(
-			List<StateProvince> records);
-	}
+                List<BOStateProvince> MapEFToBO(
+                        List<StateProvince> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>dc8536426bfa6628fc49f9f7ca013a22</Hash>
+    <Hash>9f66421fe50c0ff49cb0d5d1dac2581f</Hash>
 </Codenesium>*/

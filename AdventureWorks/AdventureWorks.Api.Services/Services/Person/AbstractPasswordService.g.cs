@@ -12,87 +12,93 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractPasswordService: AbstractService
-	{
-		private IPasswordRepository passwordRepository;
-		private IApiPasswordRequestModelValidator passwordModelValidator;
-		private IBOLPasswordMapper bolPasswordMapper;
-		private IDALPasswordMapper dalPasswordMapper;
-		private ILogger logger;
+        public abstract class AbstractPasswordService: AbstractService
+        {
+                private IPasswordRepository passwordRepository;
 
-		public AbstractPasswordService(
-			ILogger logger,
-			IPasswordRepository passwordRepository,
-			IApiPasswordRequestModelValidator passwordModelValidator,
-			IBOLPasswordMapper bolpasswordMapper,
-			IDALPasswordMapper dalpasswordMapper)
-			: base()
+                private IApiPasswordRequestModelValidator passwordModelValidator;
 
-		{
-			this.passwordRepository = passwordRepository;
-			this.passwordModelValidator = passwordModelValidator;
-			this.bolPasswordMapper = bolpasswordMapper;
-			this.dalPasswordMapper = dalpasswordMapper;
-			this.logger = logger;
-		}
+                private IBOLPasswordMapper bolPasswordMapper;
 
-		public virtual async Task<List<ApiPasswordResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.passwordRepository.All(skip, take, orderClause);
+                private IDALPasswordMapper dalPasswordMapper;
 
-			return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPasswordResponseModel> Get(int businessEntityID)
-		{
-			var record = await passwordRepository.Get(businessEntityID);
+                public AbstractPasswordService(
+                        ILogger logger,
+                        IPasswordRepository passwordRepository,
+                        IApiPasswordRequestModelValidator passwordModelValidator,
+                        IBOLPasswordMapper bolpasswordMapper,
+                        IDALPasswordMapper dalpasswordMapper)
+                        : base()
 
-			return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record));
-		}
+                {
+                        this.passwordRepository = passwordRepository;
+                        this.passwordModelValidator = passwordModelValidator;
+                        this.bolPasswordMapper = bolpasswordMapper;
+                        this.dalPasswordMapper = dalpasswordMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPasswordResponseModel>> Create(
-			ApiPasswordRequestModel model)
-		{
-			CreateResponse<ApiPasswordResponseModel> response = new CreateResponse<ApiPasswordResponseModel>(await this.passwordModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPasswordMapper.MapModelToBO(default (int), model);
-				var record = await this.passwordRepository.Create(this.dalPasswordMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPasswordResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.passwordRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int businessEntityID,
-			ApiPasswordRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.passwordModelValidator.ValidateUpdateAsync(businessEntityID, model));
+                public virtual async Task<ApiPasswordResponseModel> Get(int businessEntityID)
+                {
+                        var record = await this.passwordRepository.Get(businessEntityID);
 
-			if (response.Success)
-			{
-				var bo = this.bolPasswordMapper.MapModelToBO(businessEntityID, model);
-				await this.passwordRepository.Update(this.dalPasswordMapper.MapBOToEF(bo));
-			}
+                        return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPasswordResponseModel>> Create(
+                        ApiPasswordRequestModel model)
+                {
+                        CreateResponse<ApiPasswordResponseModel> response = new CreateResponse<ApiPasswordResponseModel>(await this.passwordModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPasswordMapper.MapModelToBO(default (int), model);
+                                var record = await this.passwordRepository.Create(this.dalPasswordMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int businessEntityID)
-		{
-			ActionResponse response = new ActionResponse(await this.passwordModelValidator.ValidateDeleteAsync(businessEntityID));
+                                response.SetRecord(this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.passwordRepository.Delete(businessEntityID);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int businessEntityID,
+                        ApiPasswordRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.passwordModelValidator.ValidateUpdateAsync(businessEntityID, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPasswordMapper.MapModelToBO(businessEntityID, model);
+                                await this.passwordRepository.Update(this.dalPasswordMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int businessEntityID)
+                {
+                        ActionResponse response = new ActionResponse(await this.passwordModelValidator.ValidateDeleteAsync(businessEntityID));
+
+                        if (response.Success)
+                        {
+                                await this.passwordRepository.Delete(businessEntityID);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8a9d4beeab3a464a2f731f1be17d6901</Hash>
+    <Hash>5cd461671d1701841f3483522b62d824</Hash>
 </Codenesium>*/

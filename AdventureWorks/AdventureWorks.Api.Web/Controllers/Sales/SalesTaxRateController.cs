@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/salesTaxRates")]
-	[ApiVersion("1.0")]
-	public class SalesTaxRateController: AbstractSalesTaxRateController
-	{
-		public SalesTaxRateController(
-			ServiceSettings settings,
-			ILogger<SalesTaxRateController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ISalesTaxRateService salesTaxRateService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       salesTaxRateService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/salesTaxRates")]
+        [ApiVersion("1.0")]
+        public class SalesTaxRateController: AbstractSalesTaxRateController
+        {
+                public SalesTaxRateController(
+                        ServiceSettings settings,
+                        ILogger<SalesTaxRateController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ISalesTaxRateService salesTaxRateService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               salesTaxRateService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>58c8794dc7302f90d73768b7de7aa857</Hash>
+    <Hash>ef5260996328755fd36c0b721709fe5c</Hash>
 </Codenesium>*/

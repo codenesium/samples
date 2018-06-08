@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/countryRegionCurrencies")]
-	[ApiVersion("1.0")]
-	public class CountryRegionCurrencyController: AbstractCountryRegionCurrencyController
-	{
-		public CountryRegionCurrencyController(
-			ServiceSettings settings,
-			ILogger<CountryRegionCurrencyController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ICountryRegionCurrencyService countryRegionCurrencyService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       countryRegionCurrencyService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/countryRegionCurrencies")]
+        [ApiVersion("1.0")]
+        public class CountryRegionCurrencyController: AbstractCountryRegionCurrencyController
+        {
+                public CountryRegionCurrencyController(
+                        ServiceSettings settings,
+                        ILogger<CountryRegionCurrencyController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ICountryRegionCurrencyService countryRegionCurrencyService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               countryRegionCurrencyService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6cec5afd2ed924dfc29d3904c7188857</Hash>
+    <Hash>85990cf60a186263fee822f533fc63a1</Hash>
 </Codenesium>*/

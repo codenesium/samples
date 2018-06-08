@@ -12,28 +12,28 @@ using PetShippingNS.Api.Services;
 
 namespace PetShippingNS.Api.Web
 {
-	[Route("api/airTransports")]
-	[ApiVersion("1.0")]
-	public class AirTransportController: AbstractAirTransportController
-	{
-		public AirTransportController(
-			ServiceSettings settings,
-			ILogger<AirTransportController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IAirTransportService airTransportService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       airTransportService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/airTransports")]
+        [ApiVersion("1.0")]
+        public class AirTransportController: AbstractAirTransportController
+        {
+                public AirTransportController(
+                        ServiceSettings settings,
+                        ILogger<AirTransportController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IAirTransportService airTransportService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               airTransportService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f4b269c259843e2be2cf6eaaf10a3a24</Hash>
+    <Hash>b164191ca083be5b45aa7cb773da278d</Hash>
 </Codenesium>*/

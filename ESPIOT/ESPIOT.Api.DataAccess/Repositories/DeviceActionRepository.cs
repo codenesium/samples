@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public class DeviceActionRepository: AbstractDeviceActionRepository, IDeviceActionRepository
-	{
-		public DeviceActionRepository(
-			ILogger<DeviceActionRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class DeviceActionRepository: AbstractDeviceActionRepository, IDeviceActionRepository
+        {
+                public DeviceActionRepository(
+                        ILogger<DeviceActionRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>80470ed72a19551cdfd7337d4201ad02</Hash>
+    <Hash>f663257e2d17d262f39f05871df0cf42</Hash>
 </Codenesium>*/

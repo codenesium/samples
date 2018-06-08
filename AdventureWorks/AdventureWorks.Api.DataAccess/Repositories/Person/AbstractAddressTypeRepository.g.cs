@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractAddressTypeRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractAddressTypeRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractAddressTypeRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<AddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractAddressTypeRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<AddressType> Get(int addressTypeID)
-		{
-			return await this.GetById(addressTypeID);
-		}
+                public virtual Task<List<AddressType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<AddressType> Create(AddressType item)
-		{
-			this.Context.Set<AddressType>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<AddressType> Get(int addressTypeID)
+                {
+                        return await this.GetById(addressTypeID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<AddressType> Create(AddressType item)
+                {
+                        this.Context.Set<AddressType>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(AddressType item)
-		{
-			var entity = this.Context.Set<AddressType>().Local.FirstOrDefault(x => x.AddressTypeID == item.AddressTypeID);
-			if (entity == null)
-			{
-				this.Context.Set<AddressType>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(AddressType item)
+                {
+                        var entity = this.Context.Set<AddressType>().Local.FirstOrDefault(x => x.AddressTypeID == item.AddressTypeID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<AddressType>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int addressTypeID)
-		{
-			AddressType record = await this.GetById(addressTypeID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<AddressType>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int addressTypeID)
+                {
+                        AddressType record = await this.GetById(addressTypeID);
 
-		public async Task<AddressType> GetName(string name)
-		{
-			var records = await this.SearchLinqEF(x => x.Name == name);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<AddressType>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
+                public async Task<AddressType> GetName(string name)
+                {
+                        var records = await this.SearchLinqEF(x => x.Name == name);
 
-		protected async Task<List<AddressType>> Where(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<AddressType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<AddressType>> Where(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<AddressType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<AddressType>> SearchLinqEF(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(AddressType.AddressTypeID)} ASC";
-			}
-			return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AddressType>();
-		}
+                        return records;
+                }
 
-		private async Task<List<AddressType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(AddressType.AddressTypeID)} ASC";
-			}
+                private async Task<List<AddressType>> SearchLinqEF(Expression<Func<AddressType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(AddressType.AddressTypeID)} ASC";
+                        }
 
-			return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AddressType>();
-		}
+                        return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AddressType>();
+                }
 
-		private async Task<AddressType> GetById(int addressTypeID)
-		{
-			List<AddressType> records = await this.SearchLinqEF(x => x.AddressTypeID == addressTypeID);
+                private async Task<List<AddressType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(AddressType.AddressTypeID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<AddressType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AddressType>();
+                }
+
+                private async Task<AddressType> GetById(int addressTypeID)
+                {
+                        List<AddressType> records = await this.SearchLinqEF(x => x.AddressTypeID == addressTypeID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>20ae52a89980e0c61a7a28bc3f842f02</Hash>
+    <Hash>421f60f86f8cce156343c3fecbca704a</Hash>
 </Codenesium>*/

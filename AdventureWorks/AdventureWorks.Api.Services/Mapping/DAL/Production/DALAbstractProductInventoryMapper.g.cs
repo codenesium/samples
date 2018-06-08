@@ -3,62 +3,63 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractDALProductInventoryMapper
-	{
-		public virtual ProductInventory MapBOToEF(
-			BOProductInventory bo)
-		{
-			ProductInventory efProductInventory = new ProductInventory ();
+        public abstract class DALAbstractProductInventoryMapper
+        {
+                public virtual ProductInventory MapBOToEF(
+                        BOProductInventory bo)
+                {
+                        ProductInventory efProductInventory = new ProductInventory();
 
-			efProductInventory.SetProperties(
-				bo.Bin,
-				bo.LocationID,
-				bo.ModifiedDate,
-				bo.ProductID,
-				bo.Quantity,
-				bo.Rowguid,
-				bo.Shelf);
-			return efProductInventory;
-		}
+                        efProductInventory.SetProperties(
+                                bo.Bin,
+                                bo.LocationID,
+                                bo.ModifiedDate,
+                                bo.ProductID,
+                                bo.Quantity,
+                                bo.Rowguid,
+                                bo.Shelf);
+                        return efProductInventory;
+                }
 
-		public virtual BOProductInventory MapEFToBO(
-			ProductInventory ef)
-		{
-			if (ef == null)
-			{
-				return null;
-			}
+                public virtual BOProductInventory MapEFToBO(
+                        ProductInventory ef)
+                {
+                        if (ef == null)
+                        {
+                                return null;
+                        }
 
-			var bo = new BOProductInventory();
+                        var bo = new BOProductInventory();
 
-			bo.SetProperties(
-				ef.ProductID,
-				ef.Bin,
-				ef.LocationID,
-				ef.ModifiedDate,
-				ef.Quantity,
-				ef.Rowguid,
-				ef.Shelf);
-			return bo;
-		}
+                        bo.SetProperties(
+                                ef.ProductID,
+                                ef.Bin,
+                                ef.LocationID,
+                                ef.ModifiedDate,
+                                ef.Quantity,
+                                ef.Rowguid,
+                                ef.Shelf);
+                        return bo;
+                }
 
-		public virtual List<BOProductInventory> MapEFToBO(
-			List<ProductInventory> records)
-		{
-			List<BOProductInventory> response = new List<BOProductInventory>();
+                public virtual List<BOProductInventory> MapEFToBO(
+                        List<ProductInventory> records)
+                {
+                        List<BOProductInventory> response = new List<BOProductInventory>();
 
-			records.ForEach(r =>
-			{
-				response.Add(this.MapEFToBO(r));
-			});
+                        records.ForEach(r =>
+                        {
+                                response.Add(this.MapEFToBO(r));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c65a82763881beebe02170e45a000959</Hash>
+    <Hash>6818227c7e56b7ceb8ff84e992ae1791</Hash>
 </Codenesium>*/

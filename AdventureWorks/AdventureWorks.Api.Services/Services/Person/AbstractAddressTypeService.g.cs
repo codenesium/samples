@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractAddressTypeService: AbstractService
-	{
-		private IAddressTypeRepository addressTypeRepository;
-		private IApiAddressTypeRequestModelValidator addressTypeModelValidator;
-		private IBOLAddressTypeMapper bolAddressTypeMapper;
-		private IDALAddressTypeMapper dalAddressTypeMapper;
-		private ILogger logger;
+        public abstract class AbstractAddressTypeService: AbstractService
+        {
+                private IAddressTypeRepository addressTypeRepository;
 
-		public AbstractAddressTypeService(
-			ILogger logger,
-			IAddressTypeRepository addressTypeRepository,
-			IApiAddressTypeRequestModelValidator addressTypeModelValidator,
-			IBOLAddressTypeMapper boladdressTypeMapper,
-			IDALAddressTypeMapper daladdressTypeMapper)
-			: base()
+                private IApiAddressTypeRequestModelValidator addressTypeModelValidator;
 
-		{
-			this.addressTypeRepository = addressTypeRepository;
-			this.addressTypeModelValidator = addressTypeModelValidator;
-			this.bolAddressTypeMapper = boladdressTypeMapper;
-			this.dalAddressTypeMapper = daladdressTypeMapper;
-			this.logger = logger;
-		}
+                private IBOLAddressTypeMapper bolAddressTypeMapper;
 
-		public virtual async Task<List<ApiAddressTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.addressTypeRepository.All(skip, take, orderClause);
+                private IDALAddressTypeMapper dalAddressTypeMapper;
 
-			return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiAddressTypeResponseModel> Get(int addressTypeID)
-		{
-			var record = await addressTypeRepository.Get(addressTypeID);
+                public AbstractAddressTypeService(
+                        ILogger logger,
+                        IAddressTypeRepository addressTypeRepository,
+                        IApiAddressTypeRequestModelValidator addressTypeModelValidator,
+                        IBOLAddressTypeMapper boladdressTypeMapper,
+                        IDALAddressTypeMapper daladdressTypeMapper)
+                        : base()
 
-			return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
-		}
+                {
+                        this.addressTypeRepository = addressTypeRepository;
+                        this.addressTypeModelValidator = addressTypeModelValidator;
+                        this.bolAddressTypeMapper = boladdressTypeMapper;
+                        this.dalAddressTypeMapper = daladdressTypeMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
-			ApiAddressTypeRequestModel model)
-		{
-			CreateResponse<ApiAddressTypeResponseModel> response = new CreateResponse<ApiAddressTypeResponseModel>(await this.addressTypeModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolAddressTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.addressTypeRepository.Create(this.dalAddressTypeMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiAddressTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.addressTypeRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int addressTypeID,
-			ApiAddressTypeRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.addressTypeModelValidator.ValidateUpdateAsync(addressTypeID, model));
+                public virtual async Task<ApiAddressTypeResponseModel> Get(int addressTypeID)
+                {
+                        var record = await this.addressTypeRepository.Get(addressTypeID);
 
-			if (response.Success)
-			{
-				var bo = this.bolAddressTypeMapper.MapModelToBO(addressTypeID, model);
-				await this.addressTypeRepository.Update(this.dalAddressTypeMapper.MapBOToEF(bo));
-			}
+                        return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
+                        ApiAddressTypeRequestModel model)
+                {
+                        CreateResponse<ApiAddressTypeResponseModel> response = new CreateResponse<ApiAddressTypeResponseModel>(await this.addressTypeModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolAddressTypeMapper.MapModelToBO(default (int), model);
+                                var record = await this.addressTypeRepository.Create(this.dalAddressTypeMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int addressTypeID)
-		{
-			ActionResponse response = new ActionResponse(await this.addressTypeModelValidator.ValidateDeleteAsync(addressTypeID));
+                                response.SetRecord(this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.addressTypeRepository.Delete(addressTypeID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiAddressTypeResponseModel> GetName(string name)
-		{
-			AddressType record = await this.addressTypeRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        int addressTypeID,
+                        ApiAddressTypeRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.addressTypeModelValidator.ValidateUpdateAsync(addressTypeID, model));
 
-			return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolAddressTypeMapper.MapModelToBO(addressTypeID, model);
+                                await this.addressTypeRepository.Update(this.dalAddressTypeMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int addressTypeID)
+                {
+                        ActionResponse response = new ActionResponse(await this.addressTypeModelValidator.ValidateDeleteAsync(addressTypeID));
+
+                        if (response.Success)
+                        {
+                                await this.addressTypeRepository.Delete(addressTypeID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiAddressTypeResponseModel> GetName(string name)
+                {
+                        AddressType record = await this.addressTypeRepository.GetName(name);
+
+                        return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>35519736a048bde26b5736cda951bb82</Hash>
+    <Hash>377848b998cd6be2f5c9f126811dc4db</Hash>
 </Codenesium>*/

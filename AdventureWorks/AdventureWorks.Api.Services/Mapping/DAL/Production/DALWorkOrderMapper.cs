@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALWorkOrderMapper: AbstractDALWorkOrderMapper, IDALWorkOrderMapper
-	{
-		public DALWorkOrderMapper()
-		{}
-	}
+        public class DALWorkOrderMapper: DALAbstractWorkOrderMapper, IDALWorkOrderMapper
+        {
+                public DALWorkOrderMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>54fbdb13b42326aa6b2d30ba32d5af8a</Hash>
+    <Hash>08eb633aea597ad94ef3907c669d5ba2</Hash>
 </Codenesium>*/

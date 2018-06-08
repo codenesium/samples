@@ -7,25 +7,25 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IWorkOrderService
-	{
-		Task<CreateResponse<ApiWorkOrderResponseModel>> Create(
-			ApiWorkOrderRequestModel model);
+        public interface IWorkOrderService
+        {
+                Task<CreateResponse<ApiWorkOrderResponseModel>> Create(
+                        ApiWorkOrderRequestModel model);
 
-		Task<ActionResponse> Update(int workOrderID,
-		                            ApiWorkOrderRequestModel model);
+                Task<ActionResponse> Update(int workOrderID,
+                                            ApiWorkOrderRequestModel model);
 
-		Task<ActionResponse> Delete(int workOrderID);
+                Task<ActionResponse> Delete(int workOrderID);
 
-		Task<ApiWorkOrderResponseModel> Get(int workOrderID);
+                Task<ApiWorkOrderResponseModel> Get(int workOrderID);
 
-		Task<List<ApiWorkOrderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiWorkOrderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<ApiWorkOrderResponseModel>> GetProductID(int productID);
-		Task<List<ApiWorkOrderResponseModel>> GetScrapReasonID(Nullable<short> scrapReasonID);
-	}
+                Task<List<ApiWorkOrderResponseModel>> GetProductID(int productID);
+                Task<List<ApiWorkOrderResponseModel>> GetScrapReasonID(Nullable<short> scrapReasonID);
+        }
 }
 
 /*<Codenesium>
-    <Hash>a98d6743c26692fda6273ed0b6c25ca6</Hash>
+    <Hash>34dc95292727ebfda2283926944b65f6</Hash>
 </Codenesium>*/

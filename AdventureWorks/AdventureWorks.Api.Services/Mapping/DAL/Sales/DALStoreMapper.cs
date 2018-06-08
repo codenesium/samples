@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALStoreMapper: AbstractDALStoreMapper, IDALStoreMapper
-	{
-		public DALStoreMapper()
-		{}
-	}
+        public class DALStoreMapper: DALAbstractStoreMapper, IDALStoreMapper
+        {
+                public DALStoreMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>605b94d5d9e3108e505df659539e0cce</Hash>
+    <Hash>49097d9f7bad90151e83f1441c1e15dc</Hash>
 </Codenesium>*/

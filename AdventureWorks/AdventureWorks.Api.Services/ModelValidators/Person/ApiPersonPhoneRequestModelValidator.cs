@@ -6,34 +6,35 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ApiPersonPhoneRequestModelValidator: AbstractApiPersonPhoneRequestModelValidator, IApiPersonPhoneRequestModelValidator
-	{
-		public ApiPersonPhoneRequestModelValidator()
-		{   }
+        public class ApiPersonPhoneRequestModelValidator: AbstractApiPersonPhoneRequestModelValidator, IApiPersonPhoneRequestModelValidator
+        {
+                public ApiPersonPhoneRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiPersonPhoneRequestModel model)
-		{
-			this.ModifiedDateRules();
-			this.PhoneNumberRules();
-			this.PhoneNumberTypeIDRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiPersonPhoneRequestModel model)
+                {
+                        this.ModifiedDateRules();
+                        this.PhoneNumberRules();
+                        this.PhoneNumberTypeIDRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonPhoneRequestModel model)
-		{
-			this.ModifiedDateRules();
-			this.PhoneNumberRules();
-			this.PhoneNumberTypeIDRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonPhoneRequestModel model)
+                {
+                        this.ModifiedDateRules();
+                        this.PhoneNumberRules();
+                        this.PhoneNumberTypeIDRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>75d70e161d8cfb73689ed1baca672e82</Hash>
+    <Hash>46b3b0263f87aff69e0be4cd7c39e1f8</Hash>
 </Codenesium>*/

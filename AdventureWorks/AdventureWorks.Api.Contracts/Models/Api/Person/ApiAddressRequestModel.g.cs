@@ -3,144 +3,146 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiAddressRequestModel: AbstractApiRequestModel
-	{
-		public ApiAddressRequestModel() : base()
-		{}
+        public partial class ApiAddressRequestModel: AbstractApiRequestModel
+        {
+                public ApiAddressRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string addressLine1,
-			string addressLine2,
-			string city,
-			DateTime modifiedDate,
-			string postalCode,
-			Guid rowguid,
-			int stateProvinceID)
-		{
-			this.AddressLine1 = addressLine1;
-			this.AddressLine2 = addressLine2;
-			this.City = city;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PostalCode = postalCode;
-			this.Rowguid = rowguid.ToGuid();
-			this.StateProvinceID = stateProvinceID.ToInt();
-		}
+                public void SetProperties(
+                        string addressLine1,
+                        string addressLine2,
+                        string city,
+                        DateTime modifiedDate,
+                        string postalCode,
+                        Guid rowguid,
+                        int stateProvinceID)
+                {
+                        this.AddressLine1 = addressLine1;
+                        this.AddressLine2 = addressLine2;
+                        this.City = city;
+                        this.ModifiedDate = modifiedDate;
+                        this.PostalCode = postalCode;
+                        this.Rowguid = rowguid;
+                        this.StateProvinceID = stateProvinceID;
+                }
 
-		private string addressLine1;
+                private string addressLine1;
 
-		[Required]
-		public string AddressLine1
-		{
-			get
-			{
-				return this.addressLine1;
-			}
+                [Required]
+                public string AddressLine1
+                {
+                        get
+                        {
+                                return this.addressLine1;
+                        }
 
-			set
-			{
-				this.addressLine1 = value;
-			}
-		}
+                        set
+                        {
+                                this.addressLine1 = value;
+                        }
+                }
 
-		private string addressLine2;
+                private string addressLine2;
 
-		public string AddressLine2
-		{
-			get
-			{
-				return this.addressLine2.IsEmptyOrZeroOrNull() ? null : this.addressLine2;
-			}
+                public string AddressLine2
+                {
+                        get
+                        {
+                                return this.addressLine2.IsEmptyOrZeroOrNull() ? null : this.addressLine2;
+                        }
 
-			set
-			{
-				this.addressLine2 = value;
-			}
-		}
+                        set
+                        {
+                                this.addressLine2 = value;
+                        }
+                }
 
-		private string city;
+                private string city;
 
-		[Required]
-		public string City
-		{
-			get
-			{
-				return this.city;
-			}
+                [Required]
+                public string City
+                {
+                        get
+                        {
+                                return this.city;
+                        }
 
-			set
-			{
-				this.city = value;
-			}
-		}
+                        set
+                        {
+                                this.city = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private string postalCode;
+                private string postalCode;
 
-		[Required]
-		public string PostalCode
-		{
-			get
-			{
-				return this.postalCode;
-			}
+                [Required]
+                public string PostalCode
+                {
+                        get
+                        {
+                                return this.postalCode;
+                        }
 
-			set
-			{
-				this.postalCode = value;
-			}
-		}
+                        set
+                        {
+                                this.postalCode = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
 
-		private int stateProvinceID;
+                private int stateProvinceID;
 
-		[Required]
-		public int StateProvinceID
-		{
-			get
-			{
-				return this.stateProvinceID;
-			}
+                [Required]
+                public int StateProvinceID
+                {
+                        get
+                        {
+                                return this.stateProvinceID;
+                        }
 
-			set
-			{
-				this.stateProvinceID = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.stateProvinceID = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9c553340c8f2d304fb2a706ab30bfd49</Hash>
+    <Hash>6d76cfd19dd8065286dd33dcf0681b0b</Hash>
 </Codenesium>*/

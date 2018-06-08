@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLBillOfMaterialsMapper
-	{
-		BOBillOfMaterials MapModelToBO(
-			int billOfMaterialsID,
-			ApiBillOfMaterialsRequestModel model);
+        public interface IBOLBillOfMaterialsMapper
+        {
+                BOBillOfMaterials MapModelToBO(
+                        int billOfMaterialsID,
+                        ApiBillOfMaterialsRequestModel model);
 
-		ApiBillOfMaterialsResponseModel MapBOToModel(
-			BOBillOfMaterials boBillOfMaterials);
+                ApiBillOfMaterialsResponseModel MapBOToModel(
+                        BOBillOfMaterials boBillOfMaterials);
 
-		List<ApiBillOfMaterialsResponseModel> MapBOToModel(
-			List<BOBillOfMaterials> items);
-	}
+                List<ApiBillOfMaterialsResponseModel> MapBOToModel(
+                        List<BOBillOfMaterials> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>137bfd8ad604e34ad7cec69c21175337</Hash>
+    <Hash>26f1c37f34286ade06b7571114a0c033</Hash>
 </Codenesium>*/

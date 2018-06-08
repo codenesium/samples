@@ -4,113 +4,123 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiCurrencyRateResponseModel: AbstractApiResponseModel
-	{
-		public ApiCurrencyRateResponseModel() : base()
-		{}
+        public partial class ApiCurrencyRateResponseModel: AbstractApiResponseModel
+        {
+                public ApiCurrencyRateResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			decimal averageRate,
-			DateTime currencyRateDate,
-			int currencyRateID,
-			decimal endOfDayRate,
-			string fromCurrencyCode,
-			DateTime modifiedDate,
-			string toCurrencyCode)
-		{
-			this.AverageRate = averageRate.ToDecimal();
-			this.CurrencyRateDate = currencyRateDate.ToDateTime();
-			this.CurrencyRateID = currencyRateID.ToInt();
-			this.EndOfDayRate = endOfDayRate.ToDecimal();
-			this.FromCurrencyCode = fromCurrencyCode;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ToCurrencyCode = toCurrencyCode;
+                public void SetProperties(
+                        decimal averageRate,
+                        DateTime currencyRateDate,
+                        int currencyRateID,
+                        decimal endOfDayRate,
+                        string fromCurrencyCode,
+                        DateTime modifiedDate,
+                        string toCurrencyCode)
+                {
+                        this.AverageRate = averageRate;
+                        this.CurrencyRateDate = currencyRateDate;
+                        this.CurrencyRateID = currencyRateID;
+                        this.EndOfDayRate = endOfDayRate;
+                        this.FromCurrencyCode = fromCurrencyCode;
+                        this.ModifiedDate = modifiedDate;
+                        this.ToCurrencyCode = toCurrencyCode;
 
-			this.FromCurrencyCodeEntity = nameof(ApiResponse.Currencies);
-			this.ToCurrencyCodeEntity = nameof(ApiResponse.Currencies);
-		}
+                        this.FromCurrencyCodeEntity = nameof(ApiResponse.Currencies);
+                        this.ToCurrencyCodeEntity = nameof(ApiResponse.Currencies);
+                }
 
-		public decimal AverageRate { get; private set; }
-		public DateTime CurrencyRateDate { get; private set; }
-		public int CurrencyRateID { get; private set; }
-		public decimal EndOfDayRate { get; private set; }
-		public string FromCurrencyCode { get; private set; }
-		public string FromCurrencyCodeEntity { get; set; }
-		public DateTime ModifiedDate { get; private set; }
-		public string ToCurrencyCode { get; private set; }
-		public string ToCurrencyCodeEntity { get; set; }
+                public decimal AverageRate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeAverageRateValue { get; set; } = true;
+                public DateTime CurrencyRateDate { get; private set; }
 
-		public bool ShouldSerializeAverageRate()
-		{
-			return this.ShouldSerializeAverageRateValue;
-		}
+                public int CurrencyRateID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRateDateValue { get; set; } = true;
+                public decimal EndOfDayRate { get; private set; }
 
-		public bool ShouldSerializeCurrencyRateDate()
-		{
-			return this.ShouldSerializeCurrencyRateDateValue;
-		}
+                public string FromCurrencyCode { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
+                public string FromCurrencyCodeEntity { get; set; }
 
-		public bool ShouldSerializeCurrencyRateID()
-		{
-			return this.ShouldSerializeCurrencyRateIDValue;
-		}
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeEndOfDayRateValue { get; set; } = true;
+                public string ToCurrencyCode { get; private set; }
 
-		public bool ShouldSerializeEndOfDayRate()
-		{
-			return this.ShouldSerializeEndOfDayRateValue;
-		}
+                public string ToCurrencyCodeEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeFromCurrencyCodeValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeAverageRateValue { get; set; } = true;
 
-		public bool ShouldSerializeFromCurrencyCode()
-		{
-			return this.ShouldSerializeFromCurrencyCodeValue;
-		}
+                public bool ShouldSerializeAverageRate()
+                {
+                        return this.ShouldSerializeAverageRateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeCurrencyRateDateValue { get; set; } = true;
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public bool ShouldSerializeCurrencyRateDate()
+                {
+                        return this.ShouldSerializeCurrencyRateDateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeToCurrencyCodeValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeCurrencyRateIDValue { get; set; } = true;
 
-		public bool ShouldSerializeToCurrencyCode()
-		{
-			return this.ShouldSerializeToCurrencyCodeValue;
-		}
+                public bool ShouldSerializeCurrencyRateID()
+                {
+                        return this.ShouldSerializeCurrencyRateIDValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeAverageRateValue = false;
-			this.ShouldSerializeCurrencyRateDateValue = false;
-			this.ShouldSerializeCurrencyRateIDValue = false;
-			this.ShouldSerializeEndOfDayRateValue = false;
-			this.ShouldSerializeFromCurrencyCodeValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeToCurrencyCodeValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeEndOfDayRateValue { get; set; } = true;
+
+                public bool ShouldSerializeEndOfDayRate()
+                {
+                        return this.ShouldSerializeEndOfDayRateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeFromCurrencyCodeValue { get; set; } = true;
+
+                public bool ShouldSerializeFromCurrencyCode()
+                {
+                        return this.ShouldSerializeFromCurrencyCodeValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeToCurrencyCodeValue { get; set; } = true;
+
+                public bool ShouldSerializeToCurrencyCode()
+                {
+                        return this.ShouldSerializeToCurrencyCodeValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeAverageRateValue = false;
+                        this.ShouldSerializeCurrencyRateDateValue = false;
+                        this.ShouldSerializeCurrencyRateIDValue = false;
+                        this.ShouldSerializeEndOfDayRateValue = false;
+                        this.ShouldSerializeFromCurrencyCodeValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeToCurrencyCodeValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>dca277ae9e074050cfd8a41fa8ae18b0</Hash>
+    <Hash>2c9041e15ff7ff3771b45dd1869f2a4d</Hash>
 </Codenesium>*/

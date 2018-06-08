@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALStoreMapper
-	{
-		Store MapBOToEF(
-			BOStore bo);
+        public interface IDALStoreMapper
+        {
+                Store MapBOToEF(
+                        BOStore bo);
 
-		BOStore MapEFToBO(
-			Store efStore);
+                BOStore MapEFToBO(
+                        Store efStore);
 
-		List<BOStore> MapEFToBO(
-			List<Store> records);
-	}
+                List<BOStore> MapEFToBO(
+                        List<Store> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>714521c1553b9f099c29d90723086894</Hash>
+    <Hash>dffc0c3b88f201a2f4d33fd08ac605fb</Hash>
 </Codenesium>*/

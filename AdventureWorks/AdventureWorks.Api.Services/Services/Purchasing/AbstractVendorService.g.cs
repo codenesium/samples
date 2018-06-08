@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractVendorService: AbstractService
-	{
-		private IVendorRepository vendorRepository;
-		private IApiVendorRequestModelValidator vendorModelValidator;
-		private IBOLVendorMapper bolVendorMapper;
-		private IDALVendorMapper dalVendorMapper;
-		private ILogger logger;
+        public abstract class AbstractVendorService: AbstractService
+        {
+                private IVendorRepository vendorRepository;
 
-		public AbstractVendorService(
-			ILogger logger,
-			IVendorRepository vendorRepository,
-			IApiVendorRequestModelValidator vendorModelValidator,
-			IBOLVendorMapper bolvendorMapper,
-			IDALVendorMapper dalvendorMapper)
-			: base()
+                private IApiVendorRequestModelValidator vendorModelValidator;
 
-		{
-			this.vendorRepository = vendorRepository;
-			this.vendorModelValidator = vendorModelValidator;
-			this.bolVendorMapper = bolvendorMapper;
-			this.dalVendorMapper = dalvendorMapper;
-			this.logger = logger;
-		}
+                private IBOLVendorMapper bolVendorMapper;
 
-		public virtual async Task<List<ApiVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.vendorRepository.All(skip, take, orderClause);
+                private IDALVendorMapper dalVendorMapper;
 
-			return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiVendorResponseModel> Get(int businessEntityID)
-		{
-			var record = await vendorRepository.Get(businessEntityID);
+                public AbstractVendorService(
+                        ILogger logger,
+                        IVendorRepository vendorRepository,
+                        IApiVendorRequestModelValidator vendorModelValidator,
+                        IBOLVendorMapper bolvendorMapper,
+                        IDALVendorMapper dalvendorMapper)
+                        : base()
 
-			return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
-		}
+                {
+                        this.vendorRepository = vendorRepository;
+                        this.vendorModelValidator = vendorModelValidator;
+                        this.bolVendorMapper = bolvendorMapper;
+                        this.dalVendorMapper = dalvendorMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiVendorResponseModel>> Create(
-			ApiVendorRequestModel model)
-		{
-			CreateResponse<ApiVendorResponseModel> response = new CreateResponse<ApiVendorResponseModel>(await this.vendorModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolVendorMapper.MapModelToBO(default (int), model);
-				var record = await this.vendorRepository.Create(this.dalVendorMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.vendorRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int businessEntityID,
-			ApiVendorRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateUpdateAsync(businessEntityID, model));
+                public virtual async Task<ApiVendorResponseModel> Get(int businessEntityID)
+                {
+                        var record = await this.vendorRepository.Get(businessEntityID);
 
-			if (response.Success)
-			{
-				var bo = this.bolVendorMapper.MapModelToBO(businessEntityID, model);
-				await this.vendorRepository.Update(this.dalVendorMapper.MapBOToEF(bo));
-			}
+                        return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiVendorResponseModel>> Create(
+                        ApiVendorRequestModel model)
+                {
+                        CreateResponse<ApiVendorResponseModel> response = new CreateResponse<ApiVendorResponseModel>(await this.vendorModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolVendorMapper.MapModelToBO(default (int), model);
+                                var record = await this.vendorRepository.Create(this.dalVendorMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int businessEntityID)
-		{
-			ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateDeleteAsync(businessEntityID));
+                                response.SetRecord(this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.vendorRepository.Delete(businessEntityID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiVendorResponseModel> GetAccountNumber(string accountNumber)
-		{
-			Vendor record = await this.vendorRepository.GetAccountNumber(accountNumber);
+                public virtual async Task<ActionResponse> Update(
+                        int businessEntityID,
+                        ApiVendorRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
-			return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolVendorMapper.MapModelToBO(businessEntityID, model);
+                                await this.vendorRepository.Update(this.dalVendorMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int businessEntityID)
+                {
+                        ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateDeleteAsync(businessEntityID));
+
+                        if (response.Success)
+                        {
+                                await this.vendorRepository.Delete(businessEntityID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiVendorResponseModel> GetAccountNumber(string accountNumber)
+                {
+                        Vendor record = await this.vendorRepository.GetAccountNumber(accountNumber);
+
+                        return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a70bd800ef0471febd763a853b55df4b</Hash>
+    <Hash>eb4b5d705ce4c291c20f8fd3e1f1044c</Hash>
 </Codenesium>*/

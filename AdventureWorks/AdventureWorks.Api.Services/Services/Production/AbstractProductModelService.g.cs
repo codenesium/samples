@@ -12,106 +12,112 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractProductModelService: AbstractService
-	{
-		private IProductModelRepository productModelRepository;
-		private IApiProductModelRequestModelValidator productModelModelValidator;
-		private IBOLProductModelMapper bolProductModelMapper;
-		private IDALProductModelMapper dalProductModelMapper;
-		private ILogger logger;
+        public abstract class AbstractProductModelService: AbstractService
+        {
+                private IProductModelRepository productModelRepository;
 
-		public AbstractProductModelService(
-			ILogger logger,
-			IProductModelRepository productModelRepository,
-			IApiProductModelRequestModelValidator productModelModelValidator,
-			IBOLProductModelMapper bolproductModelMapper,
-			IDALProductModelMapper dalproductModelMapper)
-			: base()
+                private IApiProductModelRequestModelValidator productModelModelValidator;
 
-		{
-			this.productModelRepository = productModelRepository;
-			this.productModelModelValidator = productModelModelValidator;
-			this.bolProductModelMapper = bolproductModelMapper;
-			this.dalProductModelMapper = dalproductModelMapper;
-			this.logger = logger;
-		}
+                private IBOLProductModelMapper bolProductModelMapper;
 
-		public virtual async Task<List<ApiProductModelResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.productModelRepository.All(skip, take, orderClause);
+                private IDALProductModelMapper dalProductModelMapper;
 
-			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiProductModelResponseModel> Get(int productModelID)
-		{
-			var record = await productModelRepository.Get(productModelID);
+                public AbstractProductModelService(
+                        ILogger logger,
+                        IProductModelRepository productModelRepository,
+                        IApiProductModelRequestModelValidator productModelModelValidator,
+                        IBOLProductModelMapper bolproductModelMapper,
+                        IDALProductModelMapper dalproductModelMapper)
+                        : base()
 
-			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
-		}
+                {
+                        this.productModelRepository = productModelRepository;
+                        this.productModelModelValidator = productModelModelValidator;
+                        this.bolProductModelMapper = bolproductModelMapper;
+                        this.dalProductModelMapper = dalproductModelMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiProductModelResponseModel>> Create(
-			ApiProductModelRequestModel model)
-		{
-			CreateResponse<ApiProductModelResponseModel> response = new CreateResponse<ApiProductModelResponseModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolProductModelMapper.MapModelToBO(default (int), model);
-				var record = await this.productModelRepository.Create(this.dalProductModelMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiProductModelResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.productModelRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int productModelID,
-			ApiProductModelRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateUpdateAsync(productModelID, model));
+                public virtual async Task<ApiProductModelResponseModel> Get(int productModelID)
+                {
+                        var record = await this.productModelRepository.Get(productModelID);
 
-			if (response.Success)
-			{
-				var bo = this.bolProductModelMapper.MapModelToBO(productModelID, model);
-				await this.productModelRepository.Update(this.dalProductModelMapper.MapBOToEF(bo));
-			}
+                        return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiProductModelResponseModel>> Create(
+                        ApiProductModelRequestModel model)
+                {
+                        CreateResponse<ApiProductModelResponseModel> response = new CreateResponse<ApiProductModelResponseModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductModelMapper.MapModelToBO(default (int), model);
+                                var record = await this.productModelRepository.Create(this.dalProductModelMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int productModelID)
-		{
-			ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateDeleteAsync(productModelID));
+                                response.SetRecord(this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.productModelRepository.Delete(productModelID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiProductModelResponseModel> GetName(string name)
-		{
-			ProductModel record = await this.productModelRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        int productModelID,
+                        ApiProductModelRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateUpdateAsync(productModelID, model));
 
-			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
-		}
-		public async Task<List<ApiProductModelResponseModel>> GetCatalogDescription(string catalogDescription)
-		{
-			List<ProductModel> records = await this.productModelRepository.GetCatalogDescription(catalogDescription);
+                        if (response.Success)
+                        {
+                                var bo = this.bolProductModelMapper.MapModelToBO(productModelID, model);
+                                await this.productModelRepository.Update(this.dalProductModelMapper.MapBOToEF(bo));
+                        }
 
-			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
-		}
-		public async Task<List<ApiProductModelResponseModel>> GetInstructions(string instructions)
-		{
-			List<ProductModel> records = await this.productModelRepository.GetInstructions(instructions);
+                        return response;
+                }
 
-			return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
-		}
-	}
+                public virtual async Task<ActionResponse> Delete(
+                        int productModelID)
+                {
+                        ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateDeleteAsync(productModelID));
+
+                        if (response.Success)
+                        {
+                                await this.productModelRepository.Delete(productModelID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiProductModelResponseModel> GetName(string name)
+                {
+                        ProductModel record = await this.productModelRepository.GetName(name);
+
+                        return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
+                }
+                public async Task<List<ApiProductModelResponseModel>> GetCatalogDescription(string catalogDescription)
+                {
+                        List<ProductModel> records = await this.productModelRepository.GetCatalogDescription(catalogDescription);
+
+                        return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
+                }
+                public async Task<List<ApiProductModelResponseModel>> GetInstructions(string instructions)
+                {
+                        List<ProductModel> records = await this.productModelRepository.GetInstructions(instructions);
+
+                        return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9ae561edb9032163fc89321addf36946</Hash>
+    <Hash>bebd97fa44c489852e12b2356e62e5aa</Hash>
 </Codenesium>*/

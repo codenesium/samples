@@ -2,59 +2,60 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractPersonMapper
-	{
-		public virtual BOPerson MapModelToBO(
-			int businessEntityID,
-			ApiPersonRequestModel model
-			)
-		{
-			BOPerson boPerson = new BOPerson();
+        public abstract class BOLAbstractPersonMapper
+        {
+                public virtual BOPerson MapModelToBO(
+                        int businessEntityID,
+                        ApiPersonRequestModel model
+                        )
+                {
+                        BOPerson boPerson = new BOPerson();
 
-			boPerson.SetProperties(
-				businessEntityID,
-				model.AdditionalContactInfo,
-				model.Demographics,
-				model.EmailPromotion,
-				model.FirstName,
-				model.LastName,
-				model.MiddleName,
-				model.ModifiedDate,
-				model.NameStyle,
-				model.PersonType,
-				model.Rowguid,
-				model.Suffix,
-				model.Title);
-			return boPerson;
-		}
+                        boPerson.SetProperties(
+                                businessEntityID,
+                                model.AdditionalContactInfo,
+                                model.Demographics,
+                                model.EmailPromotion,
+                                model.FirstName,
+                                model.LastName,
+                                model.MiddleName,
+                                model.ModifiedDate,
+                                model.NameStyle,
+                                model.PersonType,
+                                model.Rowguid,
+                                model.Suffix,
+                                model.Title);
+                        return boPerson;
+                }
 
-		public virtual ApiPersonResponseModel MapBOToModel(
-			BOPerson boPerson)
-		{
-			var model = new ApiPersonResponseModel();
+                public virtual ApiPersonResponseModel MapBOToModel(
+                        BOPerson boPerson)
+                {
+                        var model = new ApiPersonResponseModel();
 
-			model.SetProperties(boPerson.AdditionalContactInfo, boPerson.BusinessEntityID, boPerson.Demographics, boPerson.EmailPromotion, boPerson.FirstName, boPerson.LastName, boPerson.MiddleName, boPerson.ModifiedDate, boPerson.NameStyle, boPerson.PersonType, boPerson.Rowguid, boPerson.Suffix, boPerson.Title);
+                        model.SetProperties(boPerson.AdditionalContactInfo, boPerson.BusinessEntityID, boPerson.Demographics, boPerson.EmailPromotion, boPerson.FirstName, boPerson.LastName, boPerson.MiddleName, boPerson.ModifiedDate, boPerson.NameStyle, boPerson.PersonType, boPerson.Rowguid, boPerson.Suffix, boPerson.Title);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiPersonResponseModel> MapBOToModel(
-			List<BOPerson> items)
-		{
-			List<ApiPersonResponseModel> response = new List<ApiPersonResponseModel>();
+                public virtual List<ApiPersonResponseModel> MapBOToModel(
+                        List<BOPerson> items)
+                {
+                        List<ApiPersonResponseModel> response = new List<ApiPersonResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e61088d5798bbc7c684fffd43df641fb</Hash>
+    <Hash>ce2755db4c3b9be5cb33f5226d19d981</Hash>
 </Codenesium>*/

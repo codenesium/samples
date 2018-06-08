@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IContactTypeRepository
-	{
-		Task<ContactType> Create(ContactType item);
+        public interface IContactTypeRepository
+        {
+                Task<ContactType> Create(ContactType item);
 
-		Task Update(ContactType item);
+                Task Update(ContactType item);
 
-		Task Delete(int contactTypeID);
+                Task Delete(int contactTypeID);
 
-		Task<ContactType> Get(int contactTypeID);
+                Task<ContactType> Get(int contactTypeID);
 
-		Task<List<ContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ContactType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<ContactType> GetName(string name);
-	}
+                Task<ContactType> GetName(string name);
+        }
 }
 
 /*<Codenesium>
-    <Hash>3e71ec22ac1c0843e8e27406c69b7f7f</Hash>
+    <Hash>280d5f0c96c8d2035869dbf20a65e4b6</Hash>
 </Codenesium>*/

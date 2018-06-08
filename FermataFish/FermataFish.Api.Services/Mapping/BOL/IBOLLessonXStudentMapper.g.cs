@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+
 namespace FermataFishNS.Api.Services
 {
-	public interface IBOLLessonXStudentMapper
-	{
-		BOLessonXStudent MapModelToBO(
-			int id,
-			ApiLessonXStudentRequestModel model);
+        public interface IBOLLessonXStudentMapper
+        {
+                BOLessonXStudent MapModelToBO(
+                        int id,
+                        ApiLessonXStudentRequestModel model);
 
-		ApiLessonXStudentResponseModel MapBOToModel(
-			BOLessonXStudent boLessonXStudent);
+                ApiLessonXStudentResponseModel MapBOToModel(
+                        BOLessonXStudent boLessonXStudent);
 
-		List<ApiLessonXStudentResponseModel> MapBOToModel(
-			List<BOLessonXStudent> items);
-	}
+                List<ApiLessonXStudentResponseModel> MapBOToModel(
+                        List<BOLessonXStudent> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>f7c937dade0b02133136b9668db63dc1</Hash>
+    <Hash>afb1802d5b7d5f9f3f0edba11daa1d2b</Hash>
 </Codenesium>*/

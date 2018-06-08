@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IProductInventoryRepository
-	{
-		Task<ProductInventory> Create(ProductInventory item);
+        public interface IProductInventoryRepository
+        {
+                Task<ProductInventory> Create(ProductInventory item);
 
-		Task Update(ProductInventory item);
+                Task Update(ProductInventory item);
 
-		Task Delete(int productID);
+                Task Delete(int productID);
 
-		Task<ProductInventory> Get(int productID);
+                Task<ProductInventory> Get(int productID);
 
-		Task<List<ProductInventory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ProductInventory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>b4e5777e3fac7b6c0bb35305de925807</Hash>
+    <Hash>f4ccf238e117275620fb086d84f68cab</Hash>
 </Codenesium>*/

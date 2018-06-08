@@ -10,118 +10,120 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractStateProvinceRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractStateProvinceRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractStateProvinceRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractStateProvinceRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<StateProvince> Get(int stateProvinceID)
-		{
-			return await this.GetById(stateProvinceID);
-		}
+                public virtual Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<StateProvince> Create(StateProvince item)
-		{
-			this.Context.Set<StateProvince>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<StateProvince> Get(int stateProvinceID)
+                {
+                        return await this.GetById(stateProvinceID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<StateProvince> Create(StateProvince item)
+                {
+                        this.Context.Set<StateProvince>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(StateProvince item)
-		{
-			var entity = this.Context.Set<StateProvince>().Local.FirstOrDefault(x => x.StateProvinceID == item.StateProvinceID);
-			if (entity == null)
-			{
-				this.Context.Set<StateProvince>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(StateProvince item)
+                {
+                        var entity = this.Context.Set<StateProvince>().Local.FirstOrDefault(x => x.StateProvinceID == item.StateProvinceID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<StateProvince>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int stateProvinceID)
-		{
-			StateProvince record = await this.GetById(stateProvinceID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<StateProvince>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int stateProvinceID)
+                {
+                        StateProvince record = await this.GetById(stateProvinceID);
 
-		public async Task<StateProvince> GetName(string name)
-		{
-			var records = await this.SearchLinqEF(x => x.Name == name);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<StateProvince>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
-		public async Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode,string countryRegionCode)
-		{
-			var records = await this.SearchLinqEF(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
+                public async Task<StateProvince> GetName(string name)
+                {
+                        var records = await this.SearchLinqEF(x => x.Name == name);
 
-			return records.FirstOrDefault();
-		}
+                        return records.FirstOrDefault();
+                }
+                public async Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
+                {
+                        var records = await this.SearchLinqEF(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 
-		protected async Task<List<StateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<StateProvince> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<StateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<StateProvince> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
-			}
-			return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
-		}
+                        return records;
+                }
 
-		private async Task<List<StateProvince>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
-			}
+                private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
+                        }
 
-			return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
-		}
+                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
+                }
 
-		private async Task<StateProvince> GetById(int stateProvinceID)
-		{
-			List<StateProvince> records = await this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID);
+                private async Task<List<StateProvince>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
+                }
+
+                private async Task<StateProvince> GetById(int stateProvinceID)
+                {
+                        List<StateProvince> records = await this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0aa768f675a0a65e13b13c1d75f8fec7</Hash>
+    <Hash>ab4ff59a36ade8576237023debb79b41</Hash>
 </Codenesium>*/

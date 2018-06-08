@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/countryRegions")]
-	[ApiVersion("1.0")]
-	public class CountryRegionController: AbstractCountryRegionController
-	{
-		public CountryRegionController(
-			ServiceSettings settings,
-			ILogger<CountryRegionController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ICountryRegionService countryRegionService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       countryRegionService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/countryRegions")]
+        [ApiVersion("1.0")]
+        public class CountryRegionController: AbstractCountryRegionController
+        {
+                public CountryRegionController(
+                        ServiceSettings settings,
+                        ILogger<CountryRegionController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ICountryRegionService countryRegionService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               countryRegionService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c4b411abfb4131df2a994983945f58ab</Hash>
+    <Hash>7a67a0c8134888e1bea715e9b1aba03c</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/purchaseOrderHeaders")]
-	[ApiVersion("1.0")]
-	public class PurchaseOrderHeaderController: AbstractPurchaseOrderHeaderController
-	{
-		public PurchaseOrderHeaderController(
-			ServiceSettings settings,
-			ILogger<PurchaseOrderHeaderController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IPurchaseOrderHeaderService purchaseOrderHeaderService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       purchaseOrderHeaderService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/purchaseOrderHeaders")]
+        [ApiVersion("1.0")]
+        public class PurchaseOrderHeaderController: AbstractPurchaseOrderHeaderController
+        {
+                public PurchaseOrderHeaderController(
+                        ServiceSettings settings,
+                        ILogger<PurchaseOrderHeaderController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IPurchaseOrderHeaderService purchaseOrderHeaderService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               purchaseOrderHeaderService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>85ce29a5b07204ce946d58d854151caa</Hash>
+    <Hash>0214920cb974c9abc33c160b88a5e027</Hash>
 </Codenesium>*/

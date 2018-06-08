@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public class WorkOrderRoutingRepository: AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
-	{
-		public WorkOrderRoutingRepository(
-			ILogger<WorkOrderRoutingRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class WorkOrderRoutingRepository: AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
+        {
+                public WorkOrderRoutingRepository(
+                        ILogger<WorkOrderRoutingRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>91fcfba866b55441a7e60333460c43ac</Hash>
+    <Hash>0ef6ceaa4665f795f885c95c0ac25674</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/aWBuildVersions")]
-	[ApiVersion("1.0")]
-	public class AWBuildVersionController: AbstractAWBuildVersionController
-	{
-		public AWBuildVersionController(
-			ServiceSettings settings,
-			ILogger<AWBuildVersionController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IAWBuildVersionService aWBuildVersionService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       aWBuildVersionService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/aWBuildVersions")]
+        [ApiVersion("1.0")]
+        public class AWBuildVersionController: AbstractAWBuildVersionController
+        {
+                public AWBuildVersionController(
+                        ServiceSettings settings,
+                        ILogger<AWBuildVersionController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IAWBuildVersionService aWBuildVersionService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               aWBuildVersionService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>02e7a305f36b65ac25c6be90c97e3de9</Hash>
+    <Hash>5186ba642ea45f8de39aba712c978bdc</Hash>
 </Codenesium>*/

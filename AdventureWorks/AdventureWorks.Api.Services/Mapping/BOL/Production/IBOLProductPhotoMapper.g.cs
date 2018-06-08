@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLProductPhotoMapper
-	{
-		BOProductPhoto MapModelToBO(
-			int productPhotoID,
-			ApiProductPhotoRequestModel model);
+        public interface IBOLProductPhotoMapper
+        {
+                BOProductPhoto MapModelToBO(
+                        int productPhotoID,
+                        ApiProductPhotoRequestModel model);
 
-		ApiProductPhotoResponseModel MapBOToModel(
-			BOProductPhoto boProductPhoto);
+                ApiProductPhotoResponseModel MapBOToModel(
+                        BOProductPhoto boProductPhoto);
 
-		List<ApiProductPhotoResponseModel> MapBOToModel(
-			List<BOProductPhoto> items);
-	}
+                List<ApiProductPhotoResponseModel> MapBOToModel(
+                        List<BOProductPhoto> items);
+        }
 }
 
 /*<Codenesium>
-    <Hash>940129f609b5f4dca32c750bbe0a43f3</Hash>
+    <Hash>5d1a035eabc04a0fb5ec469ca358c7c2</Hash>
 </Codenesium>*/

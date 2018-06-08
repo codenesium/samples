@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class AddressService: AbstractAddressService, IAddressService
-	{
-		public AddressService(
-			ILogger<AddressRepository> logger,
-			IAddressRepository addressRepository,
-			IApiAddressRequestModelValidator addressModelValidator,
-			IBOLAddressMapper BOLaddressMapper,
-			IDALAddressMapper DALaddressMapper)
-			: base(logger, addressRepository,
-			       addressModelValidator,
-			       BOLaddressMapper,
-			       DALaddressMapper)
-		{}
-	}
+        public class AddressService: AbstractAddressService, IAddressService
+        {
+                public AddressService(
+                        ILogger<AddressRepository> logger,
+                        IAddressRepository addressRepository,
+                        IApiAddressRequestModelValidator addressModelValidator,
+                        IBOLAddressMapper boladdressMapper,
+                        IDALAddressMapper daladdressMapper)
+                        : base(logger,
+                               addressRepository,
+                               addressModelValidator,
+                               boladdressMapper,
+                               daladdressMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>77ceaf4a1555ed29f7c5af372b4163dc</Hash>
+    <Hash>c0b85879770178c5ff13861f2810cc9a</Hash>
 </Codenesium>*/

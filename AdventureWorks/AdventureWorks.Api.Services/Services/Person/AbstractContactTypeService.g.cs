@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractContactTypeService: AbstractService
-	{
-		private IContactTypeRepository contactTypeRepository;
-		private IApiContactTypeRequestModelValidator contactTypeModelValidator;
-		private IBOLContactTypeMapper bolContactTypeMapper;
-		private IDALContactTypeMapper dalContactTypeMapper;
-		private ILogger logger;
+        public abstract class AbstractContactTypeService: AbstractService
+        {
+                private IContactTypeRepository contactTypeRepository;
 
-		public AbstractContactTypeService(
-			ILogger logger,
-			IContactTypeRepository contactTypeRepository,
-			IApiContactTypeRequestModelValidator contactTypeModelValidator,
-			IBOLContactTypeMapper bolcontactTypeMapper,
-			IDALContactTypeMapper dalcontactTypeMapper)
-			: base()
+                private IApiContactTypeRequestModelValidator contactTypeModelValidator;
 
-		{
-			this.contactTypeRepository = contactTypeRepository;
-			this.contactTypeModelValidator = contactTypeModelValidator;
-			this.bolContactTypeMapper = bolcontactTypeMapper;
-			this.dalContactTypeMapper = dalcontactTypeMapper;
-			this.logger = logger;
-		}
+                private IBOLContactTypeMapper bolContactTypeMapper;
 
-		public virtual async Task<List<ApiContactTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.contactTypeRepository.All(skip, take, orderClause);
+                private IDALContactTypeMapper dalContactTypeMapper;
 
-			return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiContactTypeResponseModel> Get(int contactTypeID)
-		{
-			var record = await contactTypeRepository.Get(contactTypeID);
+                public AbstractContactTypeService(
+                        ILogger logger,
+                        IContactTypeRepository contactTypeRepository,
+                        IApiContactTypeRequestModelValidator contactTypeModelValidator,
+                        IBOLContactTypeMapper bolcontactTypeMapper,
+                        IDALContactTypeMapper dalcontactTypeMapper)
+                        : base()
 
-			return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
-		}
+                {
+                        this.contactTypeRepository = contactTypeRepository;
+                        this.contactTypeModelValidator = contactTypeModelValidator;
+                        this.bolContactTypeMapper = bolcontactTypeMapper;
+                        this.dalContactTypeMapper = dalcontactTypeMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiContactTypeResponseModel>> Create(
-			ApiContactTypeRequestModel model)
-		{
-			CreateResponse<ApiContactTypeResponseModel> response = new CreateResponse<ApiContactTypeResponseModel>(await this.contactTypeModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolContactTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.contactTypeRepository.Create(this.dalContactTypeMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiContactTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.contactTypeRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int contactTypeID,
-			ApiContactTypeRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.contactTypeModelValidator.ValidateUpdateAsync(contactTypeID, model));
+                public virtual async Task<ApiContactTypeResponseModel> Get(int contactTypeID)
+                {
+                        var record = await this.contactTypeRepository.Get(contactTypeID);
 
-			if (response.Success)
-			{
-				var bo = this.bolContactTypeMapper.MapModelToBO(contactTypeID, model);
-				await this.contactTypeRepository.Update(this.dalContactTypeMapper.MapBOToEF(bo));
-			}
+                        return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiContactTypeResponseModel>> Create(
+                        ApiContactTypeRequestModel model)
+                {
+                        CreateResponse<ApiContactTypeResponseModel> response = new CreateResponse<ApiContactTypeResponseModel>(await this.contactTypeModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolContactTypeMapper.MapModelToBO(default (int), model);
+                                var record = await this.contactTypeRepository.Create(this.dalContactTypeMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int contactTypeID)
-		{
-			ActionResponse response = new ActionResponse(await this.contactTypeModelValidator.ValidateDeleteAsync(contactTypeID));
+                                response.SetRecord(this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.contactTypeRepository.Delete(contactTypeID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiContactTypeResponseModel> GetName(string name)
-		{
-			ContactType record = await this.contactTypeRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        int contactTypeID,
+                        ApiContactTypeRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.contactTypeModelValidator.ValidateUpdateAsync(contactTypeID, model));
 
-			return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolContactTypeMapper.MapModelToBO(contactTypeID, model);
+                                await this.contactTypeRepository.Update(this.dalContactTypeMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int contactTypeID)
+                {
+                        ActionResponse response = new ActionResponse(await this.contactTypeModelValidator.ValidateDeleteAsync(contactTypeID));
+
+                        if (response.Success)
+                        {
+                                await this.contactTypeRepository.Delete(contactTypeID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiContactTypeResponseModel> GetName(string name)
+                {
+                        ContactType record = await this.contactTypeRepository.GetName(name);
+
+                        return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>32caefed79ccb184b0d31dfce720be6b</Hash>
+    <Hash>eb128fe25298a87812c6b5c98f7e9fc1</Hash>
 </Codenesium>*/

@@ -4,168 +4,181 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiWorkOrderRoutingResponseModel: AbstractApiResponseModel
-	{
-		public ApiWorkOrderRoutingResponseModel() : base()
-		{}
+        public partial class ApiWorkOrderRoutingResponseModel: AbstractApiResponseModel
+        {
+                public ApiWorkOrderRoutingResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<decimal> actualCost,
-			Nullable<DateTime> actualEndDate,
-			Nullable<decimal> actualResourceHrs,
-			Nullable<DateTime> actualStartDate,
-			short locationID,
-			DateTime modifiedDate,
-			short operationSequence,
-			decimal plannedCost,
-			int productID,
-			DateTime scheduledEndDate,
-			DateTime scheduledStartDate,
-			int workOrderID)
-		{
-			this.ActualCost = actualCost.ToNullableDecimal();
-			this.ActualEndDate = actualEndDate.ToNullableDateTime();
-			this.ActualResourceHrs = actualResourceHrs.ToNullableDecimal();
-			this.ActualStartDate = actualStartDate.ToNullableDateTime();
-			this.LocationID = locationID;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.OperationSequence = operationSequence;
-			this.PlannedCost = plannedCost.ToDecimal();
-			this.ProductID = productID.ToInt();
-			this.ScheduledEndDate = scheduledEndDate.ToDateTime();
-			this.ScheduledStartDate = scheduledStartDate.ToDateTime();
-			this.WorkOrderID = workOrderID.ToInt();
-		}
+                public void SetProperties(
+                        Nullable<decimal> actualCost,
+                        Nullable<DateTime> actualEndDate,
+                        Nullable<decimal> actualResourceHrs,
+                        Nullable<DateTime> actualStartDate,
+                        short locationID,
+                        DateTime modifiedDate,
+                        short operationSequence,
+                        decimal plannedCost,
+                        int productID,
+                        DateTime scheduledEndDate,
+                        DateTime scheduledStartDate,
+                        int workOrderID)
+                {
+                        this.ActualCost = actualCost;
+                        this.ActualEndDate = actualEndDate;
+                        this.ActualResourceHrs = actualResourceHrs;
+                        this.ActualStartDate = actualStartDate;
+                        this.LocationID = locationID;
+                        this.ModifiedDate = modifiedDate;
+                        this.OperationSequence = operationSequence;
+                        this.PlannedCost = plannedCost;
+                        this.ProductID = productID;
+                        this.ScheduledEndDate = scheduledEndDate;
+                        this.ScheduledStartDate = scheduledStartDate;
+                        this.WorkOrderID = workOrderID;
+                }
 
-		public Nullable<decimal> ActualCost { get; private set; }
-		public Nullable<DateTime> ActualEndDate { get; private set; }
-		public Nullable<decimal> ActualResourceHrs { get; private set; }
-		public Nullable<DateTime> ActualStartDate { get; private set; }
-		public short LocationID { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public short OperationSequence { get; private set; }
-		public decimal PlannedCost { get; private set; }
-		public int ProductID { get; private set; }
-		public DateTime ScheduledEndDate { get; private set; }
-		public DateTime ScheduledStartDate { get; private set; }
-		public int WorkOrderID { get; private set; }
+                public Nullable<decimal> ActualCost { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeActualCostValue { get; set; } = true;
+                public Nullable<DateTime> ActualEndDate { get; private set; }
 
-		public bool ShouldSerializeActualCost()
-		{
-			return this.ShouldSerializeActualCostValue;
-		}
+                public Nullable<decimal> ActualResourceHrs { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeActualEndDateValue { get; set; } = true;
+                public Nullable<DateTime> ActualStartDate { get; private set; }
 
-		public bool ShouldSerializeActualEndDate()
-		{
-			return this.ShouldSerializeActualEndDateValue;
-		}
+                public short LocationID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeActualResourceHrsValue { get; set; } = true;
+                public DateTime ModifiedDate { get; private set; }
 
-		public bool ShouldSerializeActualResourceHrs()
-		{
-			return this.ShouldSerializeActualResourceHrsValue;
-		}
+                public short OperationSequence { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeActualStartDateValue { get; set; } = true;
+                public decimal PlannedCost { get; private set; }
 
-		public bool ShouldSerializeActualStartDate()
-		{
-			return this.ShouldSerializeActualStartDateValue;
-		}
+                public int ProductID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeLocationIDValue { get; set; } = true;
+                public DateTime ScheduledEndDate { get; private set; }
 
-		public bool ShouldSerializeLocationID()
-		{
-			return this.ShouldSerializeLocationIDValue;
-		}
+                public DateTime ScheduledStartDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public int WorkOrderID { get; private set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeActualCostValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeOperationSequenceValue { get; set; } = true;
+                public bool ShouldSerializeActualCost()
+                {
+                        return this.ShouldSerializeActualCostValue;
+                }
 
-		public bool ShouldSerializeOperationSequence()
-		{
-			return this.ShouldSerializeOperationSequenceValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeActualEndDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializePlannedCostValue { get; set; } = true;
+                public bool ShouldSerializeActualEndDate()
+                {
+                        return this.ShouldSerializeActualEndDateValue;
+                }
 
-		public bool ShouldSerializePlannedCost()
-		{
-			return this.ShouldSerializePlannedCostValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeActualResourceHrsValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
+                public bool ShouldSerializeActualResourceHrs()
+                {
+                        return this.ShouldSerializeActualResourceHrsValue;
+                }
 
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeActualStartDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeScheduledEndDateValue { get; set; } = true;
+                public bool ShouldSerializeActualStartDate()
+                {
+                        return this.ShouldSerializeActualStartDateValue;
+                }
 
-		public bool ShouldSerializeScheduledEndDate()
-		{
-			return this.ShouldSerializeScheduledEndDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeLocationIDValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeScheduledStartDateValue { get; set; } = true;
+                public bool ShouldSerializeLocationID()
+                {
+                        return this.ShouldSerializeLocationIDValue;
+                }
 
-		public bool ShouldSerializeScheduledStartDate()
-		{
-			return this.ShouldSerializeScheduledStartDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeWorkOrderIDValue { get; set; } = true;
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		public bool ShouldSerializeWorkOrderID()
-		{
-			return this.ShouldSerializeWorkOrderIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeOperationSequenceValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeActualCostValue = false;
-			this.ShouldSerializeActualEndDateValue = false;
-			this.ShouldSerializeActualResourceHrsValue = false;
-			this.ShouldSerializeActualStartDateValue = false;
-			this.ShouldSerializeLocationIDValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeOperationSequenceValue = false;
-			this.ShouldSerializePlannedCostValue = false;
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeScheduledEndDateValue = false;
-			this.ShouldSerializeScheduledStartDateValue = false;
-			this.ShouldSerializeWorkOrderIDValue = false;
-		}
-	}
+                public bool ShouldSerializeOperationSequence()
+                {
+                        return this.ShouldSerializeOperationSequenceValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePlannedCostValue { get; set; } = true;
+
+                public bool ShouldSerializePlannedCost()
+                {
+                        return this.ShouldSerializePlannedCostValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeScheduledEndDateValue { get; set; } = true;
+
+                public bool ShouldSerializeScheduledEndDate()
+                {
+                        return this.ShouldSerializeScheduledEndDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeScheduledStartDateValue { get; set; } = true;
+
+                public bool ShouldSerializeScheduledStartDate()
+                {
+                        return this.ShouldSerializeScheduledStartDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeWorkOrderIDValue { get; set; } = true;
+
+                public bool ShouldSerializeWorkOrderID()
+                {
+                        return this.ShouldSerializeWorkOrderIDValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeActualCostValue = false;
+                        this.ShouldSerializeActualEndDateValue = false;
+                        this.ShouldSerializeActualResourceHrsValue = false;
+                        this.ShouldSerializeActualStartDateValue = false;
+                        this.ShouldSerializeLocationIDValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeOperationSequenceValue = false;
+                        this.ShouldSerializePlannedCostValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializeScheduledEndDateValue = false;
+                        this.ShouldSerializeScheduledStartDateValue = false;
+                        this.ShouldSerializeWorkOrderIDValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a37318f9fb5b014ff87310b4e208edda</Hash>
+    <Hash>fa97a25f2fb8076f5b8baff5f52eeb77</Hash>
 </Codenesium>*/

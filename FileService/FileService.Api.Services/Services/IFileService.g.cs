@@ -7,22 +7,22 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IFileService
-	{
-		Task<CreateResponse<ApiFileResponseModel>> Create(
-			ApiFileRequestModel model);
+        public interface IFileService
+        {
+                Task<CreateResponse<ApiFileResponseModel>> Create(
+                        ApiFileRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiFileRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiFileRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiFileResponseModel> Get(int id);
+                Task<ApiFileResponseModel> Get(int id);
 
-		Task<List<ApiFileResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiFileResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>92d2eb83fdc5ff98f82c6161e149c18f</Hash>
+    <Hash>cf68e0dcbc38fb01b069662db3d235c8</Hash>
 </Codenesium>*/

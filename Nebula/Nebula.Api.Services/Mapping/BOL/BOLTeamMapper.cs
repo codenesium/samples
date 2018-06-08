@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public class BOLTeamMapper: BOLAbstractTeamMapper, IBOLTeamMapper
-	{
-		public BOLTeamMapper()
-		{}
-	}
+        public class BOLTeamMapper: BOLAbstractTeamMapper, IBOLTeamMapper
+        {
+                public BOLTeamMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b1f498516a38bafba6e15338d038a713</Hash>
+    <Hash>ea366fa04968e7b73bef9f53222c21e7</Hash>
 </Codenesium>*/

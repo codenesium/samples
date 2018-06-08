@@ -12,100 +12,106 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractAddressService: AbstractService
-	{
-		private IAddressRepository addressRepository;
-		private IApiAddressRequestModelValidator addressModelValidator;
-		private IBOLAddressMapper bolAddressMapper;
-		private IDALAddressMapper dalAddressMapper;
-		private ILogger logger;
+        public abstract class AbstractAddressService: AbstractService
+        {
+                private IAddressRepository addressRepository;
 
-		public AbstractAddressService(
-			ILogger logger,
-			IAddressRepository addressRepository,
-			IApiAddressRequestModelValidator addressModelValidator,
-			IBOLAddressMapper boladdressMapper,
-			IDALAddressMapper daladdressMapper)
-			: base()
+                private IApiAddressRequestModelValidator addressModelValidator;
 
-		{
-			this.addressRepository = addressRepository;
-			this.addressModelValidator = addressModelValidator;
-			this.bolAddressMapper = boladdressMapper;
-			this.dalAddressMapper = daladdressMapper;
-			this.logger = logger;
-		}
+                private IBOLAddressMapper bolAddressMapper;
 
-		public virtual async Task<List<ApiAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.addressRepository.All(skip, take, orderClause);
+                private IDALAddressMapper dalAddressMapper;
 
-			return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiAddressResponseModel> Get(int addressID)
-		{
-			var record = await addressRepository.Get(addressID);
+                public AbstractAddressService(
+                        ILogger logger,
+                        IAddressRepository addressRepository,
+                        IApiAddressRequestModelValidator addressModelValidator,
+                        IBOLAddressMapper boladdressMapper,
+                        IDALAddressMapper daladdressMapper)
+                        : base()
 
-			return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
-		}
+                {
+                        this.addressRepository = addressRepository;
+                        this.addressModelValidator = addressModelValidator;
+                        this.bolAddressMapper = boladdressMapper;
+                        this.dalAddressMapper = daladdressMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiAddressResponseModel>> Create(
-			ApiAddressRequestModel model)
-		{
-			CreateResponse<ApiAddressResponseModel> response = new CreateResponse<ApiAddressResponseModel>(await this.addressModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolAddressMapper.MapModelToBO(default (int), model);
-				var record = await this.addressRepository.Create(this.dalAddressMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.addressRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int addressID,
-			ApiAddressRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateUpdateAsync(addressID, model));
+                public virtual async Task<ApiAddressResponseModel> Get(int addressID)
+                {
+                        var record = await this.addressRepository.Get(addressID);
 
-			if (response.Success)
-			{
-				var bo = this.bolAddressMapper.MapModelToBO(addressID, model);
-				await this.addressRepository.Update(this.dalAddressMapper.MapBOToEF(bo));
-			}
+                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiAddressResponseModel>> Create(
+                        ApiAddressRequestModel model)
+                {
+                        CreateResponse<ApiAddressResponseModel> response = new CreateResponse<ApiAddressResponseModel>(await this.addressModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolAddressMapper.MapModelToBO(default (int), model);
+                                var record = await this.addressRepository.Create(this.dalAddressMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int addressID)
-		{
-			ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateDeleteAsync(addressID));
+                                response.SetRecord(this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.addressRepository.Delete(addressID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiAddressResponseModel> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1,string addressLine2,string city,int stateProvinceID,string postalCode)
-		{
-			Address record = await this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1,addressLine2,city,stateProvinceID,postalCode);
+                public virtual async Task<ActionResponse> Update(
+                        int addressID,
+                        ApiAddressRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateUpdateAsync(addressID, model));
 
-			return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
-		}
-		public async Task<List<ApiAddressResponseModel>> GetStateProvinceID(int stateProvinceID)
-		{
-			List<Address> records = await this.addressRepository.GetStateProvinceID(stateProvinceID);
+                        if (response.Success)
+                        {
+                                var bo = this.bolAddressMapper.MapModelToBO(addressID, model);
+                                await this.addressRepository.Update(this.dalAddressMapper.MapBOToEF(bo));
+                        }
 
-			return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int addressID)
+                {
+                        ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateDeleteAsync(addressID));
+
+                        if (response.Success)
+                        {
+                                await this.addressRepository.Delete(addressID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiAddressResponseModel> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+                {
+                        Address record = await this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1, addressLine2, city, stateProvinceID, postalCode);
+
+                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
+                }
+                public async Task<List<ApiAddressResponseModel>> GetStateProvinceID(int stateProvinceID)
+                {
+                        List<Address> records = await this.addressRepository.GetStateProvinceID(stateProvinceID);
+
+                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>232e2ec21a545b5398bd5c645e587d7f</Hash>
+    <Hash>ee45ec7a228d525e9560070b3f35be06</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SalesTerritoryService: AbstractSalesTerritoryService, ISalesTerritoryService
-	{
-		public SalesTerritoryService(
-			ILogger<SalesTerritoryRepository> logger,
-			ISalesTerritoryRepository salesTerritoryRepository,
-			IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
-			IBOLSalesTerritoryMapper BOLsalesTerritoryMapper,
-			IDALSalesTerritoryMapper DALsalesTerritoryMapper)
-			: base(logger, salesTerritoryRepository,
-			       salesTerritoryModelValidator,
-			       BOLsalesTerritoryMapper,
-			       DALsalesTerritoryMapper)
-		{}
-	}
+        public class SalesTerritoryService: AbstractSalesTerritoryService, ISalesTerritoryService
+        {
+                public SalesTerritoryService(
+                        ILogger<SalesTerritoryRepository> logger,
+                        ISalesTerritoryRepository salesTerritoryRepository,
+                        IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
+                        IBOLSalesTerritoryMapper bolsalesTerritoryMapper,
+                        IDALSalesTerritoryMapper dalsalesTerritoryMapper)
+                        : base(logger,
+                               salesTerritoryRepository,
+                               salesTerritoryModelValidator,
+                               bolsalesTerritoryMapper,
+                               dalsalesTerritoryMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6f9c50abe29cb57bbfd06a144b032cb4</Hash>
+    <Hash>ba493f96de9e5a052ae830d6264deb15</Hash>
 </Codenesium>*/

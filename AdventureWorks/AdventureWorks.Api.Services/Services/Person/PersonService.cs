@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class PersonService: AbstractPersonService, IPersonService
-	{
-		public PersonService(
-			ILogger<PersonRepository> logger,
-			IPersonRepository personRepository,
-			IApiPersonRequestModelValidator personModelValidator,
-			IBOLPersonMapper BOLpersonMapper,
-			IDALPersonMapper DALpersonMapper)
-			: base(logger, personRepository,
-			       personModelValidator,
-			       BOLpersonMapper,
-			       DALpersonMapper)
-		{}
-	}
+        public class PersonService: AbstractPersonService, IPersonService
+        {
+                public PersonService(
+                        ILogger<PersonRepository> logger,
+                        IPersonRepository personRepository,
+                        IApiPersonRequestModelValidator personModelValidator,
+                        IBOLPersonMapper bolpersonMapper,
+                        IDALPersonMapper dalpersonMapper)
+                        : base(logger,
+                               personRepository,
+                               personModelValidator,
+                               bolpersonMapper,
+                               dalpersonMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e93b8446f04cfeee7c1909a3f64feb2b</Hash>
+    <Hash>521551727b9934fa34ec6b530ffc400d</Hash>
 </Codenesium>*/

@@ -12,28 +12,28 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/spaces")]
-	[ApiVersion("1.0")]
-	public class SpaceController: AbstractSpaceController
-	{
-		public SpaceController(
-			ServiceSettings settings,
-			ILogger<SpaceController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ISpaceService spaceService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       spaceService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/spaces")]
+        [ApiVersion("1.0")]
+        public class SpaceController: AbstractSpaceController
+        {
+                public SpaceController(
+                        ServiceSettings settings,
+                        ILogger<SpaceController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ISpaceService spaceService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               spaceService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d0d7758971d418e4d4e638eedc22a059</Hash>
+    <Hash>2cc157e9a872015c3c46c7ee49332b68</Hash>
 </Codenesium>*/

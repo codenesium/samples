@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractCurrencyRateService: AbstractService
-	{
-		private ICurrencyRateRepository currencyRateRepository;
-		private IApiCurrencyRateRequestModelValidator currencyRateModelValidator;
-		private IBOLCurrencyRateMapper bolCurrencyRateMapper;
-		private IDALCurrencyRateMapper dalCurrencyRateMapper;
-		private ILogger logger;
+        public abstract class AbstractCurrencyRateService: AbstractService
+        {
+                private ICurrencyRateRepository currencyRateRepository;
 
-		public AbstractCurrencyRateService(
-			ILogger logger,
-			ICurrencyRateRepository currencyRateRepository,
-			IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
-			IBOLCurrencyRateMapper bolcurrencyRateMapper,
-			IDALCurrencyRateMapper dalcurrencyRateMapper)
-			: base()
+                private IApiCurrencyRateRequestModelValidator currencyRateModelValidator;
 
-		{
-			this.currencyRateRepository = currencyRateRepository;
-			this.currencyRateModelValidator = currencyRateModelValidator;
-			this.bolCurrencyRateMapper = bolcurrencyRateMapper;
-			this.dalCurrencyRateMapper = dalcurrencyRateMapper;
-			this.logger = logger;
-		}
+                private IBOLCurrencyRateMapper bolCurrencyRateMapper;
 
-		public virtual async Task<List<ApiCurrencyRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.currencyRateRepository.All(skip, take, orderClause);
+                private IDALCurrencyRateMapper dalCurrencyRateMapper;
 
-			return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiCurrencyRateResponseModel> Get(int currencyRateID)
-		{
-			var record = await currencyRateRepository.Get(currencyRateID);
+                public AbstractCurrencyRateService(
+                        ILogger logger,
+                        ICurrencyRateRepository currencyRateRepository,
+                        IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
+                        IBOLCurrencyRateMapper bolcurrencyRateMapper,
+                        IDALCurrencyRateMapper dalcurrencyRateMapper)
+                        : base()
 
-			return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record));
-		}
+                {
+                        this.currencyRateRepository = currencyRateRepository;
+                        this.currencyRateModelValidator = currencyRateModelValidator;
+                        this.bolCurrencyRateMapper = bolcurrencyRateMapper;
+                        this.dalCurrencyRateMapper = dalcurrencyRateMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiCurrencyRateResponseModel>> Create(
-			ApiCurrencyRateRequestModel model)
-		{
-			CreateResponse<ApiCurrencyRateResponseModel> response = new CreateResponse<ApiCurrencyRateResponseModel>(await this.currencyRateModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolCurrencyRateMapper.MapModelToBO(default (int), model);
-				var record = await this.currencyRateRepository.Create(this.dalCurrencyRateMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiCurrencyRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.currencyRateRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int currencyRateID,
-			ApiCurrencyRateRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateUpdateAsync(currencyRateID, model));
+                public virtual async Task<ApiCurrencyRateResponseModel> Get(int currencyRateID)
+                {
+                        var record = await this.currencyRateRepository.Get(currencyRateID);
 
-			if (response.Success)
-			{
-				var bo = this.bolCurrencyRateMapper.MapModelToBO(currencyRateID, model);
-				await this.currencyRateRepository.Update(this.dalCurrencyRateMapper.MapBOToEF(bo));
-			}
+                        return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiCurrencyRateResponseModel>> Create(
+                        ApiCurrencyRateRequestModel model)
+                {
+                        CreateResponse<ApiCurrencyRateResponseModel> response = new CreateResponse<ApiCurrencyRateResponseModel>(await this.currencyRateModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolCurrencyRateMapper.MapModelToBO(default (int), model);
+                                var record = await this.currencyRateRepository.Create(this.dalCurrencyRateMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int currencyRateID)
-		{
-			ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateDeleteAsync(currencyRateID));
+                                response.SetRecord(this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.currencyRateRepository.Delete(currencyRateID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiCurrencyRateResponseModel> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate,string fromCurrencyCode,string toCurrencyCode)
-		{
-			CurrencyRate record = await this.currencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate,fromCurrencyCode,toCurrencyCode);
+                public virtual async Task<ActionResponse> Update(
+                        int currencyRateID,
+                        ApiCurrencyRateRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateUpdateAsync(currencyRateID, model));
 
-			return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolCurrencyRateMapper.MapModelToBO(currencyRateID, model);
+                                await this.currencyRateRepository.Update(this.dalCurrencyRateMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int currencyRateID)
+                {
+                        ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateDeleteAsync(currencyRateID));
+
+                        if (response.Success)
+                        {
+                                await this.currencyRateRepository.Delete(currencyRateID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiCurrencyRateResponseModel> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
+                {
+                        CurrencyRate record = await this.currencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate, fromCurrencyCode, toCurrencyCode);
+
+                        return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>56ff07f454568a3829576aba045d5e39</Hash>
+    <Hash>c7f06349c98ef25e2741ca17762c075b</Hash>
 </Codenesium>*/

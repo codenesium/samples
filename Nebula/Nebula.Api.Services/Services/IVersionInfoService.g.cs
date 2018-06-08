@@ -7,24 +7,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IVersionInfoService
-	{
-		Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
-			ApiVersionInfoRequestModel model);
+        public interface IVersionInfoService
+        {
+                Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
+                        ApiVersionInfoRequestModel model);
 
-		Task<ActionResponse> Update(long version,
-		                            ApiVersionInfoRequestModel model);
+                Task<ActionResponse> Update(long version,
+                                            ApiVersionInfoRequestModel model);
 
-		Task<ActionResponse> Delete(long version);
+                Task<ActionResponse> Delete(long version);
 
-		Task<ApiVersionInfoResponseModel> Get(long version);
+                Task<ApiVersionInfoResponseModel> Get(long version);
 
-		Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<ApiVersionInfoResponseModel> GetVersion(long version);
-	}
+                Task<ApiVersionInfoResponseModel> GetVersion(long version);
+        }
 }
 
 /*<Codenesium>
-    <Hash>6abeb8e47ec8faf0555d17ca2fdc544b</Hash>
+    <Hash>69d0cb3b08a0d88bb5ea84c3f507cd45</Hash>
 </Codenesium>*/

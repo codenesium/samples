@@ -2,71 +2,72 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractProductMapper
-	{
-		public virtual BOProduct MapModelToBO(
-			int productID,
-			ApiProductRequestModel model
-			)
-		{
-			BOProduct boProduct = new BOProduct();
+        public abstract class BOLAbstractProductMapper
+        {
+                public virtual BOProduct MapModelToBO(
+                        int productID,
+                        ApiProductRequestModel model
+                        )
+                {
+                        BOProduct boProduct = new BOProduct();
 
-			boProduct.SetProperties(
-				productID,
-				model.@Class,
-				model.Color,
-				model.DaysToManufacture,
-				model.DiscontinuedDate,
-				model.FinishedGoodsFlag,
-				model.ListPrice,
-				model.MakeFlag,
-				model.ModifiedDate,
-				model.Name,
-				model.ProductLine,
-				model.ProductModelID,
-				model.ProductNumber,
-				model.ProductSubcategoryID,
-				model.ReorderPoint,
-				model.Rowguid,
-				model.SafetyStockLevel,
-				model.SellEndDate,
-				model.SellStartDate,
-				model.Size,
-				model.SizeUnitMeasureCode,
-				model.StandardCost,
-				model.Style,
-				model.Weight,
-				model.WeightUnitMeasureCode);
-			return boProduct;
-		}
+                        boProduct.SetProperties(
+                                productID,
+                                model.@Class,
+                                model.Color,
+                                model.DaysToManufacture,
+                                model.DiscontinuedDate,
+                                model.FinishedGoodsFlag,
+                                model.ListPrice,
+                                model.MakeFlag,
+                                model.ModifiedDate,
+                                model.Name,
+                                model.ProductLine,
+                                model.ProductModelID,
+                                model.ProductNumber,
+                                model.ProductSubcategoryID,
+                                model.ReorderPoint,
+                                model.Rowguid,
+                                model.SafetyStockLevel,
+                                model.SellEndDate,
+                                model.SellStartDate,
+                                model.Size,
+                                model.SizeUnitMeasureCode,
+                                model.StandardCost,
+                                model.Style,
+                                model.Weight,
+                                model.WeightUnitMeasureCode);
+                        return boProduct;
+                }
 
-		public virtual ApiProductResponseModel MapBOToModel(
-			BOProduct boProduct)
-		{
-			var model = new ApiProductResponseModel();
+                public virtual ApiProductResponseModel MapBOToModel(
+                        BOProduct boProduct)
+                {
+                        var model = new ApiProductResponseModel();
 
-			model.SetProperties(boProduct.@Class, boProduct.Color, boProduct.DaysToManufacture, boProduct.DiscontinuedDate, boProduct.FinishedGoodsFlag, boProduct.ListPrice, boProduct.MakeFlag, boProduct.ModifiedDate, boProduct.Name, boProduct.ProductID, boProduct.ProductLine, boProduct.ProductModelID, boProduct.ProductNumber, boProduct.ProductSubcategoryID, boProduct.ReorderPoint, boProduct.Rowguid, boProduct.SafetyStockLevel, boProduct.SellEndDate, boProduct.SellStartDate, boProduct.Size, boProduct.SizeUnitMeasureCode, boProduct.StandardCost, boProduct.Style, boProduct.Weight, boProduct.WeightUnitMeasureCode);
+                        model.SetProperties(boProduct.@Class, boProduct.Color, boProduct.DaysToManufacture, boProduct.DiscontinuedDate, boProduct.FinishedGoodsFlag, boProduct.ListPrice, boProduct.MakeFlag, boProduct.ModifiedDate, boProduct.Name, boProduct.ProductID, boProduct.ProductLine, boProduct.ProductModelID, boProduct.ProductNumber, boProduct.ProductSubcategoryID, boProduct.ReorderPoint, boProduct.Rowguid, boProduct.SafetyStockLevel, boProduct.SellEndDate, boProduct.SellStartDate, boProduct.Size, boProduct.SizeUnitMeasureCode, boProduct.StandardCost, boProduct.Style, boProduct.Weight, boProduct.WeightUnitMeasureCode);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiProductResponseModel> MapBOToModel(
-			List<BOProduct> items)
-		{
-			List<ApiProductResponseModel> response = new List<ApiProductResponseModel>();
+                public virtual List<ApiProductResponseModel> MapBOToModel(
+                        List<BOProduct> items)
+                {
+                        List<ApiProductResponseModel> response = new List<ApiProductResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>35d2f3a17929a5da1cf71765dd74e5ba</Hash>
+    <Hash>f263dfc16ce07836f6a98e2931219f93</Hash>
 </Codenesium>*/

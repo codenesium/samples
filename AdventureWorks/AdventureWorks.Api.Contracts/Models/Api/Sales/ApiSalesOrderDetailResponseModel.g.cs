@@ -4,163 +4,178 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSalesOrderDetailResponseModel: AbstractApiResponseModel
-	{
-		public ApiSalesOrderDetailResponseModel() : base()
-		{}
+        public partial class ApiSalesOrderDetailResponseModel: AbstractApiResponseModel
+        {
+                public ApiSalesOrderDetailResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string carrierTrackingNumber,
-			decimal lineTotal,
-			DateTime modifiedDate,
-			short orderQty,
-			int productID,
-			Guid rowguid,
-			int salesOrderDetailID,
-			int salesOrderID,
-			int specialOfferID,
-			decimal unitPrice,
-			decimal unitPriceDiscount)
-		{
-			this.CarrierTrackingNumber = carrierTrackingNumber;
-			this.LineTotal = lineTotal.ToDecimal();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.OrderQty = orderQty;
-			this.ProductID = productID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
-			this.SalesOrderDetailID = salesOrderDetailID.ToInt();
-			this.SalesOrderID = salesOrderID.ToInt();
-			this.SpecialOfferID = specialOfferID.ToInt();
-			this.UnitPrice = unitPrice.ToDecimal();
-			this.UnitPriceDiscount = unitPriceDiscount.ToDecimal();
+                public void SetProperties(
+                        string carrierTrackingNumber,
+                        decimal lineTotal,
+                        DateTime modifiedDate,
+                        short orderQty,
+                        int productID,
+                        Guid rowguid,
+                        int salesOrderDetailID,
+                        int salesOrderID,
+                        int specialOfferID,
+                        decimal unitPrice,
+                        decimal unitPriceDiscount)
+                {
+                        this.CarrierTrackingNumber = carrierTrackingNumber;
+                        this.LineTotal = lineTotal;
+                        this.ModifiedDate = modifiedDate;
+                        this.OrderQty = orderQty;
+                        this.ProductID = productID;
+                        this.Rowguid = rowguid;
+                        this.SalesOrderDetailID = salesOrderDetailID;
+                        this.SalesOrderID = salesOrderID;
+                        this.SpecialOfferID = specialOfferID;
+                        this.UnitPrice = unitPrice;
+                        this.UnitPriceDiscount = unitPriceDiscount;
 
-			this.ProductIDEntity = nameof(ApiResponse.SpecialOfferProducts);
-			this.SalesOrderIDEntity = nameof(ApiResponse.SalesOrderHeaders);
-			this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOfferProducts);
-		}
+                        this.ProductIDEntity = nameof(ApiResponse.SpecialOfferProducts);
+                        this.SalesOrderIDEntity = nameof(ApiResponse.SalesOrderHeaders);
+                        this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOfferProducts);
+                }
 
-		public string CarrierTrackingNumber { get; private set; }
-		public decimal LineTotal { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public short OrderQty { get; private set; }
-		public int ProductID { get; private set; }
-		public string ProductIDEntity { get; set; }
-		public Guid Rowguid { get; private set; }
-		public int SalesOrderDetailID { get; private set; }
-		public int SalesOrderID { get; private set; }
-		public string SalesOrderIDEntity { get; set; }
-		public int SpecialOfferID { get; private set; }
-		public string SpecialOfferIDEntity { get; set; }
-		public decimal UnitPrice { get; private set; }
-		public decimal UnitPriceDiscount { get; private set; }
+                public string CarrierTrackingNumber { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCarrierTrackingNumberValue { get; set; } = true;
+                public decimal LineTotal { get; private set; }
 
-		public bool ShouldSerializeCarrierTrackingNumber()
-		{
-			return this.ShouldSerializeCarrierTrackingNumberValue;
-		}
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeLineTotalValue { get; set; } = true;
+                public short OrderQty { get; private set; }
 
-		public bool ShouldSerializeLineTotal()
-		{
-			return this.ShouldSerializeLineTotalValue;
-		}
+                public int ProductID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public string ProductIDEntity { get; set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public Guid Rowguid { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeOrderQtyValue { get; set; } = true;
+                public int SalesOrderDetailID { get; private set; }
 
-		public bool ShouldSerializeOrderQty()
-		{
-			return this.ShouldSerializeOrderQtyValue;
-		}
+                public int SalesOrderID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
+                public string SalesOrderIDEntity { get; set; }
 
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
+                public int SpecialOfferID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
+                public string SpecialOfferIDEntity { get; set; }
 
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
+                public decimal UnitPrice { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderDetailIDValue { get; set; } = true;
+                public decimal UnitPriceDiscount { get; private set; }
 
-		public bool ShouldSerializeSalesOrderDetailID()
-		{
-			return this.ShouldSerializeSalesOrderDetailIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCarrierTrackingNumberValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
+                public bool ShouldSerializeCarrierTrackingNumber()
+                {
+                        return this.ShouldSerializeCarrierTrackingNumberValue;
+                }
 
-		public bool ShouldSerializeSalesOrderID()
-		{
-			return this.ShouldSerializeSalesOrderIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeLineTotalValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeSpecialOfferIDValue { get; set; } = true;
+                public bool ShouldSerializeLineTotal()
+                {
+                        return this.ShouldSerializeLineTotalValue;
+                }
 
-		public bool ShouldSerializeSpecialOfferID()
-		{
-			return this.ShouldSerializeSpecialOfferIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeUnitPriceValue { get; set; } = true;
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		public bool ShouldSerializeUnitPrice()
-		{
-			return this.ShouldSerializeUnitPriceValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeOrderQtyValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeUnitPriceDiscountValue { get; set; } = true;
+                public bool ShouldSerializeOrderQty()
+                {
+                        return this.ShouldSerializeOrderQtyValue;
+                }
 
-		public bool ShouldSerializeUnitPriceDiscount()
-		{
-			return this.ShouldSerializeUnitPriceDiscountValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeCarrierTrackingNumberValue = false;
-			this.ShouldSerializeLineTotalValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeOrderQtyValue = false;
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeSalesOrderDetailIDValue = false;
-			this.ShouldSerializeSalesOrderIDValue = false;
-			this.ShouldSerializeSpecialOfferIDValue = false;
-			this.ShouldSerializeUnitPriceValue = false;
-			this.ShouldSerializeUnitPriceDiscountValue = false;
-		}
-	}
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+                public bool ShouldSerializeRowguid()
+                {
+                        return this.ShouldSerializeRowguidValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSalesOrderDetailIDValue { get; set; } = true;
+
+                public bool ShouldSerializeSalesOrderDetailID()
+                {
+                        return this.ShouldSerializeSalesOrderDetailIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSalesOrderIDValue { get; set; } = true;
+
+                public bool ShouldSerializeSalesOrderID()
+                {
+                        return this.ShouldSerializeSalesOrderIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSpecialOfferIDValue { get; set; } = true;
+
+                public bool ShouldSerializeSpecialOfferID()
+                {
+                        return this.ShouldSerializeSpecialOfferIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeUnitPriceValue { get; set; } = true;
+
+                public bool ShouldSerializeUnitPrice()
+                {
+                        return this.ShouldSerializeUnitPriceValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeUnitPriceDiscountValue { get; set; } = true;
+
+                public bool ShouldSerializeUnitPriceDiscount()
+                {
+                        return this.ShouldSerializeUnitPriceDiscountValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeCarrierTrackingNumberValue = false;
+                        this.ShouldSerializeLineTotalValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeOrderQtyValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializeRowguidValue = false;
+                        this.ShouldSerializeSalesOrderDetailIDValue = false;
+                        this.ShouldSerializeSalesOrderIDValue = false;
+                        this.ShouldSerializeSpecialOfferIDValue = false;
+                        this.ShouldSerializeUnitPriceValue = false;
+                        this.ShouldSerializeUnitPriceDiscountValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7e931710a04ba8cc478433d15e3c76df</Hash>
+    <Hash>45612e0e8a2c1891f8d108e02b8fb515</Hash>
 </Codenesium>*/

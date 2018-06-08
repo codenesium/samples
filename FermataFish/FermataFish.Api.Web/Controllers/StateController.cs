@@ -12,28 +12,28 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/states")]
-	[ApiVersion("1.0")]
-	public class StateController: AbstractStateController
-	{
-		public StateController(
-			ServiceSettings settings,
-			ILogger<StateController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IStateService stateService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       stateService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/states")]
+        [ApiVersion("1.0")]
+        public class StateController: AbstractStateController
+        {
+                public StateController(
+                        ServiceSettings settings,
+                        ILogger<StateController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IStateService stateService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               stateService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>1ad0a2a239675ebc8cd5a02fffcc66aa</Hash>
+    <Hash>4b2e1ef14b1330f76a135d9983550b1e</Hash>
 </Codenesium>*/

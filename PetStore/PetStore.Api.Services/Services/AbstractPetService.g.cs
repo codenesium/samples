@@ -12,87 +12,93 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-	public abstract class AbstractPetService: AbstractService
-	{
-		private IPetRepository petRepository;
-		private IApiPetRequestModelValidator petModelValidator;
-		private IBOLPetMapper bolPetMapper;
-		private IDALPetMapper dalPetMapper;
-		private ILogger logger;
+        public abstract class AbstractPetService: AbstractService
+        {
+                private IPetRepository petRepository;
 
-		public AbstractPetService(
-			ILogger logger,
-			IPetRepository petRepository,
-			IApiPetRequestModelValidator petModelValidator,
-			IBOLPetMapper bolpetMapper,
-			IDALPetMapper dalpetMapper)
-			: base()
+                private IApiPetRequestModelValidator petModelValidator;
 
-		{
-			this.petRepository = petRepository;
-			this.petModelValidator = petModelValidator;
-			this.bolPetMapper = bolpetMapper;
-			this.dalPetMapper = dalpetMapper;
-			this.logger = logger;
-		}
+                private IBOLPetMapper bolPetMapper;
 
-		public virtual async Task<List<ApiPetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.petRepository.All(skip, take, orderClause);
+                private IDALPetMapper dalPetMapper;
 
-			return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPetResponseModel> Get(int id)
-		{
-			var record = await petRepository.Get(id);
+                public AbstractPetService(
+                        ILogger logger,
+                        IPetRepository petRepository,
+                        IApiPetRequestModelValidator petModelValidator,
+                        IBOLPetMapper bolpetMapper,
+                        IDALPetMapper dalpetMapper)
+                        : base()
 
-			return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record));
-		}
+                {
+                        this.petRepository = petRepository;
+                        this.petModelValidator = petModelValidator;
+                        this.bolPetMapper = bolpetMapper;
+                        this.dalPetMapper = dalpetMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPetResponseModel>> Create(
-			ApiPetRequestModel model)
-		{
-			CreateResponse<ApiPetResponseModel> response = new CreateResponse<ApiPetResponseModel>(await this.petModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPetMapper.MapModelToBO(default (int), model);
-				var record = await this.petRepository.Create(this.dalPetMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.petRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiPetRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiPetResponseModel> Get(int id)
+                {
+                        var record = await this.petRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolPetMapper.MapModelToBO(id, model);
-				await this.petRepository.Update(this.dalPetMapper.MapBOToEF(bo));
-			}
+                        return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPetResponseModel>> Create(
+                        ApiPetRequestModel model)
+                {
+                        CreateResponse<ApiPetResponseModel> response = new CreateResponse<ApiPetResponseModel>(await this.petModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPetMapper.MapModelToBO(default (int), model);
+                                var record = await this.petRepository.Create(this.dalPetMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.petRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiPetRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPetMapper.MapModelToBO(id, model);
+                                await this.petRepository.Update(this.dalPetMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.petRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>aa6eb0a1239ef9143d0f9247321b9463</Hash>
+    <Hash>209a08c6ec2081820a5ac92a2de8e659</Hash>
 </Codenesium>*/

@@ -4,60 +4,64 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiVersionInfoResponseModel: AbstractApiResponseModel
-	{
-		public ApiVersionInfoResponseModel() : base()
-		{}
+        public partial class ApiVersionInfoResponseModel: AbstractApiResponseModel
+        {
+                public ApiVersionInfoResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<DateTime> appliedOn,
-			string description,
-			long version)
-		{
-			this.AppliedOn = appliedOn.ToNullableDateTime();
-			this.Description = description;
-			this.Version = version.ToLong();
-		}
+                public void SetProperties(
+                        Nullable<DateTime> appliedOn,
+                        string description,
+                        long version)
+                {
+                        this.AppliedOn = appliedOn;
+                        this.Description = description;
+                        this.Version = version;
+                }
 
-		public Nullable<DateTime> AppliedOn { get; private set; }
-		public string Description { get; private set; }
-		public long Version { get; private set; }
+                public Nullable<DateTime> AppliedOn { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeAppliedOnValue { get; set; } = true;
+                public string Description { get; private set; }
 
-		public bool ShouldSerializeAppliedOn()
-		{
-			return this.ShouldSerializeAppliedOnValue;
-		}
+                public long Version { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeDescriptionValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeAppliedOnValue { get; set; } = true;
 
-		public bool ShouldSerializeDescription()
-		{
-			return this.ShouldSerializeDescriptionValue;
-		}
+                public bool ShouldSerializeAppliedOn()
+                {
+                        return this.ShouldSerializeAppliedOnValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeVersionValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeDescriptionValue { get; set; } = true;
 
-		public bool ShouldSerializeVersion()
-		{
-			return this.ShouldSerializeVersionValue;
-		}
+                public bool ShouldSerializeDescription()
+                {
+                        return this.ShouldSerializeDescriptionValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeAppliedOnValue = false;
-			this.ShouldSerializeDescriptionValue = false;
-			this.ShouldSerializeVersionValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeVersionValue { get; set; } = true;
+
+                public bool ShouldSerializeVersion()
+                {
+                        return this.ShouldSerializeVersionValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeAppliedOnValue = false;
+                        this.ShouldSerializeDescriptionValue = false;
+                        this.ShouldSerializeVersionValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5caea4e476d8796f9bfbe0ab8f29098f</Hash>
+    <Hash>1a1fe22eed6cf548603e8c74ec6a385b</Hash>
 </Codenesium>*/

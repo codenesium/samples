@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractAirTransportService: AbstractService
-	{
-		private IAirTransportRepository airTransportRepository;
-		private IApiAirTransportRequestModelValidator airTransportModelValidator;
-		private IBOLAirTransportMapper bolAirTransportMapper;
-		private IDALAirTransportMapper dalAirTransportMapper;
-		private ILogger logger;
+        public abstract class AbstractAirTransportService: AbstractService
+        {
+                private IAirTransportRepository airTransportRepository;
 
-		public AbstractAirTransportService(
-			ILogger logger,
-			IAirTransportRepository airTransportRepository,
-			IApiAirTransportRequestModelValidator airTransportModelValidator,
-			IBOLAirTransportMapper bolairTransportMapper,
-			IDALAirTransportMapper dalairTransportMapper)
-			: base()
+                private IApiAirTransportRequestModelValidator airTransportModelValidator;
 
-		{
-			this.airTransportRepository = airTransportRepository;
-			this.airTransportModelValidator = airTransportModelValidator;
-			this.bolAirTransportMapper = bolairTransportMapper;
-			this.dalAirTransportMapper = dalairTransportMapper;
-			this.logger = logger;
-		}
+                private IBOLAirTransportMapper bolAirTransportMapper;
 
-		public virtual async Task<List<ApiAirTransportResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.airTransportRepository.All(skip, take, orderClause);
+                private IDALAirTransportMapper dalAirTransportMapper;
 
-			return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiAirTransportResponseModel> Get(int airlineId)
-		{
-			var record = await airTransportRepository.Get(airlineId);
+                public AbstractAirTransportService(
+                        ILogger logger,
+                        IAirTransportRepository airTransportRepository,
+                        IApiAirTransportRequestModelValidator airTransportModelValidator,
+                        IBOLAirTransportMapper bolairTransportMapper,
+                        IDALAirTransportMapper dalairTransportMapper)
+                        : base()
 
-			return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record));
-		}
+                {
+                        this.airTransportRepository = airTransportRepository;
+                        this.airTransportModelValidator = airTransportModelValidator;
+                        this.bolAirTransportMapper = bolairTransportMapper;
+                        this.dalAirTransportMapper = dalairTransportMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiAirTransportResponseModel>> Create(
-			ApiAirTransportRequestModel model)
-		{
-			CreateResponse<ApiAirTransportResponseModel> response = new CreateResponse<ApiAirTransportResponseModel>(await this.airTransportModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolAirTransportMapper.MapModelToBO(default (int), model);
-				var record = await this.airTransportRepository.Create(this.dalAirTransportMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiAirTransportResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.airTransportRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int airlineId,
-			ApiAirTransportRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateUpdateAsync(airlineId, model));
+                public virtual async Task<ApiAirTransportResponseModel> Get(int airlineId)
+                {
+                        var record = await this.airTransportRepository.Get(airlineId);
 
-			if (response.Success)
-			{
-				var bo = this.bolAirTransportMapper.MapModelToBO(airlineId, model);
-				await this.airTransportRepository.Update(this.dalAirTransportMapper.MapBOToEF(bo));
-			}
+                        return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiAirTransportResponseModel>> Create(
+                        ApiAirTransportRequestModel model)
+                {
+                        CreateResponse<ApiAirTransportResponseModel> response = new CreateResponse<ApiAirTransportResponseModel>(await this.airTransportModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolAirTransportMapper.MapModelToBO(default (int), model);
+                                var record = await this.airTransportRepository.Create(this.dalAirTransportMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int airlineId)
-		{
-			ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateDeleteAsync(airlineId));
+                                response.SetRecord(this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.airTransportRepository.Delete(airlineId);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int airlineId,
+                        ApiAirTransportRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateUpdateAsync(airlineId, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolAirTransportMapper.MapModelToBO(airlineId, model);
+                                await this.airTransportRepository.Update(this.dalAirTransportMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int airlineId)
+                {
+                        ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateDeleteAsync(airlineId));
+
+                        if (response.Success)
+                        {
+                                await this.airTransportRepository.Delete(airlineId);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f98f0e639e76659477c95c42314588f4</Hash>
+    <Hash>4a3f6afd57c887ac8376d621f62ca360</Hash>
 </Codenesium>*/

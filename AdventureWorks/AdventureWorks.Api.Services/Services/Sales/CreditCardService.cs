@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class CreditCardService: AbstractCreditCardService, ICreditCardService
-	{
-		public CreditCardService(
-			ILogger<CreditCardRepository> logger,
-			ICreditCardRepository creditCardRepository,
-			IApiCreditCardRequestModelValidator creditCardModelValidator,
-			IBOLCreditCardMapper BOLcreditCardMapper,
-			IDALCreditCardMapper DALcreditCardMapper)
-			: base(logger, creditCardRepository,
-			       creditCardModelValidator,
-			       BOLcreditCardMapper,
-			       DALcreditCardMapper)
-		{}
-	}
+        public class CreditCardService: AbstractCreditCardService, ICreditCardService
+        {
+                public CreditCardService(
+                        ILogger<CreditCardRepository> logger,
+                        ICreditCardRepository creditCardRepository,
+                        IApiCreditCardRequestModelValidator creditCardModelValidator,
+                        IBOLCreditCardMapper bolcreditCardMapper,
+                        IDALCreditCardMapper dalcreditCardMapper)
+                        : base(logger,
+                               creditCardRepository,
+                               creditCardModelValidator,
+                               bolcreditCardMapper,
+                               dalcreditCardMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f1831290e0398dcb9f92e5ef507b8f17</Hash>
+    <Hash>64abdee31f5ccf1c4a2d3679a9cc9ba9</Hash>
 </Codenesium>*/

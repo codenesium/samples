@@ -12,87 +12,93 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractSalesPersonService: AbstractService
-	{
-		private ISalesPersonRepository salesPersonRepository;
-		private IApiSalesPersonRequestModelValidator salesPersonModelValidator;
-		private IBOLSalesPersonMapper bolSalesPersonMapper;
-		private IDALSalesPersonMapper dalSalesPersonMapper;
-		private ILogger logger;
+        public abstract class AbstractSalesPersonService: AbstractService
+        {
+                private ISalesPersonRepository salesPersonRepository;
 
-		public AbstractSalesPersonService(
-			ILogger logger,
-			ISalesPersonRepository salesPersonRepository,
-			IApiSalesPersonRequestModelValidator salesPersonModelValidator,
-			IBOLSalesPersonMapper bolsalesPersonMapper,
-			IDALSalesPersonMapper dalsalesPersonMapper)
-			: base()
+                private IApiSalesPersonRequestModelValidator salesPersonModelValidator;
 
-		{
-			this.salesPersonRepository = salesPersonRepository;
-			this.salesPersonModelValidator = salesPersonModelValidator;
-			this.bolSalesPersonMapper = bolsalesPersonMapper;
-			this.dalSalesPersonMapper = dalsalesPersonMapper;
-			this.logger = logger;
-		}
+                private IBOLSalesPersonMapper bolSalesPersonMapper;
 
-		public virtual async Task<List<ApiSalesPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.salesPersonRepository.All(skip, take, orderClause);
+                private IDALSalesPersonMapper dalSalesPersonMapper;
 
-			return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiSalesPersonResponseModel> Get(int businessEntityID)
-		{
-			var record = await salesPersonRepository.Get(businessEntityID);
+                public AbstractSalesPersonService(
+                        ILogger logger,
+                        ISalesPersonRepository salesPersonRepository,
+                        IApiSalesPersonRequestModelValidator salesPersonModelValidator,
+                        IBOLSalesPersonMapper bolsalesPersonMapper,
+                        IDALSalesPersonMapper dalsalesPersonMapper)
+                        : base()
 
-			return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record));
-		}
+                {
+                        this.salesPersonRepository = salesPersonRepository;
+                        this.salesPersonModelValidator = salesPersonModelValidator;
+                        this.bolSalesPersonMapper = bolsalesPersonMapper;
+                        this.dalSalesPersonMapper = dalsalesPersonMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiSalesPersonResponseModel>> Create(
-			ApiSalesPersonRequestModel model)
-		{
-			CreateResponse<ApiSalesPersonResponseModel> response = new CreateResponse<ApiSalesPersonResponseModel>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolSalesPersonMapper.MapModelToBO(default (int), model);
-				var record = await this.salesPersonRepository.Create(this.dalSalesPersonMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiSalesPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.salesPersonRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int businessEntityID,
-			ApiSalesPersonRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateUpdateAsync(businessEntityID, model));
+                public virtual async Task<ApiSalesPersonResponseModel> Get(int businessEntityID)
+                {
+                        var record = await this.salesPersonRepository.Get(businessEntityID);
 
-			if (response.Success)
-			{
-				var bo = this.bolSalesPersonMapper.MapModelToBO(businessEntityID, model);
-				await this.salesPersonRepository.Update(this.dalSalesPersonMapper.MapBOToEF(bo));
-			}
+                        return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiSalesPersonResponseModel>> Create(
+                        ApiSalesPersonRequestModel model)
+                {
+                        CreateResponse<ApiSalesPersonResponseModel> response = new CreateResponse<ApiSalesPersonResponseModel>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolSalesPersonMapper.MapModelToBO(default (int), model);
+                                var record = await this.salesPersonRepository.Create(this.dalSalesPersonMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int businessEntityID)
-		{
-			ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateDeleteAsync(businessEntityID));
+                                response.SetRecord(this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.salesPersonRepository.Delete(businessEntityID);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int businessEntityID,
+                        ApiSalesPersonRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateUpdateAsync(businessEntityID, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolSalesPersonMapper.MapModelToBO(businessEntityID, model);
+                                await this.salesPersonRepository.Update(this.dalSalesPersonMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int businessEntityID)
+                {
+                        ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateDeleteAsync(businessEntityID));
+
+                        if (response.Success)
+                        {
+                                await this.salesPersonRepository.Delete(businessEntityID);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>34f3dbf86a05077b3409f789554257ce</Hash>
+    <Hash>e62d7f6661ec7de2e11b36a459fa332c</Hash>
 </Codenesium>*/

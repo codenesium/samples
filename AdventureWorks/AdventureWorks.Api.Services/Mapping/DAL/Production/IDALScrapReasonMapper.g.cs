@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALScrapReasonMapper
-	{
-		ScrapReason MapBOToEF(
-			BOScrapReason bo);
+        public interface IDALScrapReasonMapper
+        {
+                ScrapReason MapBOToEF(
+                        BOScrapReason bo);
 
-		BOScrapReason MapEFToBO(
-			ScrapReason efScrapReason);
+                BOScrapReason MapEFToBO(
+                        ScrapReason efScrapReason);
 
-		List<BOScrapReason> MapEFToBO(
-			List<ScrapReason> records);
-	}
+                List<BOScrapReason> MapEFToBO(
+                        List<ScrapReason> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>b99086bd42512d081125a889ab5bd4de</Hash>
+    <Hash>d336c2a81a0c22825782efe601f0c717</Hash>
 </Codenesium>*/

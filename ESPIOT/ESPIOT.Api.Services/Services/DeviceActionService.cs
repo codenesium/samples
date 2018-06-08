@@ -10,22 +10,24 @@ using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
 {
-	public class DeviceActionService: AbstractDeviceActionService, IDeviceActionService
-	{
-		public DeviceActionService(
-			ILogger<DeviceActionRepository> logger,
-			IDeviceActionRepository deviceActionRepository,
-			IApiDeviceActionRequestModelValidator deviceActionModelValidator,
-			IBOLDeviceActionMapper BOLdeviceActionMapper,
-			IDALDeviceActionMapper DALdeviceActionMapper)
-			: base(logger, deviceActionRepository,
-			       deviceActionModelValidator,
-			       BOLdeviceActionMapper,
-			       DALdeviceActionMapper)
-		{}
-	}
+        public class DeviceActionService: AbstractDeviceActionService, IDeviceActionService
+        {
+                public DeviceActionService(
+                        ILogger<DeviceActionRepository> logger,
+                        IDeviceActionRepository deviceActionRepository,
+                        IApiDeviceActionRequestModelValidator deviceActionModelValidator,
+                        IBOLDeviceActionMapper boldeviceActionMapper,
+                        IDALDeviceActionMapper daldeviceActionMapper)
+                        : base(logger,
+                               deviceActionRepository,
+                               deviceActionModelValidator,
+                               boldeviceActionMapper,
+                               daldeviceActionMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6c7544da0b4447e07fcac1f451c0be50</Hash>
+    <Hash>9b863b17d3eab34b57137162ebd92a7a</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class AWBuildVersionService: AbstractAWBuildVersionService, IAWBuildVersionService
-	{
-		public AWBuildVersionService(
-			ILogger<AWBuildVersionRepository> logger,
-			IAWBuildVersionRepository aWBuildVersionRepository,
-			IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
-			IBOLAWBuildVersionMapper BOLaWBuildVersionMapper,
-			IDALAWBuildVersionMapper DALaWBuildVersionMapper)
-			: base(logger, aWBuildVersionRepository,
-			       aWBuildVersionModelValidator,
-			       BOLaWBuildVersionMapper,
-			       DALaWBuildVersionMapper)
-		{}
-	}
+        public class AWBuildVersionService: AbstractAWBuildVersionService, IAWBuildVersionService
+        {
+                public AWBuildVersionService(
+                        ILogger<AWBuildVersionRepository> logger,
+                        IAWBuildVersionRepository aWBuildVersionRepository,
+                        IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
+                        IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
+                        IDALAWBuildVersionMapper dalaWBuildVersionMapper)
+                        : base(logger,
+                               aWBuildVersionRepository,
+                               aWBuildVersionModelValidator,
+                               bolaWBuildVersionMapper,
+                               dalaWBuildVersionMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9158f71314e0f1368145ba023cf4a7f3</Hash>
+    <Hash>64d499c3612c765518aba8632c29e54b</Hash>
 </Codenesium>*/

@@ -3,55 +3,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace PetShippingNS.Api.Contracts
 {
-	public partial class ApiPipelineRequestModel: AbstractApiRequestModel
-	{
-		public ApiPipelineRequestModel() : base()
-		{}
+        public partial class ApiPipelineRequestModel: AbstractApiRequestModel
+        {
+                public ApiPipelineRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int pipelineStatusId,
-			int saleId)
-		{
-			this.PipelineStatusId = pipelineStatusId.ToInt();
-			this.SaleId = saleId.ToInt();
-		}
+                public void SetProperties(
+                        int pipelineStatusId,
+                        int saleId)
+                {
+                        this.PipelineStatusId = pipelineStatusId;
+                        this.SaleId = saleId;
+                }
 
-		private int pipelineStatusId;
+                private int pipelineStatusId;
 
-		[Required]
-		public int PipelineStatusId
-		{
-			get
-			{
-				return this.pipelineStatusId;
-			}
+                [Required]
+                public int PipelineStatusId
+                {
+                        get
+                        {
+                                return this.pipelineStatusId;
+                        }
 
-			set
-			{
-				this.pipelineStatusId = value;
-			}
-		}
+                        set
+                        {
+                                this.pipelineStatusId = value;
+                        }
+                }
 
-		private int saleId;
+                private int saleId;
 
-		[Required]
-		public int SaleId
-		{
-			get
-			{
-				return this.saleId;
-			}
+                [Required]
+                public int SaleId
+                {
+                        get
+                        {
+                                return this.saleId;
+                        }
 
-			set
-			{
-				this.saleId = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.saleId = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>eaee5ebfbd04294bfb8a8b4fb9449ac8</Hash>
+    <Hash>2d3894f6acd3c006ffcb2905a9fcc446</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class LocationService: AbstractLocationService, ILocationService
-	{
-		public LocationService(
-			ILogger<LocationRepository> logger,
-			ILocationRepository locationRepository,
-			IApiLocationRequestModelValidator locationModelValidator,
-			IBOLLocationMapper BOLlocationMapper,
-			IDALLocationMapper DALlocationMapper)
-			: base(logger, locationRepository,
-			       locationModelValidator,
-			       BOLlocationMapper,
-			       DALlocationMapper)
-		{}
-	}
+        public class LocationService: AbstractLocationService, ILocationService
+        {
+                public LocationService(
+                        ILogger<LocationRepository> logger,
+                        ILocationRepository locationRepository,
+                        IApiLocationRequestModelValidator locationModelValidator,
+                        IBOLLocationMapper bollocationMapper,
+                        IDALLocationMapper dallocationMapper)
+                        : base(logger,
+                               locationRepository,
+                               locationModelValidator,
+                               bollocationMapper,
+                               dallocationMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7e3bc3bafcca38031926607754b158b4</Hash>
+    <Hash>8f88b7f3b2b4aa1ba8836f012e81966b</Hash>
 </Codenesium>*/

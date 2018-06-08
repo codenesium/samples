@@ -14,155 +14,155 @@ using PetShippingNS.Api.Services;
 
 namespace PetShippingNS.Api.Web
 {
-	public abstract class AbstractPipelineStepNoteController: AbstractApiController
-	{
-		protected IPipelineStepNoteService pipelineStepNoteService;
+        public abstract class AbstractPipelineStepNoteController: AbstractApiController
+        {
+                protected IPipelineStepNoteService PipelineStepNoteService { get; private set; }
 
-		protected int BulkInsertLimit { get; set; }
+                protected int BulkInsertLimit { get; set; }
 
-		protected int MaxLimit { get; set; }
+                protected int MaxLimit { get; set; }
 
-		protected int DefaultLimit { get; set; }
+                protected int DefaultLimit { get; set; }
 
-		public AbstractPipelineStepNoteController(
-			ServiceSettings settings,
-			ILogger<AbstractPipelineStepNoteController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IPipelineStepNoteService pipelineStepNoteService
-			)
-			: base(settings, logger, transactionCoordinator)
-		{
-			this.pipelineStepNoteService = pipelineStepNoteService;
-		}
+                public AbstractPipelineStepNoteController(
+                        ServiceSettings settings,
+                        ILogger<AbstractPipelineStepNoteController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IPipelineStepNoteService pipelineStepNoteService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.PipelineStepNoteService = pipelineStepNoteService;
+                }
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<ApiPipelineStepNoteResponseModel> response = await this.pipelineStepNoteService.All(query.Offset, query.Limit);
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPipelineStepNoteResponseModel> response = await this.PipelineStepNoteService.All(query.Offset, query.Limit);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("{id}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(int id)
-		{
-			ApiPipelineStepNoteResponseModel response = await this.pipelineStepNoteService.Get(id);
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(int id)
+                {
+                        ApiPipelineStepNoteResponseModel response = await this.PipelineStepNoteService.Get(id);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpPost]
-		[Route("")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepNoteRequestModel model)
-		{
-			CreateResponse<ApiPipelineStepNoteResponseModel> result = await this.pipelineStepNoteService.Create(model);
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepNoteRequestModel model)
+                {
+                        CreateResponse<ApiPipelineStepNoteResponseModel> result = await this.PipelineStepNoteService.Create(model);
 
-			if (result.Success)
-			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PipelineStepNotes/{result.Record.Id.ToString()}");
-				return this.Ok(result.Record);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PipelineStepNotes/{result.Record.Id.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpPost]
-		[Route("BulkInsert")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
-		[ProducesResponseType(typeof(void), 413)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepNoteRequestModel> models)
-		{
-			if (models.Count > this.BulkInsertLimit)
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-			}
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiPipelineStepNoteRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
 
-			List<ApiPipelineStepNoteResponseModel> records = new List<ApiPipelineStepNoteResponseModel>();
-			foreach (var model in models)
-			{
-				CreateResponse<ApiPipelineStepNoteResponseModel> result = await this.pipelineStepNoteService.Create(model);
+                        List<ApiPipelineStepNoteResponseModel> records = new List<ApiPipelineStepNoteResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiPipelineStepNoteResponseModel> result = await this.PipelineStepNoteService.Create(model);
 
-				if(result.Success)
-				{
-					records.Add(result.Record);
-				}
-				else
-				{
-					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-				}
-			}
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
 
-			return this.Ok(records);
-		}
+                        return this.Ok(records);
+                }
 
-		[HttpPut]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepNoteRequestModel model)
-		{
-			ActionResponse result = await this.pipelineStepNoteService.Update(id, model);
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPipelineStepNoteResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiPipelineStepNoteRequestModel model)
+                {
+                        ActionResponse result = await this.PipelineStepNoteService.Update(id, model);
 
-			if (result.Success)
-			{
-				ApiPipelineStepNoteResponseModel response = await this.pipelineStepNoteService.Get(id);
+                        if (result.Success)
+                        {
+                                ApiPipelineStepNoteResponseModel response = await this.PipelineStepNoteService.Get(id);
 
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpDelete]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(int id)
-		{
-			ActionResponse result = await this.pipelineStepNoteService.Delete(id);
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(int id)
+                {
+                        ActionResponse result = await this.PipelineStepNoteService.Delete(id);
 
-			if (result.Success)
-			{
-				return this.NoContent();
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
-	}
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b74dbe056b7882db0dddf28c87be07ae</Hash>
+    <Hash>4b00b18218739e542d56a789ce0ea452</Hash>
 </Codenesium>*/

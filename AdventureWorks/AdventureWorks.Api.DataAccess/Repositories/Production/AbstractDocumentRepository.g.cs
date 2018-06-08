@@ -10,118 +10,120 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractDocumentRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractDocumentRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractDocumentRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<Document>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractDocumentRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<Document> Get(Guid documentNode)
-		{
-			return await this.GetById(documentNode);
-		}
+                public virtual Task<List<Document>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<Document> Create(Document item)
-		{
-			this.Context.Set<Document>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<Document> Get(Guid documentNode)
+                {
+                        return await this.GetById(documentNode);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<Document> Create(Document item)
+                {
+                        this.Context.Set<Document>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(Document item)
-		{
-			var entity = this.Context.Set<Document>().Local.FirstOrDefault(x => x.DocumentNode == item.DocumentNode);
-			if (entity == null)
-			{
-				this.Context.Set<Document>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(Document item)
+                {
+                        var entity = this.Context.Set<Document>().Local.FirstOrDefault(x => x.DocumentNode == item.DocumentNode);
+                        if (entity == null)
+                        {
+                                this.Context.Set<Document>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			Guid documentNode)
-		{
-			Document record = await this.GetById(documentNode);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<Document>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        Guid documentNode)
+                {
+                        Document record = await this.GetById(documentNode);
 
-		public async Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel,Guid documentNode)
-		{
-			var records = await this.SearchLinqEF(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<Document>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
-		public async Task<List<Document>> GetFileNameRevision(string fileName,string revision)
-		{
-			var records = await this.SearchLinqEF(x => x.FileName == fileName && x.Revision == revision);
+                public async Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode)
+                {
+                        var records = await this.SearchLinqEF(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
 
-			return records;
-		}
+                        return records.FirstOrDefault();
+                }
+                public async Task<List<Document>> GetFileNameRevision(string fileName, string revision)
+                {
+                        var records = await this.SearchLinqEF(x => x.FileName == fileName && x.Revision == revision);
 
-		protected async Task<List<Document>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<Document> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records;
+                }
 
-			return records;
-		}
+                protected async Task<List<Document>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<Document> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Document.DocumentNode)} ASC";
-			}
-			return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
-		}
+                        return records;
+                }
 
-		private async Task<List<Document>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(Document.DocumentNode)} ASC";
-			}
+                private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Document.DocumentNode)} ASC";
+                        }
 
-			return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
-		}
+                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
+                }
 
-		private async Task<Document> GetById(Guid documentNode)
-		{
-			List<Document> records = await this.SearchLinqEF(x => x.DocumentNode == documentNode);
+                private async Task<List<Document>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(Document.DocumentNode)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
+                }
+
+                private async Task<Document> GetById(Guid documentNode)
+                {
+                        List<Document> records = await this.SearchLinqEF(x => x.DocumentNode == documentNode);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>86801828a21e6dc4b468f2d405baf21f</Hash>
+    <Hash>2b27018af1f11c460ff0e3ceb4c3c506</Hash>
 </Codenesium>*/

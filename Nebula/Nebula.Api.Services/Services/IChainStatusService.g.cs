@@ -7,22 +7,22 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IChainStatusService
-	{
-		Task<CreateResponse<ApiChainStatusResponseModel>> Create(
-			ApiChainStatusRequestModel model);
+        public interface IChainStatusService
+        {
+                Task<CreateResponse<ApiChainStatusResponseModel>> Create(
+                        ApiChainStatusRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiChainStatusRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiChainStatusRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiChainStatusResponseModel> Get(int id);
+                Task<ApiChainStatusResponseModel> Get(int id);
 
-		Task<List<ApiChainStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiChainStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>1758d5d43fd06134aa4f942f4e3e4786</Hash>
+    <Hash>de34785a277ed958505704c6c64888f2</Hash>
 </Codenesium>*/

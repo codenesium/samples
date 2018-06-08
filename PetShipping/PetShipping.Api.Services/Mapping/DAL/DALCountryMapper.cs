@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public class DALCountryMapper: AbstractDALCountryMapper, IDALCountryMapper
-	{
-		public DALCountryMapper()
-		{}
-	}
+        public class DALCountryMapper: DALAbstractCountryMapper, IDALCountryMapper
+        {
+                public DALCountryMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4e52a726094d655a552bf1d47a00b5b3</Hash>
+    <Hash>67ebda326784c8c40dd21a32aaf8857c</Hash>
 </Codenesium>*/

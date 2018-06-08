@@ -2,55 +2,56 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractTransactionHistoryArchiveMapper
-	{
-		public virtual BOTransactionHistoryArchive MapModelToBO(
-			int transactionID,
-			ApiTransactionHistoryArchiveRequestModel model
-			)
-		{
-			BOTransactionHistoryArchive boTransactionHistoryArchive = new BOTransactionHistoryArchive();
+        public abstract class BOLAbstractTransactionHistoryArchiveMapper
+        {
+                public virtual BOTransactionHistoryArchive MapModelToBO(
+                        int transactionID,
+                        ApiTransactionHistoryArchiveRequestModel model
+                        )
+                {
+                        BOTransactionHistoryArchive boTransactionHistoryArchive = new BOTransactionHistoryArchive();
 
-			boTransactionHistoryArchive.SetProperties(
-				transactionID,
-				model.ActualCost,
-				model.ModifiedDate,
-				model.ProductID,
-				model.Quantity,
-				model.ReferenceOrderID,
-				model.ReferenceOrderLineID,
-				model.TransactionDate,
-				model.TransactionType);
-			return boTransactionHistoryArchive;
-		}
+                        boTransactionHistoryArchive.SetProperties(
+                                transactionID,
+                                model.ActualCost,
+                                model.ModifiedDate,
+                                model.ProductID,
+                                model.Quantity,
+                                model.ReferenceOrderID,
+                                model.ReferenceOrderLineID,
+                                model.TransactionDate,
+                                model.TransactionType);
+                        return boTransactionHistoryArchive;
+                }
 
-		public virtual ApiTransactionHistoryArchiveResponseModel MapBOToModel(
-			BOTransactionHistoryArchive boTransactionHistoryArchive)
-		{
-			var model = new ApiTransactionHistoryArchiveResponseModel();
+                public virtual ApiTransactionHistoryArchiveResponseModel MapBOToModel(
+                        BOTransactionHistoryArchive boTransactionHistoryArchive)
+                {
+                        var model = new ApiTransactionHistoryArchiveResponseModel();
 
-			model.SetProperties(boTransactionHistoryArchive.ActualCost, boTransactionHistoryArchive.ModifiedDate, boTransactionHistoryArchive.ProductID, boTransactionHistoryArchive.Quantity, boTransactionHistoryArchive.ReferenceOrderID, boTransactionHistoryArchive.ReferenceOrderLineID, boTransactionHistoryArchive.TransactionDate, boTransactionHistoryArchive.TransactionID, boTransactionHistoryArchive.TransactionType);
+                        model.SetProperties(boTransactionHistoryArchive.ActualCost, boTransactionHistoryArchive.ModifiedDate, boTransactionHistoryArchive.ProductID, boTransactionHistoryArchive.Quantity, boTransactionHistoryArchive.ReferenceOrderID, boTransactionHistoryArchive.ReferenceOrderLineID, boTransactionHistoryArchive.TransactionDate, boTransactionHistoryArchive.TransactionID, boTransactionHistoryArchive.TransactionType);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiTransactionHistoryArchiveResponseModel> MapBOToModel(
-			List<BOTransactionHistoryArchive> items)
-		{
-			List<ApiTransactionHistoryArchiveResponseModel> response = new List<ApiTransactionHistoryArchiveResponseModel>();
+                public virtual List<ApiTransactionHistoryArchiveResponseModel> MapBOToModel(
+                        List<BOTransactionHistoryArchive> items)
+                {
+                        List<ApiTransactionHistoryArchiveResponseModel> response = new List<ApiTransactionHistoryArchiveResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>4afbff3af9036571157a49cbdc9e9416</Hash>
+    <Hash>4b945b5faf80b172d3a814750af8d1da</Hash>
 </Codenesium>*/

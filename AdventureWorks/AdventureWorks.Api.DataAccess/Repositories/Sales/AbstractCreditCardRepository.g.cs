@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractCreditCardRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractCreditCardRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractCreditCardRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<CreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractCreditCardRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<CreditCard> Get(int creditCardID)
-		{
-			return await this.GetById(creditCardID);
-		}
+                public virtual Task<List<CreditCard>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<CreditCard> Create(CreditCard item)
-		{
-			this.Context.Set<CreditCard>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<CreditCard> Get(int creditCardID)
+                {
+                        return await this.GetById(creditCardID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<CreditCard> Create(CreditCard item)
+                {
+                        this.Context.Set<CreditCard>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(CreditCard item)
-		{
-			var entity = this.Context.Set<CreditCard>().Local.FirstOrDefault(x => x.CreditCardID == item.CreditCardID);
-			if (entity == null)
-			{
-				this.Context.Set<CreditCard>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(CreditCard item)
+                {
+                        var entity = this.Context.Set<CreditCard>().Local.FirstOrDefault(x => x.CreditCardID == item.CreditCardID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<CreditCard>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int creditCardID)
-		{
-			CreditCard record = await this.GetById(creditCardID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<CreditCard>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int creditCardID)
+                {
+                        CreditCard record = await this.GetById(creditCardID);
 
-		public async Task<CreditCard> GetCardNumber(string cardNumber)
-		{
-			var records = await this.SearchLinqEF(x => x.CardNumber == cardNumber);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<CreditCard>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records.FirstOrDefault();
-		}
+                public async Task<CreditCard> GetCardNumber(string cardNumber)
+                {
+                        var records = await this.SearchLinqEF(x => x.CardNumber == cardNumber);
 
-		protected async Task<List<CreditCard>> Where(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<CreditCard> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records.FirstOrDefault();
+                }
 
-			return records;
-		}
+                protected async Task<List<CreditCard>> Where(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<CreditCard> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<CreditCard>> SearchLinqEF(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(CreditCard.CreditCardID)} ASC";
-			}
-			return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CreditCard>();
-		}
+                        return records;
+                }
 
-		private async Task<List<CreditCard>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(CreditCard.CreditCardID)} ASC";
-			}
+                private async Task<List<CreditCard>> SearchLinqEF(Expression<Func<CreditCard, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(CreditCard.CreditCardID)} ASC";
+                        }
 
-			return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CreditCard>();
-		}
+                        return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CreditCard>();
+                }
 
-		private async Task<CreditCard> GetById(int creditCardID)
-		{
-			List<CreditCard> records = await this.SearchLinqEF(x => x.CreditCardID == creditCardID);
+                private async Task<List<CreditCard>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(CreditCard.CreditCardID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<CreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CreditCard>();
+                }
+
+                private async Task<CreditCard> GetById(int creditCardID)
+                {
+                        List<CreditCard> records = await this.SearchLinqEF(x => x.CreditCardID == creditCardID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>2b691a160b8938f461d039790c2497bb</Hash>
+    <Hash>f93d0ff253f251c76b791d681918a92f</Hash>
 </Codenesium>*/

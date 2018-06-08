@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractHandlerService: AbstractService
-	{
-		private IHandlerRepository handlerRepository;
-		private IApiHandlerRequestModelValidator handlerModelValidator;
-		private IBOLHandlerMapper bolHandlerMapper;
-		private IDALHandlerMapper dalHandlerMapper;
-		private ILogger logger;
+        public abstract class AbstractHandlerService: AbstractService
+        {
+                private IHandlerRepository handlerRepository;
 
-		public AbstractHandlerService(
-			ILogger logger,
-			IHandlerRepository handlerRepository,
-			IApiHandlerRequestModelValidator handlerModelValidator,
-			IBOLHandlerMapper bolhandlerMapper,
-			IDALHandlerMapper dalhandlerMapper)
-			: base()
+                private IApiHandlerRequestModelValidator handlerModelValidator;
 
-		{
-			this.handlerRepository = handlerRepository;
-			this.handlerModelValidator = handlerModelValidator;
-			this.bolHandlerMapper = bolhandlerMapper;
-			this.dalHandlerMapper = dalhandlerMapper;
-			this.logger = logger;
-		}
+                private IBOLHandlerMapper bolHandlerMapper;
 
-		public virtual async Task<List<ApiHandlerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.handlerRepository.All(skip, take, orderClause);
+                private IDALHandlerMapper dalHandlerMapper;
 
-			return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiHandlerResponseModel> Get(int id)
-		{
-			var record = await handlerRepository.Get(id);
+                public AbstractHandlerService(
+                        ILogger logger,
+                        IHandlerRepository handlerRepository,
+                        IApiHandlerRequestModelValidator handlerModelValidator,
+                        IBOLHandlerMapper bolhandlerMapper,
+                        IDALHandlerMapper dalhandlerMapper)
+                        : base()
 
-			return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(record));
-		}
+                {
+                        this.handlerRepository = handlerRepository;
+                        this.handlerModelValidator = handlerModelValidator;
+                        this.bolHandlerMapper = bolhandlerMapper;
+                        this.dalHandlerMapper = dalhandlerMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiHandlerResponseModel>> Create(
-			ApiHandlerRequestModel model)
-		{
-			CreateResponse<ApiHandlerResponseModel> response = new CreateResponse<ApiHandlerResponseModel>(await this.handlerModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolHandlerMapper.MapModelToBO(default (int), model);
-				var record = await this.handlerRepository.Create(this.dalHandlerMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiHandlerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.handlerRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiHandlerRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.handlerModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiHandlerResponseModel> Get(int id)
+                {
+                        var record = await this.handlerRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolHandlerMapper.MapModelToBO(id, model);
-				await this.handlerRepository.Update(this.dalHandlerMapper.MapBOToEF(bo));
-			}
+                        return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiHandlerResponseModel>> Create(
+                        ApiHandlerRequestModel model)
+                {
+                        CreateResponse<ApiHandlerResponseModel> response = new CreateResponse<ApiHandlerResponseModel>(await this.handlerModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolHandlerMapper.MapModelToBO(default (int), model);
+                                var record = await this.handlerRepository.Create(this.dalHandlerMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.handlerModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.handlerRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiHandlerRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.handlerModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolHandlerMapper.MapModelToBO(id, model);
+                                await this.handlerRepository.Update(this.dalHandlerMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.handlerModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.handlerRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9e7336fa9912d75fe0b843ed95cc90b9</Hash>
+    <Hash>977331a6701539af914b8a46191031f7</Hash>
 </Codenesium>*/

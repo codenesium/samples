@@ -3,52 +3,53 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+
 namespace PetStoreNS.Api.Services
 {
-	public abstract class AbstractDALPenMapper
-	{
-		public virtual Pen MapBOToEF(
-			BOPen bo)
-		{
-			Pen efPen = new Pen ();
+        public abstract class DALAbstractPenMapper
+        {
+                public virtual Pen MapBOToEF(
+                        BOPen bo)
+                {
+                        Pen efPen = new Pen();
 
-			efPen.SetProperties(
-				bo.Id,
-				bo.Name);
-			return efPen;
-		}
+                        efPen.SetProperties(
+                                bo.Id,
+                                bo.Name);
+                        return efPen;
+                }
 
-		public virtual BOPen MapEFToBO(
-			Pen ef)
-		{
-			if (ef == null)
-			{
-				return null;
-			}
+                public virtual BOPen MapEFToBO(
+                        Pen ef)
+                {
+                        if (ef == null)
+                        {
+                                return null;
+                        }
 
-			var bo = new BOPen();
+                        var bo = new BOPen();
 
-			bo.SetProperties(
-				ef.Id,
-				ef.Name);
-			return bo;
-		}
+                        bo.SetProperties(
+                                ef.Id,
+                                ef.Name);
+                        return bo;
+                }
 
-		public virtual List<BOPen> MapEFToBO(
-			List<Pen> records)
-		{
-			List<BOPen> response = new List<BOPen>();
+                public virtual List<BOPen> MapEFToBO(
+                        List<Pen> records)
+                {
+                        List<BOPen> response = new List<BOPen>();
 
-			records.ForEach(r =>
-			{
-				response.Add(this.MapEFToBO(r));
-			});
+                        records.ForEach(r =>
+                        {
+                                response.Add(this.MapEFToBO(r));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c1ee44ecac679781780ea89bbfb93eb3</Hash>
+    <Hash>7d4108c153845d32d09907581a78d5b1</Hash>
 </Codenesium>*/

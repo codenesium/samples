@@ -6,34 +6,35 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class ApiSpaceRequestModelValidator: AbstractApiSpaceRequestModelValidator, IApiSpaceRequestModelValidator
-	{
-		public ApiSpaceRequestModelValidator()
-		{   }
+        public class ApiSpaceRequestModelValidator: AbstractApiSpaceRequestModelValidator, IApiSpaceRequestModelValidator
+        {
+                public ApiSpaceRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiSpaceRequestModel model)
-		{
-			this.DescriptionRules();
-			this.NameRules();
-			this.StudioIdRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiSpaceRequestModel model)
+                {
+                        this.DescriptionRules();
+                        this.NameRules();
+                        this.StudioIdRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceRequestModel model)
-		{
-			this.DescriptionRules();
-			this.NameRules();
-			this.StudioIdRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceRequestModel model)
+                {
+                        this.DescriptionRules();
+                        this.NameRules();
+                        this.StudioIdRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>647b6cd0592ffe961326df2a0880d286</Hash>
+    <Hash>42f4b01bc5f0727f023df0e9be13b318</Hash>
 </Codenesium>*/

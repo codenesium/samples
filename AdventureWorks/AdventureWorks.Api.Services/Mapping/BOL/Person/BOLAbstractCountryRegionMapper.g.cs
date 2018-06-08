@@ -2,49 +2,50 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractCountryRegionMapper
-	{
-		public virtual BOCountryRegion MapModelToBO(
-			string countryRegionCode,
-			ApiCountryRegionRequestModel model
-			)
-		{
-			BOCountryRegion boCountryRegion = new BOCountryRegion();
+        public abstract class BOLAbstractCountryRegionMapper
+        {
+                public virtual BOCountryRegion MapModelToBO(
+                        string countryRegionCode,
+                        ApiCountryRegionRequestModel model
+                        )
+                {
+                        BOCountryRegion boCountryRegion = new BOCountryRegion();
 
-			boCountryRegion.SetProperties(
-				countryRegionCode,
-				model.ModifiedDate,
-				model.Name);
-			return boCountryRegion;
-		}
+                        boCountryRegion.SetProperties(
+                                countryRegionCode,
+                                model.ModifiedDate,
+                                model.Name);
+                        return boCountryRegion;
+                }
 
-		public virtual ApiCountryRegionResponseModel MapBOToModel(
-			BOCountryRegion boCountryRegion)
-		{
-			var model = new ApiCountryRegionResponseModel();
+                public virtual ApiCountryRegionResponseModel MapBOToModel(
+                        BOCountryRegion boCountryRegion)
+                {
+                        var model = new ApiCountryRegionResponseModel();
 
-			model.SetProperties(boCountryRegion.CountryRegionCode, boCountryRegion.ModifiedDate, boCountryRegion.Name);
+                        model.SetProperties(boCountryRegion.CountryRegionCode, boCountryRegion.ModifiedDate, boCountryRegion.Name);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiCountryRegionResponseModel> MapBOToModel(
-			List<BOCountryRegion> items)
-		{
-			List<ApiCountryRegionResponseModel> response = new List<ApiCountryRegionResponseModel>();
+                public virtual List<ApiCountryRegionResponseModel> MapBOToModel(
+                        List<BOCountryRegion> items)
+                {
+                        List<ApiCountryRegionResponseModel> response = new List<ApiCountryRegionResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>1b1b93fde59717886f9b32a5a221d745</Hash>
+    <Hash>229c55458bb51c515e336723a5d42aae</Hash>
 </Codenesium>*/

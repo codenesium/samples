@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALLocationMapper: AbstractDALLocationMapper, IDALLocationMapper
-	{
-		public DALLocationMapper()
-		{}
-	}
+        public class DALLocationMapper: DALAbstractLocationMapper, IDALLocationMapper
+        {
+                public DALLocationMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3ab277367cff6f0eefe3e31abf260420</Hash>
+    <Hash>7854683154a9fdac18c9635234d8aa7f</Hash>
 </Codenesium>*/

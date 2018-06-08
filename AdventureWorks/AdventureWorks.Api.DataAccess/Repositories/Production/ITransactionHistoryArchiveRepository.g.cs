@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ITransactionHistoryArchiveRepository
-	{
-		Task<TransactionHistoryArchive> Create(TransactionHistoryArchive item);
+        public interface ITransactionHistoryArchiveRepository
+        {
+                Task<TransactionHistoryArchive> Create(TransactionHistoryArchive item);
 
-		Task Update(TransactionHistoryArchive item);
+                Task Update(TransactionHistoryArchive item);
 
-		Task Delete(int transactionID);
+                Task Delete(int transactionID);
 
-		Task<TransactionHistoryArchive> Get(int transactionID);
+                Task<TransactionHistoryArchive> Get(int transactionID);
 
-		Task<List<TransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<TransactionHistoryArchive>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<List<TransactionHistoryArchive>> GetProductID(int productID);
-		Task<List<TransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID,int referenceOrderLineID);
-	}
+                Task<List<TransactionHistoryArchive>> GetProductID(int productID);
+                Task<List<TransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
+        }
 }
 
 /*<Codenesium>
-    <Hash>e97365b391e36b16b30691fe9722f35a</Hash>
+    <Hash>bb153797e7a338d13f7b318f5d452d25</Hash>
 </Codenesium>*/

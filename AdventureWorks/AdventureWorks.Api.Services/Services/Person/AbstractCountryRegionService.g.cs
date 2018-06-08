@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractCountryRegionService: AbstractService
-	{
-		private ICountryRegionRepository countryRegionRepository;
-		private IApiCountryRegionRequestModelValidator countryRegionModelValidator;
-		private IBOLCountryRegionMapper bolCountryRegionMapper;
-		private IDALCountryRegionMapper dalCountryRegionMapper;
-		private ILogger logger;
+        public abstract class AbstractCountryRegionService: AbstractService
+        {
+                private ICountryRegionRepository countryRegionRepository;
 
-		public AbstractCountryRegionService(
-			ILogger logger,
-			ICountryRegionRepository countryRegionRepository,
-			IApiCountryRegionRequestModelValidator countryRegionModelValidator,
-			IBOLCountryRegionMapper bolcountryRegionMapper,
-			IDALCountryRegionMapper dalcountryRegionMapper)
-			: base()
+                private IApiCountryRegionRequestModelValidator countryRegionModelValidator;
 
-		{
-			this.countryRegionRepository = countryRegionRepository;
-			this.countryRegionModelValidator = countryRegionModelValidator;
-			this.bolCountryRegionMapper = bolcountryRegionMapper;
-			this.dalCountryRegionMapper = dalcountryRegionMapper;
-			this.logger = logger;
-		}
+                private IBOLCountryRegionMapper bolCountryRegionMapper;
 
-		public virtual async Task<List<ApiCountryRegionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.countryRegionRepository.All(skip, take, orderClause);
+                private IDALCountryRegionMapper dalCountryRegionMapper;
 
-			return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiCountryRegionResponseModel> Get(string countryRegionCode)
-		{
-			var record = await countryRegionRepository.Get(countryRegionCode);
+                public AbstractCountryRegionService(
+                        ILogger logger,
+                        ICountryRegionRepository countryRegionRepository,
+                        IApiCountryRegionRequestModelValidator countryRegionModelValidator,
+                        IBOLCountryRegionMapper bolcountryRegionMapper,
+                        IDALCountryRegionMapper dalcountryRegionMapper)
+                        : base()
 
-			return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record));
-		}
+                {
+                        this.countryRegionRepository = countryRegionRepository;
+                        this.countryRegionModelValidator = countryRegionModelValidator;
+                        this.bolCountryRegionMapper = bolcountryRegionMapper;
+                        this.dalCountryRegionMapper = dalcountryRegionMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiCountryRegionResponseModel>> Create(
-			ApiCountryRegionRequestModel model)
-		{
-			CreateResponse<ApiCountryRegionResponseModel> response = new CreateResponse<ApiCountryRegionResponseModel>(await this.countryRegionModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolCountryRegionMapper.MapModelToBO(default (string), model);
-				var record = await this.countryRegionRepository.Create(this.dalCountryRegionMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiCountryRegionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.countryRegionRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			string countryRegionCode,
-			ApiCountryRegionRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model));
+                public virtual async Task<ApiCountryRegionResponseModel> Get(string countryRegionCode)
+                {
+                        var record = await this.countryRegionRepository.Get(countryRegionCode);
 
-			if (response.Success)
-			{
-				var bo = this.bolCountryRegionMapper.MapModelToBO(countryRegionCode, model);
-				await this.countryRegionRepository.Update(this.dalCountryRegionMapper.MapBOToEF(bo));
-			}
+                        return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiCountryRegionResponseModel>> Create(
+                        ApiCountryRegionRequestModel model)
+                {
+                        CreateResponse<ApiCountryRegionResponseModel> response = new CreateResponse<ApiCountryRegionResponseModel>(await this.countryRegionModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolCountryRegionMapper.MapModelToBO(default (string), model);
+                                var record = await this.countryRegionRepository.Create(this.dalCountryRegionMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			string countryRegionCode)
-		{
-			ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateDeleteAsync(countryRegionCode));
+                                response.SetRecord(this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.countryRegionRepository.Delete(countryRegionCode);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiCountryRegionResponseModel> GetName(string name)
-		{
-			CountryRegion record = await this.countryRegionRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        string countryRegionCode,
+                        ApiCountryRegionRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model));
 
-			return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolCountryRegionMapper.MapModelToBO(countryRegionCode, model);
+                                await this.countryRegionRepository.Update(this.dalCountryRegionMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        string countryRegionCode)
+                {
+                        ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateDeleteAsync(countryRegionCode));
+
+                        if (response.Success)
+                        {
+                                await this.countryRegionRepository.Delete(countryRegionCode);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiCountryRegionResponseModel> GetName(string name)
+                {
+                        CountryRegion record = await this.countryRegionRepository.GetName(name);
+
+                        return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bf1ac6b7fa9562bfeb82ecc52afcb9cd</Hash>
+    <Hash>a11e85ce6ce66b1f6d0f19b4a7c38182</Hash>
 </Codenesium>*/

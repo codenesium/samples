@@ -12,87 +12,93 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-	public abstract class AbstractPaymentTypeService: AbstractService
-	{
-		private IPaymentTypeRepository paymentTypeRepository;
-		private IApiPaymentTypeRequestModelValidator paymentTypeModelValidator;
-		private IBOLPaymentTypeMapper bolPaymentTypeMapper;
-		private IDALPaymentTypeMapper dalPaymentTypeMapper;
-		private ILogger logger;
+        public abstract class AbstractPaymentTypeService: AbstractService
+        {
+                private IPaymentTypeRepository paymentTypeRepository;
 
-		public AbstractPaymentTypeService(
-			ILogger logger,
-			IPaymentTypeRepository paymentTypeRepository,
-			IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
-			IBOLPaymentTypeMapper bolpaymentTypeMapper,
-			IDALPaymentTypeMapper dalpaymentTypeMapper)
-			: base()
+                private IApiPaymentTypeRequestModelValidator paymentTypeModelValidator;
 
-		{
-			this.paymentTypeRepository = paymentTypeRepository;
-			this.paymentTypeModelValidator = paymentTypeModelValidator;
-			this.bolPaymentTypeMapper = bolpaymentTypeMapper;
-			this.dalPaymentTypeMapper = dalpaymentTypeMapper;
-			this.logger = logger;
-		}
+                private IBOLPaymentTypeMapper bolPaymentTypeMapper;
 
-		public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.paymentTypeRepository.All(skip, take, orderClause);
+                private IDALPaymentTypeMapper dalPaymentTypeMapper;
 
-			return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPaymentTypeResponseModel> Get(int id)
-		{
-			var record = await paymentTypeRepository.Get(id);
+                public AbstractPaymentTypeService(
+                        ILogger logger,
+                        IPaymentTypeRepository paymentTypeRepository,
+                        IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
+                        IBOLPaymentTypeMapper bolpaymentTypeMapper,
+                        IDALPaymentTypeMapper dalpaymentTypeMapper)
+                        : base()
 
-			return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record));
-		}
+                {
+                        this.paymentTypeRepository = paymentTypeRepository;
+                        this.paymentTypeModelValidator = paymentTypeModelValidator;
+                        this.bolPaymentTypeMapper = bolpaymentTypeMapper;
+                        this.dalPaymentTypeMapper = dalpaymentTypeMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
-			ApiPaymentTypeRequestModel model)
-		{
-			CreateResponse<ApiPaymentTypeResponseModel> response = new CreateResponse<ApiPaymentTypeResponseModel>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPaymentTypeMapper.MapModelToBO(default (int), model);
-				var record = await this.paymentTypeRepository.Create(this.dalPaymentTypeMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.paymentTypeRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiPaymentTypeRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiPaymentTypeResponseModel> Get(int id)
+                {
+                        var record = await this.paymentTypeRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolPaymentTypeMapper.MapModelToBO(id, model);
-				await this.paymentTypeRepository.Update(this.dalPaymentTypeMapper.MapBOToEF(bo));
-			}
+                        return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
+                        ApiPaymentTypeRequestModel model)
+                {
+                        CreateResponse<ApiPaymentTypeResponseModel> response = new CreateResponse<ApiPaymentTypeResponseModel>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPaymentTypeMapper.MapModelToBO(default (int), model);
+                                var record = await this.paymentTypeRepository.Create(this.dalPaymentTypeMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.paymentTypeRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiPaymentTypeRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPaymentTypeMapper.MapModelToBO(id, model);
+                                await this.paymentTypeRepository.Update(this.dalPaymentTypeMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.paymentTypeRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f75c513e7d770a53d8e15347409c3744</Hash>
+    <Hash>34140b4c58a41d12073dd65062fdf730</Hash>
 </Codenesium>*/

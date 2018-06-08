@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class BOLProductSubcategoryMapper: BOLAbstractProductSubcategoryMapper, IBOLProductSubcategoryMapper
-	{
-		public BOLProductSubcategoryMapper()
-		{}
-	}
+        public class BOLProductSubcategoryMapper: BOLAbstractProductSubcategoryMapper, IBOLProductSubcategoryMapper
+        {
+                public BOLProductSubcategoryMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>fc0eb6319443608a22c2f83182f3ec21</Hash>
+    <Hash>948f408a0f6caa290d58f2c4cadfa05d</Hash>
 </Codenesium>*/

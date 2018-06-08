@@ -2,52 +2,53 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractSalesTerritoryHistoryMapper
-	{
-		public virtual BOSalesTerritoryHistory MapModelToBO(
-			int businessEntityID,
-			ApiSalesTerritoryHistoryRequestModel model
-			)
-		{
-			BOSalesTerritoryHistory boSalesTerritoryHistory = new BOSalesTerritoryHistory();
+        public abstract class BOLAbstractSalesTerritoryHistoryMapper
+        {
+                public virtual BOSalesTerritoryHistory MapModelToBO(
+                        int businessEntityID,
+                        ApiSalesTerritoryHistoryRequestModel model
+                        )
+                {
+                        BOSalesTerritoryHistory boSalesTerritoryHistory = new BOSalesTerritoryHistory();
 
-			boSalesTerritoryHistory.SetProperties(
-				businessEntityID,
-				model.EndDate,
-				model.ModifiedDate,
-				model.Rowguid,
-				model.StartDate,
-				model.TerritoryID);
-			return boSalesTerritoryHistory;
-		}
+                        boSalesTerritoryHistory.SetProperties(
+                                businessEntityID,
+                                model.EndDate,
+                                model.ModifiedDate,
+                                model.Rowguid,
+                                model.StartDate,
+                                model.TerritoryID);
+                        return boSalesTerritoryHistory;
+                }
 
-		public virtual ApiSalesTerritoryHistoryResponseModel MapBOToModel(
-			BOSalesTerritoryHistory boSalesTerritoryHistory)
-		{
-			var model = new ApiSalesTerritoryHistoryResponseModel();
+                public virtual ApiSalesTerritoryHistoryResponseModel MapBOToModel(
+                        BOSalesTerritoryHistory boSalesTerritoryHistory)
+                {
+                        var model = new ApiSalesTerritoryHistoryResponseModel();
 
-			model.SetProperties(boSalesTerritoryHistory.BusinessEntityID, boSalesTerritoryHistory.EndDate, boSalesTerritoryHistory.ModifiedDate, boSalesTerritoryHistory.Rowguid, boSalesTerritoryHistory.StartDate, boSalesTerritoryHistory.TerritoryID);
+                        model.SetProperties(boSalesTerritoryHistory.BusinessEntityID, boSalesTerritoryHistory.EndDate, boSalesTerritoryHistory.ModifiedDate, boSalesTerritoryHistory.Rowguid, boSalesTerritoryHistory.StartDate, boSalesTerritoryHistory.TerritoryID);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiSalesTerritoryHistoryResponseModel> MapBOToModel(
-			List<BOSalesTerritoryHistory> items)
-		{
-			List<ApiSalesTerritoryHistoryResponseModel> response = new List<ApiSalesTerritoryHistoryResponseModel>();
+                public virtual List<ApiSalesTerritoryHistoryResponseModel> MapBOToModel(
+                        List<BOSalesTerritoryHistory> items)
+                {
+                        List<ApiSalesTerritoryHistoryResponseModel> response = new List<ApiSalesTerritoryHistoryResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ec209a8ce4f560f603f1d46c714b05af</Hash>
+    <Hash>f630a9c99fa944a3c99fe6f59ee4e97b</Hash>
 </Codenesium>*/

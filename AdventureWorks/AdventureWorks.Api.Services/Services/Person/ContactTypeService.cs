@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ContactTypeService: AbstractContactTypeService, IContactTypeService
-	{
-		public ContactTypeService(
-			ILogger<ContactTypeRepository> logger,
-			IContactTypeRepository contactTypeRepository,
-			IApiContactTypeRequestModelValidator contactTypeModelValidator,
-			IBOLContactTypeMapper BOLcontactTypeMapper,
-			IDALContactTypeMapper DALcontactTypeMapper)
-			: base(logger, contactTypeRepository,
-			       contactTypeModelValidator,
-			       BOLcontactTypeMapper,
-			       DALcontactTypeMapper)
-		{}
-	}
+        public class ContactTypeService: AbstractContactTypeService, IContactTypeService
+        {
+                public ContactTypeService(
+                        ILogger<ContactTypeRepository> logger,
+                        IContactTypeRepository contactTypeRepository,
+                        IApiContactTypeRequestModelValidator contactTypeModelValidator,
+                        IBOLContactTypeMapper bolcontactTypeMapper,
+                        IDALContactTypeMapper dalcontactTypeMapper)
+                        : base(logger,
+                               contactTypeRepository,
+                               contactTypeModelValidator,
+                               bolcontactTypeMapper,
+                               dalcontactTypeMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d2ceccb470d184e69af17c558693fd39</Hash>
+    <Hash>8409063baa538f4a5a5f3e0c8feb5246</Hash>
 </Codenesium>*/

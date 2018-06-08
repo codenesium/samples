@@ -14,155 +14,155 @@ using PetShippingNS.Api.Services;
 
 namespace PetShippingNS.Api.Web
 {
-	public abstract class AbstractHandlerPipelineStepController: AbstractApiController
-	{
-		protected IHandlerPipelineStepService handlerPipelineStepService;
+        public abstract class AbstractHandlerPipelineStepController: AbstractApiController
+        {
+                protected IHandlerPipelineStepService HandlerPipelineStepService { get; private set; }
 
-		protected int BulkInsertLimit { get; set; }
+                protected int BulkInsertLimit { get; set; }
 
-		protected int MaxLimit { get; set; }
+                protected int MaxLimit { get; set; }
 
-		protected int DefaultLimit { get; set; }
+                protected int DefaultLimit { get; set; }
 
-		public AbstractHandlerPipelineStepController(
-			ServiceSettings settings,
-			ILogger<AbstractHandlerPipelineStepController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IHandlerPipelineStepService handlerPipelineStepService
-			)
-			: base(settings, logger, transactionCoordinator)
-		{
-			this.handlerPipelineStepService = handlerPipelineStepService;
-		}
+                public AbstractHandlerPipelineStepController(
+                        ServiceSettings settings,
+                        ILogger<AbstractHandlerPipelineStepController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IHandlerPipelineStepService handlerPipelineStepService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.HandlerPipelineStepService = handlerPipelineStepService;
+                }
 
-		[HttpGet]
-		[Route("")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
-		public async virtual Task<IActionResult> All(int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-			List<ApiHandlerPipelineStepResponseModel> response = await this.handlerPipelineStepService.All(query.Offset, query.Limit);
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiHandlerPipelineStepResponseModel> response = await this.HandlerPipelineStepService.All(query.Offset, query.Limit);
 
-			return this.Ok(response);
-		}
+                        return this.Ok(response);
+                }
 
-		[HttpGet]
-		[Route("{id}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> Get(int id)
-		{
-			ApiHandlerPipelineStepResponseModel response = await this.handlerPipelineStepService.Get(id);
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(int id)
+                {
+                        ApiHandlerPipelineStepResponseModel response = await this.HandlerPipelineStepService.Get(id);
 
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
 
-		[HttpPost]
-		[Route("")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
-		[ProducesResponseType(typeof(CreateResponse<int>), 422)]
-		public virtual async Task<IActionResult> Create([FromBody] ApiHandlerPipelineStepRequestModel model)
-		{
-			CreateResponse<ApiHandlerPipelineStepResponseModel> result = await this.handlerPipelineStepService.Create(model);
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiHandlerPipelineStepRequestModel model)
+                {
+                        CreateResponse<ApiHandlerPipelineStepResponseModel> result = await this.HandlerPipelineStepService.Create(model);
 
-			if (result.Success)
-			{
-				this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-				this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/HandlerPipelineSteps/{result.Record.Id.ToString()}");
-				return this.Ok(result.Record);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/HandlerPipelineSteps/{result.Record.Id.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpPost]
-		[Route("BulkInsert")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
-		[ProducesResponseType(typeof(void), 413)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiHandlerPipelineStepRequestModel> models)
-		{
-			if (models.Count > this.BulkInsertLimit)
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
-			}
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiHandlerPipelineStepRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
 
-			List<ApiHandlerPipelineStepResponseModel> records = new List<ApiHandlerPipelineStepResponseModel>();
-			foreach (var model in models)
-			{
-				CreateResponse<ApiHandlerPipelineStepResponseModel> result = await this.handlerPipelineStepService.Create(model);
+                        List<ApiHandlerPipelineStepResponseModel> records = new List<ApiHandlerPipelineStepResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiHandlerPipelineStepResponseModel> result = await this.HandlerPipelineStepService.Create(model);
 
-				if(result.Success)
-				{
-					records.Add(result.Record);
-				}
-				else
-				{
-					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-				}
-			}
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
 
-			return this.Ok(records);
-		}
+                        return this.Ok(records);
+                }
 
-		[HttpPut]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiHandlerPipelineStepRequestModel model)
-		{
-			ActionResponse result = await this.handlerPipelineStepService.Update(id, model);
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(int id, [FromBody] ApiHandlerPipelineStepRequestModel model)
+                {
+                        ActionResponse result = await this.HandlerPipelineStepService.Update(id, model);
 
-			if (result.Success)
-			{
-				ApiHandlerPipelineStepResponseModel response = await this.handlerPipelineStepService.Get(id);
+                        if (result.Success)
+                        {
+                                ApiHandlerPipelineStepResponseModel response = await this.HandlerPipelineStepService.Get(id);
 
-				return this.Ok(response);
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
 
-		[HttpDelete]
-		[Route("{id}")]
-		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
-		[ProducesResponseType(typeof(ActionResponse), 422)]
-		public virtual async Task<IActionResult> Delete(int id)
-		{
-			ActionResponse result = await this.handlerPipelineStepService.Delete(id);
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(int id)
+                {
+                        ActionResponse result = await this.HandlerPipelineStepService.Delete(id);
 
-			if (result.Success)
-			{
-				return this.NoContent();
-			}
-			else
-			{
-				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-			}
-		}
-	}
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9eed465a2d8bd7c6b77faf30730ce9ae</Hash>
+    <Hash>10d00b800481c7db4ee68c2f9181fcb1</Hash>
 </Codenesium>*/

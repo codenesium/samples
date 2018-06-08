@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/cultures")]
-	[ApiVersion("1.0")]
-	public class CultureController: AbstractCultureController
-	{
-		public CultureController(
-			ServiceSettings settings,
-			ILogger<CultureController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ICultureService cultureService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       cultureService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/cultures")]
+        [ApiVersion("1.0")]
+        public class CultureController: AbstractCultureController
+        {
+                public CultureController(
+                        ServiceSettings settings,
+                        ILogger<CultureController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ICultureService cultureService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               cultureService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5c5794fb1055c5d4643aa08fbdb8fe9d</Hash>
+    <Hash>5468940995c222bcb206d52adc2b6942</Hash>
 </Codenesium>*/

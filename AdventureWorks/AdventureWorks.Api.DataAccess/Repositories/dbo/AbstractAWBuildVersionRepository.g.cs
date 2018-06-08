@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractAWBuildVersionRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractAWBuildVersionRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractAWBuildVersionRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<AWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractAWBuildVersionRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<AWBuildVersion> Get(int systemInformationID)
-		{
-			return await this.GetById(systemInformationID);
-		}
+                public virtual Task<List<AWBuildVersion>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<AWBuildVersion> Create(AWBuildVersion item)
-		{
-			this.Context.Set<AWBuildVersion>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<AWBuildVersion> Get(int systemInformationID)
+                {
+                        return await this.GetById(systemInformationID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<AWBuildVersion> Create(AWBuildVersion item)
+                {
+                        this.Context.Set<AWBuildVersion>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(AWBuildVersion item)
-		{
-			var entity = this.Context.Set<AWBuildVersion>().Local.FirstOrDefault(x => x.SystemInformationID == item.SystemInformationID);
-			if (entity == null)
-			{
-				this.Context.Set<AWBuildVersion>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(AWBuildVersion item)
+                {
+                        var entity = this.Context.Set<AWBuildVersion>().Local.FirstOrDefault(x => x.SystemInformationID == item.SystemInformationID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<AWBuildVersion>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int systemInformationID)
-		{
-			AWBuildVersion record = await this.GetById(systemInformationID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<AWBuildVersion>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int systemInformationID)
+                {
+                        AWBuildVersion record = await this.GetById(systemInformationID);
 
-		protected async Task<List<AWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<AWBuildVersion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<AWBuildVersion>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<AWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<AWBuildVersion> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<AWBuildVersion>> SearchLinqEF(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
-			}
-			return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AWBuildVersion>();
-		}
+                        return records;
+                }
 
-		private async Task<List<AWBuildVersion>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
-			}
+                private async Task<List<AWBuildVersion>> SearchLinqEF(Expression<Func<AWBuildVersion, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
+                        }
 
-			return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AWBuildVersion>();
-		}
+                        return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AWBuildVersion>();
+                }
 
-		private async Task<AWBuildVersion> GetById(int systemInformationID)
-		{
-			List<AWBuildVersion> records = await this.SearchLinqEF(x => x.SystemInformationID == systemInformationID);
+                private async Task<List<AWBuildVersion>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AWBuildVersion>();
+                }
+
+                private async Task<AWBuildVersion> GetById(int systemInformationID)
+                {
+                        List<AWBuildVersion> records = await this.SearchLinqEF(x => x.SystemInformationID == systemInformationID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>706d89db7c8f2e1059d1af01b07d1be2</Hash>
+    <Hash>2d00d6eb69e7b857cab8dc15acafd68b</Hash>
 </Codenesium>*/

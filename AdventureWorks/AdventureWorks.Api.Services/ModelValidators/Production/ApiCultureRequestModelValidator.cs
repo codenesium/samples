@@ -6,32 +6,33 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ApiCultureRequestModelValidator: AbstractApiCultureRequestModelValidator, IApiCultureRequestModelValidator
-	{
-		public ApiCultureRequestModelValidator()
-		{   }
+        public class ApiCultureRequestModelValidator: AbstractApiCultureRequestModelValidator, IApiCultureRequestModelValidator
+        {
+                public ApiCultureRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiCultureRequestModel model)
-		{
-			this.ModifiedDateRules();
-			this.NameRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiCultureRequestModel model)
+                {
+                        this.ModifiedDateRules();
+                        this.NameRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCultureRequestModel model)
-		{
-			this.ModifiedDateRules();
-			this.NameRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(string id, ApiCultureRequestModel model)
+                {
+                        this.ModifiedDateRules();
+                        this.NameRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(string id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(string id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>a509ca40a3ad694ce8c9b845cd10945f</Hash>
+    <Hash>eb0dcc75e2477bf23a5caf7e3e366247</Hash>
 </Codenesium>*/

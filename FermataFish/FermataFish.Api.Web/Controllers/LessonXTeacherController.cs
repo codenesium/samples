@@ -12,28 +12,28 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/lessonXTeachers")]
-	[ApiVersion("1.0")]
-	public class LessonXTeacherController: AbstractLessonXTeacherController
-	{
-		public LessonXTeacherController(
-			ServiceSettings settings,
-			ILogger<LessonXTeacherController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ILessonXTeacherService lessonXTeacherService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       lessonXTeacherService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/lessonXTeachers")]
+        [ApiVersion("1.0")]
+        public class LessonXTeacherController: AbstractLessonXTeacherController
+        {
+                public LessonXTeacherController(
+                        ServiceSettings settings,
+                        ILogger<LessonXTeacherController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ILessonXTeacherService lessonXTeacherService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               lessonXTeacherService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5729eb5bb5eecd0b8aa51be8044de147</Hash>
+    <Hash>4aebe55a95041adcdb6df887f872173b</Hash>
 </Codenesium>*/

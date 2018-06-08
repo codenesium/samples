@@ -7,22 +7,22 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IStudentService
-	{
-		Task<CreateResponse<ApiStudentResponseModel>> Create(
-			ApiStudentRequestModel model);
+        public interface IStudentService
+        {
+                Task<CreateResponse<ApiStudentResponseModel>> Create(
+                        ApiStudentRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiStudentRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiStudentRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiStudentResponseModel> Get(int id);
+                Task<ApiStudentResponseModel> Get(int id);
 
-		Task<List<ApiStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>c868c314c5ea9e6a592b406c91777241</Hash>
+    <Hash>359df7eaa91c8ea8b92e43145d877b57</Hash>
 </Codenesium>*/

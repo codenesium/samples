@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractCreditCardService: AbstractService
-	{
-		private ICreditCardRepository creditCardRepository;
-		private IApiCreditCardRequestModelValidator creditCardModelValidator;
-		private IBOLCreditCardMapper bolCreditCardMapper;
-		private IDALCreditCardMapper dalCreditCardMapper;
-		private ILogger logger;
+        public abstract class AbstractCreditCardService: AbstractService
+        {
+                private ICreditCardRepository creditCardRepository;
 
-		public AbstractCreditCardService(
-			ILogger logger,
-			ICreditCardRepository creditCardRepository,
-			IApiCreditCardRequestModelValidator creditCardModelValidator,
-			IBOLCreditCardMapper bolcreditCardMapper,
-			IDALCreditCardMapper dalcreditCardMapper)
-			: base()
+                private IApiCreditCardRequestModelValidator creditCardModelValidator;
 
-		{
-			this.creditCardRepository = creditCardRepository;
-			this.creditCardModelValidator = creditCardModelValidator;
-			this.bolCreditCardMapper = bolcreditCardMapper;
-			this.dalCreditCardMapper = dalcreditCardMapper;
-			this.logger = logger;
-		}
+                private IBOLCreditCardMapper bolCreditCardMapper;
 
-		public virtual async Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.creditCardRepository.All(skip, take, orderClause);
+                private IDALCreditCardMapper dalCreditCardMapper;
 
-			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiCreditCardResponseModel> Get(int creditCardID)
-		{
-			var record = await creditCardRepository.Get(creditCardID);
+                public AbstractCreditCardService(
+                        ILogger logger,
+                        ICreditCardRepository creditCardRepository,
+                        IApiCreditCardRequestModelValidator creditCardModelValidator,
+                        IBOLCreditCardMapper bolcreditCardMapper,
+                        IDALCreditCardMapper dalcreditCardMapper)
+                        : base()
 
-			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
-		}
+                {
+                        this.creditCardRepository = creditCardRepository;
+                        this.creditCardModelValidator = creditCardModelValidator;
+                        this.bolCreditCardMapper = bolcreditCardMapper;
+                        this.dalCreditCardMapper = dalcreditCardMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
-			ApiCreditCardRequestModel model)
-		{
-			CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.creditCardModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolCreditCardMapper.MapModelToBO(default (int), model);
-				var record = await this.creditCardRepository.Create(this.dalCreditCardMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.creditCardRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int creditCardID,
-			ApiCreditCardRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateUpdateAsync(creditCardID, model));
+                public virtual async Task<ApiCreditCardResponseModel> Get(int creditCardID)
+                {
+                        var record = await this.creditCardRepository.Get(creditCardID);
 
-			if (response.Success)
-			{
-				var bo = this.bolCreditCardMapper.MapModelToBO(creditCardID, model);
-				await this.creditCardRepository.Update(this.dalCreditCardMapper.MapBOToEF(bo));
-			}
+                        return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
+                        ApiCreditCardRequestModel model)
+                {
+                        CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.creditCardModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolCreditCardMapper.MapModelToBO(default (int), model);
+                                var record = await this.creditCardRepository.Create(this.dalCreditCardMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int creditCardID)
-		{
-			ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateDeleteAsync(creditCardID));
+                                response.SetRecord(this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.creditCardRepository.Delete(creditCardID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber)
-		{
-			CreditCard record = await this.creditCardRepository.GetCardNumber(cardNumber);
+                public virtual async Task<ActionResponse> Update(
+                        int creditCardID,
+                        ApiCreditCardRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateUpdateAsync(creditCardID, model));
 
-			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolCreditCardMapper.MapModelToBO(creditCardID, model);
+                                await this.creditCardRepository.Update(this.dalCreditCardMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int creditCardID)
+                {
+                        ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateDeleteAsync(creditCardID));
+
+                        if (response.Success)
+                        {
+                                await this.creditCardRepository.Delete(creditCardID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber)
+                {
+                        CreditCard record = await this.creditCardRepository.GetCardNumber(cardNumber);
+
+                        return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bb4ef1ab29a9ee3930370973c27cc82e</Hash>
+    <Hash>26e25b98716cadd9209bf61c2e19b589</Hash>
 </Codenesium>*/

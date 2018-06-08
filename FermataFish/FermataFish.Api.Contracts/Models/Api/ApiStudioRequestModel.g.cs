@@ -3,145 +3,147 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class ApiStudioRequestModel: AbstractApiRequestModel
-	{
-		public ApiStudioRequestModel() : base()
-		{}
+        public partial class ApiStudioRequestModel: AbstractApiRequestModel
+        {
+                public ApiStudioRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string address1,
-			string address2,
-			string city,
-			string name,
-			int stateId,
-			string website,
-			string zip)
-		{
-			this.Address1 = address1;
-			this.Address2 = address2;
-			this.City = city;
-			this.Name = name;
-			this.StateId = stateId.ToInt();
-			this.Website = website;
-			this.Zip = zip;
-		}
+                public void SetProperties(
+                        string address1,
+                        string address2,
+                        string city,
+                        string name,
+                        int stateId,
+                        string website,
+                        string zip)
+                {
+                        this.Address1 = address1;
+                        this.Address2 = address2;
+                        this.City = city;
+                        this.Name = name;
+                        this.StateId = stateId;
+                        this.Website = website;
+                        this.Zip = zip;
+                }
 
-		private string address1;
+                private string address1;
 
-		[Required]
-		public string Address1
-		{
-			get
-			{
-				return this.address1;
-			}
+                [Required]
+                public string Address1
+                {
+                        get
+                        {
+                                return this.address1;
+                        }
 
-			set
-			{
-				this.address1 = value;
-			}
-		}
+                        set
+                        {
+                                this.address1 = value;
+                        }
+                }
 
-		private string address2;
+                private string address2;
 
-		[Required]
-		public string Address2
-		{
-			get
-			{
-				return this.address2;
-			}
+                [Required]
+                public string Address2
+                {
+                        get
+                        {
+                                return this.address2;
+                        }
 
-			set
-			{
-				this.address2 = value;
-			}
-		}
+                        set
+                        {
+                                this.address2 = value;
+                        }
+                }
 
-		private string city;
+                private string city;
 
-		[Required]
-		public string City
-		{
-			get
-			{
-				return this.city;
-			}
+                [Required]
+                public string City
+                {
+                        get
+                        {
+                                return this.city;
+                        }
 
-			set
-			{
-				this.city = value;
-			}
-		}
+                        set
+                        {
+                                this.city = value;
+                        }
+                }
 
-		private string name;
+                private string name;
 
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
+                [Required]
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
 
-			set
-			{
-				this.name = value;
-			}
-		}
+                        set
+                        {
+                                this.name = value;
+                        }
+                }
 
-		private int stateId;
+                private int stateId;
 
-		[Required]
-		public int StateId
-		{
-			get
-			{
-				return this.stateId;
-			}
+                [Required]
+                public int StateId
+                {
+                        get
+                        {
+                                return this.stateId;
+                        }
 
-			set
-			{
-				this.stateId = value;
-			}
-		}
+                        set
+                        {
+                                this.stateId = value;
+                        }
+                }
 
-		private string website;
+                private string website;
 
-		[Required]
-		public string Website
-		{
-			get
-			{
-				return this.website;
-			}
+                [Required]
+                public string Website
+                {
+                        get
+                        {
+                                return this.website;
+                        }
 
-			set
-			{
-				this.website = value;
-			}
-		}
+                        set
+                        {
+                                this.website = value;
+                        }
+                }
 
-		private string zip;
+                private string zip;
 
-		[Required]
-		public string Zip
-		{
-			get
-			{
-				return this.zip;
-			}
+                [Required]
+                public string Zip
+                {
+                        get
+                        {
+                                return this.zip;
+                        }
 
-			set
-			{
-				this.zip = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.zip = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>dd31e4358bc61b0c8550f65f7d951ee5</Hash>
+    <Hash>522d2a85d3bd39678ee54e6b737fea3f</Hash>
 </Codenesium>*/

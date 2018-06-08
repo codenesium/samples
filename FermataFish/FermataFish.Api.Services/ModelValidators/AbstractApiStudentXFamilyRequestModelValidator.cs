@@ -6,55 +6,58 @@ using System.Threading;
 using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+
 namespace FermataFishNS.Api.Services
 
 {
-	public abstract class AbstractApiStudentXFamilyRequestModelValidator: AbstractValidator<ApiStudentXFamilyRequestModel>
-	{
-		private int existingRecordId;
+        public abstract class AbstractApiStudentXFamilyRequestModelValidator: AbstractValidator<ApiStudentXFamilyRequestModel>
+        {
+                private int existingRecordId;
 
-		public new ValidationResult Validate(ApiStudentXFamilyRequestModel model, int id)
-		{
-			this.existingRecordId = id;
-			return base.Validate(model);
-		}
+                public ValidationResult Validate(ApiStudentXFamilyRequestModel model, int id)
+                {
+                        this.existingRecordId = id;
+                        return this.Validate(model);
+                }
 
-		public async Task<ValidationResult> ValidateAsync(ApiStudentXFamilyRequestModel model, int id)
-		{
-			this.existingRecordId = id;
-			return await base.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateAsync(ApiStudentXFamilyRequestModel model, int id)
+                {
+                        this.existingRecordId = id;
+                        return await this.ValidateAsync(model);
+                }
 
-		public IFamilyRepository FamilyRepository { get; set; }
-		public IStudentRepository StudentRepository { get; set; }
-		public virtual void FamilyIdRules()
-		{
-			this.RuleFor(x => x.FamilyId).NotNull();
-			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
-		}
+                public IFamilyRepository FamilyRepository { get; set; }
 
-		public virtual void StudentIdRules()
-		{
-			this.RuleFor(x => x.StudentId).NotNull();
-			this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x ?.StudentId != null).WithMessage("Invalid reference");
-		}
+                public IStudentRepository StudentRepository { get; set; }
 
-		private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.FamilyRepository.Get(id);
+                public virtual void FamilyIdRules()
+                {
+                        this.RuleFor(x => x.FamilyId).NotNull();
+                        this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
+                }
 
-			return record != null;
-		}
+                public virtual void StudentIdRules()
+                {
+                        this.RuleFor(x => x.StudentId).NotNull();
+                        this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x ?.StudentId != null).WithMessage("Invalid reference");
+                }
 
-		private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.StudentRepository.Get(id);
+                private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
+                {
+                        var record = await this.FamilyRepository.Get(id);
 
-			return record != null;
-		}
-	}
+                        return record != null;
+                }
+
+                private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
+                {
+                        var record = await this.StudentRepository.Get(id);
+
+                        return record != null;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f358d241014c9115a4f4843dcb28d0b6</Hash>
+    <Hash>c39638caad0dac0b9c47c604dee0a267</Hash>
 </Codenesium>*/

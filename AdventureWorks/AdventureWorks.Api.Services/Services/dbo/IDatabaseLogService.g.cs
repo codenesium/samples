@@ -7,22 +7,22 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDatabaseLogService
-	{
-		Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
-			ApiDatabaseLogRequestModel model);
+        public interface IDatabaseLogService
+        {
+                Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
+                        ApiDatabaseLogRequestModel model);
 
-		Task<ActionResponse> Update(int databaseLogID,
-		                            ApiDatabaseLogRequestModel model);
+                Task<ActionResponse> Update(int databaseLogID,
+                                            ApiDatabaseLogRequestModel model);
 
-		Task<ActionResponse> Delete(int databaseLogID);
+                Task<ActionResponse> Delete(int databaseLogID);
 
-		Task<ApiDatabaseLogResponseModel> Get(int databaseLogID);
+                Task<ApiDatabaseLogResponseModel> Get(int databaseLogID);
 
-		Task<List<ApiDatabaseLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiDatabaseLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>965401c6e42c3fe22c9a5f2da48bcf2a</Hash>
+    <Hash>363b2addc4e27adc6890e715b8c1d452</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public class BucketService: AbstractBucketService, IBucketService
-	{
-		public BucketService(
-			ILogger<BucketRepository> logger,
-			IBucketRepository bucketRepository,
-			IApiBucketRequestModelValidator bucketModelValidator,
-			IBOLBucketMapper BOLbucketMapper,
-			IDALBucketMapper DALbucketMapper)
-			: base(logger, bucketRepository,
-			       bucketModelValidator,
-			       BOLbucketMapper,
-			       DALbucketMapper)
-		{}
-	}
+        public class BucketService: AbstractBucketService, IBucketService
+        {
+                public BucketService(
+                        ILogger<BucketRepository> logger,
+                        IBucketRepository bucketRepository,
+                        IApiBucketRequestModelValidator bucketModelValidator,
+                        IBOLBucketMapper bolbucketMapper,
+                        IDALBucketMapper dalbucketMapper)
+                        : base(logger,
+                               bucketRepository,
+                               bucketModelValidator,
+                               bolbucketMapper,
+                               dalbucketMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>86683633a27b0ae7333acf9fcad1fa97</Hash>
+    <Hash>35fca699e97ce4e9f1ad3c159485801d</Hash>
 </Codenesium>*/

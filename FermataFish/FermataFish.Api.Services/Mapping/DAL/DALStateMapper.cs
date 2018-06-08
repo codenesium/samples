@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+
 namespace FermataFishNS.Api.Services
 {
-	public class DALStateMapper: AbstractDALStateMapper, IDALStateMapper
-	{
-		public DALStateMapper()
-		{}
-	}
+        public class DALStateMapper: DALAbstractStateMapper, IDALStateMapper
+        {
+                public DALStateMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>055baaf42f4197a3c96e1867601491c6</Hash>
+    <Hash>01dc6483ead268901583e7c671899339</Hash>
 </Codenesium>*/

@@ -85,7 +85,6 @@ namespace FermataFishNS.Api.Web
                  o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
              });
 
-
             services.AddSwaggerGen(o =>
             {
                 o.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
@@ -106,7 +105,7 @@ namespace FermataFishNS.Api.Web
 
                 // integrate xml comments
                 // o.IncludeXmlComments( XmlCommentsFilePath );
-				if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+				if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 				{
 				   var security = new Dictionary<string, IEnumerable<string>>
 			       {
@@ -116,7 +115,6 @@ namespace FermataFishNS.Api.Web
 			       o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
 				}
             });
-
 
            services.AddCors(config =>
            {
@@ -128,7 +126,7 @@ namespace FermataFishNS.Api.Web
                 config.AddPolicy("policy", policy);
             });
 
-			if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 			{
 				var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
 				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -179,20 +177,16 @@ namespace FermataFishNS.Api.Web
                 .As<ITransactionCoordinator>()
                 .InstancePerLifetimeScope();
 
-
 		    var servicesAssembly = typeof(ValidationError).Assembly;
             builder.RegisterAssemblyTypes(servicesAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Service") || t.Name.EndsWith("ModelValidator") || t.Name.EndsWith("Mapper")))
                 .AsImplementedInterfaces()
 				.PropertiesAutowired();
 
-
             var dataAccessAssembly = typeof(AbstractRepository).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
 				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces();
-
-
 
             // Register anything else we might have that isn't a system, Microsoft, Abstract or Generic class
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(
@@ -219,7 +213,7 @@ namespace FermataFishNS.Api.Web
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-			if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 			{
 				 app.UseAuthentication();
 		    }

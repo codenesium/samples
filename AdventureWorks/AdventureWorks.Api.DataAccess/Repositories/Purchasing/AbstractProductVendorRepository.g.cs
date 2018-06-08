@@ -10,118 +10,120 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductVendorRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractProductVendorRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractProductVendorRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<ProductVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractProductVendorRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<ProductVendor> Get(int productID)
-		{
-			return await this.GetById(productID);
-		}
+                public virtual Task<List<ProductVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<ProductVendor> Create(ProductVendor item)
-		{
-			this.Context.Set<ProductVendor>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<ProductVendor> Get(int productID)
+                {
+                        return await this.GetById(productID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<ProductVendor> Create(ProductVendor item)
+                {
+                        this.Context.Set<ProductVendor>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(ProductVendor item)
-		{
-			var entity = this.Context.Set<ProductVendor>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
-			if (entity == null)
-			{
-				this.Context.Set<ProductVendor>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(ProductVendor item)
+                {
+                        var entity = this.Context.Set<ProductVendor>().Local.FirstOrDefault(x => x.ProductID == item.ProductID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<ProductVendor>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int productID)
-		{
-			ProductVendor record = await this.GetById(productID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<ProductVendor>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int productID)
+                {
+                        ProductVendor record = await this.GetById(productID);
 
-		public async Task<List<ProductVendor>> GetBusinessEntityID(int businessEntityID)
-		{
-			var records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<ProductVendor>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
-		public async Task<List<ProductVendor>> GetUnitMeasureCode(string unitMeasureCode)
-		{
-			var records = await this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode);
+                public async Task<List<ProductVendor>> GetBusinessEntityID(int businessEntityID)
+                {
+                        var records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
 
-			return records;
-		}
+                        return records;
+                }
+                public async Task<List<ProductVendor>> GetUnitMeasureCode(string unitMeasureCode)
+                {
+                        var records = await this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode);
 
-		protected async Task<List<ProductVendor>> Where(Expression<Func<ProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<ProductVendor> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records;
+                }
 
-			return records;
-		}
+                protected async Task<List<ProductVendor>> Where(Expression<Func<ProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<ProductVendor> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<ProductVendor>> SearchLinqEF(Expression<Func<ProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductVendor.ProductID)} ASC";
-			}
-			return await this.Context.Set<ProductVendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductVendor>();
-		}
+                        return records;
+                }
 
-		private async Task<List<ProductVendor>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductVendor.ProductID)} ASC";
-			}
+                private async Task<List<ProductVendor>> SearchLinqEF(Expression<Func<ProductVendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductVendor.ProductID)} ASC";
+                        }
 
-			return await this.Context.Set<ProductVendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductVendor>();
-		}
+                        return await this.Context.Set<ProductVendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductVendor>();
+                }
 
-		private async Task<ProductVendor> GetById(int productID)
-		{
-			List<ProductVendor> records = await this.SearchLinqEF(x => x.ProductID == productID);
+                private async Task<List<ProductVendor>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductVendor.ProductID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<ProductVendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductVendor>();
+                }
+
+                private async Task<ProductVendor> GetById(int productID)
+                {
+                        List<ProductVendor> records = await this.SearchLinqEF(x => x.ProductID == productID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>046fe0b9761a6543b966986f596b7ddc</Hash>
+    <Hash>d38dc48d63c25a5d6e38e871df7ea061</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class TransactionHistoryService: AbstractTransactionHistoryService, ITransactionHistoryService
-	{
-		public TransactionHistoryService(
-			ILogger<TransactionHistoryRepository> logger,
-			ITransactionHistoryRepository transactionHistoryRepository,
-			IApiTransactionHistoryRequestModelValidator transactionHistoryModelValidator,
-			IBOLTransactionHistoryMapper BOLtransactionHistoryMapper,
-			IDALTransactionHistoryMapper DALtransactionHistoryMapper)
-			: base(logger, transactionHistoryRepository,
-			       transactionHistoryModelValidator,
-			       BOLtransactionHistoryMapper,
-			       DALtransactionHistoryMapper)
-		{}
-	}
+        public class TransactionHistoryService: AbstractTransactionHistoryService, ITransactionHistoryService
+        {
+                public TransactionHistoryService(
+                        ILogger<TransactionHistoryRepository> logger,
+                        ITransactionHistoryRepository transactionHistoryRepository,
+                        IApiTransactionHistoryRequestModelValidator transactionHistoryModelValidator,
+                        IBOLTransactionHistoryMapper boltransactionHistoryMapper,
+                        IDALTransactionHistoryMapper daltransactionHistoryMapper)
+                        : base(logger,
+                               transactionHistoryRepository,
+                               transactionHistoryModelValidator,
+                               boltransactionHistoryMapper,
+                               daltransactionHistoryMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b4fbb1cad0a26ea350e9837634ff7ad6</Hash>
+    <Hash>4a7d0772a30bf6db81aff2577a4bceb3</Hash>
 </Codenesium>*/

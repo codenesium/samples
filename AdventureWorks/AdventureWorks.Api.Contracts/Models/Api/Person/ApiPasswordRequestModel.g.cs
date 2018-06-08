@@ -3,91 +3,93 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiPasswordRequestModel: AbstractApiRequestModel
-	{
-		public ApiPasswordRequestModel() : base()
-		{}
+        public partial class ApiPasswordRequestModel: AbstractApiRequestModel
+        {
+                public ApiPasswordRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			string passwordHash,
-			string passwordSalt,
-			Guid rowguid)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PasswordHash = passwordHash;
-			this.PasswordSalt = passwordSalt;
-			this.Rowguid = rowguid.ToGuid();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        string passwordHash,
+                        string passwordSalt,
+                        Guid rowguid)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.PasswordHash = passwordHash;
+                        this.PasswordSalt = passwordSalt;
+                        this.Rowguid = rowguid;
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private string passwordHash;
+                private string passwordHash;
 
-		[Required]
-		public string PasswordHash
-		{
-			get
-			{
-				return this.passwordHash;
-			}
+                [Required]
+                public string PasswordHash
+                {
+                        get
+                        {
+                                return this.passwordHash;
+                        }
 
-			set
-			{
-				this.passwordHash = value;
-			}
-		}
+                        set
+                        {
+                                this.passwordHash = value;
+                        }
+                }
 
-		private string passwordSalt;
+                private string passwordSalt;
 
-		[Required]
-		public string PasswordSalt
-		{
-			get
-			{
-				return this.passwordSalt;
-			}
+                [Required]
+                public string PasswordSalt
+                {
+                        get
+                        {
+                                return this.passwordSalt;
+                        }
 
-			set
-			{
-				this.passwordSalt = value;
-			}
-		}
+                        set
+                        {
+                                this.passwordSalt = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bcad3a8ce45388e67d487e4502cc3132</Hash>
+    <Hash>59522328f8ebdf772d8d5b9fe618a37e</Hash>
 </Codenesium>*/

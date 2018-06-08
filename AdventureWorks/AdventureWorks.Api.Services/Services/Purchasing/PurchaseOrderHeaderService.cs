@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class PurchaseOrderHeaderService: AbstractPurchaseOrderHeaderService, IPurchaseOrderHeaderService
-	{
-		public PurchaseOrderHeaderService(
-			ILogger<PurchaseOrderHeaderRepository> logger,
-			IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
-			IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
-			IBOLPurchaseOrderHeaderMapper BOLpurchaseOrderHeaderMapper,
-			IDALPurchaseOrderHeaderMapper DALpurchaseOrderHeaderMapper)
-			: base(logger, purchaseOrderHeaderRepository,
-			       purchaseOrderHeaderModelValidator,
-			       BOLpurchaseOrderHeaderMapper,
-			       DALpurchaseOrderHeaderMapper)
-		{}
-	}
+        public class PurchaseOrderHeaderService: AbstractPurchaseOrderHeaderService, IPurchaseOrderHeaderService
+        {
+                public PurchaseOrderHeaderService(
+                        ILogger<PurchaseOrderHeaderRepository> logger,
+                        IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
+                        IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
+                        IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
+                        IDALPurchaseOrderHeaderMapper dalpurchaseOrderHeaderMapper)
+                        : base(logger,
+                               purchaseOrderHeaderRepository,
+                               purchaseOrderHeaderModelValidator,
+                               bolpurchaseOrderHeaderMapper,
+                               dalpurchaseOrderHeaderMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>68c62742eea81572d70b79cf2062118c</Hash>
+    <Hash>55a734263529d4edfd7e090e4dc9a910</Hash>
 </Codenesium>*/

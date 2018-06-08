@@ -10,22 +10,24 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-	public class SpeciesService: AbstractSpeciesService, ISpeciesService
-	{
-		public SpeciesService(
-			ILogger<SpeciesRepository> logger,
-			ISpeciesRepository speciesRepository,
-			IApiSpeciesRequestModelValidator speciesModelValidator,
-			IBOLSpeciesMapper BOLspeciesMapper,
-			IDALSpeciesMapper DALspeciesMapper)
-			: base(logger, speciesRepository,
-			       speciesModelValidator,
-			       BOLspeciesMapper,
-			       DALspeciesMapper)
-		{}
-	}
+        public class SpeciesService: AbstractSpeciesService, ISpeciesService
+        {
+                public SpeciesService(
+                        ILogger<SpeciesRepository> logger,
+                        ISpeciesRepository speciesRepository,
+                        IApiSpeciesRequestModelValidator speciesModelValidator,
+                        IBOLSpeciesMapper bolspeciesMapper,
+                        IDALSpeciesMapper dalspeciesMapper)
+                        : base(logger,
+                               speciesRepository,
+                               speciesModelValidator,
+                               bolspeciesMapper,
+                               dalspeciesMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f1bcd5a7e2b93479a6ff241229221acd</Hash>
+    <Hash>6d210a413996b2391ab865d3f94343ef</Hash>
 </Codenesium>*/

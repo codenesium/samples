@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public interface IDALPipelineStatusMapper
-	{
-		PipelineStatus MapBOToEF(
-			BOPipelineStatus bo);
+        public interface IDALPipelineStatusMapper
+        {
+                PipelineStatus MapBOToEF(
+                        BOPipelineStatus bo);
 
-		BOPipelineStatus MapEFToBO(
-			PipelineStatus efPipelineStatus);
+                BOPipelineStatus MapEFToBO(
+                        PipelineStatus efPipelineStatus);
 
-		List<BOPipelineStatus> MapEFToBO(
-			List<PipelineStatus> records);
-	}
+                List<BOPipelineStatus> MapEFToBO(
+                        List<PipelineStatus> records);
+        }
 }
 
 /*<Codenesium>
-    <Hash>d5cb5df8f558c2615c41aa6d065b3692</Hash>
+    <Hash>d832d44cbf78174e534a406cbf7a6b8b</Hash>
 </Codenesium>*/

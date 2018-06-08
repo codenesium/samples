@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractEmployeePayHistoryRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractEmployeePayHistoryRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractEmployeePayHistoryRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<EmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractEmployeePayHistoryRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<EmployeePayHistory> Get(int businessEntityID)
-		{
-			return await this.GetById(businessEntityID);
-		}
+                public virtual Task<List<EmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<EmployeePayHistory> Create(EmployeePayHistory item)
-		{
-			this.Context.Set<EmployeePayHistory>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<EmployeePayHistory> Get(int businessEntityID)
+                {
+                        return await this.GetById(businessEntityID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<EmployeePayHistory> Create(EmployeePayHistory item)
+                {
+                        this.Context.Set<EmployeePayHistory>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(EmployeePayHistory item)
-		{
-			var entity = this.Context.Set<EmployeePayHistory>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
-			if (entity == null)
-			{
-				this.Context.Set<EmployeePayHistory>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(EmployeePayHistory item)
+                {
+                        var entity = this.Context.Set<EmployeePayHistory>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<EmployeePayHistory>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int businessEntityID)
-		{
-			EmployeePayHistory record = await this.GetById(businessEntityID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<EmployeePayHistory>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int businessEntityID)
+                {
+                        EmployeePayHistory record = await this.GetById(businessEntityID);
 
-		protected async Task<List<EmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<EmployeePayHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<EmployeePayHistory>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<EmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<EmployeePayHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<EmployeePayHistory>> SearchLinqEF(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(EmployeePayHistory.BusinessEntityID)} ASC";
-			}
-			return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmployeePayHistory>();
-		}
+                        return records;
+                }
 
-		private async Task<List<EmployeePayHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(EmployeePayHistory.BusinessEntityID)} ASC";
-			}
+                private async Task<List<EmployeePayHistory>> SearchLinqEF(Expression<Func<EmployeePayHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(EmployeePayHistory.BusinessEntityID)} ASC";
+                        }
 
-			return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmployeePayHistory>();
-		}
+                        return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmployeePayHistory>();
+                }
 
-		private async Task<EmployeePayHistory> GetById(int businessEntityID)
-		{
-			List<EmployeePayHistory> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                private async Task<List<EmployeePayHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(EmployeePayHistory.BusinessEntityID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmployeePayHistory>();
+                }
+
+                private async Task<EmployeePayHistory> GetById(int businessEntityID)
+                {
+                        List<EmployeePayHistory> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c42fec33a0bcac8d3f4e3d8b81097125</Hash>
+    <Hash>2258671932590e6ff3109a2cbecd9c2e</Hash>
 </Codenesium>*/

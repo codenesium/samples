@@ -4,84 +4,90 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductCostHistoryResponseModel: AbstractApiResponseModel
-	{
-		public ApiProductCostHistoryResponseModel() : base()
-		{}
+        public partial class ApiProductCostHistoryResponseModel: AbstractApiResponseModel
+        {
+                public ApiProductCostHistoryResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<DateTime> endDate,
-			DateTime modifiedDate,
-			int productID,
-			decimal standardCost,
-			DateTime startDate)
-		{
-			this.EndDate = endDate.ToNullableDateTime();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ProductID = productID.ToInt();
-			this.StandardCost = standardCost.ToDecimal();
-			this.StartDate = startDate.ToDateTime();
-		}
+                public void SetProperties(
+                        Nullable<DateTime> endDate,
+                        DateTime modifiedDate,
+                        int productID,
+                        decimal standardCost,
+                        DateTime startDate)
+                {
+                        this.EndDate = endDate;
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductID = productID;
+                        this.StandardCost = standardCost;
+                        this.StartDate = startDate;
+                }
 
-		public Nullable<DateTime> EndDate { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public int ProductID { get; private set; }
-		public decimal StandardCost { get; private set; }
-		public DateTime StartDate { get; private set; }
+                public Nullable<DateTime> EndDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeEndDateValue { get; set; } = true;
+                public DateTime ModifiedDate { get; private set; }
 
-		public bool ShouldSerializeEndDate()
-		{
-			return this.ShouldSerializeEndDateValue;
-		}
+                public int ProductID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public decimal StandardCost { get; private set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public DateTime StartDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeEndDateValue { get; set; } = true;
 
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
+                public bool ShouldSerializeEndDate()
+                {
+                        return this.ShouldSerializeEndDateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeStandardCostValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		public bool ShouldSerializeStandardCost()
-		{
-			return this.ShouldSerializeStandardCostValue;
-		}
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeStartDateValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
 
-		public bool ShouldSerializeStartDate()
-		{
-			return this.ShouldSerializeStartDateValue;
-		}
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeEndDateValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeStandardCostValue = false;
-			this.ShouldSerializeStartDateValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeStandardCostValue { get; set; } = true;
+
+                public bool ShouldSerializeStandardCost()
+                {
+                        return this.ShouldSerializeStandardCostValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeStartDateValue { get; set; } = true;
+
+                public bool ShouldSerializeStartDate()
+                {
+                        return this.ShouldSerializeStartDateValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeEndDateValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializeStandardCostValue = false;
+                        this.ShouldSerializeStartDateValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9e72e387f791787421616f8e2ca7848b</Hash>
+    <Hash>922bbb7104d675498158d3a7389b5f7b</Hash>
 </Codenesium>*/

@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class TeamService: AbstractTeamService, ITeamService
-	{
-		public TeamService(
-			ILogger<TeamRepository> logger,
-			ITeamRepository teamRepository,
-			IApiTeamRequestModelValidator teamModelValidator,
-			IBOLTeamMapper BOLteamMapper,
-			IDALTeamMapper DALteamMapper)
-			: base(logger, teamRepository,
-			       teamModelValidator,
-			       BOLteamMapper,
-			       DALteamMapper)
-		{}
-	}
+        public class TeamService: AbstractTeamService, ITeamService
+        {
+                public TeamService(
+                        ILogger<TeamRepository> logger,
+                        ITeamRepository teamRepository,
+                        IApiTeamRequestModelValidator teamModelValidator,
+                        IBOLTeamMapper bolteamMapper,
+                        IDALTeamMapper dalteamMapper)
+                        : base(logger,
+                               teamRepository,
+                               teamModelValidator,
+                               bolteamMapper,
+                               dalteamMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8e2ff1ee4ae39717a5c1e1d30645f263</Hash>
+    <Hash>887e01526d55ea5d4ca02d26a5605c0f</Hash>
 </Codenesium>*/

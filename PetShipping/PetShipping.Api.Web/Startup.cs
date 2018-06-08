@@ -49,7 +49,6 @@ namespace PetShippingNS.Api.Web
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-
 		    services.Configure<ServiceSettings>(this.Configuration);
 
 			services.AddMvcCore(config =>
@@ -86,7 +85,6 @@ namespace PetShippingNS.Api.Web
                  o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
              });
 
-
             services.AddSwaggerGen(o =>
             {
                 o.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
@@ -118,7 +116,6 @@ namespace PetShippingNS.Api.Web
 				}
             });
 
-
            services.AddCors(config =>
            {
                 var policy = new CorsPolicy();
@@ -129,7 +126,7 @@ namespace PetShippingNS.Api.Web
                 config.AddPolicy("policy", policy);
             });
 
-			if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 			{
 				var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
 				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -180,9 +177,6 @@ namespace PetShippingNS.Api.Web
                 .As<ITransactionCoordinator>()
                 .InstancePerLifetimeScope();
 
-
-
-
 			var servicesAssembly = typeof(ValidationError).Assembly;
             builder.RegisterAssemblyTypes(servicesAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Service") || t.Name.EndsWith("ModelValidator") || t.Name.EndsWith("Mapper")))
@@ -193,7 +187,6 @@ namespace PetShippingNS.Api.Web
             builder.RegisterAssemblyTypes(dataAccessAssembly)
 				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
 				.AsImplementedInterfaces();
-
 
             // Register anything else we might have that isn't a system, Microsoft, Abstract or Generic class
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(
@@ -226,7 +219,7 @@ namespace PetShippingNS.Api.Web
                 context.Database.Migrate();
             }
 
-			if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 			{
 				 app.UseAuthentication();
 		    }

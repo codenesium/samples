@@ -10,22 +10,24 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public class ClientCommunicationService: AbstractClientCommunicationService, IClientCommunicationService
-	{
-		public ClientCommunicationService(
-			ILogger<ClientCommunicationRepository> logger,
-			IClientCommunicationRepository clientCommunicationRepository,
-			IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
-			IBOLClientCommunicationMapper BOLclientCommunicationMapper,
-			IDALClientCommunicationMapper DALclientCommunicationMapper)
-			: base(logger, clientCommunicationRepository,
-			       clientCommunicationModelValidator,
-			       BOLclientCommunicationMapper,
-			       DALclientCommunicationMapper)
-		{}
-	}
+        public class ClientCommunicationService: AbstractClientCommunicationService, IClientCommunicationService
+        {
+                public ClientCommunicationService(
+                        ILogger<ClientCommunicationRepository> logger,
+                        IClientCommunicationRepository clientCommunicationRepository,
+                        IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
+                        IBOLClientCommunicationMapper bolclientCommunicationMapper,
+                        IDALClientCommunicationMapper dalclientCommunicationMapper)
+                        : base(logger,
+                               clientCommunicationRepository,
+                               clientCommunicationModelValidator,
+                               bolclientCommunicationMapper,
+                               dalclientCommunicationMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6ec5d6fbcabc08d53285d1f166a7a221</Hash>
+    <Hash>e063c5f51428af8ad9fef7f6008479d3</Hash>
 </Codenesium>*/

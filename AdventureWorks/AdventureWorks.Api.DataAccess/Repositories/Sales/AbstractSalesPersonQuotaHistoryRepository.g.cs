@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractSalesPersonQuotaHistoryRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractSalesPersonQuotaHistoryRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractSalesPersonQuotaHistoryRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<SalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractSalesPersonQuotaHistoryRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<SalesPersonQuotaHistory> Get(int businessEntityID)
-		{
-			return await this.GetById(businessEntityID);
-		}
+                public virtual Task<List<SalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<SalesPersonQuotaHistory> Create(SalesPersonQuotaHistory item)
-		{
-			this.Context.Set<SalesPersonQuotaHistory>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<SalesPersonQuotaHistory> Get(int businessEntityID)
+                {
+                        return await this.GetById(businessEntityID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<SalesPersonQuotaHistory> Create(SalesPersonQuotaHistory item)
+                {
+                        this.Context.Set<SalesPersonQuotaHistory>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(SalesPersonQuotaHistory item)
-		{
-			var entity = this.Context.Set<SalesPersonQuotaHistory>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
-			if (entity == null)
-			{
-				this.Context.Set<SalesPersonQuotaHistory>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(SalesPersonQuotaHistory item)
+                {
+                        var entity = this.Context.Set<SalesPersonQuotaHistory>().Local.FirstOrDefault(x => x.BusinessEntityID == item.BusinessEntityID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<SalesPersonQuotaHistory>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int businessEntityID)
-		{
-			SalesPersonQuotaHistory record = await this.GetById(businessEntityID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<SalesPersonQuotaHistory>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int businessEntityID)
+                {
+                        SalesPersonQuotaHistory record = await this.GetById(businessEntityID);
 
-		protected async Task<List<SalesPersonQuotaHistory>> Where(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<SalesPersonQuotaHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<SalesPersonQuotaHistory>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<SalesPersonQuotaHistory>> Where(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<SalesPersonQuotaHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<SalesPersonQuotaHistory>> SearchLinqEF(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(SalesPersonQuotaHistory.BusinessEntityID)} ASC";
-			}
-			return await this.Context.Set<SalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesPersonQuotaHistory>();
-		}
+                        return records;
+                }
 
-		private async Task<List<SalesPersonQuotaHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(SalesPersonQuotaHistory.BusinessEntityID)} ASC";
-			}
+                private async Task<List<SalesPersonQuotaHistory>> SearchLinqEF(Expression<Func<SalesPersonQuotaHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(SalesPersonQuotaHistory.BusinessEntityID)} ASC";
+                        }
 
-			return await this.Context.Set<SalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesPersonQuotaHistory>();
-		}
+                        return await this.Context.Set<SalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesPersonQuotaHistory>();
+                }
 
-		private async Task<SalesPersonQuotaHistory> GetById(int businessEntityID)
-		{
-			List<SalesPersonQuotaHistory> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                private async Task<List<SalesPersonQuotaHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(SalesPersonQuotaHistory.BusinessEntityID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<SalesPersonQuotaHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesPersonQuotaHistory>();
+                }
+
+                private async Task<SalesPersonQuotaHistory> GetById(int businessEntityID)
+                {
+                        List<SalesPersonQuotaHistory> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>73da0e5fb4f86ffd18c00792a053aaa6</Hash>
+    <Hash>b586794255ea2f699bd988eef36dcf50</Hash>
 </Codenesium>*/

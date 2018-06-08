@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ProductListPriceHistoryService: AbstractProductListPriceHistoryService, IProductListPriceHistoryService
-	{
-		public ProductListPriceHistoryService(
-			ILogger<ProductListPriceHistoryRepository> logger,
-			IProductListPriceHistoryRepository productListPriceHistoryRepository,
-			IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
-			IBOLProductListPriceHistoryMapper BOLproductListPriceHistoryMapper,
-			IDALProductListPriceHistoryMapper DALproductListPriceHistoryMapper)
-			: base(logger, productListPriceHistoryRepository,
-			       productListPriceHistoryModelValidator,
-			       BOLproductListPriceHistoryMapper,
-			       DALproductListPriceHistoryMapper)
-		{}
-	}
+        public class ProductListPriceHistoryService: AbstractProductListPriceHistoryService, IProductListPriceHistoryService
+        {
+                public ProductListPriceHistoryService(
+                        ILogger<ProductListPriceHistoryRepository> logger,
+                        IProductListPriceHistoryRepository productListPriceHistoryRepository,
+                        IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
+                        IBOLProductListPriceHistoryMapper bolproductListPriceHistoryMapper,
+                        IDALProductListPriceHistoryMapper dalproductListPriceHistoryMapper)
+                        : base(logger,
+                               productListPriceHistoryRepository,
+                               productListPriceHistoryModelValidator,
+                               bolproductListPriceHistoryMapper,
+                               dalproductListPriceHistoryMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>2b93dcf33b84c9f83039105d08095b46</Hash>
+    <Hash>ac6fe0c541653fffd129d720b5037ef1</Hash>
 </Codenesium>*/

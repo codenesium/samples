@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class BOLSalesTaxRateMapper: BOLAbstractSalesTaxRateMapper, IBOLSalesTaxRateMapper
-	{
-		public BOLSalesTaxRateMapper()
-		{}
-	}
+        public class BOLSalesTaxRateMapper: BOLAbstractSalesTaxRateMapper, IBOLSalesTaxRateMapper
+        {
+                public BOLSalesTaxRateMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bf1d3006b93f676654e9569b9923b713</Hash>
+    <Hash>b711398b933893d0e59e034269644f4e</Hash>
 </Codenesium>*/

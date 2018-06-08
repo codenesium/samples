@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class BusinessEntityContactService: AbstractBusinessEntityContactService, IBusinessEntityContactService
-	{
-		public BusinessEntityContactService(
-			ILogger<BusinessEntityContactRepository> logger,
-			IBusinessEntityContactRepository businessEntityContactRepository,
-			IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator,
-			IBOLBusinessEntityContactMapper BOLbusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper DALbusinessEntityContactMapper)
-			: base(logger, businessEntityContactRepository,
-			       businessEntityContactModelValidator,
-			       BOLbusinessEntityContactMapper,
-			       DALbusinessEntityContactMapper)
-		{}
-	}
+        public class BusinessEntityContactService: AbstractBusinessEntityContactService, IBusinessEntityContactService
+        {
+                public BusinessEntityContactService(
+                        ILogger<BusinessEntityContactRepository> logger,
+                        IBusinessEntityContactRepository businessEntityContactRepository,
+                        IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator,
+                        IBOLBusinessEntityContactMapper bolbusinessEntityContactMapper,
+                        IDALBusinessEntityContactMapper dalbusinessEntityContactMapper)
+                        : base(logger,
+                               businessEntityContactRepository,
+                               businessEntityContactModelValidator,
+                               bolbusinessEntityContactMapper,
+                               dalbusinessEntityContactMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d532d6cb48653aeb3de7eb6251607e50</Hash>
+    <Hash>a3c3fe3a26cbdb30a3c4341f352615a5</Hash>
 </Codenesium>*/

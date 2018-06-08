@@ -7,18 +7,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
+
 namespace ESPIOTNS.Api.Client
 {
-	public class ApiClient: AbstractApiClient
-	{
-		public ApiClient(string apiUrl) : base(apiUrl,"1.0")
-		{}
+        public class ApiClient: AbstractApiClient
+        {
+                public ApiClient(string apiUrl) : base(apiUrl, "1.0")
+                {
+                }
 
-		public ApiClient(HttpClient client) : base(client)
-		{}
-	}
+                public ApiClient(HttpClient client) : base(client)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>baa16a9182072cb41805ffe4e9c82d5e</Hash>
+    <Hash>11095ed06552bf62a72f1b8dc532d3ad</Hash>
 </Codenesium>*/

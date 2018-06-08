@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ISalesPersonQuotaHistoryRepository
-	{
-		Task<SalesPersonQuotaHistory> Create(SalesPersonQuotaHistory item);
+        public interface ISalesPersonQuotaHistoryRepository
+        {
+                Task<SalesPersonQuotaHistory> Create(SalesPersonQuotaHistory item);
 
-		Task Update(SalesPersonQuotaHistory item);
+                Task Update(SalesPersonQuotaHistory item);
 
-		Task Delete(int businessEntityID);
+                Task Delete(int businessEntityID);
 
-		Task<SalesPersonQuotaHistory> Get(int businessEntityID);
+                Task<SalesPersonQuotaHistory> Get(int businessEntityID);
 
-		Task<List<SalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<SalesPersonQuotaHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>2e7d28599d7414bb55d586735b64f627</Hash>
+    <Hash>b1fce2ce06ade325a03ad67ea6ccea9a</Hash>
 </Codenesium>*/

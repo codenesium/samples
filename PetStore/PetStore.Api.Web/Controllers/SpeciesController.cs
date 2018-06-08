@@ -12,28 +12,28 @@ using PetStoreNS.Api.Services;
 
 namespace PetStoreNS.Api.Web
 {
-	[Route("api/species")]
-	[ApiVersion("1.0")]
-	public class SpeciesController: AbstractSpeciesController
-	{
-		public SpeciesController(
-			ServiceSettings settings,
-			ILogger<SpeciesController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			ISpeciesService speciesService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       speciesService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/species")]
+        [ApiVersion("1.0")]
+        public class SpeciesController: AbstractSpeciesController
+        {
+                public SpeciesController(
+                        ServiceSettings settings,
+                        ILogger<SpeciesController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        ISpeciesService speciesService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               speciesService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>fe73eb4e6b2b95b4f004051bf6740066</Hash>
+    <Hash>e735fb8cbcbeec7c63aaa26b797564ad</Hash>
 </Codenesium>*/

@@ -2,49 +2,50 @@ using System;
 using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public abstract class BOLAbstractClaspMapper
-	{
-		public virtual BOClasp MapModelToBO(
-			int id,
-			ApiClaspRequestModel model
-			)
-		{
-			BOClasp boClasp = new BOClasp();
+        public abstract class BOLAbstractClaspMapper
+        {
+                public virtual BOClasp MapModelToBO(
+                        int id,
+                        ApiClaspRequestModel model
+                        )
+                {
+                        BOClasp boClasp = new BOClasp();
 
-			boClasp.SetProperties(
-				id,
-				model.NextChainId,
-				model.PreviousChainId);
-			return boClasp;
-		}
+                        boClasp.SetProperties(
+                                id,
+                                model.NextChainId,
+                                model.PreviousChainId);
+                        return boClasp;
+                }
 
-		public virtual ApiClaspResponseModel MapBOToModel(
-			BOClasp boClasp)
-		{
-			var model = new ApiClaspResponseModel();
+                public virtual ApiClaspResponseModel MapBOToModel(
+                        BOClasp boClasp)
+                {
+                        var model = new ApiClaspResponseModel();
 
-			model.SetProperties(boClasp.Id, boClasp.NextChainId, boClasp.PreviousChainId);
+                        model.SetProperties(boClasp.Id, boClasp.NextChainId, boClasp.PreviousChainId);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiClaspResponseModel> MapBOToModel(
-			List<BOClasp> items)
-		{
-			List<ApiClaspResponseModel> response = new List<ApiClaspResponseModel>();
+                public virtual List<ApiClaspResponseModel> MapBOToModel(
+                        List<BOClasp> items)
+                {
+                        List<ApiClaspResponseModel> response = new List<ApiClaspResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0534f48ed0d95ce6dc9178d546f84a67</Hash>
+    <Hash>62e965541466a633828f858aa81d0d19</Hash>
 </Codenesium>*/

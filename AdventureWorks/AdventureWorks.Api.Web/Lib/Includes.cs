@@ -117,27 +117,22 @@ namespace Codenesium.Foundation.CommonMVC
     {
         public void BeginTransaction()
         {
-         
         }
 
         public void CommitTransaction()
         {
-        
         }
 
         public void DisableChangeTracking()
         {
-           
         }
 
         public void EnableChangeTracking()
         {
-           
         }
 
         public void RollbackTransaction()
         {
-           
         }
     }
 
@@ -147,11 +142,13 @@ namespace Codenesium.Foundation.CommonMVC
     /// </summary>
     public abstract class AbstractApiController : Controller
     {
+
         public ITransactionCoordinator TransactionCooordinator { get; private set; }
 
         protected ILogger Logger { get; private set;  }
 
 		protected ServiceSettings Settings { get; private set;  }
+
 
         public AbstractApiController(
 	        ServiceSettings settings,
@@ -164,8 +161,6 @@ namespace Codenesium.Foundation.CommonMVC
             this.TransactionCooordinator = transactionCooordinator;
         }
     }
-
-
 
     /// <summary>
     /// The purpose of this filter is to throw an error when a client passes a null model to a controller
@@ -221,7 +216,9 @@ namespace Codenesium.Foundation.CommonMVC
 			}
 
             AbstractApiController controller = (AbstractApiController)actionContext.Controller;
+
             controller.TransactionCooordinator.DisableChangeTracking();
+
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
@@ -239,18 +236,20 @@ namespace Codenesium.Foundation.CommonMVC
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-			if(!(actionContext.Controller is AbstractApiController))
+			if (!(actionContext.Controller is AbstractApiController))
 			{
 				throw new Exception("UnitOfWorkActionFilter can only be applied to controllers that inherit from AbstractApiController");
 			}
 
+
 			AbstractApiController controller = (AbstractApiController)actionContext.Controller;
+
 			controller.TransactionCooordinator.BeginTransaction();
-			
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
         {
+
             AbstractApiController controller = (AbstractApiController)actionExecutedContext.Controller;
 
             if (actionExecutedContext.Exception == null)
@@ -360,6 +359,7 @@ namespace Codenesium.Foundation.CommonMVC
 
 	public class ServiceSettings
     {
+
         public string ExternalBaseUrl { get; set; }
 
         public bool MigrateDatabase { get; set; }
@@ -375,7 +375,6 @@ namespace Codenesium.Foundation.CommonMVC
         public string Issuer { get; set; }
         public string Audience { get; set; }
     }
-
 
     public class SearchQuery
     {

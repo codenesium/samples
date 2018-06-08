@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class BOLErrorLogMapper: BOLAbstractErrorLogMapper, IBOLErrorLogMapper
-	{
-		public BOLErrorLogMapper()
-		{}
-	}
+        public class BOLErrorLogMapper: BOLAbstractErrorLogMapper, IBOLErrorLogMapper
+        {
+                public BOLErrorLogMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e77f2575c5a490e4d2b62c94b3941519</Hash>
+    <Hash>03c397618f4758354c3f1ffe69a73aa2</Hash>
 </Codenesium>*/

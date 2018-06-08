@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class MachineService: AbstractMachineService, IMachineService
-	{
-		public MachineService(
-			ILogger<MachineRepository> logger,
-			IMachineRepository machineRepository,
-			IApiMachineRequestModelValidator machineModelValidator,
-			IBOLMachineMapper BOLmachineMapper,
-			IDALMachineMapper DALmachineMapper)
-			: base(logger, machineRepository,
-			       machineModelValidator,
-			       BOLmachineMapper,
-			       DALmachineMapper)
-		{}
-	}
+        public class MachineService: AbstractMachineService, IMachineService
+        {
+                public MachineService(
+                        ILogger<MachineRepository> logger,
+                        IMachineRepository machineRepository,
+                        IApiMachineRequestModelValidator machineModelValidator,
+                        IBOLMachineMapper bolmachineMapper,
+                        IDALMachineMapper dalmachineMapper)
+                        : base(logger,
+                               machineRepository,
+                               machineModelValidator,
+                               bolmachineMapper,
+                               dalmachineMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e2e2ac5194012023e72da7a32bafaf05</Hash>
+    <Hash>ba49cdf9b4ff4499c63ae22119d149ca</Hash>
 </Codenesium>*/

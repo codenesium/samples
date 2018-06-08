@@ -6,38 +6,39 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ApiEmployeeDepartmentHistoryRequestModelValidator: AbstractApiEmployeeDepartmentHistoryRequestModelValidator, IApiEmployeeDepartmentHistoryRequestModelValidator
-	{
-		public ApiEmployeeDepartmentHistoryRequestModelValidator()
-		{   }
+        public class ApiEmployeeDepartmentHistoryRequestModelValidator: AbstractApiEmployeeDepartmentHistoryRequestModelValidator, IApiEmployeeDepartmentHistoryRequestModelValidator
+        {
+                public ApiEmployeeDepartmentHistoryRequestModelValidator()
+                {
+                }
 
-		public async Task<ValidationResult> ValidateCreateAsync(ApiEmployeeDepartmentHistoryRequestModel model)
-		{
-			this.DepartmentIDRules();
-			this.EndDateRules();
-			this.ModifiedDateRules();
-			this.ShiftIDRules();
-			this.StartDateRules();
-			return await this.ValidateAsync(model);
-		}
+                public async Task<ValidationResult> ValidateCreateAsync(ApiEmployeeDepartmentHistoryRequestModel model)
+                {
+                        this.DepartmentIDRules();
+                        this.EndDateRules();
+                        this.ModifiedDateRules();
+                        this.ShiftIDRules();
+                        this.StartDateRules();
+                        return await this.ValidateAsync(model);
+                }
 
-		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmployeeDepartmentHistoryRequestModel model)
-		{
-			this.DepartmentIDRules();
-			this.EndDateRules();
-			this.ModifiedDateRules();
-			this.ShiftIDRules();
-			this.StartDateRules();
-			return await this.ValidateAsync(model, id);
-		}
+                public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmployeeDepartmentHistoryRequestModel model)
+                {
+                        this.DepartmentIDRules();
+                        this.EndDateRules();
+                        this.ModifiedDateRules();
+                        this.ShiftIDRules();
+                        this.StartDateRules();
+                        return await this.ValidateAsync(model, id);
+                }
 
-		public async Task<ValidationResult> ValidateDeleteAsync(int id)
-		{
-			return new ValidationResult();
-		}
-	}
+                public async Task<ValidationResult> ValidateDeleteAsync(int id)
+                {
+                        return new ValidationResult();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>55681b96ee1f240fdfff687ae9efcf81</Hash>
+    <Hash>db18b66b5dc1df870eb64a67699cf7fd</Hash>
 </Codenesium>*/

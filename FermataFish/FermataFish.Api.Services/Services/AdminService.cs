@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class AdminService: AbstractAdminService, IAdminService
-	{
-		public AdminService(
-			ILogger<AdminRepository> logger,
-			IAdminRepository adminRepository,
-			IApiAdminRequestModelValidator adminModelValidator,
-			IBOLAdminMapper BOLadminMapper,
-			IDALAdminMapper DALadminMapper)
-			: base(logger, adminRepository,
-			       adminModelValidator,
-			       BOLadminMapper,
-			       DALadminMapper)
-		{}
-	}
+        public class AdminService: AbstractAdminService, IAdminService
+        {
+                public AdminService(
+                        ILogger<AdminRepository> logger,
+                        IAdminRepository adminRepository,
+                        IApiAdminRequestModelValidator adminModelValidator,
+                        IBOLAdminMapper boladminMapper,
+                        IDALAdminMapper daladminMapper)
+                        : base(logger,
+                               adminRepository,
+                               adminModelValidator,
+                               boladminMapper,
+                               daladminMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>23c38b120d9676df53a8ca669038606b</Hash>
+    <Hash>7f264e45c64bf39240453a8cbfffa3c8</Hash>
 </Codenesium>*/

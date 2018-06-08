@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductPhotoRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractProductPhotoRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractProductPhotoRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<ProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractProductPhotoRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<ProductPhoto> Get(int productPhotoID)
-		{
-			return await this.GetById(productPhotoID);
-		}
+                public virtual Task<List<ProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<ProductPhoto> Create(ProductPhoto item)
-		{
-			this.Context.Set<ProductPhoto>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<ProductPhoto> Get(int productPhotoID)
+                {
+                        return await this.GetById(productPhotoID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<ProductPhoto> Create(ProductPhoto item)
+                {
+                        this.Context.Set<ProductPhoto>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(ProductPhoto item)
-		{
-			var entity = this.Context.Set<ProductPhoto>().Local.FirstOrDefault(x => x.ProductPhotoID == item.ProductPhotoID);
-			if (entity == null)
-			{
-				this.Context.Set<ProductPhoto>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(ProductPhoto item)
+                {
+                        var entity = this.Context.Set<ProductPhoto>().Local.FirstOrDefault(x => x.ProductPhotoID == item.ProductPhotoID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<ProductPhoto>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int productPhotoID)
-		{
-			ProductPhoto record = await this.GetById(productPhotoID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<ProductPhoto>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int productPhotoID)
+                {
+                        ProductPhoto record = await this.GetById(productPhotoID);
 
-		protected async Task<List<ProductPhoto>> Where(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<ProductPhoto> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<ProductPhoto>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<ProductPhoto>> Where(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<ProductPhoto> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<ProductPhoto>> SearchLinqEF(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
-			}
-			return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductPhoto>();
-		}
+                        return records;
+                }
 
-		private async Task<List<ProductPhoto>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
-			}
+                private async Task<List<ProductPhoto>> SearchLinqEF(Expression<Func<ProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
+                        }
 
-			return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductPhoto>();
-		}
+                        return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductPhoto>();
+                }
 
-		private async Task<ProductPhoto> GetById(int productPhotoID)
-		{
-			List<ProductPhoto> records = await this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID);
+                private async Task<List<ProductPhoto>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductPhoto>();
+                }
+
+                private async Task<ProductPhoto> GetById(int productPhotoID)
+                {
+                        List<ProductPhoto> records = await this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7306cdb8249babdc9be8deb9f66e6b22</Hash>
+    <Hash>c740b404201a85387d430df175fb0641</Hash>
 </Codenesium>*/

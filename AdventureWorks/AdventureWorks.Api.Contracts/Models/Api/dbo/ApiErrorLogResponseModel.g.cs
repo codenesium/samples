@@ -4,132 +4,142 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiErrorLogResponseModel: AbstractApiResponseModel
-	{
-		public ApiErrorLogResponseModel() : base()
-		{}
+        public partial class ApiErrorLogResponseModel: AbstractApiResponseModel
+        {
+                public ApiErrorLogResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<int> errorLine,
-			int errorLogID,
-			string errorMessage,
-			int errorNumber,
-			string errorProcedure,
-			Nullable<int> errorSeverity,
-			Nullable<int> errorState,
-			DateTime errorTime,
-			string userName)
-		{
-			this.ErrorLine = errorLine.ToNullableInt();
-			this.ErrorLogID = errorLogID.ToInt();
-			this.ErrorMessage = errorMessage;
-			this.ErrorNumber = errorNumber.ToInt();
-			this.ErrorProcedure = errorProcedure;
-			this.ErrorSeverity = errorSeverity.ToNullableInt();
-			this.ErrorState = errorState.ToNullableInt();
-			this.ErrorTime = errorTime.ToDateTime();
-			this.UserName = userName;
-		}
+                public void SetProperties(
+                        Nullable<int> errorLine,
+                        int errorLogID,
+                        string errorMessage,
+                        int errorNumber,
+                        string errorProcedure,
+                        Nullable<int> errorSeverity,
+                        Nullable<int> errorState,
+                        DateTime errorTime,
+                        string userName)
+                {
+                        this.ErrorLine = errorLine;
+                        this.ErrorLogID = errorLogID;
+                        this.ErrorMessage = errorMessage;
+                        this.ErrorNumber = errorNumber;
+                        this.ErrorProcedure = errorProcedure;
+                        this.ErrorSeverity = errorSeverity;
+                        this.ErrorState = errorState;
+                        this.ErrorTime = errorTime;
+                        this.UserName = userName;
+                }
 
-		public Nullable<int> ErrorLine { get; private set; }
-		public int ErrorLogID { get; private set; }
-		public string ErrorMessage { get; private set; }
-		public int ErrorNumber { get; private set; }
-		public string ErrorProcedure { get; private set; }
-		public Nullable<int> ErrorSeverity { get; private set; }
-		public Nullable<int> ErrorState { get; private set; }
-		public DateTime ErrorTime { get; private set; }
-		public string UserName { get; private set; }
+                public Nullable<int> ErrorLine { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorLineValue { get; set; } = true;
+                public int ErrorLogID { get; private set; }
 
-		public bool ShouldSerializeErrorLine()
-		{
-			return this.ShouldSerializeErrorLineValue;
-		}
+                public string ErrorMessage { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorLogIDValue { get; set; } = true;
+                public int ErrorNumber { get; private set; }
 
-		public bool ShouldSerializeErrorLogID()
-		{
-			return this.ShouldSerializeErrorLogIDValue;
-		}
+                public string ErrorProcedure { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorMessageValue { get; set; } = true;
+                public Nullable<int> ErrorSeverity { get; private set; }
 
-		public bool ShouldSerializeErrorMessage()
-		{
-			return this.ShouldSerializeErrorMessageValue;
-		}
+                public Nullable<int> ErrorState { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorNumberValue { get; set; } = true;
+                public DateTime ErrorTime { get; private set; }
 
-		public bool ShouldSerializeErrorNumber()
-		{
-			return this.ShouldSerializeErrorNumberValue;
-		}
+                public string UserName { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorProcedureValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeErrorLineValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorProcedure()
-		{
-			return this.ShouldSerializeErrorProcedureValue;
-		}
+                public bool ShouldSerializeErrorLine()
+                {
+                        return this.ShouldSerializeErrorLineValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorSeverityValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeErrorLogIDValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorSeverity()
-		{
-			return this.ShouldSerializeErrorSeverityValue;
-		}
+                public bool ShouldSerializeErrorLogID()
+                {
+                        return this.ShouldSerializeErrorLogIDValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorStateValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeErrorMessageValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorState()
-		{
-			return this.ShouldSerializeErrorStateValue;
-		}
+                public bool ShouldSerializeErrorMessage()
+                {
+                        return this.ShouldSerializeErrorMessageValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeErrorTimeValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeErrorNumberValue { get; set; } = true;
 
-		public bool ShouldSerializeErrorTime()
-		{
-			return this.ShouldSerializeErrorTimeValue;
-		}
+                public bool ShouldSerializeErrorNumber()
+                {
+                        return this.ShouldSerializeErrorNumberValue;
+                }
 
-		[JsonIgnore]
-		public bool ShouldSerializeUserNameValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeErrorProcedureValue { get; set; } = true;
 
-		public bool ShouldSerializeUserName()
-		{
-			return this.ShouldSerializeUserNameValue;
-		}
+                public bool ShouldSerializeErrorProcedure()
+                {
+                        return this.ShouldSerializeErrorProcedureValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeErrorLineValue = false;
-			this.ShouldSerializeErrorLogIDValue = false;
-			this.ShouldSerializeErrorMessageValue = false;
-			this.ShouldSerializeErrorNumberValue = false;
-			this.ShouldSerializeErrorProcedureValue = false;
-			this.ShouldSerializeErrorSeverityValue = false;
-			this.ShouldSerializeErrorStateValue = false;
-			this.ShouldSerializeErrorTimeValue = false;
-			this.ShouldSerializeUserNameValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeErrorSeverityValue { get; set; } = true;
+
+                public bool ShouldSerializeErrorSeverity()
+                {
+                        return this.ShouldSerializeErrorSeverityValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeErrorStateValue { get; set; } = true;
+
+                public bool ShouldSerializeErrorState()
+                {
+                        return this.ShouldSerializeErrorStateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeErrorTimeValue { get; set; } = true;
+
+                public bool ShouldSerializeErrorTime()
+                {
+                        return this.ShouldSerializeErrorTimeValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeUserNameValue { get; set; } = true;
+
+                public bool ShouldSerializeUserName()
+                {
+                        return this.ShouldSerializeUserNameValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeErrorLineValue = false;
+                        this.ShouldSerializeErrorLogIDValue = false;
+                        this.ShouldSerializeErrorMessageValue = false;
+                        this.ShouldSerializeErrorNumberValue = false;
+                        this.ShouldSerializeErrorProcedureValue = false;
+                        this.ShouldSerializeErrorSeverityValue = false;
+                        this.ShouldSerializeErrorStateValue = false;
+                        this.ShouldSerializeErrorTimeValue = false;
+                        this.ShouldSerializeUserNameValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>5c0208b77a615a77a56c573f9624ef28</Hash>
+    <Hash>61056a669b9630c355c79abe4c447550</Hash>
 </Codenesium>*/

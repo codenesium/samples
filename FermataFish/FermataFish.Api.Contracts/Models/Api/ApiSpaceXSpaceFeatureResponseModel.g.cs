@@ -4,65 +4,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace FermataFishNS.Api.Contracts
 {
-	public partial class ApiSpaceXSpaceFeatureResponseModel: AbstractApiResponseModel
-	{
-		public ApiSpaceXSpaceFeatureResponseModel() : base()
-		{}
+        public partial class ApiSpaceXSpaceFeatureResponseModel: AbstractApiResponseModel
+        {
+                public ApiSpaceXSpaceFeatureResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int id,
-			int spaceFeatureId,
-			int spaceId)
-		{
-			this.Id = id.ToInt();
-			this.SpaceFeatureId = spaceFeatureId.ToInt();
-			this.SpaceId = spaceId.ToInt();
+                public void SetProperties(
+                        int id,
+                        int spaceFeatureId,
+                        int spaceId)
+                {
+                        this.Id = id;
+                        this.SpaceFeatureId = spaceFeatureId;
+                        this.SpaceId = spaceId;
 
-			this.SpaceFeatureIdEntity = nameof(ApiResponse.SpaceFeatures);
-			this.SpaceIdEntity = nameof(ApiResponse.Spaces);
-		}
+                        this.SpaceFeatureIdEntity = nameof(ApiResponse.SpaceFeatures);
+                        this.SpaceIdEntity = nameof(ApiResponse.Spaces);
+                }
 
-		public int Id { get; private set; }
-		public int SpaceFeatureId { get; private set; }
-		public string SpaceFeatureIdEntity { get; set; }
-		public int SpaceId { get; private set; }
-		public string SpaceIdEntity { get; set; }
+                public int Id { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeIdValue { get; set; } = true;
+                public int SpaceFeatureId { get; private set; }
 
-		public bool ShouldSerializeId()
-		{
-			return this.ShouldSerializeIdValue;
-		}
+                public string SpaceFeatureIdEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeSpaceFeatureIdValue { get; set; } = true;
+                public int SpaceId { get; private set; }
 
-		public bool ShouldSerializeSpaceFeatureId()
-		{
-			return this.ShouldSerializeSpaceFeatureIdValue;
-		}
+                public string SpaceIdEntity { get; set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeSpaceIdValue { get; set; } = true;
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
 
-		public bool ShouldSerializeSpaceId()
-		{
-			return this.ShouldSerializeSpaceIdValue;
-		}
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeIdValue = false;
-			this.ShouldSerializeSpaceFeatureIdValue = false;
-			this.ShouldSerializeSpaceIdValue = false;
-		}
-	}
+                [JsonIgnore]
+                public bool ShouldSerializeSpaceFeatureIdValue { get; set; } = true;
+
+                public bool ShouldSerializeSpaceFeatureId()
+                {
+                        return this.ShouldSerializeSpaceFeatureIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSpaceIdValue { get; set; } = true;
+
+                public bool ShouldSerializeSpaceId()
+                {
+                        return this.ShouldSerializeSpaceIdValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeSpaceFeatureIdValue = false;
+                        this.ShouldSerializeSpaceIdValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3be2c2559ade94974c7912139f152675</Hash>
+    <Hash>026e5408c82e416421ebdcb75421559e</Hash>
 </Codenesium>*/

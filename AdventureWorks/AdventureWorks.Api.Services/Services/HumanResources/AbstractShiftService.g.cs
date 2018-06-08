@@ -12,100 +12,106 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractShiftService: AbstractService
-	{
-		private IShiftRepository shiftRepository;
-		private IApiShiftRequestModelValidator shiftModelValidator;
-		private IBOLShiftMapper bolShiftMapper;
-		private IDALShiftMapper dalShiftMapper;
-		private ILogger logger;
+        public abstract class AbstractShiftService: AbstractService
+        {
+                private IShiftRepository shiftRepository;
 
-		public AbstractShiftService(
-			ILogger logger,
-			IShiftRepository shiftRepository,
-			IApiShiftRequestModelValidator shiftModelValidator,
-			IBOLShiftMapper bolshiftMapper,
-			IDALShiftMapper dalshiftMapper)
-			: base()
+                private IApiShiftRequestModelValidator shiftModelValidator;
 
-		{
-			this.shiftRepository = shiftRepository;
-			this.shiftModelValidator = shiftModelValidator;
-			this.bolShiftMapper = bolshiftMapper;
-			this.dalShiftMapper = dalshiftMapper;
-			this.logger = logger;
-		}
+                private IBOLShiftMapper bolShiftMapper;
 
-		public virtual async Task<List<ApiShiftResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.shiftRepository.All(skip, take, orderClause);
+                private IDALShiftMapper dalShiftMapper;
 
-			return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiShiftResponseModel> Get(int shiftID)
-		{
-			var record = await shiftRepository.Get(shiftID);
+                public AbstractShiftService(
+                        ILogger logger,
+                        IShiftRepository shiftRepository,
+                        IApiShiftRequestModelValidator shiftModelValidator,
+                        IBOLShiftMapper bolshiftMapper,
+                        IDALShiftMapper dalshiftMapper)
+                        : base()
 
-			return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
-		}
+                {
+                        this.shiftRepository = shiftRepository;
+                        this.shiftModelValidator = shiftModelValidator;
+                        this.bolShiftMapper = bolshiftMapper;
+                        this.dalShiftMapper = dalshiftMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiShiftResponseModel>> Create(
-			ApiShiftRequestModel model)
-		{
-			CreateResponse<ApiShiftResponseModel> response = new CreateResponse<ApiShiftResponseModel>(await this.shiftModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolShiftMapper.MapModelToBO(default (int), model);
-				var record = await this.shiftRepository.Create(this.dalShiftMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiShiftResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.shiftRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int shiftID,
-			ApiShiftRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateUpdateAsync(shiftID, model));
+                public virtual async Task<ApiShiftResponseModel> Get(int shiftID)
+                {
+                        var record = await this.shiftRepository.Get(shiftID);
 
-			if (response.Success)
-			{
-				var bo = this.bolShiftMapper.MapModelToBO(shiftID, model);
-				await this.shiftRepository.Update(this.dalShiftMapper.MapBOToEF(bo));
-			}
+                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiShiftResponseModel>> Create(
+                        ApiShiftRequestModel model)
+                {
+                        CreateResponse<ApiShiftResponseModel> response = new CreateResponse<ApiShiftResponseModel>(await this.shiftModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolShiftMapper.MapModelToBO(default (int), model);
+                                var record = await this.shiftRepository.Create(this.dalShiftMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int shiftID)
-		{
-			ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateDeleteAsync(shiftID));
+                                response.SetRecord(this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.shiftRepository.Delete(shiftID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiShiftResponseModel> GetName(string name)
-		{
-			Shift record = await this.shiftRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        int shiftID,
+                        ApiShiftRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateUpdateAsync(shiftID, model));
 
-			return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
-		}
-		public async Task<ApiShiftResponseModel> GetStartTimeEndTime(TimeSpan startTime,TimeSpan endTime)
-		{
-			Shift record = await this.shiftRepository.GetStartTimeEndTime(startTime,endTime);
+                        if (response.Success)
+                        {
+                                var bo = this.bolShiftMapper.MapModelToBO(shiftID, model);
+                                await this.shiftRepository.Update(this.dalShiftMapper.MapBOToEF(bo));
+                        }
 
-			return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int shiftID)
+                {
+                        ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateDeleteAsync(shiftID));
+
+                        if (response.Success)
+                        {
+                                await this.shiftRepository.Delete(shiftID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiShiftResponseModel> GetName(string name)
+                {
+                        Shift record = await this.shiftRepository.GetName(name);
+
+                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                }
+                public async Task<ApiShiftResponseModel> GetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
+                {
+                        Shift record = await this.shiftRepository.GetStartTimeEndTime(startTime, endTime);
+
+                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7abdb295a4a808690283ddf9efa3965e</Hash>
+    <Hash>6d86aa3ae0755f56b2d36c36a68c498d</Hash>
 </Codenesium>*/

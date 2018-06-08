@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractCountryService: AbstractService
-	{
-		private ICountryRepository countryRepository;
-		private IApiCountryRequestModelValidator countryModelValidator;
-		private IBOLCountryMapper bolCountryMapper;
-		private IDALCountryMapper dalCountryMapper;
-		private ILogger logger;
+        public abstract class AbstractCountryService: AbstractService
+        {
+                private ICountryRepository countryRepository;
 
-		public AbstractCountryService(
-			ILogger logger,
-			ICountryRepository countryRepository,
-			IApiCountryRequestModelValidator countryModelValidator,
-			IBOLCountryMapper bolcountryMapper,
-			IDALCountryMapper dalcountryMapper)
-			: base()
+                private IApiCountryRequestModelValidator countryModelValidator;
 
-		{
-			this.countryRepository = countryRepository;
-			this.countryModelValidator = countryModelValidator;
-			this.bolCountryMapper = bolcountryMapper;
-			this.dalCountryMapper = dalcountryMapper;
-			this.logger = logger;
-		}
+                private IBOLCountryMapper bolCountryMapper;
 
-		public virtual async Task<List<ApiCountryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.countryRepository.All(skip, take, orderClause);
+                private IDALCountryMapper dalCountryMapper;
 
-			return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiCountryResponseModel> Get(int id)
-		{
-			var record = await countryRepository.Get(id);
+                public AbstractCountryService(
+                        ILogger logger,
+                        ICountryRepository countryRepository,
+                        IApiCountryRequestModelValidator countryModelValidator,
+                        IBOLCountryMapper bolcountryMapper,
+                        IDALCountryMapper dalcountryMapper)
+                        : base()
 
-			return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record));
-		}
+                {
+                        this.countryRepository = countryRepository;
+                        this.countryModelValidator = countryModelValidator;
+                        this.bolCountryMapper = bolcountryMapper;
+                        this.dalCountryMapper = dalcountryMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiCountryResponseModel>> Create(
-			ApiCountryRequestModel model)
-		{
-			CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.countryModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolCountryMapper.MapModelToBO(default (int), model);
-				var record = await this.countryRepository.Create(this.dalCountryMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiCountryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.countryRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiCountryRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiCountryResponseModel> Get(int id)
+                {
+                        var record = await this.countryRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolCountryMapper.MapModelToBO(id, model);
-				await this.countryRepository.Update(this.dalCountryMapper.MapBOToEF(bo));
-			}
+                        return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiCountryResponseModel>> Create(
+                        ApiCountryRequestModel model)
+                {
+                        CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.countryModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolCountryMapper.MapModelToBO(default (int), model);
+                                var record = await this.countryRepository.Create(this.dalCountryMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.countryRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiCountryRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolCountryMapper.MapModelToBO(id, model);
+                                await this.countryRepository.Update(this.dalCountryMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.countryRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>71c1fb7c28461e70b3b8ea75254af449</Hash>
+    <Hash>4e9e34a1839916946436590f563727c1</Hash>
 </Codenesium>*/

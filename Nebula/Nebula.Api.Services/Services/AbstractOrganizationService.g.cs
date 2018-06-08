@@ -12,87 +12,93 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public abstract class AbstractOrganizationService: AbstractService
-	{
-		private IOrganizationRepository organizationRepository;
-		private IApiOrganizationRequestModelValidator organizationModelValidator;
-		private IBOLOrganizationMapper bolOrganizationMapper;
-		private IDALOrganizationMapper dalOrganizationMapper;
-		private ILogger logger;
+        public abstract class AbstractOrganizationService: AbstractService
+        {
+                private IOrganizationRepository organizationRepository;
 
-		public AbstractOrganizationService(
-			ILogger logger,
-			IOrganizationRepository organizationRepository,
-			IApiOrganizationRequestModelValidator organizationModelValidator,
-			IBOLOrganizationMapper bolorganizationMapper,
-			IDALOrganizationMapper dalorganizationMapper)
-			: base()
+                private IApiOrganizationRequestModelValidator organizationModelValidator;
 
-		{
-			this.organizationRepository = organizationRepository;
-			this.organizationModelValidator = organizationModelValidator;
-			this.bolOrganizationMapper = bolorganizationMapper;
-			this.dalOrganizationMapper = dalorganizationMapper;
-			this.logger = logger;
-		}
+                private IBOLOrganizationMapper bolOrganizationMapper;
 
-		public virtual async Task<List<ApiOrganizationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.organizationRepository.All(skip, take, orderClause);
+                private IDALOrganizationMapper dalOrganizationMapper;
 
-			return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiOrganizationResponseModel> Get(int id)
-		{
-			var record = await organizationRepository.Get(id);
+                public AbstractOrganizationService(
+                        ILogger logger,
+                        IOrganizationRepository organizationRepository,
+                        IApiOrganizationRequestModelValidator organizationModelValidator,
+                        IBOLOrganizationMapper bolorganizationMapper,
+                        IDALOrganizationMapper dalorganizationMapper)
+                        : base()
 
-			return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record));
-		}
+                {
+                        this.organizationRepository = organizationRepository;
+                        this.organizationModelValidator = organizationModelValidator;
+                        this.bolOrganizationMapper = bolorganizationMapper;
+                        this.dalOrganizationMapper = dalorganizationMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> Create(
-			ApiOrganizationRequestModel model)
-		{
-			CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.organizationModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolOrganizationMapper.MapModelToBO(default (int), model);
-				var record = await this.organizationRepository.Create(this.dalOrganizationMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiOrganizationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.organizationRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiOrganizationRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiOrganizationResponseModel> Get(int id)
+                {
+                        var record = await this.organizationRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolOrganizationMapper.MapModelToBO(id, model);
-				await this.organizationRepository.Update(this.dalOrganizationMapper.MapBOToEF(bo));
-			}
+                        return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> Create(
+                        ApiOrganizationRequestModel model)
+                {
+                        CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.organizationModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolOrganizationMapper.MapModelToBO(default (int), model);
+                                var record = await this.organizationRepository.Create(this.dalOrganizationMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.organizationRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiOrganizationRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolOrganizationMapper.MapModelToBO(id, model);
+                                await this.organizationRepository.Update(this.dalOrganizationMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.organizationRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ac000cb8621ddb177d9fe09f114190ba</Hash>
+    <Hash>4da9e92a8b30bcd38ef52fdcdaa8737a</Hash>
 </Codenesium>*/

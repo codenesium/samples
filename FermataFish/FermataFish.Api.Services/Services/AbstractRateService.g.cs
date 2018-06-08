@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractRateService: AbstractService
-	{
-		private IRateRepository rateRepository;
-		private IApiRateRequestModelValidator rateModelValidator;
-		private IBOLRateMapper bolRateMapper;
-		private IDALRateMapper dalRateMapper;
-		private ILogger logger;
+        public abstract class AbstractRateService: AbstractService
+        {
+                private IRateRepository rateRepository;
 
-		public AbstractRateService(
-			ILogger logger,
-			IRateRepository rateRepository,
-			IApiRateRequestModelValidator rateModelValidator,
-			IBOLRateMapper bolrateMapper,
-			IDALRateMapper dalrateMapper)
-			: base()
+                private IApiRateRequestModelValidator rateModelValidator;
 
-		{
-			this.rateRepository = rateRepository;
-			this.rateModelValidator = rateModelValidator;
-			this.bolRateMapper = bolrateMapper;
-			this.dalRateMapper = dalrateMapper;
-			this.logger = logger;
-		}
+                private IBOLRateMapper bolRateMapper;
 
-		public virtual async Task<List<ApiRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.rateRepository.All(skip, take, orderClause);
+                private IDALRateMapper dalRateMapper;
 
-			return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiRateResponseModel> Get(int id)
-		{
-			var record = await rateRepository.Get(id);
+                public AbstractRateService(
+                        ILogger logger,
+                        IRateRepository rateRepository,
+                        IApiRateRequestModelValidator rateModelValidator,
+                        IBOLRateMapper bolrateMapper,
+                        IDALRateMapper dalrateMapper)
+                        : base()
 
-			return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record));
-		}
+                {
+                        this.rateRepository = rateRepository;
+                        this.rateModelValidator = rateModelValidator;
+                        this.bolRateMapper = bolrateMapper;
+                        this.dalRateMapper = dalrateMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiRateResponseModel>> Create(
-			ApiRateRequestModel model)
-		{
-			CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.rateModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolRateMapper.MapModelToBO(default (int), model);
-				var record = await this.rateRepository.Create(this.dalRateMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.rateRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiRateRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiRateResponseModel> Get(int id)
+                {
+                        var record = await this.rateRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolRateMapper.MapModelToBO(id, model);
-				await this.rateRepository.Update(this.dalRateMapper.MapBOToEF(bo));
-			}
+                        return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiRateResponseModel>> Create(
+                        ApiRateRequestModel model)
+                {
+                        CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.rateModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolRateMapper.MapModelToBO(default (int), model);
+                                var record = await this.rateRepository.Create(this.dalRateMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.rateRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiRateRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolRateMapper.MapModelToBO(id, model);
+                                await this.rateRepository.Update(this.dalRateMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.rateRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c24ae6b636489de1fca29b931c697d3e</Hash>
+    <Hash>4267037bfc7159e49b4bc8bc9fe31d7c</Hash>
 </Codenesium>*/

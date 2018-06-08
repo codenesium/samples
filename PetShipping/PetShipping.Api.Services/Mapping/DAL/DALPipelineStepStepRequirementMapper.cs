@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public class DALPipelineStepStepRequirementMapper: AbstractDALPipelineStepStepRequirementMapper, IDALPipelineStepStepRequirementMapper
-	{
-		public DALPipelineStepStepRequirementMapper()
-		{}
-	}
+        public class DALPipelineStepStepRequirementMapper: DALAbstractPipelineStepStepRequirementMapper, IDALPipelineStepStepRequirementMapper
+        {
+                public DALPipelineStepStepRequirementMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>36ab060d6ed5d8da70333536a5fd4c20</Hash>
+    <Hash>10bbb35df5276df7e915b8f43cbfbc72</Hash>
 </Codenesium>*/

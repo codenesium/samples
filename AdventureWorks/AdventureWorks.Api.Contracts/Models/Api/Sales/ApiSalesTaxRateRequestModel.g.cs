@@ -3,127 +3,129 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSalesTaxRateRequestModel: AbstractApiRequestModel
-	{
-		public ApiSalesTaxRateRequestModel() : base()
-		{}
+        public partial class ApiSalesTaxRateRequestModel: AbstractApiRequestModel
+        {
+                public ApiSalesTaxRateRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			string name,
-			Guid rowguid,
-			int stateProvinceID,
-			decimal taxRate,
-			int taxType)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name;
-			this.Rowguid = rowguid.ToGuid();
-			this.StateProvinceID = stateProvinceID.ToInt();
-			this.TaxRate = taxRate.ToDecimal();
-			this.TaxType = taxType.ToInt();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        string name,
+                        Guid rowguid,
+                        int stateProvinceID,
+                        decimal taxRate,
+                        int taxType)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                        this.Rowguid = rowguid;
+                        this.StateProvinceID = stateProvinceID;
+                        this.TaxRate = taxRate;
+                        this.TaxType = taxType;
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private string name;
+                private string name;
 
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
+                [Required]
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
 
-			set
-			{
-				this.name = value;
-			}
-		}
+                        set
+                        {
+                                this.name = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
 
-		private int stateProvinceID;
+                private int stateProvinceID;
 
-		[Required]
-		public int StateProvinceID
-		{
-			get
-			{
-				return this.stateProvinceID;
-			}
+                [Required]
+                public int StateProvinceID
+                {
+                        get
+                        {
+                                return this.stateProvinceID;
+                        }
 
-			set
-			{
-				this.stateProvinceID = value;
-			}
-		}
+                        set
+                        {
+                                this.stateProvinceID = value;
+                        }
+                }
 
-		private decimal taxRate;
+                private decimal taxRate;
 
-		[Required]
-		public decimal TaxRate
-		{
-			get
-			{
-				return this.taxRate;
-			}
+                [Required]
+                public decimal TaxRate
+                {
+                        get
+                        {
+                                return this.taxRate;
+                        }
 
-			set
-			{
-				this.taxRate = value;
-			}
-		}
+                        set
+                        {
+                                this.taxRate = value;
+                        }
+                }
 
-		private int taxType;
+                private int taxType;
 
-		[Required]
-		public int TaxType
-		{
-			get
-			{
-				return this.taxType;
-			}
+                [Required]
+                public int TaxType
+                {
+                        get
+                        {
+                                return this.taxType;
+                        }
 
-			set
-			{
-				this.taxType = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.taxType = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>3e9cacb1412d94373c005fc56de137c0</Hash>
+    <Hash>02f32f656150a45613f516f9433798d8</Hash>
 </Codenesium>*/

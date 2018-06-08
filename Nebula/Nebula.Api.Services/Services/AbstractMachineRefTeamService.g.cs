@@ -12,87 +12,93 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public abstract class AbstractMachineRefTeamService: AbstractService
-	{
-		private IMachineRefTeamRepository machineRefTeamRepository;
-		private IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator;
-		private IBOLMachineRefTeamMapper bolMachineRefTeamMapper;
-		private IDALMachineRefTeamMapper dalMachineRefTeamMapper;
-		private ILogger logger;
+        public abstract class AbstractMachineRefTeamService: AbstractService
+        {
+                private IMachineRefTeamRepository machineRefTeamRepository;
 
-		public AbstractMachineRefTeamService(
-			ILogger logger,
-			IMachineRefTeamRepository machineRefTeamRepository,
-			IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
-			IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
-			IDALMachineRefTeamMapper dalmachineRefTeamMapper)
-			: base()
+                private IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator;
 
-		{
-			this.machineRefTeamRepository = machineRefTeamRepository;
-			this.machineRefTeamModelValidator = machineRefTeamModelValidator;
-			this.bolMachineRefTeamMapper = bolmachineRefTeamMapper;
-			this.dalMachineRefTeamMapper = dalmachineRefTeamMapper;
-			this.logger = logger;
-		}
+                private IBOLMachineRefTeamMapper bolMachineRefTeamMapper;
 
-		public virtual async Task<List<ApiMachineRefTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.machineRefTeamRepository.All(skip, take, orderClause);
+                private IDALMachineRefTeamMapper dalMachineRefTeamMapper;
 
-			return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiMachineRefTeamResponseModel> Get(int id)
-		{
-			var record = await machineRefTeamRepository.Get(id);
+                public AbstractMachineRefTeamService(
+                        ILogger logger,
+                        IMachineRefTeamRepository machineRefTeamRepository,
+                        IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
+                        IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
+                        IDALMachineRefTeamMapper dalmachineRefTeamMapper)
+                        : base()
 
-			return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(record));
-		}
+                {
+                        this.machineRefTeamRepository = machineRefTeamRepository;
+                        this.machineRefTeamModelValidator = machineRefTeamModelValidator;
+                        this.bolMachineRefTeamMapper = bolmachineRefTeamMapper;
+                        this.dalMachineRefTeamMapper = dalmachineRefTeamMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiMachineRefTeamResponseModel>> Create(
-			ApiMachineRefTeamRequestModel model)
-		{
-			CreateResponse<ApiMachineRefTeamResponseModel> response = new CreateResponse<ApiMachineRefTeamResponseModel>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolMachineRefTeamMapper.MapModelToBO(default (int), model);
-				var record = await this.machineRefTeamRepository.Create(this.dalMachineRefTeamMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiMachineRefTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.machineRefTeamRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiMachineRefTeamRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiMachineRefTeamResponseModel> Get(int id)
+                {
+                        var record = await this.machineRefTeamRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolMachineRefTeamMapper.MapModelToBO(id, model);
-				await this.machineRefTeamRepository.Update(this.dalMachineRefTeamMapper.MapBOToEF(bo));
-			}
+                        return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiMachineRefTeamResponseModel>> Create(
+                        ApiMachineRefTeamRequestModel model)
+                {
+                        CreateResponse<ApiMachineRefTeamResponseModel> response = new CreateResponse<ApiMachineRefTeamResponseModel>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolMachineRefTeamMapper.MapModelToBO(default (int), model);
+                                var record = await this.machineRefTeamRepository.Create(this.dalMachineRefTeamMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.machineRefTeamRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiMachineRefTeamRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolMachineRefTeamMapper.MapModelToBO(id, model);
+                                await this.machineRefTeamRepository.Update(this.dalMachineRefTeamMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.machineRefTeamRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6235838f2a9c849873f4dbd88faf60da</Hash>
+    <Hash>994c38c22011163cb072059f5e04b724</Hash>
 </Codenesium>*/

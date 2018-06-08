@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class TransactionHistoryArchiveService: AbstractTransactionHistoryArchiveService, ITransactionHistoryArchiveService
-	{
-		public TransactionHistoryArchiveService(
-			ILogger<TransactionHistoryArchiveRepository> logger,
-			ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
-			IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
-			IBOLTransactionHistoryArchiveMapper BOLtransactionHistoryArchiveMapper,
-			IDALTransactionHistoryArchiveMapper DALtransactionHistoryArchiveMapper)
-			: base(logger, transactionHistoryArchiveRepository,
-			       transactionHistoryArchiveModelValidator,
-			       BOLtransactionHistoryArchiveMapper,
-			       DALtransactionHistoryArchiveMapper)
-		{}
-	}
+        public class TransactionHistoryArchiveService: AbstractTransactionHistoryArchiveService, ITransactionHistoryArchiveService
+        {
+                public TransactionHistoryArchiveService(
+                        ILogger<TransactionHistoryArchiveRepository> logger,
+                        ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
+                        IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
+                        IBOLTransactionHistoryArchiveMapper boltransactionHistoryArchiveMapper,
+                        IDALTransactionHistoryArchiveMapper daltransactionHistoryArchiveMapper)
+                        : base(logger,
+                               transactionHistoryArchiveRepository,
+                               transactionHistoryArchiveModelValidator,
+                               boltransactionHistoryArchiveMapper,
+                               daltransactionHistoryArchiveMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e2c41da92b2e4aa4e3d9473091b7bf52</Hash>
+    <Hash>2d00e2c116fc202e9f6261f0f6ad22a4</Hash>
 </Codenesium>*/

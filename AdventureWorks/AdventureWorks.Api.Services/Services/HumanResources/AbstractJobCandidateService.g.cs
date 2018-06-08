@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractJobCandidateService: AbstractService
-	{
-		private IJobCandidateRepository jobCandidateRepository;
-		private IApiJobCandidateRequestModelValidator jobCandidateModelValidator;
-		private IBOLJobCandidateMapper bolJobCandidateMapper;
-		private IDALJobCandidateMapper dalJobCandidateMapper;
-		private ILogger logger;
+        public abstract class AbstractJobCandidateService: AbstractService
+        {
+                private IJobCandidateRepository jobCandidateRepository;
 
-		public AbstractJobCandidateService(
-			ILogger logger,
-			IJobCandidateRepository jobCandidateRepository,
-			IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
-			IBOLJobCandidateMapper boljobCandidateMapper,
-			IDALJobCandidateMapper daljobCandidateMapper)
-			: base()
+                private IApiJobCandidateRequestModelValidator jobCandidateModelValidator;
 
-		{
-			this.jobCandidateRepository = jobCandidateRepository;
-			this.jobCandidateModelValidator = jobCandidateModelValidator;
-			this.bolJobCandidateMapper = boljobCandidateMapper;
-			this.dalJobCandidateMapper = daljobCandidateMapper;
-			this.logger = logger;
-		}
+                private IBOLJobCandidateMapper bolJobCandidateMapper;
 
-		public virtual async Task<List<ApiJobCandidateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.jobCandidateRepository.All(skip, take, orderClause);
+                private IDALJobCandidateMapper dalJobCandidateMapper;
 
-			return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiJobCandidateResponseModel> Get(int jobCandidateID)
-		{
-			var record = await jobCandidateRepository.Get(jobCandidateID);
+                public AbstractJobCandidateService(
+                        ILogger logger,
+                        IJobCandidateRepository jobCandidateRepository,
+                        IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
+                        IBOLJobCandidateMapper boljobCandidateMapper,
+                        IDALJobCandidateMapper daljobCandidateMapper)
+                        : base()
 
-			return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record));
-		}
+                {
+                        this.jobCandidateRepository = jobCandidateRepository;
+                        this.jobCandidateModelValidator = jobCandidateModelValidator;
+                        this.bolJobCandidateMapper = boljobCandidateMapper;
+                        this.dalJobCandidateMapper = daljobCandidateMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
-			ApiJobCandidateRequestModel model)
-		{
-			CreateResponse<ApiJobCandidateResponseModel> response = new CreateResponse<ApiJobCandidateResponseModel>(await this.jobCandidateModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolJobCandidateMapper.MapModelToBO(default (int), model);
-				var record = await this.jobCandidateRepository.Create(this.dalJobCandidateMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiJobCandidateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.jobCandidateRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int jobCandidateID,
-			ApiJobCandidateRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.jobCandidateModelValidator.ValidateUpdateAsync(jobCandidateID, model));
+                public virtual async Task<ApiJobCandidateResponseModel> Get(int jobCandidateID)
+                {
+                        var record = await this.jobCandidateRepository.Get(jobCandidateID);
 
-			if (response.Success)
-			{
-				var bo = this.bolJobCandidateMapper.MapModelToBO(jobCandidateID, model);
-				await this.jobCandidateRepository.Update(this.dalJobCandidateMapper.MapBOToEF(bo));
-			}
+                        return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
+                        ApiJobCandidateRequestModel model)
+                {
+                        CreateResponse<ApiJobCandidateResponseModel> response = new CreateResponse<ApiJobCandidateResponseModel>(await this.jobCandidateModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolJobCandidateMapper.MapModelToBO(default (int), model);
+                                var record = await this.jobCandidateRepository.Create(this.dalJobCandidateMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int jobCandidateID)
-		{
-			ActionResponse response = new ActionResponse(await this.jobCandidateModelValidator.ValidateDeleteAsync(jobCandidateID));
+                                response.SetRecord(this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.jobCandidateRepository.Delete(jobCandidateID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<List<ApiJobCandidateResponseModel>> GetBusinessEntityID(Nullable<int> businessEntityID)
-		{
-			List<JobCandidate> records = await this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
+                public virtual async Task<ActionResponse> Update(
+                        int jobCandidateID,
+                        ApiJobCandidateRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.jobCandidateModelValidator.ValidateUpdateAsync(jobCandidateID, model));
 
-			return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolJobCandidateMapper.MapModelToBO(jobCandidateID, model);
+                                await this.jobCandidateRepository.Update(this.dalJobCandidateMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int jobCandidateID)
+                {
+                        ActionResponse response = new ActionResponse(await this.jobCandidateModelValidator.ValidateDeleteAsync(jobCandidateID));
+
+                        if (response.Success)
+                        {
+                                await this.jobCandidateRepository.Delete(jobCandidateID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<List<ApiJobCandidateResponseModel>> GetBusinessEntityID(Nullable<int> businessEntityID)
+                {
+                        List<JobCandidate> records = await this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
+
+                        return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>75b52b1dc62a2aaebd4145c552a87a3e</Hash>
+    <Hash>13d4499e4ec8c2b51cd52c1e03d1bf56</Hash>
 </Codenesium>*/

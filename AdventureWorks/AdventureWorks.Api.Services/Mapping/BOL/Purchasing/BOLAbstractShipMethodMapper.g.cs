@@ -2,52 +2,53 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractShipMethodMapper
-	{
-		public virtual BOShipMethod MapModelToBO(
-			int shipMethodID,
-			ApiShipMethodRequestModel model
-			)
-		{
-			BOShipMethod boShipMethod = new BOShipMethod();
+        public abstract class BOLAbstractShipMethodMapper
+        {
+                public virtual BOShipMethod MapModelToBO(
+                        int shipMethodID,
+                        ApiShipMethodRequestModel model
+                        )
+                {
+                        BOShipMethod boShipMethod = new BOShipMethod();
 
-			boShipMethod.SetProperties(
-				shipMethodID,
-				model.ModifiedDate,
-				model.Name,
-				model.Rowguid,
-				model.ShipBase,
-				model.ShipRate);
-			return boShipMethod;
-		}
+                        boShipMethod.SetProperties(
+                                shipMethodID,
+                                model.ModifiedDate,
+                                model.Name,
+                                model.Rowguid,
+                                model.ShipBase,
+                                model.ShipRate);
+                        return boShipMethod;
+                }
 
-		public virtual ApiShipMethodResponseModel MapBOToModel(
-			BOShipMethod boShipMethod)
-		{
-			var model = new ApiShipMethodResponseModel();
+                public virtual ApiShipMethodResponseModel MapBOToModel(
+                        BOShipMethod boShipMethod)
+                {
+                        var model = new ApiShipMethodResponseModel();
 
-			model.SetProperties(boShipMethod.ModifiedDate, boShipMethod.Name, boShipMethod.Rowguid, boShipMethod.ShipBase, boShipMethod.ShipMethodID, boShipMethod.ShipRate);
+                        model.SetProperties(boShipMethod.ModifiedDate, boShipMethod.Name, boShipMethod.Rowguid, boShipMethod.ShipBase, boShipMethod.ShipMethodID, boShipMethod.ShipRate);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiShipMethodResponseModel> MapBOToModel(
-			List<BOShipMethod> items)
-		{
-			List<ApiShipMethodResponseModel> response = new List<ApiShipMethodResponseModel>();
+                public virtual List<ApiShipMethodResponseModel> MapBOToModel(
+                        List<BOShipMethod> items)
+                {
+                        List<ApiShipMethodResponseModel> response = new List<ApiShipMethodResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8f9199a7458c084cbf753c9c5fdff277</Hash>
+    <Hash>3e34285ddba330dc0d7a8e18956e9b57</Hash>
 </Codenesium>*/

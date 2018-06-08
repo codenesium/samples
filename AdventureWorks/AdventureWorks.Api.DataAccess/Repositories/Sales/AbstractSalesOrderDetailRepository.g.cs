@@ -10,112 +10,114 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractSalesOrderDetailRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractSalesOrderDetailRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractSalesOrderDetailRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<SalesOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractSalesOrderDetailRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<SalesOrderDetail> Get(int salesOrderID)
-		{
-			return await this.GetById(salesOrderID);
-		}
+                public virtual Task<List<SalesOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<SalesOrderDetail> Create(SalesOrderDetail item)
-		{
-			this.Context.Set<SalesOrderDetail>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<SalesOrderDetail> Get(int salesOrderID)
+                {
+                        return await this.GetById(salesOrderID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<SalesOrderDetail> Create(SalesOrderDetail item)
+                {
+                        this.Context.Set<SalesOrderDetail>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(SalesOrderDetail item)
-		{
-			var entity = this.Context.Set<SalesOrderDetail>().Local.FirstOrDefault(x => x.SalesOrderID == item.SalesOrderID);
-			if (entity == null)
-			{
-				this.Context.Set<SalesOrderDetail>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(SalesOrderDetail item)
+                {
+                        var entity = this.Context.Set<SalesOrderDetail>().Local.FirstOrDefault(x => x.SalesOrderID == item.SalesOrderID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<SalesOrderDetail>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int salesOrderID)
-		{
-			SalesOrderDetail record = await this.GetById(salesOrderID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<SalesOrderDetail>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int salesOrderID)
+                {
+                        SalesOrderDetail record = await this.GetById(salesOrderID);
 
-		public async Task<List<SalesOrderDetail>> GetProductID(int productID)
-		{
-			var records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<SalesOrderDetail>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                public async Task<List<SalesOrderDetail>> GetProductID(int productID)
+                {
+                        var records = await this.SearchLinqEF(x => x.ProductID == productID);
 
-		protected async Task<List<SalesOrderDetail>> Where(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<SalesOrderDetail> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        return records;
+                }
 
-			return records;
-		}
+                protected async Task<List<SalesOrderDetail>> Where(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<SalesOrderDetail> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<SalesOrderDetail>> SearchLinqEF(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(SalesOrderDetail.SalesOrderID)} ASC";
-			}
-			return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesOrderDetail>();
-		}
+                        return records;
+                }
 
-		private async Task<List<SalesOrderDetail>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(SalesOrderDetail.SalesOrderID)} ASC";
-			}
+                private async Task<List<SalesOrderDetail>> SearchLinqEF(Expression<Func<SalesOrderDetail, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(SalesOrderDetail.SalesOrderID)} ASC";
+                        }
 
-			return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesOrderDetail>();
-		}
+                        return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesOrderDetail>();
+                }
 
-		private async Task<SalesOrderDetail> GetById(int salesOrderID)
-		{
-			List<SalesOrderDetail> records = await this.SearchLinqEF(x => x.SalesOrderID == salesOrderID);
+                private async Task<List<SalesOrderDetail>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(SalesOrderDetail.SalesOrderID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesOrderDetail>();
+                }
+
+                private async Task<SalesOrderDetail> GetById(int salesOrderID)
+                {
+                        List<SalesOrderDetail> records = await this.SearchLinqEF(x => x.SalesOrderID == salesOrderID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8426f06a1b0a4991f6ab6b09475f6f71</Hash>
+    <Hash>0fd0aac5652ca9fe8921c0c4a5be68da</Hash>
 </Codenesium>*/

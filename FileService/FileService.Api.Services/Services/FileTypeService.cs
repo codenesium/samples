@@ -10,22 +10,24 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public class FileTypeService: AbstractFileTypeService, IFileTypeService
-	{
-		public FileTypeService(
-			ILogger<FileTypeRepository> logger,
-			IFileTypeRepository fileTypeRepository,
-			IApiFileTypeRequestModelValidator fileTypeModelValidator,
-			IBOLFileTypeMapper BOLfileTypeMapper,
-			IDALFileTypeMapper DALfileTypeMapper)
-			: base(logger, fileTypeRepository,
-			       fileTypeModelValidator,
-			       BOLfileTypeMapper,
-			       DALfileTypeMapper)
-		{}
-	}
+        public class FileTypeService: AbstractFileTypeService, IFileTypeService
+        {
+                public FileTypeService(
+                        ILogger<FileTypeRepository> logger,
+                        IFileTypeRepository fileTypeRepository,
+                        IApiFileTypeRequestModelValidator fileTypeModelValidator,
+                        IBOLFileTypeMapper bolfileTypeMapper,
+                        IDALFileTypeMapper dalfileTypeMapper)
+                        : base(logger,
+                               fileTypeRepository,
+                               fileTypeModelValidator,
+                               bolfileTypeMapper,
+                               dalfileTypeMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>978d6dba293b58b0ac3d48cd3897c434</Hash>
+    <Hash>f2e8fc83ad55228c6fe850b974f4e857</Hash>
 </Codenesium>*/

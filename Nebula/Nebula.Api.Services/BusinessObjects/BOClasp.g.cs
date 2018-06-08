@@ -3,26 +3,29 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-	public partial class BOClasp: AbstractBusinessObject
-	{
-		public BOClasp() : base()
-		{}
+        public partial class BOClasp: AbstractBusinessObject
+        {
+                public BOClasp() : base()
+                {
+                }
 
-		public void SetProperties(int id,
-		                          int nextChainId,
-		                          int previousChainId)
-		{
-			this.Id = id.ToInt();
-			this.NextChainId = nextChainId.ToInt();
-			this.PreviousChainId = previousChainId.ToInt();
-		}
+                public void SetProperties(int id,
+                                          int nextChainId,
+                                          int previousChainId)
+                {
+                        this.Id = id;
+                        this.NextChainId = nextChainId;
+                        this.PreviousChainId = previousChainId;
+                }
 
-		public int Id { get; private set; }
-		public int NextChainId { get; private set; }
-		public int PreviousChainId { get; private set; }
-	}
+                public int Id { get; private set; }
+
+                public int NextChainId { get; private set; }
+
+                public int PreviousChainId { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bb93de21cc14c70cb4083e7fcb1944d4</Hash>
+    <Hash>244202ea533c56720bf98b4e0dce537e</Hash>
 </Codenesium>*/

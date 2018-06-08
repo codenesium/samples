@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/phoneNumberTypes")]
-	[ApiVersion("1.0")]
-	public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
-	{
-		public PhoneNumberTypeController(
-			ServiceSettings settings,
-			ILogger<PhoneNumberTypeController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IPhoneNumberTypeService phoneNumberTypeService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       phoneNumberTypeService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/phoneNumberTypes")]
+        [ApiVersion("1.0")]
+        public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
+        {
+                public PhoneNumberTypeController(
+                        ServiceSettings settings,
+                        ILogger<PhoneNumberTypeController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IPhoneNumberTypeService phoneNumberTypeService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               phoneNumberTypeService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>8a6a69f42087a204a22bb0d7e6599d13</Hash>
+    <Hash>219948105159cc3b3a6196c12e181bb5</Hash>
 </Codenesium>*/

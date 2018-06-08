@@ -2,51 +2,52 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractPasswordMapper
-	{
-		public virtual BOPassword MapModelToBO(
-			int businessEntityID,
-			ApiPasswordRequestModel model
-			)
-		{
-			BOPassword boPassword = new BOPassword();
+        public abstract class BOLAbstractPasswordMapper
+        {
+                public virtual BOPassword MapModelToBO(
+                        int businessEntityID,
+                        ApiPasswordRequestModel model
+                        )
+                {
+                        BOPassword boPassword = new BOPassword();
 
-			boPassword.SetProperties(
-				businessEntityID,
-				model.ModifiedDate,
-				model.PasswordHash,
-				model.PasswordSalt,
-				model.Rowguid);
-			return boPassword;
-		}
+                        boPassword.SetProperties(
+                                businessEntityID,
+                                model.ModifiedDate,
+                                model.PasswordHash,
+                                model.PasswordSalt,
+                                model.Rowguid);
+                        return boPassword;
+                }
 
-		public virtual ApiPasswordResponseModel MapBOToModel(
-			BOPassword boPassword)
-		{
-			var model = new ApiPasswordResponseModel();
+                public virtual ApiPasswordResponseModel MapBOToModel(
+                        BOPassword boPassword)
+                {
+                        var model = new ApiPasswordResponseModel();
 
-			model.SetProperties(boPassword.BusinessEntityID, boPassword.ModifiedDate, boPassword.PasswordHash, boPassword.PasswordSalt, boPassword.Rowguid);
+                        model.SetProperties(boPassword.BusinessEntityID, boPassword.ModifiedDate, boPassword.PasswordHash, boPassword.PasswordSalt, boPassword.Rowguid);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiPasswordResponseModel> MapBOToModel(
-			List<BOPassword> items)
-		{
-			List<ApiPasswordResponseModel> response = new List<ApiPasswordResponseModel>();
+                public virtual List<ApiPasswordResponseModel> MapBOToModel(
+                        List<BOPassword> items)
+                {
+                        List<ApiPasswordResponseModel> response = new List<ApiPasswordResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>fc613264f8f3a5f62e5a7477758cf937</Hash>
+    <Hash>d1ffd81e573a97bc3e9c2a717a6dd903</Hash>
 </Codenesium>*/

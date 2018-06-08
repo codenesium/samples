@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SalesReasonService: AbstractSalesReasonService, ISalesReasonService
-	{
-		public SalesReasonService(
-			ILogger<SalesReasonRepository> logger,
-			ISalesReasonRepository salesReasonRepository,
-			IApiSalesReasonRequestModelValidator salesReasonModelValidator,
-			IBOLSalesReasonMapper BOLsalesReasonMapper,
-			IDALSalesReasonMapper DALsalesReasonMapper)
-			: base(logger, salesReasonRepository,
-			       salesReasonModelValidator,
-			       BOLsalesReasonMapper,
-			       DALsalesReasonMapper)
-		{}
-	}
+        public class SalesReasonService: AbstractSalesReasonService, ISalesReasonService
+        {
+                public SalesReasonService(
+                        ILogger<SalesReasonRepository> logger,
+                        ISalesReasonRepository salesReasonRepository,
+                        IApiSalesReasonRequestModelValidator salesReasonModelValidator,
+                        IBOLSalesReasonMapper bolsalesReasonMapper,
+                        IDALSalesReasonMapper dalsalesReasonMapper)
+                        : base(logger,
+                               salesReasonRepository,
+                               salesReasonModelValidator,
+                               bolsalesReasonMapper,
+                               dalsalesReasonMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>51cd2aa37f702050f4ee34aefb6657ab</Hash>
+    <Hash>061ec947820a9112dfdb0bef5d46041b</Hash>
 </Codenesium>*/

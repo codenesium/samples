@@ -10,22 +10,24 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public class ChainService: AbstractChainService, IChainService
-	{
-		public ChainService(
-			ILogger<ChainRepository> logger,
-			IChainRepository chainRepository,
-			IApiChainRequestModelValidator chainModelValidator,
-			IBOLChainMapper BOLchainMapper,
-			IDALChainMapper DALchainMapper)
-			: base(logger, chainRepository,
-			       chainModelValidator,
-			       BOLchainMapper,
-			       DALchainMapper)
-		{}
-	}
+        public class ChainService: AbstractChainService, IChainService
+        {
+                public ChainService(
+                        ILogger<ChainRepository> logger,
+                        IChainRepository chainRepository,
+                        IApiChainRequestModelValidator chainModelValidator,
+                        IBOLChainMapper bolchainMapper,
+                        IDALChainMapper dalchainMapper)
+                        : base(logger,
+                               chainRepository,
+                               chainModelValidator,
+                               bolchainMapper,
+                               dalchainMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>debf5319ffb5293dbed3966af65e095f</Hash>
+    <Hash>db4ae08f691ea0964e52c2a39c3edde6</Hash>
 </Codenesium>*/

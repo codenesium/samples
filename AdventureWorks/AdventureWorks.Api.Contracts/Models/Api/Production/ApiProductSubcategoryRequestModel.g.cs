@@ -3,91 +3,93 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductSubcategoryRequestModel: AbstractApiRequestModel
-	{
-		public ApiProductSubcategoryRequestModel() : base()
-		{}
+        public partial class ApiProductSubcategoryRequestModel: AbstractApiRequestModel
+        {
+                public ApiProductSubcategoryRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			string name,
-			int productCategoryID,
-			Guid rowguid)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name;
-			this.ProductCategoryID = productCategoryID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        string name,
+                        int productCategoryID,
+                        Guid rowguid)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                        this.ProductCategoryID = productCategoryID;
+                        this.Rowguid = rowguid;
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private string name;
+                private string name;
 
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
+                [Required]
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
 
-			set
-			{
-				this.name = value;
-			}
-		}
+                        set
+                        {
+                                this.name = value;
+                        }
+                }
 
-		private int productCategoryID;
+                private int productCategoryID;
 
-		[Required]
-		public int ProductCategoryID
-		{
-			get
-			{
-				return this.productCategoryID;
-			}
+                [Required]
+                public int ProductCategoryID
+                {
+                        get
+                        {
+                                return this.productCategoryID;
+                        }
 
-			set
-			{
-				this.productCategoryID = value;
-			}
-		}
+                        set
+                        {
+                                this.productCategoryID = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f1eccc26d60136e0c3804b3620dee942</Hash>
+    <Hash>1afff89d2a788c20077ecc2eee696e3d</Hash>
 </Codenesium>*/

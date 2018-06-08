@@ -12,106 +12,112 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractPersonService: AbstractService
-	{
-		private IPersonRepository personRepository;
-		private IApiPersonRequestModelValidator personModelValidator;
-		private IBOLPersonMapper bolPersonMapper;
-		private IDALPersonMapper dalPersonMapper;
-		private ILogger logger;
+        public abstract class AbstractPersonService: AbstractService
+        {
+                private IPersonRepository personRepository;
 
-		public AbstractPersonService(
-			ILogger logger,
-			IPersonRepository personRepository,
-			IApiPersonRequestModelValidator personModelValidator,
-			IBOLPersonMapper bolpersonMapper,
-			IDALPersonMapper dalpersonMapper)
-			: base()
+                private IApiPersonRequestModelValidator personModelValidator;
 
-		{
-			this.personRepository = personRepository;
-			this.personModelValidator = personModelValidator;
-			this.bolPersonMapper = bolpersonMapper;
-			this.dalPersonMapper = dalpersonMapper;
-			this.logger = logger;
-		}
+                private IBOLPersonMapper bolPersonMapper;
 
-		public virtual async Task<List<ApiPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.personRepository.All(skip, take, orderClause);
+                private IDALPersonMapper dalPersonMapper;
 
-			return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPersonResponseModel> Get(int businessEntityID)
-		{
-			var record = await personRepository.Get(businessEntityID);
+                public AbstractPersonService(
+                        ILogger logger,
+                        IPersonRepository personRepository,
+                        IApiPersonRequestModelValidator personModelValidator,
+                        IBOLPersonMapper bolpersonMapper,
+                        IDALPersonMapper dalpersonMapper)
+                        : base()
 
-			return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record));
-		}
+                {
+                        this.personRepository = personRepository;
+                        this.personModelValidator = personModelValidator;
+                        this.bolPersonMapper = bolpersonMapper;
+                        this.dalPersonMapper = dalpersonMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
-			ApiPersonRequestModel model)
-		{
-			CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.personModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPersonMapper.MapModelToBO(default (int), model);
-				var record = await this.personRepository.Create(this.dalPersonMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPersonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.personRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int businessEntityID,
-			ApiPersonRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateUpdateAsync(businessEntityID, model));
+                public virtual async Task<ApiPersonResponseModel> Get(int businessEntityID)
+                {
+                        var record = await this.personRepository.Get(businessEntityID);
 
-			if (response.Success)
-			{
-				var bo = this.bolPersonMapper.MapModelToBO(businessEntityID, model);
-				await this.personRepository.Update(this.dalPersonMapper.MapBOToEF(bo));
-			}
+                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
+                        ApiPersonRequestModel model)
+                {
+                        CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.personModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPersonMapper.MapModelToBO(default (int), model);
+                                var record = await this.personRepository.Create(this.dalPersonMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int businessEntityID)
-		{
-			ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateDeleteAsync(businessEntityID));
+                                response.SetRecord(this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.personRepository.Delete(businessEntityID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<List<ApiPersonResponseModel>> GetLastNameFirstNameMiddleName(string lastName,string firstName,string middleName)
-		{
-			List<Person> records = await this.personRepository.GetLastNameFirstNameMiddleName(lastName,firstName,middleName);
+                public virtual async Task<ActionResponse> Update(
+                        int businessEntityID,
+                        ApiPersonRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateUpdateAsync(businessEntityID, model));
 
-			return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
-		}
-		public async Task<List<ApiPersonResponseModel>> GetAdditionalContactInfo(string additionalContactInfo)
-		{
-			List<Person> records = await this.personRepository.GetAdditionalContactInfo(additionalContactInfo);
+                        if (response.Success)
+                        {
+                                var bo = this.bolPersonMapper.MapModelToBO(businessEntityID, model);
+                                await this.personRepository.Update(this.dalPersonMapper.MapBOToEF(bo));
+                        }
 
-			return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
-		}
-		public async Task<List<ApiPersonResponseModel>> GetDemographics(string demographics)
-		{
-			List<Person> records = await this.personRepository.GetDemographics(demographics);
+                        return response;
+                }
 
-			return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
-		}
-	}
+                public virtual async Task<ActionResponse> Delete(
+                        int businessEntityID)
+                {
+                        ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateDeleteAsync(businessEntityID));
+
+                        if (response.Success)
+                        {
+                                await this.personRepository.Delete(businessEntityID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<List<ApiPersonResponseModel>> GetLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
+                {
+                        List<Person> records = await this.personRepository.GetLastNameFirstNameMiddleName(lastName, firstName, middleName);
+
+                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
+                }
+                public async Task<List<ApiPersonResponseModel>> GetAdditionalContactInfo(string additionalContactInfo)
+                {
+                        List<Person> records = await this.personRepository.GetAdditionalContactInfo(additionalContactInfo);
+
+                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
+                }
+                public async Task<List<ApiPersonResponseModel>> GetDemographics(string demographics)
+                {
+                        List<Person> records = await this.personRepository.GetDemographics(demographics);
+
+                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>539812f579ed47f4a9fc54ad492e8ca6</Hash>
+    <Hash>d17043d9458f4d7741d524ef26a3ffd4</Hash>
 </Codenesium>*/

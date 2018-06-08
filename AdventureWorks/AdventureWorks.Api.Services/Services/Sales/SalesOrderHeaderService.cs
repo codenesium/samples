@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class SalesOrderHeaderService: AbstractSalesOrderHeaderService, ISalesOrderHeaderService
-	{
-		public SalesOrderHeaderService(
-			ILogger<SalesOrderHeaderRepository> logger,
-			ISalesOrderHeaderRepository salesOrderHeaderRepository,
-			IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
-			IBOLSalesOrderHeaderMapper BOLsalesOrderHeaderMapper,
-			IDALSalesOrderHeaderMapper DALsalesOrderHeaderMapper)
-			: base(logger, salesOrderHeaderRepository,
-			       salesOrderHeaderModelValidator,
-			       BOLsalesOrderHeaderMapper,
-			       DALsalesOrderHeaderMapper)
-		{}
-	}
+        public class SalesOrderHeaderService: AbstractSalesOrderHeaderService, ISalesOrderHeaderService
+        {
+                public SalesOrderHeaderService(
+                        ILogger<SalesOrderHeaderRepository> logger,
+                        ISalesOrderHeaderRepository salesOrderHeaderRepository,
+                        IApiSalesOrderHeaderRequestModelValidator salesOrderHeaderModelValidator,
+                        IBOLSalesOrderHeaderMapper bolsalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalsalesOrderHeaderMapper)
+                        : base(logger,
+                               salesOrderHeaderRepository,
+                               salesOrderHeaderModelValidator,
+                               bolsalesOrderHeaderMapper,
+                               dalsalesOrderHeaderMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>968d39218fb4a709255372eb2c8139f7</Hash>
+    <Hash>ee9184412f18e371a8e09e079465004a</Hash>
 </Codenesium>*/

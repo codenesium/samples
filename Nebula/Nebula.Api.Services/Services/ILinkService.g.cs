@@ -7,22 +7,22 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public interface ILinkService
-	{
-		Task<CreateResponse<ApiLinkResponseModel>> Create(
-			ApiLinkRequestModel model);
+        public interface ILinkService
+        {
+                Task<CreateResponse<ApiLinkResponseModel>> Create(
+                        ApiLinkRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiLinkRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiLinkRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiLinkResponseModel> Get(int id);
+                Task<ApiLinkResponseModel> Get(int id);
 
-		Task<List<ApiLinkResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiLinkResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>1fc2dda43eafbc559544545441c1b83a</Hash>
+    <Hash>8322243e3bfea3ce0c1aba3c338b0b98</Hash>
 </Codenesium>*/

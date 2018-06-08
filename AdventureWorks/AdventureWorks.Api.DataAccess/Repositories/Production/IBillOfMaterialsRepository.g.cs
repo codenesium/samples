@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IBillOfMaterialsRepository
-	{
-		Task<BillOfMaterials> Create(BillOfMaterials item);
+        public interface IBillOfMaterialsRepository
+        {
+                Task<BillOfMaterials> Create(BillOfMaterials item);
 
-		Task Update(BillOfMaterials item);
+                Task Update(BillOfMaterials item);
 
-		Task Delete(int billOfMaterialsID);
+                Task Delete(int billOfMaterialsID);
 
-		Task<BillOfMaterials> Get(int billOfMaterialsID);
+                Task<BillOfMaterials> Get(int billOfMaterialsID);
 
-		Task<List<BillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<BillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<BillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID,int componentID,DateTime startDate);
-		Task<List<BillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
-	}
+                Task<BillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate);
+                Task<List<BillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
+        }
 }
 
 /*<Codenesium>
-    <Hash>ad4f9835ec2a355ef2496f18d3d5e7e2</Hash>
+    <Hash>fce3e67bbe8e224c4b5eb45efc9a9951</Hash>
 </Codenesium>*/

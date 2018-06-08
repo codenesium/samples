@@ -10,22 +10,24 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public class LessonService: AbstractLessonService, ILessonService
-	{
-		public LessonService(
-			ILogger<LessonRepository> logger,
-			ILessonRepository lessonRepository,
-			IApiLessonRequestModelValidator lessonModelValidator,
-			IBOLLessonMapper BOLlessonMapper,
-			IDALLessonMapper DALlessonMapper)
-			: base(logger, lessonRepository,
-			       lessonModelValidator,
-			       BOLlessonMapper,
-			       DALlessonMapper)
-		{}
-	}
+        public class LessonService: AbstractLessonService, ILessonService
+        {
+                public LessonService(
+                        ILogger<LessonRepository> logger,
+                        ILessonRepository lessonRepository,
+                        IApiLessonRequestModelValidator lessonModelValidator,
+                        IBOLLessonMapper bollessonMapper,
+                        IDALLessonMapper dallessonMapper)
+                        : base(logger,
+                               lessonRepository,
+                               lessonModelValidator,
+                               bollessonMapper,
+                               dallessonMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>27a5f538793a2b491184857fc0d59977</Hash>
+    <Hash>4051cdea5c5529a021430857df864494</Hash>
 </Codenesium>*/

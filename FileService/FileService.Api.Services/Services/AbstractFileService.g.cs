@@ -12,87 +12,93 @@ using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-	public abstract class AbstractFileService: AbstractService
-	{
-		private IFileRepository fileRepository;
-		private IApiFileRequestModelValidator fileModelValidator;
-		private IBOLFileMapper bolFileMapper;
-		private IDALFileMapper dalFileMapper;
-		private ILogger logger;
+        public abstract class AbstractFileService: AbstractService
+        {
+                private IFileRepository fileRepository;
 
-		public AbstractFileService(
-			ILogger logger,
-			IFileRepository fileRepository,
-			IApiFileRequestModelValidator fileModelValidator,
-			IBOLFileMapper bolfileMapper,
-			IDALFileMapper dalfileMapper)
-			: base()
+                private IApiFileRequestModelValidator fileModelValidator;
 
-		{
-			this.fileRepository = fileRepository;
-			this.fileModelValidator = fileModelValidator;
-			this.bolFileMapper = bolfileMapper;
-			this.dalFileMapper = dalfileMapper;
-			this.logger = logger;
-		}
+                private IBOLFileMapper bolFileMapper;
 
-		public virtual async Task<List<ApiFileResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.fileRepository.All(skip, take, orderClause);
+                private IDALFileMapper dalFileMapper;
 
-			return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiFileResponseModel> Get(int id)
-		{
-			var record = await fileRepository.Get(id);
+                public AbstractFileService(
+                        ILogger logger,
+                        IFileRepository fileRepository,
+                        IApiFileRequestModelValidator fileModelValidator,
+                        IBOLFileMapper bolfileMapper,
+                        IDALFileMapper dalfileMapper)
+                        : base()
 
-			return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record));
-		}
+                {
+                        this.fileRepository = fileRepository;
+                        this.fileModelValidator = fileModelValidator;
+                        this.bolFileMapper = bolfileMapper;
+                        this.dalFileMapper = dalfileMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiFileResponseModel>> Create(
-			ApiFileRequestModel model)
-		{
-			CreateResponse<ApiFileResponseModel> response = new CreateResponse<ApiFileResponseModel>(await this.fileModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolFileMapper.MapModelToBO(default (int), model);
-				var record = await this.fileRepository.Create(this.dalFileMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiFileResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.fileRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiFileRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiFileResponseModel> Get(int id)
+                {
+                        var record = await this.fileRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolFileMapper.MapModelToBO(id, model);
-				await this.fileRepository.Update(this.dalFileMapper.MapBOToEF(bo));
-			}
+                        return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiFileResponseModel>> Create(
+                        ApiFileRequestModel model)
+                {
+                        CreateResponse<ApiFileResponseModel> response = new CreateResponse<ApiFileResponseModel>(await this.fileModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolFileMapper.MapModelToBO(default (int), model);
+                                var record = await this.fileRepository.Create(this.dalFileMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.fileRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiFileRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolFileMapper.MapModelToBO(id, model);
+                                await this.fileRepository.Update(this.dalFileMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.fileRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>010877e208b46c5c6da727dc572c5390</Hash>
+    <Hash>a7edff1b24be632d7e411ab7df52e325</Hash>
 </Codenesium>*/

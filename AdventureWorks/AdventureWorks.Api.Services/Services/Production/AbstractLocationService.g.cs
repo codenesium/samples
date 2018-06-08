@@ -12,94 +12,100 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class AbstractLocationService: AbstractService
-	{
-		private ILocationRepository locationRepository;
-		private IApiLocationRequestModelValidator locationModelValidator;
-		private IBOLLocationMapper bolLocationMapper;
-		private IDALLocationMapper dalLocationMapper;
-		private ILogger logger;
+        public abstract class AbstractLocationService: AbstractService
+        {
+                private ILocationRepository locationRepository;
 
-		public AbstractLocationService(
-			ILogger logger,
-			ILocationRepository locationRepository,
-			IApiLocationRequestModelValidator locationModelValidator,
-			IBOLLocationMapper bollocationMapper,
-			IDALLocationMapper dallocationMapper)
-			: base()
+                private IApiLocationRequestModelValidator locationModelValidator;
 
-		{
-			this.locationRepository = locationRepository;
-			this.locationModelValidator = locationModelValidator;
-			this.bolLocationMapper = bollocationMapper;
-			this.dalLocationMapper = dallocationMapper;
-			this.logger = logger;
-		}
+                private IBOLLocationMapper bolLocationMapper;
 
-		public virtual async Task<List<ApiLocationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.locationRepository.All(skip, take, orderClause);
+                private IDALLocationMapper dalLocationMapper;
 
-			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiLocationResponseModel> Get(short locationID)
-		{
-			var record = await locationRepository.Get(locationID);
+                public AbstractLocationService(
+                        ILogger logger,
+                        ILocationRepository locationRepository,
+                        IApiLocationRequestModelValidator locationModelValidator,
+                        IBOLLocationMapper bollocationMapper,
+                        IDALLocationMapper dallocationMapper)
+                        : base()
 
-			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
-		}
+                {
+                        this.locationRepository = locationRepository;
+                        this.locationModelValidator = locationModelValidator;
+                        this.bolLocationMapper = bollocationMapper;
+                        this.dalLocationMapper = dallocationMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
-			ApiLocationRequestModel model)
-		{
-			CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.locationModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolLocationMapper.MapModelToBO(default (short), model);
-				var record = await this.locationRepository.Create(this.dalLocationMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiLocationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.locationRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			short locationID,
-			ApiLocationRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateUpdateAsync(locationID, model));
+                public virtual async Task<ApiLocationResponseModel> Get(short locationID)
+                {
+                        var record = await this.locationRepository.Get(locationID);
 
-			if (response.Success)
-			{
-				var bo = this.bolLocationMapper.MapModelToBO(locationID, model);
-				await this.locationRepository.Update(this.dalLocationMapper.MapBOToEF(bo));
-			}
+                        return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
+                        ApiLocationRequestModel model)
+                {
+                        CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.locationModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolLocationMapper.MapModelToBO(default (short), model);
+                                var record = await this.locationRepository.Create(this.dalLocationMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			short locationID)
-		{
-			ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateDeleteAsync(locationID));
+                                response.SetRecord(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.locationRepository.Delete(locationID);
-			}
-			return response;
-		}
+                        return response;
+                }
 
-		public async Task<ApiLocationResponseModel> GetName(string name)
-		{
-			Location record = await this.locationRepository.GetName(name);
+                public virtual async Task<ActionResponse> Update(
+                        short locationID,
+                        ApiLocationRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateUpdateAsync(locationID, model));
 
-			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
-		}
-	}
+                        if (response.Success)
+                        {
+                                var bo = this.bolLocationMapper.MapModelToBO(locationID, model);
+                                await this.locationRepository.Update(this.dalLocationMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        short locationID)
+                {
+                        ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateDeleteAsync(locationID));
+
+                        if (response.Success)
+                        {
+                                await this.locationRepository.Delete(locationID);
+                        }
+
+                        return response;
+                }
+
+                public async Task<ApiLocationResponseModel> GetName(string name)
+                {
+                        Location record = await this.locationRepository.GetName(name);
+
+                        return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>1ac434edb490154d1b7b63daabe1ae96</Hash>
+    <Hash>53ef33e901b3cfe5f318f82c69b56c12</Hash>
 </Codenesium>*/

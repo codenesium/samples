@@ -4,72 +4,77 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiProductProductPhotoResponseModel: AbstractApiResponseModel
-	{
-		public ApiProductProductPhotoResponseModel() : base()
-		{}
+        public partial class ApiProductProductPhotoResponseModel: AbstractApiResponseModel
+        {
+                public ApiProductProductPhotoResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			bool primary,
-			int productID,
-			int productPhotoID)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Primary = primary.ToBoolean();
-			this.ProductID = productID.ToInt();
-			this.ProductPhotoID = productPhotoID.ToInt();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        bool primary,
+                        int productID,
+                        int productPhotoID)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.Primary = primary;
+                        this.ProductID = productID;
+                        this.ProductPhotoID = productPhotoID;
+                }
 
-		public DateTime ModifiedDate { get; private set; }
-		public bool Primary { get; private set; }
-		public int ProductID { get; private set; }
-		public int ProductPhotoID { get; private set; }
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public bool Primary { get; private set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public int ProductID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializePrimaryValue { get; set; } = true;
+                public int ProductPhotoID { get; private set; }
 
-		public bool ShouldSerializePrimary()
-		{
-			return this.ShouldSerializePrimaryValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductIDValue { get; set; } = true;
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		public bool ShouldSerializeProductID()
-		{
-			return this.ShouldSerializeProductIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializePrimaryValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeProductPhotoIDValue { get; set; } = true;
+                public bool ShouldSerializePrimary()
+                {
+                        return this.ShouldSerializePrimaryValue;
+                }
 
-		public bool ShouldSerializeProductPhotoID()
-		{
-			return this.ShouldSerializeProductPhotoIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializePrimaryValue = false;
-			this.ShouldSerializeProductIDValue = false;
-			this.ShouldSerializeProductPhotoIDValue = false;
-		}
-	}
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProductPhotoIDValue { get; set; } = true;
+
+                public bool ShouldSerializeProductPhotoID()
+                {
+                        return this.ShouldSerializeProductPhotoIDValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializePrimaryValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializeProductPhotoIDValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>d6665fd50b6ccdd8291f4d2f845f5699</Hash>
+    <Hash>cfa356a84392537766f06c9b0f471612</Hash>
 </Codenesium>*/

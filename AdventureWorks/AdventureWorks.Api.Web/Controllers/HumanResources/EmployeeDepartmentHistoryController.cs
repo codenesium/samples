@@ -12,28 +12,28 @@ using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Web
 {
-	[Route("api/employeeDepartmentHistories")]
-	[ApiVersion("1.0")]
-	public class EmployeeDepartmentHistoryController: AbstractEmployeeDepartmentHistoryController
-	{
-		public EmployeeDepartmentHistoryController(
-			ServiceSettings settings,
-			ILogger<EmployeeDepartmentHistoryController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IEmployeeDepartmentHistoryService employeeDepartmentHistoryService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       employeeDepartmentHistoryService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/employeeDepartmentHistories")]
+        [ApiVersion("1.0")]
+        public class EmployeeDepartmentHistoryController: AbstractEmployeeDepartmentHistoryController
+        {
+                public EmployeeDepartmentHistoryController(
+                        ServiceSettings settings,
+                        ILogger<EmployeeDepartmentHistoryController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IEmployeeDepartmentHistoryService employeeDepartmentHistoryService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               employeeDepartmentHistoryService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>919941cad04b89bf507f0032a1777e56</Hash>
+    <Hash>05977d74d534742246e7c9e1689b4544</Hash>
 </Codenesium>*/

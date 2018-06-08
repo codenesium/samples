@@ -12,28 +12,28 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/admins")]
-	[ApiVersion("1.0")]
-	public class AdminController: AbstractAdminController
-	{
-		public AdminController(
-			ServiceSettings settings,
-			ILogger<AdminController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IAdminService adminService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       adminService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/admins")]
+        [ApiVersion("1.0")]
+        public class AdminController: AbstractAdminController
+        {
+                public AdminController(
+                        ServiceSettings settings,
+                        ILogger<AdminController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IAdminService adminService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               adminService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b63443c4aaa23556f44371514825e8fb</Hash>
+    <Hash>23fe7595a5b0b685ff5e7e30787d12e6</Hash>
 </Codenesium>*/

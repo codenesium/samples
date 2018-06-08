@@ -7,18 +7,21 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
+
 namespace PetShippingNS.Api.Client
 {
-	public class ApiClient: AbstractApiClient
-	{
-		public ApiClient(string apiUrl) : base(apiUrl,"1.0")
-		{}
+        public class ApiClient: AbstractApiClient
+        {
+                public ApiClient(string apiUrl) : base(apiUrl, "1.0")
+                {
+                }
 
-		public ApiClient(HttpClient client) : base(client)
-		{}
-	}
+                public ApiClient(HttpClient client) : base(client)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>0067084be6e471875fbe7b054ace2059</Hash>
+    <Hash>2de02d846c1d993826d3ffab1192bd76</Hash>
 </Codenesium>*/

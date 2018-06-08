@@ -10,105 +10,107 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public abstract class AbstractProductModelProductDescriptionCultureRepository: AbstractRepository
-	{
-		protected ApplicationDbContext Context { get; }
-		protected ILogger Logger { get; }
+        public abstract class AbstractProductModelProductDescriptionCultureRepository: AbstractRepository
+        {
+                protected ApplicationDbContext Context { get; }
 
-		public AbstractProductModelProductDescriptionCultureRepository(
-			ILogger logger,
-			ApplicationDbContext context)
-			: base ()
-		{
-			this.Logger = logger;
-			this.Context = context;
-		}
+                protected ILogger Logger { get; }
 
-		public virtual Task<List<ProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			return this.SearchLinqEF(x => true, skip, take, orderClause);
-		}
+                public AbstractProductModelProductDescriptionCultureRepository(
+                        ILogger logger,
+                        ApplicationDbContext context)
+                        : base ()
+                {
+                        this.Logger = logger;
+                        this.Context = context;
+                }
 
-		public async virtual Task<ProductModelProductDescriptionCulture> Get(int productModelID)
-		{
-			return await this.GetById(productModelID);
-		}
+                public virtual Task<List<ProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                }
 
-		public async virtual Task<ProductModelProductDescriptionCulture> Create(ProductModelProductDescriptionCulture item)
-		{
-			this.Context.Set<ProductModelProductDescriptionCulture>().Add(item);
-			await this.Context.SaveChangesAsync();
+                public async virtual Task<ProductModelProductDescriptionCulture> Get(int productModelID)
+                {
+                        return await this.GetById(productModelID);
+                }
 
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
+                public async virtual Task<ProductModelProductDescriptionCulture> Create(ProductModelProductDescriptionCulture item)
+                {
+                        this.Context.Set<ProductModelProductDescriptionCulture>().Add(item);
+                        await this.Context.SaveChangesAsync();
 
-		public async virtual Task Update(ProductModelProductDescriptionCulture item)
-		{
-			var entity = this.Context.Set<ProductModelProductDescriptionCulture>().Local.FirstOrDefault(x => x.ProductModelID == item.ProductModelID);
-			if (entity == null)
-			{
-				this.Context.Set<ProductModelProductDescriptionCulture>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
+                        this.Context.Entry(item).State = EntityState.Detached;
+                        return item;
+                }
 
-			await this.Context.SaveChangesAsync();
-		}
+                public async virtual Task Update(ProductModelProductDescriptionCulture item)
+                {
+                        var entity = this.Context.Set<ProductModelProductDescriptionCulture>().Local.FirstOrDefault(x => x.ProductModelID == item.ProductModelID);
+                        if (entity == null)
+                        {
+                                this.Context.Set<ProductModelProductDescriptionCulture>().Attach(item);
+                        }
+                        else
+                        {
+                                this.Context.Entry(entity).CurrentValues.SetValues(item);
+                        }
 
-		public async virtual Task Delete(
-			int productModelID)
-		{
-			ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
+                        await this.Context.SaveChangesAsync();
+                }
 
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<ProductModelProductDescriptionCulture>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
+                public async virtual Task Delete(
+                        int productModelID)
+                {
+                        ProductModelProductDescriptionCulture record = await this.GetById(productModelID);
 
-		protected async Task<List<ProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        if (record == null)
+                        {
+                                return;
+                        }
+                        else
+                        {
+                                this.Context.Set<ProductModelProductDescriptionCulture>().Remove(record);
+                                await this.Context.SaveChangesAsync();
+                        }
+                }
 
-			return records;
-		}
+                protected async Task<List<ProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
 
-		private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
-			}
-			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
-		}
+                        return records;
+                }
 
-		private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			if (string.IsNullOrWhiteSpace(orderClause))
-			{
-				orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
-			}
+                private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
+                        }
 
-			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
-		}
+                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
+                }
 
-		private async Task<ProductModelProductDescriptionCulture> GetById(int productModelID)
-		{
-			List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(x => x.ProductModelID == productModelID);
+                private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        if (string.IsNullOrWhiteSpace(orderClause))
+                        {
+                                orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
+                        }
 
-			return records.FirstOrDefault();
-		}
-	}
+                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
+                }
+
+                private async Task<ProductModelProductDescriptionCulture> GetById(int productModelID)
+                {
+                        List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(x => x.ProductModelID == productModelID);
+
+                        return records.FirstOrDefault();
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b087a65462b3d15bce22fa0f6fef2c87</Hash>
+    <Hash>19ea043e68f8403d482448fbca632f8c</Hash>
 </Codenesium>*/

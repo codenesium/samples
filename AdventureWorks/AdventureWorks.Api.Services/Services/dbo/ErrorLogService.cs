@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class ErrorLogService: AbstractErrorLogService, IErrorLogService
-	{
-		public ErrorLogService(
-			ILogger<ErrorLogRepository> logger,
-			IErrorLogRepository errorLogRepository,
-			IApiErrorLogRequestModelValidator errorLogModelValidator,
-			IBOLErrorLogMapper BOLerrorLogMapper,
-			IDALErrorLogMapper DALerrorLogMapper)
-			: base(logger, errorLogRepository,
-			       errorLogModelValidator,
-			       BOLerrorLogMapper,
-			       DALerrorLogMapper)
-		{}
-	}
+        public class ErrorLogService: AbstractErrorLogService, IErrorLogService
+        {
+                public ErrorLogService(
+                        ILogger<ErrorLogRepository> logger,
+                        IErrorLogRepository errorLogRepository,
+                        IApiErrorLogRequestModelValidator errorLogModelValidator,
+                        IBOLErrorLogMapper bolerrorLogMapper,
+                        IDALErrorLogMapper dalerrorLogMapper)
+                        : base(logger,
+                               errorLogRepository,
+                               errorLogModelValidator,
+                               bolerrorLogMapper,
+                               dalerrorLogMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>dcdc412277e91f57ba7d3ed4b83dcced</Hash>
+    <Hash>b8f13cca33e7ece4ee268bb67c4e3257</Hash>
 </Codenesium>*/

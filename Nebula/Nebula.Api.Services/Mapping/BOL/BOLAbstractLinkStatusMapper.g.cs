@@ -2,48 +2,49 @@ using System;
 using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public abstract class BOLAbstractLinkStatusMapper
-	{
-		public virtual BOLinkStatus MapModelToBO(
-			int id,
-			ApiLinkStatusRequestModel model
-			)
-		{
-			BOLinkStatus boLinkStatus = new BOLinkStatus();
+        public abstract class BOLAbstractLinkStatusMapper
+        {
+                public virtual BOLinkStatus MapModelToBO(
+                        int id,
+                        ApiLinkStatusRequestModel model
+                        )
+                {
+                        BOLinkStatus boLinkStatus = new BOLinkStatus();
 
-			boLinkStatus.SetProperties(
-				id,
-				model.Name);
-			return boLinkStatus;
-		}
+                        boLinkStatus.SetProperties(
+                                id,
+                                model.Name);
+                        return boLinkStatus;
+                }
 
-		public virtual ApiLinkStatusResponseModel MapBOToModel(
-			BOLinkStatus boLinkStatus)
-		{
-			var model = new ApiLinkStatusResponseModel();
+                public virtual ApiLinkStatusResponseModel MapBOToModel(
+                        BOLinkStatus boLinkStatus)
+                {
+                        var model = new ApiLinkStatusResponseModel();
 
-			model.SetProperties(boLinkStatus.Id, boLinkStatus.Name);
+                        model.SetProperties(boLinkStatus.Id, boLinkStatus.Name);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiLinkStatusResponseModel> MapBOToModel(
-			List<BOLinkStatus> items)
-		{
-			List<ApiLinkStatusResponseModel> response = new List<ApiLinkStatusResponseModel>();
+                public virtual List<ApiLinkStatusResponseModel> MapBOToModel(
+                        List<BOLinkStatus> items)
+                {
+                        List<ApiLinkStatusResponseModel> response = new List<ApiLinkStatusResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6aaf457dae68f1b1efbc7dbc1c288752</Hash>
+    <Hash>338ca93a8463685b24d3c972e94701bb</Hash>
 </Codenesium>*/

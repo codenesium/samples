@@ -4,72 +4,77 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSalesReasonResponseModel: AbstractApiResponseModel
-	{
-		public ApiSalesReasonResponseModel() : base()
-		{}
+        public partial class ApiSalesReasonResponseModel: AbstractApiResponseModel
+        {
+                public ApiSalesReasonResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			string name,
-			string reasonType,
-			int salesReasonID)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name;
-			this.ReasonType = reasonType;
-			this.SalesReasonID = salesReasonID.ToInt();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        string name,
+                        string reasonType,
+                        int salesReasonID)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                        this.ReasonType = reasonType;
+                        this.SalesReasonID = salesReasonID;
+                }
 
-		public DateTime ModifiedDate { get; private set; }
-		public string Name { get; private set; }
-		public string ReasonType { get; private set; }
-		public int SalesReasonID { get; private set; }
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public string Name { get; private set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                public string ReasonType { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
+                public int SalesReasonID { get; private set; }
 
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeReasonTypeValue { get; set; } = true;
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		public bool ShouldSerializeReasonType()
-		{
-			return this.ShouldSerializeReasonTypeValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeSalesReasonIDValue { get; set; } = true;
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
 
-		public bool ShouldSerializeSalesReasonID()
-		{
-			return this.ShouldSerializeSalesReasonIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeReasonTypeValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeReasonTypeValue = false;
-			this.ShouldSerializeSalesReasonIDValue = false;
-		}
-	}
+                public bool ShouldSerializeReasonType()
+                {
+                        return this.ShouldSerializeReasonTypeValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSalesReasonIDValue { get; set; } = true;
+
+                public bool ShouldSerializeSalesReasonID()
+                {
+                        return this.ShouldSerializeSalesReasonIDValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeNameValue = false;
+                        this.ShouldSerializeReasonTypeValue = false;
+                        this.ShouldSerializeSalesReasonIDValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b5cadeb2498207c905da400c11897efb</Hash>
+    <Hash>1678640456dfd7156e20a9bd806df249</Hash>
 </Codenesium>*/

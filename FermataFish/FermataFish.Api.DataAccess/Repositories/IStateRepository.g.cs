@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public interface IStateRepository
-	{
-		Task<State> Create(State item);
+        public interface IStateRepository
+        {
+                Task<State> Create(State item);
 
-		Task Update(State item);
+                Task Update(State item);
 
-		Task Delete(int id);
+                Task Delete(int id);
 
-		Task<State> Get(int id);
+                Task<State> Get(int id);
 
-		Task<List<State>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<State>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>2b12f955c8918d8ebf5bb8390b66eed2</Hash>
+    <Hash>97b1d978cc7189eebec7649818e77e83</Hash>
 </Codenesium>*/

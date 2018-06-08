@@ -7,22 +7,22 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IClaspService
-	{
-		Task<CreateResponse<ApiClaspResponseModel>> Create(
-			ApiClaspRequestModel model);
+        public interface IClaspService
+        {
+                Task<CreateResponse<ApiClaspResponseModel>> Create(
+                        ApiClaspRequestModel model);
 
-		Task<ActionResponse> Update(int id,
-		                            ApiClaspRequestModel model);
+                Task<ActionResponse> Update(int id,
+                                            ApiClaspRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+                Task<ActionResponse> Delete(int id);
 
-		Task<ApiClaspResponseModel> Get(int id);
+                Task<ApiClaspResponseModel> Get(int id);
 
-		Task<List<ApiClaspResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
-	}
+                Task<List<ApiClaspResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+        }
 }
 
 /*<Codenesium>
-    <Hash>1effb569d55f35984aba790d630a20de</Hash>
+    <Hash>4f2c74ef9dff70b03b8667f781b531c4</Hash>
 </Codenesium>*/

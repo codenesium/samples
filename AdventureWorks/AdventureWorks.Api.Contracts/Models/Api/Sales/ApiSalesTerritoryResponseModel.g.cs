@@ -4,144 +4,155 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSalesTerritoryResponseModel: AbstractApiResponseModel
-	{
-		public ApiSalesTerritoryResponseModel() : base()
-		{}
+        public partial class ApiSalesTerritoryResponseModel: AbstractApiResponseModel
+        {
+                public ApiSalesTerritoryResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			decimal costLastYear,
-			decimal costYTD,
-			string countryRegionCode,
-			string @group,
-			DateTime modifiedDate,
-			string name,
-			Guid rowguid,
-			decimal salesLastYear,
-			decimal salesYTD,
-			int territoryID)
-		{
-			this.CostLastYear = costLastYear.ToDecimal();
-			this.CostYTD = costYTD.ToDecimal();
-			this.CountryRegionCode = countryRegionCode;
-			this.@Group = @group;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.Name = name;
-			this.Rowguid = rowguid.ToGuid();
-			this.SalesLastYear = salesLastYear.ToDecimal();
-			this.SalesYTD = salesYTD.ToDecimal();
-			this.TerritoryID = territoryID.ToInt();
-		}
+                public void SetProperties(
+                        decimal costLastYear,
+                        decimal costYTD,
+                        string countryRegionCode,
+                        string @group,
+                        DateTime modifiedDate,
+                        string name,
+                        Guid rowguid,
+                        decimal salesLastYear,
+                        decimal salesYTD,
+                        int territoryID)
+                {
+                        this.CostLastYear = costLastYear;
+                        this.CostYTD = costYTD;
+                        this.CountryRegionCode = countryRegionCode;
+                        this.@Group = @group;
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                        this.Rowguid = rowguid;
+                        this.SalesLastYear = salesLastYear;
+                        this.SalesYTD = salesYTD;
+                        this.TerritoryID = territoryID;
+                }
 
-		public decimal CostLastYear { get; private set; }
-		public decimal CostYTD { get; private set; }
-		public string CountryRegionCode { get; private set; }
-		public string @Group { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public string Name { get; private set; }
-		public Guid Rowguid { get; private set; }
-		public decimal SalesLastYear { get; private set; }
-		public decimal SalesYTD { get; private set; }
-		public int TerritoryID { get; private set; }
+                public decimal CostLastYear { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCostLastYearValue { get; set; } = true;
+                public decimal CostYTD { get; private set; }
 
-		public bool ShouldSerializeCostLastYear()
-		{
-			return this.ShouldSerializeCostLastYearValue;
-		}
+                public string CountryRegionCode { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCostYTDValue { get; set; } = true;
+                public string @Group { get; private set; }
 
-		public bool ShouldSerializeCostYTD()
-		{
-			return this.ShouldSerializeCostYTDValue;
-		}
+                public DateTime ModifiedDate { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
+                public string Name { get; private set; }
 
-		public bool ShouldSerializeCountryRegionCode()
-		{
-			return this.ShouldSerializeCountryRegionCodeValue;
-		}
+                public Guid Rowguid { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeGroupValue { get; set; } = true;
+                public decimal SalesLastYear { get; private set; }
 
-		public bool ShouldSerializeGroup()
-		{
-			return this.ShouldSerializeGroupValue;
-		}
+                public decimal SalesYTD { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public int TerritoryID { get; private set; }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCostLastYearValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeNameValue { get; set; } = true;
+                public bool ShouldSerializeCostLastYear()
+                {
+                        return this.ShouldSerializeCostLastYearValue;
+                }
 
-		public bool ShouldSerializeName()
-		{
-			return this.ShouldSerializeNameValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCostYTDValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeRowguidValue { get; set; } = true;
+                public bool ShouldSerializeCostYTD()
+                {
+                        return this.ShouldSerializeCostYTDValue;
+                }
 
-		public bool ShouldSerializeRowguid()
-		{
-			return this.ShouldSerializeRowguidValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCountryRegionCodeValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeSalesLastYearValue { get; set; } = true;
+                public bool ShouldSerializeCountryRegionCode()
+                {
+                        return this.ShouldSerializeCountryRegionCodeValue;
+                }
 
-		public bool ShouldSerializeSalesLastYear()
-		{
-			return this.ShouldSerializeSalesLastYearValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeGroupValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeSalesYTDValue { get; set; } = true;
+                public bool ShouldSerializeGroup()
+                {
+                        return this.ShouldSerializeGroupValue;
+                }
 
-		public bool ShouldSerializeSalesYTD()
-		{
-			return this.ShouldSerializeSalesYTDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
 
-		public bool ShouldSerializeTerritoryID()
-		{
-			return this.ShouldSerializeTerritoryIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeCostLastYearValue = false;
-			this.ShouldSerializeCostYTDValue = false;
-			this.ShouldSerializeCountryRegionCodeValue = false;
-			this.ShouldSerializeGroupValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-			this.ShouldSerializeNameValue = false;
-			this.ShouldSerializeRowguidValue = false;
-			this.ShouldSerializeSalesLastYearValue = false;
-			this.ShouldSerializeSalesYTDValue = false;
-			this.ShouldSerializeTerritoryIDValue = false;
-		}
-	}
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+                public bool ShouldSerializeRowguid()
+                {
+                        return this.ShouldSerializeRowguidValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSalesLastYearValue { get; set; } = true;
+
+                public bool ShouldSerializeSalesLastYear()
+                {
+                        return this.ShouldSerializeSalesLastYearValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSalesYTDValue { get; set; } = true;
+
+                public bool ShouldSerializeSalesYTD()
+                {
+                        return this.ShouldSerializeSalesYTDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeTerritoryIDValue { get; set; } = true;
+
+                public bool ShouldSerializeTerritoryID()
+                {
+                        return this.ShouldSerializeTerritoryIDValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeCostLastYearValue = false;
+                        this.ShouldSerializeCostYTDValue = false;
+                        this.ShouldSerializeCountryRegionCodeValue = false;
+                        this.ShouldSerializeGroupValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeNameValue = false;
+                        this.ShouldSerializeRowguidValue = false;
+                        this.ShouldSerializeSalesLastYearValue = false;
+                        this.ShouldSerializeSalesYTDValue = false;
+                        this.ShouldSerializeTerritoryIDValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>fc4b2f55fbd614d0ffa51017f5802a86</Hash>
+    <Hash>ecdfcfc30499f51d8b2ae83e79bda5f2</Hash>
 </Codenesium>*/

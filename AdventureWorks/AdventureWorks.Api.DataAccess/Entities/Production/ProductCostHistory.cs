@@ -5,44 +5,45 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	[Table("ProductCostHistory", Schema="Production")]
-	public partial class ProductCostHistory: AbstractEntity
-	{
-		public ProductCostHistory()
-		{}
+        [Table("ProductCostHistory", Schema="Production")]
+        public partial class ProductCostHistory: AbstractEntity
+        {
+                public ProductCostHistory()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<DateTime> endDate,
-			DateTime modifiedDate,
-			int productID,
-			decimal standardCost,
-			DateTime startDate)
-		{
-			this.EndDate = endDate.ToNullableDateTime();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ProductID = productID.ToInt();
-			this.StandardCost = standardCost.ToDecimal();
-			this.StartDate = startDate.ToDateTime();
-		}
+                public void SetProperties(
+                        Nullable<DateTime> endDate,
+                        DateTime modifiedDate,
+                        int productID,
+                        decimal standardCost,
+                        DateTime startDate)
+                {
+                        this.EndDate = endDate;
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductID = productID;
+                        this.StandardCost = standardCost;
+                        this.StartDate = startDate;
+                }
 
-		[Column("EndDate", TypeName="datetime")]
-		public Nullable<DateTime> EndDate { get; private set; }
+                [Column("EndDate", TypeName="datetime")]
+                public Nullable<DateTime> EndDate { get; private set; }
 
-		[Column("ModifiedDate", TypeName="datetime")]
-		public DateTime ModifiedDate { get; private set; }
+                [Column("ModifiedDate", TypeName="datetime")]
+                public DateTime ModifiedDate { get; private set; }
 
-		[Key]
-		[Column("ProductID", TypeName="int")]
-		public int ProductID { get; private set; }
+                [Key]
+                [Column("ProductID", TypeName="int")]
+                public int ProductID { get; private set; }
 
-		[Column("StandardCost", TypeName="money")]
-		public decimal StandardCost { get; private set; }
+                [Column("StandardCost", TypeName="money")]
+                public decimal StandardCost { get; private set; }
 
-		[Column("StartDate", TypeName="datetime")]
-		public DateTime StartDate { get; private set; }
-	}
+                [Column("StartDate", TypeName="datetime")]
+                public DateTime StartDate { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bbbfa6558bd4d3950e2d440629e6e75d</Hash>
+    <Hash>30a71c7f7e7aef2891af6591a9ba336c</Hash>
 </Codenesium>*/

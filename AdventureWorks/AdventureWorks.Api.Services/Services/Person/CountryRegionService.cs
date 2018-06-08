@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class CountryRegionService: AbstractCountryRegionService, ICountryRegionService
-	{
-		public CountryRegionService(
-			ILogger<CountryRegionRepository> logger,
-			ICountryRegionRepository countryRegionRepository,
-			IApiCountryRegionRequestModelValidator countryRegionModelValidator,
-			IBOLCountryRegionMapper BOLcountryRegionMapper,
-			IDALCountryRegionMapper DALcountryRegionMapper)
-			: base(logger, countryRegionRepository,
-			       countryRegionModelValidator,
-			       BOLcountryRegionMapper,
-			       DALcountryRegionMapper)
-		{}
-	}
+        public class CountryRegionService: AbstractCountryRegionService, ICountryRegionService
+        {
+                public CountryRegionService(
+                        ILogger<CountryRegionRepository> logger,
+                        ICountryRegionRepository countryRegionRepository,
+                        IApiCountryRegionRequestModelValidator countryRegionModelValidator,
+                        IBOLCountryRegionMapper bolcountryRegionMapper,
+                        IDALCountryRegionMapper dalcountryRegionMapper)
+                        : base(logger,
+                               countryRegionRepository,
+                               countryRegionModelValidator,
+                               bolcountryRegionMapper,
+                               dalcountryRegionMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f61f57db16e917180003eb7e58a800da</Hash>
+    <Hash>f8d92cbae3f984d23263a5afc853d44c</Hash>
 </Codenesium>*/

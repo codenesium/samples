@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public interface IVersionInfoRepository
-	{
-		Task<VersionInfo> Create(VersionInfo item);
+        public interface IVersionInfoRepository
+        {
+                Task<VersionInfo> Create(VersionInfo item);
 
-		Task Update(VersionInfo item);
+                Task Update(VersionInfo item);
 
-		Task Delete(long version);
+                Task Delete(long version);
 
-		Task<VersionInfo> Get(long version);
+                Task<VersionInfo> Get(long version);
 
-		Task<List<VersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<VersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<VersionInfo> GetVersion(long version);
-	}
+                Task<VersionInfo> GetVersion(long version);
+        }
 }
 
 /*<Codenesium>
-    <Hash>183dc7fecd2542ccb067e05cd1314779</Hash>
+    <Hash>2c52ed2eda63a1e9a9a91a8b71d2aa0c</Hash>
 </Codenesium>*/

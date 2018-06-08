@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALUnitMeasureMapper: AbstractDALUnitMeasureMapper, IDALUnitMeasureMapper
-	{
-		public DALUnitMeasureMapper()
-		{}
-	}
+        public class DALUnitMeasureMapper: DALAbstractUnitMeasureMapper, IDALUnitMeasureMapper
+        {
+                public DALUnitMeasureMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>57eef8bd12114099b61c3d68114ae57e</Hash>
+    <Hash>ffef8afde5a0a946f00fcec5d2a31d9d</Hash>
 </Codenesium>*/

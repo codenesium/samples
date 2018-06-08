@@ -4,96 +4,103 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiCreditCardResponseModel: AbstractApiResponseModel
-	{
-		public ApiCreditCardResponseModel() : base()
-		{}
+        public partial class ApiCreditCardResponseModel: AbstractApiResponseModel
+        {
+                public ApiCreditCardResponseModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			string cardNumber,
-			string cardType,
-			int creditCardID,
-			int expMonth,
-			short expYear,
-			DateTime modifiedDate)
-		{
-			this.CardNumber = cardNumber;
-			this.CardType = cardType;
-			this.CreditCardID = creditCardID.ToInt();
-			this.ExpMonth = expMonth.ToInt();
-			this.ExpYear = expYear;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-		}
+                public void SetProperties(
+                        string cardNumber,
+                        string cardType,
+                        int creditCardID,
+                        int expMonth,
+                        short expYear,
+                        DateTime modifiedDate)
+                {
+                        this.CardNumber = cardNumber;
+                        this.CardType = cardType;
+                        this.CreditCardID = creditCardID;
+                        this.ExpMonth = expMonth;
+                        this.ExpYear = expYear;
+                        this.ModifiedDate = modifiedDate;
+                }
 
-		public string CardNumber { get; private set; }
-		public string CardType { get; private set; }
-		public int CreditCardID { get; private set; }
-		public int ExpMonth { get; private set; }
-		public short ExpYear { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
+                public string CardNumber { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCardNumberValue { get; set; } = true;
+                public string CardType { get; private set; }
 
-		public bool ShouldSerializeCardNumber()
-		{
-			return this.ShouldSerializeCardNumberValue;
-		}
+                public int CreditCardID { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCardTypeValue { get; set; } = true;
+                public int ExpMonth { get; private set; }
 
-		public bool ShouldSerializeCardType()
-		{
-			return this.ShouldSerializeCardTypeValue;
-		}
+                public short ExpYear { get; private set; }
 
-		[JsonIgnore]
-		public bool ShouldSerializeCreditCardIDValue { get; set; } = true;
+                public DateTime ModifiedDate { get; private set; }
 
-		public bool ShouldSerializeCreditCardID()
-		{
-			return this.ShouldSerializeCreditCardIDValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCardNumberValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeExpMonthValue { get; set; } = true;
+                public bool ShouldSerializeCardNumber()
+                {
+                        return this.ShouldSerializeCardNumberValue;
+                }
 
-		public bool ShouldSerializeExpMonth()
-		{
-			return this.ShouldSerializeExpMonthValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCardTypeValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeExpYearValue { get; set; } = true;
+                public bool ShouldSerializeCardType()
+                {
+                        return this.ShouldSerializeCardTypeValue;
+                }
 
-		public bool ShouldSerializeExpYear()
-		{
-			return this.ShouldSerializeExpYearValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeCreditCardIDValue { get; set; } = true;
 
-		[JsonIgnore]
-		public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+                public bool ShouldSerializeCreditCardID()
+                {
+                        return this.ShouldSerializeCreditCardIDValue;
+                }
 
-		public bool ShouldSerializeModifiedDate()
-		{
-			return this.ShouldSerializeModifiedDateValue;
-		}
+                [JsonIgnore]
+                public bool ShouldSerializeExpMonthValue { get; set; } = true;
 
-		public void DisableAllFields()
-		{
-			this.ShouldSerializeCardNumberValue = false;
-			this.ShouldSerializeCardTypeValue = false;
-			this.ShouldSerializeCreditCardIDValue = false;
-			this.ShouldSerializeExpMonthValue = false;
-			this.ShouldSerializeExpYearValue = false;
-			this.ShouldSerializeModifiedDateValue = false;
-		}
-	}
+                public bool ShouldSerializeExpMonth()
+                {
+                        return this.ShouldSerializeExpMonthValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeExpYearValue { get; set; } = true;
+
+                public bool ShouldSerializeExpYear()
+                {
+                        return this.ShouldSerializeExpYearValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                public void DisableAllFields()
+                {
+                        this.ShouldSerializeCardNumberValue = false;
+                        this.ShouldSerializeCardTypeValue = false;
+                        this.ShouldSerializeCreditCardIDValue = false;
+                        this.ShouldSerializeExpMonthValue = false;
+                        this.ShouldSerializeExpYearValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>ddd3a1e55d5fe48ff9fbee9952b525a3</Hash>
+    <Hash>155a824bd52f454c7e3fb1bbe9da9b39</Hash>
 </Codenesium>*/

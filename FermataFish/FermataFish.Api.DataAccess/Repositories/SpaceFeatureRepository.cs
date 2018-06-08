@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public class SpaceFeatureRepository: AbstractSpaceFeatureRepository, ISpaceFeatureRepository
-	{
-		public SpaceFeatureRepository(
-			ILogger<SpaceFeatureRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class SpaceFeatureRepository: AbstractSpaceFeatureRepository, ISpaceFeatureRepository
+        {
+                public SpaceFeatureRepository(
+                        ILogger<SpaceFeatureRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>04bff05ab245f91dbb436061c7f18467</Hash>
+    <Hash>531a1099874f7ac9de90caaad93b5e45</Hash>
 </Codenesium>*/

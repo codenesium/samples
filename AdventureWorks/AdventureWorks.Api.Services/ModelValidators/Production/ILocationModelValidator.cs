@@ -2,16 +2,19 @@ using System;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using AdventureWorksNS.Api.Contracts;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiLocationRequestModelValidator
-	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLocationRequestModel model);
-		Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationRequestModel model);
-		Task<ValidationResult> ValidateDeleteAsync(short id);
-	}
+        public interface IApiLocationRequestModelValidator
+        {
+                Task<ValidationResult> ValidateCreateAsync(ApiLocationRequestModel model);
+
+                Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationRequestModel model);
+
+                Task<ValidationResult> ValidateDeleteAsync(short id);
+        }
 }
 
 /*<Codenesium>
-    <Hash>106066ae65e317c096e9de0757b58f56</Hash>
+    <Hash>f8b0e0d27292e80d73f2775e4e7d9c82</Hash>
 </Codenesium>*/

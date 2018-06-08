@@ -10,22 +10,24 @@ using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public class JobCandidateService: AbstractJobCandidateService, IJobCandidateService
-	{
-		public JobCandidateService(
-			ILogger<JobCandidateRepository> logger,
-			IJobCandidateRepository jobCandidateRepository,
-			IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
-			IBOLJobCandidateMapper BOLjobCandidateMapper,
-			IDALJobCandidateMapper DALjobCandidateMapper)
-			: base(logger, jobCandidateRepository,
-			       jobCandidateModelValidator,
-			       BOLjobCandidateMapper,
-			       DALjobCandidateMapper)
-		{}
-	}
+        public class JobCandidateService: AbstractJobCandidateService, IJobCandidateService
+        {
+                public JobCandidateService(
+                        ILogger<JobCandidateRepository> logger,
+                        IJobCandidateRepository jobCandidateRepository,
+                        IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
+                        IBOLJobCandidateMapper boljobCandidateMapper,
+                        IDALJobCandidateMapper daljobCandidateMapper)
+                        : base(logger,
+                               jobCandidateRepository,
+                               jobCandidateModelValidator,
+                               boljobCandidateMapper,
+                               daljobCandidateMapper)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>65181ac1984dff25836515e9d90e8da8</Hash>
+    <Hash>84c6211bf249aaea1c07fd9d1d806e2a</Hash>
 </Codenesium>*/

@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public class DALSalesPersonMapper: AbstractDALSalesPersonMapper, IDALSalesPersonMapper
-	{
-		public DALSalesPersonMapper()
-		{}
-	}
+        public class DALSalesPersonMapper: DALAbstractSalesPersonMapper, IDALSalesPersonMapper
+        {
+                public DALSalesPersonMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>7160fd7e3d4be1c1af55a1e7f528e1dc</Hash>
+    <Hash>fe72b6f7d73edb23eb5f77032d61dd65</Hash>
 </Codenesium>*/

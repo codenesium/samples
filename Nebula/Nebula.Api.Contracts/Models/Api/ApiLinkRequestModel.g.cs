@@ -3,229 +3,231 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace NebulaNS.Api.Contracts
 {
-	public partial class ApiLinkRequestModel: AbstractApiRequestModel
-	{
-		public ApiLinkRequestModel() : base()
-		{}
+        public partial class ApiLinkRequestModel: AbstractApiRequestModel
+        {
+                public ApiLinkRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			Nullable<int> assignedMachineId,
-			int chainId,
-			Nullable<DateTime> dateCompleted,
-			Nullable<DateTime> dateStarted,
-			string dynamicParameters,
-			Guid externalId,
-			int linkStatusId,
-			string name,
-			int order,
-			string response,
-			string staticParameters,
-			int timeoutInSeconds)
-		{
-			this.AssignedMachineId = assignedMachineId.ToNullableInt();
-			this.ChainId = chainId.ToInt();
-			this.DateCompleted = dateCompleted.ToNullableDateTime();
-			this.DateStarted = dateStarted.ToNullableDateTime();
-			this.DynamicParameters = dynamicParameters;
-			this.ExternalId = externalId.ToGuid();
-			this.LinkStatusId = linkStatusId.ToInt();
-			this.Name = name;
-			this.Order = order.ToInt();
-			this.Response = response;
-			this.StaticParameters = staticParameters;
-			this.TimeoutInSeconds = timeoutInSeconds.ToInt();
-		}
+                public void SetProperties(
+                        Nullable<int> assignedMachineId,
+                        int chainId,
+                        Nullable<DateTime> dateCompleted,
+                        Nullable<DateTime> dateStarted,
+                        string dynamicParameters,
+                        Guid externalId,
+                        int linkStatusId,
+                        string name,
+                        int order,
+                        string response,
+                        string staticParameters,
+                        int timeoutInSeconds)
+                {
+                        this.AssignedMachineId = assignedMachineId;
+                        this.ChainId = chainId;
+                        this.DateCompleted = dateCompleted;
+                        this.DateStarted = dateStarted;
+                        this.DynamicParameters = dynamicParameters;
+                        this.ExternalId = externalId;
+                        this.LinkStatusId = linkStatusId;
+                        this.Name = name;
+                        this.Order = order;
+                        this.Response = response;
+                        this.StaticParameters = staticParameters;
+                        this.TimeoutInSeconds = timeoutInSeconds;
+                }
 
-		private Nullable<int> assignedMachineId;
+                private Nullable<int> assignedMachineId;
 
-		public Nullable<int> AssignedMachineId
-		{
-			get
-			{
-				return this.assignedMachineId.IsEmptyOrZeroOrNull() ? null : this.assignedMachineId;
-			}
+                public Nullable<int> AssignedMachineId
+                {
+                        get
+                        {
+                                return this.assignedMachineId.IsEmptyOrZeroOrNull() ? null : this.assignedMachineId;
+                        }
 
-			set
-			{
-				this.assignedMachineId = value;
-			}
-		}
+                        set
+                        {
+                                this.assignedMachineId = value;
+                        }
+                }
 
-		private int chainId;
+                private int chainId;
 
-		[Required]
-		public int ChainId
-		{
-			get
-			{
-				return this.chainId;
-			}
+                [Required]
+                public int ChainId
+                {
+                        get
+                        {
+                                return this.chainId;
+                        }
 
-			set
-			{
-				this.chainId = value;
-			}
-		}
+                        set
+                        {
+                                this.chainId = value;
+                        }
+                }
 
-		private Nullable<DateTime> dateCompleted;
+                private Nullable<DateTime> dateCompleted;
 
-		public Nullable<DateTime> DateCompleted
-		{
-			get
-			{
-				return this.dateCompleted.IsEmptyOrZeroOrNull() ? null : this.dateCompleted;
-			}
+                public Nullable<DateTime> DateCompleted
+                {
+                        get
+                        {
+                                return this.dateCompleted.IsEmptyOrZeroOrNull() ? null : this.dateCompleted;
+                        }
 
-			set
-			{
-				this.dateCompleted = value;
-			}
-		}
+                        set
+                        {
+                                this.dateCompleted = value;
+                        }
+                }
 
-		private Nullable<DateTime> dateStarted;
+                private Nullable<DateTime> dateStarted;
 
-		public Nullable<DateTime> DateStarted
-		{
-			get
-			{
-				return this.dateStarted.IsEmptyOrZeroOrNull() ? null : this.dateStarted;
-			}
+                public Nullable<DateTime> DateStarted
+                {
+                        get
+                        {
+                                return this.dateStarted.IsEmptyOrZeroOrNull() ? null : this.dateStarted;
+                        }
 
-			set
-			{
-				this.dateStarted = value;
-			}
-		}
+                        set
+                        {
+                                this.dateStarted = value;
+                        }
+                }
 
-		private string dynamicParameters;
+                private string dynamicParameters;
 
-		public string DynamicParameters
-		{
-			get
-			{
-				return this.dynamicParameters.IsEmptyOrZeroOrNull() ? null : this.dynamicParameters;
-			}
+                public string DynamicParameters
+                {
+                        get
+                        {
+                                return this.dynamicParameters.IsEmptyOrZeroOrNull() ? null : this.dynamicParameters;
+                        }
 
-			set
-			{
-				this.dynamicParameters = value;
-			}
-		}
+                        set
+                        {
+                                this.dynamicParameters = value;
+                        }
+                }
 
-		private Guid externalId;
+                private Guid externalId;
 
-		[Required]
-		public Guid ExternalId
-		{
-			get
-			{
-				return this.externalId;
-			}
+                [Required]
+                public Guid ExternalId
+                {
+                        get
+                        {
+                                return this.externalId;
+                        }
 
-			set
-			{
-				this.externalId = value;
-			}
-		}
+                        set
+                        {
+                                this.externalId = value;
+                        }
+                }
 
-		private int linkStatusId;
+                private int linkStatusId;
 
-		[Required]
-		public int LinkStatusId
-		{
-			get
-			{
-				return this.linkStatusId;
-			}
+                [Required]
+                public int LinkStatusId
+                {
+                        get
+                        {
+                                return this.linkStatusId;
+                        }
 
-			set
-			{
-				this.linkStatusId = value;
-			}
-		}
+                        set
+                        {
+                                this.linkStatusId = value;
+                        }
+                }
 
-		private string name;
+                private string name;
 
-		[Required]
-		public string Name
-		{
-			get
-			{
-				return this.name;
-			}
+                [Required]
+                public string Name
+                {
+                        get
+                        {
+                                return this.name;
+                        }
 
-			set
-			{
-				this.name = value;
-			}
-		}
+                        set
+                        {
+                                this.name = value;
+                        }
+                }
 
-		private int order;
+                private int order;
 
-		[Required]
-		public int Order
-		{
-			get
-			{
-				return this.order;
-			}
+                [Required]
+                public int Order
+                {
+                        get
+                        {
+                                return this.order;
+                        }
 
-			set
-			{
-				this.order = value;
-			}
-		}
+                        set
+                        {
+                                this.order = value;
+                        }
+                }
 
-		private string response;
+                private string response;
 
-		public string Response
-		{
-			get
-			{
-				return this.response.IsEmptyOrZeroOrNull() ? null : this.response;
-			}
+                public string Response
+                {
+                        get
+                        {
+                                return this.response.IsEmptyOrZeroOrNull() ? null : this.response;
+                        }
 
-			set
-			{
-				this.response = value;
-			}
-		}
+                        set
+                        {
+                                this.response = value;
+                        }
+                }
 
-		private string staticParameters;
+                private string staticParameters;
 
-		public string StaticParameters
-		{
-			get
-			{
-				return this.staticParameters.IsEmptyOrZeroOrNull() ? null : this.staticParameters;
-			}
+                public string StaticParameters
+                {
+                        get
+                        {
+                                return this.staticParameters.IsEmptyOrZeroOrNull() ? null : this.staticParameters;
+                        }
 
-			set
-			{
-				this.staticParameters = value;
-			}
-		}
+                        set
+                        {
+                                this.staticParameters = value;
+                        }
+                }
 
-		private int timeoutInSeconds;
+                private int timeoutInSeconds;
 
-		[Required]
-		public int TimeoutInSeconds
-		{
-			get
-			{
-				return this.timeoutInSeconds;
-			}
+                [Required]
+                public int TimeoutInSeconds
+                {
+                        get
+                        {
+                                return this.timeoutInSeconds;
+                        }
 
-			set
-			{
-				this.timeoutInSeconds = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.timeoutInSeconds = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>c03439d5dfa6ec6d4e7617a51a252410</Hash>
+    <Hash>a75722d4dab945d336ecbd4d384e05f1</Hash>
 </Codenesium>*/

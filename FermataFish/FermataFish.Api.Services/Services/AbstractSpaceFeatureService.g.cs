@@ -12,87 +12,93 @@ using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-	public abstract class AbstractSpaceFeatureService: AbstractService
-	{
-		private ISpaceFeatureRepository spaceFeatureRepository;
-		private IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator;
-		private IBOLSpaceFeatureMapper bolSpaceFeatureMapper;
-		private IDALSpaceFeatureMapper dalSpaceFeatureMapper;
-		private ILogger logger;
+        public abstract class AbstractSpaceFeatureService: AbstractService
+        {
+                private ISpaceFeatureRepository spaceFeatureRepository;
 
-		public AbstractSpaceFeatureService(
-			ILogger logger,
-			ISpaceFeatureRepository spaceFeatureRepository,
-			IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
-			IBOLSpaceFeatureMapper bolspaceFeatureMapper,
-			IDALSpaceFeatureMapper dalspaceFeatureMapper)
-			: base()
+                private IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator;
 
-		{
-			this.spaceFeatureRepository = spaceFeatureRepository;
-			this.spaceFeatureModelValidator = spaceFeatureModelValidator;
-			this.bolSpaceFeatureMapper = bolspaceFeatureMapper;
-			this.dalSpaceFeatureMapper = dalspaceFeatureMapper;
-			this.logger = logger;
-		}
+                private IBOLSpaceFeatureMapper bolSpaceFeatureMapper;
 
-		public virtual async Task<List<ApiSpaceFeatureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.spaceFeatureRepository.All(skip, take, orderClause);
+                private IDALSpaceFeatureMapper dalSpaceFeatureMapper;
 
-			return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiSpaceFeatureResponseModel> Get(int id)
-		{
-			var record = await spaceFeatureRepository.Get(id);
+                public AbstractSpaceFeatureService(
+                        ILogger logger,
+                        ISpaceFeatureRepository spaceFeatureRepository,
+                        IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
+                        IBOLSpaceFeatureMapper bolspaceFeatureMapper,
+                        IDALSpaceFeatureMapper dalspaceFeatureMapper)
+                        : base()
 
-			return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(record));
-		}
+                {
+                        this.spaceFeatureRepository = spaceFeatureRepository;
+                        this.spaceFeatureModelValidator = spaceFeatureModelValidator;
+                        this.bolSpaceFeatureMapper = bolspaceFeatureMapper;
+                        this.dalSpaceFeatureMapper = dalspaceFeatureMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
-			ApiSpaceFeatureRequestModel model)
-		{
-			CreateResponse<ApiSpaceFeatureResponseModel> response = new CreateResponse<ApiSpaceFeatureResponseModel>(await this.spaceFeatureModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolSpaceFeatureMapper.MapModelToBO(default (int), model);
-				var record = await this.spaceFeatureRepository.Create(this.dalSpaceFeatureMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiSpaceFeatureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.spaceFeatureRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiSpaceFeatureRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.spaceFeatureModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiSpaceFeatureResponseModel> Get(int id)
+                {
+                        var record = await this.spaceFeatureRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolSpaceFeatureMapper.MapModelToBO(id, model);
-				await this.spaceFeatureRepository.Update(this.dalSpaceFeatureMapper.MapBOToEF(bo));
-			}
+                        return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
+                        ApiSpaceFeatureRequestModel model)
+                {
+                        CreateResponse<ApiSpaceFeatureResponseModel> response = new CreateResponse<ApiSpaceFeatureResponseModel>(await this.spaceFeatureModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolSpaceFeatureMapper.MapModelToBO(default (int), model);
+                                var record = await this.spaceFeatureRepository.Create(this.dalSpaceFeatureMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.spaceFeatureModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.spaceFeatureRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiSpaceFeatureRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.spaceFeatureModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolSpaceFeatureMapper.MapModelToBO(id, model);
+                                await this.spaceFeatureRepository.Update(this.dalSpaceFeatureMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.spaceFeatureModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.spaceFeatureRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b8c6332b52edc8a4a872454abf9ca2ec</Hash>
+    <Hash>f0383f6b7eb9b7b572f2bd40ca10a62a</Hash>
 </Codenesium>*/

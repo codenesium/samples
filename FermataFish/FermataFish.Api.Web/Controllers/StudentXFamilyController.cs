@@ -12,28 +12,28 @@ using FermataFishNS.Api.Services;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/studentXFamilies")]
-	[ApiVersion("1.0")]
-	public class StudentXFamilyController: AbstractStudentXFamilyController
-	{
-		public StudentXFamilyController(
-			ServiceSettings settings,
-			ILogger<StudentXFamilyController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IStudentXFamilyService studentXFamilyService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       studentXFamilyService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/studentXFamilies")]
+        [ApiVersion("1.0")]
+        public class StudentXFamilyController: AbstractStudentXFamilyController
+        {
+                public StudentXFamilyController(
+                        ServiceSettings settings,
+                        ILogger<StudentXFamilyController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IStudentXFamilyService studentXFamilyService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               studentXFamilyService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>91a49698fa77a09d73efa1f76624a181</Hash>
+    <Hash>869a44efe4866a60e23ea178e2b90354</Hash>
 </Codenesium>*/

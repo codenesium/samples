@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+
 namespace NebulaNS.Api.Services
 {
-	public class DALOrganizationMapper: AbstractDALOrganizationMapper, IDALOrganizationMapper
-	{
-		public DALOrganizationMapper()
-		{}
-	}
+        public class DALOrganizationMapper: DALAbstractOrganizationMapper, IDALOrganizationMapper
+        {
+                public DALOrganizationMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>9a340a3b4f7fbe809a82113f9695d705</Hash>
+    <Hash>349019d344ab050ab1bf1d612fd8e1b9</Hash>
 </Codenesium>*/

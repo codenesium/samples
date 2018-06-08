@@ -12,28 +12,28 @@ using ESPIOTNS.Api.Services;
 
 namespace ESPIOTNS.Api.Web
 {
-	[Route("api/deviceActions")]
-	[ApiVersion("1.0")]
-	public class DeviceActionController: AbstractDeviceActionController
-	{
-		public DeviceActionController(
-			ServiceSettings settings,
-			ILogger<DeviceActionController> logger,
-			ITransactionCoordinator transactionCoordinator,
-			IDeviceActionService deviceActionService
-			)
-			: base(settings,
-			       logger,
-			       transactionCoordinator,
-			       deviceActionService)
-		{
-			this.BulkInsertLimit = 250;
-			this.MaxLimit = 1000;
-			this.DefaultLimit = 250;
-		}
-	}
+        [Route("api/deviceActions")]
+        [ApiVersion("1.0")]
+        public class DeviceActionController: AbstractDeviceActionController
+        {
+                public DeviceActionController(
+                        ServiceSettings settings,
+                        ILogger<DeviceActionController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IDeviceActionService deviceActionService
+                        )
+                        : base(settings,
+                               logger,
+                               transactionCoordinator,
+                               deviceActionService)
+                {
+                        this.BulkInsertLimit = 250;
+                        this.MaxLimit = 1000;
+                        this.DefaultLimit = 250;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>f05d28a76806878ad21cedafe2951254</Hash>
+    <Hash>9bce2780cd315163c459028b9d746b75</Hash>
 </Codenesium>*/

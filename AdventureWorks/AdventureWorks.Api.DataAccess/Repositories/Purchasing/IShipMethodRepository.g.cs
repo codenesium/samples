@@ -5,22 +5,22 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IShipMethodRepository
-	{
-		Task<ShipMethod> Create(ShipMethod item);
+        public interface IShipMethodRepository
+        {
+                Task<ShipMethod> Create(ShipMethod item);
 
-		Task Update(ShipMethod item);
+                Task Update(ShipMethod item);
 
-		Task Delete(int shipMethodID);
+                Task Delete(int shipMethodID);
 
-		Task<ShipMethod> Get(int shipMethodID);
+                Task<ShipMethod> Get(int shipMethodID);
 
-		Task<List<ShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ShipMethod>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
 
-		Task<ShipMethod> GetName(string name);
-	}
+                Task<ShipMethod> GetName(string name);
+        }
 }
 
 /*<Codenesium>
-    <Hash>8b2eaba8ae7eb7ed447bcb276e764210</Hash>
+    <Hash>e89419c1bd94e35cff3f84c40e0a565e</Hash>
 </Codenesium>*/

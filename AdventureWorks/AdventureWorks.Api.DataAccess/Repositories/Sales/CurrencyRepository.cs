@@ -8,16 +8,17 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public class CurrencyRepository: AbstractCurrencyRepository, ICurrencyRepository
-	{
-		public CurrencyRepository(
-			ILogger<CurrencyRepository> logger,
-			ApplicationDbContext context)
-			: base(logger, context)
-		{}
-	}
+        public class CurrencyRepository: AbstractCurrencyRepository, ICurrencyRepository
+        {
+                public CurrencyRepository(
+                        ILogger<CurrencyRepository> logger,
+                        ApplicationDbContext context)
+                        : base(logger, context)
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>e6b6feef735eba82a08e995e850cc5f2</Hash>
+    <Hash>d21e425de463544c40e8ad97bc193d51</Hash>
 </Codenesium>*/

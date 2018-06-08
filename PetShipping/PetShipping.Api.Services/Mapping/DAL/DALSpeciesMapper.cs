@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+
 namespace PetShippingNS.Api.Services
 {
-	public class DALSpeciesMapper: AbstractDALSpeciesMapper, IDALSpeciesMapper
-	{
-		public DALSpeciesMapper()
-		{}
-	}
+        public class DALSpeciesMapper: DALAbstractSpeciesMapper, IDALSpeciesMapper
+        {
+                public DALSpeciesMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>782cdae6f1fee168c2d7de930420e053</Hash>
+    <Hash>8c487993208c4baa6ddcb94cedcfc7f0</Hash>
 </Codenesium>*/

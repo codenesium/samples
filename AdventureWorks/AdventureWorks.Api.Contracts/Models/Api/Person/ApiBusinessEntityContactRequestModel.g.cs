@@ -3,91 +3,93 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiBusinessEntityContactRequestModel: AbstractApiRequestModel
-	{
-		public ApiBusinessEntityContactRequestModel() : base()
-		{}
+        public partial class ApiBusinessEntityContactRequestModel: AbstractApiRequestModel
+        {
+                public ApiBusinessEntityContactRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			int contactTypeID,
-			DateTime modifiedDate,
-			int personID,
-			Guid rowguid)
-		{
-			this.ContactTypeID = contactTypeID.ToInt();
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.PersonID = personID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
-		}
+                public void SetProperties(
+                        int contactTypeID,
+                        DateTime modifiedDate,
+                        int personID,
+                        Guid rowguid)
+                {
+                        this.ContactTypeID = contactTypeID;
+                        this.ModifiedDate = modifiedDate;
+                        this.PersonID = personID;
+                        this.Rowguid = rowguid;
+                }
 
-		private int contactTypeID;
+                private int contactTypeID;
 
-		[Required]
-		public int ContactTypeID
-		{
-			get
-			{
-				return this.contactTypeID;
-			}
+                [Required]
+                public int ContactTypeID
+                {
+                        get
+                        {
+                                return this.contactTypeID;
+                        }
 
-			set
-			{
-				this.contactTypeID = value;
-			}
-		}
+                        set
+                        {
+                                this.contactTypeID = value;
+                        }
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private int personID;
+                private int personID;
 
-		[Required]
-		public int PersonID
-		{
-			get
-			{
-				return this.personID;
-			}
+                [Required]
+                public int PersonID
+                {
+                        get
+                        {
+                                return this.personID;
+                        }
 
-			set
-			{
-				this.personID = value;
-			}
-		}
+                        set
+                        {
+                                this.personID = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>eafcd010edba3d74a9d432fddbf63589</Hash>
+    <Hash>b00a3a074f5957f8ffe2d7be9eaa875e</Hash>
 </Codenesium>*/

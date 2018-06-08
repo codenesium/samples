@@ -12,87 +12,93 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-	public abstract class AbstractPipelineService: AbstractService
-	{
-		private IPipelineRepository pipelineRepository;
-		private IApiPipelineRequestModelValidator pipelineModelValidator;
-		private IBOLPipelineMapper bolPipelineMapper;
-		private IDALPipelineMapper dalPipelineMapper;
-		private ILogger logger;
+        public abstract class AbstractPipelineService: AbstractService
+        {
+                private IPipelineRepository pipelineRepository;
 
-		public AbstractPipelineService(
-			ILogger logger,
-			IPipelineRepository pipelineRepository,
-			IApiPipelineRequestModelValidator pipelineModelValidator,
-			IBOLPipelineMapper bolpipelineMapper,
-			IDALPipelineMapper dalpipelineMapper)
-			: base()
+                private IApiPipelineRequestModelValidator pipelineModelValidator;
 
-		{
-			this.pipelineRepository = pipelineRepository;
-			this.pipelineModelValidator = pipelineModelValidator;
-			this.bolPipelineMapper = bolpipelineMapper;
-			this.dalPipelineMapper = dalpipelineMapper;
-			this.logger = logger;
-		}
+                private IBOLPipelineMapper bolPipelineMapper;
 
-		public virtual async Task<List<ApiPipelineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
-		{
-			var records = await this.pipelineRepository.All(skip, take, orderClause);
+                private IDALPipelineMapper dalPipelineMapper;
 
-			return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(records));
-		}
+                private ILogger logger;
 
-		public virtual async Task<ApiPipelineResponseModel> Get(int id)
-		{
-			var record = await pipelineRepository.Get(id);
+                public AbstractPipelineService(
+                        ILogger logger,
+                        IPipelineRepository pipelineRepository,
+                        IApiPipelineRequestModelValidator pipelineModelValidator,
+                        IBOLPipelineMapper bolpipelineMapper,
+                        IDALPipelineMapper dalpipelineMapper)
+                        : base()
 
-			return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(record));
-		}
+                {
+                        this.pipelineRepository = pipelineRepository;
+                        this.pipelineModelValidator = pipelineModelValidator;
+                        this.bolPipelineMapper = bolpipelineMapper;
+                        this.dalPipelineMapper = dalpipelineMapper;
+                        this.logger = logger;
+                }
 
-		public virtual async Task<CreateResponse<ApiPipelineResponseModel>> Create(
-			ApiPipelineRequestModel model)
-		{
-			CreateResponse<ApiPipelineResponseModel> response = new CreateResponse<ApiPipelineResponseModel>(await this.pipelineModelValidator.ValidateCreateAsync(model));
-			if (response.Success)
-			{
-				var bo = this.bolPipelineMapper.MapModelToBO(default (int), model);
-				var record = await this.pipelineRepository.Create(this.dalPipelineMapper.MapBOToEF(bo));
+                public virtual async Task<List<ApiPipelineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                {
+                        var records = await this.pipelineRepository.All(skip, take, orderClause);
 
-				response.SetRecord(this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(record)));
-			}
-			return response;
-		}
+                        return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(records));
+                }
 
-		public virtual async Task<ActionResponse> Update(
-			int id,
-			ApiPipelineRequestModel model)
-		{
-			ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateUpdateAsync(id, model));
+                public virtual async Task<ApiPipelineResponseModel> Get(int id)
+                {
+                        var record = await this.pipelineRepository.Get(id);
 
-			if (response.Success)
-			{
-				var bo = this.bolPipelineMapper.MapModelToBO(id, model);
-				await this.pipelineRepository.Update(this.dalPipelineMapper.MapBOToEF(bo));
-			}
+                        return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(record));
+                }
 
-			return response;
-		}
+                public virtual async Task<CreateResponse<ApiPipelineResponseModel>> Create(
+                        ApiPipelineRequestModel model)
+                {
+                        CreateResponse<ApiPipelineResponseModel> response = new CreateResponse<ApiPipelineResponseModel>(await this.pipelineModelValidator.ValidateCreateAsync(model));
+                        if (response.Success)
+                        {
+                                var bo = this.bolPipelineMapper.MapModelToBO(default (int), model);
+                                var record = await this.pipelineRepository.Create(this.dalPipelineMapper.MapBOToEF(bo));
 
-		public virtual async Task<ActionResponse> Delete(
-			int id)
-		{
-			ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateDeleteAsync(id));
+                                response.SetRecord(this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(record)));
+                        }
 
-			if (response.Success)
-			{
-				await this.pipelineRepository.Delete(id);
-			}
-			return response;
-		}
-	}
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Update(
+                        int id,
+                        ApiPipelineRequestModel model)
+                {
+                        ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateUpdateAsync(id, model));
+
+                        if (response.Success)
+                        {
+                                var bo = this.bolPipelineMapper.MapModelToBO(id, model);
+                                await this.pipelineRepository.Update(this.dalPipelineMapper.MapBOToEF(bo));
+                        }
+
+                        return response;
+                }
+
+                public virtual async Task<ActionResponse> Delete(
+                        int id)
+                {
+                        ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateDeleteAsync(id));
+
+                        if (response.Success)
+                        {
+                                await this.pipelineRepository.Delete(id);
+                        }
+
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>6d05e413cc027df7943bb5f23ed1093f</Hash>
+    <Hash>be9d09b76a88fdb071b5c562296267c4</Hash>
 </Codenesium>*/

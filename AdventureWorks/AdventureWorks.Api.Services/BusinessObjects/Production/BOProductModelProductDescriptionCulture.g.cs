@@ -3,29 +3,33 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public partial class BOProductModelProductDescriptionCulture: AbstractBusinessObject
-	{
-		public BOProductModelProductDescriptionCulture() : base()
-		{}
+        public partial class BOProductModelProductDescriptionCulture: AbstractBusinessObject
+        {
+                public BOProductModelProductDescriptionCulture() : base()
+                {
+                }
 
-		public void SetProperties(int productModelID,
-		                          string cultureID,
-		                          DateTime modifiedDate,
-		                          int productDescriptionID)
-		{
-			this.CultureID = cultureID;
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ProductDescriptionID = productDescriptionID.ToInt();
-			this.ProductModelID = productModelID.ToInt();
-		}
+                public void SetProperties(int productModelID,
+                                          string cultureID,
+                                          DateTime modifiedDate,
+                                          int productDescriptionID)
+                {
+                        this.CultureID = cultureID;
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductDescriptionID = productDescriptionID;
+                        this.ProductModelID = productModelID;
+                }
 
-		public string CultureID { get; private set; }
-		public DateTime ModifiedDate { get; private set; }
-		public int ProductDescriptionID { get; private set; }
-		public int ProductModelID { get; private set; }
-	}
+                public string CultureID { get; private set; }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public int ProductDescriptionID { get; private set; }
+
+                public int ProductModelID { get; private set; }
+        }
 }
 
 /*<Codenesium>
-    <Hash>23eed6d33076beee49a12307a7dab40d</Hash>
+    <Hash>d4725dbf991504cd8fec991ff6c433a1</Hash>
 </Codenesium>*/

@@ -1,15 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+
 namespace PetStoreNS.Api.Services
 {
-	public class DALPaymentTypeMapper: AbstractDALPaymentTypeMapper, IDALPaymentTypeMapper
-	{
-		public DALPaymentTypeMapper()
-		{}
-	}
+        public class DALPaymentTypeMapper: DALAbstractPaymentTypeMapper, IDALPaymentTypeMapper
+        {
+                public DALPaymentTypeMapper()
+                {
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>bb9a5ce0a77a2fb6f1dc31ff83282ea2</Hash>
+    <Hash>7f5b4d28fcdbdc6ec8adc0cd2dba7cd5</Hash>
 </Codenesium>*/

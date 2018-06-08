@@ -2,51 +2,52 @@ using System;
 using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+
 namespace AdventureWorksNS.Api.Services
 {
-	public abstract class BOLAbstractProductListPriceHistoryMapper
-	{
-		public virtual BOProductListPriceHistory MapModelToBO(
-			int productID,
-			ApiProductListPriceHistoryRequestModel model
-			)
-		{
-			BOProductListPriceHistory boProductListPriceHistory = new BOProductListPriceHistory();
+        public abstract class BOLAbstractProductListPriceHistoryMapper
+        {
+                public virtual BOProductListPriceHistory MapModelToBO(
+                        int productID,
+                        ApiProductListPriceHistoryRequestModel model
+                        )
+                {
+                        BOProductListPriceHistory boProductListPriceHistory = new BOProductListPriceHistory();
 
-			boProductListPriceHistory.SetProperties(
-				productID,
-				model.EndDate,
-				model.ListPrice,
-				model.ModifiedDate,
-				model.StartDate);
-			return boProductListPriceHistory;
-		}
+                        boProductListPriceHistory.SetProperties(
+                                productID,
+                                model.EndDate,
+                                model.ListPrice,
+                                model.ModifiedDate,
+                                model.StartDate);
+                        return boProductListPriceHistory;
+                }
 
-		public virtual ApiProductListPriceHistoryResponseModel MapBOToModel(
-			BOProductListPriceHistory boProductListPriceHistory)
-		{
-			var model = new ApiProductListPriceHistoryResponseModel();
+                public virtual ApiProductListPriceHistoryResponseModel MapBOToModel(
+                        BOProductListPriceHistory boProductListPriceHistory)
+                {
+                        var model = new ApiProductListPriceHistoryResponseModel();
 
-			model.SetProperties(boProductListPriceHistory.EndDate, boProductListPriceHistory.ListPrice, boProductListPriceHistory.ModifiedDate, boProductListPriceHistory.ProductID, boProductListPriceHistory.StartDate);
+                        model.SetProperties(boProductListPriceHistory.EndDate, boProductListPriceHistory.ListPrice, boProductListPriceHistory.ModifiedDate, boProductListPriceHistory.ProductID, boProductListPriceHistory.StartDate);
 
-			return model;
-		}
+                        return model;
+                }
 
-		public virtual List<ApiProductListPriceHistoryResponseModel> MapBOToModel(
-			List<BOProductListPriceHistory> items)
-		{
-			List<ApiProductListPriceHistoryResponseModel> response = new List<ApiProductListPriceHistoryResponseModel>();
+                public virtual List<ApiProductListPriceHistoryResponseModel> MapBOToModel(
+                        List<BOProductListPriceHistory> items)
+                {
+                        List<ApiProductListPriceHistoryResponseModel> response = new List<ApiProductListPriceHistoryResponseModel>();
 
-			items.ForEach(d =>
-			{
-				response.Add(this.MapBOToModel(d));
-			});
+                        items.ForEach(d =>
+                        {
+                                response.Add(this.MapBOToModel(d));
+                        });
 
-			return response;
-		}
-	}
+                        return response;
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>b070932a29a12a88d3fbefaafe139e08</Hash>
+    <Hash>6a4ddbcafed3637564fa81ce06aa6544</Hash>
 </Codenesium>*/

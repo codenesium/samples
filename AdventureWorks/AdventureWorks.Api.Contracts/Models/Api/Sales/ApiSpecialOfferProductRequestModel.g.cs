@@ -3,73 +3,75 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+
 namespace AdventureWorksNS.Api.Contracts
 {
-	public partial class ApiSpecialOfferProductRequestModel: AbstractApiRequestModel
-	{
-		public ApiSpecialOfferProductRequestModel() : base()
-		{}
+        public partial class ApiSpecialOfferProductRequestModel: AbstractApiRequestModel
+        {
+                public ApiSpecialOfferProductRequestModel() : base()
+                {
+                }
 
-		public void SetProperties(
-			DateTime modifiedDate,
-			int productID,
-			Guid rowguid)
-		{
-			this.ModifiedDate = modifiedDate.ToDateTime();
-			this.ProductID = productID.ToInt();
-			this.Rowguid = rowguid.ToGuid();
-		}
+                public void SetProperties(
+                        DateTime modifiedDate,
+                        int productID,
+                        Guid rowguid)
+                {
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductID = productID;
+                        this.Rowguid = rowguid;
+                }
 
-		private DateTime modifiedDate;
+                private DateTime modifiedDate;
 
-		[Required]
-		public DateTime ModifiedDate
-		{
-			get
-			{
-				return this.modifiedDate;
-			}
+                [Required]
+                public DateTime ModifiedDate
+                {
+                        get
+                        {
+                                return this.modifiedDate;
+                        }
 
-			set
-			{
-				this.modifiedDate = value;
-			}
-		}
+                        set
+                        {
+                                this.modifiedDate = value;
+                        }
+                }
 
-		private int productID;
+                private int productID;
 
-		[Required]
-		public int ProductID
-		{
-			get
-			{
-				return this.productID;
-			}
+                [Required]
+                public int ProductID
+                {
+                        get
+                        {
+                                return this.productID;
+                        }
 
-			set
-			{
-				this.productID = value;
-			}
-		}
+                        set
+                        {
+                                this.productID = value;
+                        }
+                }
 
-		private Guid rowguid;
+                private Guid rowguid;
 
-		[Required]
-		public Guid Rowguid
-		{
-			get
-			{
-				return this.rowguid;
-			}
+                [Required]
+                public Guid Rowguid
+                {
+                        get
+                        {
+                                return this.rowguid;
+                        }
 
-			set
-			{
-				this.rowguid = value;
-			}
-		}
-	}
+                        set
+                        {
+                                this.rowguid = value;
+                        }
+                }
+        }
 }
 
 /*<Codenesium>
-    <Hash>97bcac0b3bee18e7445756aa0b96f2cb</Hash>
+    <Hash>dd6cc8b6c5b015bfd483bc8def746cd4</Hash>
 </Codenesium>*/
