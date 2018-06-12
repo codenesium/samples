@@ -1,0 +1,201 @@
+using System;
+using Codenesium.Foundation.CommonMVC;
+using FluentValidation.Results;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.Services;
+
+namespace OctopusDeployNS.Api.Web
+{
+        public abstract class AbstractServerTaskController: AbstractApiController
+        {
+                protected IServerTaskService ServerTaskService { get; private set; }
+
+                protected int BulkInsertLimit { get; set; }
+
+                protected int MaxLimit { get; set; }
+
+                protected int DefaultLimit { get; set; }
+
+                public AbstractServerTaskController(
+                        ServiceSettings settings,
+                        ILogger<AbstractServerTaskController> logger,
+                        ITransactionCoordinator transactionCoordinator,
+                        IServerTaskService serverTaskService
+                        )
+                        : base(settings, logger, transactionCoordinator)
+                {
+                        this.ServerTaskService = serverTaskService;
+                }
+
+                [HttpGet]
+                [Route("")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiServerTaskResponseModel>), 200)]
+                public async virtual Task<IActionResult> All(int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiServerTaskResponseModel> response = await this.ServerTaskService.All(query.Offset, query.Limit);
+
+                        return this.Ok(response);
+                }
+
+                [HttpGet]
+                [Route("{id}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(ApiServerTaskResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                public async virtual Task<IActionResult> Get(string id)
+                {
+                        ApiServerTaskResponseModel response = await this.ServerTaskService.Get(id);
+
+                        if (response == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                return this.Ok(response);
+                        }
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiServerTaskResponseModel), 200)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiServerTaskRequestModel model)
+                {
+                        CreateResponse<ApiServerTaskResponseModel> result = await this.ServerTaskService.Create(model);
+
+                        if (result.Success)
+                        {
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ServerTasks/{result.Record.Id.ToString()}");
+                                return this.Ok(result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPost]
+                [Route("BulkInsert")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(List<ApiServerTaskResponseModel>), 200)]
+                [ProducesResponseType(typeof(void), 413)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiServerTaskRequestModel> models)
+                {
+                        if (models.Count > this.BulkInsertLimit)
+                        {
+                                return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+                        }
+
+                        List<ApiServerTaskResponseModel> records = new List<ApiServerTaskResponseModel>();
+                        foreach (var model in models)
+                        {
+                                CreateResponse<ApiServerTaskResponseModel> result = await this.ServerTaskService.Create(model);
+
+                                if (result.Success)
+                                {
+                                        records.Add(result.Record);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
+
+                        return this.Ok(records);
+                }
+
+                [HttpPut]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiServerTaskResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Update(string id, [FromBody] ApiServerTaskRequestModel model)
+                {
+                        ActionResponse result = await this.ServerTaskService.Update(id, model);
+
+                        if (result.Success)
+                        {
+                                ApiServerTaskResponseModel response = await this.ServerTaskService.Get(id);
+
+                                return this.Ok(response);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpDelete]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(void), 204)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Delete(string id)
+                {
+                        ActionResponse result = await this.ServerTaskService.Delete(id);
+
+                        if (result.Success)
+                        {
+                                return this.NoContent();
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpGet]
+                [Route("getDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId/{description}/{queueTime}/{startTime}/{completedTime}/{errorMessage}/{concurrencyTag}/{hasPendingInterruptions}/{hasWarningsOrErrors}/{durationSeconds}/{jSON}/{state}/{name}/{projectId}/{environmentId}/{tenantId}/{serverNodeId}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiServerTaskResponseModel>), 200)]
+                public async virtual Task<IActionResult> GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTime queueTime, Nullable<DateTime> startTime, Nullable<DateTime> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
+                {
+                        List<ApiServerTaskResponseModel> response = await this.ServerTaskService.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(description, queueTime, startTime, completedTime, errorMessage, concurrencyTag, hasPendingInterruptions, hasWarningsOrErrors, durationSeconds, jSON, state, name, projectId, environmentId, tenantId, serverNodeId);
+
+                        return this.Ok(response);
+                }
+
+                [HttpGet]
+                [Route("getStateConcurrencyTag/{state}/{concurrencyTag}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiServerTaskResponseModel>), 200)]
+                public async virtual Task<IActionResult> GetStateConcurrencyTag(string state, string concurrencyTag)
+                {
+                        List<ApiServerTaskResponseModel> response = await this.ServerTaskService.GetStateConcurrencyTag(state, concurrencyTag);
+
+                        return this.Ok(response);
+                }
+
+                [HttpGet]
+                [Route("getNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId/{name}/{description}/{startTime}/{completedTime}/{errorMessage}/{hasWarningsOrErrors}/{projectId}/{environmentId}/{tenantId}/{durationSeconds}/{jSON}/{queueTime}/{state}/{concurrencyTag}/{hasPendingInterruptions}/{serverNodeId}")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiServerTaskResponseModel>), 200)]
+                public async virtual Task<IActionResult> GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTime> startTime, Nullable<DateTime> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTime queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
+                {
+                        List<ApiServerTaskResponseModel> response = await this.ServerTaskService.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(name, description, startTime, completedTime, errorMessage, hasWarningsOrErrors, projectId, environmentId, tenantId, durationSeconds, jSON, queueTime, state, concurrencyTag, hasPendingInterruptions, serverNodeId);
+
+                        return this.Ok(response);
+                }
+        }
+}
+
+/*<Codenesium>
+    <Hash>5a3c9a8b097976bcbb787c8c4db44b71</Hash>
+</Codenesium>*/

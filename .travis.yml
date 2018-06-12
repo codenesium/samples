@@ -10,3 +10,4 @@ script:
    -  dotnet build PetShipping/PetShipping.Api.Web/PetShipping.Api.Web.csproj
    -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
    -  dotnet build TicketingCRM/TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj
+   -  dotnet build OctopusDeploy/OctopusDeploy.Api.Web/OctopusDeploy.Api.Web.csproj
