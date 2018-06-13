@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Illustration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Illustration>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Illustration> Get(int illustrationID)
@@ -75,31 +75,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Illustration>> Where(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Illustration>> Where(Expression<Func<Illustration, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Illustration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Illustration> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Illustration>> SearchLinqEF(Expression<Func<Illustration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Illustration>> SearchLinqEF(Expression<Func<Illustration, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Illustration.IllustrationID)} ASC";
                         }
 
-                        return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Illustration>();
+                        return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Illustration>();
                 }
 
-                private async Task<List<Illustration>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Illustration>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Illustration.IllustrationID)} ASC";
                         }
 
-                        return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Illustration>();
+                        return await this.Context.Set<Illustration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Illustration>();
                 }
 
                 private async Task<Illustration> GetById(int illustrationID)
@@ -108,9 +108,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductModelIllustration>().Where(x => x.IllustrationID == illustrationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c6a200a20327de91dd4b20f9de4cd739</Hash>
+    <Hash>eae31a6faa447b0ec0faf96a1f655a68</Hash>
 </Codenesium>*/

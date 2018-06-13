@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiClientResponseModel> response = await this.ClientService.All(query.Offset, query.Limit);
+                        List<ApiClientResponseModel> response = await this.ClientService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,49 @@ namespace PetShippingNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{clientId}/ClientCommunications")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+                public async virtual Task<IActionResult> ClientCommunications(int clientId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiClientCommunicationResponseModel> response = await this.ClientService.ClientCommunications(clientId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{clientId}/Pets")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+                public async virtual Task<IActionResult> Pets(int clientId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPetResponseModel> response = await this.ClientService.Pets(clientId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{clientId}/Sales")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiClientResponseModel>), 200)]
+                public async virtual Task<IActionResult> Sales(int clientId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSaleResponseModel> response = await this.ClientService.Sales(clientId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>31b9813495507f720a9926fc81c25fdb</Hash>
+    <Hash>474d55edab959f667051047e2aa1ccf4</Hash>
 </Codenesium>*/

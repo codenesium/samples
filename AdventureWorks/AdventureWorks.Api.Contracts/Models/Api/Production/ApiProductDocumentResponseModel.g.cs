@@ -7,61 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiProductDocumentResponseModel: AbstractApiResponseModel
+        public partial class ApiProductDocumentResponseModel: AbstractApiProductDocumentResponseModel
         {
-                public ApiProductDocumentResponseModel() : base()
+                public ApiProductDocumentResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        Guid documentNode,
-                        DateTime modifiedDate,
-                        int productID)
-                {
-                        this.DocumentNode = documentNode;
-                        this.ModifiedDate = modifiedDate;
-                        this.ProductID = productID;
-                }
-
-                public Guid DocumentNode { get; private set; }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public int ProductID { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDocumentNodeValue { get; set; } = true;
-
-                public bool ShouldSerializeDocumentNode()
-                {
-                        return this.ShouldSerializeDocumentNodeValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductIDValue { get; set; } = true;
-
-                public bool ShouldSerializeProductID()
-                {
-                        return this.ShouldSerializeProductIDValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeDocumentNodeValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeProductIDValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>60f503e6762991104b6d7230fc7329a0</Hash>
+    <Hash>80580583dbcc9698349857f41d382c8a</Hash>
 </Codenesium>*/

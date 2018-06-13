@@ -7,65 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiCountryRequirementResponseModel: AbstractApiResponseModel
+        public partial class ApiCountryRequirementResponseModel: AbstractApiCountryRequirementResponseModel
         {
-                public ApiCountryRequirementResponseModel() : base()
+                public ApiCountryRequirementResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        int countryId,
-                        string details,
-                        int id)
-                {
-                        this.CountryId = countryId;
-                        this.Details = details;
-                        this.Id = id;
-
-                        this.CountryIdEntity = nameof(ApiResponse.Countries);
-                }
-
-                public int CountryId { get; private set; }
-
-                public string CountryIdEntity { get; set; }
-
-                public string Details { get; private set; }
-
-                public int Id { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCountryIdValue { get; set; } = true;
-
-                public bool ShouldSerializeCountryId()
-                {
-                        return this.ShouldSerializeCountryIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDetailsValue { get; set; } = true;
-
-                public bool ShouldSerializeDetails()
-                {
-                        return this.ShouldSerializeDetailsValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeCountryIdValue = false;
-                        this.ShouldSerializeDetailsValue = false;
-                        this.ShouldSerializeIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>466e98addaa75c785358e5fdc1fba01a</Hash>
+    <Hash>8dcd137c5abb6e610eaeb0bf3c24c700</Hash>
 </Codenesium>*/

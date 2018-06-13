@@ -17,17 +17,32 @@ namespace AdventureWorksNS.Api.Services
                         ILocationRepository locationRepository,
                         IApiLocationRequestModelValidator locationModelValidator,
                         IBOLLocationMapper bollocationMapper,
-                        IDALLocationMapper dallocationMapper)
+                        IDALLocationMapper dallocationMapper
+                        ,
+                        IBOLProductInventoryMapper bolProductInventoryMapper,
+                        IDALProductInventoryMapper dalProductInventoryMapper
+                        ,
+                        IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
+                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
+
+                        )
                         : base(logger,
                                locationRepository,
                                locationModelValidator,
                                bollocationMapper,
-                               dallocationMapper)
+                               dallocationMapper
+                               ,
+                               bolProductInventoryMapper,
+                               dalProductInventoryMapper
+                               ,
+                               bolWorkOrderRoutingMapper,
+                               dalWorkOrderRoutingMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8f88b7f3b2b4aa1ba8836f012e81966b</Hash>
+    <Hash>f4ac4b0eb63ddce5aad508d0482af862</Hash>
 </Codenesium>*/

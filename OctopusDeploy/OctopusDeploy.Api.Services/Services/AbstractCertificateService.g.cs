@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ICertificateRepository certificateRepository,
                         IApiCertificateRequestModelValidator certificateModelValidator,
-                        IBOLCertificateMapper bolcertificateMapper,
-                        IDALCertificateMapper dalcertificateMapper)
+                        IBOLCertificateMapper bolCertificateMapper,
+                        IDALCertificateMapper dalCertificateMapper
+
+                        )
                         : base()
 
                 {
                         this.certificateRepository = certificateRepository;
                         this.certificateModelValidator = certificateModelValidator;
-                        this.bolCertificateMapper = bolcertificateMapper;
-                        this.dalCertificateMapper = dalcertificateMapper;
+                        this.bolCertificateMapper = bolCertificateMapper;
+                        this.dalCertificateMapper = dalCertificateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCertificateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.certificateRepository.All(skip, take, orderClause);
+                        var records = await this.certificateRepository.All(limit, offset, orderClause);
 
                         return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
                 }
@@ -97,7 +99,7 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiCertificateResponseModel>> GetCreated(DateTime created)
+                public async Task<List<ApiCertificateResponseModel>> GetCreated(DateTimeOffset created)
                 {
                         List<Certificate> records = await this.certificateRepository.GetCreated(created);
 
@@ -109,7 +111,7 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiCertificateResponseModel>> GetNotAfter(DateTime notAfter)
+                public async Task<List<ApiCertificateResponseModel>> GetNotAfter(DateTimeOffset notAfter)
                 {
                         List<Certificate> records = await this.certificateRepository.GetNotAfter(notAfter);
 
@@ -125,5 +127,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6afcf9e66e9b7c8b147a644fd3eb9ac</Hash>
+    <Hash>ead47f63489dbbff14a4127272abbcf6</Hash>
 </Codenesium>*/

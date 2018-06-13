@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCurrencyResponseModel> response = await this.CurrencyService.All(query.Offset, query.Limit);
+                        List<ApiCurrencyResponseModel> response = await this.CurrencyService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,36 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{currencyCode}/CountryRegionCurrencies")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
+                public async virtual Task<IActionResult> CountryRegionCurrencies(string currencyCode, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiCountryRegionCurrencyResponseModel> response = await this.CurrencyService.CountryRegionCurrencies(currencyCode, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{fromCurrencyCode}/CurrencyRates")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCurrencyResponseModel>), 200)]
+                public async virtual Task<IActionResult> CurrencyRates(string fromCurrencyCode, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiCurrencyRateResponseModel> response = await this.CurrencyService.CurrencyRates(fromCurrencyCode, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4868c32fa25e358157ff146bb7271730</Hash>
+    <Hash>72aa847490b954ad23944bc00ad4a33d</Hash>
 </Codenesium>*/

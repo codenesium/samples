@@ -27,7 +27,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ExclusiveRules()
                 {
-                        this.RuleFor(x => x.Exclusive).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -56,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>274e323e7d43d75e3b32cd34cd4275ab</Hash>
+    <Hash>4472dfaa24ea3fc4eae6cef1ac20095e</Hash>
 </Codenesium>*/

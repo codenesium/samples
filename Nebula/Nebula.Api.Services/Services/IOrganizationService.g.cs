@@ -19,10 +19,12 @@ namespace NebulaNS.Api.Services
 
                 Task<ApiOrganizationResponseModel> Get(int id);
 
-                Task<List<ApiOrganizationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiOrganizationResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiTeamResponseModel>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>cbc4bd78f4ea2dd4bddbe16b06238890</Hash>
+    <Hash>2b4b12bdf886ecafcd5db877304ef7ba</Hash>
 </Codenesium>*/

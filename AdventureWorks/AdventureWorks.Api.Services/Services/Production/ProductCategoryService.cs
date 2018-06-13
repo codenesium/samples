@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IProductCategoryRepository productCategoryRepository,
                         IApiProductCategoryRequestModelValidator productCategoryModelValidator,
                         IBOLProductCategoryMapper bolproductCategoryMapper,
-                        IDALProductCategoryMapper dalproductCategoryMapper)
+                        IDALProductCategoryMapper dalproductCategoryMapper
+                        ,
+                        IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
+                        IDALProductSubcategoryMapper dalProductSubcategoryMapper
+
+                        )
                         : base(logger,
                                productCategoryRepository,
                                productCategoryModelValidator,
                                bolproductCategoryMapper,
-                               dalproductCategoryMapper)
+                               dalproductCategoryMapper
+                               ,
+                               bolProductSubcategoryMapper,
+                               dalProductSubcategoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4958ec8ec5d7cce47be2c1c5d20b9aa6</Hash>
+    <Hash>2fddbd6eb5dc8d6064f6d37a973c0a12</Hash>
 </Codenesium>*/

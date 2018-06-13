@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALCultureMapper dalCultureMapper;
 
+                private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
+
+                private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
+
                 private ILogger logger;
 
                 public AbstractCultureService(
                         ILogger logger,
                         ICultureRepository cultureRepository,
                         IApiCultureRequestModelValidator cultureModelValidator,
-                        IBOLCultureMapper bolcultureMapper,
-                        IDALCultureMapper dalcultureMapper)
+                        IBOLCultureMapper bolCultureMapper,
+                        IDALCultureMapper dalCultureMapper
+
+                        ,
+                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+
+                        )
                         : base()
 
                 {
                         this.cultureRepository = cultureRepository;
                         this.cultureModelValidator = cultureModelValidator;
-                        this.bolCultureMapper = bolcultureMapper;
-                        this.dalCultureMapper = dalcultureMapper;
+                        this.bolCultureMapper = bolCultureMapper;
+                        this.dalCultureMapper = dalCultureMapper;
+                        this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
+                        this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCultureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.cultureRepository.All(skip, take, orderClause);
+                        var records = await this.cultureRepository.All(limit, offset, orderClause);
 
                         return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductModelProductDescriptionCulture> records = await this.cultureRepository.ProductModelProductDescriptionCultures(cultureID, limit, offset);
+
+                        return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cb728f0338157f13296164c60dc5a61a</Hash>
+    <Hash>910c1f71914be097a2dfad5502870dab</Hash>
 </Codenesium>*/

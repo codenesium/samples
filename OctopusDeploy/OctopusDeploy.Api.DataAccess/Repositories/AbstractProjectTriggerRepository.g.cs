@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProjectTrigger>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ProjectTrigger> Get(string id)
@@ -88,31 +88,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<ProjectTrigger>> Where(Expression<Func<ProjectTrigger, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ProjectTrigger>> Where(Expression<Func<ProjectTrigger, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ProjectTrigger> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ProjectTrigger> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ProjectTrigger>> SearchLinqEF(Expression<Func<ProjectTrigger, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProjectTrigger>> SearchLinqEF(Expression<Func<ProjectTrigger, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProjectTrigger.Id)} ASC";
                         }
 
-                        return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProjectTrigger>();
+                        return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProjectTrigger>();
                 }
 
-                private async Task<List<ProjectTrigger>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProjectTrigger>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProjectTrigger.Id)} ASC";
                         }
 
-                        return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProjectTrigger>();
+                        return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProjectTrigger>();
                 }
 
                 private async Task<ProjectTrigger> GetById(string id)
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9619309b7f1e4cb8b1869e1cd98f1479</Hash>
+    <Hash>b0f6e4ec0997c451e653d7a72d0ddfc3</Hash>
 </Codenesium>*/

@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ErrorLog>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ErrorLog> Get(int errorLogID)
@@ -75,31 +75,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ErrorLog>> Where(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ErrorLog>> Where(Expression<Func<ErrorLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ErrorLog> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ErrorLog> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ErrorLog>> SearchLinqEF(Expression<Func<ErrorLog, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ErrorLog>> SearchLinqEF(Expression<Func<ErrorLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ErrorLog.ErrorLogID)} ASC";
                         }
 
-                        return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ErrorLog>();
+                        return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
                 }
 
-                private async Task<List<ErrorLog>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ErrorLog>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ErrorLog.ErrorLogID)} ASC";
                         }
 
-                        return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ErrorLog>();
+                        return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
                 }
 
                 private async Task<ErrorLog> GetById(int errorLogID)
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa06cad5e91bcdf02d365385299464a9</Hash>
+    <Hash>4a2a9ece03ca8241cceb3563031cb4b7</Hash>
 </Codenesium>*/

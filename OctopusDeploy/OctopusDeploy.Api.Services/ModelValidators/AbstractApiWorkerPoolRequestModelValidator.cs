@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IWorkerPoolRepository WorkerPoolRepository { get; set; }
                 public virtual void IsDefaultRules()
                 {
-                        this.RuleFor(x => x.IsDefault).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -45,14 +44,13 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void SortOrderRules()
                 {
-                        this.RuleFor(x => x.SortOrder).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiWorkerPoolRequestModel model,  CancellationToken cancellationToken)
                 {
                         WorkerPool record = await this.WorkerPoolRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -65,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3186303a5fc85529be80f4ea94d29bd</Hash>
+    <Hash>5450749edcca809f8105adb7a0716b53</Hash>
 </Codenesium>*/

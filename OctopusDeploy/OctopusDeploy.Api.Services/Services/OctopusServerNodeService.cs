@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IOctopusServerNodeRepository octopusServerNodeRepository,
                         IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator,
                         IBOLOctopusServerNodeMapper boloctopusServerNodeMapper,
-                        IDALOctopusServerNodeMapper daloctopusServerNodeMapper)
+                        IDALOctopusServerNodeMapper daloctopusServerNodeMapper
+
+                        )
                         : base(logger,
                                octopusServerNodeRepository,
                                octopusServerNodeModelValidator,
                                boloctopusServerNodeMapper,
-                               daloctopusServerNodeMapper)
+                               daloctopusServerNodeMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f363b295eac5a389036e9f2b35908874</Hash>
+    <Hash>00337a40d27b1f1b4858a79f67a8a050</Hash>
 </Codenesium>*/

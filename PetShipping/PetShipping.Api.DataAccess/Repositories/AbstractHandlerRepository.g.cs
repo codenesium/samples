@@ -25,9 +25,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Handler>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Handler>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Handler> Get(int id)
@@ -75,31 +75,31 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Handler>> Where(Expression<Func<Handler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Handler>> Where(Expression<Func<Handler, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Handler> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Handler> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Handler>> SearchLinqEF(Expression<Func<Handler, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Handler>> SearchLinqEF(Expression<Func<Handler, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Handler.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Handler>();
+                        return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Handler>();
                 }
 
-                private async Task<List<Handler>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Handler>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Handler.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Handler>();
+                        return await this.Context.Set<Handler>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Handler>();
                 }
 
                 private async Task<Handler> GetById(int id)
@@ -108,9 +108,22 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<AirTransport>> AirTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<AirTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
+                }
+                public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int handlerId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<HandlerPipelineStep>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
+                }
+                public async virtual Task<List<OtherTransport>> OtherTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<OtherTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9186fe8c8207510ef00f87505e26d025</Hash>
+    <Hash>dc3ede5578f89dec2043ab8df7956f7b</Hash>
 </Codenesium>*/

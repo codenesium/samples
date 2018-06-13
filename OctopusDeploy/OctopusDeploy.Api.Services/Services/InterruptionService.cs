@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IInterruptionRepository interruptionRepository,
                         IApiInterruptionRequestModelValidator interruptionModelValidator,
                         IBOLInterruptionMapper bolinterruptionMapper,
-                        IDALInterruptionMapper dalinterruptionMapper)
+                        IDALInterruptionMapper dalinterruptionMapper
+
+                        )
                         : base(logger,
                                interruptionRepository,
                                interruptionModelValidator,
                                bolinterruptionMapper,
-                               dalinterruptionMapper)
+                               dalinterruptionMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5b2716dea77110de2a4babdc6bb9a505</Hash>
+    <Hash>95eee1e6f62d18b6f0d8fd2bf0681bb4</Hash>
 </Codenesium>*/

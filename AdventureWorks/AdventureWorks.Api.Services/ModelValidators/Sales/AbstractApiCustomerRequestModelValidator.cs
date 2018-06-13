@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCustomerRequestModelValidator: AbstractValidator<ApiCustomerRequestModel>
         {
@@ -40,7 +39,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PersonIDRules()
@@ -49,7 +47,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void StoreIDRules()
@@ -80,7 +77,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Customer record = await this.CustomerRepository.GetAccountNumber(model.AccountNumber);
 
-                        if (record == null || record.CustomerID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.CustomerID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -93,5 +90,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f2ce8b29b0778a51bc4677d56985f0c7</Hash>
+    <Hash>fb91b2d614ae1443366bb24b062ed61b</Hash>
 </Codenesium>*/

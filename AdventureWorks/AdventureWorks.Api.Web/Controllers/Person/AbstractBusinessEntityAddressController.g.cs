@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.All(query.Offset, query.Limit);
+                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a029b7654b256118b565b283783750ce</Hash>
+    <Hash>ee8258c2ae96ad96229ad72673fae59e</Hash>
 </Codenesium>*/

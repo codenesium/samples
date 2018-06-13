@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IMachinePolicyRepository machinePolicyRepository,
                         IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
-                        IBOLMachinePolicyMapper bolmachinePolicyMapper,
-                        IDALMachinePolicyMapper dalmachinePolicyMapper)
+                        IBOLMachinePolicyMapper bolMachinePolicyMapper,
+                        IDALMachinePolicyMapper dalMachinePolicyMapper
+
+                        )
                         : base()
 
                 {
                         this.machinePolicyRepository = machinePolicyRepository;
                         this.machinePolicyModelValidator = machinePolicyModelValidator;
-                        this.bolMachinePolicyMapper = bolmachinePolicyMapper;
-                        this.dalMachinePolicyMapper = dalmachinePolicyMapper;
+                        this.bolMachinePolicyMapper = bolMachinePolicyMapper;
+                        this.dalMachinePolicyMapper = dalMachinePolicyMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.machinePolicyRepository.All(skip, take, orderClause);
+                        var records = await this.machinePolicyRepository.All(limit, offset, orderClause);
 
                         return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>818576d1ea691b66df2c96410d675736</Hash>
+    <Hash>fe87212dea8fb9e85b3cdb890f8eeee7</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Contracts
         public abstract class AbstractApiInterruptionResponseModel: AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        DateTime created,
+                        DateTimeOffset created,
                         string environmentId,
                         string id,
                         string jSON,
@@ -35,7 +35,7 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Title = title;
                 }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string EnvironmentId { get; private set; }
 
@@ -163,5 +163,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cd90248d799973b99af24636cb4f9f4e</Hash>
+    <Hash>cfd9aa7b650b9d6b1693d400ac0155c4</Hash>
 </Codenesium>*/

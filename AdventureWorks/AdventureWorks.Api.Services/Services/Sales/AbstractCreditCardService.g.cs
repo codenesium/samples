@@ -22,27 +22,47 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALCreditCardMapper dalCreditCardMapper;
 
+                private IBOLPersonCreditCardMapper bolPersonCreditCardMapper;
+
+                private IDALPersonCreditCardMapper dalPersonCreditCardMapper;
+                private IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper;
+
+                private IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper;
+
                 private ILogger logger;
 
                 public AbstractCreditCardService(
                         ILogger logger,
                         ICreditCardRepository creditCardRepository,
                         IApiCreditCardRequestModelValidator creditCardModelValidator,
-                        IBOLCreditCardMapper bolcreditCardMapper,
-                        IDALCreditCardMapper dalcreditCardMapper)
+                        IBOLCreditCardMapper bolCreditCardMapper,
+                        IDALCreditCardMapper dalCreditCardMapper
+
+                        ,
+                        IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
+                        IDALPersonCreditCardMapper dalPersonCreditCardMapper
+                        ,
+                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
+
+                        )
                         : base()
 
                 {
                         this.creditCardRepository = creditCardRepository;
                         this.creditCardModelValidator = creditCardModelValidator;
-                        this.bolCreditCardMapper = bolcreditCardMapper;
-                        this.dalCreditCardMapper = dalcreditCardMapper;
+                        this.bolCreditCardMapper = bolCreditCardMapper;
+                        this.dalCreditCardMapper = dalCreditCardMapper;
+                        this.bolPersonCreditCardMapper = bolPersonCreditCardMapper;
+                        this.dalPersonCreditCardMapper = dalPersonCreditCardMapper;
+                        this.bolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
+                        this.dalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.creditCardRepository.All(skip, take, orderClause);
+                        var records = await this.creditCardRepository.All(limit, offset, orderClause);
 
                         return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(records));
                 }
@@ -103,9 +123,22 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<PersonCreditCard> records = await this.creditCardRepository.PersonCreditCards(creditCardID, limit, offset);
+
+                        return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SalesOrderHeader> records = await this.creditCardRepository.SalesOrderHeaders(creditCardID, limit, offset);
+
+                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>26e25b98716cadd9209bf61c2e19b589</Hash>
+    <Hash>7db3d60a545b2153e3ec25f3f07c961c</Hash>
 </Codenesium>*/

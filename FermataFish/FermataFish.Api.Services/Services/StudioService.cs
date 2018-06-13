@@ -17,17 +17,74 @@ namespace FermataFishNS.Api.Services
                         IStudioRepository studioRepository,
                         IApiStudioRequestModelValidator studioModelValidator,
                         IBOLStudioMapper bolstudioMapper,
-                        IDALStudioMapper dalstudioMapper)
+                        IDALStudioMapper dalstudioMapper
+                        ,
+                        IBOLAdminMapper bolAdminMapper,
+                        IDALAdminMapper dalAdminMapper
+                        ,
+                        IBOLFamilyMapper bolFamilyMapper,
+                        IDALFamilyMapper dalFamilyMapper
+                        ,
+                        IBOLLessonMapper bolLessonMapper,
+                        IDALLessonMapper dalLessonMapper
+                        ,
+                        IBOLLessonStatusMapper bolLessonStatusMapper,
+                        IDALLessonStatusMapper dalLessonStatusMapper
+                        ,
+                        IBOLSpaceMapper bolSpaceMapper,
+                        IDALSpaceMapper dalSpaceMapper
+                        ,
+                        IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
+                        IDALSpaceFeatureMapper dalSpaceFeatureMapper
+                        ,
+                        IBOLStudentMapper bolStudentMapper,
+                        IDALStudentMapper dalStudentMapper
+                        ,
+                        IBOLTeacherMapper bolTeacherMapper,
+                        IDALTeacherMapper dalTeacherMapper
+                        ,
+                        IBOLTeacherSkillMapper bolTeacherSkillMapper,
+                        IDALTeacherSkillMapper dalTeacherSkillMapper
+
+                        )
                         : base(logger,
                                studioRepository,
                                studioModelValidator,
                                bolstudioMapper,
-                               dalstudioMapper)
+                               dalstudioMapper
+                               ,
+                               bolAdminMapper,
+                               dalAdminMapper
+                               ,
+                               bolFamilyMapper,
+                               dalFamilyMapper
+                               ,
+                               bolLessonMapper,
+                               dalLessonMapper
+                               ,
+                               bolLessonStatusMapper,
+                               dalLessonStatusMapper
+                               ,
+                               bolSpaceMapper,
+                               dalSpaceMapper
+                               ,
+                               bolSpaceFeatureMapper,
+                               dalSpaceFeatureMapper
+                               ,
+                               bolStudentMapper,
+                               dalStudentMapper
+                               ,
+                               bolTeacherMapper,
+                               dalTeacherMapper
+                               ,
+                               bolTeacherSkillMapper,
+                               dalTeacherSkillMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5354f8551e2c23e32b07a34e62ccea85</Hash>
+    <Hash>d0973a930a62c5d4408a0a52c6b07db7</Hash>
 </Codenesium>*/

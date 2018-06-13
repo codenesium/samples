@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SalesPerson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<SalesPerson>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<SalesPerson> Get(int businessEntityID)
@@ -75,31 +75,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<SalesPerson>> Where(Expression<Func<SalesPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<SalesPerson>> Where(Expression<Func<SalesPerson, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<SalesPerson> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<SalesPerson> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<SalesPerson>> SearchLinqEF(Expression<Func<SalesPerson, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SalesPerson>> SearchLinqEF(Expression<Func<SalesPerson, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SalesPerson.BusinessEntityID)} ASC";
                         }
 
-                        return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesPerson>();
+                        return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesPerson>();
                 }
 
-                private async Task<List<SalesPerson>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SalesPerson>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SalesPerson.BusinessEntityID)} ASC";
                         }
 
-                        return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesPerson>();
+                        return await this.Context.Set<SalesPerson>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesPerson>();
                 }
 
                 private async Task<SalesPerson> GetById(int businessEntityID)
@@ -108,9 +108,26 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                }
+                public async virtual Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesPersonQuotaHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPersonQuotaHistory>();
+                }
+                public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
+                }
+                public async virtual Task<List<Store>> Stores(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Store>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Store>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6fd0611f07ce19da559d504a8cb43852</Hash>
+    <Hash>91e4dd6825cd03ecd8730f1028131e85</Hash>
 </Codenesium>*/

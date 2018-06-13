@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCountryRegionRequestModelValidator: AbstractValidator<ApiCountryRegionRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public ICountryRegionRepository CountryRegionRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -43,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         CountryRegion record = await this.CountryRegionRepository.GetName(model.Name);
 
-                        if (record == null || record.CountryRegionCode == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.CountryRegionCode == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>38daaba0f3afce5da78c2eb5b9bb72f8</Hash>
+    <Hash>d54be00fa15fdcbe33492db66b4e519d</Hash>
 </Codenesium>*/

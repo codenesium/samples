@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IProjectGroupRepository projectGroupRepository,
                         IApiProjectGroupRequestModelValidator projectGroupModelValidator,
-                        IBOLProjectGroupMapper bolprojectGroupMapper,
-                        IDALProjectGroupMapper dalprojectGroupMapper)
+                        IBOLProjectGroupMapper bolProjectGroupMapper,
+                        IDALProjectGroupMapper dalProjectGroupMapper
+
+                        )
                         : base()
 
                 {
                         this.projectGroupRepository = projectGroupRepository;
                         this.projectGroupModelValidator = projectGroupModelValidator;
-                        this.bolProjectGroupMapper = bolprojectGroupMapper;
-                        this.dalProjectGroupMapper = dalprojectGroupMapper;
+                        this.bolProjectGroupMapper = bolProjectGroupMapper;
+                        this.dalProjectGroupMapper = dalProjectGroupMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProjectGroupResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProjectGroupResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.projectGroupRepository.All(skip, take, orderClause);
+                        var records = await this.projectGroupRepository.All(limit, offset, orderClause);
 
                         return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7aed96df7ee0e774f5731c6cc0acb19f</Hash>
+    <Hash>cb448e9368dd0939bf91a08c64034f32</Hash>
 </Codenesium>*/

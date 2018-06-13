@@ -25,9 +25,9 @@ namespace PetStoreNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PaymentType>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<PaymentType>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<PaymentType> Get(int id)
@@ -75,31 +75,31 @@ namespace PetStoreNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<PaymentType>> Where(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<PaymentType>> Where(Expression<Func<PaymentType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<PaymentType> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<PaymentType> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<PaymentType>> SearchLinqEF(Expression<Func<PaymentType, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<PaymentType>> SearchLinqEF(Expression<Func<PaymentType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(PaymentType.Id)} ASC";
                         }
 
-                        return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PaymentType>();
+                        return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PaymentType>();
                 }
 
-                private async Task<List<PaymentType>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<PaymentType>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(PaymentType.Id)} ASC";
                         }
 
-                        return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PaymentType>();
+                        return await this.Context.Set<PaymentType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PaymentType>();
                 }
 
                 private async Task<PaymentType> GetById(int id)
@@ -108,9 +108,14 @@ namespace PetStoreNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Sale>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>83b19c9da39fa0bac03d475c680bde65</Hash>
+    <Hash>53de25ac740145fab170aae39acf674f</Hash>
 </Codenesium>*/

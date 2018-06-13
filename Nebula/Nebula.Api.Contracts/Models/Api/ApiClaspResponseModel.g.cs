@@ -7,68 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiClaspResponseModel: AbstractApiResponseModel
+        public partial class ApiClaspResponseModel: AbstractApiClaspResponseModel
         {
-                public ApiClaspResponseModel() : base()
+                public ApiClaspResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        int id,
-                        int nextChainId,
-                        int previousChainId)
-                {
-                        this.Id = id;
-                        this.NextChainId = nextChainId;
-                        this.PreviousChainId = previousChainId;
-
-                        this.NextChainIdEntity = nameof(ApiResponse.Chains);
-                        this.PreviousChainIdEntity = nameof(ApiResponse.Chains);
-                }
-
-                public int Id { get; private set; }
-
-                public int NextChainId { get; private set; }
-
-                public string NextChainIdEntity { get; set; }
-
-                public int PreviousChainId { get; private set; }
-
-                public string PreviousChainIdEntity { get; set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNextChainIdValue { get; set; } = true;
-
-                public bool ShouldSerializeNextChainId()
-                {
-                        return this.ShouldSerializeNextChainIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializePreviousChainIdValue { get; set; } = true;
-
-                public bool ShouldSerializePreviousChainId()
-                {
-                        return this.ShouldSerializePreviousChainIdValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNextChainIdValue = false;
-                        this.ShouldSerializePreviousChainIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7888f5680742dcbcdf6958e0bb026782</Hash>
+    <Hash>d4f03add77801cc8c09ab1553c188a96</Hash>
 </Codenesium>*/

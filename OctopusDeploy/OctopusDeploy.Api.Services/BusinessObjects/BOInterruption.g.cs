@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Services
                 }
 
                 public void SetProperties(string id,
-                                          DateTime created,
+                                          DateTimeOffset created,
                                           string environmentId,
                                           string jSON,
                                           string projectId,
@@ -34,7 +34,7 @@ namespace OctopusDeployNS.Api.Services
                         this.Title = title;
                 }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string EnvironmentId { get; private set; }
 
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd35772fa5358e79f1fe4ff3dfb10197</Hash>
+    <Hash>f26731bfba16b86162433883fea21d34</Hash>
 </Codenesium>*/

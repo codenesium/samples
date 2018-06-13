@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiProductDescriptionResponseModel> response = await this.ProductDescriptionService.All(query.Offset, query.Limit);
+                        List<ApiProductDescriptionResponseModel> response = await this.ProductDescriptionService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{productDescriptionID}/ProductModelProductDescriptionCultures")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductDescriptionResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductModelProductDescriptionCultures(int productDescriptionID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductModelProductDescriptionCultureResponseModel> response = await this.ProductDescriptionService.ProductModelProductDescriptionCultures(productDescriptionID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>96b3a5e56c24d15ed582bbc57247242a</Hash>
+    <Hash>ab2b4c30ad082459b119ab12d64794f6</Hash>
 </Codenesium>*/

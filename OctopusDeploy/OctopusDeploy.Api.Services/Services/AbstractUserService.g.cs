@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IUserRepository userRepository,
                         IApiUserRequestModelValidator userModelValidator,
-                        IBOLUserMapper boluserMapper,
-                        IDALUserMapper daluserMapper)
+                        IBOLUserMapper bolUserMapper,
+                        IDALUserMapper dalUserMapper
+
+                        )
                         : base()
 
                 {
                         this.userRepository = userRepository;
                         this.userModelValidator = userModelValidator;
-                        this.bolUserMapper = boluserMapper;
-                        this.dalUserMapper = daluserMapper;
+                        this.bolUserMapper = bolUserMapper;
+                        this.dalUserMapper = dalUserMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiUserResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiUserResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.userRepository.All(skip, take, orderClause);
+                        var records = await this.userRepository.All(limit, offset, orderClause);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
@@ -125,5 +127,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e2a5382afdc52477e7d0f8c503c55a7</Hash>
+    <Hash>fde87286214eda6698cb565c8bc0380a</Hash>
 </Codenesium>*/

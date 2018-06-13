@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetDepartmentID(short departmentID);
                 Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetShiftID(int shiftID);
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a331befc6c8cba693e3cb4c5930dba9a</Hash>
+    <Hash>602a72aaf0e69d0b7eba670adb5c2e94</Hash>
 </Codenesium>*/

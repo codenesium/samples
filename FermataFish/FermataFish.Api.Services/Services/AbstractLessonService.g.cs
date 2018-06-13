@@ -22,27 +22,47 @@ namespace FermataFishNS.Api.Services
 
                 private IDALLessonMapper dalLessonMapper;
 
+                private IBOLLessonXStudentMapper bolLessonXStudentMapper;
+
+                private IDALLessonXStudentMapper dalLessonXStudentMapper;
+                private IBOLLessonXTeacherMapper bolLessonXTeacherMapper;
+
+                private IDALLessonXTeacherMapper dalLessonXTeacherMapper;
+
                 private ILogger logger;
 
                 public AbstractLessonService(
                         ILogger logger,
                         ILessonRepository lessonRepository,
                         IApiLessonRequestModelValidator lessonModelValidator,
-                        IBOLLessonMapper bollessonMapper,
-                        IDALLessonMapper dallessonMapper)
+                        IBOLLessonMapper bolLessonMapper,
+                        IDALLessonMapper dalLessonMapper
+
+                        ,
+                        IBOLLessonXStudentMapper bolLessonXStudentMapper,
+                        IDALLessonXStudentMapper dalLessonXStudentMapper
+                        ,
+                        IBOLLessonXTeacherMapper bolLessonXTeacherMapper,
+                        IDALLessonXTeacherMapper dalLessonXTeacherMapper
+
+                        )
                         : base()
 
                 {
                         this.lessonRepository = lessonRepository;
                         this.lessonModelValidator = lessonModelValidator;
-                        this.bolLessonMapper = bollessonMapper;
-                        this.dalLessonMapper = dallessonMapper;
+                        this.bolLessonMapper = bolLessonMapper;
+                        this.dalLessonMapper = dalLessonMapper;
+                        this.bolLessonXStudentMapper = bolLessonXStudentMapper;
+                        this.dalLessonXStudentMapper = dalLessonXStudentMapper;
+                        this.bolLessonXTeacherMapper = bolLessonXTeacherMapper;
+                        this.dalLessonXTeacherMapper = dalLessonXTeacherMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLessonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLessonResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.lessonRepository.All(skip, take, orderClause);
+                        var records = await this.lessonRepository.All(limit, offset, orderClause);
 
                         return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiLessonXStudentResponseModel>> LessonXStudents(int lessonId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<LessonXStudent> records = await this.lessonRepository.LessonXStudents(lessonId, limit, offset);
+
+                        return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiLessonXTeacherResponseModel>> LessonXTeachers(int lessonId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<LessonXTeacher> records = await this.lessonRepository.LessonXTeachers(lessonId, limit, offset);
+
+                        return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a3595b8510739f01ac789d4891a7b447</Hash>
+    <Hash>ffe4fc507baee903a63df684c4e8495b</Hash>
 </Codenesium>*/

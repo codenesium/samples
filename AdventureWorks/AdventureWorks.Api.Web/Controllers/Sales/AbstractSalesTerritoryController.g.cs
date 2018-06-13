@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSalesTerritoryResponseModel> response = await this.SalesTerritoryService.All(query.Offset, query.Limit);
+                        List<ApiSalesTerritoryResponseModel> response = await this.SalesTerritoryService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,62 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{territoryID}/Customers")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
+                public async virtual Task<IActionResult> Customers(int territoryID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiCustomerResponseModel> response = await this.SalesTerritoryService.Customers(territoryID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{territoryID}/SalesOrderHeaders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderHeaders(int territoryID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesTerritoryService.SalesOrderHeaders(territoryID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{territoryID}/SalesPersons")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesPersons(int territoryID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesPersonResponseModel> response = await this.SalesTerritoryService.SalesPersons(territoryID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{territoryID}/SalesTerritoryHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesTerritoryResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesTerritoryHistories(int territoryID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesTerritoryHistoryResponseModel> response = await this.SalesTerritoryService.SalesTerritoryHistories(territoryID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1f4e9c79537cd86643ebe91f76bb619c</Hash>
+    <Hash>3497c317e044d0a5bf23314e0c3f2e0b</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IUserRoleRepository userRoleRepository,
                         IApiUserRoleRequestModelValidator userRoleModelValidator,
-                        IBOLUserRoleMapper boluserRoleMapper,
-                        IDALUserRoleMapper daluserRoleMapper)
+                        IBOLUserRoleMapper bolUserRoleMapper,
+                        IDALUserRoleMapper dalUserRoleMapper
+
+                        )
                         : base()
 
                 {
                         this.userRoleRepository = userRoleRepository;
                         this.userRoleModelValidator = userRoleModelValidator;
-                        this.bolUserRoleMapper = boluserRoleMapper;
-                        this.dalUserRoleMapper = daluserRoleMapper;
+                        this.bolUserRoleMapper = bolUserRoleMapper;
+                        this.dalUserRoleMapper = dalUserRoleMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiUserRoleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiUserRoleResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.userRoleRepository.All(skip, take, orderClause);
+                        var records = await this.userRoleRepository.All(limit, offset, orderClause);
 
                         return this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>130360868a87523e18147bb4918c1279</Hash>
+    <Hash>52f3e16325935e31b147195835def5f5</Hash>
 </Codenesium>*/

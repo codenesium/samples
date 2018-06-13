@@ -8,7 +8,6 @@ using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
-
 {
         public abstract class AbstractApiPaymentTypeRequestModelValidator: AbstractValidator<ApiPaymentTypeRequestModel>
         {
@@ -35,5 +34,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c66ba9f6db8fce810f83f3413aa9c66f</Hash>
+    <Hash>946b2e0fb93282f0e02b00f231933d25</Hash>
 </Codenesium>*/

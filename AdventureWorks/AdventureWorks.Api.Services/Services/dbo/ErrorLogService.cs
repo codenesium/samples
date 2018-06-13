@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IErrorLogRepository errorLogRepository,
                         IApiErrorLogRequestModelValidator errorLogModelValidator,
                         IBOLErrorLogMapper bolerrorLogMapper,
-                        IDALErrorLogMapper dalerrorLogMapper)
+                        IDALErrorLogMapper dalerrorLogMapper
+
+                        )
                         : base(logger,
                                errorLogRepository,
                                errorLogModelValidator,
                                bolerrorLogMapper,
-                               dalerrorLogMapper)
+                               dalerrorLogMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b8f13cca33e7ece4ee268bb67c4e3257</Hash>
+    <Hash>d287e06649673ca424b94e7365bc3a0f</Hash>
 </Codenesium>*/

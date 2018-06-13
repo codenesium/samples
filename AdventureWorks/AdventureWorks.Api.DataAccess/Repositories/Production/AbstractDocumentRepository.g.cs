@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Document>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Document>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Document> Get(Guid documentNode)
@@ -88,31 +88,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<Document>> Where(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Document>> Where(Expression<Func<Document, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Document> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Document> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Document.DocumentNode)} ASC";
                         }
 
-                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
+                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Document>();
                 }
 
-                private async Task<List<Document>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Document>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Document.DocumentNode)} ASC";
                         }
 
-                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Document>();
+                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Document>();
                 }
 
                 private async Task<Document> GetById(Guid documentNode)
@@ -121,9 +121,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<ProductDocument>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductDocument>().Where(x => x.DocumentNode == documentNode).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductDocument>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2b27018af1f11c460ff0e3ceb4c3c506</Hash>
+    <Hash>859e3f2ee74952b86774118294973262</Hash>
 </Codenesium>*/

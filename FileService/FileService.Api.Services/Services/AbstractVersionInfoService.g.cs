@@ -28,21 +28,23 @@ namespace FileServiceNS.Api.Services
                         ILogger logger,
                         IVersionInfoRepository versionInfoRepository,
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
-                        IBOLVersionInfoMapper bolversionInfoMapper,
-                        IDALVersionInfoMapper dalversionInfoMapper)
+                        IBOLVersionInfoMapper bolVersionInfoMapper,
+                        IDALVersionInfoMapper dalVersionInfoMapper
+
+                        )
                         : base()
 
                 {
                         this.versionInfoRepository = versionInfoRepository;
                         this.versionInfoModelValidator = versionInfoModelValidator;
-                        this.bolVersionInfoMapper = bolversionInfoMapper;
-                        this.dalVersionInfoMapper = dalversionInfoMapper;
+                        this.bolVersionInfoMapper = bolVersionInfoMapper;
+                        this.dalVersionInfoMapper = dalVersionInfoMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.versionInfoRepository.All(skip, take, orderClause);
+                        var records = await this.versionInfoRepository.All(limit, offset, orderClause);
 
                         return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ef88fe9867c254cc0ba81d6c8d8d062</Hash>
+    <Hash>e6874e2d36f3329062d5703a25af500b</Hash>
 </Codenesium>*/

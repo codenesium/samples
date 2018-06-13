@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Address>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Address>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Address> Get(int addressID)
@@ -88,31 +88,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<Address>> Where(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Address>> Where(Expression<Func<Address, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Address> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Address> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Address>> SearchLinqEF(Expression<Func<Address, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Address>> SearchLinqEF(Expression<Func<Address, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Address.AddressID)} ASC";
                         }
 
-                        return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Address>();
+                        return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Address>();
                 }
 
-                private async Task<List<Address>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Address>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Address.AddressID)} ASC";
                         }
 
-                        return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Address>();
+                        return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Address>();
                 }
 
                 private async Task<Address> GetById(int addressID)
@@ -121,9 +121,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressID == addressID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4070292203bf47c8615c9180c84d26dd</Hash>
+    <Hash>1c0e4e355cee0cc19ebcab77dcc09283</Hash>
 </Codenesium>*/

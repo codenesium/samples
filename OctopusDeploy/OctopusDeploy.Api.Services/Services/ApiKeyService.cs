@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IApiKeyRepository apiKeyRepository,
                         IApiApiKeyRequestModelValidator apiKeyModelValidator,
                         IBOLApiKeyMapper bolapiKeyMapper,
-                        IDALApiKeyMapper dalapiKeyMapper)
+                        IDALApiKeyMapper dalapiKeyMapper
+
+                        )
                         : base(logger,
                                apiKeyRepository,
                                apiKeyModelValidator,
                                bolapiKeyMapper,
-                               dalapiKeyMapper)
+                               dalapiKeyMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0ff6d325397fa6d372ef75dccccbe7da</Hash>
+    <Hash>e913d1d03b504a300ddf10df423e367a</Hash>
 </Codenesium>*/

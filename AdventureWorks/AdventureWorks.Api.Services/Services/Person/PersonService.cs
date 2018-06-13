@@ -17,17 +17,44 @@ namespace AdventureWorksNS.Api.Services
                         IPersonRepository personRepository,
                         IApiPersonRequestModelValidator personModelValidator,
                         IBOLPersonMapper bolpersonMapper,
-                        IDALPersonMapper dalpersonMapper)
+                        IDALPersonMapper dalpersonMapper
+                        ,
+                        IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
+                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
+                        ,
+                        IBOLEmailAddressMapper bolEmailAddressMapper,
+                        IDALEmailAddressMapper dalEmailAddressMapper
+                        ,
+                        IBOLPasswordMapper bolPasswordMapper,
+                        IDALPasswordMapper dalPasswordMapper
+                        ,
+                        IBOLPersonPhoneMapper bolPersonPhoneMapper,
+                        IDALPersonPhoneMapper dalPersonPhoneMapper
+
+                        )
                         : base(logger,
                                personRepository,
                                personModelValidator,
                                bolpersonMapper,
-                               dalpersonMapper)
+                               dalpersonMapper
+                               ,
+                               bolBusinessEntityContactMapper,
+                               dalBusinessEntityContactMapper
+                               ,
+                               bolEmailAddressMapper,
+                               dalEmailAddressMapper
+                               ,
+                               bolPasswordMapper,
+                               dalPasswordMapper
+                               ,
+                               bolPersonPhoneMapper,
+                               dalPersonPhoneMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>521551727b9934fa34ec6b530ffc400d</Hash>
+    <Hash>3543669cc82e104a1637042da722ab38</Hash>
 </Codenesium>*/

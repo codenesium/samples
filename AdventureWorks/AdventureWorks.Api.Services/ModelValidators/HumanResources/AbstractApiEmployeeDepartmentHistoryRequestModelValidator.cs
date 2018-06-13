@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiEmployeeDepartmentHistoryRequestModelValidator: AbstractValidator<ApiEmployeeDepartmentHistoryRequestModel>
         {
@@ -28,7 +27,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void DepartmentIDRules()
                 {
-                        this.RuleFor(x => x.DepartmentID).NotNull();
                 }
 
                 public virtual void EndDateRules()
@@ -37,21 +35,18 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void ShiftIDRules()
                 {
-                        this.RuleFor(x => x.ShiftID).NotNull();
                 }
 
                 public virtual void StartDateRules()
                 {
-                        this.RuleFor(x => x.StartDate).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a58257c29ebf78641149495c87f7ee5e</Hash>
+    <Hash>e755b1fe8fd6d1ba028f69003bd09cc0</Hash>
 </Codenesium>*/

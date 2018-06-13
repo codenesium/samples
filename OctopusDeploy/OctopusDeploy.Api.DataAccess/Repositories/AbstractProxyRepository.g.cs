@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Proxy>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Proxy>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Proxy> Get(string id)
@@ -82,31 +82,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Proxy>> Where(Expression<Func<Proxy, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Proxy>> Where(Expression<Func<Proxy, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Proxy> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Proxy> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Proxy>> SearchLinqEF(Expression<Func<Proxy, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Proxy>> SearchLinqEF(Expression<Func<Proxy, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Proxy.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Proxy>();
+                        return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Proxy>();
                 }
 
-                private async Task<List<Proxy>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Proxy>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Proxy.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Proxy>();
+                        return await this.Context.Set<Proxy>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Proxy>();
                 }
 
                 private async Task<Proxy> GetById(string id)
@@ -119,5 +119,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>68eee1e7d281a127f05791e0de5c8a3d</Hash>
+    <Hash>a99d5c4edd5e0a0e8cd7e4a60223a373</Hash>
 </Codenesium>*/

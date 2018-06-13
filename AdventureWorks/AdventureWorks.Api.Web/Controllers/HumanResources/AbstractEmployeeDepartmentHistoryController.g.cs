@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.All(query.Offset, query.Limit);
+                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da16ecf75f99aa6ec6781a89e093cf73</Hash>
+    <Hash>151787a7a6e55a974b519c62bd552037</Hash>
 </Codenesium>*/

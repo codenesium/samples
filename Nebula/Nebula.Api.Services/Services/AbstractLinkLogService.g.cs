@@ -28,21 +28,23 @@ namespace NebulaNS.Api.Services
                         ILogger logger,
                         ILinkLogRepository linkLogRepository,
                         IApiLinkLogRequestModelValidator linkLogModelValidator,
-                        IBOLLinkLogMapper bollinkLogMapper,
-                        IDALLinkLogMapper dallinkLogMapper)
+                        IBOLLinkLogMapper bolLinkLogMapper,
+                        IDALLinkLogMapper dalLinkLogMapper
+
+                        )
                         : base()
 
                 {
                         this.linkLogRepository = linkLogRepository;
                         this.linkLogModelValidator = linkLogModelValidator;
-                        this.bolLinkLogMapper = bollinkLogMapper;
-                        this.dalLinkLogMapper = dallinkLogMapper;
+                        this.bolLinkLogMapper = bolLinkLogMapper;
+                        this.dalLinkLogMapper = dalLinkLogMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLinkLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLinkLogResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.linkLogRepository.All(skip, take, orderClause);
+                        var records = await this.linkLogRepository.All(limit, offset, orderClause);
 
                         return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55a928bc9a80ab3bb3c7a52695e9de5f</Hash>
+    <Hash>66263ada3b55c5dcbb6e5d41f3288b36</Hash>
 </Codenesium>*/

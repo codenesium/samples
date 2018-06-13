@@ -17,17 +17,32 @@ namespace FermataFishNS.Api.Services
                         ILessonRepository lessonRepository,
                         IApiLessonRequestModelValidator lessonModelValidator,
                         IBOLLessonMapper bollessonMapper,
-                        IDALLessonMapper dallessonMapper)
+                        IDALLessonMapper dallessonMapper
+                        ,
+                        IBOLLessonXStudentMapper bolLessonXStudentMapper,
+                        IDALLessonXStudentMapper dalLessonXStudentMapper
+                        ,
+                        IBOLLessonXTeacherMapper bolLessonXTeacherMapper,
+                        IDALLessonXTeacherMapper dalLessonXTeacherMapper
+
+                        )
                         : base(logger,
                                lessonRepository,
                                lessonModelValidator,
                                bollessonMapper,
-                               dallessonMapper)
+                               dallessonMapper
+                               ,
+                               bolLessonXStudentMapper,
+                               dalLessonXStudentMapper
+                               ,
+                               bolLessonXTeacherMapper,
+                               dalLessonXTeacherMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4051cdea5c5529a021430857df864494</Hash>
+    <Hash>0259a013f6622847e0e61b536274cbc2</Hash>
 </Codenesium>*/

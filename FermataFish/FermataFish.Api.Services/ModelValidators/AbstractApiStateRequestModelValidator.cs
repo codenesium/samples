@@ -8,7 +8,6 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
-
 {
         public abstract class AbstractApiStateRequestModelValidator: AbstractValidator<ApiStateRequestModel>
         {
@@ -35,5 +34,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17d93a611cc32fe6d64efd5d8c6edbd5</Hash>
+    <Hash>d8a728951fcf82256c269df98e226066</Hash>
 </Codenesium>*/

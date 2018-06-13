@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiVersionInfoRequestModelValidator: AbstractValidator<ApiVersionInfoRequestModel>
         {
@@ -38,5 +37,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f5a902e5095aaa07a9172ad60358395e</Hash>
+    <Hash>d9f61b47db323fe9ca80ba272e1e2f7b</Hash>
 </Codenesium>*/

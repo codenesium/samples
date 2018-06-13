@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALDepartmentMapper dalDepartmentMapper;
 
+                private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+
+                private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+
                 private ILogger logger;
 
                 public AbstractDepartmentService(
                         ILogger logger,
                         IDepartmentRepository departmentRepository,
                         IApiDepartmentRequestModelValidator departmentModelValidator,
-                        IBOLDepartmentMapper boldepartmentMapper,
-                        IDALDepartmentMapper daldepartmentMapper)
+                        IBOLDepartmentMapper bolDepartmentMapper,
+                        IDALDepartmentMapper dalDepartmentMapper
+
+                        ,
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.departmentRepository = departmentRepository;
                         this.departmentModelValidator = departmentModelValidator;
-                        this.bolDepartmentMapper = boldepartmentMapper;
-                        this.dalDepartmentMapper = daldepartmentMapper;
+                        this.bolDepartmentMapper = bolDepartmentMapper;
+                        this.dalDepartmentMapper = dalDepartmentMapper;
+                        this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+                        this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDepartmentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDepartmentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.departmentRepository.All(skip, take, orderClause);
+                        var records = await this.departmentRepository.All(limit, offset, orderClause);
 
                         return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<EmployeeDepartmentHistory> records = await this.departmentRepository.EmployeeDepartmentHistories(departmentID, limit, offset);
+
+                        return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>08abbfde89781aa5606a81e57f4ce4e0</Hash>
+    <Hash>feef7dc7b061f888f3554e6dc21f1e11</Hash>
 </Codenesium>*/

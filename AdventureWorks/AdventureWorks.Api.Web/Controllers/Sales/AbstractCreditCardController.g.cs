@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCreditCardResponseModel> response = await this.CreditCardService.All(query.Offset, query.Limit);
+                        List<ApiCreditCardResponseModel> response = await this.CreditCardService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,36 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{creditCardID}/PersonCreditCards")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
+                public async virtual Task<IActionResult> PersonCreditCards(int creditCardID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPersonCreditCardResponseModel> response = await this.CreditCardService.PersonCreditCards(creditCardID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{creditCardID}/SalesOrderHeaders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderHeaders(int creditCardID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.CreditCardService.SalesOrderHeaders(creditCardID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>dd03c4dcf5ca1cb1537c33f5940d37b4</Hash>
+    <Hash>b17313a6d91b91a972fdd59a33eba1ac</Hash>
 </Codenesium>*/

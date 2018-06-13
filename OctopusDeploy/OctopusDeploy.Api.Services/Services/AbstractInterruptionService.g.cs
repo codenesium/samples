@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IInterruptionRepository interruptionRepository,
                         IApiInterruptionRequestModelValidator interruptionModelValidator,
-                        IBOLInterruptionMapper bolinterruptionMapper,
-                        IDALInterruptionMapper dalinterruptionMapper)
+                        IBOLInterruptionMapper bolInterruptionMapper,
+                        IDALInterruptionMapper dalInterruptionMapper
+
+                        )
                         : base()
 
                 {
                         this.interruptionRepository = interruptionRepository;
                         this.interruptionModelValidator = interruptionModelValidator;
-                        this.bolInterruptionMapper = bolinterruptionMapper;
-                        this.dalInterruptionMapper = dalinterruptionMapper;
+                        this.bolInterruptionMapper = bolInterruptionMapper;
+                        this.dalInterruptionMapper = dalInterruptionMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiInterruptionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiInterruptionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.interruptionRepository.All(skip, take, orderClause);
+                        var records = await this.interruptionRepository.All(limit, offset, orderClause);
 
                         return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5ded25861de96ce748fc8c8abed6358</Hash>
+    <Hash>54199ce79d41bf7b1b5c9f810ceb3095</Hash>
 </Codenesium>*/

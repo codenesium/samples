@@ -25,9 +25,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PipelineStepDestination>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<PipelineStepDestination>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<PipelineStepDestination> Get(int id)
@@ -75,31 +75,31 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<PipelineStepDestination>> Where(Expression<Func<PipelineStepDestination, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<PipelineStepDestination>> Where(Expression<Func<PipelineStepDestination, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<PipelineStepDestination> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<PipelineStepDestination> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<PipelineStepDestination>> SearchLinqEF(Expression<Func<PipelineStepDestination, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<PipelineStepDestination>> SearchLinqEF(Expression<Func<PipelineStepDestination, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(PipelineStepDestination.Id)} ASC";
                         }
 
-                        return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PipelineStepDestination>();
+                        return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
                 }
 
-                private async Task<List<PipelineStepDestination>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<PipelineStepDestination>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(PipelineStepDestination.Id)} ASC";
                         }
 
-                        return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<PipelineStepDestination>();
+                        return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
                 }
 
                 private async Task<PipelineStepDestination> GetById(int id)
@@ -112,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e836431d93c2a46725c9d6ac7d282af</Hash>
+    <Hash>48de846f1dbc4510445e11a902c866da</Hash>
 </Codenesium>*/

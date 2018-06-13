@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiDatabaseLogRequestModelValidator: AbstractValidator<ApiDatabaseLogRequestModel>
         {
@@ -45,7 +44,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void PostTimeRules()
                 {
-                        this.RuleFor(x => x.PostTime).NotNull();
                 }
 
                 public virtual void SchemaRules()
@@ -66,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ab04ce699d616482a8c97ff3da62de3</Hash>
+    <Hash>221adce28ed134457297cdc368edcb5f</Hash>
 </Codenesium>*/

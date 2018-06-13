@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ICertificateRepository certificateRepository,
                         IApiCertificateRequestModelValidator certificateModelValidator,
                         IBOLCertificateMapper bolcertificateMapper,
-                        IDALCertificateMapper dalcertificateMapper)
+                        IDALCertificateMapper dalcertificateMapper
+
+                        )
                         : base(logger,
                                certificateRepository,
                                certificateModelValidator,
                                bolcertificateMapper,
-                               dalcertificateMapper)
+                               dalcertificateMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4e374bbe4e31787078250f8ca98960c6</Hash>
+    <Hash>080d454d3db79df117026b9d80656311</Hash>
 </Codenesium>*/

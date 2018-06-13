@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiMachineRequestModelValidator: AbstractValidator<ApiMachineRequestModel>
         {
@@ -46,7 +45,6 @@ namespace NebulaNS.Api.Services
 
                 public virtual void MachineGuidRules()
                 {
-                        this.RuleFor(x => x.MachineGuid).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -58,5 +56,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c48057c7dd8a98afe766fe4fe13a7941</Hash>
+    <Hash>3502621d058ad0847b6e95ca91dd122f</Hash>
 </Codenesium>*/

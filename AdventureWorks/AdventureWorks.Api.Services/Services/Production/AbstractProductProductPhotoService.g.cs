@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IProductProductPhotoRepository productProductPhotoRepository,
                         IApiProductProductPhotoRequestModelValidator productProductPhotoModelValidator,
-                        IBOLProductProductPhotoMapper bolproductProductPhotoMapper,
-                        IDALProductProductPhotoMapper dalproductProductPhotoMapper)
+                        IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
+                        IDALProductProductPhotoMapper dalProductProductPhotoMapper
+
+                        )
                         : base()
 
                 {
                         this.productProductPhotoRepository = productProductPhotoRepository;
                         this.productProductPhotoModelValidator = productProductPhotoModelValidator;
-                        this.bolProductProductPhotoMapper = bolproductProductPhotoMapper;
-                        this.dalProductProductPhotoMapper = dalproductProductPhotoMapper;
+                        this.bolProductProductPhotoMapper = bolProductProductPhotoMapper;
+                        this.dalProductProductPhotoMapper = dalProductProductPhotoMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductProductPhotoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductProductPhotoResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productProductPhotoRepository.All(skip, take, orderClause);
+                        var records = await this.productProductPhotoRepository.All(limit, offset, orderClause);
 
                         return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0e208f2c7ffbb14ce5e531d0acfbdf7</Hash>
+    <Hash>914da640da227287e1c903239848e21e</Hash>
 </Codenesium>*/

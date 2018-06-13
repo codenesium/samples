@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<SpecialOffer> Get(int specialOfferID)
@@ -75,31 +75,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<SpecialOffer>> Where(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<SpecialOffer>> Where(Expression<Func<SpecialOffer, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<SpecialOffer> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<SpecialOffer> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<SpecialOffer>> SearchLinqEF(Expression<Func<SpecialOffer, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SpecialOffer>> SearchLinqEF(Expression<Func<SpecialOffer, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SpecialOffer.SpecialOfferID)} ASC";
                         }
 
-                        return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpecialOffer>();
+                        return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
                 }
 
-                private async Task<List<SpecialOffer>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SpecialOffer>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SpecialOffer.SpecialOfferID)} ASC";
                         }
 
-                        return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpecialOffer>();
+                        return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
                 }
 
                 private async Task<SpecialOffer> GetById(int specialOfferID)
@@ -108,9 +108,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<SpecialOfferProduct>> SpecialOfferProducts(int specialOfferID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SpecialOfferProduct>().Where(x => x.SpecialOfferID == specialOfferID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpecialOfferProduct>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>98978ac11699658a6c13bfedddf5cd41</Hash>
+    <Hash>cf33187c71f0f77f05b6eea8b3aa547e</Hash>
 </Codenesium>*/

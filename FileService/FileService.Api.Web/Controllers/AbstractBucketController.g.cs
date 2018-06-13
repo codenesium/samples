@@ -44,7 +44,7 @@ namespace FileServiceNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBucketResponseModel> response = await this.BucketService.All(query.Offset, query.Limit);
+                        List<ApiBucketResponseModel> response = await this.BucketService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -198,9 +198,23 @@ namespace FileServiceNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{bucketId}/Files")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiBucketResponseModel>), 200)]
+                public async virtual Task<IActionResult> Files(int bucketId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiFileResponseModel> response = await this.BucketService.Files(bucketId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bde70964437708f031661d83f829c029</Hash>
+    <Hash>8e4c8b78066540015b2b54b06fd20aea</Hash>
 </Codenesium>*/

@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCreditCardRequestModelValidator: AbstractValidator<ApiCreditCardRequestModel>
         {
@@ -42,24 +41,21 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ExpMonthRules()
                 {
-                        this.RuleFor(x => x.ExpMonth).NotNull();
                 }
 
                 public virtual void ExpYearRules()
                 {
-                        this.RuleFor(x => x.ExpYear).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetCardNumber(ApiCreditCardRequestModel model,  CancellationToken cancellationToken)
                 {
                         CreditCard record = await this.CreditCardRepository.GetCardNumber(model.CardNumber);
 
-                        if (record == null || record.CreditCardID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.CreditCardID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -72,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eada0da368d28e32c2f51ad5bca78c83</Hash>
+    <Hash>cd3476d139cb048acb397a659d310683</Hash>
 </Codenesium>*/

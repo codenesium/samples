@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiProjectGroupResponseModel> Get(string id);
 
-                Task<List<ApiProjectGroupResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiProjectGroupResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiProjectGroupResponseModel> GetName(string name);
                 Task<List<ApiProjectGroupResponseModel>> GetDataVersion(byte[] dataVersion);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>169c29b2b92530ae15dd67269a9998da</Hash>
+    <Hash>e5b4d584c34c76e2496676c49f43fd1c</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ILibraryVariableSetRepository libraryVariableSetRepository,
                         IApiLibraryVariableSetRequestModelValidator libraryVariableSetModelValidator,
-                        IBOLLibraryVariableSetMapper bollibraryVariableSetMapper,
-                        IDALLibraryVariableSetMapper dallibraryVariableSetMapper)
+                        IBOLLibraryVariableSetMapper bolLibraryVariableSetMapper,
+                        IDALLibraryVariableSetMapper dalLibraryVariableSetMapper
+
+                        )
                         : base()
 
                 {
                         this.libraryVariableSetRepository = libraryVariableSetRepository;
                         this.libraryVariableSetModelValidator = libraryVariableSetModelValidator;
-                        this.bolLibraryVariableSetMapper = bollibraryVariableSetMapper;
-                        this.dalLibraryVariableSetMapper = dallibraryVariableSetMapper;
+                        this.bolLibraryVariableSetMapper = bolLibraryVariableSetMapper;
+                        this.dalLibraryVariableSetMapper = dalLibraryVariableSetMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLibraryVariableSetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLibraryVariableSetResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.libraryVariableSetRepository.All(skip, take, orderClause);
+                        var records = await this.libraryVariableSetRepository.All(limit, offset, orderClause);
 
                         return this.bolLibraryVariableSetMapper.MapBOToModel(this.dalLibraryVariableSetMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0378df938eb1f1852e8a48e4646aac4a</Hash>
+    <Hash>e94562dfdae3fa5bc6e1e10d4e1471e1</Hash>
 </Codenesium>*/

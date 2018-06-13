@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ITenantVariableRepository tenantVariableRepository,
                         IApiTenantVariableRequestModelValidator tenantVariableModelValidator,
-                        IBOLTenantVariableMapper boltenantVariableMapper,
-                        IDALTenantVariableMapper daltenantVariableMapper)
+                        IBOLTenantVariableMapper bolTenantVariableMapper,
+                        IDALTenantVariableMapper dalTenantVariableMapper
+
+                        )
                         : base()
 
                 {
                         this.tenantVariableRepository = tenantVariableRepository;
                         this.tenantVariableModelValidator = tenantVariableModelValidator;
-                        this.bolTenantVariableMapper = boltenantVariableMapper;
-                        this.dalTenantVariableMapper = daltenantVariableMapper;
+                        this.bolTenantVariableMapper = bolTenantVariableMapper;
+                        this.dalTenantVariableMapper = dalTenantVariableMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTenantVariableResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTenantVariableResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.tenantVariableRepository.All(skip, take, orderClause);
+                        var records = await this.tenantVariableRepository.All(limit, offset, orderClause);
 
                         return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb4172cd6f9f9190989fa3db2ff194de</Hash>
+    <Hash>1ca7017b8281f7021ac5ed1f3ed9361e</Hash>
 </Codenesium>*/

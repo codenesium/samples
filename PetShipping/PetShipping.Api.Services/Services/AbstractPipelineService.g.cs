@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IPipelineRepository pipelineRepository,
                         IApiPipelineRequestModelValidator pipelineModelValidator,
-                        IBOLPipelineMapper bolpipelineMapper,
-                        IDALPipelineMapper dalpipelineMapper)
+                        IBOLPipelineMapper bolPipelineMapper,
+                        IDALPipelineMapper dalPipelineMapper
+
+                        )
                         : base()
 
                 {
                         this.pipelineRepository = pipelineRepository;
                         this.pipelineModelValidator = pipelineModelValidator;
-                        this.bolPipelineMapper = bolpipelineMapper;
-                        this.dalPipelineMapper = dalpipelineMapper;
+                        this.bolPipelineMapper = bolPipelineMapper;
+                        this.dalPipelineMapper = dalPipelineMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPipelineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPipelineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.pipelineRepository.All(skip, take, orderClause);
+                        var records = await this.pipelineRepository.All(limit, offset, orderClause);
 
                         return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be9d09b76a88fdb071b5c562296267c4</Hash>
+    <Hash>d8acab4e1c3bb969c09dfa63503ee2d9</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<TransactionHistory> Get(int transactionID);
 
-                Task<List<TransactionHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<TransactionHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<TransactionHistory>> GetProductID(int productID);
                 Task<List<TransactionHistory>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
@@ -23,5 +23,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>98815c75895f0c4705fb1ddf58803694</Hash>
+    <Hash>d42eec751700761437c97767d29966e0</Hash>
 </Codenesium>*/

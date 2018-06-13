@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IUserRoleRepository userRoleRepository,
                         IApiUserRoleRequestModelValidator userRoleModelValidator,
                         IBOLUserRoleMapper boluserRoleMapper,
-                        IDALUserRoleMapper daluserRoleMapper)
+                        IDALUserRoleMapper daluserRoleMapper
+
+                        )
                         : base(logger,
                                userRoleRepository,
                                userRoleModelValidator,
                                boluserRoleMapper,
-                               daluserRoleMapper)
+                               daluserRoleMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>48714da7a2cdfaf9ceb4ae1a634b2cd8</Hash>
+    <Hash>d3c45cc8f00e6e2942b7524376001370</Hash>
 </Codenesium>*/

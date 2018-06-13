@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiLocationResponseModel> response = await this.LocationService.All(query.Offset, query.Limit);
+                        List<ApiLocationResponseModel> response = await this.LocationService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,36 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{locationID}/ProductInventories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductInventories(short locationID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductInventoryResponseModel> response = await this.LocationService.ProductInventories(locationID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{locationID}/WorkOrderRoutings")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
+                public async virtual Task<IActionResult> WorkOrderRoutings(short locationID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiWorkOrderRoutingResponseModel> response = await this.LocationService.WorkOrderRoutings(locationID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8b849f7bc3a21c4597ae57a269eca76f</Hash>
+    <Hash>41bb9737158ef8a1d5e8b3a09e942607</Hash>
 </Codenesium>*/

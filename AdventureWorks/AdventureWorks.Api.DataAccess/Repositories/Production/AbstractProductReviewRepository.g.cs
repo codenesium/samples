@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductReview>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ProductReview>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ProductReview> Get(int productReviewID)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<ProductReview>> Where(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ProductReview>> Where(Expression<Func<ProductReview, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ProductReview> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ProductReview> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ProductReview>> SearchLinqEF(Expression<Func<ProductReview, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductReview>> SearchLinqEF(Expression<Func<ProductReview, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductReview.ProductReviewID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductReview>();
+                        return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductReview>();
                 }
 
-                private async Task<List<ProductReview>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductReview>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductReview.ProductReviewID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductReview>();
+                        return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductReview>();
                 }
 
                 private async Task<ProductReview> GetById(int productReviewID)
@@ -119,5 +119,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67b53bb0298a3d88e5a7c2bc6f27ce60</Hash>
+    <Hash>51e53dadfafcb1483a435c1528afb026</Hash>
 </Codenesium>*/

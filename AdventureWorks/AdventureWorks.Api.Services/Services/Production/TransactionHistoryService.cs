@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         ITransactionHistoryRepository transactionHistoryRepository,
                         IApiTransactionHistoryRequestModelValidator transactionHistoryModelValidator,
                         IBOLTransactionHistoryMapper boltransactionHistoryMapper,
-                        IDALTransactionHistoryMapper daltransactionHistoryMapper)
+                        IDALTransactionHistoryMapper daltransactionHistoryMapper
+
+                        )
                         : base(logger,
                                transactionHistoryRepository,
                                transactionHistoryModelValidator,
                                boltransactionHistoryMapper,
-                               daltransactionHistoryMapper)
+                               daltransactionHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4a7d0772a30bf6db81aff2577a4bceb3</Hash>
+    <Hash>01d1392579fa569eb63c4b5eee80003c</Hash>
 </Codenesium>*/

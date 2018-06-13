@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IAirlineRepository airlineRepository,
                         IApiAirlineRequestModelValidator airlineModelValidator,
-                        IBOLAirlineMapper bolairlineMapper,
-                        IDALAirlineMapper dalairlineMapper)
+                        IBOLAirlineMapper bolAirlineMapper,
+                        IDALAirlineMapper dalAirlineMapper
+
+                        )
                         : base()
 
                 {
                         this.airlineRepository = airlineRepository;
                         this.airlineModelValidator = airlineModelValidator;
-                        this.bolAirlineMapper = bolairlineMapper;
-                        this.dalAirlineMapper = dalairlineMapper;
+                        this.bolAirlineMapper = bolAirlineMapper;
+                        this.dalAirlineMapper = dalAirlineMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAirlineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAirlineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.airlineRepository.All(skip, take, orderClause);
+                        var records = await this.airlineRepository.All(limit, offset, orderClause);
 
                         return this.bolAirlineMapper.MapBOToModel(this.dalAirlineMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>77620eb57f31abe703549f94f44ed9cd</Hash>
+    <Hash>38c9ebc2e5fa539034fb3693a2440b4a</Hash>
 </Codenesium>*/

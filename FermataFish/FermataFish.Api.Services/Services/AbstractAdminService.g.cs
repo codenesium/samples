@@ -28,21 +28,23 @@ namespace FermataFishNS.Api.Services
                         ILogger logger,
                         IAdminRepository adminRepository,
                         IApiAdminRequestModelValidator adminModelValidator,
-                        IBOLAdminMapper boladminMapper,
-                        IDALAdminMapper daladminMapper)
+                        IBOLAdminMapper bolAdminMapper,
+                        IDALAdminMapper dalAdminMapper
+
+                        )
                         : base()
 
                 {
                         this.adminRepository = adminRepository;
                         this.adminModelValidator = adminModelValidator;
-                        this.bolAdminMapper = boladminMapper;
-                        this.dalAdminMapper = daladminMapper;
+                        this.bolAdminMapper = bolAdminMapper;
+                        this.dalAdminMapper = dalAdminMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAdminResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAdminResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.adminRepository.All(skip, take, orderClause);
+                        var records = await this.adminRepository.All(limit, offset, orderClause);
 
                         return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5fe2300b2ce90dc06a2364244c93d1c4</Hash>
+    <Hash>1d15e8a1bb3dcdec5425897b7b3afb8f</Hash>
 </Codenesium>*/

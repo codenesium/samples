@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiLessonStatusResponseModel> response = await this.LessonStatusService.All(query.Offset, query.Limit);
+                        List<ApiLessonStatusResponseModel> response = await this.LessonStatusService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{lessonStatusId}/Lessons")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiLessonStatusResponseModel>), 200)]
+                public async virtual Task<IActionResult> Lessons(int lessonStatusId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiLessonResponseModel> response = await this.LessonStatusService.Lessons(lessonStatusId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ee6c7967ee887c246a6b63274278b444</Hash>
+    <Hash>92e852d6a181480e0cae667dd9fa9a6f</Hash>
 </Codenesium>*/

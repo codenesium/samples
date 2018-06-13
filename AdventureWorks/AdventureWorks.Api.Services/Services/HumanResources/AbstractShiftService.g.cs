@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALShiftMapper dalShiftMapper;
 
+                private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+
+                private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+
                 private ILogger logger;
 
                 public AbstractShiftService(
                         ILogger logger,
                         IShiftRepository shiftRepository,
                         IApiShiftRequestModelValidator shiftModelValidator,
-                        IBOLShiftMapper bolshiftMapper,
-                        IDALShiftMapper dalshiftMapper)
+                        IBOLShiftMapper bolShiftMapper,
+                        IDALShiftMapper dalShiftMapper
+
+                        ,
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.shiftRepository = shiftRepository;
                         this.shiftModelValidator = shiftModelValidator;
-                        this.bolShiftMapper = bolshiftMapper;
-                        this.dalShiftMapper = dalshiftMapper;
+                        this.bolShiftMapper = bolShiftMapper;
+                        this.dalShiftMapper = dalShiftMapper;
+                        this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+                        this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiShiftResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiShiftResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.shiftRepository.All(skip, take, orderClause);
+                        var records = await this.shiftRepository.All(limit, offset, orderClause);
 
                         return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<EmployeeDepartmentHistory> records = await this.shiftRepository.EmployeeDepartmentHistories(shiftID, limit, offset);
+
+                        return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d86aa3ae0755f56b2d36c36a68c498d</Hash>
+    <Hash>5456f17aef050ab538966a1fea7dd979</Hash>
 </Codenesium>*/

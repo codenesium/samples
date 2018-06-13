@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SalesTaxRate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<SalesTaxRate> Get(int salesTaxRateID)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<SalesTaxRate>> Where(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<SalesTaxRate>> Where(Expression<Func<SalesTaxRate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<SalesTaxRate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<SalesTaxRate> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<SalesTaxRate>> SearchLinqEF(Expression<Func<SalesTaxRate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SalesTaxRate>> SearchLinqEF(Expression<Func<SalesTaxRate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SalesTaxRate.SalesTaxRateID)} ASC";
                         }
 
-                        return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesTaxRate>();
+                        return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
                 }
 
-                private async Task<List<SalesTaxRate>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SalesTaxRate>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SalesTaxRate.SalesTaxRateID)} ASC";
                         }
 
-                        return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SalesTaxRate>();
+                        return await this.Context.Set<SalesTaxRate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesTaxRate>();
                 }
 
                 private async Task<SalesTaxRate> GetById(int salesTaxRateID)
@@ -119,5 +119,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cbecdead5f747d037daa1908684b4fa5</Hash>
+    <Hash>55ecdc2515569d30713126d2556d19a2</Hash>
 </Codenesium>*/

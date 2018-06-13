@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         INuGetPackageRepository nuGetPackageRepository,
                         IApiNuGetPackageRequestModelValidator nuGetPackageModelValidator,
-                        IBOLNuGetPackageMapper bolnuGetPackageMapper,
-                        IDALNuGetPackageMapper dalnuGetPackageMapper)
+                        IBOLNuGetPackageMapper bolNuGetPackageMapper,
+                        IDALNuGetPackageMapper dalNuGetPackageMapper
+
+                        )
                         : base()
 
                 {
                         this.nuGetPackageRepository = nuGetPackageRepository;
                         this.nuGetPackageModelValidator = nuGetPackageModelValidator;
-                        this.bolNuGetPackageMapper = bolnuGetPackageMapper;
-                        this.dalNuGetPackageMapper = dalnuGetPackageMapper;
+                        this.bolNuGetPackageMapper = bolNuGetPackageMapper;
+                        this.dalNuGetPackageMapper = dalNuGetPackageMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiNuGetPackageResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiNuGetPackageResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.nuGetPackageRepository.All(skip, take, orderClause);
+                        var records = await this.nuGetPackageRepository.All(limit, offset, orderClause);
 
                         return this.bolNuGetPackageMapper.MapBOToModel(this.dalNuGetPackageMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d53076c2af67b2914f9d186d5cef6f10</Hash>
+    <Hash>661a82f7b55c26b8331a28d6a16c4c18</Hash>
 </Codenesium>*/

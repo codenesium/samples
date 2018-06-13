@@ -15,15 +15,15 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Certificate> Get(string id);
 
-                Task<List<Certificate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Certificate>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
-                Task<List<Certificate>> GetCreated(DateTime created);
+                Task<List<Certificate>> GetCreated(DateTimeOffset created);
                 Task<List<Certificate>> GetDataVersion(byte[] dataVersion);
-                Task<List<Certificate>> GetNotAfter(DateTime notAfter);
+                Task<List<Certificate>> GetNotAfter(DateTimeOffset notAfter);
                 Task<List<Certificate>> GetThumbprint(string thumbprint);
         }
 }
 
 /*<Codenesium>
-    <Hash>5a1fbfe9024d98bf1bccc0f1f6c85691</Hash>
+    <Hash>7fc6819694fedf146c511564ec0371c6</Hash>
 </Codenesium>*/

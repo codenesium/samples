@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         ISpecialOfferRepository specialOfferRepository,
                         IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
                         IBOLSpecialOfferMapper bolspecialOfferMapper,
-                        IDALSpecialOfferMapper dalspecialOfferMapper)
+                        IDALSpecialOfferMapper dalspecialOfferMapper
+                        ,
+                        IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
+                        IDALSpecialOfferProductMapper dalSpecialOfferProductMapper
+
+                        )
                         : base(logger,
                                specialOfferRepository,
                                specialOfferModelValidator,
                                bolspecialOfferMapper,
-                               dalspecialOfferMapper)
+                               dalspecialOfferMapper
+                               ,
+                               bolSpecialOfferProductMapper,
+                               dalSpecialOfferProductMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4ee56b1abaa6bd08b295cd843a07abc7</Hash>
+    <Hash>41e336a348945aed5e7849f9a01fd05e</Hash>
 </Codenesium>*/

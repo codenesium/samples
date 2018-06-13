@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ILifecycleRepository lifecycleRepository,
                         IApiLifecycleRequestModelValidator lifecycleModelValidator,
                         IBOLLifecycleMapper bollifecycleMapper,
-                        IDALLifecycleMapper dallifecycleMapper)
+                        IDALLifecycleMapper dallifecycleMapper
+
+                        )
                         : base(logger,
                                lifecycleRepository,
                                lifecycleModelValidator,
                                bollifecycleMapper,
-                               dallifecycleMapper)
+                               dallifecycleMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3606e482d82723e7414e55844ce6fc50</Hash>
+    <Hash>3641314acdb424f86ba5ed6a5a8b5bc5</Hash>
 </Codenesium>*/

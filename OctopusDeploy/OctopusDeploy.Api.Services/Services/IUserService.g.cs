@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiUserResponseModel> Get(string id);
 
-                Task<List<ApiUserResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiUserResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiUserResponseModel> GetUsername(string username);
                 Task<List<ApiUserResponseModel>> GetDisplayName(string displayName);
@@ -29,5 +29,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>002d6e6c831594e825843f581e4aa9ab</Hash>
+    <Hash>e57264622ea2332bba6f786a3f20faa6</Hash>
 </Codenesium>*/

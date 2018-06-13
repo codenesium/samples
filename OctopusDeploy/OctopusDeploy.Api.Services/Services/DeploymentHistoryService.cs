@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentHistoryRepository deploymentHistoryRepository,
                         IApiDeploymentHistoryRequestModelValidator deploymentHistoryModelValidator,
                         IBOLDeploymentHistoryMapper boldeploymentHistoryMapper,
-                        IDALDeploymentHistoryMapper daldeploymentHistoryMapper)
+                        IDALDeploymentHistoryMapper daldeploymentHistoryMapper
+
+                        )
                         : base(logger,
                                deploymentHistoryRepository,
                                deploymentHistoryModelValidator,
                                boldeploymentHistoryMapper,
-                               daldeploymentHistoryMapper)
+                               daldeploymentHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e251d6f062199721a5ffb585ecf42505</Hash>
+    <Hash>1878f4960d22b44d4a806da4bd37e052</Hash>
 </Codenesium>*/

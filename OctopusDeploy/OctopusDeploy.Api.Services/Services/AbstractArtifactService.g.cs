@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IArtifactRepository artifactRepository,
                         IApiArtifactRequestModelValidator artifactModelValidator,
-                        IBOLArtifactMapper bolartifactMapper,
-                        IDALArtifactMapper dalartifactMapper)
+                        IBOLArtifactMapper bolArtifactMapper,
+                        IDALArtifactMapper dalArtifactMapper
+
+                        )
                         : base()
 
                 {
                         this.artifactRepository = artifactRepository;
                         this.artifactModelValidator = artifactModelValidator;
-                        this.bolArtifactMapper = bolartifactMapper;
-                        this.dalArtifactMapper = dalartifactMapper;
+                        this.bolArtifactMapper = bolArtifactMapper;
+                        this.dalArtifactMapper = dalArtifactMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiArtifactResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiArtifactResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.artifactRepository.All(skip, take, orderClause);
+                        var records = await this.artifactRepository.All(limit, offset, orderClause);
 
                         return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae383a9cd448cb6bde626282e89d0c9e</Hash>
+    <Hash>5d56ea114e41bd1ad261999751666e98</Hash>
 </Codenesium>*/

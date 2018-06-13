@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPersonResponseModel> response = await this.PersonService.All(query.Offset, query.Limit);
+                        List<ApiPersonResponseModel> response = await this.PersonService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -193,9 +193,62 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{personID}/BusinessEntityContacts")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> BusinessEntityContacts(int personID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiBusinessEntityContactResponseModel> response = await this.PersonService.BusinessEntityContacts(personID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/EmailAddresses")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> EmailAddresses(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiEmailAddressResponseModel> response = await this.PersonService.EmailAddresses(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/Passwords")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> Passwords(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPasswordResponseModel> response = await this.PersonService.Passwords(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/PersonPhones")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> PersonPhones(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPersonPhoneResponseModel> response = await this.PersonService.PersonPhones(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2ed8c218db7b419e8798b3ec0917cac5</Hash>
+    <Hash>37a6a8ccfbaacc443db4e881ad3c3b3e</Hash>
 </Codenesium>*/

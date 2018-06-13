@@ -17,17 +17,26 @@ namespace NebulaNS.Api.Services
                         IOrganizationRepository organizationRepository,
                         IApiOrganizationRequestModelValidator organizationModelValidator,
                         IBOLOrganizationMapper bolorganizationMapper,
-                        IDALOrganizationMapper dalorganizationMapper)
+                        IDALOrganizationMapper dalorganizationMapper
+                        ,
+                        IBOLTeamMapper bolTeamMapper,
+                        IDALTeamMapper dalTeamMapper
+
+                        )
                         : base(logger,
                                organizationRepository,
                                organizationModelValidator,
                                bolorganizationMapper,
-                               dalorganizationMapper)
+                               dalorganizationMapper
+                               ,
+                               bolTeamMapper,
+                               dalTeamMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>182f5a76a4791e65c9cb0a479d3f78c5</Hash>
+    <Hash>f066c97e79aa784bdfd7262fb40e718a</Hash>
 </Codenesium>*/

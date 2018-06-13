@@ -27,7 +27,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void IsInMaintenanceModeRules()
                 {
-                        this.RuleFor(x => x.IsInMaintenanceMode).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -37,12 +36,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void LastSeenRules()
                 {
-                        this.RuleFor(x => x.LastSeen).NotNull();
                 }
 
                 public virtual void MaxConcurrentTasksRules()
                 {
-                        this.RuleFor(x => x.MaxConcurrentTasks).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -60,5 +57,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13d45108024e6870750a090adee336db</Hash>
+    <Hash>8f26d26e987c0049218d8ccb621f33cf</Hash>
 </Codenesium>*/

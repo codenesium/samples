@@ -17,17 +17,26 @@ namespace PetStoreNS.Api.Services
                         IPaymentTypeRepository paymentTypeRepository,
                         IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
                         IBOLPaymentTypeMapper bolpaymentTypeMapper,
-                        IDALPaymentTypeMapper dalpaymentTypeMapper)
+                        IDALPaymentTypeMapper dalpaymentTypeMapper
+                        ,
+                        IBOLSaleMapper bolSaleMapper,
+                        IDALSaleMapper dalSaleMapper
+
+                        )
                         : base(logger,
                                paymentTypeRepository,
                                paymentTypeModelValidator,
                                bolpaymentTypeMapper,
-                               dalpaymentTypeMapper)
+                               dalpaymentTypeMapper
+                               ,
+                               bolSaleMapper,
+                               dalSaleMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b939252e9b7ad227c2ab24b286e8a591</Hash>
+    <Hash>ec36bd43df621bc6dcfb0f515154c5ae</Hash>
 </Codenesium>*/

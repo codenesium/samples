@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Contracts
         public abstract class AbstractApiArtifactResponseModel: AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        DateTime created,
+                        DateTimeOffset created,
                         string environmentId,
                         string filename,
                         string id,
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string EnvironmentId { get; private set; }
 
@@ -124,5 +124,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c9362b7f95d6ff85726bb6de8bc23880</Hash>
+    <Hash>42cbbf945fdc247ed6567b9d2b88102a</Hash>
 </Codenesium>*/

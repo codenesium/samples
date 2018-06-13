@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Services
                 }
 
                 public void SetProperties(string id,
-                                          Nullable<DateTime> completedTime,
+                                          Nullable<DateTimeOffset> completedTime,
                                           string concurrencyTag,
                                           string description,
                                           int durationSeconds,
@@ -21,9 +21,9 @@ namespace OctopusDeployNS.Api.Services
                                           string jSON,
                                           string name,
                                           string projectId,
-                                          DateTime queueTime,
+                                          DateTimeOffset queueTime,
                                           string serverNodeId,
-                                          Nullable<DateTime> startTime,
+                                          Nullable<DateTimeOffset> startTime,
                                           string state,
                                           string tenantId)
                 {
@@ -46,7 +46,7 @@ namespace OctopusDeployNS.Api.Services
                         this.TenantId = tenantId;
                 }
 
-                public Nullable<DateTime> CompletedTime { get; private set; }
+                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
                 public string ConcurrencyTag { get; private set; }
 
@@ -70,11 +70,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ProjectId { get; private set; }
 
-                public DateTime QueueTime { get; private set; }
+                public DateTimeOffset QueueTime { get; private set; }
 
                 public string ServerNodeId { get; private set; }
 
-                public Nullable<DateTime> StartTime { get; private set; }
+                public Nullable<DateTimeOffset> StartTime { get; private set; }
 
                 public string State { get; private set; }
 
@@ -83,5 +83,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d10e761e1ec9d62b54215958cef2e53</Hash>
+    <Hash>cb095efe5362f56d73bf6dec0913dc85</Hash>
 </Codenesium>*/

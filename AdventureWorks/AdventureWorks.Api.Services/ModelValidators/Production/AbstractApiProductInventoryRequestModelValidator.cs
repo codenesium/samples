@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiProductInventoryRequestModelValidator: AbstractValidator<ApiProductInventoryRequestModel>
         {
@@ -28,27 +27,22 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void BinRules()
                 {
-                        this.RuleFor(x => x.Bin).NotNull();
                 }
 
                 public virtual void LocationIDRules()
                 {
-                        this.RuleFor(x => x.LocationID).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void QuantityRules()
                 {
-                        this.RuleFor(x => x.Quantity).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void ShelfRules()
@@ -60,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12f7b4e85344b2023afe00cf4fd475f4</Hash>
+    <Hash>85485285a43c753a925452347e4473ae</Hash>
 </Codenesium>*/

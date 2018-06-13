@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IExtensionConfigurationRepository extensionConfigurationRepository,
                         IApiExtensionConfigurationRequestModelValidator extensionConfigurationModelValidator,
                         IBOLExtensionConfigurationMapper bolextensionConfigurationMapper,
-                        IDALExtensionConfigurationMapper dalextensionConfigurationMapper)
+                        IDALExtensionConfigurationMapper dalextensionConfigurationMapper
+
+                        )
                         : base(logger,
                                extensionConfigurationRepository,
                                extensionConfigurationModelValidator,
                                bolextensionConfigurationMapper,
-                               dalextensionConfigurationMapper)
+                               dalextensionConfigurationMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>59d49a07bad6f12e44df7e2d5f8de493</Hash>
+    <Hash>23f231823065ce97cd6f75ab5e13e689</Hash>
 </Codenesium>*/

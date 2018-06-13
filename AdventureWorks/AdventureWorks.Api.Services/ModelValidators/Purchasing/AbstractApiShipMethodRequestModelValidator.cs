@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiShipMethodRequestModelValidator: AbstractValidator<ApiShipMethodRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public IShipMethodRepository ShipMethodRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -41,24 +39,21 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void ShipBaseRules()
                 {
-                        this.RuleFor(x => x.ShipBase).NotNull();
                 }
 
                 public virtual void ShipRateRules()
                 {
-                        this.RuleFor(x => x.ShipRate).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiShipMethodRequestModel model,  CancellationToken cancellationToken)
                 {
                         ShipMethod record = await this.ShipMethodRepository.GetName(model.Name);
 
-                        if (record == null || record.ShipMethodID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ShipMethodID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -71,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04bab66af2d87c43d12bacf57e673789</Hash>
+    <Hash>d7b76e5ac68bb809d85d97a8ff54bfb9</Hash>
 </Codenesium>*/

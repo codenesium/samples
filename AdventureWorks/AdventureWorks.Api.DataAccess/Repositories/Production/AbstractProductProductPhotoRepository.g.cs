@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ProductProductPhoto>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ProductProductPhoto> Get(int productID)
@@ -75,31 +75,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ProductProductPhoto>> Where(Expression<Func<ProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ProductProductPhoto>> Where(Expression<Func<ProductProductPhoto, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ProductProductPhoto> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ProductProductPhoto> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ProductProductPhoto>> SearchLinqEF(Expression<Func<ProductProductPhoto, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductProductPhoto>> SearchLinqEF(Expression<Func<ProductProductPhoto, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductProductPhoto.ProductID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductProductPhoto>();
+                        return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
                 }
 
-                private async Task<List<ProductProductPhoto>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductProductPhoto>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductProductPhoto.ProductID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductProductPhoto>();
+                        return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
                 }
 
                 private async Task<ProductProductPhoto> GetById(int productID)
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1955f6abed25f9999d09b389e13336c9</Hash>
+    <Hash>151c25d36dfb65c2ff5105f915b71efc</Hash>
 </Codenesium>*/

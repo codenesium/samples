@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " UnitMeasure")]
+        [Trait("Integration", "UnitMeasure")]
         public class UnitMeasureTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>43500ad72bc9583f08d129307578fdaa</Hash>
+    <Hash>0f9acf749dd6ce532ede5105c350a247</Hash>
 </Codenesium>*/

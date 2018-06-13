@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IMachinePolicyRepository MachinePolicyRepository { get; set; }
                 public virtual void IsDefaultRules()
                 {
-                        this.RuleFor(x => x.IsDefault).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -47,7 +46,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         MachinePolicy record = await this.MachinePolicyRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -60,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>60ab085b512f42c70777e3f7ac34464e</Hash>
+    <Hash>d056baba4b95826f5e9993fec238dd70</Hash>
 </Codenesium>*/

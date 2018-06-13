@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 }
 
                 public void SetProperties(
-                        DateTime assembled,
+                        DateTimeOffset assembled,
                         string channelId,
                         string jSON,
                         string projectDeploymentProcessSnapshotId,
@@ -30,10 +30,10 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
-                private DateTime assembled;
+                private DateTimeOffset assembled;
 
                 [Required]
-                public DateTime Assembled
+                public DateTimeOffset Assembled
                 {
                         get
                         {
@@ -145,5 +145,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0761dbc2de6f0c876b08dfaab47a5606</Hash>
+    <Hash>159d6157b1e2ea5b1f9fe1a00564dc3c</Hash>
 </Codenesium>*/

@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiAddressTypeRequestModelValidator: AbstractValidator<ApiAddressTypeRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public IAddressTypeRepository AddressTypeRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -41,14 +39,13 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiAddressTypeRequestModel model,  CancellationToken cancellationToken)
                 {
                         AddressType record = await this.AddressTypeRepository.GetName(model.Name);
 
-                        if (record == null || record.AddressTypeID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.AddressTypeID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -61,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7dc4a92a18dabcb417b4e424837c2bc</Hash>
+    <Hash>b8736083acc8bd37b96e312958b60d5f</Hash>
 </Codenesium>*/

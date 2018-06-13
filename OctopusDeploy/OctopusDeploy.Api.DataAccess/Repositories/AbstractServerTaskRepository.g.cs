@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ServerTask>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ServerTask>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ServerTask> Get(string id)
@@ -75,7 +75,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<ServerTask>> GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTime queueTime, Nullable<DateTime> startTime, Nullable<DateTime> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
+                public async Task<List<ServerTask>> GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
                 {
                         var records = await this.SearchLinqEF(x => x.Description == description && x.QueueTime == queueTime && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.HasWarningsOrErrors == hasWarningsOrErrors && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.State == state && x.Name == name && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.ServerNodeId == serverNodeId);
 
@@ -87,38 +87,38 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
-                public async Task<List<ServerTask>> GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTime> startTime, Nullable<DateTime> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTime queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
+                public async Task<List<ServerTask>> GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
                 {
                         var records = await this.SearchLinqEF(x => x.Name == name && x.Description == description && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.HasWarningsOrErrors == hasWarningsOrErrors && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.QueueTime == queueTime && x.State == state && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.ServerNodeId == serverNodeId);
 
                         return records;
                 }
 
-                protected async Task<List<ServerTask>> Where(Expression<Func<ServerTask, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ServerTask>> Where(Expression<Func<ServerTask, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ServerTask> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ServerTask> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ServerTask>> SearchLinqEF(Expression<Func<ServerTask, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ServerTask>> SearchLinqEF(Expression<Func<ServerTask, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ServerTask.Id)} ASC";
                         }
 
-                        return await this.Context.Set<ServerTask>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ServerTask>();
+                        return await this.Context.Set<ServerTask>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ServerTask>();
                 }
 
-                private async Task<List<ServerTask>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ServerTask>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ServerTask.Id)} ASC";
                         }
 
-                        return await this.Context.Set<ServerTask>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ServerTask>();
+                        return await this.Context.Set<ServerTask>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ServerTask>();
                 }
 
                 private async Task<ServerTask> GetById(string id)
@@ -131,5 +131,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>05ed2aa273758fef53a8ff0fe44ba775</Hash>
+    <Hash>3b82c9f4cc34cfe5e63a21798dc5e6c7</Hash>
 </Codenesium>*/

@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         string id,
                         string jSON,
                         string message,
-                        DateTime occurred,
+                        DateTimeOffset occurred,
                         string projectId,
                         string relatedDocumentIds,
                         string tenantId,
@@ -60,7 +60,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string Message { get; private set; }
 
                 [Column("Occurred", TypeName="datetimeoffset")]
-                public DateTime Occurred { get; private set; }
+                public DateTimeOffset Occurred { get; private set; }
 
                 [Column("ProjectId", TypeName="nvarchar(50)")]
                 public string ProjectId { get; private set; }
@@ -80,5 +80,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d3a164650017a643ba40d1c71050ac10</Hash>
+    <Hash>1866810e494efcb2f9284b18c22356ef</Hash>
 </Codenesium>*/

@@ -27,7 +27,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void IsFrozenRules()
                 {
-                        this.RuleFor(x => x.IsFrozen).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -47,11 +46,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void VersionRules()
                 {
-                        this.RuleFor(x => x.Version).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>41ded765b0d196d36f3f59e8c4e4559a</Hash>
+    <Hash>51f15fec2472e6443d509b6314fd804a</Hash>
 </Codenesium>*/

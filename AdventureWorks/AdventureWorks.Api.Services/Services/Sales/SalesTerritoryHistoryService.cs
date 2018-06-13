@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
                         IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
                         IBOLSalesTerritoryHistoryMapper bolsalesTerritoryHistoryMapper,
-                        IDALSalesTerritoryHistoryMapper dalsalesTerritoryHistoryMapper)
+                        IDALSalesTerritoryHistoryMapper dalsalesTerritoryHistoryMapper
+
+                        )
                         : base(logger,
                                salesTerritoryHistoryRepository,
                                salesTerritoryHistoryModelValidator,
                                bolsalesTerritoryHistoryMapper,
-                               dalsalesTerritoryHistoryMapper)
+                               dalsalesTerritoryHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4df040d9b340bf87eea48e2ff76100cb</Hash>
+    <Hash>b6c24c4c04af1c46e35fc6407f9ee3ce</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IProductListPriceHistoryRepository productListPriceHistoryRepository,
                         IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
-                        IBOLProductListPriceHistoryMapper bolproductListPriceHistoryMapper,
-                        IDALProductListPriceHistoryMapper dalproductListPriceHistoryMapper)
+                        IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper,
+                        IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.productListPriceHistoryRepository = productListPriceHistoryRepository;
                         this.productListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
-                        this.bolProductListPriceHistoryMapper = bolproductListPriceHistoryMapper;
-                        this.dalProductListPriceHistoryMapper = dalproductListPriceHistoryMapper;
+                        this.bolProductListPriceHistoryMapper = bolProductListPriceHistoryMapper;
+                        this.dalProductListPriceHistoryMapper = dalProductListPriceHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productListPriceHistoryRepository.All(skip, take, orderClause);
+                        var records = await this.productListPriceHistoryRepository.All(limit, offset, orderClause);
 
                         return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d59a140c93fd3a380046cf1012633df8</Hash>
+    <Hash>1f8487027c11a5cfda90d5219a321da0</Hash>
 </Codenesium>*/

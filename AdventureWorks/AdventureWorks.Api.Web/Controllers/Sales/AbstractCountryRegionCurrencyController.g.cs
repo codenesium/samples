@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.All(query.Offset, query.Limit);
+                        List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8132b1ce0d42d4c219b8d9ed213d36ea</Hash>
+    <Hash>01257daa415444a82a781f5d8f709546</Hash>
 </Codenesium>*/

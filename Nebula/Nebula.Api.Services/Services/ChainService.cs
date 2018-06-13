@@ -17,17 +17,32 @@ namespace NebulaNS.Api.Services
                         IChainRepository chainRepository,
                         IApiChainRequestModelValidator chainModelValidator,
                         IBOLChainMapper bolchainMapper,
-                        IDALChainMapper dalchainMapper)
+                        IDALChainMapper dalchainMapper
+                        ,
+                        IBOLClaspMapper bolClaspMapper,
+                        IDALClaspMapper dalClaspMapper
+                        ,
+                        IBOLLinkMapper bolLinkMapper,
+                        IDALLinkMapper dalLinkMapper
+
+                        )
                         : base(logger,
                                chainRepository,
                                chainModelValidator,
                                bolchainMapper,
-                               dalchainMapper)
+                               dalchainMapper
+                               ,
+                               bolClaspMapper,
+                               dalClaspMapper
+                               ,
+                               bolLinkMapper,
+                               dalLinkMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>db4ae08f691ea0964e52c2a39c3edde6</Hash>
+    <Hash>070e1eed9bd4c69c75452579e24995d8</Hash>
 </Codenesium>*/

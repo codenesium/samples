@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ISubscriptionRepository subscriptionRepository,
                         IApiSubscriptionRequestModelValidator subscriptionModelValidator,
                         IBOLSubscriptionMapper bolsubscriptionMapper,
-                        IDALSubscriptionMapper dalsubscriptionMapper)
+                        IDALSubscriptionMapper dalsubscriptionMapper
+
+                        )
                         : base(logger,
                                subscriptionRepository,
                                subscriptionModelValidator,
                                bolsubscriptionMapper,
-                               dalsubscriptionMapper)
+                               dalsubscriptionMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>76097e2610c14a0ebe3cbeadc49b0f1e</Hash>
+    <Hash>d6f9c440e514f47585b2bb5e652d52cb</Hash>
 </Codenesium>*/

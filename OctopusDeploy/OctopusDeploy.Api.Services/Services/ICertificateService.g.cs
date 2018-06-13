@@ -19,15 +19,15 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiCertificateResponseModel> Get(string id);
 
-                Task<List<ApiCertificateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiCertificateResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
-                Task<List<ApiCertificateResponseModel>> GetCreated(DateTime created);
+                Task<List<ApiCertificateResponseModel>> GetCreated(DateTimeOffset created);
                 Task<List<ApiCertificateResponseModel>> GetDataVersion(byte[] dataVersion);
-                Task<List<ApiCertificateResponseModel>> GetNotAfter(DateTime notAfter);
+                Task<List<ApiCertificateResponseModel>> GetNotAfter(DateTimeOffset notAfter);
                 Task<List<ApiCertificateResponseModel>> GetThumbprint(string thumbprint);
         }
 }
 
 /*<Codenesium>
-    <Hash>b38f3614073f6d04dc1ad32991e76624</Hash>
+    <Hash>d573428023c508886314e0a2a62b0994</Hash>
 </Codenesium>*/

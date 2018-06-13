@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Worker> Get(string id);
 
-                Task<List<Worker>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Worker>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<Worker> GetName(string name);
                 Task<List<Worker>> GetMachinePolicyId(string machinePolicyId);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d331e26d6a91a9b704aa4d2d497ff7c0</Hash>
+    <Hash>ad7e70d31176dff611cd69c6b2d397f9</Hash>
 </Codenesium>*/

@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public ICommunityActionTemplateRepository CommunityActionTemplateRepository { get; set; }
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x.ExternalId).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.ExternalId));
                 }
 
@@ -48,7 +47,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         CommunityActionTemplate record = await this.CommunityActionTemplateRepository.GetExternalId(model.ExternalId);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -61,7 +60,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         CommunityActionTemplate record = await this.CommunityActionTemplateRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -74,5 +73,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b362c3e7922bc79927a1a2f14f9f4678</Hash>
+    <Hash>84aa3fcbefea08fcf92575d9a01a414f</Hash>
 </Codenesium>*/

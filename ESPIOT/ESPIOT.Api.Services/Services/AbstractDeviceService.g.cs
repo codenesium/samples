@@ -22,27 +22,39 @@ namespace ESPIOTNS.Api.Services
 
                 private IDALDeviceMapper dalDeviceMapper;
 
+                private IBOLDeviceActionMapper bolDeviceActionMapper;
+
+                private IDALDeviceActionMapper dalDeviceActionMapper;
+
                 private ILogger logger;
 
                 public AbstractDeviceService(
                         ILogger logger,
                         IDeviceRepository deviceRepository,
                         IApiDeviceRequestModelValidator deviceModelValidator,
-                        IBOLDeviceMapper boldeviceMapper,
-                        IDALDeviceMapper daldeviceMapper)
+                        IBOLDeviceMapper bolDeviceMapper,
+                        IDALDeviceMapper dalDeviceMapper
+
+                        ,
+                        IBOLDeviceActionMapper bolDeviceActionMapper,
+                        IDALDeviceActionMapper dalDeviceActionMapper
+
+                        )
                         : base()
 
                 {
                         this.deviceRepository = deviceRepository;
                         this.deviceModelValidator = deviceModelValidator;
-                        this.bolDeviceMapper = boldeviceMapper;
-                        this.dalDeviceMapper = daldeviceMapper;
+                        this.bolDeviceMapper = bolDeviceMapper;
+                        this.dalDeviceMapper = dalDeviceMapper;
+                        this.bolDeviceActionMapper = bolDeviceActionMapper;
+                        this.dalDeviceActionMapper = dalDeviceActionMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeviceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeviceResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.deviceRepository.All(skip, take, orderClause);
+                        var records = await this.deviceRepository.All(limit, offset, orderClause);
 
                         return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(records));
                 }
@@ -97,15 +109,22 @@ namespace ESPIOTNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiDeviceResponseModel> GetPublicId(Guid publicId)
+                public async Task<ApiDeviceResponseModel> ByPublicId(Guid publicId)
                 {
-                        Device record = await this.deviceRepository.GetPublicId(publicId);
+                        Device record = await this.deviceRepository.ByPublicId(publicId);
 
                         return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
+                }
+
+                public async virtual Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<DeviceAction> records = await this.deviceRepository.DeviceActions(deviceId, limit, offset);
+
+                        return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(records));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3167be6c722a316aba62e1fe78369c09</Hash>
+    <Hash>ce5b8c6c08b20ee8f16f21e69d83d88d</Hash>
 </Codenesium>*/

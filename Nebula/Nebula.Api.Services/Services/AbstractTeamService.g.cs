@@ -22,27 +22,47 @@ namespace NebulaNS.Api.Services
 
                 private IDALTeamMapper dalTeamMapper;
 
+                private IBOLChainMapper bolChainMapper;
+
+                private IDALChainMapper dalChainMapper;
+                private IBOLMachineRefTeamMapper bolMachineRefTeamMapper;
+
+                private IDALMachineRefTeamMapper dalMachineRefTeamMapper;
+
                 private ILogger logger;
 
                 public AbstractTeamService(
                         ILogger logger,
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
-                        IBOLTeamMapper bolteamMapper,
-                        IDALTeamMapper dalteamMapper)
+                        IBOLTeamMapper bolTeamMapper,
+                        IDALTeamMapper dalTeamMapper
+
+                        ,
+                        IBOLChainMapper bolChainMapper,
+                        IDALChainMapper dalChainMapper
+                        ,
+                        IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
+
+                        )
                         : base()
 
                 {
                         this.teamRepository = teamRepository;
                         this.teamModelValidator = teamModelValidator;
-                        this.bolTeamMapper = bolteamMapper;
-                        this.dalTeamMapper = dalteamMapper;
+                        this.bolTeamMapper = bolTeamMapper;
+                        this.dalTeamMapper = dalTeamMapper;
+                        this.bolChainMapper = bolChainMapper;
+                        this.dalChainMapper = dalChainMapper;
+                        this.bolMachineRefTeamMapper = bolMachineRefTeamMapper;
+                        this.dalMachineRefTeamMapper = dalMachineRefTeamMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.teamRepository.All(skip, take, orderClause);
+                        var records = await this.teamRepository.All(limit, offset, orderClause);
 
                         return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace NebulaNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Chain> records = await this.teamRepository.Chains(teamId, limit, offset);
+
+                        return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<MachineRefTeam> records = await this.teamRepository.MachineRefTeams(teamId, limit, offset);
+
+                        return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b1fdbe210c44a22b457c80b87c38df0f</Hash>
+    <Hash>86e50bad733da8d6a281158b9ff3d575</Hash>
 </Codenesium>*/

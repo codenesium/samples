@@ -19,15 +19,17 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiEventResponseModel> Get(string id);
 
-                Task<List<ApiEventResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiEventResponseModel>> GetAutoId(long autoId);
-                Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTime occurred, string category, long autoId);
-                Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTime occurred, string tenantId);
-                Task<List<ApiEventResponseModel>> GetIdOccurred(string id, DateTime occurred);
+                Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
+                Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId);
+                Task<List<ApiEventResponseModel>> GetIdOccurred(string id, DateTimeOffset occurred);
+
+                Task<List<ApiEventRelatedDocumentResponseModel>> EventRelatedDocuments(string eventId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>1780ecd7ddc16ee3a02047416e1dfaab</Hash>
+    <Hash>d87fb79fc946f3ab72fbfc93182eee20</Hash>
 </Codenesium>*/

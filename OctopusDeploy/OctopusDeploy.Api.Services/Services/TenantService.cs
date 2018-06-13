@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ITenantRepository tenantRepository,
                         IApiTenantRequestModelValidator tenantModelValidator,
                         IBOLTenantMapper boltenantMapper,
-                        IDALTenantMapper daltenantMapper)
+                        IDALTenantMapper daltenantMapper
+
+                        )
                         : base(logger,
                                tenantRepository,
                                tenantModelValidator,
                                boltenantMapper,
-                               daltenantMapper)
+                               daltenantMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6359524e73b35174f803cad88cca041e</Hash>
+    <Hash>580d21bccd73d924c98f96c357292722</Hash>
 </Codenesium>*/

@@ -16,7 +16,7 @@ namespace OctopusDeployNS.Api.Contracts
                         string id,
                         string jSON,
                         string message,
-                        DateTime occurred,
+                        DateTimeOffset occurred,
                         string projectId,
                         string relatedDocumentIds,
                         string tenantId,
@@ -49,7 +49,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string Message { get; private set; }
 
-                public DateTime Occurred { get; private set; }
+                public DateTimeOffset Occurred { get; private set; }
 
                 public string ProjectId { get; private set; }
 
@@ -176,5 +176,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f121bfef3e0e09edb4dada57d535fa61</Hash>
+    <Hash>d120f1375526b640a3a7c2b0dcda5165</Hash>
 </Codenesium>*/

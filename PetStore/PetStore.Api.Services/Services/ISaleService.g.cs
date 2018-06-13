@@ -19,10 +19,10 @@ namespace PetStoreNS.Api.Services
 
                 Task<ApiSaleResponseModel> Get(int id);
 
-                Task<List<ApiSaleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiSaleResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>50df3bdf6d0343f5fc50e40e6a37ffa4</Hash>
+    <Hash>000db729156791bdbb449fd5525c9002</Hash>
 </Codenesium>*/

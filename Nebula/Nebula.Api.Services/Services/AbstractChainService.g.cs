@@ -22,27 +22,47 @@ namespace NebulaNS.Api.Services
 
                 private IDALChainMapper dalChainMapper;
 
+                private IBOLClaspMapper bolClaspMapper;
+
+                private IDALClaspMapper dalClaspMapper;
+                private IBOLLinkMapper bolLinkMapper;
+
+                private IDALLinkMapper dalLinkMapper;
+
                 private ILogger logger;
 
                 public AbstractChainService(
                         ILogger logger,
                         IChainRepository chainRepository,
                         IApiChainRequestModelValidator chainModelValidator,
-                        IBOLChainMapper bolchainMapper,
-                        IDALChainMapper dalchainMapper)
+                        IBOLChainMapper bolChainMapper,
+                        IDALChainMapper dalChainMapper
+
+                        ,
+                        IBOLClaspMapper bolClaspMapper,
+                        IDALClaspMapper dalClaspMapper
+                        ,
+                        IBOLLinkMapper bolLinkMapper,
+                        IDALLinkMapper dalLinkMapper
+
+                        )
                         : base()
 
                 {
                         this.chainRepository = chainRepository;
                         this.chainModelValidator = chainModelValidator;
-                        this.bolChainMapper = bolchainMapper;
-                        this.dalChainMapper = dalchainMapper;
+                        this.bolChainMapper = bolChainMapper;
+                        this.dalChainMapper = dalChainMapper;
+                        this.bolClaspMapper = bolClaspMapper;
+                        this.dalClaspMapper = dalClaspMapper;
+                        this.bolLinkMapper = bolLinkMapper;
+                        this.dalLinkMapper = dalLinkMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiChainResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiChainResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.chainRepository.All(skip, take, orderClause);
+                        var records = await this.chainRepository.All(limit, offset, orderClause);
 
                         return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace NebulaNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiClaspResponseModel>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Clasp> records = await this.chainRepository.Clasps(nextChainId, limit, offset);
+
+                        return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiLinkResponseModel>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Link> records = await this.chainRepository.Links(chainId, limit, offset);
+
+                        return this.bolLinkMapper.MapBOToModel(this.dalLinkMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>37ebfb542a4630f71b912ffc1f481a11</Hash>
+    <Hash>60f6369e65f797d5ed014cae23b05f6a</Hash>
 </Codenesium>*/

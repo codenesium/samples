@@ -22,27 +22,47 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALCurrencyMapper dalCurrencyMapper;
 
+                private IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper;
+
+                private IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper;
+                private IBOLCurrencyRateMapper bolCurrencyRateMapper;
+
+                private IDALCurrencyRateMapper dalCurrencyRateMapper;
+
                 private ILogger logger;
 
                 public AbstractCurrencyService(
                         ILogger logger,
                         ICurrencyRepository currencyRepository,
                         IApiCurrencyRequestModelValidator currencyModelValidator,
-                        IBOLCurrencyMapper bolcurrencyMapper,
-                        IDALCurrencyMapper dalcurrencyMapper)
+                        IBOLCurrencyMapper bolCurrencyMapper,
+                        IDALCurrencyMapper dalCurrencyMapper
+
+                        ,
+                        IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper,
+                        IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper
+                        ,
+                        IBOLCurrencyRateMapper bolCurrencyRateMapper,
+                        IDALCurrencyRateMapper dalCurrencyRateMapper
+
+                        )
                         : base()
 
                 {
                         this.currencyRepository = currencyRepository;
                         this.currencyModelValidator = currencyModelValidator;
-                        this.bolCurrencyMapper = bolcurrencyMapper;
-                        this.dalCurrencyMapper = dalcurrencyMapper;
+                        this.bolCurrencyMapper = bolCurrencyMapper;
+                        this.dalCurrencyMapper = dalCurrencyMapper;
+                        this.bolCountryRegionCurrencyMapper = bolCountryRegionCurrencyMapper;
+                        this.dalCountryRegionCurrencyMapper = dalCountryRegionCurrencyMapper;
+                        this.bolCurrencyRateMapper = bolCurrencyRateMapper;
+                        this.dalCurrencyRateMapper = dalCurrencyRateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCurrencyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCurrencyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.currencyRepository.All(skip, take, orderClause);
+                        var records = await this.currencyRepository.All(limit, offset, orderClause);
 
                         return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(records));
                 }
@@ -103,9 +123,22 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<CountryRegionCurrency> records = await this.currencyRepository.CountryRegionCurrencies(currencyCode, limit, offset);
+
+                        return this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<CurrencyRate> records = await this.currencyRepository.CurrencyRates(fromCurrencyCode, limit, offset);
+
+                        return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2e0a429d5d9f77eb6ceab57225cc8dfd</Hash>
+    <Hash>9595266ba082b5259a0260c67e1fdd1e</Hash>
 </Codenesium>*/

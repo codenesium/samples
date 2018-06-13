@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiTeamResponseModel> response = await this.TeamService.All(query.Offset, query.Limit);
+                        List<ApiTeamResponseModel> response = await this.TeamService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,36 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{teamId}/Chains")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
+                public async virtual Task<IActionResult> Chains(int teamId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiChainResponseModel> response = await this.TeamService.Chains(teamId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{teamId}/MachineRefTeams")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
+                public async virtual Task<IActionResult> MachineRefTeams(int teamId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiMachineRefTeamResponseModel> response = await this.TeamService.MachineRefTeams(teamId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a252151fc5b0ec91b718a1fc6490666f</Hash>
+    <Hash>be9f0bb208becfb3215353995c3efeff</Hash>
 </Codenesium>*/

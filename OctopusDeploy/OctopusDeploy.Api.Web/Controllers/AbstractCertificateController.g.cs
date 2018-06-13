@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCertificateResponseModel> response = await this.CertificateService.All(query.Offset, query.Limit);
+                        List<ApiCertificateResponseModel> response = await this.CertificateService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -165,7 +165,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getCreated/{created}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCreated(DateTime created)
+                public async virtual Task<IActionResult> GetCreated(DateTimeOffset created)
                 {
                         List<ApiCertificateResponseModel> response = await this.CertificateService.GetCreated(created);
 
@@ -187,7 +187,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getNotAfter/{notAfter}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetNotAfter(DateTime notAfter)
+                public async virtual Task<IActionResult> GetNotAfter(DateTimeOffset notAfter)
                 {
                         List<ApiCertificateResponseModel> response = await this.CertificateService.GetNotAfter(notAfter);
 
@@ -208,5 +208,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b85f88a2aaf87be0e33de6f05e755e94</Hash>
+    <Hash>0ad3e5991fc4220dcee37cbc3a5a1653</Hash>
 </Codenesium>*/

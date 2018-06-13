@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.All(query.Offset, query.Limit);
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -201,9 +201,36 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{salesOrderID}/SalesOrderDetails")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderDetails(int salesOrderID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderHeaderService.SalesOrderDetails(salesOrderID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{salesOrderID}/SalesOrderHeaderSalesReasons")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderHeaderSalesReasons(int salesOrderID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await this.SalesOrderHeaderService.SalesOrderHeaderSalesReasons(salesOrderID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>580ca362527f8083ec899b27bd28d2cb</Hash>
+    <Hash>4bf80a51bbb45e5cd4132ca69a506c51</Hash>
 </Codenesium>*/

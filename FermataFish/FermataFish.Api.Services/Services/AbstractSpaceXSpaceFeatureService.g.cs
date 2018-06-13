@@ -28,21 +28,23 @@ namespace FermataFishNS.Api.Services
                         ILogger logger,
                         ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository,
                         IApiSpaceXSpaceFeatureRequestModelValidator spaceXSpaceFeatureModelValidator,
-                        IBOLSpaceXSpaceFeatureMapper bolspaceXSpaceFeatureMapper,
-                        IDALSpaceXSpaceFeatureMapper dalspaceXSpaceFeatureMapper)
+                        IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper,
+                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper
+
+                        )
                         : base()
 
                 {
                         this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
                         this.spaceXSpaceFeatureModelValidator = spaceXSpaceFeatureModelValidator;
-                        this.bolSpaceXSpaceFeatureMapper = bolspaceXSpaceFeatureMapper;
-                        this.dalSpaceXSpaceFeatureMapper = dalspaceXSpaceFeatureMapper;
+                        this.bolSpaceXSpaceFeatureMapper = bolSpaceXSpaceFeatureMapper;
+                        this.dalSpaceXSpaceFeatureMapper = dalSpaceXSpaceFeatureMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSpaceXSpaceFeatureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSpaceXSpaceFeatureResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.spaceXSpaceFeatureRepository.All(skip, take, orderClause);
+                        var records = await this.spaceXSpaceFeatureRepository.All(limit, offset, orderClause);
 
                         return this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6643c45a4f55b562b6ecbe6fd904995c</Hash>
+    <Hash>f92260227afc9fa9e35d183ab022965e</Hash>
 </Codenesium>*/

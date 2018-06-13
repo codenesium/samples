@@ -19,13 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiShiftResponseModel> Get(int shiftID);
 
-                Task<List<ApiShiftResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiShiftResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiShiftResponseModel> GetName(string name);
                 Task<ApiShiftResponseModel> GetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime);
+
+                Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>2ef062aa51b4c75e646f5758254243c9</Hash>
+    <Hash>219b5a7cf02019eb7882672577674a73</Hash>
 </Codenesium>*/

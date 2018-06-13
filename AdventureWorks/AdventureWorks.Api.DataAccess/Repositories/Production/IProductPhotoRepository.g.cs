@@ -15,10 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ProductPhoto> Get(int productPhotoID);
 
-                Task<List<ProductPhoto>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ProductPhoto>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+
+                Task<List<ProductProductPhoto>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>6e77ef823b97c48be73e7265ae6ad942</Hash>
+    <Hash>6e5ce140e0c44e9a5407177ba00b9b7c</Hash>
 </Codenesium>*/

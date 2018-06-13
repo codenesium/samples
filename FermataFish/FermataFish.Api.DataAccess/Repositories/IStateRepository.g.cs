@@ -15,10 +15,12 @@ namespace FermataFishNS.Api.DataAccess
 
                 Task<State> Get(int id);
 
-                Task<List<State>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<State>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+
+                Task<List<Studio>> Studios(int stateId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>97b1d978cc7189eebec7649818e77e83</Hash>
+    <Hash>8fc1679c382644b49a193e23079c370a</Hash>
 </Codenesium>*/

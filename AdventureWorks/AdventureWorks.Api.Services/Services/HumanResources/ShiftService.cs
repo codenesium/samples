@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IShiftRepository shiftRepository,
                         IApiShiftRequestModelValidator shiftModelValidator,
                         IBOLShiftMapper bolshiftMapper,
-                        IDALShiftMapper dalshiftMapper)
+                        IDALShiftMapper dalshiftMapper
+                        ,
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+
+                        )
                         : base(logger,
                                shiftRepository,
                                shiftModelValidator,
                                bolshiftMapper,
-                               dalshiftMapper)
+                               dalshiftMapper
+                               ,
+                               bolEmployeeDepartmentHistoryMapper,
+                               dalEmployeeDepartmentHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b0809e11ce12ebf7d08254e9ca1798b4</Hash>
+    <Hash>f0c72e2cad665f025b952d7b0a79871f</Hash>
 </Codenesium>*/

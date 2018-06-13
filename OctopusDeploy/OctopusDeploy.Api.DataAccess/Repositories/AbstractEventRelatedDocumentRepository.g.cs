@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<EventRelatedDocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<EventRelatedDocument>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<EventRelatedDocument> Get(int id)
@@ -88,31 +88,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<EventRelatedDocument>> Where(Expression<Func<EventRelatedDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<EventRelatedDocument>> Where(Expression<Func<EventRelatedDocument, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<EventRelatedDocument> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<EventRelatedDocument> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<EventRelatedDocument>> SearchLinqEF(Expression<Func<EventRelatedDocument, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<EventRelatedDocument>> SearchLinqEF(Expression<Func<EventRelatedDocument, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(EventRelatedDocument.Id)} ASC";
                         }
 
-                        return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EventRelatedDocument>();
+                        return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
                 }
 
-                private async Task<List<EventRelatedDocument>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<EventRelatedDocument>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(EventRelatedDocument.Id)} ASC";
                         }
 
-                        return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EventRelatedDocument>();
+                        return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
                 }
 
                 private async Task<EventRelatedDocument> GetById(int id)
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d7d2908dbe3af40b4ef6bdb8b1983936</Hash>
+    <Hash>7631da76e622ee9eadf477f13759b0f4</Hash>
 </Codenesium>*/

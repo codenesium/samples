@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ITagSetRepository tagSetRepository,
                         IApiTagSetRequestModelValidator tagSetModelValidator,
                         IBOLTagSetMapper boltagSetMapper,
-                        IDALTagSetMapper daltagSetMapper)
+                        IDALTagSetMapper daltagSetMapper
+
+                        )
                         : base(logger,
                                tagSetRepository,
                                tagSetModelValidator,
                                boltagSetMapper,
-                               daltagSetMapper)
+                               daltagSetMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8332b7a67c43aab0c300f3e3dc32860c</Hash>
+    <Hash>6e76a98a22c0d26496a6fbdbb6f41b20</Hash>
 </Codenesium>*/

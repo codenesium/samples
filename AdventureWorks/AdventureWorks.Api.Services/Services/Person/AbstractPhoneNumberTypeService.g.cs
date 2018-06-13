@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper;
 
+                private IBOLPersonPhoneMapper bolPersonPhoneMapper;
+
+                private IDALPersonPhoneMapper dalPersonPhoneMapper;
+
                 private ILogger logger;
 
                 public AbstractPhoneNumberTypeService(
                         ILogger logger,
                         IPhoneNumberTypeRepository phoneNumberTypeRepository,
                         IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
-                        IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
-                        IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper)
+                        IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper,
+                        IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper
+
+                        ,
+                        IBOLPersonPhoneMapper bolPersonPhoneMapper,
+                        IDALPersonPhoneMapper dalPersonPhoneMapper
+
+                        )
                         : base()
 
                 {
                         this.phoneNumberTypeRepository = phoneNumberTypeRepository;
                         this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
-                        this.bolPhoneNumberTypeMapper = bolphoneNumberTypeMapper;
-                        this.dalPhoneNumberTypeMapper = dalphoneNumberTypeMapper;
+                        this.bolPhoneNumberTypeMapper = bolPhoneNumberTypeMapper;
+                        this.dalPhoneNumberTypeMapper = dalPhoneNumberTypeMapper;
+                        this.bolPersonPhoneMapper = bolPersonPhoneMapper;
+                        this.dalPersonPhoneMapper = dalPersonPhoneMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.phoneNumberTypeRepository.All(skip, take, orderClause);
+                        var records = await this.phoneNumberTypeRepository.All(limit, offset, orderClause);
 
                         return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiPersonPhoneResponseModel>> PersonPhones(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<PersonPhone> records = await this.phoneNumberTypeRepository.PersonPhones(phoneNumberTypeID, limit, offset);
+
+                        return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>010194781666f153f0ad23372e02df0a</Hash>
+    <Hash>3ef82081c12c44d88d1b3d6b77629465</Hash>
 </Codenesium>*/

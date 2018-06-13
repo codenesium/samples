@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiPetRequestModelValidator: AbstractValidator<ApiPetRequestModel>
         {
@@ -32,13 +31,11 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void BreedIdRules()
                 {
-                        this.RuleFor(x => x.BreedId).NotNull();
                         this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x ?.BreedId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ClientIdRules()
                 {
-                        this.RuleFor(x => x.ClientId).NotNull();
                         this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x ?.ClientId != null).WithMessage("Invalid reference");
                 }
 
@@ -50,7 +47,6 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void WeightRules()
                 {
-                        this.RuleFor(x => x.Weight).NotNull();
                 }
 
                 private async Task<bool> BeValidBreed(int id,  CancellationToken cancellationToken)
@@ -70,5 +66,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>450fbaff93f0386cd0dbe6d18e57ad9e</Hash>
+    <Hash>945a4d2dbc1e4534ef5e0f6b7cf1c19b</Hash>
 </Codenesium>*/

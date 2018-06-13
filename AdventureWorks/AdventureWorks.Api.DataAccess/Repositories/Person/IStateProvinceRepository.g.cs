@@ -15,13 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<StateProvince> Get(int stateProvinceID);
 
-                Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<StateProvince>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<StateProvince> GetName(string name);
                 Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
+
+                Task<List<Address>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>d6a0fd7b04b0e0d42bcb3cab3eff4793</Hash>
+    <Hash>0a32fad1fa3ba0002d93dc0eec9cea3c</Hash>
 </Codenesium>*/

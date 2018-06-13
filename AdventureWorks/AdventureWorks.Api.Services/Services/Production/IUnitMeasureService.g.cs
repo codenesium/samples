@@ -19,12 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode);
 
-                Task<List<ApiUnitMeasureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiUnitMeasureResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiUnitMeasureResponseModel> GetName(string name);
+
+                Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>1174a574a073da25aa8c203df8886e7d</Hash>
+    <Hash>d8575a4ecc87927171ea6f2807087e3f</Hash>
 </Codenesium>*/

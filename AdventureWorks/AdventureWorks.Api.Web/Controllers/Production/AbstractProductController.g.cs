@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiProductResponseModel> response = await this.ProductService.All(query.Offset, query.Limit);
+                        List<ApiProductResponseModel> response = await this.ProductService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -198,9 +198,127 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{componentID}/BillOfMaterials")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> BillOfMaterials(int componentID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiBillOfMaterialsResponseModel> response = await this.ProductService.BillOfMaterials(componentID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/ProductCostHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductCostHistories(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductCostHistoryResponseModel> response = await this.ProductService.ProductCostHistories(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/ProductDocuments")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductDocuments(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductDocumentResponseModel> response = await this.ProductService.ProductDocuments(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/ProductInventories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductInventories(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductInventoryResponseModel> response = await this.ProductService.ProductInventories(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/ProductListPriceHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductListPriceHistories(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductListPriceHistoryResponseModel> response = await this.ProductService.ProductListPriceHistories(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/ProductProductPhotoes")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductProductPhotoes(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductProductPhotoResponseModel> response = await this.ProductService.ProductProductPhotoes(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/ProductReviews")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductReviews(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductReviewResponseModel> response = await this.ProductService.ProductReviews(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/TransactionHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> TransactionHistories(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiTransactionHistoryResponseModel> response = await this.ProductService.TransactionHistories(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{productID}/WorkOrders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> WorkOrders(int productID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiWorkOrderResponseModel> response = await this.ProductService.WorkOrders(productID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9d350d1ee85c8675e6f12a58b139cf8e</Hash>
+    <Hash>d09472c05f158a7272fe7ca5559c7f11</Hash>
 </Codenesium>*/

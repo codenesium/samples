@@ -42,7 +42,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         UserRole record = await this.UserRoleRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93b135f9da005f081074d26e54d97ddd</Hash>
+    <Hash>61d1af3f413feef17834f0c233a00c03</Hash>
 </Codenesium>*/

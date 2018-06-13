@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
                         IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
-                        IBOLSalesTerritoryHistoryMapper bolsalesTerritoryHistoryMapper,
-                        IDALSalesTerritoryHistoryMapper dalsalesTerritoryHistoryMapper)
+                        IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
+                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
                         this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
-                        this.bolSalesTerritoryHistoryMapper = bolsalesTerritoryHistoryMapper;
-                        this.dalSalesTerritoryHistoryMapper = dalsalesTerritoryHistoryMapper;
+                        this.bolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
+                        this.dalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesTerritoryHistoryRepository.All(skip, take, orderClause);
+                        var records = await this.salesTerritoryHistoryRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c53c696ce23a63b241b8e833a6b747c2</Hash>
+    <Hash>4bea642b58ac2154907b73fe346fa3bf</Hash>
 </Codenesium>*/

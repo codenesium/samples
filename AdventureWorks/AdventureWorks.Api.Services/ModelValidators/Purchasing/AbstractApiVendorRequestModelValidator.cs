@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiVendorRequestModelValidator: AbstractValidator<ApiVendorRequestModel>
         {
@@ -36,17 +35,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ActiveFlagRules()
                 {
-                        this.RuleFor(x => x.ActiveFlag).NotNull();
                 }
 
                 public virtual void CreditRatingRules()
                 {
-                        this.RuleFor(x => x.CreditRating).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -57,7 +53,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void PreferredVendorStatusRules()
                 {
-                        this.RuleFor(x => x.PreferredVendorStatus).NotNull();
                 }
 
                 public virtual void PurchasingWebServiceURLRules()
@@ -69,7 +64,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Vendor record = await this.VendorRepository.GetAccountNumber(model.AccountNumber);
 
-                        if (record == null || record.BusinessEntityID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -82,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2fb4b8b736722cf3e996e5ef40693a5d</Hash>
+    <Hash>c901a8d89b94880c626abb8cbf163dda</Hash>
 </Codenesium>*/

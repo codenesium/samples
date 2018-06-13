@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Subscription>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Subscription>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Subscription> Get(string id)
@@ -82,31 +82,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Subscription>> Where(Expression<Func<Subscription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Subscription>> Where(Expression<Func<Subscription, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Subscription> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Subscription> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Subscription>> SearchLinqEF(Expression<Func<Subscription, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Subscription>> SearchLinqEF(Expression<Func<Subscription, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Subscription.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Subscription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Subscription>();
+                        return await this.Context.Set<Subscription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Subscription>();
                 }
 
-                private async Task<List<Subscription>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Subscription>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Subscription.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Subscription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Subscription>();
+                        return await this.Context.Set<Subscription>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Subscription>();
                 }
 
                 private async Task<Subscription> GetById(string id)
@@ -119,5 +119,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3d0dfe18623d8dbf497bef8896644b5c</Hash>
+    <Hash>94b5c885d281920301c4cf3c776faff7</Hash>
 </Codenesium>*/

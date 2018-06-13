@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiSpeciesRequestModelValidator: AbstractValidator<ApiSpeciesRequestModel>
         {
@@ -35,5 +34,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd5047d5a87fe7d5a757f5144b8d0225</Hash>
+    <Hash>120e7ecaf156ab5e54c590bf6c4fd483</Hash>
 </Codenesium>*/

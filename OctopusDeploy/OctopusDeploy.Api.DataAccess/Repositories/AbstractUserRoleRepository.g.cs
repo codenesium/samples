@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<UserRole>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<UserRole>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<UserRole> Get(string id)
@@ -82,31 +82,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<UserRole>> Where(Expression<Func<UserRole, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<UserRole>> Where(Expression<Func<UserRole, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<UserRole> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<UserRole> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<UserRole>> SearchLinqEF(Expression<Func<UserRole, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<UserRole>> SearchLinqEF(Expression<Func<UserRole, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(UserRole.Id)} ASC";
                         }
 
-                        return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<UserRole>();
+                        return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UserRole>();
                 }
 
-                private async Task<List<UserRole>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<UserRole>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(UserRole.Id)} ASC";
                         }
 
-                        return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<UserRole>();
+                        return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UserRole>();
                 }
 
                 private async Task<UserRole> GetById(string id)
@@ -119,5 +119,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ba1dbf080efea410016d2f3ee6a7f67a</Hash>
+    <Hash>6f1e3d5678b3fa859ede6c9f6f66fe46</Hash>
 </Codenesium>*/

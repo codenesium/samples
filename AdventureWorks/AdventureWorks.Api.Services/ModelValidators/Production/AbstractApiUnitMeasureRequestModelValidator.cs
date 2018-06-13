@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiUnitMeasureRequestModelValidator: AbstractValidator<ApiUnitMeasureRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public IUnitMeasureRepository UnitMeasureRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -43,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         UnitMeasure record = await this.UnitMeasureRepository.GetName(model.Name);
 
-                        if (record == null || record.UnitMeasureCode == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.UnitMeasureCode == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45be35d22ae7a0304415095814e2db15</Hash>
+    <Hash>52b25aec506b79f3a541817617508808</Hash>
 </Codenesium>*/

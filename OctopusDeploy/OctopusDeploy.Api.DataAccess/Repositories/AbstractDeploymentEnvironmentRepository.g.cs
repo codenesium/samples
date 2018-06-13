@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DeploymentEnvironment>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<DeploymentEnvironment>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<DeploymentEnvironment> Get(string id)
@@ -88,31 +88,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<DeploymentEnvironment>> Where(Expression<Func<DeploymentEnvironment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<DeploymentEnvironment>> Where(Expression<Func<DeploymentEnvironment, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<DeploymentEnvironment> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<DeploymentEnvironment> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<DeploymentEnvironment>> SearchLinqEF(Expression<Func<DeploymentEnvironment, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DeploymentEnvironment>> SearchLinqEF(Expression<Func<DeploymentEnvironment, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DeploymentEnvironment.Id)} ASC";
                         }
 
-                        return await this.Context.Set<DeploymentEnvironment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeploymentEnvironment>();
+                        return await this.Context.Set<DeploymentEnvironment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentEnvironment>();
                 }
 
-                private async Task<List<DeploymentEnvironment>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DeploymentEnvironment>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DeploymentEnvironment.Id)} ASC";
                         }
 
-                        return await this.Context.Set<DeploymentEnvironment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeploymentEnvironment>();
+                        return await this.Context.Set<DeploymentEnvironment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentEnvironment>();
                 }
 
                 private async Task<DeploymentEnvironment> GetById(string id)
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>69dd32e0ecf135349ef700c76f8ef547</Hash>
+    <Hash>d75190fb9888bbdf5d505b25563ada9c</Hash>
 </Codenesium>*/

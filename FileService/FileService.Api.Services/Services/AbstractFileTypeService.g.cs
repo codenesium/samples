@@ -22,27 +22,39 @@ namespace FileServiceNS.Api.Services
 
                 private IDALFileTypeMapper dalFileTypeMapper;
 
+                private IBOLFileMapper bolFileMapper;
+
+                private IDALFileMapper dalFileMapper;
+
                 private ILogger logger;
 
                 public AbstractFileTypeService(
                         ILogger logger,
                         IFileTypeRepository fileTypeRepository,
                         IApiFileTypeRequestModelValidator fileTypeModelValidator,
-                        IBOLFileTypeMapper bolfileTypeMapper,
-                        IDALFileTypeMapper dalfileTypeMapper)
+                        IBOLFileTypeMapper bolFileTypeMapper,
+                        IDALFileTypeMapper dalFileTypeMapper
+
+                        ,
+                        IBOLFileMapper bolFileMapper,
+                        IDALFileMapper dalFileMapper
+
+                        )
                         : base()
 
                 {
                         this.fileTypeRepository = fileTypeRepository;
                         this.fileTypeModelValidator = fileTypeModelValidator;
-                        this.bolFileTypeMapper = bolfileTypeMapper;
-                        this.dalFileTypeMapper = dalfileTypeMapper;
+                        this.bolFileTypeMapper = bolFileTypeMapper;
+                        this.dalFileTypeMapper = dalFileTypeMapper;
+                        this.bolFileMapper = bolFileMapper;
+                        this.dalFileMapper = dalFileMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiFileTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiFileTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.fileTypeRepository.All(skip, take, orderClause);
+                        var records = await this.fileTypeRepository.All(limit, offset, orderClause);
 
                         return this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace FileServiceNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiFileResponseModel>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<File> records = await this.fileTypeRepository.Files(fileTypeId, limit, offset);
+
+                        return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ea390d45e9b8c11460c949c11480f328</Hash>
+    <Hash>41058d89b02aeca991961d5abb26b421</Hash>
 </Codenesium>*/

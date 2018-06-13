@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public ITagSetRepository TagSetRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -45,14 +44,13 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void SortOrderRules()
                 {
-                        this.RuleFor(x => x.SortOrder).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiTagSetRequestModel model,  CancellationToken cancellationToken)
                 {
                         TagSet record = await this.TagSetRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -65,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>535a854f7d6d74235c4f4bedcd35201f</Hash>
+    <Hash>ac1a2455c7473bb27ed11444e80823be</Hash>
 </Codenesium>*/

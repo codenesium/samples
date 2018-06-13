@@ -8,7 +8,6 @@ using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
-
 {
         public abstract class AbstractApiDeviceRequestModelValidator: AbstractValidator<ApiDeviceRequestModel>
         {
@@ -35,15 +34,14 @@ namespace ESPIOTNS.Api.Services
 
                 public virtual void PublicIdRules()
                 {
-                        this.RuleFor(x => x.PublicId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetPublicId).When(x => x ?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceRequestModel.PublicId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => x ?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceRequestModel.PublicId));
                 }
 
-                private async Task<bool> BeUniqueGetPublicId(ApiDeviceRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByPublicId(ApiDeviceRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Device record = await this.DeviceRepository.GetPublicId(model.PublicId);
+                        Device record = await this.DeviceRepository.ByPublicId(model.PublicId);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3011b747973f452fa82b7637fa224afa</Hash>
+    <Hash>066652a55c8ea681705cc52440159bf7</Hash>
 </Codenesium>*/

@@ -8,7 +8,6 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
-
 {
         public abstract class AbstractApiBucketRequestModelValidator: AbstractValidator<ApiBucketRequestModel>
         {
@@ -29,7 +28,6 @@ namespace FileServiceNS.Api.Services
                 public IBucketRepository BucketRepository { get; set; }
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x.ExternalId).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.ExternalId));
                 }
 
@@ -44,7 +42,7 @@ namespace FileServiceNS.Api.Services
                 {
                         Bucket record = await this.BucketRepository.GetExternalId(model.ExternalId);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -57,7 +55,7 @@ namespace FileServiceNS.Api.Services
                 {
                         Bucket record = await this.BucketRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -70,5 +68,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0b8bec306d2c17b5242a2339aa6354d</Hash>
+    <Hash>093119be4700e1c1729eb477110f3629</Hash>
 </Codenesium>*/

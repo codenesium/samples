@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 }
 
                 public void SetProperties(
-                        DateTime created,
+                        DateTimeOffset created,
                         string environmentId,
                         string jSON,
                         string projectId,
@@ -36,10 +36,10 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Title = title;
                 }
 
-                private DateTime created;
+                private DateTimeOffset created;
 
                 [Required]
-                public DateTime Created
+                public DateTimeOffset Created
                 {
                         get
                         {
@@ -198,5 +198,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>47d5df7d923e33e7eb1eba6a5f7d0652</Hash>
+    <Hash>ce9b06637745691ecc3ab72e2033c98e</Hash>
 </Codenesium>*/

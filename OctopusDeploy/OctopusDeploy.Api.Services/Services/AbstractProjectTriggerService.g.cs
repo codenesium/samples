@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IProjectTriggerRepository projectTriggerRepository,
                         IApiProjectTriggerRequestModelValidator projectTriggerModelValidator,
-                        IBOLProjectTriggerMapper bolprojectTriggerMapper,
-                        IDALProjectTriggerMapper dalprojectTriggerMapper)
+                        IBOLProjectTriggerMapper bolProjectTriggerMapper,
+                        IDALProjectTriggerMapper dalProjectTriggerMapper
+
+                        )
                         : base()
 
                 {
                         this.projectTriggerRepository = projectTriggerRepository;
                         this.projectTriggerModelValidator = projectTriggerModelValidator;
-                        this.bolProjectTriggerMapper = bolprojectTriggerMapper;
-                        this.dalProjectTriggerMapper = dalprojectTriggerMapper;
+                        this.bolProjectTriggerMapper = bolProjectTriggerMapper;
+                        this.dalProjectTriggerMapper = dalProjectTriggerMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProjectTriggerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProjectTriggerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.projectTriggerRepository.All(skip, take, orderClause);
+                        var records = await this.projectTriggerRepository.All(limit, offset, orderClause);
 
                         return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c90c3ceb79d05548c45611b2ecbb08ac</Hash>
+    <Hash>56fe13629a9342d01d1fdaf3352a674a</Hash>
 </Codenesium>*/

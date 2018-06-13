@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DeploymentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<DeploymentHistory> Get(string deploymentId)
@@ -75,38 +75,38 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<DeploymentHistory>> GetCreated(DateTime created)
+                public async Task<List<DeploymentHistory>> GetCreated(DateTimeOffset created)
                 {
                         var records = await this.SearchLinqEF(x => x.Created == created);
 
                         return records;
                 }
 
-                protected async Task<List<DeploymentHistory>> Where(Expression<Func<DeploymentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<DeploymentHistory>> Where(Expression<Func<DeploymentHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<DeploymentHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<DeploymentHistory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<DeploymentHistory>> SearchLinqEF(Expression<Func<DeploymentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DeploymentHistory>> SearchLinqEF(Expression<Func<DeploymentHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DeploymentHistory.DeploymentId)} ASC";
                         }
 
-                        return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeploymentHistory>();
+                        return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
                 }
 
-                private async Task<List<DeploymentHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DeploymentHistory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DeploymentHistory.DeploymentId)} ASC";
                         }
 
-                        return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeploymentHistory>();
+                        return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
                 }
 
                 private async Task<DeploymentHistory> GetById(string deploymentId)
@@ -119,5 +119,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>43217bbed1131ce5402058c53ed0dc47</Hash>
+    <Hash>a6a5bbc8d5e6f162eefeddad49b9f56a</Hash>
 </Codenesium>*/

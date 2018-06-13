@@ -17,17 +17,38 @@ namespace PetShippingNS.Api.Services
                         IHandlerRepository handlerRepository,
                         IApiHandlerRequestModelValidator handlerModelValidator,
                         IBOLHandlerMapper bolhandlerMapper,
-                        IDALHandlerMapper dalhandlerMapper)
+                        IDALHandlerMapper dalhandlerMapper
+                        ,
+                        IBOLAirTransportMapper bolAirTransportMapper,
+                        IDALAirTransportMapper dalAirTransportMapper
+                        ,
+                        IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
+                        IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper
+                        ,
+                        IBOLOtherTransportMapper bolOtherTransportMapper,
+                        IDALOtherTransportMapper dalOtherTransportMapper
+
+                        )
                         : base(logger,
                                handlerRepository,
                                handlerModelValidator,
                                bolhandlerMapper,
-                               dalhandlerMapper)
+                               dalhandlerMapper
+                               ,
+                               bolAirTransportMapper,
+                               dalAirTransportMapper
+                               ,
+                               bolHandlerPipelineStepMapper,
+                               dalHandlerPipelineStepMapper
+                               ,
+                               bolOtherTransportMapper,
+                               dalOtherTransportMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>bf9692fc14aa118454afe67ed9abd902</Hash>
+    <Hash>4c3418ea80c75710e25517bd28eae892</Hash>
 </Codenesium>*/

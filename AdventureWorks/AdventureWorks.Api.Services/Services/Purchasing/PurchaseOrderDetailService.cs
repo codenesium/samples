@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IPurchaseOrderDetailRepository purchaseOrderDetailRepository,
                         IApiPurchaseOrderDetailRequestModelValidator purchaseOrderDetailModelValidator,
                         IBOLPurchaseOrderDetailMapper bolpurchaseOrderDetailMapper,
-                        IDALPurchaseOrderDetailMapper dalpurchaseOrderDetailMapper)
+                        IDALPurchaseOrderDetailMapper dalpurchaseOrderDetailMapper
+
+                        )
                         : base(logger,
                                purchaseOrderDetailRepository,
                                purchaseOrderDetailModelValidator,
                                bolpurchaseOrderDetailMapper,
-                               dalpurchaseOrderDetailMapper)
+                               dalpurchaseOrderDetailMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>dda343399508f4f8ee7ab23a67a7f2b7</Hash>
+    <Hash>1e0bb4f3e1aca48d15a2ef4d36914f61</Hash>
 </Codenesium>*/

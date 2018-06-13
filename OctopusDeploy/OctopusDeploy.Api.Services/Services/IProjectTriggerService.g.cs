@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiProjectTriggerResponseModel> Get(string id);
 
-                Task<List<ApiProjectTriggerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiProjectTriggerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiProjectTriggerResponseModel> GetProjectIdName(string projectId, string name);
                 Task<List<ApiProjectTriggerResponseModel>> GetProjectId(string projectId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3847d76e3facdea14a15c888b38bb910</Hash>
+    <Hash>6b2f5b4113b586bfc4890aa47126aa9f</Hash>
 </Codenesium>*/

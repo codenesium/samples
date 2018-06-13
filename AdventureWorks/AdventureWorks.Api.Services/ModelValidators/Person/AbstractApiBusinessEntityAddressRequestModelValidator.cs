@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiBusinessEntityAddressRequestModelValidator: AbstractValidator<ApiBusinessEntityAddressRequestModel>
         {
@@ -28,26 +27,22 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void AddressIDRules()
                 {
-                        this.RuleFor(x => x.AddressID).NotNull();
                 }
 
                 public virtual void AddressTypeIDRules()
                 {
-                        this.RuleFor(x => x.AddressTypeID).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a20348f253a928131b63647d648e3440</Hash>
+    <Hash>8290b316b1dbb3a2f9209ba7317c1469</Hash>
 </Codenesium>*/

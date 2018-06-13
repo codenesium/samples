@@ -22,27 +22,39 @@ namespace FermataFishNS.Api.Services
 
                 private IDALSpaceMapper dalSpaceMapper;
 
+                private IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper;
+
+                private IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper;
+
                 private ILogger logger;
 
                 public AbstractSpaceService(
                         ILogger logger,
                         ISpaceRepository spaceRepository,
                         IApiSpaceRequestModelValidator spaceModelValidator,
-                        IBOLSpaceMapper bolspaceMapper,
-                        IDALSpaceMapper dalspaceMapper)
+                        IBOLSpaceMapper bolSpaceMapper,
+                        IDALSpaceMapper dalSpaceMapper
+
+                        ,
+                        IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper,
+                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper
+
+                        )
                         : base()
 
                 {
                         this.spaceRepository = spaceRepository;
                         this.spaceModelValidator = spaceModelValidator;
-                        this.bolSpaceMapper = bolspaceMapper;
-                        this.dalSpaceMapper = dalspaceMapper;
+                        this.bolSpaceMapper = bolSpaceMapper;
+                        this.dalSpaceMapper = dalSpaceMapper;
+                        this.bolSpaceXSpaceFeatureMapper = bolSpaceXSpaceFeatureMapper;
+                        this.dalSpaceXSpaceFeatureMapper = dalSpaceXSpaceFeatureMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSpaceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSpaceResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.spaceRepository.All(skip, take, orderClause);
+                        var records = await this.spaceRepository.All(limit, offset, orderClause);
 
                         return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiSpaceXSpaceFeatureResponseModel>> SpaceXSpaceFeatures(int spaceId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SpaceXSpaceFeature> records = await this.spaceRepository.SpaceXSpaceFeatures(spaceId, limit, offset);
+
+                        return this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>30a740bb0cfa10233a3d362890caa5e5</Hash>
+    <Hash>1ac8ec17eb9126a9b525180515633b1e</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IShoppingCartItemRepository shoppingCartItemRepository,
                         IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
                         IBOLShoppingCartItemMapper bolshoppingCartItemMapper,
-                        IDALShoppingCartItemMapper dalshoppingCartItemMapper)
+                        IDALShoppingCartItemMapper dalshoppingCartItemMapper
+
+                        )
                         : base(logger,
                                shoppingCartItemRepository,
                                shoppingCartItemModelValidator,
                                bolshoppingCartItemMapper,
-                               dalshoppingCartItemMapper)
+                               dalshoppingCartItemMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>37676e64854d2543dc4ee70fec9aa53b</Hash>
+    <Hash>055e07377e4099aa2f28e62105e9915e</Hash>
 </Codenesium>*/

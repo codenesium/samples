@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IArtifactRepository artifactRepository,
                         IApiArtifactRequestModelValidator artifactModelValidator,
                         IBOLArtifactMapper bolartifactMapper,
-                        IDALArtifactMapper dalartifactMapper)
+                        IDALArtifactMapper dalartifactMapper
+
+                        )
                         : base(logger,
                                artifactRepository,
                                artifactModelValidator,
                                bolartifactMapper,
-                               dalartifactMapper)
+                               dalartifactMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9abcc8ef70f584ffb92cd6d1659a0d7b</Hash>
+    <Hash>08dc909302cabb5d2bc5aee79e580651</Hash>
 </Codenesium>*/

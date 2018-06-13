@@ -17,17 +17,38 @@ namespace AdventureWorksNS.Api.Services
                         IProductModelRepository productModelRepository,
                         IApiProductModelRequestModelValidator productModelModelValidator,
                         IBOLProductModelMapper bolproductModelMapper,
-                        IDALProductModelMapper dalproductModelMapper)
+                        IDALProductModelMapper dalproductModelMapper
+                        ,
+                        IBOLProductMapper bolProductMapper,
+                        IDALProductMapper dalProductMapper
+                        ,
+                        IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
+                        ,
+                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+
+                        )
                         : base(logger,
                                productModelRepository,
                                productModelModelValidator,
                                bolproductModelMapper,
-                               dalproductModelMapper)
+                               dalproductModelMapper
+                               ,
+                               bolProductMapper,
+                               dalProductMapper
+                               ,
+                               bolProductModelIllustrationMapper,
+                               dalProductModelIllustrationMapper
+                               ,
+                               bolProductModelProductDescriptionCultureMapper,
+                               dalProductModelProductDescriptionCultureMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>46d9805013f32b12d80a980a85193d74</Hash>
+    <Hash>c1f1ef10c324ba8b05c8c263ad19e077</Hash>
 </Codenesium>*/

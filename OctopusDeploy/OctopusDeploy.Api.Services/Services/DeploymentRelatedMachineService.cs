@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository,
                         IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
                         IBOLDeploymentRelatedMachineMapper boldeploymentRelatedMachineMapper,
-                        IDALDeploymentRelatedMachineMapper daldeploymentRelatedMachineMapper)
+                        IDALDeploymentRelatedMachineMapper daldeploymentRelatedMachineMapper
+
+                        )
                         : base(logger,
                                deploymentRelatedMachineRepository,
                                deploymentRelatedMachineModelValidator,
                                boldeploymentRelatedMachineMapper,
-                               daldeploymentRelatedMachineMapper)
+                               daldeploymentRelatedMachineMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b287582e0a24f338b5824abb61a63380</Hash>
+    <Hash>dbabf2c19b995049632488af9b34ffa9</Hash>
 </Codenesium>*/

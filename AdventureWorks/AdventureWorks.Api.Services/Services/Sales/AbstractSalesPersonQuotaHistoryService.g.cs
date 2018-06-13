@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
                         IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
-                        IBOLSalesPersonQuotaHistoryMapper bolsalesPersonQuotaHistoryMapper,
-                        IDALSalesPersonQuotaHistoryMapper dalsalesPersonQuotaHistoryMapper)
+                        IBOLSalesPersonQuotaHistoryMapper bolSalesPersonQuotaHistoryMapper,
+                        IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
                         this.salesPersonQuotaHistoryModelValidator = salesPersonQuotaHistoryModelValidator;
-                        this.bolSalesPersonQuotaHistoryMapper = bolsalesPersonQuotaHistoryMapper;
-                        this.dalSalesPersonQuotaHistoryMapper = dalsalesPersonQuotaHistoryMapper;
+                        this.bolSalesPersonQuotaHistoryMapper = bolSalesPersonQuotaHistoryMapper;
+                        this.dalSalesPersonQuotaHistoryMapper = dalSalesPersonQuotaHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesPersonQuotaHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesPersonQuotaHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesPersonQuotaHistoryRepository.All(skip, take, orderClause);
+                        var records = await this.salesPersonQuotaHistoryRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a79a2106ccedbf1604f946008e88ea88</Hash>
+    <Hash>882cb4a2c7e34fa9b02f718b2d7385da</Hash>
 </Codenesium>*/

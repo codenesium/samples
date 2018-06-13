@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiChainStatusResponseModel> response = await this.ChainStatusService.All(query.Offset, query.Limit);
+                        List<ApiChainStatusResponseModel> response = await this.ChainStatusService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{chainStatusId}/Chains")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiChainStatusResponseModel>), 200)]
+                public async virtual Task<IActionResult> Chains(int chainStatusId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiChainResponseModel> response = await this.ChainStatusService.Chains(chainStatusId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>56e9bade2496c9956e585382f59066a7</Hash>
+    <Hash>5061645b2b10e0829bd4a1a2f5950d46</Hash>
 </Codenesium>*/

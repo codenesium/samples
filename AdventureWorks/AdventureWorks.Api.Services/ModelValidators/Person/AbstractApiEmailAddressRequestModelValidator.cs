@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiEmailAddressRequestModelValidator: AbstractValidator<ApiEmailAddressRequestModel>
         {
@@ -33,21 +32,18 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void EmailAddressIDRules()
                 {
-                        this.RuleFor(x => x.EmailAddressID).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>30f698e1f091e6478c0e40743870b980</Hash>
+    <Hash>7f9618397ccdc047e96d771daec2ef5e</Hash>
 </Codenesium>*/

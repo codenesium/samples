@@ -17,17 +17,26 @@ namespace FileServiceNS.Api.Services
                         IBucketRepository bucketRepository,
                         IApiBucketRequestModelValidator bucketModelValidator,
                         IBOLBucketMapper bolbucketMapper,
-                        IDALBucketMapper dalbucketMapper)
+                        IDALBucketMapper dalbucketMapper
+                        ,
+                        IBOLFileMapper bolFileMapper,
+                        IDALFileMapper dalFileMapper
+
+                        )
                         : base(logger,
                                bucketRepository,
                                bucketModelValidator,
                                bolbucketMapper,
-                               dalbucketMapper)
+                               dalbucketMapper
+                               ,
+                               bolFileMapper,
+                               dalFileMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>35fca699e97ce4e9f1ad3c159485801d</Hash>
+    <Hash>d95fa231c9aacdf31941003687cb3ecc</Hash>
 </Codenesium>*/

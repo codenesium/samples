@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Proxy")]
+        [Trait("Integration", "Proxy")]
         public class ProxyTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>23a9c05d2cb25dba4fa776b390192339</Hash>
+    <Hash>a683490b30f96de0f8562863c738b1db</Hash>
 </Codenesium>*/

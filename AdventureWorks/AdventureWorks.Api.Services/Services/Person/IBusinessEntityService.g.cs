@@ -19,10 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiBusinessEntityResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiBusinessEntityResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiBusinessEntityResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiPersonResponseModel>> People(int businessEntityID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>efb92b4e7c941eeceee92437f5425d04</Hash>
+    <Hash>561319336813b74fd14ddc1edf81c96f</Hash>
 </Codenesium>*/

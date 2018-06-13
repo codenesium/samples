@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPhoneNumberTypeResponseModel> response = await this.PhoneNumberTypeService.All(query.Offset, query.Limit);
+                        List<ApiPhoneNumberTypeResponseModel> response = await this.PhoneNumberTypeService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{phoneNumberTypeID}/PersonPhones")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPhoneNumberTypeResponseModel>), 200)]
+                public async virtual Task<IActionResult> PersonPhones(int phoneNumberTypeID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPersonPhoneResponseModel> response = await this.PhoneNumberTypeService.PersonPhones(phoneNumberTypeID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>96863c39bcb4576db2d6d6dceb819190</Hash>
+    <Hash>af7aad73213c1dcdb729ebc9b5f707ef</Hash>
 </Codenesium>*/

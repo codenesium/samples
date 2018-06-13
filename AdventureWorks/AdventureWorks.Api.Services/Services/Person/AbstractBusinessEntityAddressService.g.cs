@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IBusinessEntityAddressRepository businessEntityAddressRepository,
                         IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator,
-                        IBOLBusinessEntityAddressMapper bolbusinessEntityAddressMapper,
-                        IDALBusinessEntityAddressMapper dalbusinessEntityAddressMapper)
+                        IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
+                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
+
+                        )
                         : base()
 
                 {
                         this.businessEntityAddressRepository = businessEntityAddressRepository;
                         this.businessEntityAddressModelValidator = businessEntityAddressModelValidator;
-                        this.bolBusinessEntityAddressMapper = bolbusinessEntityAddressMapper;
-                        this.dalBusinessEntityAddressMapper = dalbusinessEntityAddressMapper;
+                        this.bolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
+                        this.dalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.businessEntityAddressRepository.All(skip, take, orderClause);
+                        var records = await this.businessEntityAddressRepository.All(limit, offset, orderClause);
 
                         return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7b0750f44092916a566d60584404b77</Hash>
+    <Hash>027cd0bf43dec318d2173a48260aa912</Hash>
 </Codenesium>*/

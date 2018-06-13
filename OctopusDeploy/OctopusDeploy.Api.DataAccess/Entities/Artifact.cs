@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 public void SetProperties(
-                        DateTime created,
+                        DateTimeOffset created,
                         string environmentId,
                         string filename,
                         string id,
@@ -33,7 +33,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Column("Created", TypeName="datetimeoffset")]
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 [Column("EnvironmentId", TypeName="nvarchar(50)")]
                 public string EnvironmentId { get; private set; }
@@ -60,5 +60,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>16d7a971154245cd727359c36d22d43d</Hash>
+    <Hash>a451bac86b08b98def957f8adfc6bac1</Hash>
 </Codenesium>*/

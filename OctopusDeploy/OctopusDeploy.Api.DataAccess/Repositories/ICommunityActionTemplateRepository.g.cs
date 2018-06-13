@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<CommunityActionTemplate> Get(string id);
 
-                Task<List<CommunityActionTemplate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<CommunityActionTemplate>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<CommunityActionTemplate> GetExternalId(Guid externalId);
                 Task<CommunityActionTemplate> GetName(string name);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d518765e174901fa9447e16a5500726</Hash>
+    <Hash>7647c3dcddbab761d8e60b6e07c4febd</Hash>
 </Codenesium>*/

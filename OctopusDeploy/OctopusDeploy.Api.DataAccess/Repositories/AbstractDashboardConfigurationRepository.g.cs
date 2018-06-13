@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DashboardConfiguration>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<DashboardConfiguration>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<DashboardConfiguration> Get(string id)
@@ -75,31 +75,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<DashboardConfiguration>> Where(Expression<Func<DashboardConfiguration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<DashboardConfiguration>> Where(Expression<Func<DashboardConfiguration, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<DashboardConfiguration> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<DashboardConfiguration> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<DashboardConfiguration>> SearchLinqEF(Expression<Func<DashboardConfiguration, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DashboardConfiguration>> SearchLinqEF(Expression<Func<DashboardConfiguration, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DashboardConfiguration.Id)} ASC";
                         }
 
-                        return await this.Context.Set<DashboardConfiguration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DashboardConfiguration>();
+                        return await this.Context.Set<DashboardConfiguration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DashboardConfiguration>();
                 }
 
-                private async Task<List<DashboardConfiguration>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DashboardConfiguration>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DashboardConfiguration.Id)} ASC";
                         }
 
-                        return await this.Context.Set<DashboardConfiguration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DashboardConfiguration>();
+                        return await this.Context.Set<DashboardConfiguration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DashboardConfiguration>();
                 }
 
                 private async Task<DashboardConfiguration> GetById(string id)
@@ -112,5 +112,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5c881d84e3a4cc0721827019ea97fc9a</Hash>
+    <Hash>3273dec2a4e75f3fdb19fcbfcead3012</Hash>
 </Codenesium>*/

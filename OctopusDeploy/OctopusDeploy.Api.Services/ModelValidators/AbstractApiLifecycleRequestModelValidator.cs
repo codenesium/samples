@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public ILifecycleRepository LifecycleRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -47,7 +46,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Lifecycle record = await this.LifecycleRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -60,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0b3744411bc93894c741c1be2c5e09b</Hash>
+    <Hash>624aa063a80362a65c6380e79f2a50c0</Hash>
 </Codenesium>*/

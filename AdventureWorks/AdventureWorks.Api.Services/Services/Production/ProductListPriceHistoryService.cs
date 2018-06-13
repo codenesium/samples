@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IProductListPriceHistoryRepository productListPriceHistoryRepository,
                         IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
                         IBOLProductListPriceHistoryMapper bolproductListPriceHistoryMapper,
-                        IDALProductListPriceHistoryMapper dalproductListPriceHistoryMapper)
+                        IDALProductListPriceHistoryMapper dalproductListPriceHistoryMapper
+
+                        )
                         : base(logger,
                                productListPriceHistoryRepository,
                                productListPriceHistoryModelValidator,
                                bolproductListPriceHistoryMapper,
-                               dalproductListPriceHistoryMapper)
+                               dalproductListPriceHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ac6fe0c541653fffd129d720b5037ef1</Hash>
+    <Hash>64973a4b3c2e630c508294f2d07b8657</Hash>
 </Codenesium>*/

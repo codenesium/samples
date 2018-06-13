@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IPipelineStepNoteRepository pipelineStepNoteRepository,
                         IApiPipelineStepNoteRequestModelValidator pipelineStepNoteModelValidator,
-                        IBOLPipelineStepNoteMapper bolpipelineStepNoteMapper,
-                        IDALPipelineStepNoteMapper dalpipelineStepNoteMapper)
+                        IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
+                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
+
+                        )
                         : base()
 
                 {
                         this.pipelineStepNoteRepository = pipelineStepNoteRepository;
                         this.pipelineStepNoteModelValidator = pipelineStepNoteModelValidator;
-                        this.bolPipelineStepNoteMapper = bolpipelineStepNoteMapper;
-                        this.dalPipelineStepNoteMapper = dalpipelineStepNoteMapper;
+                        this.bolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
+                        this.dalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPipelineStepNoteResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPipelineStepNoteResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.pipelineStepNoteRepository.All(skip, take, orderClause);
+                        var records = await this.pipelineStepNoteRepository.All(limit, offset, orderClause);
 
                         return this.bolPipelineStepNoteMapper.MapBOToModel(this.dalPipelineStepNoteMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84cf04c47a33e3230d08461625ccd162</Hash>
+    <Hash>541922db266e36ebd5005004eca1da76</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<EmployeeDepartmentHistory> Get(int businessEntityID);
 
-                Task<List<EmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<EmployeeDepartmentHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<EmployeeDepartmentHistory>> GetDepartmentID(short departmentID);
                 Task<List<EmployeeDepartmentHistory>> GetShiftID(int shiftID);
@@ -23,5 +23,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8aad88e40b771d56179b5de82e13cfbf</Hash>
+    <Hash>3f45fa83dc2df06d896ba9e7f59b21a0</Hash>
 </Codenesium>*/

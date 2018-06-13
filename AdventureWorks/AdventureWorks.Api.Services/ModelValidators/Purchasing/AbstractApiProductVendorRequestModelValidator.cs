@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiProductVendorRequestModelValidator: AbstractValidator<ApiProductVendorRequestModel>
         {
@@ -28,12 +27,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void AverageLeadTimeRules()
                 {
-                        this.RuleFor(x => x.AverageLeadTime).NotNull();
                 }
 
                 public virtual void BusinessEntityIDRules()
                 {
-                        this.RuleFor(x => x.BusinessEntityID).NotNull();
                 }
 
                 public virtual void LastReceiptCostRules()
@@ -46,17 +43,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void MaxOrderQtyRules()
                 {
-                        this.RuleFor(x => x.MaxOrderQty).NotNull();
                 }
 
                 public virtual void MinOrderQtyRules()
                 {
-                        this.RuleFor(x => x.MinOrderQty).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void OnOrderQtyRules()
@@ -65,7 +59,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void StandardPriceRules()
                 {
-                        this.RuleFor(x => x.StandardPrice).NotNull();
                 }
 
                 public virtual void UnitMeasureCodeRules()
@@ -77,5 +70,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9bf23bd938690ecf789103ed3b37a180</Hash>
+    <Hash>eb3b1a6b49e4ab3f0ec1a263c39aea93</Hash>
 </Codenesium>*/

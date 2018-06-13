@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<UnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<UnitMeasure> Get(string unitMeasureCode)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<UnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<UnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<UnitMeasure> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<UnitMeasure> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<UnitMeasure>> SearchLinqEF(Expression<Func<UnitMeasure, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<UnitMeasure>> SearchLinqEF(Expression<Func<UnitMeasure, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(UnitMeasure.UnitMeasureCode)} ASC";
                         }
 
-                        return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<UnitMeasure>();
+                        return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
                 }
 
-                private async Task<List<UnitMeasure>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<UnitMeasure>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(UnitMeasure.UnitMeasureCode)} ASC";
                         }
 
-                        return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<UnitMeasure>();
+                        return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
                 }
 
                 private async Task<UnitMeasure> GetById(string unitMeasureCode)
@@ -115,9 +115,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<BillOfMaterials>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BillOfMaterials>().Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
+                }
+                public async virtual Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Product>().Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b908d98b67fbd4e21d285000c4d406bb</Hash>
+    <Hash>bd245aa8ef46c04d5fb38510b75454a3</Hash>
 </Codenesium>*/

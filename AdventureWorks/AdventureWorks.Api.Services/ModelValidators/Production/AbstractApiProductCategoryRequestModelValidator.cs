@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiProductCategoryRequestModelValidator: AbstractValidator<ApiProductCategoryRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public IProductCategoryRepository ProductCategoryRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -41,14 +39,13 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiProductCategoryRequestModel model,  CancellationToken cancellationToken)
                 {
                         ProductCategory record = await this.ProductCategoryRepository.GetName(model.Name);
 
-                        if (record == null || record.ProductCategoryID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ProductCategoryID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -61,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f47d070d2fb214752543b482ad417c9</Hash>
+    <Hash>aec9987e00cdabbda938b028d9e421ee</Hash>
 </Codenesium>*/

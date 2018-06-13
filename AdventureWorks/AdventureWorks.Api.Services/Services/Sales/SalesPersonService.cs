@@ -17,17 +17,44 @@ namespace AdventureWorksNS.Api.Services
                         ISalesPersonRepository salesPersonRepository,
                         IApiSalesPersonRequestModelValidator salesPersonModelValidator,
                         IBOLSalesPersonMapper bolsalesPersonMapper,
-                        IDALSalesPersonMapper dalsalesPersonMapper)
+                        IDALSalesPersonMapper dalsalesPersonMapper
+                        ,
+                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
+                        ,
+                        IBOLSalesPersonQuotaHistoryMapper bolSalesPersonQuotaHistoryMapper,
+                        IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper
+                        ,
+                        IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
+                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
+                        ,
+                        IBOLStoreMapper bolStoreMapper,
+                        IDALStoreMapper dalStoreMapper
+
+                        )
                         : base(logger,
                                salesPersonRepository,
                                salesPersonModelValidator,
                                bolsalesPersonMapper,
-                               dalsalesPersonMapper)
+                               dalsalesPersonMapper
+                               ,
+                               bolSalesOrderHeaderMapper,
+                               dalSalesOrderHeaderMapper
+                               ,
+                               bolSalesPersonQuotaHistoryMapper,
+                               dalSalesPersonQuotaHistoryMapper
+                               ,
+                               bolSalesTerritoryHistoryMapper,
+                               dalSalesTerritoryHistoryMapper
+                               ,
+                               bolStoreMapper,
+                               dalStoreMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>51c9f57f68dece9e743c936ff151ba78</Hash>
+    <Hash>036f1ca6933275c4023dd100a873ec66</Hash>
 </Codenesium>*/

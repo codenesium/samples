@@ -17,17 +17,44 @@ namespace AdventureWorksNS.Api.Services
                         ISalesTerritoryRepository salesTerritoryRepository,
                         IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
                         IBOLSalesTerritoryMapper bolsalesTerritoryMapper,
-                        IDALSalesTerritoryMapper dalsalesTerritoryMapper)
+                        IDALSalesTerritoryMapper dalsalesTerritoryMapper
+                        ,
+                        IBOLCustomerMapper bolCustomerMapper,
+                        IDALCustomerMapper dalCustomerMapper
+                        ,
+                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
+                        ,
+                        IBOLSalesPersonMapper bolSalesPersonMapper,
+                        IDALSalesPersonMapper dalSalesPersonMapper
+                        ,
+                        IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
+                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
+
+                        )
                         : base(logger,
                                salesTerritoryRepository,
                                salesTerritoryModelValidator,
                                bolsalesTerritoryMapper,
-                               dalsalesTerritoryMapper)
+                               dalsalesTerritoryMapper
+                               ,
+                               bolCustomerMapper,
+                               dalCustomerMapper
+                               ,
+                               bolSalesOrderHeaderMapper,
+                               dalSalesOrderHeaderMapper
+                               ,
+                               bolSalesPersonMapper,
+                               dalSalesPersonMapper
+                               ,
+                               bolSalesTerritoryHistoryMapper,
+                               dalSalesTerritoryHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ba493f96de9e5a052ae830d6264deb15</Hash>
+    <Hash>34bdf4d57704bbdefdc4cf58f4d606a5</Hash>
 </Codenesium>*/

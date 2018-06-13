@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ActionTemplate>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ActionTemplate>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ActionTemplate> Get(string id)
@@ -82,31 +82,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<ActionTemplate>> Where(Expression<Func<ActionTemplate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ActionTemplate>> Where(Expression<Func<ActionTemplate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ActionTemplate> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ActionTemplate> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ActionTemplate>> SearchLinqEF(Expression<Func<ActionTemplate, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ActionTemplate>> SearchLinqEF(Expression<Func<ActionTemplate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ActionTemplate.Id)} ASC";
                         }
 
-                        return await this.Context.Set<ActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ActionTemplate>();
+                        return await this.Context.Set<ActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ActionTemplate>();
                 }
 
-                private async Task<List<ActionTemplate>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ActionTemplate>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ActionTemplate.Id)} ASC";
                         }
 
-                        return await this.Context.Set<ActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ActionTemplate>();
+                        return await this.Context.Set<ActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ActionTemplate>();
                 }
 
                 private async Task<ActionTemplate> GetById(string id)
@@ -119,5 +119,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a156d1633ae39ba4d0a58a3b8a16efc8</Hash>
+    <Hash>46d9518e2869701e540c3908c8148c78</Hash>
 </Codenesium>*/

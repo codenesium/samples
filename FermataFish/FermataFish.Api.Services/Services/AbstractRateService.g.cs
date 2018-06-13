@@ -28,21 +28,23 @@ namespace FermataFishNS.Api.Services
                         ILogger logger,
                         IRateRepository rateRepository,
                         IApiRateRequestModelValidator rateModelValidator,
-                        IBOLRateMapper bolrateMapper,
-                        IDALRateMapper dalrateMapper)
+                        IBOLRateMapper bolRateMapper,
+                        IDALRateMapper dalRateMapper
+
+                        )
                         : base()
 
                 {
                         this.rateRepository = rateRepository;
                         this.rateModelValidator = rateModelValidator;
-                        this.bolRateMapper = bolrateMapper;
-                        this.dalRateMapper = dalrateMapper;
+                        this.bolRateMapper = bolRateMapper;
+                        this.dalRateMapper = dalRateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiRateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.rateRepository.All(skip, take, orderClause);
+                        var records = await this.rateRepository.All(limit, offset, orderClause);
 
                         return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4267037bfc7159e49b4bc8bc9fe31d7c</Hash>
+    <Hash>3739218fe979c993d407df66a04caf41</Hash>
 </Codenesium>*/

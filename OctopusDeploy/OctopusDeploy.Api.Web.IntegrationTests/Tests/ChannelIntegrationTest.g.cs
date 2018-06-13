@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Channel")]
+        [Trait("Integration", "Channel")]
         public class ChannelTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a70ddd2e5a9e06d6c725bf81ca89f398</Hash>
+    <Hash>02c4447f83387ee4153b994c986d51f8</Hash>
 </Codenesium>*/

@@ -17,17 +17,38 @@ namespace AdventureWorksNS.Api.Services
                         IEmployeeRepository employeeRepository,
                         IApiEmployeeRequestModelValidator employeeModelValidator,
                         IBOLEmployeeMapper bolemployeeMapper,
-                        IDALEmployeeMapper dalemployeeMapper)
+                        IDALEmployeeMapper dalemployeeMapper
+                        ,
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+                        ,
+                        IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
+                        IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper
+                        ,
+                        IBOLJobCandidateMapper bolJobCandidateMapper,
+                        IDALJobCandidateMapper dalJobCandidateMapper
+
+                        )
                         : base(logger,
                                employeeRepository,
                                employeeModelValidator,
                                bolemployeeMapper,
-                               dalemployeeMapper)
+                               dalemployeeMapper
+                               ,
+                               bolEmployeeDepartmentHistoryMapper,
+                               dalEmployeeDepartmentHistoryMapper
+                               ,
+                               bolEmployeePayHistoryMapper,
+                               dalEmployeePayHistoryMapper
+                               ,
+                               bolJobCandidateMapper,
+                               dalJobCandidateMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6ca8fd8bd0d73c4fca5180371a55ee54</Hash>
+    <Hash>2c747b213f3d79e0d1355624c0ebe62d</Hash>
 </Codenesium>*/

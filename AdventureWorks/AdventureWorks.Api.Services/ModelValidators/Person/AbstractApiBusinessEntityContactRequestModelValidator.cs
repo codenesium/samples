@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiBusinessEntityContactRequestModelValidator: AbstractValidator<ApiBusinessEntityContactRequestModel>
         {
@@ -28,26 +27,22 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ContactTypeIDRules()
                 {
-                        this.RuleFor(x => x.ContactTypeID).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PersonIDRules()
                 {
-                        this.RuleFor(x => x.PersonID).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f0726ef02947a281e13787a5481358cb</Hash>
+    <Hash>e18431e5ad0e9652a8a1eefe8148f2e6</Hash>
 </Codenesium>*/

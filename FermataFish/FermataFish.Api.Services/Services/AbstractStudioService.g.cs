@@ -22,27 +22,103 @@ namespace FermataFishNS.Api.Services
 
                 private IDALStudioMapper dalStudioMapper;
 
+                private IBOLAdminMapper bolAdminMapper;
+
+                private IDALAdminMapper dalAdminMapper;
+                private IBOLFamilyMapper bolFamilyMapper;
+
+                private IDALFamilyMapper dalFamilyMapper;
+                private IBOLLessonMapper bolLessonMapper;
+
+                private IDALLessonMapper dalLessonMapper;
+                private IBOLLessonStatusMapper bolLessonStatusMapper;
+
+                private IDALLessonStatusMapper dalLessonStatusMapper;
+                private IBOLSpaceMapper bolSpaceMapper;
+
+                private IDALSpaceMapper dalSpaceMapper;
+                private IBOLSpaceFeatureMapper bolSpaceFeatureMapper;
+
+                private IDALSpaceFeatureMapper dalSpaceFeatureMapper;
+                private IBOLStudentMapper bolStudentMapper;
+
+                private IDALStudentMapper dalStudentMapper;
+                private IBOLTeacherMapper bolTeacherMapper;
+
+                private IDALTeacherMapper dalTeacherMapper;
+                private IBOLTeacherSkillMapper bolTeacherSkillMapper;
+
+                private IDALTeacherSkillMapper dalTeacherSkillMapper;
+
                 private ILogger logger;
 
                 public AbstractStudioService(
                         ILogger logger,
                         IStudioRepository studioRepository,
                         IApiStudioRequestModelValidator studioModelValidator,
-                        IBOLStudioMapper bolstudioMapper,
-                        IDALStudioMapper dalstudioMapper)
+                        IBOLStudioMapper bolStudioMapper,
+                        IDALStudioMapper dalStudioMapper
+
+                        ,
+                        IBOLAdminMapper bolAdminMapper,
+                        IDALAdminMapper dalAdminMapper
+                        ,
+                        IBOLFamilyMapper bolFamilyMapper,
+                        IDALFamilyMapper dalFamilyMapper
+                        ,
+                        IBOLLessonMapper bolLessonMapper,
+                        IDALLessonMapper dalLessonMapper
+                        ,
+                        IBOLLessonStatusMapper bolLessonStatusMapper,
+                        IDALLessonStatusMapper dalLessonStatusMapper
+                        ,
+                        IBOLSpaceMapper bolSpaceMapper,
+                        IDALSpaceMapper dalSpaceMapper
+                        ,
+                        IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
+                        IDALSpaceFeatureMapper dalSpaceFeatureMapper
+                        ,
+                        IBOLStudentMapper bolStudentMapper,
+                        IDALStudentMapper dalStudentMapper
+                        ,
+                        IBOLTeacherMapper bolTeacherMapper,
+                        IDALTeacherMapper dalTeacherMapper
+                        ,
+                        IBOLTeacherSkillMapper bolTeacherSkillMapper,
+                        IDALTeacherSkillMapper dalTeacherSkillMapper
+
+                        )
                         : base()
 
                 {
                         this.studioRepository = studioRepository;
                         this.studioModelValidator = studioModelValidator;
-                        this.bolStudioMapper = bolstudioMapper;
-                        this.dalStudioMapper = dalstudioMapper;
+                        this.bolStudioMapper = bolStudioMapper;
+                        this.dalStudioMapper = dalStudioMapper;
+                        this.bolAdminMapper = bolAdminMapper;
+                        this.dalAdminMapper = dalAdminMapper;
+                        this.bolFamilyMapper = bolFamilyMapper;
+                        this.dalFamilyMapper = dalFamilyMapper;
+                        this.bolLessonMapper = bolLessonMapper;
+                        this.dalLessonMapper = dalLessonMapper;
+                        this.bolLessonStatusMapper = bolLessonStatusMapper;
+                        this.dalLessonStatusMapper = dalLessonStatusMapper;
+                        this.bolSpaceMapper = bolSpaceMapper;
+                        this.dalSpaceMapper = dalSpaceMapper;
+                        this.bolSpaceFeatureMapper = bolSpaceFeatureMapper;
+                        this.dalSpaceFeatureMapper = dalSpaceFeatureMapper;
+                        this.bolStudentMapper = bolStudentMapper;
+                        this.dalStudentMapper = dalStudentMapper;
+                        this.bolTeacherMapper = bolTeacherMapper;
+                        this.dalTeacherMapper = dalTeacherMapper;
+                        this.bolTeacherSkillMapper = bolTeacherSkillMapper;
+                        this.dalTeacherSkillMapper = dalTeacherSkillMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStudioResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStudioResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.studioRepository.All(skip, take, orderClause);
+                        var records = await this.studioRepository.All(limit, offset, orderClause);
 
                         return this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(records));
                 }
@@ -96,9 +172,64 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiAdminResponseModel>> Admins(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Admin> records = await this.studioRepository.Admins(studioId, limit, offset);
+
+                        return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiFamilyResponseModel>> Families(int id, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Family> records = await this.studioRepository.Families(id, limit, offset);
+
+                        return this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiLessonResponseModel>> Lessons(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Lesson> records = await this.studioRepository.Lessons(studioId, limit, offset);
+
+                        return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiLessonStatusResponseModel>> LessonStatus(int id, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<LessonStatus> records = await this.studioRepository.LessonStatus(id, limit, offset);
+
+                        return this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiSpaceResponseModel>> Spaces(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Space> records = await this.studioRepository.Spaces(studioId, limit, offset);
+
+                        return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatures(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SpaceFeature> records = await this.studioRepository.SpaceFeatures(studioId, limit, offset);
+
+                        return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiStudentResponseModel>> Students(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Student> records = await this.studioRepository.Students(studioId, limit, offset);
+
+                        return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiTeacherResponseModel>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Teacher> records = await this.studioRepository.Teachers(studioId, limit, offset);
+
+                        return this.bolTeacherMapper.MapBOToModel(this.dalTeacherMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<TeacherSkill> records = await this.studioRepository.TeacherSkills(studioId, limit, offset);
+
+                        return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cb5eb148f9575b053beea3c4998f71ab</Hash>
+    <Hash>430e352394289bf558beae12f4711128</Hash>
 </Codenesium>*/

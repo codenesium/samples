@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiStudioResponseModel> response = await this.StudioService.All(query.Offset, query.Limit);
+                        List<ApiStudioResponseModel> response = await this.StudioService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,127 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{studioId}/Admins")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> Admins(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiAdminResponseModel> response = await this.StudioService.Admins(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{id}/Families")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> Families(int id, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiFamilyResponseModel> response = await this.StudioService.Families(id, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{studioId}/Lessons")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> Lessons(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiLessonResponseModel> response = await this.StudioService.Lessons(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{id}/LessonStatus")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> LessonStatus(int id, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiLessonStatusResponseModel> response = await this.StudioService.LessonStatus(id, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{studioId}/Spaces")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> Spaces(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSpaceResponseModel> response = await this.StudioService.Spaces(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{studioId}/SpaceFeatures")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> SpaceFeatures(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSpaceFeatureResponseModel> response = await this.StudioService.SpaceFeatures(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{studioId}/Students")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> Students(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiStudentResponseModel> response = await this.StudioService.Students(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{studioId}/Teachers")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> Teachers(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiTeacherResponseModel> response = await this.StudioService.Teachers(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{studioId}/TeacherSkills")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStudioResponseModel>), 200)]
+                public async virtual Task<IActionResult> TeacherSkills(int studioId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiTeacherSkillResponseModel> response = await this.StudioService.TeacherSkills(studioId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>53e9e1bbdaac100556dc7a27030d3acb</Hash>
+    <Hash>7925e21c6dc93ece7ba6afb6cf391d5e</Hash>
 </Codenesium>*/

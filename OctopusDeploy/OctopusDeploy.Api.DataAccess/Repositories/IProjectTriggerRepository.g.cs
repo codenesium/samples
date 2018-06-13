@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<ProjectTrigger> Get(string id);
 
-                Task<List<ProjectTrigger>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<ProjectTrigger> GetProjectIdName(string projectId, string name);
                 Task<List<ProjectTrigger>> GetProjectId(string projectId);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58e2b40b33b62b7f4a6fe24b0c1acec5</Hash>
+    <Hash>f0d2cc7cd8d4f067b843c1daf6b2cc2b</Hash>
 </Codenesium>*/

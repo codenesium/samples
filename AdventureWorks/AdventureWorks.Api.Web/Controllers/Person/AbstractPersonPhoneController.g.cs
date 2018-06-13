@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.All(query.Offset, query.Limit);
+                        List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3bf96326deab49f6f6ced2fd03a807d2</Hash>
+    <Hash>0d9d64ad2cbd8b63d7a0130fd357ba87</Hash>
 </Codenesium>*/

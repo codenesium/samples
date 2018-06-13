@@ -15,10 +15,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<KeyAllocation> Get(string collectionName);
 
-                Task<List<KeyAllocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<KeyAllocation>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>4255d7d9ce26562a8a5c02a19be559ab</Hash>
+    <Hash>15c56fe1ccd1b0f570c92b8a9ed0cb45</Hash>
 </Codenesium>*/

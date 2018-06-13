@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiAddressRequestModelValidator: AbstractValidator<ApiAddressRequestModel>
         {
@@ -49,7 +48,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PostalCodeRules()
@@ -61,12 +59,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void StateProvinceIDRules()
                 {
-                        this.RuleFor(x => x.StateProvinceID).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x ?.StateProvinceID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.StateProvinceID));
                 }
 
@@ -74,7 +70,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Address record = await this.AddressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(model.AddressLine1, model.AddressLine2, model.City, model.StateProvinceID, model.PostalCode);
 
-                        if (record == null || record.AddressID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.AddressID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -87,5 +83,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52c14d04e4c0f98ab30220255bb42200</Hash>
+    <Hash>de2a77ebfa7406c708c067433694b024</Hash>
 </Codenesium>*/

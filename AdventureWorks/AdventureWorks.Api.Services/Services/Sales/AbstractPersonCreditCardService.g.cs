@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IPersonCreditCardRepository personCreditCardRepository,
                         IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator,
-                        IBOLPersonCreditCardMapper bolpersonCreditCardMapper,
-                        IDALPersonCreditCardMapper dalpersonCreditCardMapper)
+                        IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
+                        IDALPersonCreditCardMapper dalPersonCreditCardMapper
+
+                        )
                         : base()
 
                 {
                         this.personCreditCardRepository = personCreditCardRepository;
                         this.personCreditCardModelValidator = personCreditCardModelValidator;
-                        this.bolPersonCreditCardMapper = bolpersonCreditCardMapper;
-                        this.dalPersonCreditCardMapper = dalpersonCreditCardMapper;
+                        this.bolPersonCreditCardMapper = bolPersonCreditCardMapper;
+                        this.dalPersonCreditCardMapper = dalPersonCreditCardMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPersonCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPersonCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.personCreditCardRepository.All(skip, take, orderClause);
+                        var records = await this.personCreditCardRepository.All(limit, offset, orderClause);
 
                         return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f065c9236f95cf31e958ef6b8be97ca1</Hash>
+    <Hash>8e28dfd591909b0a2aa54797882afb20</Hash>
 </Codenesium>*/

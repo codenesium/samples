@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolteamMapper,
-                        IDALTeamMapper dalteamMapper)
+                        IDALTeamMapper dalteamMapper
+
+                        )
                         : base(logger,
                                teamRepository,
                                teamModelValidator,
                                bolteamMapper,
-                               dalteamMapper)
+                               dalteamMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e044d07ba608fa72b916861b7b447484</Hash>
+    <Hash>61eaf610f6745f3cdf383650f1c5ca8a</Hash>
 </Codenesium>*/

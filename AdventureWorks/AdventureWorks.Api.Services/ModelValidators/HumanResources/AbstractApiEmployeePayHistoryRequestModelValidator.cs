@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiEmployeePayHistoryRequestModelValidator: AbstractValidator<ApiEmployeePayHistoryRequestModel>
         {
@@ -28,26 +27,22 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PayFrequencyRules()
                 {
-                        this.RuleFor(x => x.PayFrequency).NotNull();
                 }
 
                 public virtual void RateRules()
                 {
-                        this.RuleFor(x => x.Rate).NotNull();
                 }
 
                 public virtual void RateChangeDateRules()
                 {
-                        this.RuleFor(x => x.RateChangeDate).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>95fe120b9375626648bbe315783e5688</Hash>
+    <Hash>2869ec546da2c11924073b0767494243</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPasswordResponseModel> response = await this.PasswordService.All(query.Offset, query.Limit);
+                        List<ApiPasswordResponseModel> response = await this.PasswordService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6a53a224c01769cc558604b3b42c693a</Hash>
+    <Hash>2c8d580a9707ffeccae3373634f2019d</Hash>
 </Codenesium>*/

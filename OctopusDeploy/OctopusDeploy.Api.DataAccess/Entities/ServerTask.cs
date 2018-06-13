@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 public void SetProperties(
-                        Nullable<DateTime> completedTime,
+                        Nullable<DateTimeOffset> completedTime,
                         string concurrencyTag,
                         string description,
                         int durationSeconds,
@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         string jSON,
                         string name,
                         string projectId,
-                        DateTime queueTime,
+                        DateTimeOffset queueTime,
                         string serverNodeId,
-                        Nullable<DateTime> startTime,
+                        Nullable<DateTimeOffset> startTime,
                         string state,
                         string tenantId)
                 {
@@ -51,7 +51,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Column("CompletedTime", TypeName="datetimeoffset")]
-                public Nullable<DateTime> CompletedTime { get; private set; }
+                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
                 [Column("ConcurrencyTag", TypeName="nvarchar(100)")]
                 public string ConcurrencyTag { get; private set; }
@@ -88,13 +88,13 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string ProjectId { get; private set; }
 
                 [Column("QueueTime", TypeName="datetimeoffset")]
-                public DateTime QueueTime { get; private set; }
+                public DateTimeOffset QueueTime { get; private set; }
 
                 [Column("ServerNodeId", TypeName="nvarchar(250)")]
                 public string ServerNodeId { get; private set; }
 
                 [Column("StartTime", TypeName="datetimeoffset")]
-                public Nullable<DateTime> StartTime { get; private set; }
+                public Nullable<DateTimeOffset> StartTime { get; private set; }
 
                 [Column("State", TypeName="nvarchar(50)")]
                 public string State { get; private set; }
@@ -105,5 +105,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>15b05f56c2a2752eec384e7a9e86b419</Hash>
+    <Hash>8e94e272554822f7f979c431eea259fc</Hash>
 </Codenesium>*/

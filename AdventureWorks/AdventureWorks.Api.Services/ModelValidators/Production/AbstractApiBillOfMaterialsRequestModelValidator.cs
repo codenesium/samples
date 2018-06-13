@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiBillOfMaterialsRequestModelValidator: AbstractValidator<ApiBillOfMaterialsRequestModel>
         {
@@ -29,12 +28,10 @@ namespace AdventureWorksNS.Api.Services
                 public IBillOfMaterialsRepository BillOfMaterialsRepository { get; set; }
                 public virtual void BOMLevelRules()
                 {
-                        this.RuleFor(x => x.BOMLevel).NotNull();
                 }
 
                 public virtual void ComponentIDRules()
                 {
-                        this.RuleFor(x => x.ComponentID).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ComponentID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.ComponentID));
                 }
 
@@ -44,12 +41,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PerAssemblyQtyRules()
                 {
-                        this.RuleFor(x => x.PerAssemblyQty).NotNull();
                 }
 
                 public virtual void ProductAssemblyIDRules()
@@ -59,7 +54,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void StartDateRules()
                 {
-                        this.RuleFor(x => x.StartDate).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.StartDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.StartDate));
                 }
 
@@ -73,7 +67,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         BillOfMaterials record = await this.BillOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID, model.ComponentID, model.StartDate);
 
-                        if (record == null || record.BillOfMaterialsID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.BillOfMaterialsID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -86,5 +80,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36b362af7e587ee89d01a89be9588f43</Hash>
+    <Hash>85209a48279146ae55220e5b7f0545e4</Hash>
 </Codenesium>*/

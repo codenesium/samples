@@ -22,27 +22,47 @@ namespace FermataFishNS.Api.Services
 
                 private IDALTeacherMapper dalTeacherMapper;
 
+                private IBOLRateMapper bolRateMapper;
+
+                private IDALRateMapper dalRateMapper;
+                private IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper;
+
+                private IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper;
+
                 private ILogger logger;
 
                 public AbstractTeacherService(
                         ILogger logger,
                         ITeacherRepository teacherRepository,
                         IApiTeacherRequestModelValidator teacherModelValidator,
-                        IBOLTeacherMapper bolteacherMapper,
-                        IDALTeacherMapper dalteacherMapper)
+                        IBOLTeacherMapper bolTeacherMapper,
+                        IDALTeacherMapper dalTeacherMapper
+
+                        ,
+                        IBOLRateMapper bolRateMapper,
+                        IDALRateMapper dalRateMapper
+                        ,
+                        IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
+                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
+
+                        )
                         : base()
 
                 {
                         this.teacherRepository = teacherRepository;
                         this.teacherModelValidator = teacherModelValidator;
-                        this.bolTeacherMapper = bolteacherMapper;
-                        this.dalTeacherMapper = dalteacherMapper;
+                        this.bolTeacherMapper = bolTeacherMapper;
+                        this.dalTeacherMapper = dalTeacherMapper;
+                        this.bolRateMapper = bolRateMapper;
+                        this.dalRateMapper = dalRateMapper;
+                        this.bolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
+                        this.dalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTeacherResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTeacherResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.teacherRepository.All(skip, take, orderClause);
+                        var records = await this.teacherRepository.All(limit, offset, orderClause);
 
                         return this.bolTeacherMapper.MapBOToModel(this.dalTeacherMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiRateResponseModel>> Rates(int teacherId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Rate> records = await this.teacherRepository.Rates(teacherId, limit, offset);
+
+                        return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkills(int teacherId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<TeacherXTeacherSkill> records = await this.teacherRepository.TeacherXTeacherSkills(teacherId, limit, offset);
+
+                        return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2916ba8893dd30200e325c0c1c5adc6c</Hash>
+    <Hash>d698c742eb01fea77045637409912d84</Hash>
 </Codenesium>*/

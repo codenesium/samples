@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IConfigurationRepository configurationRepository,
                         IApiConfigurationRequestModelValidator configurationModelValidator,
                         IBOLConfigurationMapper bolconfigurationMapper,
-                        IDALConfigurationMapper dalconfigurationMapper)
+                        IDALConfigurationMapper dalconfigurationMapper
+
+                        )
                         : base(logger,
                                configurationRepository,
                                configurationModelValidator,
                                bolconfigurationMapper,
-                               dalconfigurationMapper)
+                               dalconfigurationMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>edd642bc36d40cc0daec3811a1328bf8</Hash>
+    <Hash>e85465a6e6d32ae9e482c5f05ff433de</Hash>
 </Codenesium>*/

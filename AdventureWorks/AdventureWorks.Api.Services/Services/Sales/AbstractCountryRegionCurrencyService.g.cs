@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
                         IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
-                        IBOLCountryRegionCurrencyMapper bolcountryRegionCurrencyMapper,
-                        IDALCountryRegionCurrencyMapper dalcountryRegionCurrencyMapper)
+                        IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper,
+                        IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper
+
+                        )
                         : base()
 
                 {
                         this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
                         this.countryRegionCurrencyModelValidator = countryRegionCurrencyModelValidator;
-                        this.bolCountryRegionCurrencyMapper = bolcountryRegionCurrencyMapper;
-                        this.dalCountryRegionCurrencyMapper = dalcountryRegionCurrencyMapper;
+                        this.bolCountryRegionCurrencyMapper = bolCountryRegionCurrencyMapper;
+                        this.dalCountryRegionCurrencyMapper = dalCountryRegionCurrencyMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.countryRegionCurrencyRepository.All(skip, take, orderClause);
+                        var records = await this.countryRegionCurrencyRepository.All(limit, offset, orderClause);
 
                         return this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0ad9c75c99a52d193dc2f0cc970053c</Hash>
+    <Hash>eca2ff103728bb5429ee78e5fad1707d</Hash>
 </Codenesium>*/

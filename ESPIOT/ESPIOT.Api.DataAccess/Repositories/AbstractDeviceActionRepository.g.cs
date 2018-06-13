@@ -25,9 +25,9 @@ namespace ESPIOTNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DeviceAction>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<DeviceAction>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<DeviceAction> Get(int id)
@@ -75,38 +75,38 @@ namespace ESPIOTNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<DeviceAction>> GetDeviceId(int deviceId)
+                public async Task<List<DeviceAction>> ByDeviceId(int deviceId)
                 {
                         var records = await this.SearchLinqEF(x => x.DeviceId == deviceId);
 
                         return records;
                 }
 
-                protected async Task<List<DeviceAction>> Where(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<DeviceAction>> Where(Expression<Func<DeviceAction, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<DeviceAction> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<DeviceAction> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<DeviceAction>> SearchLinqEF(Expression<Func<DeviceAction, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DeviceAction>> SearchLinqEF(Expression<Func<DeviceAction, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DeviceAction.Id)} ASC";
                         }
 
-                        return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeviceAction>();
+                        return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
                 }
 
-                private async Task<List<DeviceAction>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<DeviceAction>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(DeviceAction.Id)} ASC";
                         }
 
-                        return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<DeviceAction>();
+                        return await this.Context.Set<DeviceAction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeviceAction>();
                 }
 
                 private async Task<DeviceAction> GetById(int id)
@@ -119,5 +119,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>24f7d40b00e948580feeb60a7a765675</Hash>
+    <Hash>83d394b32ba1a5f9239beca3ca0ade11</Hash>
 </Codenesium>*/

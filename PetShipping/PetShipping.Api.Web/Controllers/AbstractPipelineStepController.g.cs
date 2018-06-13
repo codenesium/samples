@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPipelineStepResponseModel> response = await this.PipelineStepService.All(query.Offset, query.Limit);
+                        List<ApiPipelineStepResponseModel> response = await this.PipelineStepService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,75 @@ namespace PetShippingNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{pipelineStepId}/HandlerPipelineSteps")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+                public async virtual Task<IActionResult> HandlerPipelineSteps(int pipelineStepId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiHandlerPipelineStepResponseModel> response = await this.PipelineStepService.HandlerPipelineSteps(pipelineStepId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{pipelineStepId}/OtherTransports")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+                public async virtual Task<IActionResult> OtherTransports(int pipelineStepId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiOtherTransportResponseModel> response = await this.PipelineStepService.OtherTransports(pipelineStepId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{pipelineStepId}/PipelineStepDestinations")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+                public async virtual Task<IActionResult> PipelineStepDestinations(int pipelineStepId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPipelineStepDestinationResponseModel> response = await this.PipelineStepService.PipelineStepDestinations(pipelineStepId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{pipelineStepId}/PipelineStepNotes")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+                public async virtual Task<IActionResult> PipelineStepNotes(int pipelineStepId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPipelineStepNoteResponseModel> response = await this.PipelineStepService.PipelineStepNotes(pipelineStepId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{pipelineStepId}/PipelineStepStepRequirements")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
+                public async virtual Task<IActionResult> PipelineStepStepRequirements(int pipelineStepId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPipelineStepStepRequirementResponseModel> response = await this.PipelineStepService.PipelineStepStepRequirements(pipelineStepId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5d19b68943afa39d77854d0bf656a07c</Hash>
+    <Hash>3194ca335c44cbbd5bcb25afce73a2de</Hash>
 </Codenesium>*/

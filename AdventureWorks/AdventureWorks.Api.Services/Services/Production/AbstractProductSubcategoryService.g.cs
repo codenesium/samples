@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALProductSubcategoryMapper dalProductSubcategoryMapper;
 
+                private IBOLProductMapper bolProductMapper;
+
+                private IDALProductMapper dalProductMapper;
+
                 private ILogger logger;
 
                 public AbstractProductSubcategoryService(
                         ILogger logger,
                         IProductSubcategoryRepository productSubcategoryRepository,
                         IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator,
-                        IBOLProductSubcategoryMapper bolproductSubcategoryMapper,
-                        IDALProductSubcategoryMapper dalproductSubcategoryMapper)
+                        IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
+                        IDALProductSubcategoryMapper dalProductSubcategoryMapper
+
+                        ,
+                        IBOLProductMapper bolProductMapper,
+                        IDALProductMapper dalProductMapper
+
+                        )
                         : base()
 
                 {
                         this.productSubcategoryRepository = productSubcategoryRepository;
                         this.productSubcategoryModelValidator = productSubcategoryModelValidator;
-                        this.bolProductSubcategoryMapper = bolproductSubcategoryMapper;
-                        this.dalProductSubcategoryMapper = dalproductSubcategoryMapper;
+                        this.bolProductSubcategoryMapper = bolProductSubcategoryMapper;
+                        this.dalProductSubcategoryMapper = dalProductSubcategoryMapper;
+                        this.bolProductMapper = bolProductMapper;
+                        this.dalProductMapper = dalProductMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductSubcategoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductSubcategoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productSubcategoryRepository.All(skip, take, orderClause);
+                        var records = await this.productSubcategoryRepository.All(limit, offset, orderClause);
 
                         return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiProductResponseModel>> Products(int productSubcategoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Product> records = await this.productSubcategoryRepository.Products(productSubcategoryID, limit, offset);
+
+                        return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5a9a8a20f65e15f58af8dcf0733e1b1d</Hash>
+    <Hash>ad91b8924b2723f27923a89cf12b0ab6</Hash>
 </Codenesium>*/

@@ -19,12 +19,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiUserRoleResponseModel> Get(string id);
 
-                Task<List<ApiUserRoleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiUserRoleResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiUserRoleResponseModel> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>1547c4131ce13b605e50d8c8a0937c4b</Hash>
+    <Hash>fed28a4cd8d65273bbd88221d64026d6</Hash>
 </Codenesium>*/

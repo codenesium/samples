@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiChainResponseModel> response = await this.ChainService.All(query.Offset, query.Limit);
+                        List<ApiChainResponseModel> response = await this.ChainService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,36 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{nextChainId}/Clasps")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
+                public async virtual Task<IActionResult> Clasps(int nextChainId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiClaspResponseModel> response = await this.ChainService.Clasps(nextChainId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{chainId}/Links")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
+                public async virtual Task<IActionResult> Links(int chainId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiLinkResponseModel> response = await this.ChainService.Links(chainId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>07e15ea99d2c491273250133a18206ef</Hash>
+    <Hash>91035e89d6eb35607de7ea5853882548</Hash>
 </Codenesium>*/

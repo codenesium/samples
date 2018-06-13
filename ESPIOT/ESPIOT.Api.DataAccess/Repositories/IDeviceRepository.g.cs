@@ -15,12 +15,14 @@ namespace ESPIOTNS.Api.DataAccess
 
                 Task<Device> Get(int id);
 
-                Task<List<Device>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Device>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
-                Task<Device> GetPublicId(Guid publicId);
+                Task<Device> ByPublicId(Guid publicId);
+
+                Task<List<DeviceAction>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>a77a31c8b0974426c8ca643f0df16496</Hash>
+    <Hash>41323104c11a7d0fe9aa79d71adab2b1</Hash>
 </Codenesium>*/

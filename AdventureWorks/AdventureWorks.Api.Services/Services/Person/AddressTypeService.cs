@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IAddressTypeRepository addressTypeRepository,
                         IApiAddressTypeRequestModelValidator addressTypeModelValidator,
                         IBOLAddressTypeMapper boladdressTypeMapper,
-                        IDALAddressTypeMapper daladdressTypeMapper)
+                        IDALAddressTypeMapper daladdressTypeMapper
+                        ,
+                        IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
+                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
+
+                        )
                         : base(logger,
                                addressTypeRepository,
                                addressTypeModelValidator,
                                boladdressTypeMapper,
-                               daladdressTypeMapper)
+                               daladdressTypeMapper
+                               ,
+                               bolBusinessEntityAddressMapper,
+                               dalBusinessEntityAddressMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4a2a868049f2e54585d630856bc89732</Hash>
+    <Hash>b9cb4a65fa6cf78ef611efb6f5de97ad</Hash>
 </Codenesium>*/

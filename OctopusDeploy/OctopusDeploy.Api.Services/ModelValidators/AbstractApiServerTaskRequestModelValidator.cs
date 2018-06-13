@@ -41,7 +41,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void DurationSecondsRules()
                 {
-                        this.RuleFor(x => x.DurationSeconds).NotNull();
                 }
 
                 public virtual void EnvironmentIdRules()
@@ -55,12 +54,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void HasPendingInterruptionsRules()
                 {
-                        this.RuleFor(x => x.HasPendingInterruptions).NotNull();
                 }
 
                 public virtual void HasWarningsOrErrorsRules()
                 {
-                        this.RuleFor(x => x.HasWarningsOrErrors).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -81,7 +78,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void QueueTimeRules()
                 {
-                        this.RuleFor(x => x.QueueTime).NotNull();
                 }
 
                 public virtual void ServerNodeIdRules()
@@ -107,5 +103,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1354ae1ce5c7d37f26fa3fe118171f15</Hash>
+    <Hash>e173f9d374135f41174cd1c541d82bb3</Hash>
 </Codenesium>*/

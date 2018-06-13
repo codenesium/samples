@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentEnvironmentRepository deploymentEnvironmentRepository,
                         IApiDeploymentEnvironmentRequestModelValidator deploymentEnvironmentModelValidator,
                         IBOLDeploymentEnvironmentMapper boldeploymentEnvironmentMapper,
-                        IDALDeploymentEnvironmentMapper daldeploymentEnvironmentMapper)
+                        IDALDeploymentEnvironmentMapper daldeploymentEnvironmentMapper
+
+                        )
                         : base(logger,
                                deploymentEnvironmentRepository,
                                deploymentEnvironmentModelValidator,
                                boldeploymentEnvironmentMapper,
-                               daldeploymentEnvironmentMapper)
+                               daldeploymentEnvironmentMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3bc9400947a2c5b3f9c289f91e54c6c4</Hash>
+    <Hash>e49d0609227a71df34570fe09d0deda5</Hash>
 </Codenesium>*/

@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<PurchaseOrderDetail> Get(int purchaseOrderID);
 
-                Task<List<PurchaseOrderDetail>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<PurchaseOrderDetail>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<PurchaseOrderDetail>> GetProductID(int productID);
         }
 }
 
 /*<Codenesium>
-    <Hash>6cb2c73b24df9f5c13e556070bb4f585</Hash>
+    <Hash>b40b1b286ef2396c574c4ce3c6d6992f</Hash>
 </Codenesium>*/

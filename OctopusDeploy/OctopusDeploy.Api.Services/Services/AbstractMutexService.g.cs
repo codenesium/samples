@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IMutexRepository mutexRepository,
                         IApiMutexRequestModelValidator mutexModelValidator,
-                        IBOLMutexMapper bolmutexMapper,
-                        IDALMutexMapper dalmutexMapper)
+                        IBOLMutexMapper bolMutexMapper,
+                        IDALMutexMapper dalMutexMapper
+
+                        )
                         : base()
 
                 {
                         this.mutexRepository = mutexRepository;
                         this.mutexModelValidator = mutexModelValidator;
-                        this.bolMutexMapper = bolmutexMapper;
-                        this.dalMutexMapper = dalmutexMapper;
+                        this.bolMutexMapper = bolMutexMapper;
+                        this.dalMutexMapper = dalMutexMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMutexResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMutexResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.mutexRepository.All(skip, take, orderClause);
+                        var records = await this.mutexRepository.All(limit, offset, orderClause);
 
                         return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7f186ed797d886b96d3e9150397e5d4</Hash>
+    <Hash>2be76dfa28be39c18ce9f3dc2d0cdc06</Hash>
 </Codenesium>*/

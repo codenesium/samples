@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IPasswordRepository passwordRepository,
                         IApiPasswordRequestModelValidator passwordModelValidator,
                         IBOLPasswordMapper bolpasswordMapper,
-                        IDALPasswordMapper dalpasswordMapper)
+                        IDALPasswordMapper dalpasswordMapper
+
+                        )
                         : base(logger,
                                passwordRepository,
                                passwordModelValidator,
                                bolpasswordMapper,
-                               dalpasswordMapper)
+                               dalpasswordMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>94b984a6965c039a84433dea859f876e</Hash>
+    <Hash>c811089eb2218287078891f994f8d553</Hash>
 </Codenesium>*/

@@ -19,10 +19,12 @@ namespace FileServiceNS.Api.Services
 
                 Task<ApiFileTypeResponseModel> Get(int id);
 
-                Task<List<ApiFileTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiFileTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiFileResponseModel>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>eb6abf183a35b0ede08f6ccb847101f5</Hash>
+    <Hash>7793b2b44666188b678cad8bf87a4013</Hash>
 </Codenesium>*/

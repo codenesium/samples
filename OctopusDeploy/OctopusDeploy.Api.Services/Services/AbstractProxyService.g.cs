@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IProxyRepository proxyRepository,
                         IApiProxyRequestModelValidator proxyModelValidator,
-                        IBOLProxyMapper bolproxyMapper,
-                        IDALProxyMapper dalproxyMapper)
+                        IBOLProxyMapper bolProxyMapper,
+                        IDALProxyMapper dalProxyMapper
+
+                        )
                         : base()
 
                 {
                         this.proxyRepository = proxyRepository;
                         this.proxyModelValidator = proxyModelValidator;
-                        this.bolProxyMapper = bolproxyMapper;
-                        this.dalProxyMapper = dalproxyMapper;
+                        this.bolProxyMapper = bolProxyMapper;
+                        this.dalProxyMapper = dalProxyMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProxyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProxyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.proxyRepository.All(skip, take, orderClause);
+                        var records = await this.proxyRepository.All(limit, offset, orderClause);
 
                         return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd02b685c5f0a2cfa56dd0cdf6d6962f</Hash>
+    <Hash>eb321922c0131d3b4a85a6946a92a4c5</Hash>
 </Codenesium>*/

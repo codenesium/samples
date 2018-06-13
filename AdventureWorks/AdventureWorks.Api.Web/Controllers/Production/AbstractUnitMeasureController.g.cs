@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiUnitMeasureResponseModel> response = await this.UnitMeasureService.All(query.Offset, query.Limit);
+                        List<ApiUnitMeasureResponseModel> response = await this.UnitMeasureService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,36 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{unitMeasureCode}/BillOfMaterials")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
+                public async virtual Task<IActionResult> BillOfMaterials(string unitMeasureCode, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiBillOfMaterialsResponseModel> response = await this.UnitMeasureService.BillOfMaterials(unitMeasureCode, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{sizeUnitMeasureCode}/Products")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiUnitMeasureResponseModel>), 200)]
+                public async virtual Task<IActionResult> Products(string sizeUnitMeasureCode, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductResponseModel> response = await this.UnitMeasureService.Products(sizeUnitMeasureCode, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d47cd0b53aaccaf0c685a00d4e78f4f5</Hash>
+    <Hash>7933bee111e9672eec17d43000725b6c</Hash>
 </Codenesium>*/

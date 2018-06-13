@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCurrencyRequestModelValidator: AbstractValidator<ApiCurrencyRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public ICurrencyRepository CurrencyRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -43,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Currency record = await this.CurrencyRepository.GetName(model.Name);
 
-                        if (record == null || record.CurrencyCode == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.CurrencyCode == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1091a6fd003039ffc63365373c4cd1ad</Hash>
+    <Hash>fd28523e5e7502750780755f19719063</Hash>
 </Codenesium>*/

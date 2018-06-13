@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCurrencyRateResponseModel> response = await this.CurrencyRateService.All(query.Offset, query.Limit);
+                        List<ApiCurrencyRateResponseModel> response = await this.CurrencyRateService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{currencyRateID}/SalesOrderHeaders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderHeaders(int currencyRateID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.CurrencyRateService.SalesOrderHeaders(currencyRateID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b68a68eabdf5c23c96455635609c05ef</Hash>
+    <Hash>ba3e66ef0d990e9abe28f016d0344ba2</Hash>
 </Codenesium>*/

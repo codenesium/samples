@@ -8,7 +8,6 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
-
 {
         public abstract class AbstractApiRateRequestModelValidator: AbstractValidator<ApiRateRequestModel>
         {
@@ -32,18 +31,15 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void AmountPerMinuteRules()
                 {
-                        this.RuleFor(x => x.AmountPerMinute).NotNull();
                 }
 
                 public virtual void TeacherIdRules()
                 {
-                        this.RuleFor(x => x.TeacherId).NotNull();
                         this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacher).When(x => x ?.TeacherId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TeacherSkillIdRules()
                 {
-                        this.RuleFor(x => x.TeacherSkillId).NotNull();
                         this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x ?.TeacherSkillId != null).WithMessage("Invalid reference");
                 }
 
@@ -64,5 +60,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c3f06e883b2875fca2824647f2ef0226</Hash>
+    <Hash>c03e87470a2ba27afe637ea595179f32</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiOrganizationResponseModel> response = await this.OrganizationService.All(query.Offset, query.Limit);
+                        List<ApiOrganizationResponseModel> response = await this.OrganizationService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{organizationId}/Teams")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiOrganizationResponseModel>), 200)]
+                public async virtual Task<IActionResult> Teams(int organizationId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiTeamResponseModel> response = await this.OrganizationService.Teams(organizationId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>32608c814fdd5c3ff5e714975913811b</Hash>
+    <Hash>97a55d70f05475985c4c5ed478db0ce6</Hash>
 </Codenesium>*/

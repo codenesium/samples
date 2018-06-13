@@ -22,27 +22,39 @@ namespace PetShippingNS.Api.Services
 
                 private IDALPipelineStatusMapper dalPipelineStatusMapper;
 
+                private IBOLPipelineMapper bolPipelineMapper;
+
+                private IDALPipelineMapper dalPipelineMapper;
+
                 private ILogger logger;
 
                 public AbstractPipelineStatusService(
                         ILogger logger,
                         IPipelineStatusRepository pipelineStatusRepository,
                         IApiPipelineStatusRequestModelValidator pipelineStatusModelValidator,
-                        IBOLPipelineStatusMapper bolpipelineStatusMapper,
-                        IDALPipelineStatusMapper dalpipelineStatusMapper)
+                        IBOLPipelineStatusMapper bolPipelineStatusMapper,
+                        IDALPipelineStatusMapper dalPipelineStatusMapper
+
+                        ,
+                        IBOLPipelineMapper bolPipelineMapper,
+                        IDALPipelineMapper dalPipelineMapper
+
+                        )
                         : base()
 
                 {
                         this.pipelineStatusRepository = pipelineStatusRepository;
                         this.pipelineStatusModelValidator = pipelineStatusModelValidator;
-                        this.bolPipelineStatusMapper = bolpipelineStatusMapper;
-                        this.dalPipelineStatusMapper = dalpipelineStatusMapper;
+                        this.bolPipelineStatusMapper = bolPipelineStatusMapper;
+                        this.dalPipelineStatusMapper = dalPipelineStatusMapper;
+                        this.bolPipelineMapper = bolPipelineMapper;
+                        this.dalPipelineMapper = dalPipelineMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPipelineStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPipelineStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.pipelineStatusRepository.All(skip, take, orderClause);
+                        var records = await this.pipelineStatusRepository.All(limit, offset, orderClause);
 
                         return this.bolPipelineStatusMapper.MapBOToModel(this.dalPipelineStatusMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace PetShippingNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiPipelineResponseModel>> Pipelines(int pipelineStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Pipeline> records = await this.pipelineStatusRepository.Pipelines(pipelineStatusId, limit, offset);
+
+                        return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b42b92d025482c8bac3c320e71da3036</Hash>
+    <Hash>a42bc653e43cca1b20ca7d8214c6b0db</Hash>
 </Codenesium>*/

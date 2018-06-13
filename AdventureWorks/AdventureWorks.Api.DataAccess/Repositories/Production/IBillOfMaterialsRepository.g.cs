@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<BillOfMaterials> Get(int billOfMaterialsID);
 
-                Task<List<BillOfMaterials>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<BillOfMaterials>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<BillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate);
                 Task<List<BillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
@@ -23,5 +23,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fce3e67bbe8e224c4b5eb45efc9a9951</Hash>
+    <Hash>026c6116c47e354fbfd920988c2c2d22</Hash>
 </Codenesium>*/

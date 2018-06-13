@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IPipelineStepDestinationRepository pipelineStepDestinationRepository,
                         IApiPipelineStepDestinationRequestModelValidator pipelineStepDestinationModelValidator,
-                        IBOLPipelineStepDestinationMapper bolpipelineStepDestinationMapper,
-                        IDALPipelineStepDestinationMapper dalpipelineStepDestinationMapper)
+                        IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
+                        IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper
+
+                        )
                         : base()
 
                 {
                         this.pipelineStepDestinationRepository = pipelineStepDestinationRepository;
                         this.pipelineStepDestinationModelValidator = pipelineStepDestinationModelValidator;
-                        this.bolPipelineStepDestinationMapper = bolpipelineStepDestinationMapper;
-                        this.dalPipelineStepDestinationMapper = dalpipelineStepDestinationMapper;
+                        this.bolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
+                        this.dalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.pipelineStepDestinationRepository.All(skip, take, orderClause);
+                        var records = await this.pipelineStepDestinationRepository.All(limit, offset, orderClause);
 
                         return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3cf223528a4a30b992b2a106e6e34066</Hash>
+    <Hash>2d434b8e4a980523a6cb968b8e6b9313</Hash>
 </Codenesium>*/

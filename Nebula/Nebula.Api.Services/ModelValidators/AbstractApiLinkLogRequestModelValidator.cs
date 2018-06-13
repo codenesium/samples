@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiLinkLogRequestModelValidator: AbstractValidator<ApiLinkLogRequestModel>
         {
@@ -30,12 +29,10 @@ namespace NebulaNS.Api.Services
 
                 public virtual void DateEnteredRules()
                 {
-                        this.RuleFor(x => x.DateEntered).NotNull();
                 }
 
                 public virtual void LinkIdRules()
                 {
-                        this.RuleFor(x => x.LinkId).NotNull();
                         this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLink).When(x => x ?.LinkId != null).WithMessage("Invalid reference");
                 }
 
@@ -55,5 +52,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6728e8bf8571068d093a5172cbffb6a6</Hash>
+    <Hash>2b2fb5a3e057743708bbf857ea014ab1</Hash>
 </Codenesium>*/

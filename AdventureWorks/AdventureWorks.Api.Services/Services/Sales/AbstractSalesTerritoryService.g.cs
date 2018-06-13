@@ -22,27 +22,63 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALSalesTerritoryMapper dalSalesTerritoryMapper;
 
+                private IBOLCustomerMapper bolCustomerMapper;
+
+                private IDALCustomerMapper dalCustomerMapper;
+                private IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper;
+
+                private IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper;
+                private IBOLSalesPersonMapper bolSalesPersonMapper;
+
+                private IDALSalesPersonMapper dalSalesPersonMapper;
+                private IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper;
+
+                private IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper;
+
                 private ILogger logger;
 
                 public AbstractSalesTerritoryService(
                         ILogger logger,
                         ISalesTerritoryRepository salesTerritoryRepository,
                         IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
-                        IBOLSalesTerritoryMapper bolsalesTerritoryMapper,
-                        IDALSalesTerritoryMapper dalsalesTerritoryMapper)
+                        IBOLSalesTerritoryMapper bolSalesTerritoryMapper,
+                        IDALSalesTerritoryMapper dalSalesTerritoryMapper
+
+                        ,
+                        IBOLCustomerMapper bolCustomerMapper,
+                        IDALCustomerMapper dalCustomerMapper
+                        ,
+                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
+                        ,
+                        IBOLSalesPersonMapper bolSalesPersonMapper,
+                        IDALSalesPersonMapper dalSalesPersonMapper
+                        ,
+                        IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
+                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.salesTerritoryRepository = salesTerritoryRepository;
                         this.salesTerritoryModelValidator = salesTerritoryModelValidator;
-                        this.bolSalesTerritoryMapper = bolsalesTerritoryMapper;
-                        this.dalSalesTerritoryMapper = dalsalesTerritoryMapper;
+                        this.bolSalesTerritoryMapper = bolSalesTerritoryMapper;
+                        this.dalSalesTerritoryMapper = dalSalesTerritoryMapper;
+                        this.bolCustomerMapper = bolCustomerMapper;
+                        this.dalCustomerMapper = dalCustomerMapper;
+                        this.bolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
+                        this.dalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
+                        this.bolSalesPersonMapper = bolSalesPersonMapper;
+                        this.dalSalesPersonMapper = dalSalesPersonMapper;
+                        this.bolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
+                        this.dalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesTerritoryRepository.All(skip, take, orderClause);
+                        var records = await this.salesTerritoryRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(records));
                 }
@@ -103,9 +139,34 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiCustomerResponseModel>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Customer> records = await this.salesTerritoryRepository.Customers(territoryID, limit, offset);
+
+                        return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SalesOrderHeader> records = await this.salesTerritoryRepository.SalesOrderHeaders(territoryID, limit, offset);
+
+                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiSalesPersonResponseModel>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SalesPerson> records = await this.salesTerritoryRepository.SalesPersons(territoryID, limit, offset);
+
+                        return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SalesTerritoryHistory> records = await this.salesTerritoryRepository.SalesTerritoryHistories(territoryID, limit, offset);
+
+                        return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ac75c52c3edb350c5fbfb8aa5b2c36ab</Hash>
+    <Hash>b422ae097cb3fb2ca95b42a2407a8fd3</Hash>
 </Codenesium>*/

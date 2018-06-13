@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IFeedRepository feedRepository,
                         IApiFeedRequestModelValidator feedModelValidator,
-                        IBOLFeedMapper bolfeedMapper,
-                        IDALFeedMapper dalfeedMapper)
+                        IBOLFeedMapper bolFeedMapper,
+                        IDALFeedMapper dalFeedMapper
+
+                        )
                         : base()
 
                 {
                         this.feedRepository = feedRepository;
                         this.feedModelValidator = feedModelValidator;
-                        this.bolFeedMapper = bolfeedMapper;
-                        this.dalFeedMapper = dalfeedMapper;
+                        this.bolFeedMapper = bolFeedMapper;
+                        this.dalFeedMapper = dalFeedMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiFeedResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiFeedResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.feedRepository.All(skip, take, orderClause);
+                        var records = await this.feedRepository.All(limit, offset, orderClause);
 
                         return this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc90b8f6ac2c65f92067822cb00fcf9e</Hash>
+    <Hash>522743b5c3416efe5ed8acb6f971b5db</Hash>
 </Codenesium>*/

@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiTenantVariableResponseModel> Get(string id);
 
-                Task<List<ApiTenantVariableResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiTenantVariableResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiTenantVariableResponseModel> GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId);
                 Task<List<ApiTenantVariableResponseModel>> GetTenantId(string tenantId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0aa483ec52854dbccd60332c54945ef</Hash>
+    <Hash>1d9d559fc60102eab4a3eb39a988a165</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IEmailAddressRepository emailAddressRepository,
                         IApiEmailAddressRequestModelValidator emailAddressModelValidator,
                         IBOLEmailAddressMapper bolemailAddressMapper,
-                        IDALEmailAddressMapper dalemailAddressMapper)
+                        IDALEmailAddressMapper dalemailAddressMapper
+
+                        )
                         : base(logger,
                                emailAddressRepository,
                                emailAddressModelValidator,
                                bolemailAddressMapper,
-                               dalemailAddressMapper)
+                               dalemailAddressMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0d0174f3e44459506f60d2d9f1eeba36</Hash>
+    <Hash>0b59e3a812cd84d2cae584679a1daaab</Hash>
 </Codenesium>*/

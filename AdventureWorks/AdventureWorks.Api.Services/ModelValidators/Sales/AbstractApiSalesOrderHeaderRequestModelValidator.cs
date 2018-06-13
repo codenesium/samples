@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiSalesOrderHeaderRequestModelValidator: AbstractValidator<ApiSalesOrderHeaderRequestModel>
         {
@@ -44,7 +43,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void BillToAddressIDRules()
                 {
-                        this.RuleFor(x => x.BillToAddressID).NotNull();
                 }
 
                 public virtual void CommentRules()
@@ -69,33 +67,27 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void CustomerIDRules()
                 {
-                        this.RuleFor(x => x.CustomerID).NotNull();
                         this.RuleFor(x => x.CustomerID).MustAsync(this.BeValidCustomer).When(x => x ?.CustomerID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void DueDateRules()
                 {
-                        this.RuleFor(x => x.DueDate).NotNull();
                 }
 
                 public virtual void FreightRules()
                 {
-                        this.RuleFor(x => x.Freight).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void OnlineOrderFlagRules()
                 {
-                        this.RuleFor(x => x.OnlineOrderFlag).NotNull();
                 }
 
                 public virtual void OrderDateRules()
                 {
-                        this.RuleFor(x => x.OrderDate).NotNull();
                 }
 
                 public virtual void PurchaseOrderNumberRules()
@@ -105,12 +97,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RevisionNumberRules()
                 {
-                        this.RuleFor(x => x.RevisionNumber).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SalesOrderNumberRules()
@@ -131,27 +121,22 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ShipMethodIDRules()
                 {
-                        this.RuleFor(x => x.ShipMethodID).NotNull();
                 }
 
                 public virtual void ShipToAddressIDRules()
                 {
-                        this.RuleFor(x => x.ShipToAddressID).NotNull();
                 }
 
                 public virtual void StatusRules()
                 {
-                        this.RuleFor(x => x.Status).NotNull();
                 }
 
                 public virtual void SubTotalRules()
                 {
-                        this.RuleFor(x => x.SubTotal).NotNull();
                 }
 
                 public virtual void TaxAmtRules()
                 {
-                        this.RuleFor(x => x.TaxAmt).NotNull();
                 }
 
                 public virtual void TerritoryIDRules()
@@ -161,7 +146,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void TotalDueRules()
                 {
-                        this.RuleFor(x => x.TotalDue).NotNull();
                 }
 
                 private async Task<bool> BeValidCreditCard(Nullable<int> id,  CancellationToken cancellationToken)
@@ -203,7 +187,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         SalesOrderHeader record = await this.SalesOrderHeaderRepository.GetSalesOrderNumber(model.SalesOrderNumber);
 
-                        if (record == null || record.SalesOrderID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.SalesOrderID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -216,5 +200,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da043b75233431e050267c3f8ef719a9</Hash>
+    <Hash>ce10157cbed702194547c9e73956740f</Hash>
 </Codenesium>*/

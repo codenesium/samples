@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IAWBuildVersionRepository aWBuildVersionRepository,
                         IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
-                        IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
-                        IDALAWBuildVersionMapper dalaWBuildVersionMapper)
+                        IBOLAWBuildVersionMapper bolAWBuildVersionMapper,
+                        IDALAWBuildVersionMapper dalAWBuildVersionMapper
+
+                        )
                         : base()
 
                 {
                         this.aWBuildVersionRepository = aWBuildVersionRepository;
                         this.aWBuildVersionModelValidator = aWBuildVersionModelValidator;
-                        this.bolAWBuildVersionMapper = bolaWBuildVersionMapper;
-                        this.dalAWBuildVersionMapper = dalaWBuildVersionMapper;
+                        this.bolAWBuildVersionMapper = bolAWBuildVersionMapper;
+                        this.dalAWBuildVersionMapper = dalAWBuildVersionMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAWBuildVersionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAWBuildVersionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.aWBuildVersionRepository.All(skip, take, orderClause);
+                        var records = await this.aWBuildVersionRepository.All(limit, offset, orderClause);
 
                         return this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>beb9227d51919b80355b9a5eeba7caaf</Hash>
+    <Hash>df437a9793676e4306ba410ca286a198</Hash>
 </Codenesium>*/

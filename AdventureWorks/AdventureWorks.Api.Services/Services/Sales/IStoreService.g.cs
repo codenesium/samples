@@ -19,13 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiStoreResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiStoreResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiStoreResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiStoreResponseModel>> GetSalesPersonID(Nullable<int> salesPersonID);
                 Task<List<ApiStoreResponseModel>> GetDemographics(string demographics);
+
+                Task<List<ApiCustomerResponseModel>> Customers(int storeID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>9b6d20ff23f7e041018b88432801eba5</Hash>
+    <Hash>f843a02642738b6d59ed0f01573d4624</Hash>
 </Codenesium>*/

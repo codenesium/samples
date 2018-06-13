@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IBusinessEntityContactRepository businessEntityContactRepository,
                         IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator,
-                        IBOLBusinessEntityContactMapper bolbusinessEntityContactMapper,
-                        IDALBusinessEntityContactMapper dalbusinessEntityContactMapper)
+                        IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
+                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
+
+                        )
                         : base()
 
                 {
                         this.businessEntityContactRepository = businessEntityContactRepository;
                         this.businessEntityContactModelValidator = businessEntityContactModelValidator;
-                        this.bolBusinessEntityContactMapper = bolbusinessEntityContactMapper;
-                        this.dalBusinessEntityContactMapper = dalbusinessEntityContactMapper;
+                        this.bolBusinessEntityContactMapper = bolBusinessEntityContactMapper;
+                        this.dalBusinessEntityContactMapper = dalBusinessEntityContactMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.businessEntityContactRepository.All(skip, take, orderClause);
+                        var records = await this.businessEntityContactRepository.All(limit, offset, orderClause);
 
                         return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>03b5aadbd7d449222ffed0c9f6f4b754</Hash>
+    <Hash>383320c4659128e8ee404aad581355d6</Hash>
 </Codenesium>*/

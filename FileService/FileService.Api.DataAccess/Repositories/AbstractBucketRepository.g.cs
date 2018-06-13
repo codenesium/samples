@@ -25,9 +25,9 @@ namespace FileServiceNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Bucket>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Bucket> Get(int id)
@@ -88,31 +88,31 @@ namespace FileServiceNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Bucket>> Where(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Bucket>> Where(Expression<Func<Bucket, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Bucket> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Bucket> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Bucket>> SearchLinqEF(Expression<Func<Bucket, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Bucket>> SearchLinqEF(Expression<Func<Bucket, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Bucket.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Bucket>();
+                        return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Bucket>();
                 }
 
-                private async Task<List<Bucket>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Bucket>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Bucket.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Bucket>();
+                        return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Bucket>();
                 }
 
                 private async Task<Bucket> GetById(int id)
@@ -121,9 +121,14 @@ namespace FileServiceNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<File>().Where(x => x.BucketId == bucketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>52a0ff1613993b534afa3c4e67421973</Hash>
+    <Hash>7fc19134a5e16588ef6799c3df184e6e</Hash>
 </Codenesium>*/

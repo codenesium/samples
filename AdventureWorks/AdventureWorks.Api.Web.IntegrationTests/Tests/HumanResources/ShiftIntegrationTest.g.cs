@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Shift")]
+        [Trait("Integration", "Shift")]
         public class ShiftTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>57ec64e0091d098023ab391025f097c8</Hash>
+    <Hash>435ad9f46635b495694464f1f56ed055</Hash>
 </Codenesium>*/

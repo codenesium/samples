@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPersonCreditCardResponseModel> response = await this.PersonCreditCardService.All(query.Offset, query.Limit);
+                        List<ApiPersonCreditCardResponseModel> response = await this.PersonCreditCardService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4c1a8d0832f19975f893d8fb9ac646b5</Hash>
+    <Hash>b1666f8853e623d0203a1874b5e19067</Hash>
 </Codenesium>*/

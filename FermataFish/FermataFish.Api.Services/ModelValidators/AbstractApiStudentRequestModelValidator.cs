@@ -8,7 +8,6 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
-
 {
         public abstract class AbstractApiStudentRequestModelValidator: AbstractValidator<ApiStudentRequestModel>
         {
@@ -32,7 +31,6 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void BirthdayRules()
                 {
-                        this.RuleFor(x => x.Birthday).NotNull();
                 }
 
                 public virtual void EmailRules()
@@ -43,12 +41,10 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void EmailRemindersEnabledRules()
                 {
-                        this.RuleFor(x => x.EmailRemindersEnabled).NotNull();
                 }
 
                 public virtual void FamilyIdRules()
                 {
-                        this.RuleFor(x => x.FamilyId).NotNull();
                         this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
                 }
 
@@ -60,7 +56,6 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void IsAdultRules()
                 {
-                        this.RuleFor(x => x.IsAdult).NotNull();
                 }
 
                 public virtual void LastNameRules()
@@ -77,12 +72,10 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void SmsRemindersEnabledRules()
                 {
-                        this.RuleFor(x => x.SmsRemindersEnabled).NotNull();
                 }
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).NotNull();
                         this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
                 }
 
@@ -103,5 +96,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9aacef7e8be6eae82e171a09a3c1d75c</Hash>
+    <Hash>9e148105c7c34948df7739e7d283a833</Hash>
 </Codenesium>*/

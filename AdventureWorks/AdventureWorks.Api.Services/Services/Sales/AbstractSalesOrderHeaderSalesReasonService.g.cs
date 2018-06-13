@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
                         IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
-                        IBOLSalesOrderHeaderSalesReasonMapper bolsalesOrderHeaderSalesReasonMapper,
-                        IDALSalesOrderHeaderSalesReasonMapper dalsalesOrderHeaderSalesReasonMapper)
+                        IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
+                        IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper
+
+                        )
                         : base()
 
                 {
                         this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
                         this.salesOrderHeaderSalesReasonModelValidator = salesOrderHeaderSalesReasonModelValidator;
-                        this.bolSalesOrderHeaderSalesReasonMapper = bolsalesOrderHeaderSalesReasonMapper;
-                        this.dalSalesOrderHeaderSalesReasonMapper = dalsalesOrderHeaderSalesReasonMapper;
+                        this.bolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
+                        this.dalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesOrderHeaderSalesReasonRepository.All(skip, take, orderClause);
+                        var records = await this.salesOrderHeaderSalesReasonRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3cc0d1f85ece5ac470cb0154d680fccb</Hash>
+    <Hash>8f24c8d9f6012357aea8eada1eca8a65</Hash>
 </Codenesium>*/

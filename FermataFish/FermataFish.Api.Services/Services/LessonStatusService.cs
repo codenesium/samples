@@ -17,17 +17,26 @@ namespace FermataFishNS.Api.Services
                         ILessonStatusRepository lessonStatusRepository,
                         IApiLessonStatusRequestModelValidator lessonStatusModelValidator,
                         IBOLLessonStatusMapper bollessonStatusMapper,
-                        IDALLessonStatusMapper dallessonStatusMapper)
+                        IDALLessonStatusMapper dallessonStatusMapper
+                        ,
+                        IBOLLessonMapper bolLessonMapper,
+                        IDALLessonMapper dalLessonMapper
+
+                        )
                         : base(logger,
                                lessonStatusRepository,
                                lessonStatusModelValidator,
                                bollessonStatusMapper,
-                               dallessonStatusMapper)
+                               dallessonStatusMapper
+                               ,
+                               bolLessonMapper,
+                               dalLessonMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d248c3ea470b528b21d743bec6c15534</Hash>
+    <Hash>dd2a7590cd69ae9e32b0c2f9c0e435f4</Hash>
 </Codenesium>*/

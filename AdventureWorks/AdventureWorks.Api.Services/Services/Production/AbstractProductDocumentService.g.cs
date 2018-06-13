@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IProductDocumentRepository productDocumentRepository,
                         IApiProductDocumentRequestModelValidator productDocumentModelValidator,
-                        IBOLProductDocumentMapper bolproductDocumentMapper,
-                        IDALProductDocumentMapper dalproductDocumentMapper)
+                        IBOLProductDocumentMapper bolProductDocumentMapper,
+                        IDALProductDocumentMapper dalProductDocumentMapper
+
+                        )
                         : base()
 
                 {
                         this.productDocumentRepository = productDocumentRepository;
                         this.productDocumentModelValidator = productDocumentModelValidator;
-                        this.bolProductDocumentMapper = bolproductDocumentMapper;
-                        this.dalProductDocumentMapper = dalproductDocumentMapper;
+                        this.bolProductDocumentMapper = bolProductDocumentMapper;
+                        this.dalProductDocumentMapper = dalProductDocumentMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productDocumentRepository.All(skip, take, orderClause);
+                        var records = await this.productDocumentRepository.All(limit, offset, orderClause);
 
                         return this.bolProductDocumentMapper.MapBOToModel(this.dalProductDocumentMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5106743bb82747b09a307d9d010ac89b</Hash>
+    <Hash>1f013ab7b1577cb2e951c2494613596b</Hash>
 </Codenesium>*/

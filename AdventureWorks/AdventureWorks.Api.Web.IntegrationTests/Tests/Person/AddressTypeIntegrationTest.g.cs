@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " AddressType")]
+        [Trait("Integration", "AddressType")]
         public class AddressTypeTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>aae98695fd88609d0c0ec2a4032052e0</Hash>
+    <Hash>abbe527ce23171fa7fcd014e5ccab58f</Hash>
 </Codenesium>*/

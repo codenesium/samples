@@ -10,13 +10,13 @@ namespace OctopusDeployNS.Api.Services
                 }
 
                 public void SetProperties(string id,
-                                          Nullable<DateTime> archived,
-                                          DateTime created,
+                                          Nullable<DateTimeOffset> archived,
+                                          DateTimeOffset created,
                                           byte[] dataVersion,
                                           string environmentIds,
                                           string jSON,
                                           string name,
-                                          DateTime notAfter,
+                                          DateTimeOffset notAfter,
                                           string subject,
                                           string tenantIds,
                                           string tenantTags,
@@ -36,9 +36,9 @@ namespace OctopusDeployNS.Api.Services
                         this.Thumbprint = thumbprint;
                 }
 
-                public Nullable<DateTime> Archived { get; private set; }
+                public Nullable<DateTimeOffset> Archived { get; private set; }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public byte[] DataVersion { get; private set; }
 
@@ -50,7 +50,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public string Name { get; private set; }
 
-                public DateTime NotAfter { get; private set; }
+                public DateTimeOffset NotAfter { get; private set; }
 
                 public string Subject { get; private set; }
 
@@ -63,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35cbb9b2d2c592ebbc5d5ebf0bd5240b</Hash>
+    <Hash>f97937a6e92ab8d2726ea216c8e0c579</Hash>
 </Codenesium>*/

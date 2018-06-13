@@ -8,7 +8,6 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
-
 {
         public abstract class AbstractApiStudioRequestModelValidator: AbstractValidator<ApiStudioRequestModel>
         {
@@ -54,7 +53,6 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StateIdRules()
                 {
-                        this.RuleFor(x => x.StateId).NotNull();
                         this.RuleFor(x => x.StateId).MustAsync(this.BeValidState).When(x => x ?.StateId != null).WithMessage("Invalid reference");
                 }
 
@@ -80,5 +78,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ad04cfa1e19a0e451d3a0d866c1970c</Hash>
+    <Hash>4d239552ee4edcea5e67c4058531aaf4</Hash>
 </Codenesium>*/

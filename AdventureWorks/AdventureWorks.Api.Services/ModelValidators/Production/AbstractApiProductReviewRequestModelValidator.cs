@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiProductReviewRequestModelValidator: AbstractValidator<ApiProductReviewRequestModel>
         {
@@ -39,22 +38,18 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void ProductIDRules()
                 {
-                        this.RuleFor(x => x.ProductID).NotNull();
                 }
 
                 public virtual void RatingRules()
                 {
-                        this.RuleFor(x => x.Rating).NotNull();
                 }
 
                 public virtual void ReviewDateRules()
                 {
-                        this.RuleFor(x => x.ReviewDate).NotNull();
                 }
 
                 public virtual void ReviewerNameRules()
@@ -66,5 +61,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4f3f830f7a4dfef49f7eedbdc3307d85</Hash>
+    <Hash>82a80c157f0042a209895705cd67c2f0</Hash>
 </Codenesium>*/

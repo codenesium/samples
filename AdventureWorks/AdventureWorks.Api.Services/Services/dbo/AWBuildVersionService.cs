@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IAWBuildVersionRepository aWBuildVersionRepository,
                         IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
                         IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
-                        IDALAWBuildVersionMapper dalaWBuildVersionMapper)
+                        IDALAWBuildVersionMapper dalaWBuildVersionMapper
+
+                        )
                         : base(logger,
                                aWBuildVersionRepository,
                                aWBuildVersionModelValidator,
                                bolaWBuildVersionMapper,
-                               dalaWBuildVersionMapper)
+                               dalaWBuildVersionMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>64d499c3612c765518aba8632c29e54b</Hash>
+    <Hash>8850fb312d5fd61f10b1ad4c16d946c9</Hash>
 </Codenesium>*/

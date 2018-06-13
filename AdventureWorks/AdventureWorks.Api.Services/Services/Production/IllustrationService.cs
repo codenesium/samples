@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IIllustrationRepository illustrationRepository,
                         IApiIllustrationRequestModelValidator illustrationModelValidator,
                         IBOLIllustrationMapper bolillustrationMapper,
-                        IDALIllustrationMapper dalillustrationMapper)
+                        IDALIllustrationMapper dalillustrationMapper
+                        ,
+                        IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
+
+                        )
                         : base(logger,
                                illustrationRepository,
                                illustrationModelValidator,
                                bolillustrationMapper,
-                               dalillustrationMapper)
+                               dalillustrationMapper
+                               ,
+                               bolProductModelIllustrationMapper,
+                               dalProductModelIllustrationMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1735eb4deef9890879d2ab019c8037bb</Hash>
+    <Hash>f479ee396492ea8fba9a860f9b3d7597</Hash>
 </Codenesium>*/

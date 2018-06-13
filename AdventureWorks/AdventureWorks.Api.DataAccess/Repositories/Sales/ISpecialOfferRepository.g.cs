@@ -15,10 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<SpecialOffer> Get(int specialOfferID);
 
-                Task<List<SpecialOffer>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+
+                Task<List<SpecialOfferProduct>> SpecialOfferProducts(int specialOfferID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>cd79451c585b76a89530c777d594ad83</Hash>
+    <Hash>80d8f089ae083e9aa2db6140a3670533</Hash>
 </Codenesium>*/

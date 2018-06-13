@@ -28,21 +28,23 @@ namespace NebulaNS.Api.Services
                         ILogger logger,
                         IMachineRefTeamRepository machineRefTeamRepository,
                         IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
-                        IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
-                        IDALMachineRefTeamMapper dalmachineRefTeamMapper)
+                        IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
+
+                        )
                         : base()
 
                 {
                         this.machineRefTeamRepository = machineRefTeamRepository;
                         this.machineRefTeamModelValidator = machineRefTeamModelValidator;
-                        this.bolMachineRefTeamMapper = bolmachineRefTeamMapper;
-                        this.dalMachineRefTeamMapper = dalmachineRefTeamMapper;
+                        this.bolMachineRefTeamMapper = bolMachineRefTeamMapper;
+                        this.dalMachineRefTeamMapper = dalMachineRefTeamMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachineRefTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachineRefTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.machineRefTeamRepository.All(skip, take, orderClause);
+                        var records = await this.machineRefTeamRepository.All(limit, offset, orderClause);
 
                         return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>994c38c22011163cb072059f5e04b724</Hash>
+    <Hash>50336a119ea2633a99045a38a20e5105</Hash>
 </Codenesium>*/

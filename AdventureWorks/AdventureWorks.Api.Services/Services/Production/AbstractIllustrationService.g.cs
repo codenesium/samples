@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALIllustrationMapper dalIllustrationMapper;
 
+                private IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper;
+
+                private IDALProductModelIllustrationMapper dalProductModelIllustrationMapper;
+
                 private ILogger logger;
 
                 public AbstractIllustrationService(
                         ILogger logger,
                         IIllustrationRepository illustrationRepository,
                         IApiIllustrationRequestModelValidator illustrationModelValidator,
-                        IBOLIllustrationMapper bolillustrationMapper,
-                        IDALIllustrationMapper dalillustrationMapper)
+                        IBOLIllustrationMapper bolIllustrationMapper,
+                        IDALIllustrationMapper dalIllustrationMapper
+
+                        ,
+                        IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
+
+                        )
                         : base()
 
                 {
                         this.illustrationRepository = illustrationRepository;
                         this.illustrationModelValidator = illustrationModelValidator;
-                        this.bolIllustrationMapper = bolillustrationMapper;
-                        this.dalIllustrationMapper = dalillustrationMapper;
+                        this.bolIllustrationMapper = bolIllustrationMapper;
+                        this.dalIllustrationMapper = dalIllustrationMapper;
+                        this.bolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
+                        this.dalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiIllustrationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiIllustrationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.illustrationRepository.All(skip, take, orderClause);
+                        var records = await this.illustrationRepository.All(limit, offset, orderClause);
 
                         return this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductModelIllustration> records = await this.illustrationRepository.ProductModelIllustrations(illustrationID, limit, offset);
+
+                        return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7cbcb5e9ec8fb1173c9018b3e0e72240</Hash>
+    <Hash>5ffbffe4cde57b8d91f13449731ea631</Hash>
 </Codenesium>*/

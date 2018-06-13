@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDepartmentResponseModel> response = await this.DepartmentService.All(query.Offset, query.Limit);
+                        List<ApiDepartmentResponseModel> response = await this.DepartmentService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{departmentID}/EmployeeDepartmentHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
+                public async virtual Task<IActionResult> EmployeeDepartmentHistories(short departmentID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.DepartmentService.EmployeeDepartmentHistories(departmentID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>429eecba4d9c6b26a9726091c1ae814f</Hash>
+    <Hash>09736eb5455ad3a30dd0418bd810e716</Hash>
 </Codenesium>*/

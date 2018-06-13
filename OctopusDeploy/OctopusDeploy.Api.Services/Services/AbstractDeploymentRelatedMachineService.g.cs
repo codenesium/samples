@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository,
                         IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
-                        IBOLDeploymentRelatedMachineMapper boldeploymentRelatedMachineMapper,
-                        IDALDeploymentRelatedMachineMapper daldeploymentRelatedMachineMapper)
+                        IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper,
+                        IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper
+
+                        )
                         : base()
 
                 {
                         this.deploymentRelatedMachineRepository = deploymentRelatedMachineRepository;
                         this.deploymentRelatedMachineModelValidator = deploymentRelatedMachineModelValidator;
-                        this.bolDeploymentRelatedMachineMapper = boldeploymentRelatedMachineMapper;
-                        this.dalDeploymentRelatedMachineMapper = daldeploymentRelatedMachineMapper;
+                        this.bolDeploymentRelatedMachineMapper = bolDeploymentRelatedMachineMapper;
+                        this.dalDeploymentRelatedMachineMapper = dalDeploymentRelatedMachineMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.deploymentRelatedMachineRepository.All(skip, take, orderClause);
+                        var records = await this.deploymentRelatedMachineRepository.All(limit, offset, orderClause);
 
                         return this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d912b3ae16c48ac791e3851f65d70103</Hash>
+    <Hash>d52865a338991d818b36fa8aaab6522a</Hash>
 </Codenesium>*/

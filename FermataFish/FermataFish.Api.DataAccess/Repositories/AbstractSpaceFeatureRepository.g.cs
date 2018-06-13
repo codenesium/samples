@@ -25,9 +25,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<SpaceFeature> Get(int id)
@@ -75,31 +75,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<SpaceFeature>> Where(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<SpaceFeature>> Where(Expression<Func<SpaceFeature, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<SpaceFeature> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<SpaceFeature> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<SpaceFeature>> SearchLinqEF(Expression<Func<SpaceFeature, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SpaceFeature>> SearchLinqEF(Expression<Func<SpaceFeature, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SpaceFeature.Id)} ASC";
                         }
 
-                        return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpaceFeature>();
+                        return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
                 }
 
-                private async Task<List<SpaceFeature>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<SpaceFeature>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(SpaceFeature.Id)} ASC";
                         }
 
-                        return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<SpaceFeature>();
+                        return await this.Context.Set<SpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
                 }
 
                 private async Task<SpaceFeature> GetById(int id)
@@ -108,9 +108,14 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SpaceXSpaceFeature>().Where(x => x.SpaceFeatureId == spaceFeatureId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bc632ed2d138b33005a4f46a99c83604</Hash>
+    <Hash>4fb5c3652dcca435c7ccccb00f8d8a84</Hash>
 </Codenesium>*/

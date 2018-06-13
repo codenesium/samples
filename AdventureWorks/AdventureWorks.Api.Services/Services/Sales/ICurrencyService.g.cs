@@ -19,12 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCurrencyResponseModel> Get(string currencyCode);
 
-                Task<List<ApiCurrencyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiCurrencyResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiCurrencyResponseModel> GetName(string name);
+
+                Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>9cc93ba8a6acdc8b6bdf8b3113611063</Hash>
+    <Hash>f942ca407892dc78bd1ac5c37329cf74</Hash>
 </Codenesium>*/

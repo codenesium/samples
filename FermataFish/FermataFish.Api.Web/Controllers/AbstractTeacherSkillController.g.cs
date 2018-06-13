@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiTeacherSkillResponseModel> response = await this.TeacherSkillService.All(query.Offset, query.Limit);
+                        List<ApiTeacherSkillResponseModel> response = await this.TeacherSkillService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,36 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{teacherSkillId}/Rates")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
+                public async virtual Task<IActionResult> Rates(int teacherSkillId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiRateResponseModel> response = await this.TeacherSkillService.Rates(teacherSkillId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{teacherSkillId}/TeacherXTeacherSkills")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
+                public async virtual Task<IActionResult> TeacherXTeacherSkills(int teacherSkillId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiTeacherXTeacherSkillResponseModel> response = await this.TeacherSkillService.TeacherXTeacherSkills(teacherSkillId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ab5e7abcbe716383c89a05cb52b5e0b5</Hash>
+    <Hash>68614ff312ac17822dae245cde513280</Hash>
 </Codenesium>*/

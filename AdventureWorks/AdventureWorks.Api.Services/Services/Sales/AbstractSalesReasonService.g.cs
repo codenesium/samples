@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALSalesReasonMapper dalSalesReasonMapper;
 
+                private IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper;
+
+                private IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper;
+
                 private ILogger logger;
 
                 public AbstractSalesReasonService(
                         ILogger logger,
                         ISalesReasonRepository salesReasonRepository,
                         IApiSalesReasonRequestModelValidator salesReasonModelValidator,
-                        IBOLSalesReasonMapper bolsalesReasonMapper,
-                        IDALSalesReasonMapper dalsalesReasonMapper)
+                        IBOLSalesReasonMapper bolSalesReasonMapper,
+                        IDALSalesReasonMapper dalSalesReasonMapper
+
+                        ,
+                        IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
+                        IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper
+
+                        )
                         : base()
 
                 {
                         this.salesReasonRepository = salesReasonRepository;
                         this.salesReasonModelValidator = salesReasonModelValidator;
-                        this.bolSalesReasonMapper = bolsalesReasonMapper;
-                        this.dalSalesReasonMapper = dalsalesReasonMapper;
+                        this.bolSalesReasonMapper = bolSalesReasonMapper;
+                        this.dalSalesReasonMapper = dalSalesReasonMapper;
+                        this.bolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
+                        this.dalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesReasonResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesReasonRepository.All(skip, take, orderClause);
+                        var records = await this.salesReasonRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SalesOrderHeaderSalesReason> records = await this.salesReasonRepository.SalesOrderHeaderSalesReasons(salesReasonID, limit, offset);
+
+                        return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7e9acb465dd9346bfb3659090be86bdd</Hash>
+    <Hash>4c45c4323f8e9243e65782cf355c96e1</Hash>
 </Codenesium>*/

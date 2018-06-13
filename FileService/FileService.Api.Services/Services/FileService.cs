@@ -17,17 +17,20 @@ namespace FileServiceNS.Api.Services
                         IFileRepository fileRepository,
                         IApiFileRequestModelValidator fileModelValidator,
                         IBOLFileMapper bolfileMapper,
-                        IDALFileMapper dalfileMapper)
+                        IDALFileMapper dalfileMapper
+
+                        )
                         : base(logger,
                                fileRepository,
                                fileModelValidator,
                                bolfileMapper,
-                               dalfileMapper)
+                               dalfileMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e14d5676f1db2fe867ff1d68654e77f</Hash>
+    <Hash>79fdae4e4ba155713bd32a709b2cde95</Hash>
 </Codenesium>*/

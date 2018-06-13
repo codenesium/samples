@@ -44,22 +44,18 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void VersionBuildRules()
                 {
-                        this.RuleFor(x => x.VersionBuild).NotNull();
                 }
 
                 public virtual void VersionMajorRules()
                 {
-                        this.RuleFor(x => x.VersionMajor).NotNull();
                 }
 
                 public virtual void VersionMinorRules()
                 {
-                        this.RuleFor(x => x.VersionMinor).NotNull();
                 }
 
                 public virtual void VersionRevisionRules()
                 {
-                        this.RuleFor(x => x.VersionRevision).NotNull();
                 }
 
                 public virtual void VersionSpecialRules()
@@ -70,5 +66,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>afdbbb5ecb25a72aabdaab7b462b7bfe</Hash>
+    <Hash>b6b5dfb0d7f2f658c8088bd531f326f5</Hash>
 </Codenesium>*/

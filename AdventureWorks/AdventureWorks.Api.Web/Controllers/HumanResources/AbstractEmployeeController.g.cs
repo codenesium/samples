@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.All(query.Offset, query.Limit);
+                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -220,9 +220,49 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{businessEntityID}/EmployeeDepartmentHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                public async virtual Task<IActionResult> EmployeeDepartmentHistories(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeService.EmployeeDepartmentHistories(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/EmployeePayHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                public async virtual Task<IActionResult> EmployeePayHistories(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiEmployeePayHistoryResponseModel> response = await this.EmployeeService.EmployeePayHistories(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/JobCandidates")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
+                public async virtual Task<IActionResult> JobCandidates(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiJobCandidateResponseModel> response = await this.EmployeeService.JobCandidates(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1d5c7870a6ace5defd9de752b45c4463</Hash>
+    <Hash>dbaf04066a38c138745bc7f4eb1bc17e</Hash>
 </Codenesium>*/

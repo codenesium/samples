@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Invitation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Invitation>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Invitation> Get(string id)
@@ -75,31 +75,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Invitation>> Where(Expression<Func<Invitation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Invitation>> Where(Expression<Func<Invitation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Invitation> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Invitation> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Invitation>> SearchLinqEF(Expression<Func<Invitation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Invitation>> SearchLinqEF(Expression<Func<Invitation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Invitation.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Invitation>();
+                        return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Invitation>();
                 }
 
-                private async Task<List<Invitation>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Invitation>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Invitation.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Invitation>();
+                        return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Invitation>();
                 }
 
                 private async Task<Invitation> GetById(string id)
@@ -112,5 +112,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7581c629bd44c44dbe35d72c6f8b4485</Hash>
+    <Hash>ac21c721859e6a3c1bd9e97aa713b4b7</Hash>
 </Codenesium>*/

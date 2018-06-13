@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiPipelineStepStepRequirementRequestModelValidator: AbstractValidator<ApiPipelineStepStepRequirementRequestModel>
         {
@@ -36,13 +35,11 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).NotNull();
                         this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x ?.PipelineStepId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void RequirementMetRules()
                 {
-                        this.RuleFor(x => x.RequirementMet).NotNull();
                 }
 
                 private async Task<bool> BeValidPipelineStep(int id,  CancellationToken cancellationToken)
@@ -55,5 +52,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94c3e3cf42f46852138ce3c876eb505f</Hash>
+    <Hash>5347c7243c9534ea89d69e2098485269</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IWorkerRepository workerRepository,
                         IApiWorkerRequestModelValidator workerModelValidator,
-                        IBOLWorkerMapper bolworkerMapper,
-                        IDALWorkerMapper dalworkerMapper)
+                        IBOLWorkerMapper bolWorkerMapper,
+                        IDALWorkerMapper dalWorkerMapper
+
+                        )
                         : base()
 
                 {
                         this.workerRepository = workerRepository;
                         this.workerModelValidator = workerModelValidator;
-                        this.bolWorkerMapper = bolworkerMapper;
-                        this.dalWorkerMapper = dalworkerMapper;
+                        this.bolWorkerMapper = bolWorkerMapper;
+                        this.dalWorkerMapper = dalWorkerMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkerResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.workerRepository.All(skip, take, orderClause);
+                        var records = await this.workerRepository.All(limit, offset, orderClause);
 
                         return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b3d8faf8f98ef982929be327e358478a</Hash>
+    <Hash>30cc4f07ed015aa964d9f022fbc4e30c</Hash>
 </Codenesium>*/

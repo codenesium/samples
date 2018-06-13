@@ -19,10 +19,12 @@ namespace NebulaNS.Api.Services
 
                 Task<ApiChainStatusResponseModel> Get(int id);
 
-                Task<List<ApiChainStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiChainStatusResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiChainResponseModel>> Chains(int chainStatusId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>de34785a277ed958505704c6c64888f2</Hash>
+    <Hash>783a71b0c5a40abb9022662601e838e3</Hash>
 </Codenesium>*/

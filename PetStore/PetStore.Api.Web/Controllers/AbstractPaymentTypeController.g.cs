@@ -44,7 +44,7 @@ namespace PetStoreNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPaymentTypeResponseModel> response = await this.PaymentTypeService.All(query.Offset, query.Limit);
+                        List<ApiPaymentTypeResponseModel> response = await this.PaymentTypeService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace PetStoreNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{paymentTypeId}/Sales")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPaymentTypeResponseModel>), 200)]
+                public async virtual Task<IActionResult> Sales(int paymentTypeId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSaleResponseModel> response = await this.PaymentTypeService.Sales(paymentTypeId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>675afdd33bc2909d815413f3145d6fb2</Hash>
+    <Hash>90d1d0aeeb62aaec0c237948897e7635</Hash>
 </Codenesium>*/

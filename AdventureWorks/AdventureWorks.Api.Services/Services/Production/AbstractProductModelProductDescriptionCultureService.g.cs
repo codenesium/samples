@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
                         IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
-                        IBOLProductModelProductDescriptionCultureMapper bolproductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalproductModelProductDescriptionCultureMapper)
+                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+
+                        )
                         : base()
 
                 {
                         this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
                         this.productModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
-                        this.bolProductModelProductDescriptionCultureMapper = bolproductModelProductDescriptionCultureMapper;
-                        this.dalProductModelProductDescriptionCultureMapper = dalproductModelProductDescriptionCultureMapper;
+                        this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
+                        this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductModelProductDescriptionCultureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductModelProductDescriptionCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productModelProductDescriptionCultureRepository.All(skip, take, orderClause);
+                        var records = await this.productModelProductDescriptionCultureRepository.All(limit, offset, orderClause);
 
                         return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a13ddd14cd5307b8dcd094faf075ecc0</Hash>
+    <Hash>659c397b2e9834419397caf6469bec82</Hash>
 </Codenesium>*/

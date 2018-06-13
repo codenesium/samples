@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSalesPersonResponseModel> response = await this.SalesPersonService.All(query.Offset, query.Limit);
+                        List<ApiSalesPersonResponseModel> response = await this.SalesPersonService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,62 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{salesPersonID}/SalesOrderHeaders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderHeaders(int salesPersonID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesPersonService.SalesOrderHeaders(salesPersonID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/SalesPersonQuotaHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesPersonQuotaHistories(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesPersonQuotaHistoryResponseModel> response = await this.SalesPersonService.SalesPersonQuotaHistories(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/SalesTerritoryHistories")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesTerritoryHistories(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesTerritoryHistoryResponseModel> response = await this.SalesPersonService.SalesTerritoryHistories(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{salesPersonID}/Stores")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
+                public async virtual Task<IActionResult> Stores(int salesPersonID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiStoreResponseModel> response = await this.SalesPersonService.Stores(salesPersonID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f43ab6d2f1956c65c0bd44ccdb39d9dc</Hash>
+    <Hash>46b3b3f922ec2f522c092143e20dcbc1</Hash>
 </Codenesium>*/

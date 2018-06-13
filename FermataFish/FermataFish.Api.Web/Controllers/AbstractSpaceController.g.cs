@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSpaceResponseModel> response = await this.SpaceService.All(query.Offset, query.Limit);
+                        List<ApiSpaceResponseModel> response = await this.SpaceService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{spaceId}/SpaceXSpaceFeatures")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
+                public async virtual Task<IActionResult> SpaceXSpaceFeatures(int spaceId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSpaceXSpaceFeatureResponseModel> response = await this.SpaceService.SpaceXSpaceFeatures(spaceId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bbf010532eaef292bf2f815c076f2d53</Hash>
+    <Hash>ab76bebeea7ce3247cd858d478dc661b</Hash>
 </Codenesium>*/

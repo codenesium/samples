@@ -19,12 +19,12 @@ namespace NebulaNS.Api.Services
 
                 Task<ApiVersionInfoResponseModel> Get(long version);
 
-                Task<List<ApiVersionInfoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiVersionInfoResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiVersionInfoResponseModel> GetVersion(long version);
         }
 }
 
 /*<Codenesium>
-    <Hash>69d0cb3b08a0d88bb5ea84c3f507cd45</Hash>
+    <Hash>2bfdedafb614462ddb04cf593f016088</Hash>
 </Codenesium>*/

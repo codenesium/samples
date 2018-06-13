@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<DeploymentRelatedMachine> Get(int id);
 
-                Task<List<DeploymentRelatedMachine>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<DeploymentRelatedMachine>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<DeploymentRelatedMachine>> GetDeploymentId(string deploymentId);
                 Task<List<DeploymentRelatedMachine>> GetMachineId(string machineId);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30c8536d73ba6dbc40dc13b8f6f94bf2</Hash>
+    <Hash>b4d52fbdf901810381c3e3c67db08e89</Hash>
 </Codenesium>*/

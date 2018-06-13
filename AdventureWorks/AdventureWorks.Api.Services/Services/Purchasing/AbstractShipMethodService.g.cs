@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALShipMethodMapper dalShipMethodMapper;
 
+                private IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper;
+
+                private IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper;
+
                 private ILogger logger;
 
                 public AbstractShipMethodService(
                         ILogger logger,
                         IShipMethodRepository shipMethodRepository,
                         IApiShipMethodRequestModelValidator shipMethodModelValidator,
-                        IBOLShipMethodMapper bolshipMethodMapper,
-                        IDALShipMethodMapper dalshipMethodMapper)
+                        IBOLShipMethodMapper bolShipMethodMapper,
+                        IDALShipMethodMapper dalShipMethodMapper
+
+                        ,
+                        IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
+                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
+
+                        )
                         : base()
 
                 {
                         this.shipMethodRepository = shipMethodRepository;
                         this.shipMethodModelValidator = shipMethodModelValidator;
-                        this.bolShipMethodMapper = bolshipMethodMapper;
-                        this.dalShipMethodMapper = dalshipMethodMapper;
+                        this.bolShipMethodMapper = bolShipMethodMapper;
+                        this.dalShipMethodMapper = dalShipMethodMapper;
+                        this.bolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
+                        this.dalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiShipMethodResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiShipMethodResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.shipMethodRepository.All(skip, take, orderClause);
+                        var records = await this.shipMethodRepository.All(limit, offset, orderClause);
 
                         return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<PurchaseOrderHeader> records = await this.shipMethodRepository.PurchaseOrderHeaders(shipMethodID, limit, offset);
+
+                        return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>436a158593b1525914f78c0fc95a9ec5</Hash>
+    <Hash>46e3d3dba658bd2d3cd9cf3b8a76e21c</Hash>
 </Codenesium>*/

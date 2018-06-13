@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Services
                 public void SetProperties(string deploymentId,
                                           string channelId,
                                           string channelName,
-                                          Nullable<DateTime> completedTime,
-                                          DateTime created,
+                                          Nullable<DateTimeOffset> completedTime,
+                                          DateTimeOffset created,
                                           string deployedBy,
                                           string deploymentName,
                                           Nullable<int> durationSeconds,
@@ -22,10 +22,10 @@ namespace OctopusDeployNS.Api.Services
                                           string projectId,
                                           string projectName,
                                           string projectSlug,
-                                          DateTime queueTime,
+                                          DateTimeOffset queueTime,
                                           string releaseId,
                                           string releaseVersion,
-                                          Nullable<DateTime> startTime,
+                                          Nullable<DateTimeOffset> startTime,
                                           string taskId,
                                           string taskState,
                                           string tenantId,
@@ -58,9 +58,9 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ChannelName { get; private set; }
 
-                public Nullable<DateTime> CompletedTime { get; private set; }
+                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string DeployedBy { get; private set; }
 
@@ -80,13 +80,13 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ProjectSlug { get; private set; }
 
-                public DateTime QueueTime { get; private set; }
+                public DateTimeOffset QueueTime { get; private set; }
 
                 public string ReleaseId { get; private set; }
 
                 public string ReleaseVersion { get; private set; }
 
-                public Nullable<DateTime> StartTime { get; private set; }
+                public Nullable<DateTimeOffset> StartTime { get; private set; }
 
                 public string TaskId { get; private set; }
 
@@ -99,5 +99,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1086cf29114ac28f4ff1fea03d23dc0f</Hash>
+    <Hash>63637c2bf1dcb288e9d8152c3be4dc31</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IChannelRepository channelRepository,
                         IApiChannelRequestModelValidator channelModelValidator,
-                        IBOLChannelMapper bolchannelMapper,
-                        IDALChannelMapper dalchannelMapper)
+                        IBOLChannelMapper bolChannelMapper,
+                        IDALChannelMapper dalChannelMapper
+
+                        )
                         : base()
 
                 {
                         this.channelRepository = channelRepository;
                         this.channelModelValidator = channelModelValidator;
-                        this.bolChannelMapper = bolchannelMapper;
-                        this.dalChannelMapper = dalchannelMapper;
+                        this.bolChannelMapper = bolChannelMapper;
+                        this.dalChannelMapper = dalChannelMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiChannelResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiChannelResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.channelRepository.All(skip, take, orderClause);
+                        var records = await this.channelRepository.All(limit, offset, orderClause);
 
                         return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
                 }
@@ -119,5 +121,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f22412c12f7d80cb1fb6ffaa8429cc74</Hash>
+    <Hash>83d1f8e43ee0eef3bedee0c1fa050d2f</Hash>
 </Codenesium>*/

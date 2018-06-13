@@ -15,10 +15,10 @@ namespace FermataFishNS.Api.DataAccess
 
                 Task<SpaceXSpaceFeature> Get(int id);
 
-                Task<List<SpaceXSpaceFeature>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<SpaceXSpaceFeature>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>dd2a4fb8f4ecb647dacbd1d5a68522cf</Hash>
+    <Hash>de462b1f7941c8c794248be727c57d56</Hash>
 </Codenesium>*/

@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiHandlerRequestModelValidator: AbstractValidator<ApiHandlerRequestModel>
         {
@@ -28,7 +27,6 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void CountryIdRules()
                 {
-                        this.RuleFor(x => x.CountryId).NotNull();
                 }
 
                 public virtual void EmailRules()
@@ -58,5 +56,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8446b850fd7c171cffac98530c3de9b</Hash>
+    <Hash>fbe51df8d7534c388b4caf8c3c15f4a2</Hash>
 </Codenesium>*/

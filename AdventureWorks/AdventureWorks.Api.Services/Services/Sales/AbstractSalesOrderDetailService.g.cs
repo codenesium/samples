@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ISalesOrderDetailRepository salesOrderDetailRepository,
                         IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
-                        IBOLSalesOrderDetailMapper bolsalesOrderDetailMapper,
-                        IDALSalesOrderDetailMapper dalsalesOrderDetailMapper)
+                        IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
+                        IDALSalesOrderDetailMapper dalSalesOrderDetailMapper
+
+                        )
                         : base()
 
                 {
                         this.salesOrderDetailRepository = salesOrderDetailRepository;
                         this.salesOrderDetailModelValidator = salesOrderDetailModelValidator;
-                        this.bolSalesOrderDetailMapper = bolsalesOrderDetailMapper;
-                        this.dalSalesOrderDetailMapper = dalsalesOrderDetailMapper;
+                        this.bolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
+                        this.dalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesOrderDetailRepository.All(skip, take, orderClause);
+                        var records = await this.salesOrderDetailRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f454535d126a68d0dee6674e0efc9def</Hash>
+    <Hash>2e06c61d4c698a1f73a692ac056012d4</Hash>
 </Codenesium>*/

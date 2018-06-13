@@ -17,17 +17,20 @@ namespace FermataFishNS.Api.Services
                         IAdminRepository adminRepository,
                         IApiAdminRequestModelValidator adminModelValidator,
                         IBOLAdminMapper boladminMapper,
-                        IDALAdminMapper daladminMapper)
+                        IDALAdminMapper daladminMapper
+
+                        )
                         : base(logger,
                                adminRepository,
                                adminModelValidator,
                                boladminMapper,
-                               daladminMapper)
+                               daladminMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f264e45c64bf39240453a8cbfffa3c8</Hash>
+    <Hash>762eade70d52c6de92978333f7920077</Hash>
 </Codenesium>*/

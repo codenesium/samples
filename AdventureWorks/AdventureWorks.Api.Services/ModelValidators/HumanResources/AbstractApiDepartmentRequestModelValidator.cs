@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiDepartmentRequestModelValidator: AbstractValidator<ApiDepartmentRequestModel>
         {
@@ -35,7 +34,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -49,7 +47,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Department record = await this.DepartmentRepository.GetName(model.Name);
 
-                        if (record == null || record.DepartmentID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (short) && record.DepartmentID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -62,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>181c4047f90b3aafafb1ef893ab45aa0</Hash>
+    <Hash>62153f87a375e411acb3a9f86fb0e22d</Hash>
 </Codenesium>*/

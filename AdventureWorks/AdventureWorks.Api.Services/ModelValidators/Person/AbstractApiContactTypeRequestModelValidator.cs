@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiContactTypeRequestModelValidator: AbstractValidator<ApiContactTypeRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public IContactTypeRepository ContactTypeRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -43,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ContactType record = await this.ContactTypeRepository.GetName(model.Name);
 
-                        if (record == null || record.ContactTypeID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ContactTypeID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cedd7acf8754f66e3968d668ecd0ff0a</Hash>
+    <Hash>2dde1ab1a72ce6b0f3f3ca9a440391b4</Hash>
 </Codenesium>*/

@@ -42,7 +42,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Proxy record = await this.ProxyRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73d9c6742fc76627e0203ccc755dcb04</Hash>
+    <Hash>6b150d44b1c49d45cb3a2dcf79d82033</Hash>
 </Codenesium>*/

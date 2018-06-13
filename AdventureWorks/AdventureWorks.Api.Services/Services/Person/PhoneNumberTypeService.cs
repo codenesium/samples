@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IPhoneNumberTypeRepository phoneNumberTypeRepository,
                         IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
                         IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
-                        IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper)
+                        IDALPhoneNumberTypeMapper dalphoneNumberTypeMapper
+                        ,
+                        IBOLPersonPhoneMapper bolPersonPhoneMapper,
+                        IDALPersonPhoneMapper dalPersonPhoneMapper
+
+                        )
                         : base(logger,
                                phoneNumberTypeRepository,
                                phoneNumberTypeModelValidator,
                                bolphoneNumberTypeMapper,
-                               dalphoneNumberTypeMapper)
+                               dalphoneNumberTypeMapper
+                               ,
+                               bolPersonPhoneMapper,
+                               dalPersonPhoneMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2cb7f251e6ae13bb919703a56fe533ea</Hash>
+    <Hash>23350f3bca986f848db26dc4008c6fdd</Hash>
 </Codenesium>*/

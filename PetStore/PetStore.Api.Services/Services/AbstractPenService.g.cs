@@ -22,27 +22,39 @@ namespace PetStoreNS.Api.Services
 
                 private IDALPenMapper dalPenMapper;
 
+                private IBOLPetMapper bolPetMapper;
+
+                private IDALPetMapper dalPetMapper;
+
                 private ILogger logger;
 
                 public AbstractPenService(
                         ILogger logger,
                         IPenRepository penRepository,
                         IApiPenRequestModelValidator penModelValidator,
-                        IBOLPenMapper bolpenMapper,
-                        IDALPenMapper dalpenMapper)
+                        IBOLPenMapper bolPenMapper,
+                        IDALPenMapper dalPenMapper
+
+                        ,
+                        IBOLPetMapper bolPetMapper,
+                        IDALPetMapper dalPetMapper
+
+                        )
                         : base()
 
                 {
                         this.penRepository = penRepository;
                         this.penModelValidator = penModelValidator;
-                        this.bolPenMapper = bolpenMapper;
-                        this.dalPenMapper = dalpenMapper;
+                        this.bolPenMapper = bolPenMapper;
+                        this.dalPenMapper = dalPenMapper;
+                        this.bolPetMapper = bolPetMapper;
+                        this.dalPetMapper = dalPetMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPenResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPenResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.penRepository.All(skip, take, orderClause);
+                        var records = await this.penRepository.All(limit, offset, orderClause);
 
                         return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace PetStoreNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiPetResponseModel>> Pets(int penId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Pet> records = await this.penRepository.Pets(penId, limit, offset);
+
+                        return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>de4d915b2ea3b8584ef144838f8294b8</Hash>
+    <Hash>f9ac3b05d2718641ca01cb73c005648c</Hash>
 </Codenesium>*/

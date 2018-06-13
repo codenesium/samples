@@ -15,10 +15,10 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<OtherTransport> Get(int id);
 
-                Task<List<OtherTransport>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<OtherTransport>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>e1f0cede71f15445778e1ad748d29b19</Hash>
+    <Hash>09645e704e2d526199957c4bf5cfbf31</Hash>
 </Codenesium>*/

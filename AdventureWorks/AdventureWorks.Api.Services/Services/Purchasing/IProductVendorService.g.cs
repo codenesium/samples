@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiProductVendorResponseModel> Get(int productID);
 
-                Task<List<ApiProductVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiProductVendorResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiProductVendorResponseModel>> GetBusinessEntityID(int businessEntityID);
                 Task<List<ApiProductVendorResponseModel>> GetUnitMeasureCode(string unitMeasureCode);
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05630fd6ad3771c06d9eec2059a70de4</Hash>
+    <Hash>125c737b921b5d549561eec8ccd3caca</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IVariableSetRepository variableSetRepository,
                         IApiVariableSetRequestModelValidator variableSetModelValidator,
                         IBOLVariableSetMapper bolvariableSetMapper,
-                        IDALVariableSetMapper dalvariableSetMapper)
+                        IDALVariableSetMapper dalvariableSetMapper
+
+                        )
                         : base(logger,
                                variableSetRepository,
                                variableSetModelValidator,
                                bolvariableSetMapper,
-                               dalvariableSetMapper)
+                               dalvariableSetMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2a340eca94a04efdc0e35723209f2c8c</Hash>
+    <Hash>356ee435eb92f143a71d3658c3d1370e</Hash>
 </Codenesium>*/

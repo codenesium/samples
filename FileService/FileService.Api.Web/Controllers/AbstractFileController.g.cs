@@ -44,7 +44,7 @@ namespace FileServiceNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiFileResponseModel> response = await this.FileService.All(query.Offset, query.Limit);
+                        List<ApiFileResponseModel> response = await this.FileService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ab6ffb0d0e069026ab6481857bf35572</Hash>
+    <Hash>298b5b635408da9e9ae5c1a978f5d919</Hash>
 </Codenesium>*/

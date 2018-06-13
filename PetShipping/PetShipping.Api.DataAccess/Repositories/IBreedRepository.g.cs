@@ -15,10 +15,12 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<Breed> Get(int id);
 
-                Task<List<Breed>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Breed>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+
+                Task<List<Pet>> Pets(int breedId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>441c0bf7531348e1ac5a44322bb0636a</Hash>
+    <Hash>12f98711b800eb3a7607ecfd95c9f722</Hash>
 </Codenesium>*/

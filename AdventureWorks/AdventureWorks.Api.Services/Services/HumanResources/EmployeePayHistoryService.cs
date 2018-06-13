@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IEmployeePayHistoryRepository employeePayHistoryRepository,
                         IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
                         IBOLEmployeePayHistoryMapper bolemployeePayHistoryMapper,
-                        IDALEmployeePayHistoryMapper dalemployeePayHistoryMapper)
+                        IDALEmployeePayHistoryMapper dalemployeePayHistoryMapper
+
+                        )
                         : base(logger,
                                employeePayHistoryRepository,
                                employeePayHistoryModelValidator,
                                bolemployeePayHistoryMapper,
-                               dalemployeePayHistoryMapper)
+                               dalemployeePayHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fddf78d53784c0da262a9cf16d93f069</Hash>
+    <Hash>b92f41e3998055f225fa23791dac8f8b</Hash>
 </Codenesium>*/

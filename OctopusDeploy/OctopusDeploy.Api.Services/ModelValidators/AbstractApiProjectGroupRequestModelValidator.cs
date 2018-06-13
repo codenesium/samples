@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IProjectGroupRepository ProjectGroupRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -47,7 +46,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ProjectGroup record = await this.ProjectGroupRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -60,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6fc6cd64e8573a1335c28fa07c78978</Hash>
+    <Hash>2b04358668e3aa498ab2483e063c09b7</Hash>
 </Codenesium>*/

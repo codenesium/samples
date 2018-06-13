@@ -27,7 +27,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void AppliedRules()
                 {
-                        this.RuleFor(x => x.Applied).NotNull();
                 }
 
                 public virtual void ScriptNameRules()
@@ -39,5 +38,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3cfd427a1bdc7773e0b9779a0fba380c</Hash>
+    <Hash>052bf0cc35ece259c84405b33e52ac22</Hash>
 </Codenesium>*/

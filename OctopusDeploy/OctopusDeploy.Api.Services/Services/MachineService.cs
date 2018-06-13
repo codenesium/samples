@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
                         IBOLMachineMapper bolmachineMapper,
-                        IDALMachineMapper dalmachineMapper)
+                        IDALMachineMapper dalmachineMapper
+
+                        )
                         : base(logger,
                                machineRepository,
                                machineModelValidator,
                                bolmachineMapper,
-                               dalmachineMapper)
+                               dalmachineMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d1d7e2381ec6d7fdfbc83a361d906f9a</Hash>
+    <Hash>9b8607223160c3fad4cc9dbc4737323b</Hash>
 </Codenesium>*/

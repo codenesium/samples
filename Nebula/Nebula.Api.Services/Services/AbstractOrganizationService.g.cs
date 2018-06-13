@@ -22,27 +22,39 @@ namespace NebulaNS.Api.Services
 
                 private IDALOrganizationMapper dalOrganizationMapper;
 
+                private IBOLTeamMapper bolTeamMapper;
+
+                private IDALTeamMapper dalTeamMapper;
+
                 private ILogger logger;
 
                 public AbstractOrganizationService(
                         ILogger logger,
                         IOrganizationRepository organizationRepository,
                         IApiOrganizationRequestModelValidator organizationModelValidator,
-                        IBOLOrganizationMapper bolorganizationMapper,
-                        IDALOrganizationMapper dalorganizationMapper)
+                        IBOLOrganizationMapper bolOrganizationMapper,
+                        IDALOrganizationMapper dalOrganizationMapper
+
+                        ,
+                        IBOLTeamMapper bolTeamMapper,
+                        IDALTeamMapper dalTeamMapper
+
+                        )
                         : base()
 
                 {
                         this.organizationRepository = organizationRepository;
                         this.organizationModelValidator = organizationModelValidator;
-                        this.bolOrganizationMapper = bolorganizationMapper;
-                        this.dalOrganizationMapper = dalorganizationMapper;
+                        this.bolOrganizationMapper = bolOrganizationMapper;
+                        this.dalOrganizationMapper = dalOrganizationMapper;
+                        this.bolTeamMapper = bolTeamMapper;
+                        this.dalTeamMapper = dalTeamMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiOrganizationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiOrganizationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.organizationRepository.All(skip, take, orderClause);
+                        var records = await this.organizationRepository.All(limit, offset, orderClause);
 
                         return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace NebulaNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiTeamResponseModel>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Team> records = await this.organizationRepository.Teams(organizationId, limit, offset);
+
+                        return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4da9e92a8b30bcd38ef52fdcdaa8737a</Hash>
+    <Hash>7e3f93261c00f191b26309ae300829ad</Hash>
 </Codenesium>*/

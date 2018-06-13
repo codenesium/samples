@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IProjectTriggerRepository ProjectTriggerRepository { get; set; }
                 public virtual void IsDisabledRules()
                 {
-                        this.RuleFor(x => x.IsDisabled).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -59,7 +58,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ProjectTrigger record = await this.ProjectTriggerRepository.GetProjectIdName(model.ProjectId, model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -72,5 +71,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5811019a49692f17d4b7bf15333da0b8</Hash>
+    <Hash>40990cdbe512a7b3f5ca573ec5c3506a</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IActionTemplateRepository actionTemplateRepository,
                         IApiActionTemplateRequestModelValidator actionTemplateModelValidator,
                         IBOLActionTemplateMapper bolactionTemplateMapper,
-                        IDALActionTemplateMapper dalactionTemplateMapper)
+                        IDALActionTemplateMapper dalactionTemplateMapper
+
+                        )
                         : base(logger,
                                actionTemplateRepository,
                                actionTemplateModelValidator,
                                bolactionTemplateMapper,
-                               dalactionTemplateMapper)
+                               dalactionTemplateMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>98784c8ac744988c8c09ae23abdaddd4</Hash>
+    <Hash>62f0cf31ebf6a163201055d9bb0c0b3d</Hash>
 </Codenesium>*/

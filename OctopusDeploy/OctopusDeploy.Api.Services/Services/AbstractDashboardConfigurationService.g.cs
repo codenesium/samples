@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IDashboardConfigurationRepository dashboardConfigurationRepository,
                         IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
-                        IBOLDashboardConfigurationMapper boldashboardConfigurationMapper,
-                        IDALDashboardConfigurationMapper daldashboardConfigurationMapper)
+                        IBOLDashboardConfigurationMapper bolDashboardConfigurationMapper,
+                        IDALDashboardConfigurationMapper dalDashboardConfigurationMapper
+
+                        )
                         : base()
 
                 {
                         this.dashboardConfigurationRepository = dashboardConfigurationRepository;
                         this.dashboardConfigurationModelValidator = dashboardConfigurationModelValidator;
-                        this.bolDashboardConfigurationMapper = boldashboardConfigurationMapper;
-                        this.dalDashboardConfigurationMapper = daldashboardConfigurationMapper;
+                        this.bolDashboardConfigurationMapper = bolDashboardConfigurationMapper;
+                        this.dalDashboardConfigurationMapper = dalDashboardConfigurationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDashboardConfigurationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDashboardConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.dashboardConfigurationRepository.All(skip, take, orderClause);
+                        var records = await this.dashboardConfigurationRepository.All(limit, offset, orderClause);
 
                         return this.bolDashboardConfigurationMapper.MapBOToModel(this.dalDashboardConfigurationMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ef5b3aaba1603b0bbdd5f04372b6baf</Hash>
+    <Hash>4a9eb12ebc8a73aa6c81286c5448b4cb</Hash>
 </Codenesium>*/

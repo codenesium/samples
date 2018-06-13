@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
                         IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator,
-                        IBOLPipelineStepStepRequirementMapper bolpipelineStepStepRequirementMapper,
-                        IDALPipelineStepStepRequirementMapper dalpipelineStepStepRequirementMapper)
+                        IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
+                        IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper
+
+                        )
                         : base()
 
                 {
                         this.pipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
                         this.pipelineStepStepRequirementModelValidator = pipelineStepStepRequirementModelValidator;
-                        this.bolPipelineStepStepRequirementMapper = bolpipelineStepStepRequirementMapper;
-                        this.dalPipelineStepStepRequirementMapper = dalpipelineStepStepRequirementMapper;
+                        this.bolPipelineStepStepRequirementMapper = bolPipelineStepStepRequirementMapper;
+                        this.dalPipelineStepStepRequirementMapper = dalPipelineStepStepRequirementMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.pipelineStepStepRequirementRepository.All(skip, take, orderClause);
+                        var records = await this.pipelineStepStepRequirementRepository.All(limit, offset, orderClause);
 
                         return this.bolPipelineStepStepRequirementMapper.MapBOToModel(this.dalPipelineStepStepRequirementMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e61f834faaf5ba08196e1804489bd9ef</Hash>
+    <Hash>b65c78feabd094f9d39edf0dea87d9a6</Hash>
 </Codenesium>*/

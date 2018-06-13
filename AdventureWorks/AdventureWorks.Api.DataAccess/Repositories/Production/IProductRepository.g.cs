@@ -15,13 +15,23 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Product> Get(int productID);
 
-                Task<List<Product>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Product>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<Product> GetName(string name);
                 Task<Product> GetProductNumber(string productNumber);
+
+                Task<List<BillOfMaterials>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ProductDocument>> ProductDocuments(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ProductInventory>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ProductListPriceHistory>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ProductProductPhoto>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ProductReview>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<TransactionHistory>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<WorkOrder>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>450f98544f43afa2419d9038fd05f0ee</Hash>
+    <Hash>af2940cb61db3ea1a3af5700e6e2f29a</Hash>
 </Codenesium>*/

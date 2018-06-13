@@ -28,21 +28,23 @@ namespace FermataFishNS.Api.Services
                         ILogger logger,
                         IStudentXFamilyRepository studentXFamilyRepository,
                         IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
-                        IBOLStudentXFamilyMapper bolstudentXFamilyMapper,
-                        IDALStudentXFamilyMapper dalstudentXFamilyMapper)
+                        IBOLStudentXFamilyMapper bolStudentXFamilyMapper,
+                        IDALStudentXFamilyMapper dalStudentXFamilyMapper
+
+                        )
                         : base()
 
                 {
                         this.studentXFamilyRepository = studentXFamilyRepository;
                         this.studentXFamilyModelValidator = studentXFamilyModelValidator;
-                        this.bolStudentXFamilyMapper = bolstudentXFamilyMapper;
-                        this.dalStudentXFamilyMapper = dalstudentXFamilyMapper;
+                        this.bolStudentXFamilyMapper = bolStudentXFamilyMapper;
+                        this.dalStudentXFamilyMapper = dalStudentXFamilyMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStudentXFamilyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStudentXFamilyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.studentXFamilyRepository.All(skip, take, orderClause);
+                        var records = await this.studentXFamilyRepository.All(limit, offset, orderClause);
 
                         return this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>14b799908fd236f3c804e53b162f2be2</Hash>
+    <Hash>cf16b39eaa0ca7404c9e8f82735b6228</Hash>
 </Codenesium>*/

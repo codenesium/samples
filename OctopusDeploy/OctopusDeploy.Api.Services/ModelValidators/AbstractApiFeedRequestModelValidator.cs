@@ -54,7 +54,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Feed record = await this.FeedRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -67,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8a9c1cee029f58bb0218f5241e87bed</Hash>
+    <Hash>eb0282690df9fafbe15124e3c182e0c3</Hash>
 </Codenesium>*/

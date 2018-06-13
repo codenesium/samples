@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IMutexRepository mutexRepository,
                         IApiMutexRequestModelValidator mutexModelValidator,
                         IBOLMutexMapper bolmutexMapper,
-                        IDALMutexMapper dalmutexMapper)
+                        IDALMutexMapper dalmutexMapper
+
+                        )
                         : base(logger,
                                mutexRepository,
                                mutexModelValidator,
                                bolmutexMapper,
-                               dalmutexMapper)
+                               dalmutexMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6737c18538a4ad4e2baf5acd6d8de89c</Hash>
+    <Hash>87f926b4297dee5b6cff0e0244789f25</Hash>
 </Codenesium>*/

@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IStoreRepository storeRepository,
                         IApiStoreRequestModelValidator storeModelValidator,
                         IBOLStoreMapper bolstoreMapper,
-                        IDALStoreMapper dalstoreMapper)
+                        IDALStoreMapper dalstoreMapper
+                        ,
+                        IBOLCustomerMapper bolCustomerMapper,
+                        IDALCustomerMapper dalCustomerMapper
+
+                        )
                         : base(logger,
                                storeRepository,
                                storeModelValidator,
                                bolstoreMapper,
-                               dalstoreMapper)
+                               dalstoreMapper
+                               ,
+                               bolCustomerMapper,
+                               dalCustomerMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cc1bb2845d640a23022d5ae267f99ec4</Hash>
+    <Hash>70f4369fb1545c44b08ac0c881ef1c8b</Hash>
 </Codenesium>*/

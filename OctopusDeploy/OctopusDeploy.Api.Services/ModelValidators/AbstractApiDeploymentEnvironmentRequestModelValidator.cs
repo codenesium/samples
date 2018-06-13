@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IDeploymentEnvironmentRepository DeploymentEnvironmentRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -45,14 +44,13 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void SortOrderRules()
                 {
-                        this.RuleFor(x => x.SortOrder).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiDeploymentEnvironmentRequestModel model,  CancellationToken cancellationToken)
                 {
                         DeploymentEnvironment record = await this.DeploymentEnvironmentRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -65,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>689ba5ff17527bc64f455bff87f6f60f</Hash>
+    <Hash>52adfaae5094f292fdf35969f399d092</Hash>
 </Codenesium>*/

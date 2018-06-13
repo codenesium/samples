@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IStateProvinceRepository stateProvinceRepository,
                         IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
                         IBOLStateProvinceMapper bolstateProvinceMapper,
-                        IDALStateProvinceMapper dalstateProvinceMapper)
+                        IDALStateProvinceMapper dalstateProvinceMapper
+                        ,
+                        IBOLAddressMapper bolAddressMapper,
+                        IDALAddressMapper dalAddressMapper
+
+                        )
                         : base(logger,
                                stateProvinceRepository,
                                stateProvinceModelValidator,
                                bolstateProvinceMapper,
-                               dalstateProvinceMapper)
+                               dalstateProvinceMapper
+                               ,
+                               bolAddressMapper,
+                               dalAddressMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ec28982512542d7f6bc8852dd536fe4c</Hash>
+    <Hash>88ebfbcb24f7de0719204557374f8fb5</Hash>
 </Codenesium>*/

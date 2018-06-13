@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Vendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Vendor> Get(int businessEntityID)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Vendor>> Where(Expression<Func<Vendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Vendor>> Where(Expression<Func<Vendor, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Vendor> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Vendor> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Vendor>> SearchLinqEF(Expression<Func<Vendor, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Vendor>> SearchLinqEF(Expression<Func<Vendor, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Vendor.BusinessEntityID)} ASC";
                         }
 
-                        return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Vendor>();
+                        return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Vendor>();
                 }
 
-                private async Task<List<Vendor>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Vendor>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Vendor.BusinessEntityID)} ASC";
                         }
 
-                        return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Vendor>();
+                        return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Vendor>();
                 }
 
                 private async Task<Vendor> GetById(int businessEntityID)
@@ -115,9 +115,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<ProductVendor>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductVendor>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductVendor>();
+                }
+                public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>88ddba3e32eee0ace819278e4a7ef0b8</Hash>
+    <Hash>0a55c97e04dc2b7b59c874aec1e02d65</Hash>
 </Codenesium>*/

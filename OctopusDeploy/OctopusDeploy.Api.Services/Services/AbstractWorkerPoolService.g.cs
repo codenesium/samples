@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IWorkerPoolRepository workerPoolRepository,
                         IApiWorkerPoolRequestModelValidator workerPoolModelValidator,
-                        IBOLWorkerPoolMapper bolworkerPoolMapper,
-                        IDALWorkerPoolMapper dalworkerPoolMapper)
+                        IBOLWorkerPoolMapper bolWorkerPoolMapper,
+                        IDALWorkerPoolMapper dalWorkerPoolMapper
+
+                        )
                         : base()
 
                 {
                         this.workerPoolRepository = workerPoolRepository;
                         this.workerPoolModelValidator = workerPoolModelValidator;
-                        this.bolWorkerPoolMapper = bolworkerPoolMapper;
-                        this.dalWorkerPoolMapper = dalworkerPoolMapper;
+                        this.bolWorkerPoolMapper = bolWorkerPoolMapper;
+                        this.dalWorkerPoolMapper = dalWorkerPoolMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkerPoolResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkerPoolResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.workerPoolRepository.All(skip, take, orderClause);
+                        var records = await this.workerPoolRepository.All(limit, offset, orderClause);
 
                         return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c1d282f9b03783cf3a9aced8164bafe8</Hash>
+    <Hash>c3f2244abc915c7c9d9c5c03d83fb4f4</Hash>
 </Codenesium>*/

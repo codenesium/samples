@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductModelProductDescriptionCulture>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ProductModelProductDescriptionCulture>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ProductModelProductDescriptionCulture> Get(int productModelID)
@@ -75,31 +75,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ProductModelProductDescriptionCulture>> Where(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ProductModelProductDescriptionCulture> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEF(Expression<Func<ProductModelProductDescriptionCulture, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
+                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
                 }
 
-                private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductModelProductDescriptionCulture>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductModelProductDescriptionCulture.ProductModelID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductModelProductDescriptionCulture>();
+                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
                 }
 
                 private async Task<ProductModelProductDescriptionCulture> GetById(int productModelID)
@@ -112,5 +112,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>19ea043e68f8403d482448fbca632f8c</Hash>
+    <Hash>fdd708f77a45d357fb63cd5e597c4c16</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDestinationResponseModel> response = await this.DestinationService.All(query.Offset, query.Limit);
+                        List<ApiDestinationResponseModel> response = await this.DestinationService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace PetShippingNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{destinationId}/PipelineStepDestinations")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiDestinationResponseModel>), 200)]
+                public async virtual Task<IActionResult> PipelineStepDestinations(int destinationId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPipelineStepDestinationResponseModel> response = await this.DestinationService.PipelineStepDestinations(destinationId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7dc809122f2952677f11c2a249655d65</Hash>
+    <Hash>9393c3681313b04f6287491054c96673</Hash>
 </Codenesium>*/

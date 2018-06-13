@@ -25,9 +25,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Organization>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Organization>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Organization> Get(int id)
@@ -75,31 +75,31 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Organization>> Where(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Organization>> Where(Expression<Func<Organization, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Organization> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Organization> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Organization>> SearchLinqEF(Expression<Func<Organization, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Organization>> SearchLinqEF(Expression<Func<Organization, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Organization.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Organization>();
+                        return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Organization>();
                 }
 
-                private async Task<List<Organization>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Organization>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Organization.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Organization>();
+                        return await this.Context.Set<Organization>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Organization>();
                 }
 
                 private async Task<Organization> GetById(int id)
@@ -108,9 +108,14 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Team>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Team>().Where(x => x.OrganizationId == organizationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Team>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ce32ed685af01602a648cc27ae2e733c</Hash>
+    <Hash>9c0d2a79eb70a783908c6f1fcc273491</Hash>
 </Codenesium>*/

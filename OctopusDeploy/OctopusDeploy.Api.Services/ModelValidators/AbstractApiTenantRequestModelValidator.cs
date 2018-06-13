@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public ITenantRepository TenantRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -56,7 +55,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Tenant record = await this.TenantRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -69,5 +68,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f9e8abea500a3eabef9dc360bd0694c</Hash>
+    <Hash>583ac73d7b719a84f08b6e6566592f20</Hash>
 </Codenesium>*/

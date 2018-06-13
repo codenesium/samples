@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IErrorLogRepository errorLogRepository,
                         IApiErrorLogRequestModelValidator errorLogModelValidator,
-                        IBOLErrorLogMapper bolerrorLogMapper,
-                        IDALErrorLogMapper dalerrorLogMapper)
+                        IBOLErrorLogMapper bolErrorLogMapper,
+                        IDALErrorLogMapper dalErrorLogMapper
+
+                        )
                         : base()
 
                 {
                         this.errorLogRepository = errorLogRepository;
                         this.errorLogModelValidator = errorLogModelValidator;
-                        this.bolErrorLogMapper = bolerrorLogMapper;
-                        this.dalErrorLogMapper = dalerrorLogMapper;
+                        this.bolErrorLogMapper = bolErrorLogMapper;
+                        this.dalErrorLogMapper = dalErrorLogMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiErrorLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiErrorLogResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.errorLogRepository.All(skip, take, orderClause);
+                        var records = await this.errorLogRepository.All(limit, offset, orderClause);
 
                         return this.bolErrorLogMapper.MapBOToModel(this.dalErrorLogMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3901a23200d5178e39a5e86c305543aa</Hash>
+    <Hash>948f83b0924b5f94c61f41dc9b8ab702</Hash>
 </Codenesium>*/

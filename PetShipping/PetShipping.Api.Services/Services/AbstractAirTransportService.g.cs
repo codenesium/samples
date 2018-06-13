@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IAirTransportRepository airTransportRepository,
                         IApiAirTransportRequestModelValidator airTransportModelValidator,
-                        IBOLAirTransportMapper bolairTransportMapper,
-                        IDALAirTransportMapper dalairTransportMapper)
+                        IBOLAirTransportMapper bolAirTransportMapper,
+                        IDALAirTransportMapper dalAirTransportMapper
+
+                        )
                         : base()
 
                 {
                         this.airTransportRepository = airTransportRepository;
                         this.airTransportModelValidator = airTransportModelValidator;
-                        this.bolAirTransportMapper = bolairTransportMapper;
-                        this.dalAirTransportMapper = dalairTransportMapper;
+                        this.bolAirTransportMapper = bolAirTransportMapper;
+                        this.dalAirTransportMapper = dalAirTransportMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAirTransportResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAirTransportResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.airTransportRepository.All(skip, take, orderClause);
+                        var records = await this.airTransportRepository.All(limit, offset, orderClause);
 
                         return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a3f6afd57c887ac8376d621f62ca360</Hash>
+    <Hash>24d0714e63ac6764697a2180ab18d314</Hash>
 </Codenesium>*/

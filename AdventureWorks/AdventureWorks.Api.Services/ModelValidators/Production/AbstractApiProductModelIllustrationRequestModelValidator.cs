@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiProductModelIllustrationRequestModelValidator: AbstractValidator<ApiProductModelIllustrationRequestModel>
         {
@@ -28,16 +27,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void IllustrationIDRules()
                 {
-                        this.RuleFor(x => x.IllustrationID).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2fd4b64379e36e41c8ac477309532aff</Hash>
+    <Hash>022a8c854876dd626c81ab08497e2aec</Hash>
 </Codenesium>*/

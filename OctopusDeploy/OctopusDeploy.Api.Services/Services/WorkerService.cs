@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IWorkerRepository workerRepository,
                         IApiWorkerRequestModelValidator workerModelValidator,
                         IBOLWorkerMapper bolworkerMapper,
-                        IDALWorkerMapper dalworkerMapper)
+                        IDALWorkerMapper dalworkerMapper
+
+                        )
                         : base(logger,
                                workerRepository,
                                workerModelValidator,
                                bolworkerMapper,
-                               dalworkerMapper)
+                               dalworkerMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>670f257d5646f3874f35f42996843864</Hash>
+    <Hash>c6d26779cb1258c4f0690a1cf6a1d09a</Hash>
 </Codenesium>*/

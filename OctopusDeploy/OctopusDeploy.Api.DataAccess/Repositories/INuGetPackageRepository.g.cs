@@ -15,10 +15,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<NuGetPackage> Get(string id);
 
-                Task<List<NuGetPackage>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<NuGetPackage>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>1ccd8277059616881b7c24b5eb4d1ad3</Hash>
+    <Hash>7692484c4762bd8bde4e6d62c0cc934d</Hash>
 </Codenesium>*/

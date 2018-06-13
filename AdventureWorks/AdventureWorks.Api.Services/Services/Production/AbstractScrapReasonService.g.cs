@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALScrapReasonMapper dalScrapReasonMapper;
 
+                private IBOLWorkOrderMapper bolWorkOrderMapper;
+
+                private IDALWorkOrderMapper dalWorkOrderMapper;
+
                 private ILogger logger;
 
                 public AbstractScrapReasonService(
                         ILogger logger,
                         IScrapReasonRepository scrapReasonRepository,
                         IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
-                        IBOLScrapReasonMapper bolscrapReasonMapper,
-                        IDALScrapReasonMapper dalscrapReasonMapper)
+                        IBOLScrapReasonMapper bolScrapReasonMapper,
+                        IDALScrapReasonMapper dalScrapReasonMapper
+
+                        ,
+                        IBOLWorkOrderMapper bolWorkOrderMapper,
+                        IDALWorkOrderMapper dalWorkOrderMapper
+
+                        )
                         : base()
 
                 {
                         this.scrapReasonRepository = scrapReasonRepository;
                         this.scrapReasonModelValidator = scrapReasonModelValidator;
-                        this.bolScrapReasonMapper = bolscrapReasonMapper;
-                        this.dalScrapReasonMapper = dalscrapReasonMapper;
+                        this.bolScrapReasonMapper = bolScrapReasonMapper;
+                        this.dalScrapReasonMapper = dalScrapReasonMapper;
+                        this.bolWorkOrderMapper = bolWorkOrderMapper;
+                        this.dalWorkOrderMapper = dalWorkOrderMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiScrapReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiScrapReasonResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.scrapReasonRepository.All(skip, take, orderClause);
+                        var records = await this.scrapReasonRepository.All(limit, offset, orderClause);
 
                         return this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiWorkOrderResponseModel>> WorkOrders(short scrapReasonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<WorkOrder> records = await this.scrapReasonRepository.WorkOrders(scrapReasonID, limit, offset);
+
+                        return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bd6da65a6c32e49a14878261888319f6</Hash>
+    <Hash>36d7d0d73040abcc12ef8b9056be6f58</Hash>
 </Codenesium>*/

@@ -14,7 +14,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public void SetProperties(
                         string apiKeyHashed,
-                        DateTime created,
+                        DateTimeOffset created,
                         string id,
                         string jSON,
                         string userId)
@@ -30,7 +30,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string ApiKeyHashed { get; private set; }
 
                 [Column("Created", TypeName="datetimeoffset")]
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 [Key]
                 [Column("Id", TypeName="nvarchar(50)")]
@@ -45,5 +45,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c00562e03f38f7138bbf40160650a6e3</Hash>
+    <Hash>4040e9f2d62226352ff88fc2cea35976</Hash>
 </Codenesium>*/

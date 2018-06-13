@@ -27,11 +27,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void AllocatedRules()
                 {
-                        this.RuleFor(x => x.Allocated).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>66e58aa8228b9be186fc6b065f151aea</Hash>
+    <Hash>87908dde668e0a456582ce0dfd94c5b7</Hash>
 </Codenesium>*/

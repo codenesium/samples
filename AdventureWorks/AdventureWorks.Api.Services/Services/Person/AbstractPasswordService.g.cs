@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IPasswordRepository passwordRepository,
                         IApiPasswordRequestModelValidator passwordModelValidator,
-                        IBOLPasswordMapper bolpasswordMapper,
-                        IDALPasswordMapper dalpasswordMapper)
+                        IBOLPasswordMapper bolPasswordMapper,
+                        IDALPasswordMapper dalPasswordMapper
+
+                        )
                         : base()
 
                 {
                         this.passwordRepository = passwordRepository;
                         this.passwordModelValidator = passwordModelValidator;
-                        this.bolPasswordMapper = bolpasswordMapper;
-                        this.dalPasswordMapper = dalpasswordMapper;
+                        this.bolPasswordMapper = bolPasswordMapper;
+                        this.dalPasswordMapper = dalPasswordMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPasswordResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPasswordResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.passwordRepository.All(skip, take, orderClause);
+                        var records = await this.passwordRepository.All(limit, offset, orderClause);
 
                         return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5cd461671d1701841f3483522b62d824</Hash>
+    <Hash>83076a3f6814a8b88103aa9616841776</Hash>
 </Codenesium>*/

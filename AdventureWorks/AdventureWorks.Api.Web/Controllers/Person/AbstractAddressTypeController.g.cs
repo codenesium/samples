@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiAddressTypeResponseModel> response = await this.AddressTypeService.All(query.Offset, query.Limit);
+                        List<ApiAddressTypeResponseModel> response = await this.AddressTypeService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{addressTypeID}/BusinessEntityAddresses")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiAddressTypeResponseModel>), 200)]
+                public async virtual Task<IActionResult> BusinessEntityAddresses(int addressTypeID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiBusinessEntityAddressResponseModel> response = await this.AddressTypeService.BusinessEntityAddresses(addressTypeID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f99103ee2fe1dc05686c9a789de14a5e</Hash>
+    <Hash>73f49df3c24d4bf44c9e48898bd73005</Hash>
 </Codenesium>*/

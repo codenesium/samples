@@ -15,13 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Document> Get(Guid documentNode);
 
-                Task<List<Document>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Document>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode);
                 Task<List<Document>> GetFileNameRevision(string fileName, string revision);
+
+                Task<List<ProductDocument>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>ecb8880fa8d287ed678de5f2184ecd16</Hash>
+    <Hash>c973fb91d51f84a8a2af27c97f52d44e</Hash>
 </Codenesium>*/

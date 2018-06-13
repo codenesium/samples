@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IProjectTriggerRepository projectTriggerRepository,
                         IApiProjectTriggerRequestModelValidator projectTriggerModelValidator,
                         IBOLProjectTriggerMapper bolprojectTriggerMapper,
-                        IDALProjectTriggerMapper dalprojectTriggerMapper)
+                        IDALProjectTriggerMapper dalprojectTriggerMapper
+
+                        )
                         : base(logger,
                                projectTriggerRepository,
                                projectTriggerModelValidator,
                                bolprojectTriggerMapper,
-                               dalprojectTriggerMapper)
+                               dalprojectTriggerMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d70dce6382875e00cf4044bffdcd9021</Hash>
+    <Hash>c83785aef368e095ca8d2f94e1db0681</Hash>
 </Codenesium>*/

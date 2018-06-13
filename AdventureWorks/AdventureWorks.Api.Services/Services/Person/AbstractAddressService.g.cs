@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALAddressMapper dalAddressMapper;
 
+                private IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper;
+
+                private IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper;
+
                 private ILogger logger;
 
                 public AbstractAddressService(
                         ILogger logger,
                         IAddressRepository addressRepository,
                         IApiAddressRequestModelValidator addressModelValidator,
-                        IBOLAddressMapper boladdressMapper,
-                        IDALAddressMapper daladdressMapper)
+                        IBOLAddressMapper bolAddressMapper,
+                        IDALAddressMapper dalAddressMapper
+
+                        ,
+                        IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
+                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
+
+                        )
                         : base()
 
                 {
                         this.addressRepository = addressRepository;
                         this.addressModelValidator = addressModelValidator;
-                        this.bolAddressMapper = boladdressMapper;
-                        this.dalAddressMapper = daladdressMapper;
+                        this.bolAddressMapper = bolAddressMapper;
+                        this.dalAddressMapper = dalAddressMapper;
+                        this.bolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
+                        this.dalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.addressRepository.All(skip, take, orderClause);
+                        var records = await this.addressRepository.All(limit, offset, orderClause);
 
                         return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<BusinessEntityAddress> records = await this.addressRepository.BusinessEntityAddresses(addressID, limit, offset);
+
+                        return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ee45ec7a228d525e9560070b3f35be06</Hash>
+    <Hash>0305522272cba835b3afa2b15e0f8572</Hash>
 </Codenesium>*/

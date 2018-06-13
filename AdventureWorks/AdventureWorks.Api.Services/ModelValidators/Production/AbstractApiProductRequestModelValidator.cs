@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiProductRequestModelValidator: AbstractValidator<ApiProductRequestModel>
         {
@@ -39,7 +38,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void DaysToManufactureRules()
                 {
-                        this.RuleFor(x => x.DaysToManufacture).NotNull();
                 }
 
                 public virtual void DiscontinuedDateRules()
@@ -48,22 +46,18 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void FinishedGoodsFlagRules()
                 {
-                        this.RuleFor(x => x.FinishedGoodsFlag).NotNull();
                 }
 
                 public virtual void ListPriceRules()
                 {
-                        this.RuleFor(x => x.ListPrice).NotNull();
                 }
 
                 public virtual void MakeFlagRules()
                 {
-                        this.RuleFor(x => x.MakeFlag).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -95,17 +89,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ReorderPointRules()
                 {
-                        this.RuleFor(x => x.ReorderPoint).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SafetyStockLevelRules()
                 {
-                        this.RuleFor(x => x.SafetyStockLevel).NotNull();
                 }
 
                 public virtual void SellEndDateRules()
@@ -114,7 +105,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SellStartDateRules()
                 {
-                        this.RuleFor(x => x.SellStartDate).NotNull();
                 }
 
                 public virtual void SizeRules()
@@ -129,7 +119,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void StandardCostRules()
                 {
-                        this.RuleFor(x => x.StandardCost).NotNull();
                 }
 
                 public virtual void StyleRules()
@@ -150,7 +139,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Product record = await this.ProductRepository.GetName(model.Name);
 
-                        if (record == null || record.ProductID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ProductID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -163,7 +152,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Product record = await this.ProductRepository.GetProductNumber(model.ProductNumber);
 
-                        if (record == null || record.ProductID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ProductID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -176,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a9b25588435b93e731d921ca9d47187</Hash>
+    <Hash>594b2488420d3814c1fd38cf4fa0214f</Hash>
 </Codenesium>*/

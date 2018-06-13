@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<DeploymentEnvironment> Get(string id);
 
-                Task<List<DeploymentEnvironment>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<DeploymentEnvironment>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<DeploymentEnvironment> GetName(string name);
                 Task<List<DeploymentEnvironment>> GetDataVersion(byte[] dataVersion);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>914fe7feab6da1d59cf401b109686d7d</Hash>
+    <Hash>b48a5e04d8591ac6c1e4ed35fe64bd4f</Hash>
 </Codenesium>*/

@@ -25,9 +25,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<CountryRequirement>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<CountryRequirement> Get(int id)
@@ -75,31 +75,31 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<CountryRequirement>> Where(Expression<Func<CountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<CountryRequirement>> Where(Expression<Func<CountryRequirement, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<CountryRequirement> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<CountryRequirement> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<CountryRequirement>> SearchLinqEF(Expression<Func<CountryRequirement, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<CountryRequirement>> SearchLinqEF(Expression<Func<CountryRequirement, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(CountryRequirement.Id)} ASC";
                         }
 
-                        return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRequirement>();
+                        return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
                 }
 
-                private async Task<List<CountryRequirement>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<CountryRequirement>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(CountryRequirement.Id)} ASC";
                         }
 
-                        return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRequirement>();
+                        return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
                 }
 
                 private async Task<CountryRequirement> GetById(int id)
@@ -112,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0df7e16ad2896e5ac27b33d887f41daf</Hash>
+    <Hash>03c2b98429d972f3d3cd36f6b96e0a1a</Hash>
 </Codenesium>*/

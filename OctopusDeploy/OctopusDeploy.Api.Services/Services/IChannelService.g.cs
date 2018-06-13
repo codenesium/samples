@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiChannelResponseModel> Get(string id);
 
-                Task<List<ApiChannelResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiChannelResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiChannelResponseModel> GetNameProjectId(string name, string projectId);
                 Task<List<ApiChannelResponseModel>> GetDataVersion(byte[] dataVersion);
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4121edbcee97ea15c5d71a9e5e46cd6e</Hash>
+    <Hash>aefab95f6c78b0e5a3c75ab6fdafdc31</Hash>
 </Codenesium>*/

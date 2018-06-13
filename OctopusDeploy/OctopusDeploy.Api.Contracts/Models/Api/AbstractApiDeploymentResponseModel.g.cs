@@ -11,7 +11,7 @@ namespace OctopusDeployNS.Api.Contracts
         {
                 public virtual void SetProperties(
                         string channelId,
-                        DateTime created,
+                        DateTimeOffset created,
                         string deployedBy,
                         string deployedToMachineIds,
                         string environmentId,
@@ -41,7 +41,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ChannelId { get; private set; }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string DeployedBy { get; private set; }
 
@@ -189,5 +189,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ed8b47c745e7d28c52e3839de9905056</Hash>
+    <Hash>458eb03af9567a4b1c1909077f3851a8</Hash>
 </Codenesium>*/

@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         ICultureRepository cultureRepository,
                         IApiCultureRequestModelValidator cultureModelValidator,
                         IBOLCultureMapper bolcultureMapper,
-                        IDALCultureMapper dalcultureMapper)
+                        IDALCultureMapper dalcultureMapper
+                        ,
+                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+
+                        )
                         : base(logger,
                                cultureRepository,
                                cultureModelValidator,
                                bolcultureMapper,
-                               dalcultureMapper)
+                               dalcultureMapper
+                               ,
+                               bolProductModelProductDescriptionCultureMapper,
+                               dalProductModelProductDescriptionCultureMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>bc5301e592c6fe5c45108b0753b56014</Hash>
+    <Hash>cfa0705da57ca5750aafb858aabf5810</Hash>
 </Codenesium>*/

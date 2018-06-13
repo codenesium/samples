@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiStateProvinceRequestModelValidator: AbstractValidator<ApiStateProvinceRequestModel>
         {
@@ -36,12 +35,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void IsOnlyStateProvinceFlagRules()
                 {
-                        this.RuleFor(x => x.IsOnlyStateProvinceFlag).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -53,7 +50,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void StateProvinceCodeRules()
@@ -65,14 +61,13 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void TerritoryIDRules()
                 {
-                        this.RuleFor(x => x.TerritoryID).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiStateProvinceRequestModel model,  CancellationToken cancellationToken)
                 {
                         StateProvince record = await this.StateProvinceRepository.GetName(model.Name);
 
-                        if (record == null || record.StateProvinceID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.StateProvinceID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -85,7 +80,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         StateProvince record = await this.StateProvinceRepository.GetStateProvinceCodeCountryRegionCode(model.StateProvinceCode, model.CountryRegionCode);
 
-                        if (record == null || record.StateProvinceID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.StateProvinceID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -98,5 +93,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>426bd93db8fa82ceb99b0e0ed75fea8a</Hash>
+    <Hash>d56786cdc0b30b7c48fb2fab8a3fef85</Hash>
 </Codenesium>*/

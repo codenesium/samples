@@ -8,7 +8,6 @@ using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
-
 {
         public abstract class AbstractApiDeviceActionRequestModelValidator: AbstractValidator<ApiDeviceActionRequestModel>
         {
@@ -30,7 +29,6 @@ namespace ESPIOTNS.Api.Services
 
                 public virtual void DeviceIdRules()
                 {
-                        this.RuleFor(x => x.DeviceId).NotNull();
                         this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDevice).When(x => x ?.DeviceId != null).WithMessage("Invalid reference");
                 }
 
@@ -56,5 +54,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3202433e7a49f79c9ba9f46d43da699</Hash>
+    <Hash>15aaf2d9af22325036ca443eee62a865</Hash>
 </Codenesium>*/

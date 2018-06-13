@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<TenantVariable> Get(string id);
 
-                Task<List<TenantVariable>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<TenantVariable>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<TenantVariable> GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId);
                 Task<List<TenantVariable>> GetTenantId(string tenantId);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d3253c3d6a19b12ed01c7cd6434eb121</Hash>
+    <Hash>aa8b39079335c4fdcfbead91b5ba0353</Hash>
 </Codenesium>*/

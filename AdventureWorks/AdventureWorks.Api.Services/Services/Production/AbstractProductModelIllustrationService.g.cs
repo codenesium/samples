@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IProductModelIllustrationRepository productModelIllustrationRepository,
                         IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator,
-                        IBOLProductModelIllustrationMapper bolproductModelIllustrationMapper,
-                        IDALProductModelIllustrationMapper dalproductModelIllustrationMapper)
+                        IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
+
+                        )
                         : base()
 
                 {
                         this.productModelIllustrationRepository = productModelIllustrationRepository;
                         this.productModelIllustrationModelValidator = productModelIllustrationModelValidator;
-                        this.bolProductModelIllustrationMapper = bolproductModelIllustrationMapper;
-                        this.dalProductModelIllustrationMapper = dalproductModelIllustrationMapper;
+                        this.bolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
+                        this.dalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductModelIllustrationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductModelIllustrationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productModelIllustrationRepository.All(skip, take, orderClause);
+                        var records = await this.productModelIllustrationRepository.All(limit, offset, orderClause);
 
                         return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b54378fea832285334c3899a5017e894</Hash>
+    <Hash>97f8d6f570dbebfbdf1ac6dab9e54442</Hash>
 </Codenesium>*/

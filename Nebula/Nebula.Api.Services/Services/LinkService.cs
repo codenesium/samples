@@ -17,17 +17,26 @@ namespace NebulaNS.Api.Services
                         ILinkRepository linkRepository,
                         IApiLinkRequestModelValidator linkModelValidator,
                         IBOLLinkMapper bollinkMapper,
-                        IDALLinkMapper dallinkMapper)
+                        IDALLinkMapper dallinkMapper
+                        ,
+                        IBOLLinkLogMapper bolLinkLogMapper,
+                        IDALLinkLogMapper dalLinkLogMapper
+
+                        )
                         : base(logger,
                                linkRepository,
                                linkModelValidator,
                                bollinkMapper,
-                               dallinkMapper)
+                               dallinkMapper
+                               ,
+                               bolLinkLogMapper,
+                               dalLinkLogMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0f81e4a3ab14963c802172e2db1ed506</Hash>
+    <Hash>9f85e4d896d4413eb041513be404330b</Hash>
 </Codenesium>*/

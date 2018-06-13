@@ -19,12 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiScrapReasonResponseModel> Get(short scrapReasonID);
 
-                Task<List<ApiScrapReasonResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiScrapReasonResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiScrapReasonResponseModel> GetName(string name);
+
+                Task<List<ApiWorkOrderResponseModel>> WorkOrders(short scrapReasonID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>6b172c1d75e975dc7805ccc43f7dcaf5</Hash>
+    <Hash>0eb8a6d487a225e6dc65c75d8ac30fc7</Hash>
 </Codenesium>*/

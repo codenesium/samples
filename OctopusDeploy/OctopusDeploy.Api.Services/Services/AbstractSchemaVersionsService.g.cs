@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ISchemaVersionsRepository schemaVersionsRepository,
                         IApiSchemaVersionsRequestModelValidator schemaVersionsModelValidator,
-                        IBOLSchemaVersionsMapper bolschemaVersionsMapper,
-                        IDALSchemaVersionsMapper dalschemaVersionsMapper)
+                        IBOLSchemaVersionsMapper bolSchemaVersionsMapper,
+                        IDALSchemaVersionsMapper dalSchemaVersionsMapper
+
+                        )
                         : base()
 
                 {
                         this.schemaVersionsRepository = schemaVersionsRepository;
                         this.schemaVersionsModelValidator = schemaVersionsModelValidator;
-                        this.bolSchemaVersionsMapper = bolschemaVersionsMapper;
-                        this.dalSchemaVersionsMapper = dalschemaVersionsMapper;
+                        this.bolSchemaVersionsMapper = bolSchemaVersionsMapper;
+                        this.dalSchemaVersionsMapper = dalSchemaVersionsMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSchemaVersionsResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSchemaVersionsResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.schemaVersionsRepository.All(skip, take, orderClause);
+                        var records = await this.schemaVersionsRepository.All(limit, offset, orderClause);
 
                         return this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fee40a12e9e74acdfb4121332aae2d56</Hash>
+    <Hash>df189eaf3cc65ca06236125fc263938f</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiFeedResponseModel> response = await this.FeedService.All(query.Offset, query.Limit);
+                        List<ApiFeedResponseModel> response = await this.FeedService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bdee635aa4dd3c1627e94eecd992a67e</Hash>
+    <Hash>21c6b51afa470250d5ad30e8a260e664</Hash>
 </Codenesium>*/

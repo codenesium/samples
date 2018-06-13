@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IDepartmentRepository departmentRepository,
                         IApiDepartmentRequestModelValidator departmentModelValidator,
                         IBOLDepartmentMapper boldepartmentMapper,
-                        IDALDepartmentMapper daldepartmentMapper)
+                        IDALDepartmentMapper daldepartmentMapper
+                        ,
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+
+                        )
                         : base(logger,
                                departmentRepository,
                                departmentModelValidator,
                                boldepartmentMapper,
-                               daldepartmentMapper)
+                               daldepartmentMapper
+                               ,
+                               bolEmployeeDepartmentHistoryMapper,
+                               dalEmployeeDepartmentHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a0676beb863a26e9f0d2272ebcb4f029</Hash>
+    <Hash>5ebe38835f6ab45c3ca1fcd9b1817ca9</Hash>
 </Codenesium>*/

@@ -19,13 +19,23 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiProductResponseModel> Get(int productID);
 
-                Task<List<ApiProductResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiProductResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiProductResponseModel> GetName(string name);
                 Task<ApiProductResponseModel> GetProductNumber(string productNumber);
+
+                Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductDocumentResponseModel>> ProductDocuments(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductInventoryResponseModel>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiProductReviewResponseModel>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiTransactionHistoryResponseModel>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiWorkOrderResponseModel>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>26eefb9b21078f4fa0826749c007b787</Hash>
+    <Hash>2f6ce7b94265a7a54e3f7e5344a173d7</Hash>
 </Codenesium>*/

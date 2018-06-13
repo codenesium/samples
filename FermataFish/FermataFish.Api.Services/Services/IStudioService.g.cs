@@ -19,10 +19,20 @@ namespace FermataFishNS.Api.Services
 
                 Task<ApiStudioResponseModel> Get(int id);
 
-                Task<List<ApiStudioResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiStudioResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiAdminResponseModel>> Admins(int studioId, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiFamilyResponseModel>> Families(int id, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiLessonResponseModel>> Lessons(int studioId, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiLessonStatusResponseModel>> LessonStatus(int id, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiSpaceResponseModel>> Spaces(int studioId, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatures(int studioId, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiStudentResponseModel>> Students(int studioId, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiTeacherResponseModel>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>f00377320ef4e8e03af01f91bb49fa31</Hash>
+    <Hash>16a71ff67a50880ad0246031efe428f3</Hash>
 </Codenesium>*/

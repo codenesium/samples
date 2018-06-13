@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiVersionInfoResponseModel> response = await this.VersionInfoService.All(query.Offset, query.Limit);
+                        List<ApiVersionInfoResponseModel> response = await this.VersionInfoService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -183,5 +183,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>00052769ed0f00cdbbcb3599a109c084</Hash>
+    <Hash>c31b812e8ac854ae68429d3a5e02fb34</Hash>
 </Codenesium>*/

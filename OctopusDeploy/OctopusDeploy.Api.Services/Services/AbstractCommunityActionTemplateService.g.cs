@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ICommunityActionTemplateRepository communityActionTemplateRepository,
                         IApiCommunityActionTemplateRequestModelValidator communityActionTemplateModelValidator,
-                        IBOLCommunityActionTemplateMapper bolcommunityActionTemplateMapper,
-                        IDALCommunityActionTemplateMapper dalcommunityActionTemplateMapper)
+                        IBOLCommunityActionTemplateMapper bolCommunityActionTemplateMapper,
+                        IDALCommunityActionTemplateMapper dalCommunityActionTemplateMapper
+
+                        )
                         : base()
 
                 {
                         this.communityActionTemplateRepository = communityActionTemplateRepository;
                         this.communityActionTemplateModelValidator = communityActionTemplateModelValidator;
-                        this.bolCommunityActionTemplateMapper = bolcommunityActionTemplateMapper;
-                        this.dalCommunityActionTemplateMapper = dalcommunityActionTemplateMapper;
+                        this.bolCommunityActionTemplateMapper = bolCommunityActionTemplateMapper;
+                        this.dalCommunityActionTemplateMapper = dalCommunityActionTemplateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.communityActionTemplateRepository.All(skip, take, orderClause);
+                        var records = await this.communityActionTemplateRepository.All(limit, offset, orderClause);
 
                         return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72a58bd27fec6c16ba1ed1f44afaa6ac</Hash>
+    <Hash>f26bbd7462595f5f33c095c043563983</Hash>
 </Codenesium>*/

@@ -41,7 +41,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CreatedRules()
                 {
-                        this.RuleFor(x => x.Created).NotNull();
                 }
 
                 public virtual void DeployedByRules()
@@ -91,7 +90,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void QueueTimeRules()
                 {
-                        this.RuleFor(x => x.QueueTime).NotNull();
                 }
 
                 public virtual void ReleaseIdRules()
@@ -135,5 +133,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>60e3d9cb70ae9456a59e680430127454</Hash>
+    <Hash>fc9e6ee351f5851e9307c332f62546e5</Hash>
 </Codenesium>*/

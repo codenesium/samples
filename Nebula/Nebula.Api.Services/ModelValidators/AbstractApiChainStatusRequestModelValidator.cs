@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiChainStatusRequestModelValidator: AbstractValidator<ApiChainStatusRequestModel>
         {
@@ -35,5 +34,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d56793b629b920c7635b6c7d50b8840b</Hash>
+    <Hash>f1999150ecbbc221268bc0c716185343</Hash>
 </Codenesium>*/

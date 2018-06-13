@@ -28,21 +28,23 @@ namespace FileServiceNS.Api.Services
                         ILogger logger,
                         IFileRepository fileRepository,
                         IApiFileRequestModelValidator fileModelValidator,
-                        IBOLFileMapper bolfileMapper,
-                        IDALFileMapper dalfileMapper)
+                        IBOLFileMapper bolFileMapper,
+                        IDALFileMapper dalFileMapper
+
+                        )
                         : base()
 
                 {
                         this.fileRepository = fileRepository;
                         this.fileModelValidator = fileModelValidator;
-                        this.bolFileMapper = bolfileMapper;
-                        this.dalFileMapper = dalfileMapper;
+                        this.bolFileMapper = bolFileMapper;
+                        this.dalFileMapper = dalFileMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiFileResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiFileResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.fileRepository.All(skip, take, orderClause);
+                        var records = await this.fileRepository.All(limit, offset, orderClause);
 
                         return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7edff1b24be632d7e411ab7df52e325</Hash>
+    <Hash>fedfe7dd8ec82422744ca332f570d86b</Hash>
 </Codenesium>*/

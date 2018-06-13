@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALProductPhotoMapper dalProductPhotoMapper;
 
+                private IBOLProductProductPhotoMapper bolProductProductPhotoMapper;
+
+                private IDALProductProductPhotoMapper dalProductProductPhotoMapper;
+
                 private ILogger logger;
 
                 public AbstractProductPhotoService(
                         ILogger logger,
                         IProductPhotoRepository productPhotoRepository,
                         IApiProductPhotoRequestModelValidator productPhotoModelValidator,
-                        IBOLProductPhotoMapper bolproductPhotoMapper,
-                        IDALProductPhotoMapper dalproductPhotoMapper)
+                        IBOLProductPhotoMapper bolProductPhotoMapper,
+                        IDALProductPhotoMapper dalProductPhotoMapper
+
+                        ,
+                        IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
+                        IDALProductProductPhotoMapper dalProductProductPhotoMapper
+
+                        )
                         : base()
 
                 {
                         this.productPhotoRepository = productPhotoRepository;
                         this.productPhotoModelValidator = productPhotoModelValidator;
-                        this.bolProductPhotoMapper = bolproductPhotoMapper;
-                        this.dalProductPhotoMapper = dalproductPhotoMapper;
+                        this.bolProductPhotoMapper = bolProductPhotoMapper;
+                        this.dalProductPhotoMapper = dalProductPhotoMapper;
+                        this.bolProductProductPhotoMapper = bolProductProductPhotoMapper;
+                        this.dalProductProductPhotoMapper = dalProductProductPhotoMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductPhotoResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductPhotoResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productPhotoRepository.All(skip, take, orderClause);
+                        var records = await this.productPhotoRepository.All(limit, offset, orderClause);
 
                         return this.bolProductPhotoMapper.MapBOToModel(this.dalProductPhotoMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductProductPhoto> records = await this.productPhotoRepository.ProductProductPhotoes(productPhotoID, limit, offset);
+
+                        return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>44e65581ec26a4934c0528c760e82820</Hash>
+    <Hash>cfa8e6359c73df52148dfb0e7fb142d9</Hash>
 </Codenesium>*/

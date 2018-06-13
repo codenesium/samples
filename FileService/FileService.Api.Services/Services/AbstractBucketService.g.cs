@@ -22,27 +22,39 @@ namespace FileServiceNS.Api.Services
 
                 private IDALBucketMapper dalBucketMapper;
 
+                private IBOLFileMapper bolFileMapper;
+
+                private IDALFileMapper dalFileMapper;
+
                 private ILogger logger;
 
                 public AbstractBucketService(
                         ILogger logger,
                         IBucketRepository bucketRepository,
                         IApiBucketRequestModelValidator bucketModelValidator,
-                        IBOLBucketMapper bolbucketMapper,
-                        IDALBucketMapper dalbucketMapper)
+                        IBOLBucketMapper bolBucketMapper,
+                        IDALBucketMapper dalBucketMapper
+
+                        ,
+                        IBOLFileMapper bolFileMapper,
+                        IDALFileMapper dalFileMapper
+
+                        )
                         : base()
 
                 {
                         this.bucketRepository = bucketRepository;
                         this.bucketModelValidator = bucketModelValidator;
-                        this.bolBucketMapper = bolbucketMapper;
-                        this.dalBucketMapper = dalbucketMapper;
+                        this.bolBucketMapper = bolBucketMapper;
+                        this.dalBucketMapper = dalBucketMapper;
+                        this.bolFileMapper = bolFileMapper;
+                        this.dalFileMapper = dalFileMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBucketResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBucketResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.bucketRepository.All(skip, take, orderClause);
+                        var records = await this.bucketRepository.All(limit, offset, orderClause);
 
                         return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace FileServiceNS.Api.Services
 
                         return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiFileResponseModel>> Files(int bucketId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<File> records = await this.bucketRepository.Files(bucketId, limit, offset);
+
+                        return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>65a86565ad12cf2cddc414b67dd7f8f0</Hash>
+    <Hash>0bb09e9d4fb1ac6edadbe3f62ca4b642</Hash>
 </Codenesium>*/

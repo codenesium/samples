@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.All(query.Offset, query.Limit);
+                        List<ApiDeploymentResponseModel> response = await this.DeploymentService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -176,7 +176,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId/{id}/{projectId}/{projectGroupId}/{name}/{created}/{releaseId}/{taskId}/{environmentId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTime created, string releaseId, string taskId, string environmentId)
+                public async virtual Task<IActionResult> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
                         List<ApiDeploymentResponseModel> response = await this.DeploymentService.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
 
@@ -193,9 +193,23 @@ namespace OctopusDeployNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{deploymentId}/DeploymentRelatedMachines")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiDeploymentResponseModel>), 200)]
+                public async virtual Task<IActionResult> DeploymentRelatedMachines(string deploymentId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentService.DeploymentRelatedMachines(deploymentId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e030223f06968300aea981c4e1fd8973</Hash>
+    <Hash>201a3256ae650a59839b3899147a58c3</Hash>
 </Codenesium>*/

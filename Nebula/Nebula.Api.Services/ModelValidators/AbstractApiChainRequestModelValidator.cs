@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiChainRequestModelValidator: AbstractValidator<ApiChainRequestModel>
         {
@@ -32,13 +31,11 @@ namespace NebulaNS.Api.Services
 
                 public virtual void ChainStatusIdRules()
                 {
-                        this.RuleFor(x => x.ChainStatusId).NotNull();
                         this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x.ExternalId).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -49,7 +46,6 @@ namespace NebulaNS.Api.Services
 
                 public virtual void TeamIdRules()
                 {
-                        this.RuleFor(x => x.TeamId).NotNull();
                         this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
                 }
 
@@ -70,5 +66,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>96e0c46ea8bcf8d355b75c861d6b8fcd</Hash>
+    <Hash>0a4cc61d30ea7bc543e23a1f532eb0a1</Hash>
 </Codenesium>*/

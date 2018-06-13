@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiAirTransportRequestModelValidator: AbstractValidator<ApiAirTransportRequestModel>
         {
@@ -36,28 +35,23 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void HandlerIdRules()
                 {
-                        this.RuleFor(x => x.HandlerId).NotNull();
                         this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x ?.HandlerId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void IdRules()
                 {
-                        this.RuleFor(x => x.Id).NotNull();
                 }
 
                 public virtual void LandDateRules()
                 {
-                        this.RuleFor(x => x.LandDate).NotNull();
                 }
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).NotNull();
                 }
 
                 public virtual void TakeoffDateRules()
                 {
-                        this.RuleFor(x => x.TakeoffDate).NotNull();
                 }
 
                 private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
@@ -70,5 +64,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>993f8d0183217620a49057b65a5aaf71</Hash>
+    <Hash>b841d4a4d7c761a7038ad8d8399e5600</Hash>
 </Codenesium>*/

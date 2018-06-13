@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IAccountRepository accountRepository,
                         IApiAccountRequestModelValidator accountModelValidator,
                         IBOLAccountMapper bolaccountMapper,
-                        IDALAccountMapper dalaccountMapper)
+                        IDALAccountMapper dalaccountMapper
+
+                        )
                         : base(logger,
                                accountRepository,
                                accountModelValidator,
                                bolaccountMapper,
-                               dalaccountMapper)
+                               dalaccountMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>55c4a53bba28b094bbcd04011c2f3022</Hash>
+    <Hash>d944e5ec2782dce7f44efa394de33eb8</Hash>
 </Codenesium>*/

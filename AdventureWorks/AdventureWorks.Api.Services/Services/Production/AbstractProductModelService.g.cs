@@ -22,27 +22,55 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALProductModelMapper dalProductModelMapper;
 
+                private IBOLProductMapper bolProductMapper;
+
+                private IDALProductMapper dalProductMapper;
+                private IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper;
+
+                private IDALProductModelIllustrationMapper dalProductModelIllustrationMapper;
+                private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
+
+                private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
+
                 private ILogger logger;
 
                 public AbstractProductModelService(
                         ILogger logger,
                         IProductModelRepository productModelRepository,
                         IApiProductModelRequestModelValidator productModelModelValidator,
-                        IBOLProductModelMapper bolproductModelMapper,
-                        IDALProductModelMapper dalproductModelMapper)
+                        IBOLProductModelMapper bolProductModelMapper,
+                        IDALProductModelMapper dalProductModelMapper
+
+                        ,
+                        IBOLProductMapper bolProductMapper,
+                        IDALProductMapper dalProductMapper
+                        ,
+                        IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
+                        ,
+                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+
+                        )
                         : base()
 
                 {
                         this.productModelRepository = productModelRepository;
                         this.productModelModelValidator = productModelModelValidator;
-                        this.bolProductModelMapper = bolproductModelMapper;
-                        this.dalProductModelMapper = dalproductModelMapper;
+                        this.bolProductModelMapper = bolProductModelMapper;
+                        this.dalProductModelMapper = dalProductModelMapper;
+                        this.bolProductMapper = bolProductMapper;
+                        this.dalProductMapper = dalProductMapper;
+                        this.bolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
+                        this.dalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
+                        this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
+                        this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductModelResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductModelResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productModelRepository.All(skip, take, orderClause);
+                        var records = await this.productModelRepository.All(limit, offset, orderClause);
 
                         return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
                 }
@@ -115,9 +143,28 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiProductResponseModel>> Products(int productModelID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Product> records = await this.productModelRepository.Products(productModelID, limit, offset);
+
+                        return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductModelIllustration> records = await this.productModelRepository.ProductModelIllustrations(productModelID, limit, offset);
+
+                        return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductModelProductDescriptionCulture> records = await this.productModelRepository.ProductModelProductDescriptionCultures(productModelID, limit, offset);
+
+                        return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>bebd97fa44c489852e12b2356e62e5aa</Hash>
+    <Hash>2d5f31294b89a91227cdb7c921b559f8</Hash>
 </Codenesium>*/

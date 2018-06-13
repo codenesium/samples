@@ -52,7 +52,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void VersionRules()
                 {
-                        this.RuleFor(x => x.Version).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetNameVersion).When(x => x ?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiActionTemplateVersionRequestModel.Version));
                 }
 
@@ -60,7 +59,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ActionTemplateVersion record = await this.ActionTemplateVersionRepository.GetNameVersion(model.Name, model.Version);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -73,5 +72,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c967e147e472ecba6d8557a7319c5ded</Hash>
+    <Hash>349923d3ae53134db8db805cf521d8d3</Hash>
 </Codenesium>*/

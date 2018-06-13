@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IEventRelatedDocumentRepository eventRelatedDocumentRepository,
                         IApiEventRelatedDocumentRequestModelValidator eventRelatedDocumentModelValidator,
-                        IBOLEventRelatedDocumentMapper boleventRelatedDocumentMapper,
-                        IDALEventRelatedDocumentMapper daleventRelatedDocumentMapper)
+                        IBOLEventRelatedDocumentMapper bolEventRelatedDocumentMapper,
+                        IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper
+
+                        )
                         : base()
 
                 {
                         this.eventRelatedDocumentRepository = eventRelatedDocumentRepository;
                         this.eventRelatedDocumentModelValidator = eventRelatedDocumentModelValidator;
-                        this.bolEventRelatedDocumentMapper = boleventRelatedDocumentMapper;
-                        this.dalEventRelatedDocumentMapper = daleventRelatedDocumentMapper;
+                        this.bolEventRelatedDocumentMapper = bolEventRelatedDocumentMapper;
+                        this.dalEventRelatedDocumentMapper = dalEventRelatedDocumentMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.eventRelatedDocumentRepository.All(skip, take, orderClause);
+                        var records = await this.eventRelatedDocumentRepository.All(limit, offset, orderClause);
 
                         return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af1a8102fade047114f2c538bfe9f2bc</Hash>
+    <Hash>5a9c097ccefaa079ff431fc55dfa4402</Hash>
 </Codenesium>*/

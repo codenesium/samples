@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiLessonXTeacherResponseModel> response = await this.LessonXTeacherService.All(query.Offset, query.Limit);
+                        List<ApiLessonXTeacherResponseModel> response = await this.LessonXTeacherService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed2eb5a385447864668aabcd6c163e3b</Hash>
+    <Hash>fbc919bf6ac2045f6a61c9496e5642c1</Hash>
 </Codenesium>*/

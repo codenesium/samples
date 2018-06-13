@@ -22,27 +22,39 @@ namespace FermataFishNS.Api.Services
 
                 private IDALLessonStatusMapper dalLessonStatusMapper;
 
+                private IBOLLessonMapper bolLessonMapper;
+
+                private IDALLessonMapper dalLessonMapper;
+
                 private ILogger logger;
 
                 public AbstractLessonStatusService(
                         ILogger logger,
                         ILessonStatusRepository lessonStatusRepository,
                         IApiLessonStatusRequestModelValidator lessonStatusModelValidator,
-                        IBOLLessonStatusMapper bollessonStatusMapper,
-                        IDALLessonStatusMapper dallessonStatusMapper)
+                        IBOLLessonStatusMapper bolLessonStatusMapper,
+                        IDALLessonStatusMapper dalLessonStatusMapper
+
+                        ,
+                        IBOLLessonMapper bolLessonMapper,
+                        IDALLessonMapper dalLessonMapper
+
+                        )
                         : base()
 
                 {
                         this.lessonStatusRepository = lessonStatusRepository;
                         this.lessonStatusModelValidator = lessonStatusModelValidator;
-                        this.bolLessonStatusMapper = bollessonStatusMapper;
-                        this.dalLessonStatusMapper = dallessonStatusMapper;
+                        this.bolLessonStatusMapper = bolLessonStatusMapper;
+                        this.dalLessonStatusMapper = dalLessonStatusMapper;
+                        this.bolLessonMapper = bolLessonMapper;
+                        this.dalLessonMapper = dalLessonMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLessonStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLessonStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.lessonStatusRepository.All(skip, take, orderClause);
+                        var records = await this.lessonStatusRepository.All(limit, offset, orderClause);
 
                         return this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiLessonResponseModel>> Lessons(int lessonStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Lesson> records = await this.lessonStatusRepository.Lessons(lessonStatusId, limit, offset);
+
+                        return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d9740acc5b7405262229aabc46925310</Hash>
+    <Hash>ed3c04af465c41e13e3cd616e1d7f4e2</Hash>
 </Codenesium>*/

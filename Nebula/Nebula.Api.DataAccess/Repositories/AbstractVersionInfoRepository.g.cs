@@ -25,9 +25,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<VersionInfo>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<VersionInfo> Get(long version)
@@ -82,31 +82,31 @@ namespace NebulaNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<VersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<VersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<VersionInfo> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<VersionInfo> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<VersionInfo>> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<VersionInfo>> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(VersionInfo.Version)} ASC";
                         }
 
-                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
+                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
                 }
 
-                private async Task<List<VersionInfo>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<VersionInfo>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(VersionInfo.Version)} ASC";
                         }
 
-                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<VersionInfo>();
+                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
                 }
 
                 private async Task<VersionInfo> GetById(long version)
@@ -119,5 +119,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa314a2858854b7fda7019c4e8496d61</Hash>
+    <Hash>8685cffa1c9e39c3aaaa31ffc626c550</Hash>
 </Codenesium>*/

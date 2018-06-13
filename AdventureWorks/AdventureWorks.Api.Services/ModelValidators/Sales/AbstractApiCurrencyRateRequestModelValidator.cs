@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCurrencyRateRequestModelValidator: AbstractValidator<ApiCurrencyRateRequestModel>
         {
@@ -31,18 +30,15 @@ namespace AdventureWorksNS.Api.Services
                 public ICurrencyRateRepository CurrencyRateRepository { get; set; }
                 public virtual void AverageRateRules()
                 {
-                        this.RuleFor(x => x.AverageRate).NotNull();
                 }
 
                 public virtual void CurrencyRateDateRules()
                 {
-                        this.RuleFor(x => x.CurrencyRateDate).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.CurrencyRateDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.CurrencyRateDate));
                 }
 
                 public virtual void EndOfDayRateRules()
                 {
-                        this.RuleFor(x => x.EndOfDayRate).NotNull();
                 }
 
                 public virtual void FromCurrencyCodeRules()
@@ -55,7 +51,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void ToCurrencyCodeRules()
@@ -77,7 +72,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         CurrencyRate record = await this.CurrencyRateRepository.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(model.CurrencyRateDate, model.FromCurrencyCode, model.ToCurrencyCode);
 
-                        if (record == null || record.CurrencyRateID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.CurrencyRateID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -90,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8246066d8ed50663fada2724002995ab</Hash>
+    <Hash>b776fabfff8eb684ef776629a308f7c4</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace FermataFishNS.Api.Services
 
                 Task<ApiTeacherXTeacherSkillResponseModel> Get(int id);
 
-                Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>f2542b18f13a4daf6481609d3d7e2cf9</Hash>
+    <Hash>55a454ddd9a88c2dd1bddf205b988b9d</Hash>
 </Codenesium>*/

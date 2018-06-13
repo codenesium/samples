@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiShoppingCartItemRequestModelValidator: AbstractValidator<ApiShoppingCartItemRequestModel>
         {
@@ -28,22 +27,18 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void DateCreatedRules()
                 {
-                        this.RuleFor(x => x.DateCreated).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void ProductIDRules()
                 {
-                        this.RuleFor(x => x.ProductID).NotNull();
                 }
 
                 public virtual void QuantityRules()
                 {
-                        this.RuleFor(x => x.Quantity).NotNull();
                 }
 
                 public virtual void ShoppingCartIDRules()
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acbc2b62763db7ad2fe2857dadbff63e</Hash>
+    <Hash>1f6137ad78c56de9958287811224d993</Hash>
 </Codenesium>*/

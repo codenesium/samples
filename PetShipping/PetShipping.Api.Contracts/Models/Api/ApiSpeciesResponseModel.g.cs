@@ -7,48 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiSpeciesResponseModel: AbstractApiResponseModel
+        public partial class ApiSpeciesResponseModel: AbstractApiSpeciesResponseModel
         {
-                public ApiSpeciesResponseModel() : base()
+                public ApiSpeciesResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>364001e1bbae36445fe32a84938aaaaa</Hash>
+    <Hash>775f3c59e0664b915de673ba13fd3d57</Hash>
 </Codenesium>*/

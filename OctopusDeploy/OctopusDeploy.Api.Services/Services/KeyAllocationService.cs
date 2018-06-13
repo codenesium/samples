@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IKeyAllocationRepository keyAllocationRepository,
                         IApiKeyAllocationRequestModelValidator keyAllocationModelValidator,
                         IBOLKeyAllocationMapper bolkeyAllocationMapper,
-                        IDALKeyAllocationMapper dalkeyAllocationMapper)
+                        IDALKeyAllocationMapper dalkeyAllocationMapper
+
+                        )
                         : base(logger,
                                keyAllocationRepository,
                                keyAllocationModelValidator,
                                bolkeyAllocationMapper,
-                               dalkeyAllocationMapper)
+                               dalkeyAllocationMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>49bb8a01918463e1bf884e568d450115</Hash>
+    <Hash>02aecfaa227bbe55a814a6438ca25249</Hash>
 </Codenesium>*/

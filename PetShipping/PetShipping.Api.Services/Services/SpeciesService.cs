@@ -17,17 +17,26 @@ namespace PetShippingNS.Api.Services
                         ISpeciesRepository speciesRepository,
                         IApiSpeciesRequestModelValidator speciesModelValidator,
                         IBOLSpeciesMapper bolspeciesMapper,
-                        IDALSpeciesMapper dalspeciesMapper)
+                        IDALSpeciesMapper dalspeciesMapper
+                        ,
+                        IBOLBreedMapper bolBreedMapper,
+                        IDALBreedMapper dalBreedMapper
+
+                        )
                         : base(logger,
                                speciesRepository,
                                speciesModelValidator,
                                bolspeciesMapper,
-                               dalspeciesMapper)
+                               dalspeciesMapper
+                               ,
+                               bolBreedMapper,
+                               dalBreedMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a3892e0f0ac9833e96912fe4d0bb18d9</Hash>
+    <Hash>6935283b58a0cfd9347b7b8119e72e08</Hash>
 </Codenesium>*/

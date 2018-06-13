@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductSubcategory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<ProductSubcategory> Get(int productSubcategoryID)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<ProductSubcategory>> Where(Expression<Func<ProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<ProductSubcategory>> Where(Expression<Func<ProductSubcategory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<ProductSubcategory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<ProductSubcategory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<ProductSubcategory>> SearchLinqEF(Expression<Func<ProductSubcategory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductSubcategory>> SearchLinqEF(Expression<Func<ProductSubcategory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductSubcategory.ProductSubcategoryID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductSubcategory>();
+                        return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
                 }
 
-                private async Task<List<ProductSubcategory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<ProductSubcategory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(ProductSubcategory.ProductSubcategoryID)} ASC";
                         }
 
-                        return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<ProductSubcategory>();
+                        return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
                 }
 
                 private async Task<ProductSubcategory> GetById(int productSubcategoryID)
@@ -115,9 +115,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Product>> Products(int productSubcategoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Product>().Where(x => x.ProductSubcategoryID == productSubcategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7aaa570bd6a465b095053f3f2d4128d0</Hash>
+    <Hash>1bd614158b5b68b00500be444ea1521f</Hash>
 </Codenesium>*/

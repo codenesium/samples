@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " KeyAllocation")]
+        [Trait("Integration", "KeyAllocation")]
         public class KeyAllocationTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>22f0afe8b80bf4f63edd5e1b9d20ea4a</Hash>
+    <Hash>7eb1ef7c76e304c4c58963e5ef8363a2</Hash>
 </Codenesium>*/

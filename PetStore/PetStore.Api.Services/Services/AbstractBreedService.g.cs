@@ -22,27 +22,39 @@ namespace PetStoreNS.Api.Services
 
                 private IDALBreedMapper dalBreedMapper;
 
+                private IBOLPetMapper bolPetMapper;
+
+                private IDALPetMapper dalPetMapper;
+
                 private ILogger logger;
 
                 public AbstractBreedService(
                         ILogger logger,
                         IBreedRepository breedRepository,
                         IApiBreedRequestModelValidator breedModelValidator,
-                        IBOLBreedMapper bolbreedMapper,
-                        IDALBreedMapper dalbreedMapper)
+                        IBOLBreedMapper bolBreedMapper,
+                        IDALBreedMapper dalBreedMapper
+
+                        ,
+                        IBOLPetMapper bolPetMapper,
+                        IDALPetMapper dalPetMapper
+
+                        )
                         : base()
 
                 {
                         this.breedRepository = breedRepository;
                         this.breedModelValidator = breedModelValidator;
-                        this.bolBreedMapper = bolbreedMapper;
-                        this.dalBreedMapper = dalbreedMapper;
+                        this.bolBreedMapper = bolBreedMapper;
+                        this.dalBreedMapper = dalBreedMapper;
+                        this.bolPetMapper = bolPetMapper;
+                        this.dalPetMapper = dalPetMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBreedResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBreedResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.breedRepository.All(skip, take, orderClause);
+                        var records = await this.breedRepository.All(limit, offset, orderClause);
 
                         return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace PetStoreNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiPetResponseModel>> Pets(int breedId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Pet> records = await this.breedRepository.Pets(breedId, limit, offset);
+
+                        return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>55185c323cef212ae6724aa23d21e689</Hash>
+    <Hash>2f77d8f1f11712e62ba27fd70522be56</Hash>
 </Codenesium>*/

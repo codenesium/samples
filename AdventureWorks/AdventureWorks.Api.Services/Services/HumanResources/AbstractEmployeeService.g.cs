@@ -22,27 +22,55 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALEmployeeMapper dalEmployeeMapper;
 
+                private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+
+                private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+                private IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper;
+
+                private IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper;
+                private IBOLJobCandidateMapper bolJobCandidateMapper;
+
+                private IDALJobCandidateMapper dalJobCandidateMapper;
+
                 private ILogger logger;
 
                 public AbstractEmployeeService(
                         ILogger logger,
                         IEmployeeRepository employeeRepository,
                         IApiEmployeeRequestModelValidator employeeModelValidator,
-                        IBOLEmployeeMapper bolemployeeMapper,
-                        IDALEmployeeMapper dalemployeeMapper)
+                        IBOLEmployeeMapper bolEmployeeMapper,
+                        IDALEmployeeMapper dalEmployeeMapper
+
+                        ,
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+                        ,
+                        IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
+                        IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper
+                        ,
+                        IBOLJobCandidateMapper bolJobCandidateMapper,
+                        IDALJobCandidateMapper dalJobCandidateMapper
+
+                        )
                         : base()
 
                 {
                         this.employeeRepository = employeeRepository;
                         this.employeeModelValidator = employeeModelValidator;
-                        this.bolEmployeeMapper = bolemployeeMapper;
-                        this.dalEmployeeMapper = dalemployeeMapper;
+                        this.bolEmployeeMapper = bolEmployeeMapper;
+                        this.dalEmployeeMapper = dalEmployeeMapper;
+                        this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+                        this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
+                        this.bolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
+                        this.dalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
+                        this.bolJobCandidateMapper = bolJobCandidateMapper;
+                        this.dalJobCandidateMapper = dalJobCandidateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEmployeeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.employeeRepository.All(skip, take, orderClause);
+                        var records = await this.employeeRepository.All(limit, offset, orderClause);
 
                         return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
                 }
@@ -121,9 +149,28 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<EmployeeDepartmentHistory> records = await this.employeeRepository.EmployeeDepartmentHistories(businessEntityID, limit, offset);
+
+                        return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<EmployeePayHistory> records = await this.employeeRepository.EmployeePayHistories(businessEntityID, limit, offset);
+
+                        return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiJobCandidateResponseModel>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<JobCandidate> records = await this.employeeRepository.JobCandidates(businessEntityID, limit, offset);
+
+                        return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2add0455ad50c69bd786a9ced010c2a4</Hash>
+    <Hash>bfd385cd0324fb4c6e245f9399c5a781</Hash>
 </Codenesium>*/

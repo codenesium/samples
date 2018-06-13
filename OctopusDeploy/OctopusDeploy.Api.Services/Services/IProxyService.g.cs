@@ -19,12 +19,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiProxyResponseModel> Get(string id);
 
-                Task<List<ApiProxyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiProxyResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiProxyResponseModel> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>d57cbe2ccfb43cc3e4c2cbe0c4869a27</Hash>
+    <Hash>8469be6512d00dd24123962fb285712c</Hash>
 </Codenesium>*/

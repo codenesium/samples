@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiWorkOrderRoutingRequestModelValidator: AbstractValidator<ApiWorkOrderRoutingRequestModel>
         {
@@ -44,41 +43,34 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void LocationIDRules()
                 {
-                        this.RuleFor(x => x.LocationID).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void OperationSequenceRules()
                 {
-                        this.RuleFor(x => x.OperationSequence).NotNull();
                 }
 
                 public virtual void PlannedCostRules()
                 {
-                        this.RuleFor(x => x.PlannedCost).NotNull();
                 }
 
                 public virtual void ProductIDRules()
                 {
-                        this.RuleFor(x => x.ProductID).NotNull();
                 }
 
                 public virtual void ScheduledEndDateRules()
                 {
-                        this.RuleFor(x => x.ScheduledEndDate).NotNull();
                 }
 
                 public virtual void ScheduledStartDateRules()
                 {
-                        this.RuleFor(x => x.ScheduledStartDate).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>358ad4044dedb2600dc87f0102d9ef86</Hash>
+    <Hash>aaeee0fc8eae973fa0750e97f04795fc</Hash>
 </Codenesium>*/

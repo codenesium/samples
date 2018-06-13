@@ -22,27 +22,39 @@ namespace FermataFishNS.Api.Services
 
                 private IDALStateMapper dalStateMapper;
 
+                private IBOLStudioMapper bolStudioMapper;
+
+                private IDALStudioMapper dalStudioMapper;
+
                 private ILogger logger;
 
                 public AbstractStateService(
                         ILogger logger,
                         IStateRepository stateRepository,
                         IApiStateRequestModelValidator stateModelValidator,
-                        IBOLStateMapper bolstateMapper,
-                        IDALStateMapper dalstateMapper)
+                        IBOLStateMapper bolStateMapper,
+                        IDALStateMapper dalStateMapper
+
+                        ,
+                        IBOLStudioMapper bolStudioMapper,
+                        IDALStudioMapper dalStudioMapper
+
+                        )
                         : base()
 
                 {
                         this.stateRepository = stateRepository;
                         this.stateModelValidator = stateModelValidator;
-                        this.bolStateMapper = bolstateMapper;
-                        this.dalStateMapper = dalstateMapper;
+                        this.bolStateMapper = bolStateMapper;
+                        this.dalStateMapper = dalStateMapper;
+                        this.bolStudioMapper = bolStudioMapper;
+                        this.dalStudioMapper = dalStudioMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.stateRepository.All(skip, take, orderClause);
+                        var records = await this.stateRepository.All(limit, offset, orderClause);
 
                         return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiStudioResponseModel>> Studios(int stateId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Studio> records = await this.stateRepository.Studios(stateId, limit, offset);
+
+                        return this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ff1306d367d238824217e519b1a1b357</Hash>
+    <Hash>0bff1473743146de22f5296f55790288</Hash>
 </Codenesium>*/

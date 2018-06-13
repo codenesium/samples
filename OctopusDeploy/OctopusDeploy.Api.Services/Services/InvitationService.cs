@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IInvitationRepository invitationRepository,
                         IApiInvitationRequestModelValidator invitationModelValidator,
                         IBOLInvitationMapper bolinvitationMapper,
-                        IDALInvitationMapper dalinvitationMapper)
+                        IDALInvitationMapper dalinvitationMapper
+
+                        )
                         : base(logger,
                                invitationRepository,
                                invitationModelValidator,
                                bolinvitationMapper,
-                               dalinvitationMapper)
+                               dalinvitationMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8c2cf922102c6d8673b81bd447dafc46</Hash>
+    <Hash>6947582d235256e77dd501933c20f608</Hash>
 </Codenesium>*/

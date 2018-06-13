@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.All(query.Offset, query.Limit);
+                        List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -182,9 +182,23 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{workOrderID}/WorkOrderRoutings")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
+                public async virtual Task<IActionResult> WorkOrderRoutings(int workOrderID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderService.WorkOrderRoutings(workOrderID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>572e668c1ca22f7bf21a2c919dea1f5f</Hash>
+    <Hash>f41552144c6b67c72e9bd986a6c2db83</Hash>
 </Codenesium>*/

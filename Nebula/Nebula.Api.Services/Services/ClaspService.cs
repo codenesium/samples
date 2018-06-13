@@ -17,17 +17,20 @@ namespace NebulaNS.Api.Services
                         IClaspRepository claspRepository,
                         IApiClaspRequestModelValidator claspModelValidator,
                         IBOLClaspMapper bolclaspMapper,
-                        IDALClaspMapper dalclaspMapper)
+                        IDALClaspMapper dalclaspMapper
+
+                        )
                         : base(logger,
                                claspRepository,
                                claspModelValidator,
                                bolclaspMapper,
-                               dalclaspMapper)
+                               dalclaspMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>37a5c7768a71cd3627678de40964d824</Hash>
+    <Hash>a53e3e80e6c88822361467c874095b8e</Hash>
 </Codenesium>*/

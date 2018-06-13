@@ -22,27 +22,39 @@ namespace NebulaNS.Api.Services
 
                 private IDALChainStatusMapper dalChainStatusMapper;
 
+                private IBOLChainMapper bolChainMapper;
+
+                private IDALChainMapper dalChainMapper;
+
                 private ILogger logger;
 
                 public AbstractChainStatusService(
                         ILogger logger,
                         IChainStatusRepository chainStatusRepository,
                         IApiChainStatusRequestModelValidator chainStatusModelValidator,
-                        IBOLChainStatusMapper bolchainStatusMapper,
-                        IDALChainStatusMapper dalchainStatusMapper)
+                        IBOLChainStatusMapper bolChainStatusMapper,
+                        IDALChainStatusMapper dalChainStatusMapper
+
+                        ,
+                        IBOLChainMapper bolChainMapper,
+                        IDALChainMapper dalChainMapper
+
+                        )
                         : base()
 
                 {
                         this.chainStatusRepository = chainStatusRepository;
                         this.chainStatusModelValidator = chainStatusModelValidator;
-                        this.bolChainStatusMapper = bolchainStatusMapper;
-                        this.dalChainStatusMapper = dalchainStatusMapper;
+                        this.bolChainStatusMapper = bolChainStatusMapper;
+                        this.dalChainStatusMapper = dalChainStatusMapper;
+                        this.bolChainMapper = bolChainMapper;
+                        this.dalChainMapper = dalChainMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiChainStatusResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiChainStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.chainStatusRepository.All(skip, take, orderClause);
+                        var records = await this.chainStatusRepository.All(limit, offset, orderClause);
 
                         return this.bolChainStatusMapper.MapBOToModel(this.dalChainStatusMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace NebulaNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiChainResponseModel>> Chains(int chainStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Chain> records = await this.chainStatusRepository.Chains(chainStatusId, limit, offset);
+
+                        return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a70171ebacc5b53308c31fc49afcf4ec</Hash>
+    <Hash>f0f8aa37a9c9fc09963bf92e1df44f28</Hash>
 </Codenesium>*/

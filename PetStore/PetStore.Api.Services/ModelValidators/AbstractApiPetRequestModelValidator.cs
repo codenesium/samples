@@ -8,7 +8,6 @@ using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
-
 {
         public abstract class AbstractApiPetRequestModelValidator: AbstractValidator<ApiPetRequestModel>
         {
@@ -34,12 +33,10 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void AcquiredDateRules()
                 {
-                        this.RuleFor(x => x.AcquiredDate).NotNull();
                 }
 
                 public virtual void BreedIdRules()
                 {
-                        this.RuleFor(x => x.BreedId).NotNull();
                         this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x ?.BreedId != null).WithMessage("Invalid reference");
                 }
 
@@ -51,18 +48,15 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void PenIdRules()
                 {
-                        this.RuleFor(x => x.PenId).NotNull();
                         this.RuleFor(x => x.PenId).MustAsync(this.BeValidPen).When(x => x ?.PenId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PriceRules()
                 {
-                        this.RuleFor(x => x.Price).NotNull();
                 }
 
                 public virtual void SpeciesIdRules()
                 {
-                        this.RuleFor(x => x.SpeciesId).NotNull();
                         this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpecies).When(x => x ?.SpeciesId != null).WithMessage("Invalid reference");
                 }
 
@@ -90,5 +84,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce7754b4f1355c6f620190ed4679ca8b</Hash>
+    <Hash>9b58940e40cb7dfa03737c3342815719</Hash>
 </Codenesium>*/

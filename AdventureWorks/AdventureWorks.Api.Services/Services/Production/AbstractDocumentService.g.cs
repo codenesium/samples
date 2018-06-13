@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALDocumentMapper dalDocumentMapper;
 
+                private IBOLProductDocumentMapper bolProductDocumentMapper;
+
+                private IDALProductDocumentMapper dalProductDocumentMapper;
+
                 private ILogger logger;
 
                 public AbstractDocumentService(
                         ILogger logger,
                         IDocumentRepository documentRepository,
                         IApiDocumentRequestModelValidator documentModelValidator,
-                        IBOLDocumentMapper boldocumentMapper,
-                        IDALDocumentMapper daldocumentMapper)
+                        IBOLDocumentMapper bolDocumentMapper,
+                        IDALDocumentMapper dalDocumentMapper
+
+                        ,
+                        IBOLProductDocumentMapper bolProductDocumentMapper,
+                        IDALProductDocumentMapper dalProductDocumentMapper
+
+                        )
                         : base()
 
                 {
                         this.documentRepository = documentRepository;
                         this.documentModelValidator = documentModelValidator;
-                        this.bolDocumentMapper = boldocumentMapper;
-                        this.dalDocumentMapper = daldocumentMapper;
+                        this.bolDocumentMapper = bolDocumentMapper;
+                        this.dalDocumentMapper = dalDocumentMapper;
+                        this.bolProductDocumentMapper = bolProductDocumentMapper;
+                        this.dalProductDocumentMapper = dalProductDocumentMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.documentRepository.All(skip, take, orderClause);
+                        var records = await this.documentRepository.All(limit, offset, orderClause);
 
                         return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiProductDocumentResponseModel>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductDocument> records = await this.documentRepository.ProductDocuments(documentNode, limit, offset);
+
+                        return this.bolProductDocumentMapper.MapBOToModel(this.dalProductDocumentMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>72011715ce20ce0507a38fc22bb8cd93</Hash>
+    <Hash>9cddc25ea293b4843428ca27f71b6410</Hash>
 </Codenesium>*/

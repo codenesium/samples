@@ -17,17 +17,26 @@ namespace FermataFishNS.Api.Services
                         ISpaceRepository spaceRepository,
                         IApiSpaceRequestModelValidator spaceModelValidator,
                         IBOLSpaceMapper bolspaceMapper,
-                        IDALSpaceMapper dalspaceMapper)
+                        IDALSpaceMapper dalspaceMapper
+                        ,
+                        IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper,
+                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper
+
+                        )
                         : base(logger,
                                spaceRepository,
                                spaceModelValidator,
                                bolspaceMapper,
-                               dalspaceMapper)
+                               dalspaceMapper
+                               ,
+                               bolSpaceXSpaceFeatureMapper,
+                               dalSpaceXSpaceFeatureMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5345c624c670617dc39d0cc67c5dc932</Hash>
+    <Hash>a4ba9274881bac454b5e887af353c8ac</Hash>
 </Codenesium>*/

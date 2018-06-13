@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<User> Get(string id);
 
-                Task<List<User>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<User>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<User> GetUsername(string username);
                 Task<List<User>> GetDisplayName(string displayName);
@@ -25,5 +25,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e88db10eb22df2623aaac2c1c3cdfe3a</Hash>
+    <Hash>af02ee5897149e3b598aac47cb30e399</Hash>
 </Codenesium>*/

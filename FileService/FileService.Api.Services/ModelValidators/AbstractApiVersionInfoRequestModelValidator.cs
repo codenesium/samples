@@ -8,7 +8,6 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
-
 {
         public abstract class AbstractApiVersionInfoRequestModelValidator: AbstractValidator<ApiVersionInfoRequestModel>
         {
@@ -38,5 +37,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc0e6b97563c0a62c905ae584613abd3</Hash>
+    <Hash>3f17f3bc53d3b8f0def211aef05aa192</Hash>
 </Codenesium>*/

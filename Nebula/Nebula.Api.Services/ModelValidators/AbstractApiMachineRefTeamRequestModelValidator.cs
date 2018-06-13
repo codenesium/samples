@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiMachineRefTeamRequestModelValidator: AbstractValidator<ApiMachineRefTeamRequestModel>
         {
@@ -32,13 +31,11 @@ namespace NebulaNS.Api.Services
 
                 public virtual void MachineIdRules()
                 {
-                        this.RuleFor(x => x.MachineId).NotNull();
                         this.RuleFor(x => x.MachineId).MustAsync(this.BeValidMachine).When(x => x ?.MachineId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TeamIdRules()
                 {
-                        this.RuleFor(x => x.TeamId).NotNull();
                         this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
                 }
 
@@ -59,5 +56,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7c02352bdec76429e0c95f81c8ab71f</Hash>
+    <Hash>9bb98672e2a240896baa4315554d483e</Hash>
 </Codenesium>*/

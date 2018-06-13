@@ -25,9 +25,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Family>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Family>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Family> Get(int id)
@@ -75,31 +75,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Family>> Where(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Family>> Where(Expression<Func<Family, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Family> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Family> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Family>> SearchLinqEF(Expression<Func<Family, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Family>> SearchLinqEF(Expression<Func<Family, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Family.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Family>();
+                        return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Family>();
                 }
 
-                private async Task<List<Family>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Family>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Family.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Family>();
+                        return await this.Context.Set<Family>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Family>();
                 }
 
                 private async Task<Family> GetById(int id)
@@ -108,9 +108,18 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Student>> Students(int familyId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Student>().Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+                }
+                public async virtual Task<List<StudentXFamily>> StudentXFamilies(int familyId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<StudentXFamily>().Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<StudentXFamily>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8ecb76647780eebd4c2df8a3dba43a00</Hash>
+    <Hash>1060de65420484a76ff97dde6a32d0eb</Hash>
 </Codenesium>*/

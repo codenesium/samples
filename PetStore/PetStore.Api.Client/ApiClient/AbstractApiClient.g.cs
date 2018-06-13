@@ -80,9 +80,9 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiBreedResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBreedResponseModel>> BreedAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiBreedResponseModel>> BreedAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
@@ -127,9 +127,9 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPaymentTypeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPaymentTypeResponseModel>> PaymentTypeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPaymentTypeResponseModel>> PaymentTypeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPaymentTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -174,9 +174,9 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPenResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPenResponseModel>> PenAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPenResponseModel>> PenAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pens?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pens?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPenResponseModel>>(httpResponse.Content.ContentToString());
@@ -221,9 +221,9 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPetResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPetResponseModel>> PetAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPetResponseModel>> PetAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
@@ -268,9 +268,9 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSaleResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSaleResponseModel>> SaleAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSaleResponseModel>> SaleAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sales?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sales?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
@@ -315,9 +315,9 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSpeciesResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpeciesResponseModel>> SpeciesAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSpeciesResponseModel>> SpeciesAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpeciesResponseModel>>(httpResponse.Content.ContentToString());
@@ -334,5 +334,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d0716c3a16454db5dd1233377cd1f513</Hash>
+    <Hash>91f750e9a421b2c14ebb34d92078bc3d</Hash>
 </Codenesium>*/

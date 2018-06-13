@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ProductVendor> Get(int productID);
 
-                Task<List<ProductVendor>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ProductVendor>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<ProductVendor>> GetBusinessEntityID(int businessEntityID);
                 Task<List<ProductVendor>> GetUnitMeasureCode(string unitMeasureCode);
@@ -23,5 +23,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>29fd10a0d6bea2048d4caac5d8041b07</Hash>
+    <Hash>390260ff189f239a0f9a91549a718926</Hash>
 </Codenesium>*/

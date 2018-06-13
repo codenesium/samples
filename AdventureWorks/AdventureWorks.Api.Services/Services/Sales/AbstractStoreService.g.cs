@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALStoreMapper dalStoreMapper;
 
+                private IBOLCustomerMapper bolCustomerMapper;
+
+                private IDALCustomerMapper dalCustomerMapper;
+
                 private ILogger logger;
 
                 public AbstractStoreService(
                         ILogger logger,
                         IStoreRepository storeRepository,
                         IApiStoreRequestModelValidator storeModelValidator,
-                        IBOLStoreMapper bolstoreMapper,
-                        IDALStoreMapper dalstoreMapper)
+                        IBOLStoreMapper bolStoreMapper,
+                        IDALStoreMapper dalStoreMapper
+
+                        ,
+                        IBOLCustomerMapper bolCustomerMapper,
+                        IDALCustomerMapper dalCustomerMapper
+
+                        )
                         : base()
 
                 {
                         this.storeRepository = storeRepository;
                         this.storeModelValidator = storeModelValidator;
-                        this.bolStoreMapper = bolstoreMapper;
-                        this.dalStoreMapper = dalstoreMapper;
+                        this.bolStoreMapper = bolStoreMapper;
+                        this.dalStoreMapper = dalStoreMapper;
+                        this.bolCustomerMapper = bolCustomerMapper;
+                        this.dalCustomerMapper = dalCustomerMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStoreResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStoreResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.storeRepository.All(skip, take, orderClause);
+                        var records = await this.storeRepository.All(limit, offset, orderClause);
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiCustomerResponseModel>> Customers(int storeID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Customer> records = await this.storeRepository.Customers(storeID, limit, offset);
+
+                        return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2b11f6cdc7e53c08efc2772fc373a0d1</Hash>
+    <Hash>9b2cda70c057a8e0f3e29950430b1877</Hash>
 </Codenesium>*/

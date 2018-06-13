@@ -17,17 +17,20 @@ namespace FermataFishNS.Api.Services
                         IRateRepository rateRepository,
                         IApiRateRequestModelValidator rateModelValidator,
                         IBOLRateMapper bolrateMapper,
-                        IDALRateMapper dalrateMapper)
+                        IDALRateMapper dalrateMapper
+
+                        )
                         : base(logger,
                                rateRepository,
                                rateModelValidator,
                                bolrateMapper,
-                               dalrateMapper)
+                               dalrateMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1aa232da36130352ddd4fece615fec99</Hash>
+    <Hash>220f8c03911bd72dcd4fa7400c24718e</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Project> Get(string id);
 
-                Task<List<Project>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Project>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<Project> GetName(string name);
                 Task<Project> GetSlug(string slug);
@@ -25,5 +25,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>672128c86718f01f0e4fe438d5682918</Hash>
+    <Hash>d7a279e173e032de960483bbc7413c34</Hash>
 </Codenesium>*/

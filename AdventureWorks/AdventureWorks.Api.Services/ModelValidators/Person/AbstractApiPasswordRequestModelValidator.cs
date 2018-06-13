@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiPasswordRequestModelValidator: AbstractValidator<ApiPasswordRequestModel>
         {
@@ -28,7 +27,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PasswordHashRules()
@@ -45,11 +43,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9c486645a8929f12b35b9d19807cfe01</Hash>
+    <Hash>2a6db9a4ac191f3565b10898cc495f16</Hash>
 </Codenesium>*/

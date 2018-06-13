@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " CreditCard")]
+        [Trait("Integration", "CreditCard")]
         public class CreditCardTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>91a32072807f913036b073268d4dc03d</Hash>
+    <Hash>bbc8bd257a700b1f42e74c71e5f44a05</Hash>
 </Codenesium>*/

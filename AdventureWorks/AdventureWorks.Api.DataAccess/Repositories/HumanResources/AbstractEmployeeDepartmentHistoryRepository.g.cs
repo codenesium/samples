@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<EmployeeDepartmentHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<EmployeeDepartmentHistory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<EmployeeDepartmentHistory> Get(int businessEntityID)
@@ -88,31 +88,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<EmployeeDepartmentHistory>> Where(Expression<Func<EmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<EmployeeDepartmentHistory>> Where(Expression<Func<EmployeeDepartmentHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<EmployeeDepartmentHistory> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<EmployeeDepartmentHistory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<EmployeeDepartmentHistory>> SearchLinqEF(Expression<Func<EmployeeDepartmentHistory, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<EmployeeDepartmentHistory>> SearchLinqEF(Expression<Func<EmployeeDepartmentHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(EmployeeDepartmentHistory.BusinessEntityID)} ASC";
                         }
 
-                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmployeeDepartmentHistory>();
+                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
                 }
 
-                private async Task<List<EmployeeDepartmentHistory>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<EmployeeDepartmentHistory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(EmployeeDepartmentHistory.BusinessEntityID)} ASC";
                         }
 
-                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<EmployeeDepartmentHistory>();
+                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
                 }
 
                 private async Task<EmployeeDepartmentHistory> GetById(int businessEntityID)
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f166ef3075587ee4a5f8285a3ccbd884</Hash>
+    <Hash>c2db260069a5e36a425bbb0b5b80df79</Hash>
 </Codenesium>*/

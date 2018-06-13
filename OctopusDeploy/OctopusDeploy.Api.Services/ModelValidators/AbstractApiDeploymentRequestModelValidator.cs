@@ -33,7 +33,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CreatedRules()
                 {
-                        this.RuleFor(x => x.Created).NotNull();
                 }
 
                 public virtual void DeployedByRules()
@@ -94,5 +93,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e1c43f461467a78019fb5a3e2fbb3f7e</Hash>
+    <Hash>d0e450f2a3725045abb1606ea78020e9</Hash>
 </Codenesium>*/

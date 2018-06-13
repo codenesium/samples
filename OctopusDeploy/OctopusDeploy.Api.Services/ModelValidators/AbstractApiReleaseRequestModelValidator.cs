@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IReleaseRepository ReleaseRepository { get; set; }
                 public virtual void AssembledRules()
                 {
-                        this.RuleFor(x => x.Assembled).NotNull();
                 }
 
                 public virtual void ChannelIdRules()
@@ -72,7 +71,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Release record = await this.ReleaseRepository.GetVersionProjectId(model.Version, model.ProjectId);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -85,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef41b2f36b1f2e26cf261a0e64cdc04e</Hash>
+    <Hash>c7f19ed6a67711e898a499a02176ca30</Hash>
 </Codenesium>*/

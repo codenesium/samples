@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.Contracts
                 public void SetProperties(
                         bool isInMaintenanceMode,
                         string jSON,
-                        DateTime lastSeen,
+                        DateTimeOffset lastSeen,
                         int maxConcurrentTasks,
                         string name,
                         string rank)
@@ -60,10 +60,10 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private DateTime lastSeen;
+                private DateTimeOffset lastSeen;
 
                 [Required]
-                public DateTime LastSeen
+                public DateTimeOffset LastSeen
                 {
                         get
                         {
@@ -127,5 +127,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9584724ed6faee8516e863445a7cdd6d</Hash>
+    <Hash>b91d5698cf9f08d57aa8b3c756842de5</Hash>
 </Codenesium>*/

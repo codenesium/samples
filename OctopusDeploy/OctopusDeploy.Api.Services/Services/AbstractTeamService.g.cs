@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
-                        IBOLTeamMapper bolteamMapper,
-                        IDALTeamMapper dalteamMapper)
+                        IBOLTeamMapper bolTeamMapper,
+                        IDALTeamMapper dalTeamMapper
+
+                        )
                         : base()
 
                 {
                         this.teamRepository = teamRepository;
                         this.teamModelValidator = teamModelValidator;
-                        this.bolTeamMapper = bolteamMapper;
-                        this.dalTeamMapper = dalteamMapper;
+                        this.bolTeamMapper = bolTeamMapper;
+                        this.dalTeamMapper = dalTeamMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.teamRepository.All(skip, take, orderClause);
+                        var records = await this.teamRepository.All(limit, offset, orderClause);
 
                         return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>58b337848611ba7cf8f5d0cf3ce347a8</Hash>
+    <Hash>a6b4082b07edea22310b9f0f226e7ba0</Hash>
 </Codenesium>*/

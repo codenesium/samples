@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiShipMethodResponseModel> response = await this.ShipMethodService.All(query.Offset, query.Limit);
+                        List<ApiShipMethodResponseModel> response = await this.ShipMethodService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{shipMethodID}/PurchaseOrderHeaders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiShipMethodResponseModel>), 200)]
+                public async virtual Task<IActionResult> PurchaseOrderHeaders(int shipMethodID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPurchaseOrderHeaderResponseModel> response = await this.ShipMethodService.PurchaseOrderHeaders(shipMethodID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e456705d808232c09ba5db798797efb3</Hash>
+    <Hash>508bd094ff2d7cf46b952305068e9358</Hash>
 </Codenesium>*/

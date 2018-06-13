@@ -9,7 +9,7 @@ using NebulaNS.Api.Client;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Clasp")]
+        [Trait("Integration", "Clasp")]
         public class ClaspTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>fb5f376871ce33a1fa60832f101ad0b7</Hash>
+    <Hash>3fb17c50f1cba4e6934293cf7cd66af1</Hash>
 </Codenesium>*/

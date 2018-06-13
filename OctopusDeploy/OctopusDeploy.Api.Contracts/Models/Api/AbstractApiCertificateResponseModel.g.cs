@@ -10,14 +10,14 @@ namespace OctopusDeployNS.Api.Contracts
         public abstract class AbstractApiCertificateResponseModel: AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> archived,
-                        DateTime created,
+                        Nullable<DateTimeOffset> archived,
+                        DateTimeOffset created,
                         byte[] dataVersion,
                         string environmentIds,
                         string id,
                         string jSON,
                         string name,
-                        DateTime notAfter,
+                        DateTimeOffset notAfter,
                         string subject,
                         string tenantIds,
                         string tenantTags,
@@ -37,9 +37,9 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
-                public Nullable<DateTime> Archived { get; private set; }
+                public Nullable<DateTimeOffset> Archived { get; private set; }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public byte[] DataVersion { get; private set; }
 
@@ -51,7 +51,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string Name { get; private set; }
 
-                public DateTime NotAfter { get; private set; }
+                public DateTimeOffset NotAfter { get; private set; }
 
                 public string Subject { get; private set; }
 
@@ -176,5 +176,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>66b5656558f64cceccb0ab32285096ec</Hash>
+    <Hash>0050186e8022ed6709a6152a006341d9</Hash>
 </Codenesium>*/

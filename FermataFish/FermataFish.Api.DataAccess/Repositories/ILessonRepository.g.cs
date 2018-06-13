@@ -15,10 +15,13 @@ namespace FermataFishNS.Api.DataAccess
 
                 Task<Lesson> Get(int id);
 
-                Task<List<Lesson>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Lesson>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+
+                Task<List<LessonXStudent>> LessonXStudents(int lessonId, int limit = int.MaxValue, int offset = 0);
+                Task<List<LessonXTeacher>> LessonXTeachers(int lessonId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>4145f4666e2f0f5e6e109941d6126eee</Hash>
+    <Hash>3abe8fa766919f2d3496092257868a17</Hash>
 </Codenesium>*/

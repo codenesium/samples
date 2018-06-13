@@ -9,7 +9,7 @@ using ESPIOTNS.Api.Client;
 
 namespace ESPIOTNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " DeviceAction")]
+        [Trait("Integration", "DeviceAction")]
         public class DeviceActionTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>2912ef989567ff4292e0bd1aff1dbe24</Hash>
+    <Hash>1548fe687fa460de87eba718b5525950</Hash>
 </Codenesium>*/

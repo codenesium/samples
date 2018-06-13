@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " ProjectGroup")]
+        [Trait("Integration", "ProjectGroup")]
         public class ProjectGroupTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>2372730aa94188ba354421c3608c6f78</Hash>
+    <Hash>a0a79b1a0461d7cc6b8528b4f5b4b1ec</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ISalesTaxRateRepository salesTaxRateRepository,
                         IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
-                        IBOLSalesTaxRateMapper bolsalesTaxRateMapper,
-                        IDALSalesTaxRateMapper dalsalesTaxRateMapper)
+                        IBOLSalesTaxRateMapper bolSalesTaxRateMapper,
+                        IDALSalesTaxRateMapper dalSalesTaxRateMapper
+
+                        )
                         : base()
 
                 {
                         this.salesTaxRateRepository = salesTaxRateRepository;
                         this.salesTaxRateModelValidator = salesTaxRateModelValidator;
-                        this.bolSalesTaxRateMapper = bolsalesTaxRateMapper;
-                        this.dalSalesTaxRateMapper = dalsalesTaxRateMapper;
+                        this.bolSalesTaxRateMapper = bolSalesTaxRateMapper;
+                        this.dalSalesTaxRateMapper = dalSalesTaxRateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesTaxRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesTaxRateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.salesTaxRateRepository.All(skip, take, orderClause);
+                        var records = await this.salesTaxRateRepository.All(limit, offset, orderClause);
 
                         return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34a0e3185f5eb88c6b03bd9ac1d814ae</Hash>
+    <Hash>3f46dff5159b85b1777b18c0781af095</Hash>
 </Codenesium>*/

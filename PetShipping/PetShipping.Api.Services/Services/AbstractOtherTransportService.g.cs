@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IOtherTransportRepository otherTransportRepository,
                         IApiOtherTransportRequestModelValidator otherTransportModelValidator,
-                        IBOLOtherTransportMapper bolotherTransportMapper,
-                        IDALOtherTransportMapper dalotherTransportMapper)
+                        IBOLOtherTransportMapper bolOtherTransportMapper,
+                        IDALOtherTransportMapper dalOtherTransportMapper
+
+                        )
                         : base()
 
                 {
                         this.otherTransportRepository = otherTransportRepository;
                         this.otherTransportModelValidator = otherTransportModelValidator;
-                        this.bolOtherTransportMapper = bolotherTransportMapper;
-                        this.dalOtherTransportMapper = dalotherTransportMapper;
+                        this.bolOtherTransportMapper = bolOtherTransportMapper;
+                        this.dalOtherTransportMapper = dalOtherTransportMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiOtherTransportResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiOtherTransportResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.otherTransportRepository.All(skip, take, orderClause);
+                        var records = await this.otherTransportRepository.All(limit, offset, orderClause);
 
                         return this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f3df7e938750442662a3c23159118f1b</Hash>
+    <Hash>84a261a30c121987bf86e452885ba4bf</Hash>
 </Codenesium>*/

@@ -22,27 +22,47 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALLocationMapper dalLocationMapper;
 
+                private IBOLProductInventoryMapper bolProductInventoryMapper;
+
+                private IDALProductInventoryMapper dalProductInventoryMapper;
+                private IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper;
+
+                private IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper;
+
                 private ILogger logger;
 
                 public AbstractLocationService(
                         ILogger logger,
                         ILocationRepository locationRepository,
                         IApiLocationRequestModelValidator locationModelValidator,
-                        IBOLLocationMapper bollocationMapper,
-                        IDALLocationMapper dallocationMapper)
+                        IBOLLocationMapper bolLocationMapper,
+                        IDALLocationMapper dalLocationMapper
+
+                        ,
+                        IBOLProductInventoryMapper bolProductInventoryMapper,
+                        IDALProductInventoryMapper dalProductInventoryMapper
+                        ,
+                        IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
+                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
+
+                        )
                         : base()
 
                 {
                         this.locationRepository = locationRepository;
                         this.locationModelValidator = locationModelValidator;
-                        this.bolLocationMapper = bollocationMapper;
-                        this.dalLocationMapper = dallocationMapper;
+                        this.bolLocationMapper = bolLocationMapper;
+                        this.dalLocationMapper = dalLocationMapper;
+                        this.bolProductInventoryMapper = bolProductInventoryMapper;
+                        this.dalProductInventoryMapper = dalProductInventoryMapper;
+                        this.bolWorkOrderRoutingMapper = bolWorkOrderRoutingMapper;
+                        this.dalWorkOrderRoutingMapper = dalWorkOrderRoutingMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLocationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLocationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.locationRepository.All(skip, take, orderClause);
+                        var records = await this.locationRepository.All(limit, offset, orderClause);
 
                         return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(records));
                 }
@@ -103,9 +123,22 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductInventory> records = await this.locationRepository.ProductInventories(locationID, limit, offset);
+
+                        return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<WorkOrderRouting> records = await this.locationRepository.WorkOrderRoutings(locationID, limit, offset);
+
+                        return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>53ef33e901b3cfe5f318f82c69b56c12</Hash>
+    <Hash>0ccf4945c18d1614e7a0024c08758030</Hash>
 </Codenesium>*/

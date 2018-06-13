@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IDashboardConfigurationRepository dashboardConfigurationRepository,
                         IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
                         IBOLDashboardConfigurationMapper boldashboardConfigurationMapper,
-                        IDALDashboardConfigurationMapper daldashboardConfigurationMapper)
+                        IDALDashboardConfigurationMapper daldashboardConfigurationMapper
+
+                        )
                         : base(logger,
                                dashboardConfigurationRepository,
                                dashboardConfigurationModelValidator,
                                boldashboardConfigurationMapper,
-                               daldashboardConfigurationMapper)
+                               daldashboardConfigurationMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>12096116557e9b29f72d3fea13844b7c</Hash>
+    <Hash>6969714aa206973eb3c43ab57972113b</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.All(query.Offset, query.Limit);
+                        List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2f07d1d28af3b707abd96b5e4c8440ba</Hash>
+    <Hash>0c49afa09f3c8eafa22f77828c7bed3a</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IInvitationRepository invitationRepository,
                         IApiInvitationRequestModelValidator invitationModelValidator,
-                        IBOLInvitationMapper bolinvitationMapper,
-                        IDALInvitationMapper dalinvitationMapper)
+                        IBOLInvitationMapper bolInvitationMapper,
+                        IDALInvitationMapper dalInvitationMapper
+
+                        )
                         : base()
 
                 {
                         this.invitationRepository = invitationRepository;
                         this.invitationModelValidator = invitationModelValidator;
-                        this.bolInvitationMapper = bolinvitationMapper;
-                        this.dalInvitationMapper = dalinvitationMapper;
+                        this.bolInvitationMapper = bolInvitationMapper;
+                        this.dalInvitationMapper = dalInvitationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiInvitationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiInvitationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.invitationRepository.All(skip, take, orderClause);
+                        var records = await this.invitationRepository.All(limit, offset, orderClause);
 
                         return this.bolInvitationMapper.MapBOToModel(this.dalInvitationMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da01f49e95ffddf4ad02a80e6c18f7f9</Hash>
+    <Hash>534db29c0c61cc1247d72264a058d105</Hash>
 </Codenesium>*/

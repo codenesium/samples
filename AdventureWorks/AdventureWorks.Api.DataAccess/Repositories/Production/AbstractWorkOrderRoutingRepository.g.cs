@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<WorkOrderRouting>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<WorkOrderRouting>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<WorkOrderRouting> Get(int workOrderID)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<WorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<WorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<WorkOrderRouting> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<WorkOrderRouting> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<WorkOrderRouting>> SearchLinqEF(Expression<Func<WorkOrderRouting, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<WorkOrderRouting>> SearchLinqEF(Expression<Func<WorkOrderRouting, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(WorkOrderRouting.WorkOrderID)} ASC";
                         }
 
-                        return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<WorkOrderRouting>();
+                        return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
                 }
 
-                private async Task<List<WorkOrderRouting>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<WorkOrderRouting>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(WorkOrderRouting.WorkOrderID)} ASC";
                         }
 
-                        return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<WorkOrderRouting>();
+                        return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
                 }
 
                 private async Task<WorkOrderRouting> GetById(int workOrderID)
@@ -119,5 +119,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d87e08735584bbcfccb1c972c3e5584b</Hash>
+    <Hash>b9cc745bb751953fcb4a435766e1ebdd</Hash>
 </Codenesium>*/

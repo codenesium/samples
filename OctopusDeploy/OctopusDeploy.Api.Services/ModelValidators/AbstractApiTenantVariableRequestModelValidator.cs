@@ -66,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         TenantVariable record = await this.TenantVariableRepository.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(model.TenantId, model.OwnerId, model.EnvironmentId, model.VariableTemplateId);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -79,5 +79,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1278e378214082a5d789e06b7c8185d6</Hash>
+    <Hash>20323379054be91d441f1e1ae3b25999</Hash>
 </Codenesium>*/

@@ -25,9 +25,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Chain>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Chain> Get(int id)
@@ -75,31 +75,31 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Chain>> Where(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Chain>> Where(Expression<Func<Chain, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Chain> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Chain> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Chain>> SearchLinqEF(Expression<Func<Chain, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Chain>> SearchLinqEF(Expression<Func<Chain, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Chain.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Chain>();
+                        return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Chain>();
                 }
 
-                private async Task<List<Chain>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Chain>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Chain.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Chain>();
+                        return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Chain>();
                 }
 
                 private async Task<Chain> GetById(int id)
@@ -108,9 +108,18 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Clasp>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Clasp>().Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
+                }
+                public async virtual Task<List<Link>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2c163e0c4362bd6894b826b484256f3f</Hash>
+    <Hash>0eabdd529cde2bd7a72570d6879bdb9c</Hash>
 </Codenesium>*/

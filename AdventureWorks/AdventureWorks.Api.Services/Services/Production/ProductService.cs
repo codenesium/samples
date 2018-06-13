@@ -17,17 +17,74 @@ namespace AdventureWorksNS.Api.Services
                         IProductRepository productRepository,
                         IApiProductRequestModelValidator productModelValidator,
                         IBOLProductMapper bolproductMapper,
-                        IDALProductMapper dalproductMapper)
+                        IDALProductMapper dalproductMapper
+                        ,
+                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
+                        ,
+                        IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
+                        IDALProductCostHistoryMapper dalProductCostHistoryMapper
+                        ,
+                        IBOLProductDocumentMapper bolProductDocumentMapper,
+                        IDALProductDocumentMapper dalProductDocumentMapper
+                        ,
+                        IBOLProductInventoryMapper bolProductInventoryMapper,
+                        IDALProductInventoryMapper dalProductInventoryMapper
+                        ,
+                        IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper,
+                        IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper
+                        ,
+                        IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
+                        IDALProductProductPhotoMapper dalProductProductPhotoMapper
+                        ,
+                        IBOLProductReviewMapper bolProductReviewMapper,
+                        IDALProductReviewMapper dalProductReviewMapper
+                        ,
+                        IBOLTransactionHistoryMapper bolTransactionHistoryMapper,
+                        IDALTransactionHistoryMapper dalTransactionHistoryMapper
+                        ,
+                        IBOLWorkOrderMapper bolWorkOrderMapper,
+                        IDALWorkOrderMapper dalWorkOrderMapper
+
+                        )
                         : base(logger,
                                productRepository,
                                productModelValidator,
                                bolproductMapper,
-                               dalproductMapper)
+                               dalproductMapper
+                               ,
+                               bolBillOfMaterialsMapper,
+                               dalBillOfMaterialsMapper
+                               ,
+                               bolProductCostHistoryMapper,
+                               dalProductCostHistoryMapper
+                               ,
+                               bolProductDocumentMapper,
+                               dalProductDocumentMapper
+                               ,
+                               bolProductInventoryMapper,
+                               dalProductInventoryMapper
+                               ,
+                               bolProductListPriceHistoryMapper,
+                               dalProductListPriceHistoryMapper
+                               ,
+                               bolProductProductPhotoMapper,
+                               dalProductProductPhotoMapper
+                               ,
+                               bolProductReviewMapper,
+                               dalProductReviewMapper
+                               ,
+                               bolTransactionHistoryMapper,
+                               dalTransactionHistoryMapper
+                               ,
+                               bolWorkOrderMapper,
+                               dalWorkOrderMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>46322777a0de5b5b2a59bd20853114ad</Hash>
+    <Hash>ba2719c29ff3844684499e6933e9cee0</Hash>
 </Codenesium>*/

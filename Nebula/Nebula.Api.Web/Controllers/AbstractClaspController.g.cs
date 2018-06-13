@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiClaspResponseModel> response = await this.ClaspService.All(query.Offset, query.Limit);
+                        List<ApiClaspResponseModel> response = await this.ClaspService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e037cf211f55becf26371d9e9f042b90</Hash>
+    <Hash>25d76bc4d03cc85493869e01638c045f</Hash>
 </Codenesium>*/

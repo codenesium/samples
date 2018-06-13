@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IEventRelatedDocumentRepository eventRelatedDocumentRepository,
                         IApiEventRelatedDocumentRequestModelValidator eventRelatedDocumentModelValidator,
                         IBOLEventRelatedDocumentMapper boleventRelatedDocumentMapper,
-                        IDALEventRelatedDocumentMapper daleventRelatedDocumentMapper)
+                        IDALEventRelatedDocumentMapper daleventRelatedDocumentMapper
+
+                        )
                         : base(logger,
                                eventRelatedDocumentRepository,
                                eventRelatedDocumentModelValidator,
                                boleventRelatedDocumentMapper,
-                               daleventRelatedDocumentMapper)
+                               daleventRelatedDocumentMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fb1fe24af0ca807c92a916a42a257023</Hash>
+    <Hash>cba94c9a183728f26b265440262cb8b0</Hash>
 </Codenesium>*/

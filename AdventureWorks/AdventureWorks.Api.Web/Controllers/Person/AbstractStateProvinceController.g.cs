@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiStateProvinceResponseModel> response = await this.StateProvinceService.All(query.Offset, query.Limit);
+                        List<ApiStateProvinceResponseModel> response = await this.StateProvinceService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -198,9 +198,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{stateProvinceID}/Addresses")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
+                public async virtual Task<IActionResult> Addresses(int stateProvinceID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiAddressResponseModel> response = await this.StateProvinceService.Addresses(stateProvinceID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>dd97710003bf07de5e892499fc8196ec</Hash>
+    <Hash>ce8d1be0a1e2fc6dfd1bbc8b6873895e</Hash>
 </Codenesium>*/

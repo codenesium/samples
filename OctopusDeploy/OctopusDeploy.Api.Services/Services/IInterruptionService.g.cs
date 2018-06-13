@@ -19,12 +19,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiInterruptionResponseModel> Get(string id);
 
-                Task<List<ApiInterruptionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiInterruptionResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiInterruptionResponseModel>> GetTenantId(string tenantId);
         }
 }
 
 /*<Codenesium>
-    <Hash>c1998dad2d36d2364829b11be34994ce</Hash>
+    <Hash>7229b5d51991a9fb23af435f691559a0</Hash>
 </Codenesium>*/

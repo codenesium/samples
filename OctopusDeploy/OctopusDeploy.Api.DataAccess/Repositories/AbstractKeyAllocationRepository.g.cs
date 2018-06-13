@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<KeyAllocation>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<KeyAllocation>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<KeyAllocation> Get(string collectionName)
@@ -75,31 +75,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<KeyAllocation>> Where(Expression<Func<KeyAllocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<KeyAllocation>> Where(Expression<Func<KeyAllocation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<KeyAllocation> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<KeyAllocation> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<KeyAllocation>> SearchLinqEF(Expression<Func<KeyAllocation, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<KeyAllocation>> SearchLinqEF(Expression<Func<KeyAllocation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(KeyAllocation.CollectionName)} ASC";
                         }
 
-                        return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<KeyAllocation>();
+                        return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<KeyAllocation>();
                 }
 
-                private async Task<List<KeyAllocation>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<KeyAllocation>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(KeyAllocation.CollectionName)} ASC";
                         }
 
-                        return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<KeyAllocation>();
+                        return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<KeyAllocation>();
                 }
 
                 private async Task<KeyAllocation> GetById(string collectionName)
@@ -112,5 +112,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>47e6c20551bb13ca1cf7eab74b69836f</Hash>
+    <Hash>ad022bf96065f1fae74e5282c8076486</Hash>
 </Codenesium>*/

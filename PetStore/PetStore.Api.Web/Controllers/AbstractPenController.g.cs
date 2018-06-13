@@ -44,7 +44,7 @@ namespace PetStoreNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiPenResponseModel> response = await this.PenService.All(query.Offset, query.Limit);
+                        List<ApiPenResponseModel> response = await this.PenService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace PetStoreNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{penId}/Pets")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiPenResponseModel>), 200)]
+                public async virtual Task<IActionResult> Pets(int penId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPetResponseModel> response = await this.PenService.Pets(penId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0540b83c93cc6ae0e0330c0da70dba29</Hash>
+    <Hash>5c08fc5847f72b1d45e3316461f1d921</Hash>
 </Codenesium>*/

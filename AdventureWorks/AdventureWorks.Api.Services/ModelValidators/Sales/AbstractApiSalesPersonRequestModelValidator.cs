@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiSalesPersonRequestModelValidator: AbstractValidator<ApiSalesPersonRequestModel>
         {
@@ -30,27 +29,22 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void BonusRules()
                 {
-                        this.RuleFor(x => x.Bonus).NotNull();
                 }
 
                 public virtual void CommissionPctRules()
                 {
-                        this.RuleFor(x => x.CommissionPct).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SalesLastYearRules()
                 {
-                        this.RuleFor(x => x.SalesLastYear).NotNull();
                 }
 
                 public virtual void SalesQuotaRules()
@@ -59,7 +53,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SalesYTDRules()
                 {
-                        this.RuleFor(x => x.SalesYTD).NotNull();
                 }
 
                 public virtual void TerritoryIDRules()
@@ -77,5 +70,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>21ef569da6de358621357f0f93f8f0f6</Hash>
+    <Hash>3aa5c682c4dac4ca3f6a4d064f800aa6</Hash>
 </Codenesium>*/

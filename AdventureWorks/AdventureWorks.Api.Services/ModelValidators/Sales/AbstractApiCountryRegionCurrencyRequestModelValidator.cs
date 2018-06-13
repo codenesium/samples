@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCountryRegionCurrencyRequestModelValidator: AbstractValidator<ApiCountryRegionCurrencyRequestModel>
         {
@@ -37,7 +36,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 private async Task<bool> BeValidCurrency(string id,  CancellationToken cancellationToken)
@@ -50,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ccd7d5ff31bc3c63d710e56e1dfa0a4</Hash>
+    <Hash>8d1d9bcfc7e0f0b8e245c9a94b9ef2fa</Hash>
 </Codenesium>*/

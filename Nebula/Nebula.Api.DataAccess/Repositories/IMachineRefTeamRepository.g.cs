@@ -15,10 +15,10 @@ namespace NebulaNS.Api.DataAccess
 
                 Task<MachineRefTeam> Get(int id);
 
-                Task<List<MachineRefTeam>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<MachineRefTeam>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>cdc469d007ec836c01486638d39be26a</Hash>
+    <Hash>daaf20c107107eb982f69d953131a45a</Hash>
 </Codenesium>*/

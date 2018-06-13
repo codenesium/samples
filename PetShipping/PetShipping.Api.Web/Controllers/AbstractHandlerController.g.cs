@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiHandlerResponseModel> response = await this.HandlerService.All(query.Offset, query.Limit);
+                        List<ApiHandlerResponseModel> response = await this.HandlerService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,49 @@ namespace PetShippingNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{handlerId}/AirTransports")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+                public async virtual Task<IActionResult> AirTransports(int handlerId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiAirTransportResponseModel> response = await this.HandlerService.AirTransports(handlerId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{handlerId}/HandlerPipelineSteps")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+                public async virtual Task<IActionResult> HandlerPipelineSteps(int handlerId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiHandlerPipelineStepResponseModel> response = await this.HandlerService.HandlerPipelineSteps(handlerId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{handlerId}/OtherTransports")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+                public async virtual Task<IActionResult> OtherTransports(int handlerId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiOtherTransportResponseModel> response = await this.HandlerService.OtherTransports(handlerId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>048cd80418ec4ea5ef83c2d6d52baffa</Hash>
+    <Hash>02fdef5564d568aaf5a171ced318e3df</Hash>
 </Codenesium>*/

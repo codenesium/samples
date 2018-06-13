@@ -28,21 +28,23 @@ namespace NebulaNS.Api.Services
                         ILogger logger,
                         IClaspRepository claspRepository,
                         IApiClaspRequestModelValidator claspModelValidator,
-                        IBOLClaspMapper bolclaspMapper,
-                        IDALClaspMapper dalclaspMapper)
+                        IBOLClaspMapper bolClaspMapper,
+                        IDALClaspMapper dalClaspMapper
+
+                        )
                         : base()
 
                 {
                         this.claspRepository = claspRepository;
                         this.claspModelValidator = claspModelValidator;
-                        this.bolClaspMapper = bolclaspMapper;
-                        this.dalClaspMapper = dalclaspMapper;
+                        this.bolClaspMapper = bolClaspMapper;
+                        this.dalClaspMapper = dalClaspMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiClaspResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiClaspResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.claspRepository.All(skip, take, orderClause);
+                        var records = await this.claspRepository.All(limit, offset, orderClause);
 
                         return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b505919f4c44367a4c806aeaa2b23d9c</Hash>
+    <Hash>787e8af4d1d0b19a8a8ddb02104be6c0</Hash>
 </Codenesium>*/

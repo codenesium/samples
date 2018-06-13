@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Channel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Channel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Channel> Get(string id)
@@ -94,31 +94,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<Channel>> Where(Expression<Func<Channel, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Channel>> Where(Expression<Func<Channel, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Channel> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Channel> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Channel>> SearchLinqEF(Expression<Func<Channel, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Channel>> SearchLinqEF(Expression<Func<Channel, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Channel.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Channel>();
+                        return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Channel>();
                 }
 
-                private async Task<List<Channel>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Channel>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Channel.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Channel>();
+                        return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Channel>();
                 }
 
                 private async Task<Channel> GetById(string id)
@@ -131,5 +131,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>97703d1b7731c30c88a0378bda065b00</Hash>
+    <Hash>da2b159e1f999926b216b627dc5110d2</Hash>
 </Codenesium>*/

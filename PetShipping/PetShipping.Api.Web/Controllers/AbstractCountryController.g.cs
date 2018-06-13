@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiCountryResponseModel> response = await this.CountryService.All(query.Offset, query.Limit);
+                        List<ApiCountryResponseModel> response = await this.CountryService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,36 @@ namespace PetShippingNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{countryId}/CountryRequirements")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+                public async virtual Task<IActionResult> CountryRequirements(int countryId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiCountryRequirementResponseModel> response = await this.CountryService.CountryRequirements(countryId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{countryId}/Destinations")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiCountryResponseModel>), 200)]
+                public async virtual Task<IActionResult> Destinations(int countryId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiDestinationResponseModel> response = await this.CountryService.Destinations(countryId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>78708f830c1e79a070ab33bbd6d72841</Hash>
+    <Hash>b278358ac476a768936be700024ca644</Hash>
 </Codenesium>*/

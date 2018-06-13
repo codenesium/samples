@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
                         IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
                         IBOLEmployeeDepartmentHistoryMapper bolemployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalemployeeDepartmentHistoryMapper)
+                        IDALEmployeeDepartmentHistoryMapper dalemployeeDepartmentHistoryMapper
+
+                        )
                         : base(logger,
                                employeeDepartmentHistoryRepository,
                                employeeDepartmentHistoryModelValidator,
                                bolemployeeDepartmentHistoryMapper,
-                               dalemployeeDepartmentHistoryMapper)
+                               dalemployeeDepartmentHistoryMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9697c21dfb62ded36ada9092be9f9c1a</Hash>
+    <Hash>b94be6b44bc59d91fc29e30a9c94d8ec</Hash>
 </Codenesium>*/

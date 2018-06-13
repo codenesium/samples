@@ -44,7 +44,7 @@ namespace PetStoreNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSaleResponseModel> response = await this.SaleService.All(query.Offset, query.Limit);
+                        List<ApiSaleResponseModel> response = await this.SaleService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ac8bcba478dddd5408064512ae6ee2e7</Hash>
+    <Hash>049feb00de0a4218a7472effcabff66f</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IExtensionConfigurationRepository extensionConfigurationRepository,
                         IApiExtensionConfigurationRequestModelValidator extensionConfigurationModelValidator,
-                        IBOLExtensionConfigurationMapper bolextensionConfigurationMapper,
-                        IDALExtensionConfigurationMapper dalextensionConfigurationMapper)
+                        IBOLExtensionConfigurationMapper bolExtensionConfigurationMapper,
+                        IDALExtensionConfigurationMapper dalExtensionConfigurationMapper
+
+                        )
                         : base()
 
                 {
                         this.extensionConfigurationRepository = extensionConfigurationRepository;
                         this.extensionConfigurationModelValidator = extensionConfigurationModelValidator;
-                        this.bolExtensionConfigurationMapper = bolextensionConfigurationMapper;
-                        this.dalExtensionConfigurationMapper = dalextensionConfigurationMapper;
+                        this.bolExtensionConfigurationMapper = bolExtensionConfigurationMapper;
+                        this.dalExtensionConfigurationMapper = dalExtensionConfigurationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiExtensionConfigurationResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiExtensionConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.extensionConfigurationRepository.All(skip, take, orderClause);
+                        var records = await this.extensionConfigurationRepository.All(limit, offset, orderClause);
 
                         return this.bolExtensionConfigurationMapper.MapBOToModel(this.dalExtensionConfigurationMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d3ef994bc92b4d8b6b829765900072b</Hash>
+    <Hash>32c4bc73ea7826da78b8900fc871ba00</Hash>
 </Codenesium>*/

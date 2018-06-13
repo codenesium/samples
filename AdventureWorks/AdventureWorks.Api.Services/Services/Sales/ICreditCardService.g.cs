@@ -19,12 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCreditCardResponseModel> Get(int creditCardID);
 
-                Task<List<ApiCreditCardResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiCreditCardResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber);
+
+                Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>bd9dbd850bda11bb3dd7f59ce64494ab</Hash>
+    <Hash>12772e282770d98bc8f2d9073091899b</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IFeedRepository feedRepository,
                         IApiFeedRequestModelValidator feedModelValidator,
                         IBOLFeedMapper bolfeedMapper,
-                        IDALFeedMapper dalfeedMapper)
+                        IDALFeedMapper dalfeedMapper
+
+                        )
                         : base(logger,
                                feedRepository,
                                feedModelValidator,
                                bolfeedMapper,
-                               dalfeedMapper)
+                               dalfeedMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ed213cf748dc13fea02d8318b23d1963</Hash>
+    <Hash>1b3402931e5a697773c0ad0f3ae669f8</Hash>
 </Codenesium>*/

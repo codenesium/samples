@@ -61,7 +61,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Account record = await this.AccountRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -74,5 +74,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71e93e2780b3446f48e75dd0229b4217</Hash>
+    <Hash>bf8568dfd84cb14a281b18b1ff70a6ef</Hash>
 </Codenesium>*/

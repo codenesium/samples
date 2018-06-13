@@ -15,12 +15,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Proxy> Get(string id);
 
-                Task<List<Proxy>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Proxy>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<Proxy> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>8893d032946c8cf138cb85e910383a75</Hash>
+    <Hash>7d9f9666093dcb22dedf9540d01ba771</Hash>
 </Codenesium>*/

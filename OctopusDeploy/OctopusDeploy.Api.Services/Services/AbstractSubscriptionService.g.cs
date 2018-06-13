@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ISubscriptionRepository subscriptionRepository,
                         IApiSubscriptionRequestModelValidator subscriptionModelValidator,
-                        IBOLSubscriptionMapper bolsubscriptionMapper,
-                        IDALSubscriptionMapper dalsubscriptionMapper)
+                        IBOLSubscriptionMapper bolSubscriptionMapper,
+                        IDALSubscriptionMapper dalSubscriptionMapper
+
+                        )
                         : base()
 
                 {
                         this.subscriptionRepository = subscriptionRepository;
                         this.subscriptionModelValidator = subscriptionModelValidator;
-                        this.bolSubscriptionMapper = bolsubscriptionMapper;
-                        this.dalSubscriptionMapper = dalsubscriptionMapper;
+                        this.bolSubscriptionMapper = bolSubscriptionMapper;
+                        this.dalSubscriptionMapper = dalSubscriptionMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSubscriptionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSubscriptionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.subscriptionRepository.All(skip, take, orderClause);
+                        var records = await this.subscriptionRepository.All(limit, offset, orderClause);
 
                         return this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aae9fd95424991c9b189719f56d27725</Hash>
+    <Hash>9da717df2a5ceb6cc8ff129e49356438</Hash>
 </Codenesium>*/

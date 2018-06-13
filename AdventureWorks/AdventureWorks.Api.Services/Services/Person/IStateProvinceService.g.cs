@@ -19,13 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiStateProvinceResponseModel> Get(int stateProvinceID);
 
-                Task<List<ApiStateProvinceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiStateProvinceResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiStateProvinceResponseModel> GetName(string name);
                 Task<ApiStateProvinceResponseModel> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
+
+                Task<List<ApiAddressResponseModel>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>dc9d36d8a53b43c990364bc49374c9d1</Hash>
+    <Hash>fd177da469330e4a619659c06f7d9475</Hash>
 </Codenesium>*/

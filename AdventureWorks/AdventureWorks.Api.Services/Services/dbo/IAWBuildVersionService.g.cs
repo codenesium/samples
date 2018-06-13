@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiAWBuildVersionResponseModel> Get(int systemInformationID);
 
-                Task<List<ApiAWBuildVersionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiAWBuildVersionResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>2318477765ab07f793ecfc2412817830</Hash>
+    <Hash>84fab466f4a5bce64dfdc2fad9685dc9</Hash>
 </Codenesium>*/

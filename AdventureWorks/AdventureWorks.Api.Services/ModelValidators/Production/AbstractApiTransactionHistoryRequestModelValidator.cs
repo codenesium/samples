@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiTransactionHistoryRequestModelValidator: AbstractValidator<ApiTransactionHistoryRequestModel>
         {
@@ -28,37 +27,30 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ActualCostRules()
                 {
-                        this.RuleFor(x => x.ActualCost).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void ProductIDRules()
                 {
-                        this.RuleFor(x => x.ProductID).NotNull();
                 }
 
                 public virtual void QuantityRules()
                 {
-                        this.RuleFor(x => x.Quantity).NotNull();
                 }
 
                 public virtual void ReferenceOrderIDRules()
                 {
-                        this.RuleFor(x => x.ReferenceOrderID).NotNull();
                 }
 
                 public virtual void ReferenceOrderLineIDRules()
                 {
-                        this.RuleFor(x => x.ReferenceOrderLineID).NotNull();
                 }
 
                 public virtual void TransactionDateRules()
                 {
-                        this.RuleFor(x => x.TransactionDate).NotNull();
                 }
 
                 public virtual void TransactionTypeRules()
@@ -70,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4c6ff5a9d2b8471f58970b1753d1e32</Hash>
+    <Hash>cf66dec1e43d97f9e66e6fa1d6c18bc5</Hash>
 </Codenesium>*/

@@ -25,9 +25,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<AirTransport>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<AirTransport>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<AirTransport> Get(int airlineId)
@@ -75,31 +75,31 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<AirTransport>> Where(Expression<Func<AirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<AirTransport>> Where(Expression<Func<AirTransport, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<AirTransport> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<AirTransport> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<AirTransport>> SearchLinqEF(Expression<Func<AirTransport, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<AirTransport>> SearchLinqEF(Expression<Func<AirTransport, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(AirTransport.AirlineId)} ASC";
                         }
 
-                        return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AirTransport>();
+                        return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<AirTransport>();
                 }
 
-                private async Task<List<AirTransport>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<AirTransport>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(AirTransport.AirlineId)} ASC";
                         }
 
-                        return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<AirTransport>();
+                        return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<AirTransport>();
                 }
 
                 private async Task<AirTransport> GetById(int airlineId)
@@ -112,5 +112,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb7cce0f17f7eff8c94fc195484a40b3</Hash>
+    <Hash>a2f74b2356427ca77a0e4516c1ada6d9</Hash>
 </Codenesium>*/

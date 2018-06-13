@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiBreedRequestModelValidator: AbstractValidator<ApiBreedRequestModel>
         {
@@ -36,7 +35,6 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void SpeciesIdRules()
                 {
-                        this.RuleFor(x => x.SpeciesId).NotNull();
                         this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpecies).When(x => x ?.SpeciesId != null).WithMessage("Invalid reference");
                 }
 
@@ -50,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8cde82d044b79f4f33bfaa11c0e93e97</Hash>
+    <Hash>d7d4b42044119d7eee04be1a0f6252d9</Hash>
 </Codenesium>*/

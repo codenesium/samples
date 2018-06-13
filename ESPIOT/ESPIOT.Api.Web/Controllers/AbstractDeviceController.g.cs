@@ -44,7 +44,7 @@ namespace ESPIOTNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDeviceResponseModel> response = await this.DeviceService.All(query.Offset, query.Limit);
+                        List<ApiDeviceResponseModel> response = await this.DeviceService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -162,13 +162,13 @@ namespace ESPIOTNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getPublicId/{publicId}")]
+                [Route("byPublicId/{publicId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiDeviceResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetPublicId(Guid publicId)
+                public async virtual Task<IActionResult> ByPublicId(Guid publicId)
                 {
-                        ApiDeviceResponseModel response = await this.DeviceService.GetPublicId(publicId);
+                        ApiDeviceResponseModel response = await this.DeviceService.ByPublicId(publicId);
 
                         if (response == null)
                         {
@@ -179,9 +179,23 @@ namespace ESPIOTNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{deviceId}/DeviceActions")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiDeviceResponseModel>), 200)]
+                public async virtual Task<IActionResult> DeviceActions(int deviceId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiDeviceActionResponseModel> response = await this.DeviceService.DeviceActions(deviceId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6b2e42730d7989fb8727406062ef2d20</Hash>
+    <Hash>44e046a15fee80b12809abf85781b3fa</Hash>
 </Codenesium>*/

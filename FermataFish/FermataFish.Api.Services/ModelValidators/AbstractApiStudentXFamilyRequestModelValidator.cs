@@ -8,7 +8,6 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
-
 {
         public abstract class AbstractApiStudentXFamilyRequestModelValidator: AbstractValidator<ApiStudentXFamilyRequestModel>
         {
@@ -32,13 +31,11 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void FamilyIdRules()
                 {
-                        this.RuleFor(x => x.FamilyId).NotNull();
                         this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void StudentIdRules()
                 {
-                        this.RuleFor(x => x.StudentId).NotNull();
                         this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x ?.StudentId != null).WithMessage("Invalid reference");
                 }
 
@@ -59,5 +56,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c39638caad0dac0b9c47c604dee0a267</Hash>
+    <Hash>55d43b53b84f00f1ef0dccb71892cd30</Hash>
 </Codenesium>*/

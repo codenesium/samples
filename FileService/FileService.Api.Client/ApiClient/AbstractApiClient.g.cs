@@ -80,9 +80,9 @@ namespace FileServiceNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBucketResponseModel>> BucketAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiBucketResponseModel>> BucketAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
@@ -143,9 +143,9 @@ namespace FileServiceNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiFileResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiFileResponseModel>> FileAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiFileResponseModel>> FileAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
@@ -190,9 +190,9 @@ namespace FileServiceNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiFileTypeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiFileTypeResponseModel>> FileTypeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiFileTypeResponseModel>> FileTypeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -237,9 +237,9 @@ namespace FileServiceNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
@@ -264,5 +264,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>7f9345c10b4150e40be8a7609e007c87</Hash>
+    <Hash>1527a694cf913b2ce16ce1ac1cd81811</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IEmailAddressRepository emailAddressRepository,
                         IApiEmailAddressRequestModelValidator emailAddressModelValidator,
-                        IBOLEmailAddressMapper bolemailAddressMapper,
-                        IDALEmailAddressMapper dalemailAddressMapper)
+                        IBOLEmailAddressMapper bolEmailAddressMapper,
+                        IDALEmailAddressMapper dalEmailAddressMapper
+
+                        )
                         : base()
 
                 {
                         this.emailAddressRepository = emailAddressRepository;
                         this.emailAddressModelValidator = emailAddressModelValidator;
-                        this.bolEmailAddressMapper = bolemailAddressMapper;
-                        this.dalEmailAddressMapper = dalemailAddressMapper;
+                        this.bolEmailAddressMapper = bolEmailAddressMapper;
+                        this.dalEmailAddressMapper = dalEmailAddressMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEmailAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEmailAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.emailAddressRepository.All(skip, take, orderClause);
+                        var records = await this.emailAddressRepository.All(limit, offset, orderClause);
 
                         return this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d30430f81b931fbfb5cc443477be42f</Hash>
+    <Hash>a91be037e72bc2a3f080fae0220182b6</Hash>
 </Codenesium>*/

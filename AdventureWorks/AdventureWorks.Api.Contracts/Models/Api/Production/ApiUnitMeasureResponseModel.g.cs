@@ -7,61 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiUnitMeasureResponseModel: AbstractApiResponseModel
+        public partial class ApiUnitMeasureResponseModel: AbstractApiUnitMeasureResponseModel
         {
-                public ApiUnitMeasureResponseModel() : base()
+                public ApiUnitMeasureResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        DateTime modifiedDate,
-                        string name,
-                        string unitMeasureCode)
-                {
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                        this.UnitMeasureCode = unitMeasureCode;
-                }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public string Name { get; private set; }
-
-                public string UnitMeasureCode { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeUnitMeasureCodeValue { get; set; } = true;
-
-                public bool ShouldSerializeUnitMeasureCode()
-                {
-                        return this.ShouldSerializeUnitMeasureCodeValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
-                        this.ShouldSerializeUnitMeasureCodeValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>436e337595005a1252d966c7e452b20d</Hash>
+    <Hash>57a1d2d0686d8375eb5f8cd07416b95d</Hash>
 </Codenesium>*/

@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiScrapReasonRequestModelValidator: AbstractValidator<ApiScrapReasonRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public IScrapReasonRepository ScrapReasonRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -43,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ScrapReason record = await this.ScrapReasonRepository.GetName(model.Name);
 
-                        if (record == null || record.ScrapReasonID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (short) && record.ScrapReasonID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb7d759fe887680cb11eb816fb20164e</Hash>
+    <Hash>dd5467cfec731cbc0c2d9d214ae2bc20</Hash>
 </Codenesium>*/

@@ -15,15 +15,17 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Event> Get(string id);
 
-                Task<List<Event>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Event>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<Event>> GetAutoId(long autoId);
-                Task<List<Event>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTime occurred, string category, long autoId);
-                Task<List<Event>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTime occurred, string tenantId);
-                Task<List<Event>> GetIdOccurred(string id, DateTime occurred);
+                Task<List<Event>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
+                Task<List<Event>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId);
+                Task<List<Event>> GetIdOccurred(string id, DateTimeOffset occurred);
+
+                Task<List<EventRelatedDocument>> EventRelatedDocuments(string eventId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>9323a8e91f4f77ebefb60b3f52409db6</Hash>
+    <Hash>d6302b7b35ad4197ad79a9f7c818be63</Hash>
 </Codenesium>*/

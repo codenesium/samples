@@ -15,8 +15,8 @@ namespace OctopusDeployNS.Api.Contracts
                 public void SetProperties(
                         string channelId,
                         string channelName,
-                        Nullable<DateTime> completedTime,
-                        DateTime created,
+                        Nullable<DateTimeOffset> completedTime,
+                        DateTimeOffset created,
                         string deployedBy,
                         string deploymentName,
                         Nullable<int> durationSeconds,
@@ -25,10 +25,10 @@ namespace OctopusDeployNS.Api.Contracts
                         string projectId,
                         string projectName,
                         string projectSlug,
-                        DateTime queueTime,
+                        DateTimeOffset queueTime,
                         string releaseId,
                         string releaseVersion,
-                        Nullable<DateTime> startTime,
+                        Nullable<DateTimeOffset> startTime,
                         string taskId,
                         string taskState,
                         string tenantId,
@@ -86,9 +86,9 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> completedTime;
+                private Nullable<DateTimeOffset> completedTime;
 
-                public Nullable<DateTime> CompletedTime
+                public Nullable<DateTimeOffset> CompletedTime
                 {
                         get
                         {
@@ -101,10 +101,10 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private DateTime created;
+                private DateTimeOffset created;
 
                 [Required]
-                public DateTime Created
+                public DateTimeOffset Created
                 {
                         get
                         {
@@ -243,10 +243,10 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private DateTime queueTime;
+                private DateTimeOffset queueTime;
 
                 [Required]
-                public DateTime QueueTime
+                public DateTimeOffset QueueTime
                 {
                         get
                         {
@@ -291,9 +291,9 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> startTime;
+                private Nullable<DateTimeOffset> startTime;
 
-                public Nullable<DateTime> StartTime
+                public Nullable<DateTimeOffset> StartTime
                 {
                         get
                         {
@@ -371,5 +371,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2a9fa78ae4318af62c4a7f476379de32</Hash>
+    <Hash>cab10dc88c34ccbbf08f111f1309eafc</Hash>
 </Codenesium>*/

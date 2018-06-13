@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiSalesTaxRateRequestModelValidator: AbstractValidator<ApiSalesTaxRateRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public ISalesTaxRateRepository SalesTaxRateRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -40,23 +38,19 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void StateProvinceIDRules()
                 {
-                        this.RuleFor(x => x.StateProvinceID).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.StateProvinceID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateRequestModel.StateProvinceID));
                 }
 
                 public virtual void TaxRateRules()
                 {
-                        this.RuleFor(x => x.TaxRate).NotNull();
                 }
 
                 public virtual void TaxTypeRules()
                 {
-                        this.RuleFor(x => x.TaxType).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetStateProvinceIDTaxType).When(x => x ?.TaxType != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTaxRateRequestModel.TaxType));
                 }
 
@@ -64,7 +58,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         SalesTaxRate record = await this.SalesTaxRateRepository.GetStateProvinceIDTaxType(model.StateProvinceID, model.TaxType);
 
-                        if (record == null || record.SalesTaxRateID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.SalesTaxRateID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -77,5 +71,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73fc09776d938ae2d81ea0c514b59912</Hash>
+    <Hash>dd74a2a6e380df0b3e27a44651c0b0f4</Hash>
 </Codenesium>*/

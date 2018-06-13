@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiDatabaseLogResponseModel> Get(int databaseLogID);
 
-                Task<List<ApiDatabaseLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiDatabaseLogResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>363b2addc4e27adc6890e715b8c1d452</Hash>
+    <Hash>f7265621b21e74c25c0648798943d06b</Hash>
 </Codenesium>*/

@@ -22,27 +22,47 @@ namespace FermataFishNS.Api.Services
 
                 private IDALTeacherSkillMapper dalTeacherSkillMapper;
 
+                private IBOLRateMapper bolRateMapper;
+
+                private IDALRateMapper dalRateMapper;
+                private IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper;
+
+                private IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper;
+
                 private ILogger logger;
 
                 public AbstractTeacherSkillService(
                         ILogger logger,
                         ITeacherSkillRepository teacherSkillRepository,
                         IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
-                        IBOLTeacherSkillMapper bolteacherSkillMapper,
-                        IDALTeacherSkillMapper dalteacherSkillMapper)
+                        IBOLTeacherSkillMapper bolTeacherSkillMapper,
+                        IDALTeacherSkillMapper dalTeacherSkillMapper
+
+                        ,
+                        IBOLRateMapper bolRateMapper,
+                        IDALRateMapper dalRateMapper
+                        ,
+                        IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
+                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
+
+                        )
                         : base()
 
                 {
                         this.teacherSkillRepository = teacherSkillRepository;
                         this.teacherSkillModelValidator = teacherSkillModelValidator;
-                        this.bolTeacherSkillMapper = bolteacherSkillMapper;
-                        this.dalTeacherSkillMapper = dalteacherSkillMapper;
+                        this.bolTeacherSkillMapper = bolTeacherSkillMapper;
+                        this.dalTeacherSkillMapper = dalTeacherSkillMapper;
+                        this.bolRateMapper = bolRateMapper;
+                        this.dalRateMapper = dalRateMapper;
+                        this.bolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
+                        this.dalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTeacherSkillResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTeacherSkillResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.teacherSkillRepository.All(skip, take, orderClause);
+                        var records = await this.teacherSkillRepository.All(limit, offset, orderClause);
 
                         return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiRateResponseModel>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Rate> records = await this.teacherSkillRepository.Rates(teacherSkillId, limit, offset);
+
+                        return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<TeacherXTeacherSkill> records = await this.teacherSkillRepository.TeacherXTeacherSkills(teacherSkillId, limit, offset);
+
+                        return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>63899b2bd564ea2197876e12b1d2423b</Hash>
+    <Hash>46fe7f1bad91e81300e8ab0be67111de</Hash>
 </Codenesium>*/

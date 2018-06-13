@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiShiftRequestModelValidator: AbstractValidator<ApiShiftRequestModel>
         {
@@ -29,13 +28,11 @@ namespace AdventureWorksNS.Api.Services
                 public IShiftRepository ShiftRepository { get; set; }
                 public virtual void EndTimeRules()
                 {
-                        this.RuleFor(x => x.EndTime).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetStartTimeEndTime).When(x => x ?.EndTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.EndTime));
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -47,7 +44,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void StartTimeRules()
                 {
-                        this.RuleFor(x => x.StartTime).NotNull();
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetStartTimeEndTime).When(x => x ?.StartTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.StartTime));
                 }
 
@@ -55,7 +51,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Shift record = await this.ShiftRepository.GetName(model.Name);
 
-                        if (record == null || record.ShiftID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ShiftID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -68,7 +64,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Shift record = await this.ShiftRepository.GetStartTimeEndTime(model.StartTime, model.EndTime);
 
-                        if (record == null || record.ShiftID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.ShiftID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -81,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>249d0ecfe81732e598ce30a2a94704d4</Hash>
+    <Hash>250e5f22f93d483673d0abe21280ccbe</Hash>
 </Codenesium>*/

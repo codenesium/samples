@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public ISubscriptionRepository SubscriptionRepository { get; set; }
                 public virtual void IsDisabledRules()
                 {
-                        this.RuleFor(x => x.IsDisabled).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -52,7 +51,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Subscription record = await this.SubscriptionRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -65,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76c46e9038779268c331be11abae0d39</Hash>
+    <Hash>a24e1e174b8edbebd8cda2d380da9b9e</Hash>
 </Codenesium>*/

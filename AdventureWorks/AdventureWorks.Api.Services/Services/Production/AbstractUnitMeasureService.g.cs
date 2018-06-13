@@ -22,27 +22,47 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALUnitMeasureMapper dalUnitMeasureMapper;
 
+                private IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper;
+
+                private IDALBillOfMaterialsMapper dalBillOfMaterialsMapper;
+                private IBOLProductMapper bolProductMapper;
+
+                private IDALProductMapper dalProductMapper;
+
                 private ILogger logger;
 
                 public AbstractUnitMeasureService(
                         ILogger logger,
                         IUnitMeasureRepository unitMeasureRepository,
                         IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
-                        IBOLUnitMeasureMapper bolunitMeasureMapper,
-                        IDALUnitMeasureMapper dalunitMeasureMapper)
+                        IBOLUnitMeasureMapper bolUnitMeasureMapper,
+                        IDALUnitMeasureMapper dalUnitMeasureMapper
+
+                        ,
+                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
+                        ,
+                        IBOLProductMapper bolProductMapper,
+                        IDALProductMapper dalProductMapper
+
+                        )
                         : base()
 
                 {
                         this.unitMeasureRepository = unitMeasureRepository;
                         this.unitMeasureModelValidator = unitMeasureModelValidator;
-                        this.bolUnitMeasureMapper = bolunitMeasureMapper;
-                        this.dalUnitMeasureMapper = dalunitMeasureMapper;
+                        this.bolUnitMeasureMapper = bolUnitMeasureMapper;
+                        this.dalUnitMeasureMapper = dalUnitMeasureMapper;
+                        this.bolBillOfMaterialsMapper = bolBillOfMaterialsMapper;
+                        this.dalBillOfMaterialsMapper = dalBillOfMaterialsMapper;
+                        this.bolProductMapper = bolProductMapper;
+                        this.dalProductMapper = dalProductMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.unitMeasureRepository.All(skip, take, orderClause);
+                        var records = await this.unitMeasureRepository.All(limit, offset, orderClause);
 
                         return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(records));
                 }
@@ -103,9 +123,22 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<BillOfMaterials> records = await this.unitMeasureRepository.BillOfMaterials(unitMeasureCode, limit, offset);
+
+                        return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Product> records = await this.unitMeasureRepository.Products(sizeUnitMeasureCode, limit, offset);
+
+                        return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>42fefd0a630a04be9e981d63df75cc47</Hash>
+    <Hash>4e05aa400c64f2de13946a638f1bfab3</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IBillOfMaterialsRepository billOfMaterialsRepository,
                         IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
-                        IBOLBillOfMaterialsMapper bolbillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalbillOfMaterialsMapper)
+                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
+
+                        )
                         : base()
 
                 {
                         this.billOfMaterialsRepository = billOfMaterialsRepository;
                         this.billOfMaterialsModelValidator = billOfMaterialsModelValidator;
-                        this.bolBillOfMaterialsMapper = bolbillOfMaterialsMapper;
-                        this.dalBillOfMaterialsMapper = dalbillOfMaterialsMapper;
+                        this.bolBillOfMaterialsMapper = bolBillOfMaterialsMapper;
+                        this.dalBillOfMaterialsMapper = dalBillOfMaterialsMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.billOfMaterialsRepository.All(skip, take, orderClause);
+                        var records = await this.billOfMaterialsRepository.All(limit, offset, orderClause);
 
                         return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c44e6426f291171c90d313989407c980</Hash>
+    <Hash>3f3d63b235be59b99a37fcf96a381f22</Hash>
 </Codenesium>*/

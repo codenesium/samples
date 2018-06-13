@@ -15,12 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Currency> Get(string currencyCode);
 
-                Task<List<Currency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Currency>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<Currency> GetName(string name);
+
+                Task<List<CountryRegionCurrency>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0);
+                Task<List<CurrencyRate>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>c5a2cf1bb82186d7f81c04fc88706693</Hash>
+    <Hash>170cc8244586bce4d99d0e53d9bce8de</Hash>
 </Codenesium>*/

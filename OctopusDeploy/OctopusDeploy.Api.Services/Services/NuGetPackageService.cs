@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         INuGetPackageRepository nuGetPackageRepository,
                         IApiNuGetPackageRequestModelValidator nuGetPackageModelValidator,
                         IBOLNuGetPackageMapper bolnuGetPackageMapper,
-                        IDALNuGetPackageMapper dalnuGetPackageMapper)
+                        IDALNuGetPackageMapper dalnuGetPackageMapper
+
+                        )
                         : base(logger,
                                nuGetPackageRepository,
                                nuGetPackageModelValidator,
                                bolnuGetPackageMapper,
-                               dalnuGetPackageMapper)
+                               dalnuGetPackageMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6436a8a04490cc7f8016b1738eaa2aeb</Hash>
+    <Hash>30242553695526f61626cb4088572d49</Hash>
 </Codenesium>*/

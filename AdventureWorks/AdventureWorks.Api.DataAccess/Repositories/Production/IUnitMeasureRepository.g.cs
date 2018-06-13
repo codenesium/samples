@@ -15,12 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<UnitMeasure> Get(string unitMeasureCode);
 
-                Task<List<UnitMeasure>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<UnitMeasure> GetName(string name);
+
+                Task<List<BillOfMaterials>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
+                Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>298dcdfcfdebdee22dcbaacc33d97286</Hash>
+    <Hash>202c806430e96d074bb29ad2a1495736</Hash>
 </Codenesium>*/

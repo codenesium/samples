@@ -22,27 +22,39 @@ namespace PetShippingNS.Api.Services
 
                 private IDALSpeciesMapper dalSpeciesMapper;
 
+                private IBOLBreedMapper bolBreedMapper;
+
+                private IDALBreedMapper dalBreedMapper;
+
                 private ILogger logger;
 
                 public AbstractSpeciesService(
                         ILogger logger,
                         ISpeciesRepository speciesRepository,
                         IApiSpeciesRequestModelValidator speciesModelValidator,
-                        IBOLSpeciesMapper bolspeciesMapper,
-                        IDALSpeciesMapper dalspeciesMapper)
+                        IBOLSpeciesMapper bolSpeciesMapper,
+                        IDALSpeciesMapper dalSpeciesMapper
+
+                        ,
+                        IBOLBreedMapper bolBreedMapper,
+                        IDALBreedMapper dalBreedMapper
+
+                        )
                         : base()
 
                 {
                         this.speciesRepository = speciesRepository;
                         this.speciesModelValidator = speciesModelValidator;
-                        this.bolSpeciesMapper = bolspeciesMapper;
-                        this.dalSpeciesMapper = dalspeciesMapper;
+                        this.bolSpeciesMapper = bolSpeciesMapper;
+                        this.dalSpeciesMapper = dalSpeciesMapper;
+                        this.bolBreedMapper = bolBreedMapper;
+                        this.dalBreedMapper = dalBreedMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSpeciesResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSpeciesResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.speciesRepository.All(skip, take, orderClause);
+                        var records = await this.speciesRepository.All(limit, offset, orderClause);
 
                         return this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace PetShippingNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiBreedResponseModel>> Breeds(int speciesId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Breed> records = await this.speciesRepository.Breeds(speciesId, limit, offset);
+
+                        return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f214ad6b637c7ec07c0cd834f1a58b40</Hash>
+    <Hash>607e4a3332354564d77266d2367ce751</Hash>
 </Codenesium>*/

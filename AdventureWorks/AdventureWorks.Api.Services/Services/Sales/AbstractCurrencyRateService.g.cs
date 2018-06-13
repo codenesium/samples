@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALCurrencyRateMapper dalCurrencyRateMapper;
 
+                private IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper;
+
+                private IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper;
+
                 private ILogger logger;
 
                 public AbstractCurrencyRateService(
                         ILogger logger,
                         ICurrencyRateRepository currencyRateRepository,
                         IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
-                        IBOLCurrencyRateMapper bolcurrencyRateMapper,
-                        IDALCurrencyRateMapper dalcurrencyRateMapper)
+                        IBOLCurrencyRateMapper bolCurrencyRateMapper,
+                        IDALCurrencyRateMapper dalCurrencyRateMapper
+
+                        ,
+                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
+
+                        )
                         : base()
 
                 {
                         this.currencyRateRepository = currencyRateRepository;
                         this.currencyRateModelValidator = currencyRateModelValidator;
-                        this.bolCurrencyRateMapper = bolcurrencyRateMapper;
-                        this.dalCurrencyRateMapper = dalcurrencyRateMapper;
+                        this.bolCurrencyRateMapper = bolCurrencyRateMapper;
+                        this.dalCurrencyRateMapper = dalCurrencyRateMapper;
+                        this.bolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
+                        this.dalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCurrencyRateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCurrencyRateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.currencyRateRepository.All(skip, take, orderClause);
+                        var records = await this.currencyRateRepository.All(limit, offset, orderClause);
 
                         return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int currencyRateID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SalesOrderHeader> records = await this.currencyRateRepository.SalesOrderHeaders(currencyRateID, limit, offset);
+
+                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c7f06349c98ef25e2741ca17762c075b</Hash>
+    <Hash>0bd2d58e16d8d1e000b0249d6557cbc1</Hash>
 </Codenesium>*/

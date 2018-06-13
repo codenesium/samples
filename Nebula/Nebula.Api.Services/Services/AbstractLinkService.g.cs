@@ -22,27 +22,39 @@ namespace NebulaNS.Api.Services
 
                 private IDALLinkMapper dalLinkMapper;
 
+                private IBOLLinkLogMapper bolLinkLogMapper;
+
+                private IDALLinkLogMapper dalLinkLogMapper;
+
                 private ILogger logger;
 
                 public AbstractLinkService(
                         ILogger logger,
                         ILinkRepository linkRepository,
                         IApiLinkRequestModelValidator linkModelValidator,
-                        IBOLLinkMapper bollinkMapper,
-                        IDALLinkMapper dallinkMapper)
+                        IBOLLinkMapper bolLinkMapper,
+                        IDALLinkMapper dalLinkMapper
+
+                        ,
+                        IBOLLinkLogMapper bolLinkLogMapper,
+                        IDALLinkLogMapper dalLinkLogMapper
+
+                        )
                         : base()
 
                 {
                         this.linkRepository = linkRepository;
                         this.linkModelValidator = linkModelValidator;
-                        this.bolLinkMapper = bollinkMapper;
-                        this.dalLinkMapper = dallinkMapper;
+                        this.bolLinkMapper = bolLinkMapper;
+                        this.dalLinkMapper = dalLinkMapper;
+                        this.bolLinkLogMapper = bolLinkLogMapper;
+                        this.dalLinkLogMapper = dalLinkLogMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLinkResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLinkResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.linkRepository.All(skip, take, orderClause);
+                        var records = await this.linkRepository.All(limit, offset, orderClause);
 
                         return this.bolLinkMapper.MapBOToModel(this.dalLinkMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace NebulaNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<LinkLog> records = await this.linkRepository.LinkLogs(linkId, limit, offset);
+
+                        return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>49a69c4f9ab41b1b07ce16b1ef64afe1</Hash>
+    <Hash>24c34cb35d39566734fead8c680cd858</Hash>
 </Codenesium>*/

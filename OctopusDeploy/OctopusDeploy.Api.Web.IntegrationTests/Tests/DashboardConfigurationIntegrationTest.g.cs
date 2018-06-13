@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " DashboardConfiguration")]
+        [Trait("Integration", "DashboardConfiguration")]
         public class DashboardConfigurationTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>20526009cc6353324dcc79588d366260</Hash>
+    <Hash>8aef84dc11114d816386277f879f5d99</Hash>
 </Codenesium>*/

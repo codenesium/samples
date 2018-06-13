@@ -17,17 +17,32 @@ namespace AdventureWorksNS.Api.Services
                         IUnitMeasureRepository unitMeasureRepository,
                         IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
                         IBOLUnitMeasureMapper bolunitMeasureMapper,
-                        IDALUnitMeasureMapper dalunitMeasureMapper)
+                        IDALUnitMeasureMapper dalunitMeasureMapper
+                        ,
+                        IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
+                        ,
+                        IBOLProductMapper bolProductMapper,
+                        IDALProductMapper dalProductMapper
+
+                        )
                         : base(logger,
                                unitMeasureRepository,
                                unitMeasureModelValidator,
                                bolunitMeasureMapper,
-                               dalunitMeasureMapper)
+                               dalunitMeasureMapper
+                               ,
+                               bolBillOfMaterialsMapper,
+                               dalBillOfMaterialsMapper
+                               ,
+                               bolProductMapper,
+                               dalProductMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>22b6f8d792e1436d00420abaab5a8d72</Hash>
+    <Hash>22038b256aec6cf651b050d0831c3c43</Hash>
 </Codenesium>*/

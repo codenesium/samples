@@ -80,9 +80,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiAccountResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiAccountResponseModel>> AccountAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiAccountResponseModel>> AccountAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Accounts?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Accounts?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiAccountResponseModel>>(httpResponse.Content.ContentToString());
@@ -135,9 +135,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiActionTemplateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiActionTemplateResponseModel>> ActionTemplateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiActionTemplateResponseModel>> ActionTemplateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiActionTemplateResponseModel>>(httpResponse.Content.ContentToString());
@@ -190,9 +190,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiActionTemplateVersionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiActionTemplateVersionResponseModel>> ActionTemplateVersionAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiActionTemplateVersionResponseModel>> ActionTemplateVersionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplateVersions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ActionTemplateVersions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiActionTemplateVersionResponseModel>>(httpResponse.Content.ContentToString());
@@ -253,9 +253,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiApiKeyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiApiKeyResponseModel>> ApiKeyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiApiKeyResponseModel>> ApiKeyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ApiKeys?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ApiKeys?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiApiKeyResponseModel>>(httpResponse.Content.ContentToString());
@@ -308,9 +308,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiArtifactResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiArtifactResponseModel>> ArtifactAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiArtifactResponseModel>> ArtifactAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Artifacts?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Artifacts?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiArtifactResponseModel>>(httpResponse.Content.ContentToString());
@@ -363,9 +363,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCertificateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> CertificateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCertificateResponseModel>> CertificateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
@@ -379,7 +379,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetCreated(DateTime created)
+                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetCreated(DateTimeOffset created)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/getCreated/{created}");
 
@@ -395,7 +395,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCertificateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetNotAfter(DateTime notAfter)
+                public virtual async Task<List<ApiCertificateResponseModel>> GetCertificateGetNotAfter(DateTimeOffset notAfter)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Certificates/getNotAfter/{notAfter}");
 
@@ -442,9 +442,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiChannelResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiChannelResponseModel>> ChannelAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiChannelResponseModel>> ChannelAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Channels?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiChannelResponseModel>>(httpResponse.Content.ContentToString());
@@ -513,9 +513,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCommunityActionTemplateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> CommunityActionTemplateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> CommunityActionTemplateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CommunityActionTemplates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CommunityActionTemplates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCommunityActionTemplateResponseModel>>(httpResponse.Content.ContentToString());
@@ -576,9 +576,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiConfigurationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiConfigurationResponseModel>> ConfigurationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiConfigurationResponseModel>> ConfigurationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Configurations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Configurations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiConfigurationResponseModel>>(httpResponse.Content.ContentToString());
@@ -623,9 +623,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDashboardConfigurationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDashboardConfigurationResponseModel>> DashboardConfigurationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDashboardConfigurationResponseModel>> DashboardConfigurationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DashboardConfigurations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DashboardConfigurations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDashboardConfigurationResponseModel>>(httpResponse.Content.ContentToString());
@@ -670,9 +670,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDeploymentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentResponseModel>> DeploymentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDeploymentResponseModel>> DeploymentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
@@ -694,7 +694,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentGetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTime created, string releaseId, string taskId, string environmentId)
+                public virtual async Task<List<ApiDeploymentResponseModel>> GetDeploymentGetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/getIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId/{id}/{projectId}/{projectGroupId}/{name}/{created}/{releaseId}/{taskId}/{environmentId}");
 
@@ -741,9 +741,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDeploymentEnvironmentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> DeploymentEnvironmentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> DeploymentEnvironmentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentEnvironments?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentEnvironments?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentEnvironmentResponseModel>>(httpResponse.Content.ContentToString());
@@ -804,9 +804,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDeploymentHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> DeploymentHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> DeploymentHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -820,7 +820,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentHistoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> GetDeploymentHistoryGetCreated(DateTime created)
+                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> GetDeploymentHistoryGetCreated(DateTimeOffset created)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentHistories/getCreated/{created}");
 
@@ -859,9 +859,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDeploymentProcessResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentProcessResponseModel>> DeploymentProcessAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDeploymentProcessResponseModel>> DeploymentProcessAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentProcesses?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentProcesses?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentProcessResponseModel>>(httpResponse.Content.ContentToString());
@@ -906,9 +906,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDeploymentRelatedMachineResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> DeploymentRelatedMachineAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> DeploymentRelatedMachineAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentRelatedMachines?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeploymentRelatedMachines?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeploymentRelatedMachineResponseModel>>(httpResponse.Content.ContentToString());
@@ -969,9 +969,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiEventResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> EventAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiEventResponseModel>> EventAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
@@ -993,7 +993,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTime occurred, string category, long autoId)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getIdRelatedDocumentIdsOccurredCategoryAutoId/{id}/{relatedDocumentIds}/{occurred}/{category}/{autoId}");
 
@@ -1001,7 +1001,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTime occurred, string tenantId)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId/{id}/{relatedDocumentIds}/{projectId}/{environmentId}/{category}/{userId}/{occurred}/{tenantId}");
 
@@ -1009,7 +1009,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdOccurred(string id, DateTime occurred)
+                public virtual async Task<List<ApiEventResponseModel>> GetEventGetIdOccurred(string id, DateTimeOffset occurred)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/getIdOccurred/{id}/{occurred}");
 
@@ -1048,9 +1048,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiEventRelatedDocumentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> EventRelatedDocumentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> EventRelatedDocumentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventRelatedDocuments?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventRelatedDocuments?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventRelatedDocumentResponseModel>>(httpResponse.Content.ContentToString());
@@ -1111,9 +1111,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiExtensionConfigurationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiExtensionConfigurationResponseModel>> ExtensionConfigurationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiExtensionConfigurationResponseModel>> ExtensionConfigurationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ExtensionConfigurations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ExtensionConfigurations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiExtensionConfigurationResponseModel>>(httpResponse.Content.ContentToString());
@@ -1158,9 +1158,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiFeedResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiFeedResponseModel>> FeedAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiFeedResponseModel>> FeedAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Feeds?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Feeds?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFeedResponseModel>>(httpResponse.Content.ContentToString());
@@ -1213,9 +1213,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiInterruptionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiInterruptionResponseModel>> InterruptionAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiInterruptionResponseModel>> InterruptionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Interruptions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Interruptions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiInterruptionResponseModel>>(httpResponse.Content.ContentToString());
@@ -1268,9 +1268,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiInvitationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiInvitationResponseModel>> InvitationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiInvitationResponseModel>> InvitationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Invitations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Invitations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiInvitationResponseModel>>(httpResponse.Content.ContentToString());
@@ -1315,9 +1315,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiKeyAllocationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiKeyAllocationResponseModel>> KeyAllocationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiKeyAllocationResponseModel>> KeyAllocationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/KeyAllocations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/KeyAllocations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiKeyAllocationResponseModel>>(httpResponse.Content.ContentToString());
@@ -1362,9 +1362,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLibraryVariableSetResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLibraryVariableSetResponseModel>> LibraryVariableSetAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLibraryVariableSetResponseModel>> LibraryVariableSetAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LibraryVariableSets?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LibraryVariableSets?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLibraryVariableSetResponseModel>>(httpResponse.Content.ContentToString());
@@ -1417,9 +1417,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLifecycleResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLifecycleResponseModel>> LifecycleAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLifecycleResponseModel>> LifecycleAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lifecycles?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lifecycles?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLifecycleResponseModel>>(httpResponse.Content.ContentToString());
@@ -1480,9 +1480,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiMachineResponseModel>> MachineAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiMachineResponseModel>> MachineAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
@@ -1543,9 +1543,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiMachinePolicyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiMachinePolicyResponseModel>> MachinePolicyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiMachinePolicyResponseModel>> MachinePolicyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachinePolicies?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/MachinePolicies?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiMachinePolicyResponseModel>>(httpResponse.Content.ContentToString());
@@ -1598,9 +1598,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiMutexResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiMutexResponseModel>> MutexAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiMutexResponseModel>> MutexAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Mutexes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Mutexes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiMutexResponseModel>>(httpResponse.Content.ContentToString());
@@ -1645,9 +1645,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiNuGetPackageResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiNuGetPackageResponseModel>> NuGetPackageAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiNuGetPackageResponseModel>> NuGetPackageAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/NuGetPackages?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/NuGetPackages?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiNuGetPackageResponseModel>>(httpResponse.Content.ContentToString());
@@ -1692,9 +1692,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiOctopusServerNodeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiOctopusServerNodeResponseModel>> OctopusServerNodeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiOctopusServerNodeResponseModel>> OctopusServerNodeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/OctopusServerNodes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/OctopusServerNodes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiOctopusServerNodeResponseModel>>(httpResponse.Content.ContentToString());
@@ -1739,9 +1739,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProjectResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectResponseModel>> ProjectAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProjectResponseModel>> ProjectAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Projects?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectResponseModel>>(httpResponse.Content.ContentToString());
@@ -1818,9 +1818,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProjectGroupResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectGroupResponseModel>> ProjectGroupAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProjectGroupResponseModel>> ProjectGroupAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectGroups?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectGroups?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectGroupResponseModel>>(httpResponse.Content.ContentToString());
@@ -1881,9 +1881,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProjectTriggerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProjectTriggerResponseModel>> ProjectTriggerAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProjectTriggerResponseModel>> ProjectTriggerAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectTriggers?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProjectTriggers?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProjectTriggerResponseModel>>(httpResponse.Content.ContentToString());
@@ -1944,9 +1944,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProxyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProxyResponseModel>> ProxyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProxyResponseModel>> ProxyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Proxies?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Proxies?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProxyResponseModel>>(httpResponse.Content.ContentToString());
@@ -1999,9 +1999,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiReleaseResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> ReleaseAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiReleaseResponseModel>> ReleaseAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
@@ -2023,7 +2023,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiReleaseResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdAssembled(string id, DateTime assembled)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdAssembled(string id, DateTimeOffset assembled)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getIdAssembled/{id}/{assembled}");
 
@@ -2039,7 +2039,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTime assembled)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}");
 
@@ -2047,7 +2047,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiReleaseResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTime assembled)
+                public virtual async Task<List<ApiReleaseResponseModel>> GetReleaseGetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Releases/getIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}");
 
@@ -2086,9 +2086,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSchemaVersionsResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSchemaVersionsResponseModel>> SchemaVersionsAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSchemaVersionsResponseModel>> SchemaVersionsAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SchemaVersions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SchemaVersions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSchemaVersionsResponseModel>>(httpResponse.Content.ContentToString());
@@ -2133,9 +2133,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiServerTaskResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiServerTaskResponseModel>> ServerTaskAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiServerTaskResponseModel>> ServerTaskAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
@@ -2149,7 +2149,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTime queueTime, Nullable<DateTime> startTime, Nullable<DateTime> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
+                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/getDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId/{description}/{queueTime}/{startTime}/{completedTime}/{errorMessage}/{concurrencyTag}/{hasPendingInterruptions}/{hasWarningsOrErrors}/{durationSeconds}/{jSON}/{state}/{name}/{projectId}/{environmentId}/{tenantId}/{serverNodeId}");
 
@@ -2165,7 +2165,7 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiServerTaskResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTime> startTime, Nullable<DateTime> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTime queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
+                public virtual async Task<List<ApiServerTaskResponseModel>> GetServerTaskGetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
                 {
                         HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ServerTasks/getNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId/{name}/{description}/{startTime}/{completedTime}/{errorMessage}/{hasWarningsOrErrors}/{projectId}/{environmentId}/{tenantId}/{durationSeconds}/{jSON}/{queueTime}/{state}/{concurrencyTag}/{hasPendingInterruptions}/{serverNodeId}");
 
@@ -2204,9 +2204,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSubscriptionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSubscriptionResponseModel>> SubscriptionAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSubscriptionResponseModel>> SubscriptionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Subscriptions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Subscriptions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSubscriptionResponseModel>>(httpResponse.Content.ContentToString());
@@ -2259,9 +2259,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTagSetResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTagSetResponseModel>> TagSetAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTagSetResponseModel>> TagSetAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TagSets?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TagSets?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTagSetResponseModel>>(httpResponse.Content.ContentToString());
@@ -2322,9 +2322,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTeamResponseModel>> TeamAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTeamResponseModel>> TeamAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
@@ -2377,9 +2377,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTenantResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTenantResponseModel>> TenantAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTenantResponseModel>> TenantAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tenants?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tenants?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTenantResponseModel>>(httpResponse.Content.ContentToString());
@@ -2440,9 +2440,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTenantVariableResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTenantVariableResponseModel>> TenantVariableAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTenantVariableResponseModel>> TenantVariableAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TenantVariables?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TenantVariables?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTenantVariableResponseModel>>(httpResponse.Content.ContentToString());
@@ -2503,9 +2503,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiUserResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiUserResponseModel>> UserAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiUserResponseModel>> UserAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
@@ -2582,9 +2582,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiUserRoleResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiUserRoleResponseModel>> UserRoleAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiUserRoleResponseModel>> UserRoleAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UserRoles?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UserRoles?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiUserRoleResponseModel>>(httpResponse.Content.ContentToString());
@@ -2637,9 +2637,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiVariableSetResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiVariableSetResponseModel>> VariableSetAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiVariableSetResponseModel>> VariableSetAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VariableSets?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VariableSets?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiVariableSetResponseModel>>(httpResponse.Content.ContentToString());
@@ -2684,9 +2684,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiWorkerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkerResponseModel>> WorkerAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiWorkerResponseModel>> WorkerAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Workers?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Workers?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkerResponseModel>>(httpResponse.Content.ContentToString());
@@ -2747,9 +2747,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiWorkerPoolResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkerPoolResponseModel>> WorkerPoolAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiWorkerPoolResponseModel>> WorkerPoolAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkerPools?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkerPools?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkerPoolResponseModel>>(httpResponse.Content.ContentToString());
@@ -2802,9 +2802,9 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiWorkerTaskLeaseResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkerTaskLeaseResponseModel>> WorkerTaskLeaseAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiWorkerTaskLeaseResponseModel>> WorkerTaskLeaseAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkerTaskLeases?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkerTaskLeases?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkerTaskLeaseResponseModel>>(httpResponse.Content.ContentToString());
@@ -2821,5 +2821,5 @@ namespace OctopusDeployNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>03ed2fbb8d28fa4855428fb2d2dc7615</Hash>
+    <Hash>a6521a2c444b5fab48d7c1628173b56a</Hash>
 </Codenesium>*/

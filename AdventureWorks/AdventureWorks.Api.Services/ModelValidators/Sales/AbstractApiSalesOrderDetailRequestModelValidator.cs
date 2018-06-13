@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiSalesOrderDetailRequestModelValidator: AbstractValidator<ApiSalesOrderDetailRequestModel>
         {
@@ -37,49 +36,40 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void LineTotalRules()
                 {
-                        this.RuleFor(x => x.LineTotal).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void OrderQtyRules()
                 {
-                        this.RuleFor(x => x.OrderQty).NotNull();
                 }
 
                 public virtual void ProductIDRules()
                 {
-                        this.RuleFor(x => x.ProductID).NotNull();
                         this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SalesOrderDetailIDRules()
                 {
-                        this.RuleFor(x => x.SalesOrderDetailID).NotNull();
                 }
 
                 public virtual void SpecialOfferIDRules()
                 {
-                        this.RuleFor(x => x.SpecialOfferID).NotNull();
                         this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x ?.SpecialOfferID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void UnitPriceRules()
                 {
-                        this.RuleFor(x => x.UnitPrice).NotNull();
                 }
 
                 public virtual void UnitPriceDiscountRules()
                 {
-                        this.RuleFor(x => x.UnitPriceDiscount).NotNull();
                 }
 
                 private async Task<bool> BeValidSpecialOfferProduct(int id,  CancellationToken cancellationToken)
@@ -99,5 +89,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f989b533b7c34532d42baf6f4d1e2c70</Hash>
+    <Hash>a13f2ea8e3d5c3482b9def365aaec641</Hash>
 </Codenesium>*/

@@ -19,13 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiWorkOrderResponseModel> Get(int workOrderID);
 
-                Task<List<ApiWorkOrderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiWorkOrderResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiWorkOrderResponseModel>> GetProductID(int productID);
                 Task<List<ApiWorkOrderResponseModel>> GetScrapReasonID(Nullable<short> scrapReasonID);
+
+                Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>34dc95292727ebfda2283926944b65f6</Hash>
+    <Hash>993b25aa6fb7e108b7046e4e6570ab9f</Hash>
 </Codenesium>*/

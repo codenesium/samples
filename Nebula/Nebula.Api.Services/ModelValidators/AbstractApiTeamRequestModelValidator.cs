@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiTeamRequestModelValidator: AbstractValidator<ApiTeamRequestModel>
         {
@@ -36,7 +35,6 @@ namespace NebulaNS.Api.Services
 
                 public virtual void OrganizationIdRules()
                 {
-                        this.RuleFor(x => x.OrganizationId).NotNull();
                         this.RuleFor(x => x.OrganizationId).MustAsync(this.BeValidOrganization).When(x => x ?.OrganizationId != null).WithMessage("Invalid reference");
                 }
 
@@ -50,5 +48,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da226e2344bd072bd11a10ab94da6c39</Hash>
+    <Hash>cd579d633f4d61574065f323e5b42c08</Hash>
 </Codenesium>*/

@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<CountryRegionCurrency>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<CountryRegionCurrency>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<CountryRegionCurrency> Get(string countryRegionCode)
@@ -82,31 +82,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<CountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<CountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<CountryRegionCurrency> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<CountryRegionCurrency> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<CountryRegionCurrency>> SearchLinqEF(Expression<Func<CountryRegionCurrency, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<CountryRegionCurrency>> SearchLinqEF(Expression<Func<CountryRegionCurrency, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(CountryRegionCurrency.CountryRegionCode)} ASC";
                         }
 
-                        return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegionCurrency>();
+                        return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
                 }
 
-                private async Task<List<CountryRegionCurrency>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<CountryRegionCurrency>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(CountryRegionCurrency.CountryRegionCode)} ASC";
                         }
 
-                        return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<CountryRegionCurrency>();
+                        return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
                 }
 
                 private async Task<CountryRegionCurrency> GetById(string countryRegionCode)
@@ -119,5 +119,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6bb1a2a32e6663019eacd69fdbdc3138</Hash>
+    <Hash>dbff45d05cc3d42d8897ae72cdac157c</Hash>
 </Codenesium>*/

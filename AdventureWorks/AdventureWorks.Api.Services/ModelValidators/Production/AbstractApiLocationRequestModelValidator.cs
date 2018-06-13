@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiLocationRequestModelValidator: AbstractValidator<ApiLocationRequestModel>
         {
@@ -29,17 +28,14 @@ namespace AdventureWorksNS.Api.Services
                 public ILocationRepository LocationRepository { get; set; }
                 public virtual void AvailabilityRules()
                 {
-                        this.RuleFor(x => x.Availability).NotNull();
                 }
 
                 public virtual void CostRateRules()
                 {
-                        this.RuleFor(x => x.CostRate).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -53,7 +49,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Location record = await this.LocationRepository.GetName(model.Name);
 
-                        if (record == null || record.LocationID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (short) && record.LocationID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -66,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c3fbff3638fde1c39a6adf2b6a82405</Hash>
+    <Hash>1e8b6939c792ec77f7172b580b6626cf</Hash>
 </Codenesium>*/

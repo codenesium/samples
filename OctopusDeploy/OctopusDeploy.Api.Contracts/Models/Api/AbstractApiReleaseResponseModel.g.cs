@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Contracts
         public abstract class AbstractApiReleaseResponseModel: AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        DateTime assembled,
+                        DateTimeOffset assembled,
                         string channelId,
                         string id,
                         string jSON,
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Version = version;
                 }
 
-                public DateTime Assembled { get; private set; }
+                public DateTimeOffset Assembled { get; private set; }
 
                 public string ChannelId { get; private set; }
 
@@ -124,5 +124,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e8f00489994dcbf2daedeed595877843</Hash>
+    <Hash>95b98ddc029e08ba4b05ef986c9428cf</Hash>
 </Codenesium>*/

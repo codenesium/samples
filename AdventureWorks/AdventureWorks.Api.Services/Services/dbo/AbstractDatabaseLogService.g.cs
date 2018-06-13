@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IDatabaseLogRepository databaseLogRepository,
                         IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
-                        IBOLDatabaseLogMapper boldatabaseLogMapper,
-                        IDALDatabaseLogMapper daldatabaseLogMapper)
+                        IBOLDatabaseLogMapper bolDatabaseLogMapper,
+                        IDALDatabaseLogMapper dalDatabaseLogMapper
+
+                        )
                         : base()
 
                 {
                         this.databaseLogRepository = databaseLogRepository;
                         this.databaseLogModelValidator = databaseLogModelValidator;
-                        this.bolDatabaseLogMapper = boldatabaseLogMapper;
-                        this.dalDatabaseLogMapper = daldatabaseLogMapper;
+                        this.bolDatabaseLogMapper = bolDatabaseLogMapper;
+                        this.dalDatabaseLogMapper = dalDatabaseLogMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDatabaseLogResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDatabaseLogResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.databaseLogRepository.All(skip, take, orderClause);
+                        var records = await this.databaseLogRepository.All(limit, offset, orderClause);
 
                         return this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad78bb783c2ac16e9d4d6421cf39c198</Hash>
+    <Hash>4c96595f8fb96383bf8f777b4a4b0ccc</Hash>
 </Codenesium>*/

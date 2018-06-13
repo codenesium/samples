@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSalesReasonResponseModel> response = await this.SalesReasonService.All(query.Offset, query.Limit);
+                        List<ApiSalesReasonResponseModel> response = await this.SalesReasonService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{salesReasonID}/SalesOrderHeaderSalesReasons")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSalesReasonResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderHeaderSalesReasons(int salesReasonID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await this.SalesReasonService.SalesOrderHeaderSalesReasons(salesReasonID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>37eafbe955d18e1cf543825a2d805a47</Hash>
+    <Hash>e82e3a7ba34e118f6dff1af6a3bbd428</Hash>
 </Codenesium>*/

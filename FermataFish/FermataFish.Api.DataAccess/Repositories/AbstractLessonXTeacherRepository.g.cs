@@ -25,9 +25,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<LessonXTeacher>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<LessonXTeacher>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<LessonXTeacher> Get(int id)
@@ -75,31 +75,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<LessonXTeacher>> Where(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<LessonXTeacher>> Where(Expression<Func<LessonXTeacher, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<LessonXTeacher> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<LessonXTeacher> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<LessonXTeacher>> SearchLinqEF(Expression<Func<LessonXTeacher, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<LessonXTeacher>> SearchLinqEF(Expression<Func<LessonXTeacher, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(LessonXTeacher.Id)} ASC";
                         }
 
-                        return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<LessonXTeacher>();
+                        return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
                 }
 
-                private async Task<List<LessonXTeacher>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<LessonXTeacher>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(LessonXTeacher.Id)} ASC";
                         }
 
-                        return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<LessonXTeacher>();
+                        return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
                 }
 
                 private async Task<LessonXTeacher> GetById(int id)
@@ -112,5 +112,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c1134a62560da32916dc748a301ade54</Hash>
+    <Hash>30f65918a5994ac8cc3b97b544b918b3</Hash>
 </Codenesium>*/

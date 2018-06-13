@@ -19,12 +19,12 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiTeamResponseModel> Get(string id);
 
-                Task<List<ApiTeamResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiTeamResponseModel> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>eeff72abc56ae57bfb1ada46886b111e</Hash>
+    <Hash>7fceb7d1df8591b094b3fd926202c24e</Hash>
 </Codenesium>*/

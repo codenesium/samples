@@ -14,7 +14,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public void SetProperties(
                         string channelId,
-                        DateTime created,
+                        DateTimeOffset created,
                         string deployedBy,
                         string deployedToMachineIds,
                         string environmentId,
@@ -46,7 +46,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string ChannelId { get; private set; }
 
                 [Column("Created", TypeName="datetimeoffset")]
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 [Column("DeployedBy", TypeName="nvarchar(200)")]
                 public string DeployedBy { get; private set; }
@@ -85,5 +85,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c64599c3dec00da220df6f2e30bb1bb</Hash>
+    <Hash>2ee40e20839e526386335d9784448fb4</Hash>
 </Codenesium>*/

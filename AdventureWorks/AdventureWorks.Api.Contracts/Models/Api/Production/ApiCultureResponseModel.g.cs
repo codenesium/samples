@@ -7,61 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiCultureResponseModel: AbstractApiResponseModel
+        public partial class ApiCultureResponseModel: AbstractApiCultureResponseModel
         {
-                public ApiCultureResponseModel() : base()
+                public ApiCultureResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        string cultureID,
-                        DateTime modifiedDate,
-                        string name)
-                {
-                        this.CultureID = cultureID;
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                }
-
-                public string CultureID { get; private set; }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeCultureIDValue { get; set; } = true;
-
-                public bool ShouldSerializeCultureID()
-                {
-                        return this.ShouldSerializeCultureIDValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
-
-                public bool ShouldSerializeModifiedDate()
-                {
-                        return this.ShouldSerializeModifiedDateValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeCultureIDValue = false;
-                        this.ShouldSerializeModifiedDateValue = false;
-                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>24367f52e78dc0778d7514929fcb7c96</Hash>
+    <Hash>8743502b88046117b0e4b9c726ff3d08</Hash>
 </Codenesium>*/

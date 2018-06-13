@@ -17,17 +17,26 @@ namespace PetShippingNS.Api.Services
                         IPetRepository petRepository,
                         IApiPetRequestModelValidator petModelValidator,
                         IBOLPetMapper bolpetMapper,
-                        IDALPetMapper dalpetMapper)
+                        IDALPetMapper dalpetMapper
+                        ,
+                        IBOLSaleMapper bolSaleMapper,
+                        IDALSaleMapper dalSaleMapper
+
+                        )
                         : base(logger,
                                petRepository,
                                petModelValidator,
                                bolpetMapper,
-                               dalpetMapper)
+                               dalpetMapper
+                               ,
+                               bolSaleMapper,
+                               dalSaleMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e7a26d590253ab4e4327d37d069100b5</Hash>
+    <Hash>2a25fff8c10097472527efa7a7b6dc50</Hash>
 </Codenesium>*/

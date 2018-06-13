@@ -8,7 +8,6 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
-
 {
         public abstract class AbstractApiFileRequestModelValidator: AbstractValidator<ApiFileRequestModel>
         {
@@ -37,7 +36,6 @@ namespace FileServiceNS.Api.Services
 
                 public virtual void DateCreatedRules()
                 {
-                        this.RuleFor(x => x.DateCreated).NotNull();
                 }
 
                 public virtual void DescriptionRules()
@@ -47,7 +45,6 @@ namespace FileServiceNS.Api.Services
 
                 public virtual void ExpirationRules()
                 {
-                        this.RuleFor(x => x.Expiration).NotNull();
                 }
 
                 public virtual void ExtensionRules()
@@ -58,17 +55,14 @@ namespace FileServiceNS.Api.Services
 
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x.ExternalId).NotNull();
                 }
 
                 public virtual void FileSizeInBytesRules()
                 {
-                        this.RuleFor(x => x.FileSizeInBytes).NotNull();
                 }
 
                 public virtual void FileTypeIdRules()
                 {
-                        this.RuleFor(x => x.FileTypeId).NotNull();
                         this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileType).When(x => x ?.FileTypeId != null).WithMessage("Invalid reference");
                 }
 
@@ -107,5 +101,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>146012264e1b6d20317057ca42a58ee5</Hash>
+    <Hash>71f1abf2120d3539187fd8a0f7d4366f</Hash>
 </Codenesium>*/

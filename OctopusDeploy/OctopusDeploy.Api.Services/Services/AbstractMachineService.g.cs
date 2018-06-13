@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
-                        IBOLMachineMapper bolmachineMapper,
-                        IDALMachineMapper dalmachineMapper)
+                        IBOLMachineMapper bolMachineMapper,
+                        IDALMachineMapper dalMachineMapper
+
+                        )
                         : base()
 
                 {
                         this.machineRepository = machineRepository;
                         this.machineModelValidator = machineModelValidator;
-                        this.bolMachineMapper = bolmachineMapper;
-                        this.dalMachineMapper = dalmachineMapper;
+                        this.bolMachineMapper = bolMachineMapper;
+                        this.dalMachineMapper = dalMachineMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.machineRepository.All(skip, take, orderClause);
+                        var records = await this.machineRepository.All(limit, offset, orderClause);
 
                         return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db0eb6e6b4a57f9d1341e04bb1633a84</Hash>
+    <Hash>cfe38f970e4870a504b914ac981e61b2</Hash>
 </Codenesium>*/

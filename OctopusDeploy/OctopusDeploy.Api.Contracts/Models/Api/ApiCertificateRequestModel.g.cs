@@ -13,13 +13,13 @@ namespace OctopusDeployNS.Api.Contracts
                 }
 
                 public void SetProperties(
-                        Nullable<DateTime> archived,
-                        DateTime created,
+                        Nullable<DateTimeOffset> archived,
+                        DateTimeOffset created,
                         byte[] dataVersion,
                         string environmentIds,
                         string jSON,
                         string name,
-                        DateTime notAfter,
+                        DateTimeOffset notAfter,
                         string subject,
                         string tenantIds,
                         string tenantTags,
@@ -38,9 +38,9 @@ namespace OctopusDeployNS.Api.Contracts
                         this.Thumbprint = thumbprint;
                 }
 
-                private Nullable<DateTime> archived;
+                private Nullable<DateTimeOffset> archived;
 
-                public Nullable<DateTime> Archived
+                public Nullable<DateTimeOffset> Archived
                 {
                         get
                         {
@@ -53,10 +53,10 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private DateTime created;
+                private DateTimeOffset created;
 
                 [Required]
-                public DateTime Created
+                public DateTimeOffset Created
                 {
                         get
                         {
@@ -132,10 +132,10 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private DateTime notAfter;
+                private DateTimeOffset notAfter;
 
                 [Required]
-                public DateTime NotAfter
+                public DateTimeOffset NotAfter
                 {
                         get
                         {
@@ -213,5 +213,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>67e6b66eb80e52fa840377d127d8516a</Hash>
+    <Hash>385512fc7e6a41e86de69a480483bcdf</Hash>
 </Codenesium>*/

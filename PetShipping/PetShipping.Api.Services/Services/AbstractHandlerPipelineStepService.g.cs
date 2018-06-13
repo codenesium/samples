@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         IHandlerPipelineStepRepository handlerPipelineStepRepository,
                         IApiHandlerPipelineStepRequestModelValidator handlerPipelineStepModelValidator,
-                        IBOLHandlerPipelineStepMapper bolhandlerPipelineStepMapper,
-                        IDALHandlerPipelineStepMapper dalhandlerPipelineStepMapper)
+                        IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
+                        IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper
+
+                        )
                         : base()
 
                 {
                         this.handlerPipelineStepRepository = handlerPipelineStepRepository;
                         this.handlerPipelineStepModelValidator = handlerPipelineStepModelValidator;
-                        this.bolHandlerPipelineStepMapper = bolhandlerPipelineStepMapper;
-                        this.dalHandlerPipelineStepMapper = dalhandlerPipelineStepMapper;
+                        this.bolHandlerPipelineStepMapper = bolHandlerPipelineStepMapper;
+                        this.dalHandlerPipelineStepMapper = dalHandlerPipelineStepMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiHandlerPipelineStepResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiHandlerPipelineStepResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.handlerPipelineStepRepository.All(skip, take, orderClause);
+                        var records = await this.handlerPipelineStepRepository.All(limit, offset, orderClause);
 
                         return this.bolHandlerPipelineStepMapper.MapBOToModel(this.dalHandlerPipelineStepMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b23a0a3524340d9bc3946f712803de22</Hash>
+    <Hash>50b7ca9d98308266ca34ef5b37504129</Hash>
 </Codenesium>*/

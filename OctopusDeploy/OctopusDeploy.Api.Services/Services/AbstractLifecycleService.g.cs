@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ILifecycleRepository lifecycleRepository,
                         IApiLifecycleRequestModelValidator lifecycleModelValidator,
-                        IBOLLifecycleMapper bollifecycleMapper,
-                        IDALLifecycleMapper dallifecycleMapper)
+                        IBOLLifecycleMapper bolLifecycleMapper,
+                        IDALLifecycleMapper dalLifecycleMapper
+
+                        )
                         : base()
 
                 {
                         this.lifecycleRepository = lifecycleRepository;
                         this.lifecycleModelValidator = lifecycleModelValidator;
-                        this.bolLifecycleMapper = bollifecycleMapper;
-                        this.dalLifecycleMapper = dallifecycleMapper;
+                        this.bolLifecycleMapper = bolLifecycleMapper;
+                        this.dalLifecycleMapper = dalLifecycleMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLifecycleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLifecycleResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.lifecycleRepository.All(skip, take, orderClause);
+                        var records = await this.lifecycleRepository.All(limit, offset, orderClause);
 
                         return this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7cb7549d4cbc2155e286fbad9029dbf</Hash>
+    <Hash>eb805e9eaccc47e7a1b349c2bc98c4d0</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace PetStoreNS.Api.DataAccess
 
                 Task<Sale> Get(int id);
 
-                Task<List<Sale>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Sale>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>e689c2b51f6bdb9c34ac54ec9ea9847e</Hash>
+    <Hash>2f1986bae13415cc6e2e912abc667276</Hash>
 </Codenesium>*/

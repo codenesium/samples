@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IApiKeyRepository apiKeyRepository,
                         IApiApiKeyRequestModelValidator apiKeyModelValidator,
-                        IBOLApiKeyMapper bolapiKeyMapper,
-                        IDALApiKeyMapper dalapiKeyMapper)
+                        IBOLApiKeyMapper bolApiKeyMapper,
+                        IDALApiKeyMapper dalApiKeyMapper
+
+                        )
                         : base()
 
                 {
                         this.apiKeyRepository = apiKeyRepository;
                         this.apiKeyModelValidator = apiKeyModelValidator;
-                        this.bolApiKeyMapper = bolapiKeyMapper;
-                        this.dalApiKeyMapper = dalapiKeyMapper;
+                        this.bolApiKeyMapper = bolApiKeyMapper;
+                        this.dalApiKeyMapper = dalApiKeyMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiApiKeyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiApiKeyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.apiKeyRepository.All(skip, take, orderClause);
+                        var records = await this.apiKeyRepository.All(limit, offset, orderClause);
 
                         return this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93f8ebef9a28ac3ba0045ac863ac3f25</Hash>
+    <Hash>e0daa46a608d3edb225a9f874351b7e3</Hash>
 </Codenesium>*/

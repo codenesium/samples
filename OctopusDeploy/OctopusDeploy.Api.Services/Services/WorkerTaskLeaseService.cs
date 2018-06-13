@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IWorkerTaskLeaseRepository workerTaskLeaseRepository,
                         IApiWorkerTaskLeaseRequestModelValidator workerTaskLeaseModelValidator,
                         IBOLWorkerTaskLeaseMapper bolworkerTaskLeaseMapper,
-                        IDALWorkerTaskLeaseMapper dalworkerTaskLeaseMapper)
+                        IDALWorkerTaskLeaseMapper dalworkerTaskLeaseMapper
+
+                        )
                         : base(logger,
                                workerTaskLeaseRepository,
                                workerTaskLeaseModelValidator,
                                bolworkerTaskLeaseMapper,
-                               dalworkerTaskLeaseMapper)
+                               dalworkerTaskLeaseMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1de6d2acda9d38f0b812846218662e94</Hash>
+    <Hash>72f4db42375195f1ff26f8abd642a711</Hash>
 </Codenesium>*/

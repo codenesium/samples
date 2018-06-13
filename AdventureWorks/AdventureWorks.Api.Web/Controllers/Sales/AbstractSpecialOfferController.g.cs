@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSpecialOfferResponseModel> response = await this.SpecialOfferService.All(query.Offset, query.Limit);
+                        List<ApiSpecialOfferResponseModel> response = await this.SpecialOfferService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{specialOfferID}/SpecialOfferProducts")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSpecialOfferResponseModel>), 200)]
+                public async virtual Task<IActionResult> SpecialOfferProducts(int specialOfferID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSpecialOfferProductResponseModel> response = await this.SpecialOfferService.SpecialOfferProducts(specialOfferID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5da64c0343fbebdbc936b9e984df896f</Hash>
+    <Hash>227fde469c9bb582d7c025f70f88ada7</Hash>
 </Codenesium>*/

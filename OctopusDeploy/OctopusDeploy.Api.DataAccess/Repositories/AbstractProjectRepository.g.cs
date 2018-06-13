@@ -25,9 +25,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Project>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Project>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Project> Get(string id)
@@ -100,31 +100,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         return records;
                 }
 
-                protected async Task<List<Project>> Where(Expression<Func<Project, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Project>> Where(Expression<Func<Project, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Project> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Project> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Project>> SearchLinqEF(Expression<Func<Project, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Project>> SearchLinqEF(Expression<Func<Project, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Project.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Project>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Project>();
+                        return await this.Context.Set<Project>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Project>();
                 }
 
-                private async Task<List<Project>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Project>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Project.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Project>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Project>();
+                        return await this.Context.Set<Project>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Project>();
                 }
 
                 private async Task<Project> GetById(string id)
@@ -137,5 +137,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>415f4c6ecbf7dc135d2974f2e944c04f</Hash>
+    <Hash>6809d71ac6f3cb1398233df146a267f5</Hash>
 </Codenesium>*/

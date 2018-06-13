@@ -13,14 +13,14 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 public void SetProperties(
-                        Nullable<DateTime> archived,
-                        DateTime created,
+                        Nullable<DateTimeOffset> archived,
+                        DateTimeOffset created,
                         byte[] dataVersion,
                         string environmentIds,
                         string id,
                         string jSON,
                         string name,
-                        DateTime notAfter,
+                        DateTimeOffset notAfter,
                         string subject,
                         string tenantIds,
                         string tenantTags,
@@ -41,10 +41,10 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Column("Archived", TypeName="datetimeoffset")]
-                public Nullable<DateTime> Archived { get; private set; }
+                public Nullable<DateTimeOffset> Archived { get; private set; }
 
                 [Column("Created", TypeName="datetimeoffset")]
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 [Column("DataVersion", TypeName="timestamp")]
                 public byte[] DataVersion { get; private set; }
@@ -63,7 +63,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string Name { get; private set; }
 
                 [Column("NotAfter", TypeName="datetimeoffset")]
-                public DateTime NotAfter { get; private set; }
+                public DateTimeOffset NotAfter { get; private set; }
 
                 [Column("Subject", TypeName="nvarchar(-1)")]
                 public string Subject { get; private set; }
@@ -80,5 +80,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>69e144326e0a92e70ff56bb741a0a5d6</Hash>
+    <Hash>447c9bdad907c153d32b4cea9a8b897e</Hash>
 </Codenesium>*/

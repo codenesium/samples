@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
                         IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
-                        IBOLEmployeeDepartmentHistoryMapper bolemployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalemployeeDepartmentHistoryMapper)
+                        IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
                         this.employeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
-                        this.bolEmployeeDepartmentHistoryMapper = bolemployeeDepartmentHistoryMapper;
-                        this.dalEmployeeDepartmentHistoryMapper = dalemployeeDepartmentHistoryMapper;
+                        this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+                        this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.employeeDepartmentHistoryRepository.All(skip, take, orderClause);
+                        var records = await this.employeeDepartmentHistoryRepository.All(limit, offset, orderClause);
 
                         return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bdbcc9532a11cbb752fc7ea7f2d6274a</Hash>
+    <Hash>2375721021fa0180cf2e5a93c758eeb2</Hash>
 </Codenesium>*/

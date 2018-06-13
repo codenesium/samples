@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<EventRelatedDocument> Get(int id);
 
-                Task<List<EventRelatedDocument>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<EventRelatedDocument>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<EventRelatedDocument>> GetEventId(string eventId);
                 Task<List<EventRelatedDocument>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ac8319737cc4ebd7542e439fc3a2d2c9</Hash>
+    <Hash>f40421d75435f4f78a7c5d03a30bc2df</Hash>
 </Codenesium>*/

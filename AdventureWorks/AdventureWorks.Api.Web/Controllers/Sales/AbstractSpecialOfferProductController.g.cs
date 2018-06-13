@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSpecialOfferProductResponseModel> response = await this.SpecialOfferProductService.All(query.Offset, query.Limit);
+                        List<ApiSpecialOfferProductResponseModel> response = await this.SpecialOfferProductService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -171,9 +171,23 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{specialOfferID}/SalesOrderDetails")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
+                public async virtual Task<IActionResult> SalesOrderDetails(int specialOfferID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiSalesOrderDetailResponseModel> response = await this.SpecialOfferProductService.SalesOrderDetails(specialOfferID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>88a273b99ade08399dbdb2179e29ce17</Hash>
+    <Hash>f85060a02c2b71fcfef695a86f90a8c1</Hash>
 </Codenesium>*/

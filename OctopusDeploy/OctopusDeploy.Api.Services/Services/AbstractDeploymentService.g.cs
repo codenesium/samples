@@ -22,27 +22,39 @@ namespace OctopusDeployNS.Api.Services
 
                 private IDALDeploymentMapper dalDeploymentMapper;
 
+                private IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper;
+
+                private IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper;
+
                 private ILogger logger;
 
                 public AbstractDeploymentService(
                         ILogger logger,
                         IDeploymentRepository deploymentRepository,
                         IApiDeploymentRequestModelValidator deploymentModelValidator,
-                        IBOLDeploymentMapper boldeploymentMapper,
-                        IDALDeploymentMapper daldeploymentMapper)
+                        IBOLDeploymentMapper bolDeploymentMapper,
+                        IDALDeploymentMapper dalDeploymentMapper
+
+                        ,
+                        IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper,
+                        IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper
+
+                        )
                         : base()
 
                 {
                         this.deploymentRepository = deploymentRepository;
                         this.deploymentModelValidator = deploymentModelValidator;
-                        this.bolDeploymentMapper = boldeploymentMapper;
-                        this.dalDeploymentMapper = daldeploymentMapper;
+                        this.bolDeploymentMapper = bolDeploymentMapper;
+                        this.dalDeploymentMapper = dalDeploymentMapper;
+                        this.bolDeploymentRelatedMachineMapper = bolDeploymentRelatedMachineMapper;
+                        this.dalDeploymentRelatedMachineMapper = dalDeploymentRelatedMachineMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeploymentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeploymentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.deploymentRepository.All(skip, take, orderClause);
+                        var records = await this.deploymentRepository.All(limit, offset, orderClause);
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
@@ -103,7 +115,7 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiDeploymentResponseModel>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTime created, string releaseId, string taskId, string environmentId)
+                public async Task<List<ApiDeploymentResponseModel>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
                         List<Deployment> records = await this.deploymentRepository.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
 
@@ -115,9 +127,16 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiDeploymentRelatedMachineResponseModel>> DeploymentRelatedMachines(string deploymentId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<DeploymentRelatedMachine> records = await this.deploymentRepository.DeploymentRelatedMachines(deploymentId, limit, offset);
+
+                        return this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b30527b5decc085564775c6f0f66533c</Hash>
+    <Hash>c48ba1664ccd7e8c61de07c229538731</Hash>
 </Codenesium>*/

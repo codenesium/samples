@@ -9,7 +9,7 @@ using NebulaNS.Api.Client;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " ChainStatus")]
+        [Trait("Integration", "ChainStatus")]
         public class ChainStatusTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>2fce8da700f10ee1efd26fba4d233d64</Hash>
+    <Hash>bba3bff3e9781d4649e1bcf053d3ae73</Hash>
 </Codenesium>*/

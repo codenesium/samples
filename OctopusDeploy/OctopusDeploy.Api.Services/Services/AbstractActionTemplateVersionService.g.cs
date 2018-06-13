@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IActionTemplateVersionRepository actionTemplateVersionRepository,
                         IApiActionTemplateVersionRequestModelValidator actionTemplateVersionModelValidator,
-                        IBOLActionTemplateVersionMapper bolactionTemplateVersionMapper,
-                        IDALActionTemplateVersionMapper dalactionTemplateVersionMapper)
+                        IBOLActionTemplateVersionMapper bolActionTemplateVersionMapper,
+                        IDALActionTemplateVersionMapper dalActionTemplateVersionMapper
+
+                        )
                         : base()
 
                 {
                         this.actionTemplateVersionRepository = actionTemplateVersionRepository;
                         this.actionTemplateVersionModelValidator = actionTemplateVersionModelValidator;
-                        this.bolActionTemplateVersionMapper = bolactionTemplateVersionMapper;
-                        this.dalActionTemplateVersionMapper = dalactionTemplateVersionMapper;
+                        this.bolActionTemplateVersionMapper = bolActionTemplateVersionMapper;
+                        this.dalActionTemplateVersionMapper = dalActionTemplateVersionMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiActionTemplateVersionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiActionTemplateVersionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.actionTemplateVersionRepository.All(skip, take, orderClause);
+                        var records = await this.actionTemplateVersionRepository.All(limit, offset, orderClause);
 
                         return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>43a746639cfaccc19c73f6bba2e8c88e</Hash>
+    <Hash>6611102aa63d4b493bed374a6503ed41</Hash>
 </Codenesium>*/

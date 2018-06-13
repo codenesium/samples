@@ -53,7 +53,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         LibraryVariableSet record = await this.LibraryVariableSetRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -66,5 +66,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a380ed9a38e73a1e7bc4f59d8216765a</Hash>
+    <Hash>8a541a2d320fee5e3c896706b7893342</Hash>
 </Codenesium>*/

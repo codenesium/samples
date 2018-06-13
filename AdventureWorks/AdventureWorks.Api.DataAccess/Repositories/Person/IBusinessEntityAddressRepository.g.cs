@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<BusinessEntityAddress> Get(int businessEntityID);
 
-                Task<List<BusinessEntityAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<BusinessEntityAddress>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<BusinessEntityAddress>> GetAddressID(int addressID);
                 Task<List<BusinessEntityAddress>> GetAddressTypeID(int addressTypeID);
@@ -23,5 +23,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3cf3a06892d8a5366510fcd9453b68a4</Hash>
+    <Hash>c877957c8b501c4cfd8207374510e6bf</Hash>
 </Codenesium>*/

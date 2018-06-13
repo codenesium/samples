@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
                         IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
-                        IBOLTransactionHistoryArchiveMapper boltransactionHistoryArchiveMapper,
-                        IDALTransactionHistoryArchiveMapper daltransactionHistoryArchiveMapper)
+                        IBOLTransactionHistoryArchiveMapper bolTransactionHistoryArchiveMapper,
+                        IDALTransactionHistoryArchiveMapper dalTransactionHistoryArchiveMapper
+
+                        )
                         : base()
 
                 {
                         this.transactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
                         this.transactionHistoryArchiveModelValidator = transactionHistoryArchiveModelValidator;
-                        this.bolTransactionHistoryArchiveMapper = boltransactionHistoryArchiveMapper;
-                        this.dalTransactionHistoryArchiveMapper = daltransactionHistoryArchiveMapper;
+                        this.bolTransactionHistoryArchiveMapper = bolTransactionHistoryArchiveMapper;
+                        this.dalTransactionHistoryArchiveMapper = dalTransactionHistoryArchiveMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.transactionHistoryArchiveRepository.All(skip, take, orderClause);
+                        var records = await this.transactionHistoryArchiveRepository.All(limit, offset, orderClause);
 
                         return this.bolTransactionHistoryArchiveMapper.MapBOToModel(this.dalTransactionHistoryArchiveMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>162d29d4929908e83f8b905e17da4906</Hash>
+    <Hash>9796201e2cc1ef84eae4218484ceb4af</Hash>
 </Codenesium>*/

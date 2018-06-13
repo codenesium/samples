@@ -17,17 +17,32 @@ namespace NebulaNS.Api.Services
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolteamMapper,
-                        IDALTeamMapper dalteamMapper)
+                        IDALTeamMapper dalteamMapper
+                        ,
+                        IBOLChainMapper bolChainMapper,
+                        IDALChainMapper dalChainMapper
+                        ,
+                        IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
+
+                        )
                         : base(logger,
                                teamRepository,
                                teamModelValidator,
                                bolteamMapper,
-                               dalteamMapper)
+                               dalteamMapper
+                               ,
+                               bolChainMapper,
+                               dalChainMapper
+                               ,
+                               bolMachineRefTeamMapper,
+                               dalMachineRefTeamMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>887e01526d55ea5d4ca02d26a5605c0f</Hash>
+    <Hash>0213f4cbfe78bc009170dd5730736296</Hash>
 </Codenesium>*/

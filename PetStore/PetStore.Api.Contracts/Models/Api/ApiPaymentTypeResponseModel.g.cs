@@ -7,48 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public partial class ApiPaymentTypeResponseModel: AbstractApiResponseModel
+        public partial class ApiPaymentTypeResponseModel: AbstractApiPaymentTypeResponseModel
         {
-                public ApiPaymentTypeResponseModel() : base()
+                public ApiPaymentTypeResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c630464e5d011b4df256eacdfb650637</Hash>
+    <Hash>730a5443b0a1ec192f15c97823b51d27</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IReleaseRepository releaseRepository,
                         IApiReleaseRequestModelValidator releaseModelValidator,
-                        IBOLReleaseMapper bolreleaseMapper,
-                        IDALReleaseMapper dalreleaseMapper)
+                        IBOLReleaseMapper bolReleaseMapper,
+                        IDALReleaseMapper dalReleaseMapper
+
+                        )
                         : base()
 
                 {
                         this.releaseRepository = releaseRepository;
                         this.releaseModelValidator = releaseModelValidator;
-                        this.bolReleaseMapper = bolreleaseMapper;
-                        this.dalReleaseMapper = dalreleaseMapper;
+                        this.bolReleaseMapper = bolReleaseMapper;
+                        this.dalReleaseMapper = dalReleaseMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiReleaseResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.releaseRepository.All(skip, take, orderClause);
+                        var records = await this.releaseRepository.All(limit, offset, orderClause);
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
@@ -103,7 +105,7 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
                 }
-                public async Task<List<ApiReleaseResponseModel>> GetIdAssembled(string id, DateTime assembled)
+                public async Task<List<ApiReleaseResponseModel>> GetIdAssembled(string id, DateTimeOffset assembled)
                 {
                         List<Release> records = await this.releaseRepository.GetIdAssembled(id, assembled);
 
@@ -115,13 +117,13 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiReleaseResponseModel>> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTime assembled)
+                public async Task<List<ApiReleaseResponseModel>> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
                         List<Release> records = await this.releaseRepository.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiReleaseResponseModel>> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTime assembled)
+                public async Task<List<ApiReleaseResponseModel>> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
                         List<Release> records = await this.releaseRepository.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
 
@@ -131,5 +133,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d60c6715894e507d5e1092fd18326c7</Hash>
+    <Hash>dbd1c11b5d1170c4e88540f072a6a25e</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IVariableSetRepository variableSetRepository,
                         IApiVariableSetRequestModelValidator variableSetModelValidator,
-                        IBOLVariableSetMapper bolvariableSetMapper,
-                        IDALVariableSetMapper dalvariableSetMapper)
+                        IBOLVariableSetMapper bolVariableSetMapper,
+                        IDALVariableSetMapper dalVariableSetMapper
+
+                        )
                         : base()
 
                 {
                         this.variableSetRepository = variableSetRepository;
                         this.variableSetModelValidator = variableSetModelValidator;
-                        this.bolVariableSetMapper = bolvariableSetMapper;
-                        this.dalVariableSetMapper = dalvariableSetMapper;
+                        this.bolVariableSetMapper = bolVariableSetMapper;
+                        this.dalVariableSetMapper = dalVariableSetMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiVariableSetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiVariableSetResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.variableSetRepository.All(skip, take, orderClause);
+                        var records = await this.variableSetRepository.All(limit, offset, orderClause);
 
                         return this.bolVariableSetMapper.MapBOToModel(this.dalVariableSetMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4716b28a41f5f79e3cb32cb18f3fde55</Hash>
+    <Hash>823f4c3ee911ce4c9de20aea871cd3a8</Hash>
 </Codenesium>*/

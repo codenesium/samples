@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiSalesTerritoryRequestModelValidator: AbstractValidator<ApiSalesTerritoryRequestModel>
         {
@@ -29,12 +28,10 @@ namespace AdventureWorksNS.Api.Services
                 public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
                 public virtual void CostLastYearRules()
                 {
-                        this.RuleFor(x => x.CostLastYear).NotNull();
                 }
 
                 public virtual void CostYTDRules()
                 {
-                        this.RuleFor(x => x.CostYTD).NotNull();
                 }
 
                 public virtual void CountryRegionCodeRules()
@@ -51,7 +48,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -63,24 +59,21 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SalesLastYearRules()
                 {
-                        this.RuleFor(x => x.SalesLastYear).NotNull();
                 }
 
                 public virtual void SalesYTDRules()
                 {
-                        this.RuleFor(x => x.SalesYTD).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiSalesTerritoryRequestModel model,  CancellationToken cancellationToken)
                 {
                         SalesTerritory record = await this.SalesTerritoryRepository.GetName(model.Name);
 
-                        if (record == null || record.TerritoryID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.TerritoryID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -93,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3b2ec64162dc7bf9541fa1b3542315e</Hash>
+    <Hash>b521f366222075e0e52ed2b9bf6936e6</Hash>
 </Codenesium>*/

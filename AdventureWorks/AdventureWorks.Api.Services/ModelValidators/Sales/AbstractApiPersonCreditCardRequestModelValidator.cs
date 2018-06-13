@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiPersonCreditCardRequestModelValidator: AbstractValidator<ApiPersonCreditCardRequestModel>
         {
@@ -30,13 +29,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void CreditCardIDRules()
                 {
-                        this.RuleFor(x => x.CreditCardID).NotNull();
                         this.RuleFor(x => x.CreditCardID).MustAsync(this.BeValidCreditCard).When(x => x ?.CreditCardID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 private async Task<bool> BeValidCreditCard(int id,  CancellationToken cancellationToken)
@@ -49,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>165fed88c81aab421bd4b0282e6e454a</Hash>
+    <Hash>780273685149e33dda457d6123edf881</Hash>
 </Codenesium>*/

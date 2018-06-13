@@ -19,10 +19,10 @@ namespace PetShippingNS.Api.Services
 
                 Task<ApiCountryRequirementResponseModel> Get(int id);
 
-                Task<List<ApiCountryRequirementResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiCountryRequirementResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>57c6c5fa72035a6b219d876513230c25</Hash>
+    <Hash>ef6bbe49e483019ae2dad6aba6618f31</Hash>
 </Codenesium>*/

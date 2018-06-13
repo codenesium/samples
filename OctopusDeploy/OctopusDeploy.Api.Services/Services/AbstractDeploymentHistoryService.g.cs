@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IDeploymentHistoryRepository deploymentHistoryRepository,
                         IApiDeploymentHistoryRequestModelValidator deploymentHistoryModelValidator,
-                        IBOLDeploymentHistoryMapper boldeploymentHistoryMapper,
-                        IDALDeploymentHistoryMapper daldeploymentHistoryMapper)
+                        IBOLDeploymentHistoryMapper bolDeploymentHistoryMapper,
+                        IDALDeploymentHistoryMapper dalDeploymentHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.deploymentHistoryRepository = deploymentHistoryRepository;
                         this.deploymentHistoryModelValidator = deploymentHistoryModelValidator;
-                        this.bolDeploymentHistoryMapper = boldeploymentHistoryMapper;
-                        this.dalDeploymentHistoryMapper = daldeploymentHistoryMapper;
+                        this.bolDeploymentHistoryMapper = bolDeploymentHistoryMapper;
+                        this.dalDeploymentHistoryMapper = dalDeploymentHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeploymentHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.deploymentHistoryRepository.All(skip, take, orderClause);
+                        var records = await this.deploymentHistoryRepository.All(limit, offset, orderClause);
 
                         return this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(records));
                 }
@@ -97,7 +99,7 @@ namespace OctopusDeployNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiDeploymentHistoryResponseModel>> GetCreated(DateTime created)
+                public async Task<List<ApiDeploymentHistoryResponseModel>> GetCreated(DateTimeOffset created)
                 {
                         List<DeploymentHistory> records = await this.deploymentHistoryRepository.GetCreated(created);
 
@@ -107,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c8e47d9745b9c4810312446302af7049</Hash>
+    <Hash>8e01bf9b06ed95071e8ae33e242cedb9</Hash>
 </Codenesium>*/

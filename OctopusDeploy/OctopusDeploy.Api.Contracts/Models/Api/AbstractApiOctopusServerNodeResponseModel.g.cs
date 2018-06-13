@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                         string id,
                         bool isInMaintenanceMode,
                         string jSON,
-                        DateTime lastSeen,
+                        DateTimeOffset lastSeen,
                         int maxConcurrentTasks,
                         string name,
                         string rank)
@@ -33,7 +33,7 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string JSON { get; private set; }
 
-                public DateTime LastSeen { get; private set; }
+                public DateTimeOffset LastSeen { get; private set; }
 
                 public int MaxConcurrentTasks { get; private set; }
 
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c6485942ac35bb9f27ba06233305efa6</Hash>
+    <Hash>e2a5a4329404664c3abf130cba0aa3a3</Hash>
 </Codenesium>*/

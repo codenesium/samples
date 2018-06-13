@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiPersonRequestModelValidator: AbstractValidator<ApiPersonRequestModel>
         {
@@ -36,7 +35,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void EmailPromotionRules()
                 {
-                        this.RuleFor(x => x.EmailPromotion).NotNull();
                 }
 
                 public virtual void FirstNameRules()
@@ -58,12 +56,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameStyleRules()
                 {
-                        this.RuleFor(x => x.NameStyle).NotNull();
                 }
 
                 public virtual void PersonTypeRules()
@@ -74,7 +70,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SuffixRules()
@@ -90,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad544beb44af99503bd06bd83d9f94a7</Hash>
+    <Hash>1fcb5d20d6b128b6881c6bab7cfed812</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDocumentResponseModel> response = await this.DocumentService.All(query.Offset, query.Limit);
+                        List<ApiDocumentResponseModel> response = await this.DocumentService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -190,9 +190,23 @@ namespace AdventureWorksNS.Api.Web
 
                         return this.Ok(response);
                 }
+
+                [HttpGet]
+                [Route("{documentNode}/ProductDocuments")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductDocuments(Guid documentNode, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductDocumentResponseModel> response = await this.DocumentService.ProductDocuments(documentNode, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c86473079e2c57e04b4f2c26e387b3f7</Hash>
+    <Hash>dd698ef5b7700e22649aadfb7267d50e</Hash>
 </Codenesium>*/

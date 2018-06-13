@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IChannelRepository channelRepository,
                         IApiChannelRequestModelValidator channelModelValidator,
                         IBOLChannelMapper bolchannelMapper,
-                        IDALChannelMapper dalchannelMapper)
+                        IDALChannelMapper dalchannelMapper
+
+                        )
                         : base(logger,
                                channelRepository,
                                channelModelValidator,
                                bolchannelMapper,
-                               dalchannelMapper)
+                               dalchannelMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>404906d45623d39e73ef389da40a9572</Hash>
+    <Hash>7938c82e331c5642e58d033d113ce30b</Hash>
 </Codenesium>*/

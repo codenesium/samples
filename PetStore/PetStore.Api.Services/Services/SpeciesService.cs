@@ -17,17 +17,26 @@ namespace PetStoreNS.Api.Services
                         ISpeciesRepository speciesRepository,
                         IApiSpeciesRequestModelValidator speciesModelValidator,
                         IBOLSpeciesMapper bolspeciesMapper,
-                        IDALSpeciesMapper dalspeciesMapper)
+                        IDALSpeciesMapper dalspeciesMapper
+                        ,
+                        IBOLPetMapper bolPetMapper,
+                        IDALPetMapper dalPetMapper
+
+                        )
                         : base(logger,
                                speciesRepository,
                                speciesModelValidator,
                                bolspeciesMapper,
-                               dalspeciesMapper)
+                               dalspeciesMapper
+                               ,
+                               bolPetMapper,
+                               dalPetMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d210a413996b2391ab865d3f94343ef</Hash>
+    <Hash>01a5502019a7f83404cde5fb5ef85821</Hash>
 </Codenesium>*/

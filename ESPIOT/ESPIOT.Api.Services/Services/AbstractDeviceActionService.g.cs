@@ -28,21 +28,23 @@ namespace ESPIOTNS.Api.Services
                         ILogger logger,
                         IDeviceActionRepository deviceActionRepository,
                         IApiDeviceActionRequestModelValidator deviceActionModelValidator,
-                        IBOLDeviceActionMapper boldeviceActionMapper,
-                        IDALDeviceActionMapper daldeviceActionMapper)
+                        IBOLDeviceActionMapper bolDeviceActionMapper,
+                        IDALDeviceActionMapper dalDeviceActionMapper
+
+                        )
                         : base()
 
                 {
                         this.deviceActionRepository = deviceActionRepository;
                         this.deviceActionModelValidator = deviceActionModelValidator;
-                        this.bolDeviceActionMapper = boldeviceActionMapper;
-                        this.dalDeviceActionMapper = daldeviceActionMapper;
+                        this.bolDeviceActionMapper = bolDeviceActionMapper;
+                        this.dalDeviceActionMapper = dalDeviceActionMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeviceActionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeviceActionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.deviceActionRepository.All(skip, take, orderClause);
+                        var records = await this.deviceActionRepository.All(limit, offset, orderClause);
 
                         return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(records));
                 }
@@ -97,9 +99,9 @@ namespace ESPIOTNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiDeviceActionResponseModel>> GetDeviceId(int deviceId)
+                public async Task<List<ApiDeviceActionResponseModel>> ByDeviceId(int deviceId)
                 {
-                        List<DeviceAction> records = await this.deviceActionRepository.GetDeviceId(deviceId);
+                        List<DeviceAction> records = await this.deviceActionRepository.ByDeviceId(deviceId);
 
                         return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5916ed6502d703034415b8004ec00804</Hash>
+    <Hash>f0f746964fa3746d01dca16dd7b98e01</Hash>
 </Codenesium>*/

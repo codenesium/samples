@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSpaceXSpaceFeatureResponseModel> response = await this.SpaceXSpaceFeatureService.All(query.Offset, query.Limit);
+                        List<ApiSpaceXSpaceFeatureResponseModel> response = await this.SpaceXSpaceFeatureService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ae7ed082ce34c5c00e49252672117b09</Hash>
+    <Hash>109268be83048027e6def586b1d6fe9a</Hash>
 </Codenesium>*/

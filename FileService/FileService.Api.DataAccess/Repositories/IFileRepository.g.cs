@@ -15,10 +15,10 @@ namespace FileServiceNS.Api.DataAccess
 
                 Task<File> Get(int id);
 
-                Task<List<File>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<File>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>2416cee98b1ced104c42502f0699b38e</Hash>
+    <Hash>911ed88c332e3c183cc06dca97ce36f6</Hash>
 </Codenesium>*/

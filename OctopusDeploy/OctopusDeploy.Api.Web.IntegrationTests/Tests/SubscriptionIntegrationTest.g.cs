@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Subscription")]
+        [Trait("Integration", "Subscription")]
         public class SubscriptionTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>db3c9d7114031f0b1dbd8211c15e56ed</Hash>
+    <Hash>96c8619025dfb2c08f74d625b7c0efb2</Hash>
 </Codenesium>*/

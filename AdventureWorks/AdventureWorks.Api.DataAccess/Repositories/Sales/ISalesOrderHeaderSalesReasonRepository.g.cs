@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<SalesOrderHeaderSalesReason> Get(int salesOrderID);
 
-                Task<List<SalesOrderHeaderSalesReason>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<SalesOrderHeaderSalesReason>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>da9c042e6de941a6702b94cf95f4e31c</Hash>
+    <Hash>166edf2619a64cc3dc23adc1d684545b</Hash>
 </Codenesium>*/

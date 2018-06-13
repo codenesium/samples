@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IWorkerTaskLeaseRepository workerTaskLeaseRepository,
                         IApiWorkerTaskLeaseRequestModelValidator workerTaskLeaseModelValidator,
-                        IBOLWorkerTaskLeaseMapper bolworkerTaskLeaseMapper,
-                        IDALWorkerTaskLeaseMapper dalworkerTaskLeaseMapper)
+                        IBOLWorkerTaskLeaseMapper bolWorkerTaskLeaseMapper,
+                        IDALWorkerTaskLeaseMapper dalWorkerTaskLeaseMapper
+
+                        )
                         : base()
 
                 {
                         this.workerTaskLeaseRepository = workerTaskLeaseRepository;
                         this.workerTaskLeaseModelValidator = workerTaskLeaseModelValidator;
-                        this.bolWorkerTaskLeaseMapper = bolworkerTaskLeaseMapper;
-                        this.dalWorkerTaskLeaseMapper = dalworkerTaskLeaseMapper;
+                        this.bolWorkerTaskLeaseMapper = bolWorkerTaskLeaseMapper;
+                        this.dalWorkerTaskLeaseMapper = dalWorkerTaskLeaseMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkerTaskLeaseResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkerTaskLeaseResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.workerTaskLeaseRepository.All(skip, take, orderClause);
+                        var records = await this.workerTaskLeaseRepository.All(limit, offset, orderClause);
 
                         return this.bolWorkerTaskLeaseMapper.MapBOToModel(this.dalWorkerTaskLeaseMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e1ea15f9e40de47185f8d00ecff2c986</Hash>
+    <Hash>ab01b6a36709f0950edc00a6fc2793a5</Hash>
 </Codenesium>*/

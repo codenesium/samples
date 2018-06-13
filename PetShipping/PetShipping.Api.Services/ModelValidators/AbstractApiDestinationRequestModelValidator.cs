@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiDestinationRequestModelValidator: AbstractValidator<ApiDestinationRequestModel>
         {
@@ -30,7 +29,6 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void CountryIdRules()
                 {
-                        this.RuleFor(x => x.CountryId).NotNull();
                         this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x ?.CountryId != null).WithMessage("Invalid reference");
                 }
 
@@ -42,7 +40,6 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void OrderRules()
                 {
-                        this.RuleFor(x => x.Order).NotNull();
                 }
 
                 private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
@@ -55,5 +52,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>44550967d86b0814f9f24a41da386cff</Hash>
+    <Hash>4c87c74dcfe7ce381c04f5c96d046b86</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiStateResponseModel> response = await this.StateService.All(query.Offset, query.Limit);
+                        List<ApiStateResponseModel> response = await this.StateService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{stateId}/Studios")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiStateResponseModel>), 200)]
+                public async virtual Task<IActionResult> Studios(int stateId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiStudioResponseModel> response = await this.StateService.Studios(stateId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>e360eec9e58ce649fec27beb99a28b7a</Hash>
+    <Hash>4da340083f01bb1576a262e2b7657c4b</Hash>
 </Codenesium>*/

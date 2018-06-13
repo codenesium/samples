@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IDeploymentEnvironmentRepository deploymentEnvironmentRepository,
                         IApiDeploymentEnvironmentRequestModelValidator deploymentEnvironmentModelValidator,
-                        IBOLDeploymentEnvironmentMapper boldeploymentEnvironmentMapper,
-                        IDALDeploymentEnvironmentMapper daldeploymentEnvironmentMapper)
+                        IBOLDeploymentEnvironmentMapper bolDeploymentEnvironmentMapper,
+                        IDALDeploymentEnvironmentMapper dalDeploymentEnvironmentMapper
+
+                        )
                         : base()
 
                 {
                         this.deploymentEnvironmentRepository = deploymentEnvironmentRepository;
                         this.deploymentEnvironmentModelValidator = deploymentEnvironmentModelValidator;
-                        this.bolDeploymentEnvironmentMapper = boldeploymentEnvironmentMapper;
-                        this.dalDeploymentEnvironmentMapper = daldeploymentEnvironmentMapper;
+                        this.bolDeploymentEnvironmentMapper = bolDeploymentEnvironmentMapper;
+                        this.dalDeploymentEnvironmentMapper = dalDeploymentEnvironmentMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.deploymentEnvironmentRepository.All(skip, take, orderClause);
+                        var records = await this.deploymentEnvironmentRepository.All(limit, offset, orderClause);
 
                         return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b17dedd86504da56d712b5fa1cfd38dc</Hash>
+    <Hash>2195b6fff0fa336f6bb7c0add6931b03</Hash>
 </Codenesium>*/

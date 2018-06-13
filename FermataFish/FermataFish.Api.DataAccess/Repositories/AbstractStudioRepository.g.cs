@@ -25,9 +25,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Studio>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Studio> Get(int id)
@@ -75,31 +75,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Studio>> Where(Expression<Func<Studio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Studio>> Where(Expression<Func<Studio, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Studio> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Studio> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Studio>> SearchLinqEF(Expression<Func<Studio, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Studio>> SearchLinqEF(Expression<Func<Studio, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Studio.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Studio>();
+                        return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Studio>();
                 }
 
-                private async Task<List<Studio>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Studio>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Studio.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Studio>();
+                        return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Studio>();
                 }
 
                 private async Task<Studio> GetById(int id)
@@ -108,9 +108,46 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Admin>> Admins(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Admin>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
+                }
+                public async virtual Task<List<Family>> Families(int id, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Family>().Where(x => x.Id == id).AsQueryable().Skip(offset).Take(limit).ToListAsync<Family>();
+                }
+                public async virtual Task<List<Lesson>> Lessons(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Lesson>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Lesson>();
+                }
+                public async virtual Task<List<LessonStatus>> LessonStatus(int id, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<LessonStatus>().Where(x => x.Id == id).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonStatus>();
+                }
+                public async virtual Task<List<Space>> Spaces(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Space>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Space>();
+                }
+                public async virtual Task<List<SpaceFeature>> SpaceFeatures(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SpaceFeature>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
+                }
+                public async virtual Task<List<Student>> Students(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Student>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+                }
+                public async virtual Task<List<Teacher>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Teacher>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
+                }
+                public async virtual Task<List<TeacherSkill>> TeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<TeacherSkill>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2a6cddf97dd0cef0f0d54553fde68164</Hash>
+    <Hash>87fcae7cfb9078d90c1aca4e5277d65c</Hash>
 </Codenesium>*/

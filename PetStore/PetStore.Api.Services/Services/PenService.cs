@@ -17,17 +17,26 @@ namespace PetStoreNS.Api.Services
                         IPenRepository penRepository,
                         IApiPenRequestModelValidator penModelValidator,
                         IBOLPenMapper bolpenMapper,
-                        IDALPenMapper dalpenMapper)
+                        IDALPenMapper dalpenMapper
+                        ,
+                        IBOLPetMapper bolPetMapper,
+                        IDALPetMapper dalPetMapper
+
+                        )
                         : base(logger,
                                penRepository,
                                penModelValidator,
                                bolpenMapper,
-                               dalpenMapper)
+                               dalpenMapper
+                               ,
+                               bolPetMapper,
+                               dalPetMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4ef5581cc6ad3e031bd77fbfeb2a7a99</Hash>
+    <Hash>2587f2f7869bb51a6d917ed21db1dd76</Hash>
 </Codenesium>*/

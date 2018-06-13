@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IPersonPhoneRepository personPhoneRepository,
                         IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
-                        IBOLPersonPhoneMapper bolpersonPhoneMapper,
-                        IDALPersonPhoneMapper dalpersonPhoneMapper)
+                        IBOLPersonPhoneMapper bolPersonPhoneMapper,
+                        IDALPersonPhoneMapper dalPersonPhoneMapper
+
+                        )
                         : base()
 
                 {
                         this.personPhoneRepository = personPhoneRepository;
                         this.personPhoneModelValidator = personPhoneModelValidator;
-                        this.bolPersonPhoneMapper = bolpersonPhoneMapper;
-                        this.dalPersonPhoneMapper = dalpersonPhoneMapper;
+                        this.bolPersonPhoneMapper = bolPersonPhoneMapper;
+                        this.dalPersonPhoneMapper = dalPersonPhoneMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.personPhoneRepository.All(skip, take, orderClause);
+                        var records = await this.personPhoneRepository.All(limit, offset, orderClause);
 
                         return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>841ef554b3f1ad85bb2d747e77a7b5e1</Hash>
+    <Hash>fcd67f36d8110479ab2063dde2d309f2</Hash>
 </Codenesium>*/

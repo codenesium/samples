@@ -19,10 +19,12 @@ namespace NebulaNS.Api.Services
 
                 Task<ApiLinkResponseModel> Get(int id);
 
-                Task<List<ApiLinkResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiLinkResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>8322243e3bfea3ce0c1aba3c338b0b98</Hash>
+    <Hash>847d1b577352086f58fe9f813e98cf00</Hash>
 </Codenesium>*/

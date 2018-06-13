@@ -17,17 +17,32 @@ namespace AdventureWorksNS.Api.Services
                         ICreditCardRepository creditCardRepository,
                         IApiCreditCardRequestModelValidator creditCardModelValidator,
                         IBOLCreditCardMapper bolcreditCardMapper,
-                        IDALCreditCardMapper dalcreditCardMapper)
+                        IDALCreditCardMapper dalcreditCardMapper
+                        ,
+                        IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
+                        IDALPersonCreditCardMapper dalPersonCreditCardMapper
+                        ,
+                        IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
+
+                        )
                         : base(logger,
                                creditCardRepository,
                                creditCardModelValidator,
                                bolcreditCardMapper,
-                               dalcreditCardMapper)
+                               dalcreditCardMapper
+                               ,
+                               bolPersonCreditCardMapper,
+                               dalPersonCreditCardMapper
+                               ,
+                               bolSalesOrderHeaderMapper,
+                               dalSalesOrderHeaderMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>64abdee31f5ccf1c4a2d3679a9cc9ba9</Hash>
+    <Hash>2b2a95b16a4ad121f7497c9ecd18a9e4</Hash>
 </Codenesium>*/

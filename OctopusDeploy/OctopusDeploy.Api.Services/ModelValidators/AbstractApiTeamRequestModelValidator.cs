@@ -69,7 +69,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Team record = await this.TeamRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d73e18e14d044f26c03f96c52a2024f</Hash>
+    <Hash>1f00ba34303f0216f604ff73081037f7</Hash>
 </Codenesium>*/

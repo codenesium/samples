@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         ISchemaVersionsRepository schemaVersionsRepository,
                         IApiSchemaVersionsRequestModelValidator schemaVersionsModelValidator,
                         IBOLSchemaVersionsMapper bolschemaVersionsMapper,
-                        IDALSchemaVersionsMapper dalschemaVersionsMapper)
+                        IDALSchemaVersionsMapper dalschemaVersionsMapper
+
+                        )
                         : base(logger,
                                schemaVersionsRepository,
                                schemaVersionsModelValidator,
                                bolschemaVersionsMapper,
-                               dalschemaVersionsMapper)
+                               dalschemaVersionsMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>99a97181ac7f37e558a6df2a884bd574</Hash>
+    <Hash>a5e4e92d99d38dec0389f3b2a9e98d11</Hash>
 </Codenesium>*/

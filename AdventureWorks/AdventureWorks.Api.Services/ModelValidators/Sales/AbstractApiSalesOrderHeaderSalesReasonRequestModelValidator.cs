@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator: AbstractValidator<ApiSalesOrderHeaderSalesReasonRequestModel>
         {
@@ -32,12 +31,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void SalesReasonIDRules()
                 {
-                        this.RuleFor(x => x.SalesReasonID).NotNull();
                         this.RuleFor(x => x.SalesReasonID).MustAsync(this.BeValidSalesReason).When(x => x ?.SalesReasonID != null).WithMessage("Invalid reference");
                 }
 
@@ -58,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87eed7b1391967ce95568981a85fcc09</Hash>
+    <Hash>33da463d92e20400c98c1720052021d7</Hash>
 </Codenesium>*/

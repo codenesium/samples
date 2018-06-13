@@ -28,21 +28,23 @@ namespace PetShippingNS.Api.Services
                         ILogger logger,
                         ICountryRequirementRepository countryRequirementRepository,
                         IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
-                        IBOLCountryRequirementMapper bolcountryRequirementMapper,
-                        IDALCountryRequirementMapper dalcountryRequirementMapper)
+                        IBOLCountryRequirementMapper bolCountryRequirementMapper,
+                        IDALCountryRequirementMapper dalCountryRequirementMapper
+
+                        )
                         : base()
 
                 {
                         this.countryRequirementRepository = countryRequirementRepository;
                         this.countryRequirementModelValidator = countryRequirementModelValidator;
-                        this.bolCountryRequirementMapper = bolcountryRequirementMapper;
-                        this.dalCountryRequirementMapper = dalcountryRequirementMapper;
+                        this.bolCountryRequirementMapper = bolCountryRequirementMapper;
+                        this.dalCountryRequirementMapper = dalCountryRequirementMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCountryRequirementResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCountryRequirementResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.countryRequirementRepository.All(skip, take, orderClause);
+                        var records = await this.countryRequirementRepository.All(limit, offset, orderClause);
 
                         return this.bolCountryRequirementMapper.MapBOToModel(this.dalCountryRequirementMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7eb41aa7a93a7f31666cef4533c8e80</Hash>
+    <Hash>dc762863f2e561d4ffc5dd38a60d38c4</Hash>
 </Codenesium>*/

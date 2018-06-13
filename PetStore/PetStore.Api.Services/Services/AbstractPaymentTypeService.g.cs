@@ -22,27 +22,39 @@ namespace PetStoreNS.Api.Services
 
                 private IDALPaymentTypeMapper dalPaymentTypeMapper;
 
+                private IBOLSaleMapper bolSaleMapper;
+
+                private IDALSaleMapper dalSaleMapper;
+
                 private ILogger logger;
 
                 public AbstractPaymentTypeService(
                         ILogger logger,
                         IPaymentTypeRepository paymentTypeRepository,
                         IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
-                        IBOLPaymentTypeMapper bolpaymentTypeMapper,
-                        IDALPaymentTypeMapper dalpaymentTypeMapper)
+                        IBOLPaymentTypeMapper bolPaymentTypeMapper,
+                        IDALPaymentTypeMapper dalPaymentTypeMapper
+
+                        ,
+                        IBOLSaleMapper bolSaleMapper,
+                        IDALSaleMapper dalSaleMapper
+
+                        )
                         : base()
 
                 {
                         this.paymentTypeRepository = paymentTypeRepository;
                         this.paymentTypeModelValidator = paymentTypeModelValidator;
-                        this.bolPaymentTypeMapper = bolpaymentTypeMapper;
-                        this.dalPaymentTypeMapper = dalpaymentTypeMapper;
+                        this.bolPaymentTypeMapper = bolPaymentTypeMapper;
+                        this.dalPaymentTypeMapper = dalPaymentTypeMapper;
+                        this.bolSaleMapper = bolSaleMapper;
+                        this.dalSaleMapper = dalSaleMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.paymentTypeRepository.All(skip, take, orderClause);
+                        var records = await this.paymentTypeRepository.All(limit, offset, orderClause);
 
                         return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace PetStoreNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiSaleResponseModel>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Sale> records = await this.paymentTypeRepository.Sales(paymentTypeId, limit, offset);
+
+                        return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>34140b4c58a41d12073dd65062fdf730</Hash>
+    <Hash>2c0bc266b01a4ff4e8696f5a5209dcb6</Hash>
 </Codenesium>*/

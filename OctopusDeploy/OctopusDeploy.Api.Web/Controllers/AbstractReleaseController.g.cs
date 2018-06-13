@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiReleaseResponseModel> response = await this.ReleaseService.All(query.Offset, query.Limit);
+                        List<ApiReleaseResponseModel> response = await this.ReleaseService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -184,7 +184,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdAssembled/{id}/{assembled}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdAssembled(string id, DateTime assembled)
+                public async virtual Task<IActionResult> GetIdAssembled(string id, DateTimeOffset assembled)
                 {
                         List<ApiReleaseResponseModel> response = await this.ReleaseService.GetIdAssembled(id, assembled);
 
@@ -206,7 +206,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTime assembled)
+                public async virtual Task<IActionResult> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
                         List<ApiReleaseResponseModel> response = await this.ReleaseService.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
 
@@ -217,7 +217,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTime assembled)
+                public async virtual Task<IActionResult> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
                         List<ApiReleaseResponseModel> response = await this.ReleaseService.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
 
@@ -227,5 +227,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ea5d56a6c75853845ab365914138cfd2</Hash>
+    <Hash>f969ff5cba5c53527f683ffc7fd8a1b9</Hash>
 </Codenesium>*/

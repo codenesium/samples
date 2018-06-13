@@ -25,9 +25,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<StateProvince>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<StateProvince> Get(int stateProvinceID)
@@ -88,31 +88,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<StateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<StateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<StateProvince> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<StateProvince> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
                         }
 
-                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
+                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<StateProvince>();
                 }
 
-                private async Task<List<StateProvince>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<StateProvince>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
                         }
 
-                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<StateProvince>();
+                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<StateProvince>();
                 }
 
                 private async Task<StateProvince> GetById(int stateProvinceID)
@@ -121,9 +121,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<Address>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Address>().Where(x => x.StateProvinceID == stateProvinceID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Address>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ab4ff59a36ade8576237023debb79b41</Hash>
+    <Hash>64f148867df968bff0c750824f83e228</Hash>
 </Codenesium>*/

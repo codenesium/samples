@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiLinkLogResponseModel> response = await this.LinkLogService.All(query.Offset, query.Limit);
+                        List<ApiLinkLogResponseModel> response = await this.LinkLogService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3984c3bf73c5bf1d070fce61bc1daeb7</Hash>
+    <Hash>21300411449537655fb2a45524a8a95c</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiIllustrationResponseModel> response = await this.IllustrationService.All(query.Offset, query.Limit);
+                        List<ApiIllustrationResponseModel> response = await this.IllustrationService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{illustrationID}/ProductModelIllustrations")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
+                public async virtual Task<IActionResult> ProductModelIllustrations(int illustrationID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiProductModelIllustrationResponseModel> response = await this.IllustrationService.ProductModelIllustrations(illustrationID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8499a95f04d4668d266f6b8a55666dbf</Hash>
+    <Hash>770991183b93b3990dd4076405ab0e41</Hash>
 </Codenesium>*/

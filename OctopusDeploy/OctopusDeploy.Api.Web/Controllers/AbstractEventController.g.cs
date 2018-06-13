@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiEventResponseModel> response = await this.EventService.All(query.Offset, query.Limit);
+                        List<ApiEventResponseModel> response = await this.EventService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -176,7 +176,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdRelatedDocumentIdsOccurredCategoryAutoId/{id}/{relatedDocumentIds}/{occurred}/{category}/{autoId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTime occurred, string category, long autoId)
+                public async virtual Task<IActionResult> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
                         List<ApiEventResponseModel> response = await this.EventService.GetIdRelatedDocumentIdsOccurredCategoryAutoId(id, relatedDocumentIds, occurred, category, autoId);
 
@@ -187,7 +187,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId/{id}/{relatedDocumentIds}/{projectId}/{environmentId}/{category}/{userId}/{occurred}/{tenantId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTime occurred, string tenantId)
+                public async virtual Task<IActionResult> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
                         List<ApiEventResponseModel> response = await this.EventService.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(id, relatedDocumentIds, projectId, environmentId, category, userId, occurred, tenantId);
 
@@ -198,9 +198,23 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getIdOccurred/{id}/{occurred}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetIdOccurred(string id, DateTime occurred)
+                public async virtual Task<IActionResult> GetIdOccurred(string id, DateTimeOffset occurred)
                 {
                         List<ApiEventResponseModel> response = await this.EventService.GetIdOccurred(id, occurred);
+
+                        return this.Ok(response);
+                }
+
+                [HttpGet]
+                [Route("{eventId}/EventRelatedDocuments")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+                public async virtual Task<IActionResult> EventRelatedDocuments(string eventId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiEventRelatedDocumentResponseModel> response = await this.EventService.EventRelatedDocuments(eventId, query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -208,5 +222,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>437b0593a64949790a3bd7f927e29e6c</Hash>
+    <Hash>8eb393b8326c0a1b968abcbc0b3730cf</Hash>
 </Codenesium>*/

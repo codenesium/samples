@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiSaleResponseModel> response = await this.SaleService.All(query.Offset, query.Limit);
+                        List<ApiSaleResponseModel> response = await this.SaleService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -164,5 +164,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6fec65d19dfa955e8f203a9295636c75</Hash>
+    <Hash>d544f390c146ef934ed2b0be5acea571</Hash>
 </Codenesium>*/

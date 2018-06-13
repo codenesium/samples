@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IProxyRepository proxyRepository,
                         IApiProxyRequestModelValidator proxyModelValidator,
                         IBOLProxyMapper bolproxyMapper,
-                        IDALProxyMapper dalproxyMapper)
+                        IDALProxyMapper dalproxyMapper
+
+                        )
                         : base(logger,
                                proxyRepository,
                                proxyModelValidator,
                                bolproxyMapper,
-                               dalproxyMapper)
+                               dalproxyMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e168e11c944e99855a96a9d7b8010755</Hash>
+    <Hash>07e5c10a571e0cbe3b9be4c3a36291f7</Hash>
 </Codenesium>*/

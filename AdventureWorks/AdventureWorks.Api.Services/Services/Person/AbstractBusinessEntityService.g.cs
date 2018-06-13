@@ -22,27 +22,55 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALBusinessEntityMapper dalBusinessEntityMapper;
 
+                private IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper;
+
+                private IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper;
+                private IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper;
+
+                private IDALBusinessEntityContactMapper dalBusinessEntityContactMapper;
+                private IBOLPersonMapper bolPersonMapper;
+
+                private IDALPersonMapper dalPersonMapper;
+
                 private ILogger logger;
 
                 public AbstractBusinessEntityService(
                         ILogger logger,
                         IBusinessEntityRepository businessEntityRepository,
                         IApiBusinessEntityRequestModelValidator businessEntityModelValidator,
-                        IBOLBusinessEntityMapper bolbusinessEntityMapper,
-                        IDALBusinessEntityMapper dalbusinessEntityMapper)
+                        IBOLBusinessEntityMapper bolBusinessEntityMapper,
+                        IDALBusinessEntityMapper dalBusinessEntityMapper
+
+                        ,
+                        IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
+                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
+                        ,
+                        IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
+                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
+                        ,
+                        IBOLPersonMapper bolPersonMapper,
+                        IDALPersonMapper dalPersonMapper
+
+                        )
                         : base()
 
                 {
                         this.businessEntityRepository = businessEntityRepository;
                         this.businessEntityModelValidator = businessEntityModelValidator;
-                        this.bolBusinessEntityMapper = bolbusinessEntityMapper;
-                        this.dalBusinessEntityMapper = dalbusinessEntityMapper;
+                        this.bolBusinessEntityMapper = bolBusinessEntityMapper;
+                        this.dalBusinessEntityMapper = dalBusinessEntityMapper;
+                        this.bolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
+                        this.dalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
+                        this.bolBusinessEntityContactMapper = bolBusinessEntityContactMapper;
+                        this.dalBusinessEntityContactMapper = dalBusinessEntityContactMapper;
+                        this.bolPersonMapper = bolPersonMapper;
+                        this.dalPersonMapper = dalPersonMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBusinessEntityResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBusinessEntityResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.businessEntityRepository.All(skip, take, orderClause);
+                        var records = await this.businessEntityRepository.All(limit, offset, orderClause);
 
                         return this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(records));
                 }
@@ -96,9 +124,28 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<BusinessEntityAddress> records = await this.businessEntityRepository.BusinessEntityAddresses(businessEntityID, limit, offset);
+
+                        return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<BusinessEntityContact> records = await this.businessEntityRepository.BusinessEntityContacts(businessEntityID, limit, offset);
+
+                        return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiPersonResponseModel>> People(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Person> records = await this.businessEntityRepository.People(businessEntityID, limit, offset);
+
+                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0c01aa0fd2279b22c207d596fb05d7ed</Hash>
+    <Hash>41955341a2870067082e577aed68c1ad</Hash>
 </Codenesium>*/

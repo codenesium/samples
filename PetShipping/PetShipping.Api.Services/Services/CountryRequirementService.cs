@@ -17,17 +17,20 @@ namespace PetShippingNS.Api.Services
                         ICountryRequirementRepository countryRequirementRepository,
                         IApiCountryRequirementRequestModelValidator countryRequirementModelValidator,
                         IBOLCountryRequirementMapper bolcountryRequirementMapper,
-                        IDALCountryRequirementMapper dalcountryRequirementMapper)
+                        IDALCountryRequirementMapper dalcountryRequirementMapper
+
+                        )
                         : base(logger,
                                countryRequirementRepository,
                                countryRequirementModelValidator,
                                bolcountryRequirementMapper,
-                               dalcountryRequirementMapper)
+                               dalcountryRequirementMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0cd2e23e2d001f0156ad7404ded0ed25</Hash>
+    <Hash>f9d2dbd1345ce2192743fc63ec1cd3a9</Hash>
 </Codenesium>*/

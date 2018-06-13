@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ITenantRepository tenantRepository,
                         IApiTenantRequestModelValidator tenantModelValidator,
-                        IBOLTenantMapper boltenantMapper,
-                        IDALTenantMapper daltenantMapper)
+                        IBOLTenantMapper bolTenantMapper,
+                        IDALTenantMapper dalTenantMapper
+
+                        )
                         : base()
 
                 {
                         this.tenantRepository = tenantRepository;
                         this.tenantModelValidator = tenantModelValidator;
-                        this.bolTenantMapper = boltenantMapper;
-                        this.dalTenantMapper = daltenantMapper;
+                        this.bolTenantMapper = bolTenantMapper;
+                        this.dalTenantMapper = dalTenantMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTenantResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTenantResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.tenantRepository.All(skip, take, orderClause);
+                        var records = await this.tenantRepository.All(limit, offset, orderClause);
 
                         return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0a4576a779f549339ea005ab6644f6e</Hash>
+    <Hash>c384156d1bd513e9d0e066f5bb2fb500</Hash>
 </Codenesium>*/

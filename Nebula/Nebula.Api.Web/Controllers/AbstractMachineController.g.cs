@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiMachineResponseModel> response = await this.MachineService.All(query.Offset, query.Limit);
+                        List<ApiMachineResponseModel> response = await this.MachineService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,36 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{assignedMachineId}/Links")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+                public async virtual Task<IActionResult> Links(int assignedMachineId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiLinkResponseModel> response = await this.MachineService.Links(assignedMachineId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{machineId}/MachineRefTeams")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+                public async virtual Task<IActionResult> MachineRefTeams(int machineId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiMachineRefTeamResponseModel> response = await this.MachineService.MachineRefTeams(machineId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a24b73cda7e267361c5056e6b9a6f802</Hash>
+    <Hash>483fee1587e3c2a938e4ef4e077938d4</Hash>
 </Codenesium>*/

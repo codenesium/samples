@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IProductPhotoRepository productPhotoRepository,
                         IApiProductPhotoRequestModelValidator productPhotoModelValidator,
                         IBOLProductPhotoMapper bolproductPhotoMapper,
-                        IDALProductPhotoMapper dalproductPhotoMapper)
+                        IDALProductPhotoMapper dalproductPhotoMapper
+                        ,
+                        IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
+                        IDALProductProductPhotoMapper dalProductProductPhotoMapper
+
+                        )
                         : base(logger,
                                productPhotoRepository,
                                productPhotoModelValidator,
                                bolproductPhotoMapper,
-                               dalproductPhotoMapper)
+                               dalproductPhotoMapper
+                               ,
+                               bolProductProductPhotoMapper,
+                               dalProductProductPhotoMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e76fdc273e21d7a492944724613b7f1</Hash>
+    <Hash>993dd0b214a1eb51fb6221693930ecbc</Hash>
 </Codenesium>*/

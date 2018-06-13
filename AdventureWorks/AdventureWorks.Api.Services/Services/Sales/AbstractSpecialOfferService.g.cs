@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALSpecialOfferMapper dalSpecialOfferMapper;
 
+                private IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper;
+
+                private IDALSpecialOfferProductMapper dalSpecialOfferProductMapper;
+
                 private ILogger logger;
 
                 public AbstractSpecialOfferService(
                         ILogger logger,
                         ISpecialOfferRepository specialOfferRepository,
                         IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
-                        IBOLSpecialOfferMapper bolspecialOfferMapper,
-                        IDALSpecialOfferMapper dalspecialOfferMapper)
+                        IBOLSpecialOfferMapper bolSpecialOfferMapper,
+                        IDALSpecialOfferMapper dalSpecialOfferMapper
+
+                        ,
+                        IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
+                        IDALSpecialOfferProductMapper dalSpecialOfferProductMapper
+
+                        )
                         : base()
 
                 {
                         this.specialOfferRepository = specialOfferRepository;
                         this.specialOfferModelValidator = specialOfferModelValidator;
-                        this.bolSpecialOfferMapper = bolspecialOfferMapper;
-                        this.dalSpecialOfferMapper = dalspecialOfferMapper;
+                        this.bolSpecialOfferMapper = bolSpecialOfferMapper;
+                        this.dalSpecialOfferMapper = dalSpecialOfferMapper;
+                        this.bolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
+                        this.dalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSpecialOfferResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSpecialOfferResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.specialOfferRepository.All(skip, take, orderClause);
+                        var records = await this.specialOfferRepository.All(limit, offset, orderClause);
 
                         return this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiSpecialOfferProductResponseModel>> SpecialOfferProducts(int specialOfferID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<SpecialOfferProduct> records = await this.specialOfferRepository.SpecialOfferProducts(specialOfferID, limit, offset);
+
+                        return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>33a7c9875764e34b269b2985b79f01c5</Hash>
+    <Hash>835ed7564c6c739c7c33dd226cf145f0</Hash>
 </Codenesium>*/

@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiEventRelatedDocumentResponseModel> Get(int id);
 
-                Task<List<ApiEventRelatedDocumentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiEventRelatedDocumentResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiEventRelatedDocumentResponseModel>> GetEventId(string eventId);
                 Task<List<ApiEventRelatedDocumentResponseModel>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d88ead68157f515a46656d2913b8d0bd</Hash>
+    <Hash>80191e6fc67269960a1c77d4a0d31b1e</Hash>
 </Codenesium>*/

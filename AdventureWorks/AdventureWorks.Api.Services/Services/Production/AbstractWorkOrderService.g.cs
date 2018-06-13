@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALWorkOrderMapper dalWorkOrderMapper;
 
+                private IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper;
+
+                private IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper;
+
                 private ILogger logger;
 
                 public AbstractWorkOrderService(
                         ILogger logger,
                         IWorkOrderRepository workOrderRepository,
                         IApiWorkOrderRequestModelValidator workOrderModelValidator,
-                        IBOLWorkOrderMapper bolworkOrderMapper,
-                        IDALWorkOrderMapper dalworkOrderMapper)
+                        IBOLWorkOrderMapper bolWorkOrderMapper,
+                        IDALWorkOrderMapper dalWorkOrderMapper
+
+                        ,
+                        IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
+                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
+
+                        )
                         : base()
 
                 {
                         this.workOrderRepository = workOrderRepository;
                         this.workOrderModelValidator = workOrderModelValidator;
-                        this.bolWorkOrderMapper = bolworkOrderMapper;
-                        this.dalWorkOrderMapper = dalworkOrderMapper;
+                        this.bolWorkOrderMapper = bolWorkOrderMapper;
+                        this.dalWorkOrderMapper = dalWorkOrderMapper;
+                        this.bolWorkOrderRoutingMapper = bolWorkOrderRoutingMapper;
+                        this.dalWorkOrderRoutingMapper = dalWorkOrderRoutingMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkOrderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkOrderResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.workOrderRepository.All(skip, take, orderClause);
+                        var records = await this.workOrderRepository.All(limit, offset, orderClause);
 
                         return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<WorkOrderRouting> records = await this.workOrderRepository.WorkOrderRoutings(workOrderID, limit, offset);
+
+                        return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f290ec8b5e4e8fa209bf6513e770a4b9</Hash>
+    <Hash>3f88e2a615d334c9311899096b39ac12</Hash>
 </Codenesium>*/

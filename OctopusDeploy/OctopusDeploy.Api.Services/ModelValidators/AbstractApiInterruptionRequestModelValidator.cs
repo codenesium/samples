@@ -27,7 +27,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CreatedRules()
                 {
-                        this.RuleFor(x => x.Created).NotNull();
                 }
 
                 public virtual void EnvironmentIdRules()
@@ -83,5 +82,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>844cbd86463bf3ed8e7ebcb3d422e2d2</Hash>
+    <Hash>6970949e89182fbd80044020df4f0b6a</Hash>
 </Codenesium>*/

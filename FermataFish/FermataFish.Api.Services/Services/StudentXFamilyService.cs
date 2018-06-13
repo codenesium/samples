@@ -17,17 +17,20 @@ namespace FermataFishNS.Api.Services
                         IStudentXFamilyRepository studentXFamilyRepository,
                         IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
                         IBOLStudentXFamilyMapper bolstudentXFamilyMapper,
-                        IDALStudentXFamilyMapper dalstudentXFamilyMapper)
+                        IDALStudentXFamilyMapper dalstudentXFamilyMapper
+
+                        )
                         : base(logger,
                                studentXFamilyRepository,
                                studentXFamilyModelValidator,
                                bolstudentXFamilyMapper,
-                               dalstudentXFamilyMapper)
+                               dalstudentXFamilyMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c12cd378c1731bdccafbfdaad73abb4a</Hash>
+    <Hash>45fb04f308f7f32bf7e8129702189e27</Hash>
 </Codenesium>*/

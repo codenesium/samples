@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         IOctopusServerNodeRepository octopusServerNodeRepository,
                         IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator,
-                        IBOLOctopusServerNodeMapper boloctopusServerNodeMapper,
-                        IDALOctopusServerNodeMapper daloctopusServerNodeMapper)
+                        IBOLOctopusServerNodeMapper bolOctopusServerNodeMapper,
+                        IDALOctopusServerNodeMapper dalOctopusServerNodeMapper
+
+                        )
                         : base()
 
                 {
                         this.octopusServerNodeRepository = octopusServerNodeRepository;
                         this.octopusServerNodeModelValidator = octopusServerNodeModelValidator;
-                        this.bolOctopusServerNodeMapper = boloctopusServerNodeMapper;
-                        this.dalOctopusServerNodeMapper = daloctopusServerNodeMapper;
+                        this.bolOctopusServerNodeMapper = bolOctopusServerNodeMapper;
+                        this.dalOctopusServerNodeMapper = dalOctopusServerNodeMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiOctopusServerNodeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiOctopusServerNodeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.octopusServerNodeRepository.All(skip, take, orderClause);
+                        var records = await this.octopusServerNodeRepository.All(limit, offset, orderClause);
 
                         return this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a745c97c458cf213b76dad707bec6d88</Hash>
+    <Hash>f29f94270d6074aaa356eef44598ec81</Hash>
 </Codenesium>*/

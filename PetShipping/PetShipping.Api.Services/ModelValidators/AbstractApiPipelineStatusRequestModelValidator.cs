@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiPipelineStatusRequestModelValidator: AbstractValidator<ApiPipelineStatusRequestModel>
         {
@@ -35,5 +34,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6e699eb4afdc569117f9ed9d5dc6ee7</Hash>
+    <Hash>e076e9f907e6a8b7ca43d7bfab1aa280</Hash>
 </Codenesium>*/

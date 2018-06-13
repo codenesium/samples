@@ -19,10 +19,12 @@ namespace PetStoreNS.Api.Services
 
                 Task<ApiBreedResponseModel> Get(int id);
 
-                Task<List<ApiBreedResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiBreedResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+
+                Task<List<ApiPetResponseModel>> Pets(int breedId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>2b853ec7c1fef3cb9dfa20529325bc56</Hash>
+    <Hash>ef7b219fa0142f0f7d4870327d06374a</Hash>
 </Codenesium>*/

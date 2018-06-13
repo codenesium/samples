@@ -44,7 +44,7 @@ namespace FermataFishNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiFamilyResponseModel> response = await this.FamilyService.All(query.Offset, query.Limit);
+                        List<ApiFamilyResponseModel> response = await this.FamilyService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,36 @@ namespace FermataFishNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{familyId}/Students")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+                public async virtual Task<IActionResult> Students(int familyId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiStudentResponseModel> response = await this.FamilyService.Students(familyId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{familyId}/StudentXFamilies")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+                public async virtual Task<IActionResult> StudentXFamilies(int familyId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiStudentXFamilyResponseModel> response = await this.FamilyService.StudentXFamilies(familyId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>00843fdce60f8c8659d825f19b7c0418</Hash>
+    <Hash>98b90f945bea0b8b03f640b7d47ba382</Hash>
 </Codenesium>*/

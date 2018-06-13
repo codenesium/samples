@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiSaleRequestModelValidator: AbstractValidator<ApiSaleRequestModel>
         {
@@ -32,12 +31,10 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void AmountRules()
                 {
-                        this.RuleFor(x => x.Amount).NotNull();
                 }
 
                 public virtual void ClientIdRules()
                 {
-                        this.RuleFor(x => x.ClientId).NotNull();
                         this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x ?.ClientId != null).WithMessage("Invalid reference");
                 }
 
@@ -49,18 +46,15 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void PetIdRules()
                 {
-                        this.RuleFor(x => x.PetId).NotNull();
                         this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x ?.PetId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void SaleDateRules()
                 {
-                        this.RuleFor(x => x.SaleDate).NotNull();
                 }
 
                 public virtual void SalesPersonIdRules()
                 {
-                        this.RuleFor(x => x.SalesPersonId).NotNull();
                 }
 
                 private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
@@ -80,5 +74,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa3a3147fa8697a8d46a9da81732f34c</Hash>
+    <Hash>325e1e474d708f828e9ac8f9d904d235</Hash>
 </Codenesium>*/

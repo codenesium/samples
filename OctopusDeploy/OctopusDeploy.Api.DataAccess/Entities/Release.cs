@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 public void SetProperties(
-                        DateTime assembled,
+                        DateTimeOffset assembled,
                         string channelId,
                         string id,
                         string jSON,
@@ -33,7 +33,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Column("Assembled", TypeName="datetimeoffset")]
-                public DateTime Assembled { get; private set; }
+                public DateTimeOffset Assembled { get; private set; }
 
                 [Column("ChannelId", TypeName="nvarchar(50)")]
                 public string ChannelId { get; private set; }
@@ -60,5 +60,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a36605bcda5e94c5a4c80739bb1923b6</Hash>
+    <Hash>a8c1b60ba9a84686ed794794860704cc</Hash>
 </Codenesium>*/

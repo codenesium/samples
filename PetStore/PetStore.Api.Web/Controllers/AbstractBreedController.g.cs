@@ -44,7 +44,7 @@ namespace PetStoreNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBreedResponseModel> response = await this.BreedService.All(query.Offset, query.Limit);
+                        List<ApiBreedResponseModel> response = await this.BreedService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace PetStoreNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{breedId}/Pets")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiBreedResponseModel>), 200)]
+                public async virtual Task<IActionResult> Pets(int breedId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPetResponseModel> response = await this.BreedService.Pets(breedId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5414d2556867606a8584afeab0a98fb8</Hash>
+    <Hash>19578e0ed82745d68005df1b51c3f59f</Hash>
 </Codenesium>*/

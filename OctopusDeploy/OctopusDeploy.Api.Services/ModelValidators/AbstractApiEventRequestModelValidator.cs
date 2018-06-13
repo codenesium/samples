@@ -27,7 +27,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void AutoIdRules()
                 {
-                        this.RuleFor(x => x.AutoId).NotNull();
                 }
 
                 public virtual void CategoryRules()
@@ -53,7 +52,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void OccurredRules()
                 {
-                        this.RuleFor(x => x.Occurred).NotNull();
                 }
 
                 public virtual void ProjectIdRules()
@@ -86,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>363dc347c472f1d2b1209ca8076f7997</Hash>
+    <Hash>413e17e69feb9f16516e613f27a6b7e9</Hash>
 </Codenesium>*/

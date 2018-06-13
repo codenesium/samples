@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiScrapReasonResponseModel> response = await this.ScrapReasonService.All(query.Offset, query.Limit);
+                        List<ApiScrapReasonResponseModel> response = await this.ScrapReasonService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -179,9 +179,23 @@ namespace AdventureWorksNS.Api.Web
                                 return this.Ok(response);
                         }
                 }
+
+                [HttpGet]
+                [Route("{scrapReasonID}/WorkOrders")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiScrapReasonResponseModel>), 200)]
+                public async virtual Task<IActionResult> WorkOrders(short scrapReasonID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiWorkOrderResponseModel> response = await this.ScrapReasonService.WorkOrders(scrapReasonID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1d5b1ac7fa152e0b46d8f3bbc8ee624</Hash>
+    <Hash>db34237f6ce2b54fd87d602a46b4e7bf</Hash>
 </Codenesium>*/

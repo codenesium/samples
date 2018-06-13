@@ -28,21 +28,23 @@ namespace FermataFishNS.Api.Services
                         ILogger logger,
                         ILessonXStudentRepository lessonXStudentRepository,
                         IApiLessonXStudentRequestModelValidator lessonXStudentModelValidator,
-                        IBOLLessonXStudentMapper bollessonXStudentMapper,
-                        IDALLessonXStudentMapper dallessonXStudentMapper)
+                        IBOLLessonXStudentMapper bolLessonXStudentMapper,
+                        IDALLessonXStudentMapper dalLessonXStudentMapper
+
+                        )
                         : base()
 
                 {
                         this.lessonXStudentRepository = lessonXStudentRepository;
                         this.lessonXStudentModelValidator = lessonXStudentModelValidator;
-                        this.bolLessonXStudentMapper = bollessonXStudentMapper;
-                        this.dalLessonXStudentMapper = dallessonXStudentMapper;
+                        this.bolLessonXStudentMapper = bolLessonXStudentMapper;
+                        this.dalLessonXStudentMapper = dalLessonXStudentMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.lessonXStudentRepository.All(skip, take, orderClause);
+                        var records = await this.lessonXStudentRepository.All(limit, offset, orderClause);
 
                         return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfb06b78c48d254e366cc1c82c4779ba</Hash>
+    <Hash>ade6bef39e50223ac17f343a4f4f4d73</Hash>
 </Codenesium>*/

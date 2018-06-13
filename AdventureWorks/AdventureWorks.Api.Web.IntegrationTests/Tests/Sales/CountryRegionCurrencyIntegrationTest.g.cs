@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " CountryRegionCurrency")]
+        [Trait("Integration", "CountryRegionCurrency")]
         public class CountryRegionCurrencyTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7b4c2984413a90265886e531e99499c7</Hash>
+    <Hash>b45074dbef2dd6a1f8d5438487301622</Hash>
 </Codenesium>*/

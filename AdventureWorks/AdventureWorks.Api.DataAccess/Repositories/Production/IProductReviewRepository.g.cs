@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ProductReview> Get(int productReviewID);
 
-                Task<List<ProductReview>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ProductReview>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<ProductReview>> GetCommentsProductIDReviewerName(string comments, int productID, string reviewerName);
         }
 }
 
 /*<Codenesium>
-    <Hash>cde049a4ec74f900ad1c18e5e95fb86d</Hash>
+    <Hash>4ddf416718a590922cf490c847c5895a</Hash>
 </Codenesium>*/

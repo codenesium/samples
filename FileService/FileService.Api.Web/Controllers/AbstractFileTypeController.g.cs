@@ -44,7 +44,7 @@ namespace FileServiceNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiFileTypeResponseModel> response = await this.FileTypeService.All(query.Offset, query.Limit);
+                        List<ApiFileTypeResponseModel> response = await this.FileTypeService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace FileServiceNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{fileTypeId}/Files")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiFileTypeResponseModel>), 200)]
+                public async virtual Task<IActionResult> Files(int fileTypeId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiFileResponseModel> response = await this.FileTypeService.Files(fileTypeId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c69af77a5a42386a3e4ddeb9d986b95d</Hash>
+    <Hash>2e1d0954950c74f635dc8dd52e3ad6fd</Hash>
 </Codenesium>*/

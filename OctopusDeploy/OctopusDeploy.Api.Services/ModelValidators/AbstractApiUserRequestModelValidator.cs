@@ -47,17 +47,14 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void IdentificationTokenRules()
                 {
-                        this.RuleFor(x => x.IdentificationToken).NotNull();
                 }
 
                 public virtual void IsActiveRules()
                 {
-                        this.RuleFor(x => x.IsActive).NotNull();
                 }
 
                 public virtual void IsServiceRules()
                 {
-                        this.RuleFor(x => x.IsService).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -76,7 +73,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         User record = await this.UserRepository.GetUsername(model.Username);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -89,5 +86,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fab78e431539cf3c8e930dd19a7fb9ac</Hash>
+    <Hash>b6b94f19d0f786d13304aef238695c9d</Hash>
 </Codenesium>*/

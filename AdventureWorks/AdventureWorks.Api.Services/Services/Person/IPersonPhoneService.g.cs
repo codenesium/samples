@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiPersonPhoneResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiPersonPhoneResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiPersonPhoneResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiPersonPhoneResponseModel>> GetPhoneNumber(string phoneNumber);
         }
 }
 
 /*<Codenesium>
-    <Hash>e6150cc5dd064889d74106533c05b76f</Hash>
+    <Hash>d2d8780a79062e07444a89c781e4a282</Hash>
 </Codenesium>*/

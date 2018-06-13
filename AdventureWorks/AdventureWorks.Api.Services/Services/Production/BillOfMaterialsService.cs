@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         IBillOfMaterialsRepository billOfMaterialsRepository,
                         IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
                         IBOLBillOfMaterialsMapper bolbillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalbillOfMaterialsMapper)
+                        IDALBillOfMaterialsMapper dalbillOfMaterialsMapper
+
+                        )
                         : base(logger,
                                billOfMaterialsRepository,
                                billOfMaterialsModelValidator,
                                bolbillOfMaterialsMapper,
-                               dalbillOfMaterialsMapper)
+                               dalbillOfMaterialsMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9cd7bb02d629e9df4e23f98ab19be1ea</Hash>
+    <Hash>4755b7e49dbd05e0b9deb9e9b9240cd8</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
                         IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
                         IBOLCountryRegionCurrencyMapper bolcountryRegionCurrencyMapper,
-                        IDALCountryRegionCurrencyMapper dalcountryRegionCurrencyMapper)
+                        IDALCountryRegionCurrencyMapper dalcountryRegionCurrencyMapper
+
+                        )
                         : base(logger,
                                countryRegionCurrencyRepository,
                                countryRegionCurrencyModelValidator,
                                bolcountryRegionCurrencyMapper,
-                               dalcountryRegionCurrencyMapper)
+                               dalcountryRegionCurrencyMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4fec83e0e14de620bb08c044373af6b7</Hash>
+    <Hash>de4834201a16354add11585aa85eb9d7</Hash>
 </Codenesium>*/

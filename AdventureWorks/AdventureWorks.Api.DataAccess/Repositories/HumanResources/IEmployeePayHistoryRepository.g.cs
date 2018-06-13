@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<EmployeePayHistory> Get(int businessEntityID);
 
-                Task<List<EmployeePayHistory>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<EmployeePayHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
         }
 }
 
 /*<Codenesium>
-    <Hash>2ac11d052b5ba887eaa822edf431b1d5</Hash>
+    <Hash>54c44ddcaa5598aa9b667ad3dc7f1659</Hash>
 </Codenesium>*/

@@ -22,27 +22,47 @@ namespace NebulaNS.Api.Services
 
                 private IDALMachineMapper dalMachineMapper;
 
+                private IBOLLinkMapper bolLinkMapper;
+
+                private IDALLinkMapper dalLinkMapper;
+                private IBOLMachineRefTeamMapper bolMachineRefTeamMapper;
+
+                private IDALMachineRefTeamMapper dalMachineRefTeamMapper;
+
                 private ILogger logger;
 
                 public AbstractMachineService(
                         ILogger logger,
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
-                        IBOLMachineMapper bolmachineMapper,
-                        IDALMachineMapper dalmachineMapper)
+                        IBOLMachineMapper bolMachineMapper,
+                        IDALMachineMapper dalMachineMapper
+
+                        ,
+                        IBOLLinkMapper bolLinkMapper,
+                        IDALLinkMapper dalLinkMapper
+                        ,
+                        IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
+
+                        )
                         : base()
 
                 {
                         this.machineRepository = machineRepository;
                         this.machineModelValidator = machineModelValidator;
-                        this.bolMachineMapper = bolmachineMapper;
-                        this.dalMachineMapper = dalmachineMapper;
+                        this.bolMachineMapper = bolMachineMapper;
+                        this.dalMachineMapper = dalMachineMapper;
+                        this.bolLinkMapper = bolLinkMapper;
+                        this.dalLinkMapper = dalLinkMapper;
+                        this.bolMachineRefTeamMapper = bolMachineRefTeamMapper;
+                        this.dalMachineRefTeamMapper = dalMachineRefTeamMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachineResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.machineRepository.All(skip, take, orderClause);
+                        var records = await this.machineRepository.All(limit, offset, orderClause);
 
                         return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace NebulaNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiLinkResponseModel>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Link> records = await this.machineRepository.Links(assignedMachineId, limit, offset);
+
+                        return this.bolLinkMapper.MapBOToModel(this.dalLinkMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<MachineRefTeam> records = await this.machineRepository.MachineRefTeams(machineId, limit, offset);
+
+                        return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2a99ec94ddb6fef062199d38078b903b</Hash>
+    <Hash>2ed48271d34e827d7a19b337d36add7b</Hash>
 </Codenesium>*/

@@ -80,9 +80,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiAWBuildVersionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiAWBuildVersionResponseModel>> AWBuildVersionAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiAWBuildVersionResponseModel>> AWBuildVersionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AWBuildVersions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AWBuildVersions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiAWBuildVersionResponseModel>>(httpResponse.Content.ContentToString());
@@ -127,9 +127,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDatabaseLogResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDatabaseLogResponseModel>> DatabaseLogAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDatabaseLogResponseModel>> DatabaseLogAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DatabaseLogs?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DatabaseLogs?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDatabaseLogResponseModel>>(httpResponse.Content.ContentToString());
@@ -174,9 +174,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiErrorLogResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiErrorLogResponseModel>> ErrorLogAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiErrorLogResponseModel>> ErrorLogAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ErrorLogs?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ErrorLogs?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiErrorLogResponseModel>>(httpResponse.Content.ContentToString());
@@ -221,9 +221,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDepartmentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDepartmentResponseModel>> DepartmentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDepartmentResponseModel>> DepartmentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDepartmentResponseModel>>(httpResponse.Content.ContentToString());
@@ -276,9 +276,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiEmployeeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmployeeResponseModel>> EmployeeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiEmployeeResponseModel>> EmployeeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
@@ -355,9 +355,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiEmployeeDepartmentHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmployeeDepartmentHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -418,9 +418,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiEmployeePayHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeePayHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeePayHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmployeePayHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -465,9 +465,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiJobCandidateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiJobCandidateResponseModel>> JobCandidateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiJobCandidateResponseModel>> JobCandidateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiJobCandidateResponseModel>>(httpResponse.Content.ContentToString());
@@ -520,9 +520,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiShiftResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiShiftResponseModel>> ShiftAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiShiftResponseModel>> ShiftAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiShiftResponseModel>>(httpResponse.Content.ContentToString());
@@ -583,9 +583,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiAddressResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiAddressResponseModel>> AddressAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiAddressResponseModel>> AddressAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiAddressResponseModel>>(httpResponse.Content.ContentToString());
@@ -646,9 +646,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiAddressTypeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiAddressTypeResponseModel>> AddressTypeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiAddressTypeResponseModel>> AddressTypeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiAddressTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -701,9 +701,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiBusinessEntityResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityResponseModel>> BusinessEntityAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiBusinessEntityResponseModel>> BusinessEntityAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntities?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntities?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityResponseModel>>(httpResponse.Content.ContentToString());
@@ -748,9 +748,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiBusinessEntityAddressResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityAddressResponseModel>>(httpResponse.Content.ContentToString());
@@ -811,9 +811,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiBusinessEntityContactResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityContactResponseModel>>(httpResponse.Content.ContentToString());
@@ -874,9 +874,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiContactTypeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiContactTypeResponseModel>> ContactTypeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiContactTypeResponseModel>> ContactTypeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiContactTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -929,9 +929,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCountryRegionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCountryRegionResponseModel>> CountryRegionAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCountryRegionResponseModel>> CountryRegionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCountryRegionResponseModel>>(httpResponse.Content.ContentToString());
@@ -984,9 +984,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiEmailAddressResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmailAddressResponseModel>> EmailAddressAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiEmailAddressResponseModel>> EmailAddressAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmailAddressResponseModel>>(httpResponse.Content.ContentToString());
@@ -1039,9 +1039,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPasswordResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPasswordResponseModel>> PasswordAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPasswordResponseModel>> PasswordAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Passwords?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Passwords?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPasswordResponseModel>>(httpResponse.Content.ContentToString());
@@ -1086,9 +1086,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPersonResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonResponseModel>> PersonAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPersonResponseModel>> PersonAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
@@ -1157,9 +1157,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPersonPhoneResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonPhoneResponseModel>> PersonPhoneAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPersonPhoneResponseModel>> PersonPhoneAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonPhoneResponseModel>>(httpResponse.Content.ContentToString());
@@ -1212,9 +1212,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPhoneNumberTypeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> PhoneNumberTypeAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> PhoneNumberTypeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PhoneNumberTypes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PhoneNumberTypes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPhoneNumberTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -1259,9 +1259,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiStateProvinceResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStateProvinceResponseModel>> StateProvinceAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiStateProvinceResponseModel>> StateProvinceAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStateProvinceResponseModel>>(httpResponse.Content.ContentToString());
@@ -1322,9 +1322,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiBillOfMaterialsResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterialsAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterialsAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBillOfMaterialsResponseModel>>(httpResponse.Content.ContentToString());
@@ -1385,9 +1385,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCultureResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCultureResponseModel>> CultureAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCultureResponseModel>> CultureAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCultureResponseModel>>(httpResponse.Content.ContentToString());
@@ -1440,9 +1440,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDocumentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiDocumentResponseModel>> DocumentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiDocumentResponseModel>> DocumentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDocumentResponseModel>>(httpResponse.Content.ContentToString());
@@ -1503,9 +1503,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiIllustrationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiIllustrationResponseModel>> IllustrationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiIllustrationResponseModel>> IllustrationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Illustrations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Illustrations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiIllustrationResponseModel>>(httpResponse.Content.ContentToString());
@@ -1550,9 +1550,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLocationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLocationResponseModel>> LocationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLocationResponseModel>> LocationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLocationResponseModel>>(httpResponse.Content.ContentToString());
@@ -1605,9 +1605,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductResponseModel>> ProductAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductResponseModel>> ProductAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductResponseModel>>(httpResponse.Content.ContentToString());
@@ -1668,9 +1668,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductCategoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductCategoryResponseModel>> ProductCategoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductCategoryResponseModel>> ProductCategoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductCategoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -1723,9 +1723,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductCostHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCostHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCostHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductCostHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -1770,9 +1770,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductDescriptionResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductDescriptionResponseModel>> ProductDescriptionAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductDescriptionResponseModel>> ProductDescriptionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDescriptions?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDescriptions?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductDescriptionResponseModel>>(httpResponse.Content.ContentToString());
@@ -1817,9 +1817,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductDocumentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductDocumentResponseModel>> ProductDocumentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductDocumentResponseModel>> ProductDocumentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductDocumentResponseModel>>(httpResponse.Content.ContentToString());
@@ -1864,9 +1864,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductInventoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductInventoryResponseModel>> ProductInventoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductInventoryResponseModel>> ProductInventoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductInventories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductInventories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductInventoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -1911,9 +1911,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductListPriceHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductListPriceHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductListPriceHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductListPriceHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -1958,9 +1958,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductModelResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductModelResponseModel>> ProductModelAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductModelResponseModel>> ProductModelAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductModelResponseModel>>(httpResponse.Content.ContentToString());
@@ -2029,9 +2029,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductModelIllustrationResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrationAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrationAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelIllustrations?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelIllustrations?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductModelIllustrationResponseModel>>(httpResponse.Content.ContentToString());
@@ -2076,9 +2076,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductModelProductDescriptionCultureResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultureAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultureAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelProductDescriptionCultures?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModelProductDescriptionCultures?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductModelProductDescriptionCultureResponseModel>>(httpResponse.Content.ContentToString());
@@ -2123,9 +2123,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductPhotoResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductPhotoResponseModel>> ProductPhotoAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductPhotoResponseModel>> ProductPhotoAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductPhotoes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductPhotoes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductPhotoResponseModel>>(httpResponse.Content.ContentToString());
@@ -2170,9 +2170,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductProductPhotoResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductProductPhotoes?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductProductPhotoes?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductProductPhotoResponseModel>>(httpResponse.Content.ContentToString());
@@ -2217,9 +2217,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductReviewResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductReviewResponseModel>> ProductReviewAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductReviewResponseModel>> ProductReviewAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductReviewResponseModel>>(httpResponse.Content.ContentToString());
@@ -2272,9 +2272,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductSubcategoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductSubcategoryResponseModel>> ProductSubcategoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductSubcategoryResponseModel>> ProductSubcategoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductSubcategoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -2327,9 +2327,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiScrapReasonResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiScrapReasonResponseModel>> ScrapReasonAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiScrapReasonResponseModel>> ScrapReasonAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiScrapReasonResponseModel>>(httpResponse.Content.ContentToString());
@@ -2382,9 +2382,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTransactionHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryResponseModel>> TransactionHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTransactionHistoryResponseModel>> TransactionHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -2445,9 +2445,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTransactionHistoryArchiveResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> TransactionHistoryArchiveAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> TransactionHistoryArchiveAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryArchiveResponseModel>>(httpResponse.Content.ContentToString());
@@ -2508,9 +2508,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiUnitMeasureResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiUnitMeasureResponseModel>> UnitMeasureAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiUnitMeasureResponseModel>> UnitMeasureAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiUnitMeasureResponseModel>>(httpResponse.Content.ContentToString());
@@ -2563,9 +2563,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiWorkOrderResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkOrderResponseModel>> WorkOrderAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiWorkOrderResponseModel>> WorkOrderAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderResponseModel>>(httpResponse.Content.ContentToString());
@@ -2626,9 +2626,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiWorkOrderRoutingResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutingAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutingAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderRoutingResponseModel>>(httpResponse.Content.ContentToString());
@@ -2681,9 +2681,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiProductVendorResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductVendorResponseModel>> ProductVendorAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiProductVendorResponseModel>> ProductVendorAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductVendorResponseModel>>(httpResponse.Content.ContentToString());
@@ -2744,9 +2744,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPurchaseOrderDetailResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderDetailResponseModel>> PurchaseOrderDetailAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPurchaseOrderDetailResponseModel>> PurchaseOrderDetailAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderDetailResponseModel>>(httpResponse.Content.ContentToString());
@@ -2799,9 +2799,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPurchaseOrderHeaderResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaderAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaderAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
@@ -2862,9 +2862,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiShipMethodResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiShipMethodResponseModel>> ShipMethodAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiShipMethodResponseModel>> ShipMethodAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiShipMethodResponseModel>>(httpResponse.Content.ContentToString());
@@ -2917,9 +2917,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiVendorResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiVendorResponseModel>> VendorAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiVendorResponseModel>> VendorAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiVendorResponseModel>>(httpResponse.Content.ContentToString());
@@ -2972,9 +2972,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCountryRegionCurrencyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCountryRegionCurrencyResponseModel>>(httpResponse.Content.ContentToString());
@@ -3027,9 +3027,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCreditCardResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCreditCardResponseModel>> CreditCardAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCreditCardResponseModel>> CreditCardAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCreditCardResponseModel>>(httpResponse.Content.ContentToString());
@@ -3082,9 +3082,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCurrencyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCurrencyResponseModel>> CurrencyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCurrencyResponseModel>> CurrencyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCurrencyResponseModel>>(httpResponse.Content.ContentToString());
@@ -3137,9 +3137,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCurrencyRateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCurrencyRateResponseModel>> CurrencyRateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCurrencyRateResponseModel>> CurrencyRateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCurrencyRateResponseModel>>(httpResponse.Content.ContentToString());
@@ -3192,9 +3192,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiCustomerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCustomerResponseModel>> CustomerAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiCustomerResponseModel>> CustomerAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCustomerResponseModel>>(httpResponse.Content.ContentToString());
@@ -3255,9 +3255,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiPersonCreditCardResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCardAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCardAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonCreditCards?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonCreditCards?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonCreditCardResponseModel>>(httpResponse.Content.ContentToString());
@@ -3302,9 +3302,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesOrderDetailResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetailAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetailAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderDetailResponseModel>>(httpResponse.Content.ContentToString());
@@ -3357,9 +3357,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesOrderHeaderResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaderAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaderAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
@@ -3428,9 +3428,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesOrderHeaderSalesReasonResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasonAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasonAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaderSalesReasons?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaderSalesReasons?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderSalesReasonResponseModel>>(httpResponse.Content.ContentToString());
@@ -3475,9 +3475,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesPersonResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesPersonResponseModel>> SalesPersonAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesPersonResponseModel>> SalesPersonAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersons?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersons?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesPersonResponseModel>>(httpResponse.Content.ContentToString());
@@ -3522,9 +3522,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesPersonQuotaHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersonQuotaHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesPersonQuotaHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesPersonQuotaHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -3569,9 +3569,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesReasonResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesReasonResponseModel>> SalesReasonAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesReasonResponseModel>> SalesReasonAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesReasons?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesReasons?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesReasonResponseModel>>(httpResponse.Content.ContentToString());
@@ -3616,9 +3616,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesTaxRateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesTaxRateResponseModel>> SalesTaxRateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesTaxRateResponseModel>> SalesTaxRateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesTaxRateResponseModel>>(httpResponse.Content.ContentToString());
@@ -3671,9 +3671,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesTerritoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesTerritoryResponseModel>> SalesTerritoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesTerritoryResponseModel>> SalesTerritoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesTerritoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -3726,9 +3726,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSalesTerritoryHistoryResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoryAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoryAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritoryHistories?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritoryHistories?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesTerritoryHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -3773,9 +3773,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiShoppingCartItemResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiShoppingCartItemResponseModel>> ShoppingCartItemAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiShoppingCartItemResponseModel>> ShoppingCartItemAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiShoppingCartItemResponseModel>>(httpResponse.Content.ContentToString());
@@ -3828,9 +3828,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSpecialOfferResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpecialOfferResponseModel>> SpecialOfferAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSpecialOfferResponseModel>> SpecialOfferAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOffers?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOffers?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpecialOfferResponseModel>>(httpResponse.Content.ContentToString());
@@ -3875,9 +3875,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSpecialOfferProductResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpecialOfferProductResponseModel>> SpecialOfferProductAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSpecialOfferProductResponseModel>> SpecialOfferProductAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpecialOfferProductResponseModel>>(httpResponse.Content.ContentToString());
@@ -3930,9 +3930,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiStoreResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStoreResponseModel>> StoreAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiStoreResponseModel>> StoreAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStoreResponseModel>>(httpResponse.Content.ContentToString());
@@ -3965,5 +3965,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>136fe40816f1b5bf77bd28d93556303f</Hash>
+    <Hash>b3f366058a2afd555e216751acb6168f</Hash>
 </Codenesium>*/

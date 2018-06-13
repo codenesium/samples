@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Contracts
         public abstract class AbstractApiServerTaskResponseModel: AbstractApiResponseModel
         {
                 public virtual void SetProperties(
-                        Nullable<DateTime> completedTime,
+                        Nullable<DateTimeOffset> completedTime,
                         string concurrencyTag,
                         string description,
                         int durationSeconds,
@@ -22,9 +22,9 @@ namespace OctopusDeployNS.Api.Contracts
                         string jSON,
                         string name,
                         string projectId,
-                        DateTime queueTime,
+                        DateTimeOffset queueTime,
                         string serverNodeId,
-                        Nullable<DateTime> startTime,
+                        Nullable<DateTimeOffset> startTime,
                         string state,
                         string tenantId)
                 {
@@ -47,7 +47,7 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                public Nullable<DateTime> CompletedTime { get; private set; }
+                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
                 public string ConcurrencyTag { get; private set; }
 
@@ -71,11 +71,11 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ProjectId { get; private set; }
 
-                public DateTime QueueTime { get; private set; }
+                public DateTimeOffset QueueTime { get; private set; }
 
                 public string ServerNodeId { get; private set; }
 
-                public Nullable<DateTime> StartTime { get; private set; }
+                public Nullable<DateTimeOffset> StartTime { get; private set; }
 
                 public string State { get; private set; }
 
@@ -241,5 +241,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ad75411519252816f2b7fe8279415995</Hash>
+    <Hash>84dfca76a1b41279cc2953653230d12c</Hash>
 </Codenesium>*/

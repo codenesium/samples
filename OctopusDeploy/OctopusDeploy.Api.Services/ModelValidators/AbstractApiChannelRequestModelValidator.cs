@@ -28,7 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public IChannelRepository ChannelRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -63,7 +62,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Channel record = await this.ChannelRepository.GetNameProjectId(model.Name, model.ProjectId);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -76,5 +75,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59ed847c2556da88d2e33bab083e3496</Hash>
+    <Hash>667a66a4c3f1481af394fd14b83a33a2</Hash>
 </Codenesium>*/

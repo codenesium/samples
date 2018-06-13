@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " TransactionHistory")]
+        [Trait("Integration", "TransactionHistory")]
         public class TransactionHistoryTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d1e68601983b5fb10cf8d478c4be688b</Hash>
+    <Hash>7ad2a63eca2e2676cf6f8aa59fb23297</Hash>
 </Codenesium>*/

@@ -44,7 +44,7 @@ namespace ESPIOTNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDeviceActionResponseModel> response = await this.DeviceActionService.All(query.Offset, query.Limit);
+                        List<ApiDeviceActionResponseModel> response = await this.DeviceActionService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -162,12 +162,12 @@ namespace ESPIOTNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDeviceId/{deviceId}")]
+                [Route("byDeviceId/{deviceId}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDeviceId(int deviceId)
+                public async virtual Task<IActionResult> ByDeviceId(int deviceId)
                 {
-                        List<ApiDeviceActionResponseModel> response = await this.DeviceActionService.GetDeviceId(deviceId);
+                        List<ApiDeviceActionResponseModel> response = await this.DeviceActionService.ByDeviceId(deviceId);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3781f23c55ab4203ca4c5cd5cc24f001</Hash>
+    <Hash>1668bd2966a63e4028de899dd6992626</Hash>
 </Codenesium>*/

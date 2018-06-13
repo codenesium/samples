@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Contracts
                 }
 
                 public void SetProperties(
-                        Nullable<DateTime> completedTime,
+                        Nullable<DateTimeOffset> completedTime,
                         string concurrencyTag,
                         string description,
                         int durationSeconds,
@@ -24,9 +24,9 @@ namespace OctopusDeployNS.Api.Contracts
                         string jSON,
                         string name,
                         string projectId,
-                        DateTime queueTime,
+                        DateTimeOffset queueTime,
                         string serverNodeId,
-                        Nullable<DateTime> startTime,
+                        Nullable<DateTimeOffset> startTime,
                         string state,
                         string tenantId)
                 {
@@ -48,9 +48,9 @@ namespace OctopusDeployNS.Api.Contracts
                         this.TenantId = tenantId;
                 }
 
-                private Nullable<DateTime> completedTime;
+                private Nullable<DateTimeOffset> completedTime;
 
-                public Nullable<DateTime> CompletedTime
+                public Nullable<DateTimeOffset> CompletedTime
                 {
                         get
                         {
@@ -219,10 +219,10 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private DateTime queueTime;
+                private DateTimeOffset queueTime;
 
                 [Required]
-                public DateTime QueueTime
+                public DateTimeOffset QueueTime
                 {
                         get
                         {
@@ -250,9 +250,9 @@ namespace OctopusDeployNS.Api.Contracts
                         }
                 }
 
-                private Nullable<DateTime> startTime;
+                private Nullable<DateTimeOffset> startTime;
 
-                public Nullable<DateTime> StartTime
+                public Nullable<DateTimeOffset> StartTime
                 {
                         get
                         {
@@ -299,5 +299,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a98d103154344f697bc9e6c0de45c5cd</Hash>
+    <Hash>bfdd5e586ac659cd73a259bd9f5910b6</Hash>
 </Codenesium>*/

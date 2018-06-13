@@ -9,7 +9,7 @@ using FileServiceNS.Api.Client;
 
 namespace FileServiceNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Bucket")]
+        [Trait("Integration", "Bucket")]
         public class BucketTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>438eebc1965aa7bfca672d7b0ec7cbc2</Hash>
+    <Hash>da81e567c7562f5b8e58ec6b7d8db455</Hash>
 </Codenesium>*/

@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IProductReviewRepository productReviewRepository,
                         IApiProductReviewRequestModelValidator productReviewModelValidator,
-                        IBOLProductReviewMapper bolproductReviewMapper,
-                        IDALProductReviewMapper dalproductReviewMapper)
+                        IBOLProductReviewMapper bolProductReviewMapper,
+                        IDALProductReviewMapper dalProductReviewMapper
+
+                        )
                         : base()
 
                 {
                         this.productReviewRepository = productReviewRepository;
                         this.productReviewModelValidator = productReviewModelValidator;
-                        this.bolProductReviewMapper = bolproductReviewMapper;
-                        this.dalProductReviewMapper = dalproductReviewMapper;
+                        this.bolProductReviewMapper = bolProductReviewMapper;
+                        this.dalProductReviewMapper = dalProductReviewMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductReviewResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductReviewResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productReviewRepository.All(skip, take, orderClause);
+                        var records = await this.productReviewRepository.All(limit, offset, orderClause);
 
                         return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ed7a7374f9b56463be897ae35c27243</Hash>
+    <Hash>90c4d67dee5d811bc8cb19a9f96357e1</Hash>
 </Codenesium>*/

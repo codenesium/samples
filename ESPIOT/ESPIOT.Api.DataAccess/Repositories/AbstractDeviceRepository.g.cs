@@ -25,9 +25,9 @@ namespace ESPIOTNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Device>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Device>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Device> Get(int id)
@@ -75,38 +75,38 @@ namespace ESPIOTNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Device> GetPublicId(Guid publicId)
+                public async Task<Device> ByPublicId(Guid publicId)
                 {
                         var records = await this.SearchLinqEF(x => x.PublicId == publicId);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Device>> Where(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Device>> Where(Expression<Func<Device, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Device> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Device> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Device>> SearchLinqEF(Expression<Func<Device, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Device>> SearchLinqEF(Expression<Func<Device, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Device.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Device>();
+                        return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Device>();
                 }
 
-                private async Task<List<Device>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Device>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Device.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Device>();
+                        return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Device>();
                 }
 
                 private async Task<Device> GetById(int id)
@@ -115,9 +115,14 @@ namespace ESPIOTNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<DeviceAction>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<DeviceAction>().Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7af65374d318746a2a5e5235d637b119</Hash>
+    <Hash>6bb34772a09b334f8bf85b3f6ff9f808</Hash>
 </Codenesium>*/

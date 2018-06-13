@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiOrganizationRequestModelValidator: AbstractValidator<ApiOrganizationRequestModel>
         {
@@ -35,5 +34,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59e1d21f51310ae5feaea67bcf6ac93f</Hash>
+    <Hash>428321d99f4da3bad338bc1922d06660</Hash>
 </Codenesium>*/

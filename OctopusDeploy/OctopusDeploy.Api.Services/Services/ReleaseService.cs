@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IReleaseRepository releaseRepository,
                         IApiReleaseRequestModelValidator releaseModelValidator,
                         IBOLReleaseMapper bolreleaseMapper,
-                        IDALReleaseMapper dalreleaseMapper)
+                        IDALReleaseMapper dalreleaseMapper
+
+                        )
                         : base(logger,
                                releaseRepository,
                                releaseModelValidator,
                                bolreleaseMapper,
-                               dalreleaseMapper)
+                               dalreleaseMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccba7ddb6cd3825ea9f9e2ff90fdc88a</Hash>
+    <Hash>81da1589c049b4b9f46acb08ff74c416</Hash>
 </Codenesium>*/

@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALContactTypeMapper dalContactTypeMapper;
 
+                private IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper;
+
+                private IDALBusinessEntityContactMapper dalBusinessEntityContactMapper;
+
                 private ILogger logger;
 
                 public AbstractContactTypeService(
                         ILogger logger,
                         IContactTypeRepository contactTypeRepository,
                         IApiContactTypeRequestModelValidator contactTypeModelValidator,
-                        IBOLContactTypeMapper bolcontactTypeMapper,
-                        IDALContactTypeMapper dalcontactTypeMapper)
+                        IBOLContactTypeMapper bolContactTypeMapper,
+                        IDALContactTypeMapper dalContactTypeMapper
+
+                        ,
+                        IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
+                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
+
+                        )
                         : base()
 
                 {
                         this.contactTypeRepository = contactTypeRepository;
                         this.contactTypeModelValidator = contactTypeModelValidator;
-                        this.bolContactTypeMapper = bolcontactTypeMapper;
-                        this.dalContactTypeMapper = dalcontactTypeMapper;
+                        this.bolContactTypeMapper = bolContactTypeMapper;
+                        this.dalContactTypeMapper = dalContactTypeMapper;
+                        this.bolBusinessEntityContactMapper = bolBusinessEntityContactMapper;
+                        this.dalBusinessEntityContactMapper = dalBusinessEntityContactMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiContactTypeResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiContactTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.contactTypeRepository.All(skip, take, orderClause);
+                        var records = await this.contactTypeRepository.All(limit, offset, orderClause);
 
                         return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(records));
                 }
@@ -103,9 +115,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolContactTypeMapper.MapBOToModel(this.dalContactTypeMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int contactTypeID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<BusinessEntityContact> records = await this.contactTypeRepository.BusinessEntityContacts(contactTypeID, limit, offset);
+
+                        return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>eb128fe25298a87812c6b5c98f7e9fc1</Hash>
+    <Hash>4c923342527faa6d61d8e3eb5354fc4b</Hash>
 </Codenesium>*/

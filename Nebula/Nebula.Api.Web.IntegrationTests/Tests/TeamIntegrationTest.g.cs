@@ -9,7 +9,7 @@ using NebulaNS.Api.Client;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Team")]
+        [Trait("Integration", "Team")]
         public class TeamTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>94fc4762fafae2bae931aede8d5ee7cb</Hash>
+    <Hash>17a2c013d4e2039f231dd833b3d2efcf</Hash>
 </Codenesium>*/

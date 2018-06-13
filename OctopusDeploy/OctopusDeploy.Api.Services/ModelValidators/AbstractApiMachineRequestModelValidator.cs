@@ -44,7 +44,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void IsDisabledRules()
                 {
-                        this.RuleFor(x => x.IsDisabled).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -90,7 +89,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Machine record = await this.MachineRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -103,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d77a27d7df3ae48aeb8fdda02614f5c3</Hash>
+    <Hash>17b6fae17f4c7688dfa3cb128326a7dc</Hash>
 </Codenesium>*/

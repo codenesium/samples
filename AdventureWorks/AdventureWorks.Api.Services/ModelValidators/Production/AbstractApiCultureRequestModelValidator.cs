@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiCultureRequestModelValidator: AbstractValidator<ApiCultureRequestModel>
         {
@@ -29,7 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public ICultureRepository CultureRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NameRules()
@@ -43,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Culture record = await this.CultureRepository.GetName(model.Name);
 
-                        if (record == null || record.CultureID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.CultureID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12b1f20b868255b010da773639866556</Hash>
+    <Hash>775d528e59763203e0ebd8e4a0e3ac85</Hash>
 </Codenesium>*/

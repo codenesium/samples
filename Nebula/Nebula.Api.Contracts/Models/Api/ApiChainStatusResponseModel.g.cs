@@ -7,48 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiChainStatusResponseModel: AbstractApiResponseModel
+        public partial class ApiChainStatusResponseModel: AbstractApiChainStatusResponseModel
         {
-                public ApiChainStatusResponseModel() : base()
+                public ApiChainStatusResponseModel()
+                        : base()
                 {
-                }
-
-                public void SetProperties(
-                        int id,
-                        string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
-
-                [JsonIgnore]
-                public bool ShouldSerializeIdValue { get; set; } = true;
-
-                public bool ShouldSerializeId()
-                {
-                        return this.ShouldSerializeIdValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeNameValue { get; set; } = true;
-
-                public bool ShouldSerializeName()
-                {
-                        return this.ShouldSerializeNameValue;
-                }
-
-                public void DisableAllFields()
-                {
-                        this.ShouldSerializeIdValue = false;
-                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>da313005271194405edb7abdcccc4f93</Hash>
+    <Hash>630f912a117d6d00f88cc19c19c786d5</Hash>
 </Codenesium>*/

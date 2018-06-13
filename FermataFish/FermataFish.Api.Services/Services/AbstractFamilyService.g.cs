@@ -22,27 +22,47 @@ namespace FermataFishNS.Api.Services
 
                 private IDALFamilyMapper dalFamilyMapper;
 
+                private IBOLStudentMapper bolStudentMapper;
+
+                private IDALStudentMapper dalStudentMapper;
+                private IBOLStudentXFamilyMapper bolStudentXFamilyMapper;
+
+                private IDALStudentXFamilyMapper dalStudentXFamilyMapper;
+
                 private ILogger logger;
 
                 public AbstractFamilyService(
                         ILogger logger,
                         IFamilyRepository familyRepository,
                         IApiFamilyRequestModelValidator familyModelValidator,
-                        IBOLFamilyMapper bolfamilyMapper,
-                        IDALFamilyMapper dalfamilyMapper)
+                        IBOLFamilyMapper bolFamilyMapper,
+                        IDALFamilyMapper dalFamilyMapper
+
+                        ,
+                        IBOLStudentMapper bolStudentMapper,
+                        IDALStudentMapper dalStudentMapper
+                        ,
+                        IBOLStudentXFamilyMapper bolStudentXFamilyMapper,
+                        IDALStudentXFamilyMapper dalStudentXFamilyMapper
+
+                        )
                         : base()
 
                 {
                         this.familyRepository = familyRepository;
                         this.familyModelValidator = familyModelValidator;
-                        this.bolFamilyMapper = bolfamilyMapper;
-                        this.dalFamilyMapper = dalfamilyMapper;
+                        this.bolFamilyMapper = bolFamilyMapper;
+                        this.dalFamilyMapper = dalFamilyMapper;
+                        this.bolStudentMapper = bolStudentMapper;
+                        this.dalStudentMapper = dalStudentMapper;
+                        this.bolStudentXFamilyMapper = bolStudentXFamilyMapper;
+                        this.dalStudentXFamilyMapper = dalStudentXFamilyMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiFamilyResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiFamilyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.familyRepository.All(skip, take, orderClause);
+                        var records = await this.familyRepository.All(limit, offset, orderClause);
 
                         return this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace FermataFishNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiStudentResponseModel>> Students(int familyId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Student> records = await this.familyRepository.Students(familyId, limit, offset);
+
+                        return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilies(int familyId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<StudentXFamily> records = await this.familyRepository.StudentXFamilies(familyId, limit, offset);
+
+                        return this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>71c268384ad76fae4e5b5005494ac92e</Hash>
+    <Hash>63c14909cc5927732b23f0c9e93a5aab</Hash>
 </Codenesium>*/

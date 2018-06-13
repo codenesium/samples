@@ -10,7 +10,7 @@ namespace OctopusDeployNS.Api.Services
                 }
 
                 public void SetProperties(string id,
-                                          DateTime assembled,
+                                          DateTimeOffset assembled,
                                           string channelId,
                                           string jSON,
                                           string projectDeploymentProcessSnapshotId,
@@ -28,7 +28,7 @@ namespace OctopusDeployNS.Api.Services
                         this.Version = version;
                 }
 
-                public DateTime Assembled { get; private set; }
+                public DateTimeOffset Assembled { get; private set; }
 
                 public string ChannelId { get; private set; }
 
@@ -47,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5dfd64aa06de925523c6a90e6b1d4f09</Hash>
+    <Hash>0242f5ecded68f47beb054b9bc80224e</Hash>
 </Codenesium>*/

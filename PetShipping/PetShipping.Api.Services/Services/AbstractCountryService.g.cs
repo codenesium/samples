@@ -22,27 +22,47 @@ namespace PetShippingNS.Api.Services
 
                 private IDALCountryMapper dalCountryMapper;
 
+                private IBOLCountryRequirementMapper bolCountryRequirementMapper;
+
+                private IDALCountryRequirementMapper dalCountryRequirementMapper;
+                private IBOLDestinationMapper bolDestinationMapper;
+
+                private IDALDestinationMapper dalDestinationMapper;
+
                 private ILogger logger;
 
                 public AbstractCountryService(
                         ILogger logger,
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
-                        IBOLCountryMapper bolcountryMapper,
-                        IDALCountryMapper dalcountryMapper)
+                        IBOLCountryMapper bolCountryMapper,
+                        IDALCountryMapper dalCountryMapper
+
+                        ,
+                        IBOLCountryRequirementMapper bolCountryRequirementMapper,
+                        IDALCountryRequirementMapper dalCountryRequirementMapper
+                        ,
+                        IBOLDestinationMapper bolDestinationMapper,
+                        IDALDestinationMapper dalDestinationMapper
+
+                        )
                         : base()
 
                 {
                         this.countryRepository = countryRepository;
                         this.countryModelValidator = countryModelValidator;
-                        this.bolCountryMapper = bolcountryMapper;
-                        this.dalCountryMapper = dalcountryMapper;
+                        this.bolCountryMapper = bolCountryMapper;
+                        this.dalCountryMapper = dalCountryMapper;
+                        this.bolCountryRequirementMapper = bolCountryRequirementMapper;
+                        this.dalCountryRequirementMapper = dalCountryRequirementMapper;
+                        this.bolDestinationMapper = bolDestinationMapper;
+                        this.dalDestinationMapper = dalDestinationMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCountryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCountryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.countryRepository.All(skip, take, orderClause);
+                        var records = await this.countryRepository.All(limit, offset, orderClause);
 
                         return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(records));
                 }
@@ -96,9 +116,22 @@ namespace PetShippingNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiCountryRequirementResponseModel>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<CountryRequirement> records = await this.countryRepository.CountryRequirements(countryId, limit, offset);
+
+                        return this.bolCountryRequirementMapper.MapBOToModel(this.dalCountryRequirementMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiDestinationResponseModel>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Destination> records = await this.countryRepository.Destinations(countryId, limit, offset);
+
+                        return this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4e9e34a1839916946436590f563727c1</Hash>
+    <Hash>9ffd6cd2d5d59c5fa3052a79bf966333</Hash>
 </Codenesium>*/

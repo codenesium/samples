@@ -15,10 +15,14 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<Client> Get(int id);
 
-                Task<List<Client>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<Client>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+
+                Task<List<ClientCommunication>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0);
+                Task<List<Pet>> Pets(int clientId, int limit = int.MaxValue, int offset = 0);
+                Task<List<Sale>> Sales(int clientId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>5356b20dd4a444f4dddddbaf6f0cc6cc</Hash>
+    <Hash>c90a0f809e7e8fd8f11e0912477ec294</Hash>
 </Codenesium>*/

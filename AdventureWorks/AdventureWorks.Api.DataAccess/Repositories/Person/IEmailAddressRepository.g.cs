@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<EmailAddress> Get(int businessEntityID);
 
-                Task<List<EmailAddress>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<EmailAddress>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
 
                 Task<List<EmailAddress>> GetEmailAddress(string emailAddress1);
         }
 }
 
 /*<Codenesium>
-    <Hash>698a0ca95b0d3dccad7a4c702e1104cb</Hash>
+    <Hash>ab69651e3f7f2ad07d502094548750dc</Hash>
 </Codenesium>*/

@@ -17,17 +17,26 @@ namespace FermataFishNS.Api.Services
                         IStateRepository stateRepository,
                         IApiStateRequestModelValidator stateModelValidator,
                         IBOLStateMapper bolstateMapper,
-                        IDALStateMapper dalstateMapper)
+                        IDALStateMapper dalstateMapper
+                        ,
+                        IBOLStudioMapper bolStudioMapper,
+                        IDALStudioMapper dalStudioMapper
+
+                        )
                         : base(logger,
                                stateRepository,
                                stateModelValidator,
                                bolstateMapper,
-                               dalstateMapper)
+                               dalstateMapper
+                               ,
+                               bolStudioMapper,
+                               dalStudioMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>02837e84498e3fd1b4dc728b6e97891d</Hash>
+    <Hash>5c792d73f4e69b2403072d5770a2423e</Hash>
 </Codenesium>*/

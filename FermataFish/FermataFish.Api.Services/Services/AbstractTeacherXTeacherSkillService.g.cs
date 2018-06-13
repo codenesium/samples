@@ -28,21 +28,23 @@ namespace FermataFishNS.Api.Services
                         ILogger logger,
                         ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
                         IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
-                        IBOLTeacherXTeacherSkillMapper bolteacherXTeacherSkillMapper,
-                        IDALTeacherXTeacherSkillMapper dalteacherXTeacherSkillMapper)
+                        IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
+                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
+
+                        )
                         : base()
 
                 {
                         this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
                         this.teacherXTeacherSkillModelValidator = teacherXTeacherSkillModelValidator;
-                        this.bolTeacherXTeacherSkillMapper = bolteacherXTeacherSkillMapper;
-                        this.dalTeacherXTeacherSkillMapper = dalteacherXTeacherSkillMapper;
+                        this.bolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
+                        this.dalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.teacherXTeacherSkillRepository.All(skip, take, orderClause);
+                        var records = await this.teacherXTeacherSkillRepository.All(limit, offset, orderClause);
 
                         return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23903415ee8bb4d76819d999c4cd89a6</Hash>
+    <Hash>4b95ae47276822d99e243b5364ba9421</Hash>
 </Codenesium>*/

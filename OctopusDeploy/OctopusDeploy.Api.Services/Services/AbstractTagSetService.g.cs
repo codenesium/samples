@@ -28,21 +28,23 @@ namespace OctopusDeployNS.Api.Services
                         ILogger logger,
                         ITagSetRepository tagSetRepository,
                         IApiTagSetRequestModelValidator tagSetModelValidator,
-                        IBOLTagSetMapper boltagSetMapper,
-                        IDALTagSetMapper daltagSetMapper)
+                        IBOLTagSetMapper bolTagSetMapper,
+                        IDALTagSetMapper dalTagSetMapper
+
+                        )
                         : base()
 
                 {
                         this.tagSetRepository = tagSetRepository;
                         this.tagSetModelValidator = tagSetModelValidator;
-                        this.bolTagSetMapper = boltagSetMapper;
-                        this.dalTagSetMapper = daltagSetMapper;
+                        this.bolTagSetMapper = bolTagSetMapper;
+                        this.dalTagSetMapper = dalTagSetMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTagSetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTagSetResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.tagSetRepository.All(skip, take, orderClause);
+                        var records = await this.tagSetRepository.All(limit, offset, orderClause);
 
                         return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(records));
                 }
@@ -113,5 +115,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7c6e1be9dd0dea50111155f0c94833f6</Hash>
+    <Hash>a6291222958de1a640fc23e819725e28</Hash>
 </Codenesium>*/

@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IUserRepository userRepository,
                         IApiUserRequestModelValidator userModelValidator,
                         IBOLUserMapper boluserMapper,
-                        IDALUserMapper daluserMapper)
+                        IDALUserMapper daluserMapper
+
+                        )
                         : base(logger,
                                userRepository,
                                userModelValidator,
                                boluserMapper,
-                               daluserMapper)
+                               daluserMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>407d103fa2400ec9adb0a91e6cf38cde</Hash>
+    <Hash>02f3f92bf5cbd80b75bc91b7cbd9c16f</Hash>
 </Codenesium>*/

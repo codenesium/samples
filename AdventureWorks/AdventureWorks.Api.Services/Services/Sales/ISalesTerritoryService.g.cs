@@ -19,12 +19,17 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiSalesTerritoryResponseModel> Get(int territoryID);
 
-                Task<List<ApiSalesTerritoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiSalesTerritoryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiSalesTerritoryResponseModel> GetName(string name);
+
+                Task<List<ApiCustomerResponseModel>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiSalesPersonResponseModel>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>3101feb0eeb9711f109cd7b90af7d172</Hash>
+    <Hash>f35d1db73591951d25f0bb25baa0d67c</Hash>
 </Codenesium>*/

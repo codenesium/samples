@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IServerTaskRepository serverTaskRepository,
                         IApiServerTaskRequestModelValidator serverTaskModelValidator,
                         IBOLServerTaskMapper bolserverTaskMapper,
-                        IDALServerTaskMapper dalserverTaskMapper)
+                        IDALServerTaskMapper dalserverTaskMapper
+
+                        )
                         : base(logger,
                                serverTaskRepository,
                                serverTaskModelValidator,
                                bolserverTaskMapper,
-                               dalserverTaskMapper)
+                               dalserverTaskMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2eeb5794daf7144da95ca82c40924009</Hash>
+    <Hash>dae1576d6965234d5dfe298f4c205d3e</Hash>
 </Codenesium>*/

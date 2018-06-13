@@ -9,7 +9,7 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " Machine")]
+        [Trait("Integration", "Machine")]
         public class MachineTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>9d7960458dae25756f0c8d72c7f1bf5d</Hash>
+    <Hash>ba448c5888c83f08be8bee0d12d0c10c</Hash>
 </Codenesium>*/

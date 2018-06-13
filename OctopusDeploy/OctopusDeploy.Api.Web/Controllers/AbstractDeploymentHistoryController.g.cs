@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.All(query.Offset, query.Limit);
+                        List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -165,7 +165,7 @@ namespace OctopusDeployNS.Api.Web
                 [Route("getCreated/{created}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDeploymentHistoryResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCreated(DateTime created)
+                public async virtual Task<IActionResult> GetCreated(DateTimeOffset created)
                 {
                         List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.GetCreated(created);
 
@@ -175,5 +175,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5c19e4cffd9bd14df2b451dc4732f700</Hash>
+    <Hash>c14022ff238667c246a470807aaf4906</Hash>
 </Codenesium>*/

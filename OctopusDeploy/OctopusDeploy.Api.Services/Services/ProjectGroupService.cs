@@ -17,17 +17,20 @@ namespace OctopusDeployNS.Api.Services
                         IProjectGroupRepository projectGroupRepository,
                         IApiProjectGroupRequestModelValidator projectGroupModelValidator,
                         IBOLProjectGroupMapper bolprojectGroupMapper,
-                        IDALProjectGroupMapper dalprojectGroupMapper)
+                        IDALProjectGroupMapper dalprojectGroupMapper
+
+                        )
                         : base(logger,
                                projectGroupRepository,
                                projectGroupModelValidator,
                                bolprojectGroupMapper,
-                               dalprojectGroupMapper)
+                               dalprojectGroupMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8010fc4bcea9906e42420a1baee8e2a9</Hash>
+    <Hash>bbce90158d3502a4f0f3b5618e4e6e47</Hash>
 </Codenesium>*/

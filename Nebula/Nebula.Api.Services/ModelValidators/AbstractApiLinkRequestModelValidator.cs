@@ -8,7 +8,6 @@ using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
-
 {
         public abstract class AbstractApiLinkRequestModelValidator: AbstractValidator<ApiLinkRequestModel>
         {
@@ -39,7 +38,6 @@ namespace NebulaNS.Api.Services
 
                 public virtual void ChainIdRules()
                 {
-                        this.RuleFor(x => x.ChainId).NotNull();
                         this.RuleFor(x => x.ChainId).MustAsync(this.BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
                 }
 
@@ -58,12 +56,10 @@ namespace NebulaNS.Api.Services
 
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x.ExternalId).NotNull();
                 }
 
                 public virtual void LinkStatusIdRules()
                 {
-                        this.RuleFor(x => x.LinkStatusId).NotNull();
                         this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
                 }
 
@@ -75,7 +71,6 @@ namespace NebulaNS.Api.Services
 
                 public virtual void OrderRules()
                 {
-                        this.RuleFor(x => x.Order).NotNull();
                 }
 
                 public virtual void ResponseRules()
@@ -90,7 +85,6 @@ namespace NebulaNS.Api.Services
 
                 public virtual void TimeoutInSecondsRules()
                 {
-                        this.RuleFor(x => x.TimeoutInSeconds).NotNull();
                 }
 
                 private async Task<bool> BeValidMachine(Nullable<int> id,  CancellationToken cancellationToken)
@@ -117,5 +111,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53990a1e7be6e0bfcfc0054432fa7910</Hash>
+    <Hash>3714d064ce79edc614eac5a3089768b8</Hash>
 </Codenesium>*/

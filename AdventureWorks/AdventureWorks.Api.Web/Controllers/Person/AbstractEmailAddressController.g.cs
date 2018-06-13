@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.All(query.Offset, query.Limit);
+                        List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>62eef34815c1a87fab3b648ba34f76bd</Hash>
+    <Hash>0fa21f3d8f160facd034468d4f2e4ca4</Hash>
 </Codenesium>*/

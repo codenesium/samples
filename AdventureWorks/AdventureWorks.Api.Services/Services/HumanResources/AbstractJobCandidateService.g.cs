@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IJobCandidateRepository jobCandidateRepository,
                         IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
-                        IBOLJobCandidateMapper boljobCandidateMapper,
-                        IDALJobCandidateMapper daljobCandidateMapper)
+                        IBOLJobCandidateMapper bolJobCandidateMapper,
+                        IDALJobCandidateMapper dalJobCandidateMapper
+
+                        )
                         : base()
 
                 {
                         this.jobCandidateRepository = jobCandidateRepository;
                         this.jobCandidateModelValidator = jobCandidateModelValidator;
-                        this.bolJobCandidateMapper = boljobCandidateMapper;
-                        this.dalJobCandidateMapper = daljobCandidateMapper;
+                        this.bolJobCandidateMapper = bolJobCandidateMapper;
+                        this.dalJobCandidateMapper = dalJobCandidateMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiJobCandidateResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiJobCandidateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.jobCandidateRepository.All(skip, take, orderClause);
+                        var records = await this.jobCandidateRepository.All(limit, offset, orderClause);
 
                         return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
                 }
@@ -107,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13d4499e4ec8c2b51cd52c1e03d1bf56</Hash>
+    <Hash>cb998408df9a5a1391b2330083fc9df9</Hash>
 </Codenesium>*/

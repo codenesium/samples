@@ -17,17 +17,20 @@ namespace PetShippingNS.Api.Services
                         IAirlineRepository airlineRepository,
                         IApiAirlineRequestModelValidator airlineModelValidator,
                         IBOLAirlineMapper bolairlineMapper,
-                        IDALAirlineMapper dalairlineMapper)
+                        IDALAirlineMapper dalairlineMapper
+
+                        )
                         : base(logger,
                                airlineRepository,
                                airlineModelValidator,
                                bolairlineMapper,
-                               dalairlineMapper)
+                               dalairlineMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>83e10fc3e1f3a3d678ece01f57f2c170</Hash>
+    <Hash>9a0291fd595ce8a32ba0c77164001e27</Hash>
 </Codenesium>*/

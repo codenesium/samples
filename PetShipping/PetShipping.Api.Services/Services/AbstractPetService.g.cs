@@ -22,27 +22,39 @@ namespace PetShippingNS.Api.Services
 
                 private IDALPetMapper dalPetMapper;
 
+                private IBOLSaleMapper bolSaleMapper;
+
+                private IDALSaleMapper dalSaleMapper;
+
                 private ILogger logger;
 
                 public AbstractPetService(
                         ILogger logger,
                         IPetRepository petRepository,
                         IApiPetRequestModelValidator petModelValidator,
-                        IBOLPetMapper bolpetMapper,
-                        IDALPetMapper dalpetMapper)
+                        IBOLPetMapper bolPetMapper,
+                        IDALPetMapper dalPetMapper
+
+                        ,
+                        IBOLSaleMapper bolSaleMapper,
+                        IDALSaleMapper dalSaleMapper
+
+                        )
                         : base()
 
                 {
                         this.petRepository = petRepository;
                         this.petModelValidator = petModelValidator;
-                        this.bolPetMapper = bolpetMapper;
-                        this.dalPetMapper = dalpetMapper;
+                        this.bolPetMapper = bolPetMapper;
+                        this.dalPetMapper = dalPetMapper;
+                        this.bolSaleMapper = bolSaleMapper;
+                        this.dalSaleMapper = dalSaleMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPetResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPetResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.petRepository.All(skip, take, orderClause);
+                        var records = await this.petRepository.All(limit, offset, orderClause);
 
                         return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace PetShippingNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiSaleResponseModel>> Sales(int petId, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Sale> records = await this.petRepository.Sales(petId, limit, offset);
+
+                        return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f5e42b014848a66817811c9b3d24e927</Hash>
+    <Hash>822340117ed1c4cf82ea1de76a7bae92</Hash>
 </Codenesium>*/

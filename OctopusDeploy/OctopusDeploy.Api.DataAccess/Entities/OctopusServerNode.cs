@@ -16,7 +16,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         string id,
                         bool isInMaintenanceMode,
                         string jSON,
-                        DateTime lastSeen,
+                        DateTimeOffset lastSeen,
                         int maxConcurrentTasks,
                         string name,
                         string rank)
@@ -41,7 +41,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public string JSON { get; private set; }
 
                 [Column("LastSeen", TypeName="datetimeoffset")]
-                public DateTime LastSeen { get; private set; }
+                public DateTimeOffset LastSeen { get; private set; }
 
                 [Column("MaxConcurrentTasks", TypeName="int")]
                 public int MaxConcurrentTasks { get; private set; }
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8097ff79c1e0fdc267e7d8fc24d5cbe</Hash>
+    <Hash>d258dba3e3a0c9470e24cbaaa6ddf3ed</Hash>
 </Codenesium>*/

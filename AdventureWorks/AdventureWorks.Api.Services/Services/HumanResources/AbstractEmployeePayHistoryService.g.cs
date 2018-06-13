@@ -28,21 +28,23 @@ namespace AdventureWorksNS.Api.Services
                         ILogger logger,
                         IEmployeePayHistoryRepository employeePayHistoryRepository,
                         IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
-                        IBOLEmployeePayHistoryMapper bolemployeePayHistoryMapper,
-                        IDALEmployeePayHistoryMapper dalemployeePayHistoryMapper)
+                        IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
+                        IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper
+
+                        )
                         : base()
 
                 {
                         this.employeePayHistoryRepository = employeePayHistoryRepository;
                         this.employeePayHistoryModelValidator = employeePayHistoryModelValidator;
-                        this.bolEmployeePayHistoryMapper = bolemployeePayHistoryMapper;
-                        this.dalEmployeePayHistoryMapper = dalemployeePayHistoryMapper;
+                        this.bolEmployeePayHistoryMapper = bolEmployeePayHistoryMapper;
+                        this.dalEmployeePayHistoryMapper = dalEmployeePayHistoryMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEmployeePayHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.employeePayHistoryRepository.All(skip, take, orderClause);
+                        var records = await this.employeePayHistoryRepository.All(limit, offset, orderClause);
 
                         return this.bolEmployeePayHistoryMapper.MapBOToModel(this.dalEmployeePayHistoryMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0b966034f086edf9586ad2dbc34d33d</Hash>
+    <Hash>1e61b2026420065335b897daa4e723ea</Hash>
 </Codenesium>*/

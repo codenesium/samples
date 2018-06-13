@@ -51,14 +51,13 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void VersionRules()
                 {
-                        this.RuleFor(x => x.Version).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetName(ApiActionTemplateRequestModel model,  CancellationToken cancellationToken)
                 {
                         ActionTemplate record = await this.ActionTemplateRepository.GetName(model.Name);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -71,5 +70,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1e57b760ba0d9f64c3b4efd4a04fef1</Hash>
+    <Hash>f5cfb7edd350907bf3a1ef8f9b022e01</Hash>
 </Codenesium>*/

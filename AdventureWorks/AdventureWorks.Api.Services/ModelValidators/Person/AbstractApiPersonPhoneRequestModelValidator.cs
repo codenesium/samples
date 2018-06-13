@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiPersonPhoneRequestModelValidator: AbstractValidator<ApiPersonPhoneRequestModel>
         {
@@ -28,7 +27,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void PhoneNumberRules()
@@ -39,11 +37,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void PhoneNumberTypeIDRules()
                 {
-                        this.RuleFor(x => x.PhoneNumberTypeID).NotNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9217e135b55085ceea82ad2b4d30996b</Hash>
+    <Hash>db8025a2c1a08b9082cc13ec6959311a</Hash>
 </Codenesium>*/

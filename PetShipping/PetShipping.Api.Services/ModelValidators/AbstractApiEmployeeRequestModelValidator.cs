@@ -8,7 +8,6 @@ using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
-
 {
         public abstract class AbstractApiEmployeeRequestModelValidator: AbstractValidator<ApiEmployeeRequestModel>
         {
@@ -34,12 +33,10 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void IsSalesPersonRules()
                 {
-                        this.RuleFor(x => x.IsSalesPerson).NotNull();
                 }
 
                 public virtual void IsShipperRules()
                 {
-                        this.RuleFor(x => x.IsShipper).NotNull();
                 }
 
                 public virtual void LastNameRules()
@@ -51,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b093a56e5e85da5410b46c049ec65b4</Hash>
+    <Hash>b0081dfa1130c42495697657ebf5ff8b</Hash>
 </Codenesium>*/

@@ -17,17 +17,26 @@ namespace AdventureWorksNS.Api.Services
                         IScrapReasonRepository scrapReasonRepository,
                         IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
                         IBOLScrapReasonMapper bolscrapReasonMapper,
-                        IDALScrapReasonMapper dalscrapReasonMapper)
+                        IDALScrapReasonMapper dalscrapReasonMapper
+                        ,
+                        IBOLWorkOrderMapper bolWorkOrderMapper,
+                        IDALWorkOrderMapper dalWorkOrderMapper
+
+                        )
                         : base(logger,
                                scrapReasonRepository,
                                scrapReasonModelValidator,
                                bolscrapReasonMapper,
-                               dalscrapReasonMapper)
+                               dalscrapReasonMapper
+                               ,
+                               bolWorkOrderMapper,
+                               dalWorkOrderMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d1b90b93d8a66d74573d802b6e163fc3</Hash>
+    <Hash>acb55a6274eef24b011bb24b6459f1de</Hash>
 </Codenesium>*/

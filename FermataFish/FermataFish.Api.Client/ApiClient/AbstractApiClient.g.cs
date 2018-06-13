@@ -80,9 +80,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiAdminResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiAdminResponseModel>> AdminAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiAdminResponseModel>> AdminAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiAdminResponseModel>>(httpResponse.Content.ContentToString());
@@ -127,9 +127,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiFamilyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiFamilyResponseModel>> FamilyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiFamilyResponseModel>> FamilyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFamilyResponseModel>>(httpResponse.Content.ContentToString());
@@ -174,9 +174,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLessonResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLessonResponseModel>> LessonAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLessonResponseModel>> LessonAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLessonResponseModel>>(httpResponse.Content.ContentToString());
@@ -221,9 +221,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLessonStatusResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLessonStatusResponseModel>> LessonStatusAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLessonStatusResponseModel>> LessonStatusAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonStatus?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonStatus?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLessonStatusResponseModel>>(httpResponse.Content.ContentToString());
@@ -268,9 +268,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLessonXStudentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLessonXStudentResponseModel>> LessonXStudentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLessonXStudentResponseModel>> LessonXStudentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXStudents?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXStudents?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLessonXStudentResponseModel>>(httpResponse.Content.ContentToString());
@@ -315,9 +315,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiLessonXTeacherResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiLessonXTeacherResponseModel>> LessonXTeacherAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiLessonXTeacherResponseModel>> LessonXTeacherAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXTeachers?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonXTeachers?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLessonXTeacherResponseModel>>(httpResponse.Content.ContentToString());
@@ -362,9 +362,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiRateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiRateResponseModel>> RateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiRateResponseModel>> RateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Rates?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Rates?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiRateResponseModel>>(httpResponse.Content.ContentToString());
@@ -409,9 +409,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSpaceResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpaceResponseModel>> SpaceAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSpaceResponseModel>> SpaceAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpaceResponseModel>>(httpResponse.Content.ContentToString());
@@ -456,9 +456,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSpaceFeatureResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatureAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatureAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
@@ -503,9 +503,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiSpaceXSpaceFeatureResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpaceXSpaceFeatureResponseModel>> SpaceXSpaceFeatureAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiSpaceXSpaceFeatureResponseModel>> SpaceXSpaceFeatureAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceXSpaceFeatures?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceXSpaceFeatures?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpaceXSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
@@ -550,9 +550,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiStateResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStateResponseModel>> StateAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiStateResponseModel>> StateAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/States?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/States?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStateResponseModel>>(httpResponse.Content.ContentToString());
@@ -597,9 +597,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiStudentResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStudentResponseModel>> StudentAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiStudentResponseModel>> StudentAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Students?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Students?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStudentResponseModel>>(httpResponse.Content.ContentToString());
@@ -644,9 +644,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiStudentXFamilyResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilyAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilyAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StudentXFamilies?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StudentXFamilies?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStudentXFamilyResponseModel>>(httpResponse.Content.ContentToString());
@@ -691,9 +691,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiStudioResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStudioResponseModel>> StudioAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiStudioResponseModel>> StudioAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStudioResponseModel>>(httpResponse.Content.ContentToString());
@@ -738,9 +738,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTeacherResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTeacherResponseModel>> TeacherAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTeacherResponseModel>> TeacherAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTeacherResponseModel>>(httpResponse.Content.ContentToString());
@@ -785,9 +785,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTeacherSkillResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTeacherSkillResponseModel>> TeacherSkillAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTeacherSkillResponseModel>> TeacherSkillAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
@@ -832,9 +832,9 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiTeacherXTeacherSkillResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkillAllAsync(int offset = 0, int limit = 250)
+                public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkillAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherXTeacherSkills?offset={offset}&limit={limit}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherXTeacherSkills?limit={limit}&offset={offset}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTeacherXTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
@@ -851,5 +851,5 @@ namespace FermataFishNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>142072215998451dac8e75ad3f904cdb</Hash>
+    <Hash>aca0c5b61364a072b7ad53b1ffbe8481</Hash>
 </Codenesium>*/

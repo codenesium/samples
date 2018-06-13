@@ -8,7 +8,6 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
-
 {
         public abstract class AbstractApiTeacherRequestModelValidator: AbstractValidator<ApiTeacherRequestModel>
         {
@@ -30,7 +29,6 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void BirthdayRules()
                 {
-                        this.RuleFor(x => x.Birthday).NotNull();
                 }
 
                 public virtual void EmailRules()
@@ -59,7 +57,6 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).NotNull();
                         this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
                 }
 
@@ -73,5 +70,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b3a1910b050336712dc05e0329353d7a</Hash>
+    <Hash>89478656658f3237a88c3aad1f4971b0</Hash>
 </Codenesium>*/

@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALProductDescriptionMapper dalProductDescriptionMapper;
 
+                private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
+
+                private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
+
                 private ILogger logger;
 
                 public AbstractProductDescriptionService(
                         ILogger logger,
                         IProductDescriptionRepository productDescriptionRepository,
                         IApiProductDescriptionRequestModelValidator productDescriptionModelValidator,
-                        IBOLProductDescriptionMapper bolproductDescriptionMapper,
-                        IDALProductDescriptionMapper dalproductDescriptionMapper)
+                        IBOLProductDescriptionMapper bolProductDescriptionMapper,
+                        IDALProductDescriptionMapper dalProductDescriptionMapper
+
+                        ,
+                        IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
+
+                        )
                         : base()
 
                 {
                         this.productDescriptionRepository = productDescriptionRepository;
                         this.productDescriptionModelValidator = productDescriptionModelValidator;
-                        this.bolProductDescriptionMapper = bolproductDescriptionMapper;
-                        this.dalProductDescriptionMapper = dalproductDescriptionMapper;
+                        this.bolProductDescriptionMapper = bolProductDescriptionMapper;
+                        this.dalProductDescriptionMapper = dalProductDescriptionMapper;
+                        this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
+                        this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductDescriptionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductDescriptionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.productDescriptionRepository.All(skip, take, orderClause);
+                        var records = await this.productDescriptionRepository.All(limit, offset, orderClause);
 
                         return this.bolProductDescriptionMapper.MapBOToModel(this.dalProductDescriptionMapper.MapEFToBO(records));
                 }
@@ -96,9 +108,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return response;
                 }
+
+                public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productDescriptionID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductModelProductDescriptionCulture> records = await this.productDescriptionRepository.ProductModelProductDescriptionCultures(productDescriptionID, limit, offset);
+
+                        return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>743aed2f5935d859d7169103f429bcc9</Hash>
+    <Hash>f490104185ebf32ecbef3e4bf2afcd68</Hash>
 </Codenesium>*/

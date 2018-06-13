@@ -11,7 +11,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public void SetProperties(string id,
                                           string apiKeyHashed,
-                                          DateTime created,
+                                          DateTimeOffset created,
                                           string jSON,
                                           string userId)
                 {
@@ -24,7 +24,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public string ApiKeyHashed { get; private set; }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string Id { get; private set; }
 
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1e924f0d7d264cc61e57f968cd3f512</Hash>
+    <Hash>9eb2f5f64903bb3ac4ac70242cf04e5e</Hash>
 </Codenesium>*/

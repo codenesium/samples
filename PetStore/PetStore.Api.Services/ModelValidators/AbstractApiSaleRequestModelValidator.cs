@@ -8,7 +8,6 @@ using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
-
 {
         public abstract class AbstractApiSaleRequestModelValidator: AbstractValidator<ApiSaleRequestModel>
         {
@@ -32,7 +31,6 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void AmountRules()
                 {
-                        this.RuleFor(x => x.Amount).NotNull();
                 }
 
                 public virtual void FirstNameRules()
@@ -49,13 +47,11 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void PaymentTypeIdRules()
                 {
-                        this.RuleFor(x => x.PaymentTypeId).NotNull();
                         this.RuleFor(x => x.PaymentTypeId).MustAsync(this.BeValidPaymentType).When(x => x ?.PaymentTypeId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PetIdRules()
                 {
-                        this.RuleFor(x => x.PetId).NotNull();
                         this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x ?.PetId != null).WithMessage("Invalid reference");
                 }
 
@@ -82,5 +78,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12f77099ccddc378e7e5256dee943dc3</Hash>
+    <Hash>4f1e6c47b4185229a6657b88e29c6474</Hash>
 </Codenesium>*/

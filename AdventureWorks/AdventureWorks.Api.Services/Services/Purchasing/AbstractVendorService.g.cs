@@ -22,27 +22,47 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALVendorMapper dalVendorMapper;
 
+                private IBOLProductVendorMapper bolProductVendorMapper;
+
+                private IDALProductVendorMapper dalProductVendorMapper;
+                private IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper;
+
+                private IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper;
+
                 private ILogger logger;
 
                 public AbstractVendorService(
                         ILogger logger,
                         IVendorRepository vendorRepository,
                         IApiVendorRequestModelValidator vendorModelValidator,
-                        IBOLVendorMapper bolvendorMapper,
-                        IDALVendorMapper dalvendorMapper)
+                        IBOLVendorMapper bolVendorMapper,
+                        IDALVendorMapper dalVendorMapper
+
+                        ,
+                        IBOLProductVendorMapper bolProductVendorMapper,
+                        IDALProductVendorMapper dalProductVendorMapper
+                        ,
+                        IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
+                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
+
+                        )
                         : base()
 
                 {
                         this.vendorRepository = vendorRepository;
                         this.vendorModelValidator = vendorModelValidator;
-                        this.bolVendorMapper = bolvendorMapper;
-                        this.dalVendorMapper = dalvendorMapper;
+                        this.bolVendorMapper = bolVendorMapper;
+                        this.dalVendorMapper = dalVendorMapper;
+                        this.bolProductVendorMapper = bolProductVendorMapper;
+                        this.dalProductVendorMapper = dalProductVendorMapper;
+                        this.bolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
+                        this.dalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiVendorResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.vendorRepository.All(skip, take, orderClause);
+                        var records = await this.vendorRepository.All(limit, offset, orderClause);
 
                         return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(records));
                 }
@@ -103,9 +123,22 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiProductVendorResponseModel>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<ProductVendor> records = await this.vendorRepository.ProductVendors(businessEntityID, limit, offset);
+
+                        return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
+                }
+                public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<PurchaseOrderHeader> records = await this.vendorRepository.PurchaseOrderHeaders(vendorID, limit, offset);
+
+                        return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>eb4b5d705ce4c291c20f8fd3e1f1044c</Hash>
+    <Hash>75cd670fbca4dce0637c80a01d6338a0</Hash>
 </Codenesium>*/

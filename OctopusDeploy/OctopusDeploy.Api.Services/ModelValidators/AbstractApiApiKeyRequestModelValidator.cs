@@ -35,7 +35,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CreatedRules()
                 {
-                        this.RuleFor(x => x.Created).NotNull();
                 }
 
                 public virtual void JSONRules()
@@ -53,7 +52,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ApiKey record = await this.ApiKeyRepository.GetApiKeyHashed(model.ApiKeyHashed);
 
-                        if (record == null || record.Id == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -66,5 +65,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79f36e4ca7ff33b7e217bad459235a2e</Hash>
+    <Hash>63382f3bda7b195c3e23794a6edac3d4</Hash>
 </Codenesium>*/

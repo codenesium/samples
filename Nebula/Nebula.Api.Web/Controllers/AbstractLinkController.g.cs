@@ -44,7 +44,7 @@ namespace NebulaNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiLinkResponseModel> response = await this.LinkService.All(query.Offset, query.Limit);
+                        List<ApiLinkResponseModel> response = await this.LinkService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,23 @@ namespace NebulaNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{linkId}/LinkLogs")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
+                public async virtual Task<IActionResult> LinkLogs(int linkId, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiLinkLogResponseModel> response = await this.LinkService.LinkLogs(linkId, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5d3b812d4cd0431ddbef7dd43cc592f9</Hash>
+    <Hash>61e50f539b01cdc895765c2ab945f42c</Hash>
 </Codenesium>*/

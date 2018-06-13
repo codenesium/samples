@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Web
                         SearchQuery query = new SearchQuery();
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiBusinessEntityResponseModel> response = await this.BusinessEntityService.All(query.Offset, query.Limit);
+                        List<ApiBusinessEntityResponseModel> response = await this.BusinessEntityService.All(query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -160,9 +160,49 @@ namespace AdventureWorksNS.Api.Web
                                 return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
                         }
                 }
+
+                [HttpGet]
+                [Route("{businessEntityID}/BusinessEntityAddresses")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+                public async virtual Task<IActionResult> BusinessEntityAddresses(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityService.BusinessEntityAddresses(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/BusinessEntityContacts")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+                public async virtual Task<IActionResult> BusinessEntityContacts(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityService.BusinessEntityContacts(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
+                [HttpGet]
+                [Route("{businessEntityID}/People")]
+                [ReadOnly]
+                [ProducesResponseType(typeof(List<ApiBusinessEntityResponseModel>), 200)]
+                public async virtual Task<IActionResult> People(int businessEntityID, int? limit, int? offset)
+                {
+                        SearchQuery query = new SearchQuery();
+
+                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+                        List<ApiPersonResponseModel> response = await this.BusinessEntityService.People(businessEntityID, query.Limit, query.Offset);
+
+                        return this.Ok(response);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fc4f358d353c72a43e0400488c38b4ec</Hash>
+    <Hash>9df030620a4681082da64f96bf659102</Hash>
 </Codenesium>*/

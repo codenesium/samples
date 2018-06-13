@@ -17,17 +17,32 @@ namespace FermataFishNS.Api.Services
                         ITeacherSkillRepository teacherSkillRepository,
                         IApiTeacherSkillRequestModelValidator teacherSkillModelValidator,
                         IBOLTeacherSkillMapper bolteacherSkillMapper,
-                        IDALTeacherSkillMapper dalteacherSkillMapper)
+                        IDALTeacherSkillMapper dalteacherSkillMapper
+                        ,
+                        IBOLRateMapper bolRateMapper,
+                        IDALRateMapper dalRateMapper
+                        ,
+                        IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
+                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
+
+                        )
                         : base(logger,
                                teacherSkillRepository,
                                teacherSkillModelValidator,
                                bolteacherSkillMapper,
-                               dalteacherSkillMapper)
+                               dalteacherSkillMapper
+                               ,
+                               bolRateMapper,
+                               dalRateMapper
+                               ,
+                               bolTeacherXTeacherSkillMapper,
+                               dalTeacherXTeacherSkillMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>239b8f8ff0520064f27e272c13ec74e1</Hash>
+    <Hash>598804d39d5648c17e4445f5c9a2ad27</Hash>
 </Codenesium>*/

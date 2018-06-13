@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiErrorLogRequestModelValidator: AbstractValidator<ApiErrorLogRequestModel>
         {
@@ -38,7 +37,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ErrorNumberRules()
                 {
-                        this.RuleFor(x => x.ErrorNumber).NotNull();
                 }
 
                 public virtual void ErrorProcedureRules()
@@ -56,7 +54,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ErrorTimeRules()
                 {
-                        this.RuleFor(x => x.ErrorTime).NotNull();
                 }
 
                 public virtual void UserNameRules()
@@ -68,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ca616e40a8836c205e83adfd63a1b07</Hash>
+    <Hash>81c5395490532de681de3363fceb7a05</Hash>
 </Codenesium>*/

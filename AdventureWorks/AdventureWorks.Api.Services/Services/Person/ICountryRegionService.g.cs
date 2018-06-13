@@ -19,12 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCountryRegionResponseModel> Get(string countryRegionCode);
 
-                Task<List<ApiCountryRegionResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiCountryRegionResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<ApiCountryRegionResponseModel> GetName(string name);
+
+                Task<List<ApiStateProvinceResponseModel>> StateProvinces(string countryRegionCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>af170fc141496818b8191ce7eda711a6</Hash>
+    <Hash>383ca571be34754fb0a86306ae9f8b45</Hash>
 </Codenesium>*/

@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiEmployeeRequestModelValidator: AbstractValidator<ApiEmployeeRequestModel>
         {
@@ -29,12 +28,10 @@ namespace AdventureWorksNS.Api.Services
                 public IEmployeeRepository EmployeeRepository { get; set; }
                 public virtual void BirthDateRules()
                 {
-                        this.RuleFor(x => x.BirthDate).NotNull();
                 }
 
                 public virtual void CurrentFlagRules()
                 {
-                        this.RuleFor(x => x.CurrentFlag).NotNull();
                 }
 
                 public virtual void GenderRules()
@@ -45,7 +42,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void HireDateRules()
                 {
-                        this.RuleFor(x => x.HireDate).NotNull();
                 }
 
                 public virtual void JobTitleRules()
@@ -69,7 +65,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void NationalIDNumberRules()
@@ -89,29 +84,25 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void SalariedFlagRules()
                 {
-                        this.RuleFor(x => x.SalariedFlag).NotNull();
                 }
 
                 public virtual void SickLeaveHoursRules()
                 {
-                        this.RuleFor(x => x.SickLeaveHours).NotNull();
                 }
 
                 public virtual void VacationHoursRules()
                 {
-                        this.RuleFor(x => x.VacationHours).NotNull();
                 }
 
                 private async Task<bool> BeUniqueGetLoginID(ApiEmployeeRequestModel model,  CancellationToken cancellationToken)
                 {
                         Employee record = await this.EmployeeRepository.GetLoginID(model.LoginID);
 
-                        if (record == null || record.BusinessEntityID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -124,7 +115,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Employee record = await this.EmployeeRepository.GetNationalIDNumber(model.NationalIDNumber);
 
-                        if (record == null || record.BusinessEntityID == this.existingRecordId)
+                        if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -137,5 +128,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04c8ab61d721c48db721582541a1f6f8</Hash>
+    <Hash>224d547396a714d60c365ca6572f3eed</Hash>
 </Codenesium>*/

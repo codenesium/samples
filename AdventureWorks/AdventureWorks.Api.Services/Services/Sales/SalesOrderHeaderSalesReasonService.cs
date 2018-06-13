@@ -17,17 +17,20 @@ namespace AdventureWorksNS.Api.Services
                         ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
                         IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
                         IBOLSalesOrderHeaderSalesReasonMapper bolsalesOrderHeaderSalesReasonMapper,
-                        IDALSalesOrderHeaderSalesReasonMapper dalsalesOrderHeaderSalesReasonMapper)
+                        IDALSalesOrderHeaderSalesReasonMapper dalsalesOrderHeaderSalesReasonMapper
+
+                        )
                         : base(logger,
                                salesOrderHeaderSalesReasonRepository,
                                salesOrderHeaderSalesReasonModelValidator,
                                bolsalesOrderHeaderSalesReasonMapper,
-                               dalsalesOrderHeaderSalesReasonMapper)
+                               dalsalesOrderHeaderSalesReasonMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ad02c92f8bf262ff63e068420c75a936</Hash>
+    <Hash>f3dd809bc49053b7cb0937aee832980f</Hash>
 </Codenesium>*/

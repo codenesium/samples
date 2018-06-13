@@ -17,17 +17,26 @@ namespace ESPIOTNS.Api.Services
                         IDeviceRepository deviceRepository,
                         IApiDeviceRequestModelValidator deviceModelValidator,
                         IBOLDeviceMapper boldeviceMapper,
-                        IDALDeviceMapper daldeviceMapper)
+                        IDALDeviceMapper daldeviceMapper
+                        ,
+                        IBOLDeviceActionMapper bolDeviceActionMapper,
+                        IDALDeviceActionMapper dalDeviceActionMapper
+
+                        )
                         : base(logger,
                                deviceRepository,
                                deviceModelValidator,
                                boldeviceMapper,
-                               daldeviceMapper)
+                               daldeviceMapper
+                               ,
+                               bolDeviceActionMapper,
+                               dalDeviceActionMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9390b973e0aa8ee04fba676e4494446d</Hash>
+    <Hash>962eabbdf1eaf43d1f38b88b39977929</Hash>
 </Codenesium>*/

@@ -9,7 +9,7 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", " WorkOrderRouting")]
+        [Trait("Integration", "WorkOrderRouting")]
         public class WorkOrderRoutingTests
         {
                 private TestServer server;
@@ -82,5 +82,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>cb58e83bf65451e900ccf21c91afd662</Hash>
+    <Hash>582ada5f83d35cc39c80246ac60fb1b0</Hash>
 </Codenesium>*/

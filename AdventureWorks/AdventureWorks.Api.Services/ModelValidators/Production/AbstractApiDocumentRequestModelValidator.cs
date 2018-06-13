@@ -8,7 +8,6 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
-
 {
         public abstract class AbstractApiDocumentRequestModelValidator: AbstractValidator<ApiDocumentRequestModel>
         {
@@ -28,7 +27,6 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ChangeNumberRules()
                 {
-                        this.RuleFor(x => x.ChangeNumber).NotNull();
                 }
 
                 public virtual void Document1Rules()
@@ -57,17 +55,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void FolderFlagRules()
                 {
-                        this.RuleFor(x => x.FolderFlag).NotNull();
                 }
 
                 public virtual void ModifiedDateRules()
                 {
-                        this.RuleFor(x => x.ModifiedDate).NotNull();
                 }
 
                 public virtual void OwnerRules()
                 {
-                        this.RuleFor(x => x.Owner).NotNull();
                 }
 
                 public virtual void RevisionRules()
@@ -78,12 +73,10 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void RowguidRules()
                 {
-                        this.RuleFor(x => x.Rowguid).NotNull();
                 }
 
                 public virtual void StatusRules()
                 {
-                        this.RuleFor(x => x.Status).NotNull();
                 }
 
                 public virtual void TitleRules()
@@ -95,5 +88,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>651a92d148a6335e7bbd8543bee4dcb0</Hash>
+    <Hash>5315903f4edd8bc44fb3b1d5c13627c8</Hash>
 </Codenesium>*/

@@ -25,9 +25,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Country>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual Task<List<Country>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        return this.SearchLinqEF(x => true, skip, take, orderClause);
+                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
                 }
 
                 public async virtual Task<Country> Get(int id)
@@ -75,31 +75,31 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Country>> Where(Expression<Func<Country, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                protected async Task<List<Country>> Where(Expression<Func<Country, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
-                        List<Country> records = await this.SearchLinqEF(predicate, skip, take, orderClause);
+                        List<Country> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
 
                         return records;
                 }
 
-                private async Task<List<Country>> SearchLinqEF(Expression<Func<Country, bool>> predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Country>> SearchLinqEF(Expression<Func<Country, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Country.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Country>();
+                        return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Country>();
                 }
 
-                private async Task<List<Country>> SearchLinqEFDynamic(string predicate, int skip = 0, int take = int.MaxValue, string orderClause = "")
+                private async Task<List<Country>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
                 {
                         if (string.IsNullOrWhiteSpace(orderClause))
                         {
                                 orderClause = $"{nameof(Country.Id)} ASC";
                         }
 
-                        return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(skip).Take(take).ToListAsync<Country>();
+                        return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Country>();
                 }
 
                 private async Task<Country> GetById(int id)
@@ -108,9 +108,18 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
+                public async virtual Task<List<CountryRequirement>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<CountryRequirement>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
+                }
+                public async virtual Task<List<Destination>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Destination>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Destination>();
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1d6f6986a57c3e9af85f4138d4f37c4b</Hash>
+    <Hash>6d0ce4ee407cb041464209273b2314dd</Hash>
 </Codenesium>*/

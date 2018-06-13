@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper;
 
+                private IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper;
+
+                private IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper;
+
                 private ILogger logger;
 
                 public AbstractPurchaseOrderHeaderService(
                         ILogger logger,
                         IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
                         IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
-                        IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
-                        IDALPurchaseOrderHeaderMapper dalpurchaseOrderHeaderMapper)
+                        IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
+                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
+
+                        ,
+                        IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
+                        IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper
+
+                        )
                         : base()
 
                 {
                         this.purchaseOrderHeaderRepository = purchaseOrderHeaderRepository;
                         this.purchaseOrderHeaderModelValidator = purchaseOrderHeaderModelValidator;
-                        this.bolPurchaseOrderHeaderMapper = bolpurchaseOrderHeaderMapper;
-                        this.dalPurchaseOrderHeaderMapper = dalpurchaseOrderHeaderMapper;
+                        this.bolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
+                        this.dalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
+                        this.bolPurchaseOrderDetailMapper = bolPurchaseOrderDetailMapper;
+                        this.dalPurchaseOrderDetailMapper = dalPurchaseOrderDetailMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.purchaseOrderHeaderRepository.All(skip, take, orderClause);
+                        var records = await this.purchaseOrderHeaderRepository.All(limit, offset, orderClause);
 
                         return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
                 }
+
+                public async virtual Task<List<ApiPurchaseOrderDetailResponseModel>> PurchaseOrderDetails(int purchaseOrderID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<PurchaseOrderDetail> records = await this.purchaseOrderHeaderRepository.PurchaseOrderDetails(purchaseOrderID, limit, offset);
+
+                        return this.bolPurchaseOrderDetailMapper.MapBOToModel(this.dalPurchaseOrderDetailMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cd4c5c111fb1f6e44d021ea44ae87404</Hash>
+    <Hash>815ba3679d688bfc44f134aa152a4990</Hash>
 </Codenesium>*/

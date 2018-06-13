@@ -22,27 +22,39 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALStateProvinceMapper dalStateProvinceMapper;
 
+                private IBOLAddressMapper bolAddressMapper;
+
+                private IDALAddressMapper dalAddressMapper;
+
                 private ILogger logger;
 
                 public AbstractStateProvinceService(
                         ILogger logger,
                         IStateProvinceRepository stateProvinceRepository,
                         IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
-                        IBOLStateProvinceMapper bolstateProvinceMapper,
-                        IDALStateProvinceMapper dalstateProvinceMapper)
+                        IBOLStateProvinceMapper bolStateProvinceMapper,
+                        IDALStateProvinceMapper dalStateProvinceMapper
+
+                        ,
+                        IBOLAddressMapper bolAddressMapper,
+                        IDALAddressMapper dalAddressMapper
+
+                        )
                         : base()
 
                 {
                         this.stateProvinceRepository = stateProvinceRepository;
                         this.stateProvinceModelValidator = stateProvinceModelValidator;
-                        this.bolStateProvinceMapper = bolstateProvinceMapper;
-                        this.dalStateProvinceMapper = dalstateProvinceMapper;
+                        this.bolStateProvinceMapper = bolStateProvinceMapper;
+                        this.dalStateProvinceMapper = dalStateProvinceMapper;
+                        this.bolAddressMapper = bolAddressMapper;
+                        this.dalAddressMapper = dalAddressMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStateProvinceResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStateProvinceResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.stateProvinceRepository.All(skip, take, orderClause);
+                        var records = await this.stateProvinceRepository.All(limit, offset, orderClause);
 
                         return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(records));
                 }
@@ -109,9 +121,16 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
                 }
+
+                public async virtual Task<List<ApiAddressResponseModel>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
+                {
+                        List<Address> records = await this.stateProvinceRepository.Addresses(stateProvinceID, limit, offset);
+
+                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8b07aab4fa602cb4a1827929fa45e951</Hash>
+    <Hash>43df6b8d43dd4a10e759687f7ecc246b</Hash>
 </Codenesium>*/

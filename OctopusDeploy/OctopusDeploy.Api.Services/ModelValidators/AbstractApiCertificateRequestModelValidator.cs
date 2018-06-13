@@ -31,12 +31,10 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void CreatedRules()
                 {
-                        this.RuleFor(x => x.Created).NotNull();
                 }
 
                 public virtual void DataVersionRules()
                 {
-                        this.RuleFor(x => x.DataVersion).NotNull();
                 }
 
                 public virtual void EnvironmentIdsRules()
@@ -56,7 +54,6 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void NotAfterRules()
                 {
-                        this.RuleFor(x => x.NotAfter).NotNull();
                 }
 
                 public virtual void SubjectRules()
@@ -81,5 +78,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f847e5fcf693e2559dd3cd2816da821</Hash>
+    <Hash>ef3854d9c49f077fff81e87e6df22cdd</Hash>
 </Codenesium>*/

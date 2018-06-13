@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiBusinessEntityAddressResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiBusinessEntityAddressResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "");
+                Task<List<ApiBusinessEntityAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
 
                 Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressID(int addressID);
                 Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressTypeID(int addressTypeID);
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95616e55943951c7b490cd3a38744e6e</Hash>
+    <Hash>c173a89bf7e261c32af0135a81926aac</Hash>
 </Codenesium>*/

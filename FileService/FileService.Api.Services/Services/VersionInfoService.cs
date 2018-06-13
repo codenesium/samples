@@ -17,17 +17,20 @@ namespace FileServiceNS.Api.Services
                         IVersionInfoRepository versionInfoRepository,
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
                         IBOLVersionInfoMapper bolversionInfoMapper,
-                        IDALVersionInfoMapper dalversionInfoMapper)
+                        IDALVersionInfoMapper dalversionInfoMapper
+
+                        )
                         : base(logger,
                                versionInfoRepository,
                                versionInfoModelValidator,
                                bolversionInfoMapper,
-                               dalversionInfoMapper)
+                               dalversionInfoMapper
+                               )
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>aa8921b8f1579efdaee3124e083fd8dd</Hash>
+    <Hash>af98fdb53400aa70219f3711307e3128</Hash>
 </Codenesium>*/

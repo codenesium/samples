@@ -28,21 +28,23 @@ namespace PetStoreNS.Api.Services
                         ILogger logger,
                         ISaleRepository saleRepository,
                         IApiSaleRequestModelValidator saleModelValidator,
-                        IBOLSaleMapper bolsaleMapper,
-                        IDALSaleMapper dalsaleMapper)
+                        IBOLSaleMapper bolSaleMapper,
+                        IDALSaleMapper dalSaleMapper
+
+                        )
                         : base()
 
                 {
                         this.saleRepository = saleRepository;
                         this.saleModelValidator = saleModelValidator;
-                        this.bolSaleMapper = bolsaleMapper;
-                        this.dalSaleMapper = dalsaleMapper;
+                        this.bolSaleMapper = bolSaleMapper;
+                        this.dalSaleMapper = dalSaleMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSaleResponseModel>> All(int skip = 0, int take = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSaleResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
                 {
-                        var records = await this.saleRepository.All(skip, take, orderClause);
+                        var records = await this.saleRepository.All(limit, offset, orderClause);
 
                         return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
                 }
@@ -100,5 +102,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13f4f7d6cc255499599002a01c95e2b8</Hash>
+    <Hash>2690287dab9b2ef0aaba03f79c7d170e</Hash>
 </Codenesium>*/

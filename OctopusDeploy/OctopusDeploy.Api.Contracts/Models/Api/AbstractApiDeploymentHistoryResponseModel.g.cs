@@ -12,8 +12,8 @@ namespace OctopusDeployNS.Api.Contracts
                 public virtual void SetProperties(
                         string channelId,
                         string channelName,
-                        Nullable<DateTime> completedTime,
-                        DateTime created,
+                        Nullable<DateTimeOffset> completedTime,
+                        DateTimeOffset created,
                         string deployedBy,
                         string deploymentId,
                         string deploymentName,
@@ -23,10 +23,10 @@ namespace OctopusDeployNS.Api.Contracts
                         string projectId,
                         string projectName,
                         string projectSlug,
-                        DateTime queueTime,
+                        DateTimeOffset queueTime,
                         string releaseId,
                         string releaseVersion,
-                        Nullable<DateTime> startTime,
+                        Nullable<DateTimeOffset> startTime,
                         string taskId,
                         string taskState,
                         string tenantId,
@@ -59,9 +59,9 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ChannelName { get; private set; }
 
-                public Nullable<DateTime> CompletedTime { get; private set; }
+                public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
-                public DateTime Created { get; private set; }
+                public DateTimeOffset Created { get; private set; }
 
                 public string DeployedBy { get; private set; }
 
@@ -81,13 +81,13 @@ namespace OctopusDeployNS.Api.Contracts
 
                 public string ProjectSlug { get; private set; }
 
-                public DateTime QueueTime { get; private set; }
+                public DateTimeOffset QueueTime { get; private set; }
 
                 public string ReleaseId { get; private set; }
 
                 public string ReleaseVersion { get; private set; }
 
-                public Nullable<DateTime> StartTime { get; private set; }
+                public Nullable<DateTimeOffset> StartTime { get; private set; }
 
                 public string TaskId { get; private set; }
 
@@ -293,5 +293,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5529e949296ce666a72f3a93d46843fb</Hash>
+    <Hash>5acc3ca6a0bb226ec79ef4c00aed04b2</Hash>
 </Codenesium>*/
