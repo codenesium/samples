@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProxyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProxyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProxyService proxyService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0a842cadf0c46d3a673f77104c1ae911</Hash>
+    <Hash>c5eb17108247fab25736ce40b81331d8</Hash>
 </Codenesium>*/

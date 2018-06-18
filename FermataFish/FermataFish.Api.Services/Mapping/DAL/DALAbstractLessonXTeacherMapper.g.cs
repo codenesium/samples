@@ -23,11 +23,6 @@ namespace FermataFishNS.Api.Services
                 public virtual BOLessonXTeacher MapEFToBO(
                         LessonXTeacher ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOLessonXTeacher();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>36ac0f8d4a273ed3f587ca7a48f88c71</Hash>
+    <Hash>3d2f8a9b5548e7449280f4bdf5a761b2</Hash>
 </Codenesium>*/

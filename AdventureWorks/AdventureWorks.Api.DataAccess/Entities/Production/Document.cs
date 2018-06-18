@@ -16,7 +16,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         int changeNumber,
                         byte[] document1,
                         Nullable<short> documentLevel,
-                        Guid documentNode,
                         string documentSummary,
                         string fileExtension,
                         string fileName,
@@ -31,7 +30,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ChangeNumber = changeNumber;
                         this.Document1 = document1;
                         this.DocumentLevel = documentLevel;
-                        this.DocumentNode = documentNode;
                         this.DocumentSummary = documentSummary;
                         this.FileExtension = fileExtension;
                         this.FileName = fileName;
@@ -54,10 +52,6 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("DocumentLevel", TypeName="smallint")]
                 public Nullable<short> DocumentLevel { get; private set; }
 
-                [Key]
-                [Column("DocumentNode", TypeName="hierarchyid(892)")]
-                public Guid DocumentNode { get; private set; }
-
                 [Column("DocumentSummary", TypeName="nvarchar(-1)")]
                 public string DocumentSummary { get; private set; }
 
@@ -79,6 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("Revision", TypeName="nchar(5)")]
                 public string Revision { get; private set; }
 
+                [Key]
                 [Column("rowguid", TypeName="uniqueidentifier")]
                 public Guid Rowguid { get; private set; }
 
@@ -91,5 +86,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>35f31652d5cd8c198ffd558b7088d9d9</Hash>
+    <Hash>ab8aed3076aa1ab3bd8b89f85757ab6b</Hash>
 </Codenesium>*/

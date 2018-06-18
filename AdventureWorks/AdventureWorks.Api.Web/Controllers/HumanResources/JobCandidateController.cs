@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class JobCandidateController: AbstractJobCandidateController
         {
                 public JobCandidateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<JobCandidateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IJobCandidateService jobCandidateService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2b47196e9fbb5d5a456c15c387dbfb94</Hash>
+    <Hash>b900ca4bde0764693af524bb1e8abec9</Hash>
 </Codenesium>*/

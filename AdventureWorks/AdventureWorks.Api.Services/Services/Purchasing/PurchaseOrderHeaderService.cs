@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class PurchaseOrderHeaderService: AbstractPurchaseOrderHeaderService, IPurchaseOrderHeaderService
         {
                 public PurchaseOrderHeaderService(
-                        ILogger<PurchaseOrderHeaderRepository> logger,
+                        ILogger<IPurchaseOrderHeaderRepository> logger,
                         IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
                         IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
                         IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3be5d8604b4df749565557b635e83b17</Hash>
+    <Hash>2eb17cf86d52415ef7c1107d8952a499</Hash>
 </Codenesium>*/

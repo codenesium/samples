@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductReview>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProductReview>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProductReview> Get(int productReviewID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<ProductReview>> GetCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                public async Task<List<ProductReview>> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
                 {
-                        var records = await this.SearchLinqEF(x => x.Comments == comments && x.ProductID == productID && x.ReviewerName == reviewerName);
+                        var records = await this.Where(x => x.Comments == comments && x.ProductID == productID && x.ReviewerName == reviewerName);
 
                         return records;
                 }
 
-                protected async Task<List<ProductReview>> Where(Expression<Func<ProductReview, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProductReview>> Where(
+                        Expression<Func<ProductReview, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProductReview, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ProductReview> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ProductReview>> SearchLinqEF(Expression<Func<ProductReview, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProductReview.ProductReviewID)} ASC";
+                                orderBy = x => x.ProductReviewID;
                         }
 
-                        return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductReview>();
-                }
-
-                private async Task<List<ProductReview>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProductReview.ProductReviewID)} ASC";
+                                return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductReview>();
                         }
-
-                        return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductReview>();
+                        else
+                        {
+                                return await this.Context.Set<ProductReview>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductReview>();
+                        }
                 }
 
                 private async Task<ProductReview> GetById(int productReviewID)
                 {
-                        List<ProductReview> records = await this.SearchLinqEF(x => x.ProductReviewID == productReviewID);
+                        List<ProductReview> records = await this.Where(x => x.ProductReviewID == productReviewID);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51e53dadfafcb1483a435c1528afb026</Hash>
+    <Hash>96bd2106f4216e016e4ee166ab6fd2cf</Hash>
 </Codenesium>*/

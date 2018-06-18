@@ -11,19 +11,16 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task Update(Document item);
 
-                Task Delete(Guid documentNode);
+                Task Delete(Guid rowguid);
 
-                Task<Document> Get(Guid documentNode);
+                Task<Document> Get(Guid rowguid);
 
-                Task<List<Document>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Document>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode);
-                Task<List<Document>> GetFileNameRevision(string fileName, string revision);
-
-                Task<List<ProductDocument>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0);
+                Task<List<Document>> ByFileNameRevision(string fileName, string revision);
         }
 }
 
 /*<Codenesium>
-    <Hash>c973fb91d51f84a8a2af27c97f52d44e</Hash>
+    <Hash>fae9bb41712a17d554fecf55c0c3bf22</Hash>
 </Codenesium>*/

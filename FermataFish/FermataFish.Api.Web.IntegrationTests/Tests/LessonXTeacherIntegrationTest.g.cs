@@ -9,7 +9,9 @@ using FermataFishNS.Api.Client;
 
 namespace FermataFishNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "LessonXTeacher")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "LessonXTeacher")]
+        [Trait("Area", "Integration")]
         public class LessonXTeacherTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c55fb2180ee883fdd996ed367331e8f9</Hash>
+    <Hash>9d1ce27a434fd88381a63d7b34a139d4</Hash>
 </Codenesium>*/

@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Nebula.Api.Services", "Nebu
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Nebula.Api.Web.IntegrationTests", "Nebula.Api.Web.IntegrationTests/Nebula.Api.Web.IntegrationTests.csproj", "{Nebula.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Nebula.Api.DataAccess.Tests", "Nebula.Api.DataAccess.Tests/Nebula.Api.DataAccess.Tests.csproj", "{Nebula.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Nebula.Api.Services.Tests", "Nebula.Api.Services.Tests/Nebula.Api.Services.Tests.csproj", "{Nebula.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "Nebula.Api.Web.Tests", "Nebula.Api.Web.Tests/Nebula.Api.Web.Tests.csproj", "{Nebula.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{Nebula.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{Nebula.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {Nebula.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Nebula.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Nebula.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Nebula.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {Nebula.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Nebula.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Nebula.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Nebula.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {Nebula.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{Nebula.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{Nebula.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{Nebula.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

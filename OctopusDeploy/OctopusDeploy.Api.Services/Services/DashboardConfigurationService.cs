@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class DashboardConfigurationService: AbstractDashboardConfigurationService, IDashboardConfigurationService
         {
                 public DashboardConfigurationService(
-                        ILogger<DashboardConfigurationRepository> logger,
+                        ILogger<IDashboardConfigurationRepository> logger,
                         IDashboardConfigurationRepository dashboardConfigurationRepository,
                         IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
                         IBOLDashboardConfigurationMapper boldashboardConfigurationMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6969714aa206973eb3c43ab57972113b</Hash>
+    <Hash>2ced9b4f555bd66f91446db578e72f21</Hash>
 </Codenesium>*/

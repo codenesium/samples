@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ProductReviewController: AbstractProductReviewController
         {
                 public ProductReviewController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProductReviewController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductReviewService productReviewService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c461a976b06a5b9815a7f5bba7196dc2</Hash>
+    <Hash>09f9f0f4333785d36cdaa8f56992f42a</Hash>
 </Codenesium>*/

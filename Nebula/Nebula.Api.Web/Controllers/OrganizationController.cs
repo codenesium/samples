@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class OrganizationController: AbstractOrganizationController
         {
                 public OrganizationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<OrganizationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IOrganizationService organizationService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed4af7ebf01229d5ab5a2a65363fa665</Hash>
+    <Hash>37b4a4e3c004447d01418024e586621f</Hash>
 </Codenesium>*/

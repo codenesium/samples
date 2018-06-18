@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.billOfMaterialsRepository.All(limit, offset, orderClause);
+                        var records = await this.billOfMaterialsRepository.All(limit, offset);
 
                         return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.billOfMaterialsRepository.Get(billOfMaterialsID);
 
-                        return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiBillOfMaterialsResponseModel>> Create(
@@ -99,15 +106,22 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiBillOfMaterialsResponseModel> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public async Task<ApiBillOfMaterialsResponseModel> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
                 {
-                        BillOfMaterials record = await this.billOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
+                        BillOfMaterials record = await this.billOfMaterialsRepository.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
 
-                        return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
+                        }
                 }
-                public async Task<List<ApiBillOfMaterialsResponseModel>> GetUnitMeasureCode(string unitMeasureCode)
+                public async Task<List<ApiBillOfMaterialsResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
                 {
-                        List<BillOfMaterials> records = await this.billOfMaterialsRepository.GetUnitMeasureCode(unitMeasureCode);
+                        List<BillOfMaterials> records = await this.billOfMaterialsRepository.ByUnitMeasureCode(unitMeasureCode);
 
                         return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
                 }
@@ -115,5 +129,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f3d63b235be59b99a37fcf96a381f22</Hash>
+    <Hash>370bcd184a5b13d7d2db8919cc716d86</Hash>
 </Codenesium>*/

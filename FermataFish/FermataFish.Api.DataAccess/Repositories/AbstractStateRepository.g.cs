@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<State>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<State>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<State> Get(int id)
@@ -75,36 +76,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<State>> Where(Expression<Func<State, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<State>> Where(
+                        Expression<Func<State, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<State, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<State> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<State>> SearchLinqEF(Expression<Func<State, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(State.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<State>();
-                }
-
-                private async Task<List<State>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(State.Id)} ASC";
+                                return await this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<State>();
                         }
-
-                        return await this.Context.Set<State>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<State>();
+                        else
+                        {
+                                return await this.Context.Set<State>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<State>();
+                        }
                 }
 
                 private async Task<State> GetById(int id)
                 {
-                        List<State> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<State> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e0e1c65c5cd8572c8692d30dcdf39bb5</Hash>
+    <Hash>ff85ba8df125d11b7b52be375f27e621</Hash>
 </Codenesium>*/

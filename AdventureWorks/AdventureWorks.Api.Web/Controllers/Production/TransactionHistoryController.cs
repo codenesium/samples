@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class TransactionHistoryController: AbstractTransactionHistoryController
         {
                 public TransactionHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TransactionHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITransactionHistoryService transactionHistoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>24709435f60add1fe4712a2d8d9cf62a</Hash>
+    <Hash>f99b8daae51674f69cfd069342190f3e</Hash>
 </Codenesium>*/

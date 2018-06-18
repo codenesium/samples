@@ -8,14 +8,14 @@ namespace AdventureWorksNS.Api.Services
         public abstract class BOLAbstractDocumentMapper
         {
                 public virtual BODocument MapModelToBO(
-                        Guid documentNode,
+                        Guid rowguid,
                         ApiDocumentRequestModel model
                         )
                 {
                         BODocument boDocument = new BODocument();
 
                         boDocument.SetProperties(
-                                documentNode,
+                                rowguid,
                                 model.ChangeNumber,
                                 model.Document1,
                                 model.DocumentLevel,
@@ -26,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                                 model.ModifiedDate,
                                 model.Owner,
                                 model.Revision,
-                                model.Rowguid,
                                 model.Status,
                                 model.Title);
                         return boDocument;
@@ -37,7 +36,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiDocumentResponseModel();
 
-                        model.SetProperties(boDocument.ChangeNumber, boDocument.Document1, boDocument.DocumentLevel, boDocument.DocumentNode, boDocument.DocumentSummary, boDocument.FileExtension, boDocument.FileName, boDocument.FolderFlag, boDocument.ModifiedDate, boDocument.Owner, boDocument.Revision, boDocument.Rowguid, boDocument.Status, boDocument.Title);
+                        model.SetProperties(boDocument.ChangeNumber, boDocument.Document1, boDocument.DocumentLevel, boDocument.DocumentSummary, boDocument.FileExtension, boDocument.FileName, boDocument.FolderFlag, boDocument.ModifiedDate, boDocument.Owner, boDocument.Revision, boDocument.Rowguid, boDocument.Status, boDocument.Title);
 
                         return model;
                 }
@@ -58,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fdab04164ace703bc8387b24d2fdcc34</Hash>
+    <Hash>b4a1905a6adad041b16f5fa61df5dd74</Hash>
 </Codenesium>*/

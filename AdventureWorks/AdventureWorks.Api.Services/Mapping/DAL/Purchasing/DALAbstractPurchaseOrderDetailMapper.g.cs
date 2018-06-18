@@ -31,11 +31,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOPurchaseOrderDetail MapEFToBO(
                         PurchaseOrderDetail ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPurchaseOrderDetail();
 
                         bo.SetProperties(
@@ -69,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20ff08d0355214a0b1d97e4c47c7c71f</Hash>
+    <Hash>552200f8119a1ee3dffc0d3b327eacc2</Hash>
 </Codenesium>*/

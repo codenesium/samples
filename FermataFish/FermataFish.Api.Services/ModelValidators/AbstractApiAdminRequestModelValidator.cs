@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiAdminRequestModel model, int id)
+                IAdminRepository adminRepository;
+
+                public AbstractApiAdminRequestModelValidator(IAdminRepository adminRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.adminRepository = adminRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiAdminRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IStudioRepository StudioRepository { get; set; }
 
                 public virtual void BirthdayRules()
                 {
@@ -62,7 +61,7 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudioRepository.Get(id);
+                        var record = await this.adminRepository.GetStudio(id);
 
                         return record != null;
                 }
@@ -70,5 +69,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>96b4c0d9d9ec093347456f3868c15f75</Hash>
+    <Hash>af90e99d1cdd7d620948a49a5a06033a</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class HandlerController: AbstractHandlerController
         {
                 public HandlerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<HandlerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IHandlerService handlerService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>900c87452ddb68216bbad25efd315669</Hash>
+    <Hash>4c4ec0291fdf3698e11732ddf7522ed5</Hash>
 </Codenesium>*/

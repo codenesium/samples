@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProductModel>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProductModel> Get(int productModelID)
@@ -75,55 +76,50 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<ProductModel> GetName(string name)
+                public async Task<ProductModel> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<List<ProductModel>> GetCatalogDescription(string catalogDescription)
+                public async Task<List<ProductModel>> ByCatalogDescription(string catalogDescription)
                 {
-                        var records = await this.SearchLinqEF(x => x.CatalogDescription == catalogDescription);
+                        var records = await this.Where(x => x.CatalogDescription == catalogDescription);
 
                         return records;
                 }
-                public async Task<List<ProductModel>> GetInstructions(string instructions)
+                public async Task<List<ProductModel>> ByInstructions(string instructions)
                 {
-                        var records = await this.SearchLinqEF(x => x.Instructions == instructions);
-
-                        return records;
-                }
-
-                protected async Task<List<ProductModel>> Where(Expression<Func<ProductModel, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        List<ProductModel> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
+                        var records = await this.Where(x => x.Instructions == instructions);
 
                         return records;
                 }
 
-                private async Task<List<ProductModel>> SearchLinqEF(Expression<Func<ProductModel, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProductModel>> Where(
+                        Expression<Func<ProductModel, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProductModel, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProductModel.ProductModelID)} ASC";
+                                orderBy = x => x.ProductModelID;
                         }
 
-                        return await this.Context.Set<ProductModel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductModel>();
-                }
-
-                private async Task<List<ProductModel>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProductModel.ProductModelID)} ASC";
+                                return await this.Context.Set<ProductModel>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductModel>();
                         }
-
-                        return await this.Context.Set<ProductModel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductModel>();
+                        else
+                        {
+                                return await this.Context.Set<ProductModel>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductModel>();
+                        }
                 }
 
                 private async Task<ProductModel> GetById(int productModelID)
                 {
-                        List<ProductModel> records = await this.SearchLinqEF(x => x.ProductModelID == productModelID);
+                        List<ProductModel> records = await this.Where(x => x.ProductModelID == productModelID);
 
                         return records.FirstOrDefault();
                 }
@@ -144,5 +140,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff0b7cb6cab051eada35e095056e3dc1</Hash>
+    <Hash>f8d9a22cda5f80ff6cd130650cf705de</Hash>
 </Codenesium>*/

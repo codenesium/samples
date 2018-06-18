@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiInterruptionRequestModelValidator: AbstractApiInterruptionRequestModelValidator, IApiInterruptionRequestModelValidator
         {
-                public ApiInterruptionRequestModelValidator()
+                public ApiInterruptionRequestModelValidator(IInterruptionRepository interruptionRepository)
+                        : base(interruptionRepository)
                 {
                 }
 
@@ -50,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d3052501c8f1cf574f06acb4f33a554</Hash>
+    <Hash>46172cedcb66f0e822a58118e6dddacd</Hash>
 </Codenesium>*/

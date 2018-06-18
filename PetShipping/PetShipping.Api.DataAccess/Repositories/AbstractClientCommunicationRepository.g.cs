@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ClientCommunication>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ClientCommunication>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ClientCommunication> Get(int id)
@@ -75,42 +76,46 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ClientCommunication>> Where(Expression<Func<ClientCommunication, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ClientCommunication>> Where(
+                        Expression<Func<ClientCommunication, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ClientCommunication, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ClientCommunication> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ClientCommunication>> SearchLinqEF(Expression<Func<ClientCommunication, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ClientCommunication.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
-                }
-
-                private async Task<List<ClientCommunication>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ClientCommunication.Id)} ASC";
+                                return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
                         }
-
-                        return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
+                        else
+                        {
+                                return await this.Context.Set<ClientCommunication>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
+                        }
                 }
 
                 private async Task<ClientCommunication> GetById(int id)
                 {
-                        List<ClientCommunication> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<ClientCommunication> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Client> GetClient(int clientId)
+                {
+                        return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
+                }
+                public async virtual Task<Employee> GetEmployee(int employeeId)
+                {
+                        return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d0b0627e9d0108f0a37490b48602022d</Hash>
+    <Hash>52f27c9e2c28ac6f0db60c65eb53c448</Hash>
 </Codenesium>*/

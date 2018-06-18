@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class ClaspController: AbstractClaspController
         {
                 public ClaspController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ClaspController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IClaspService claspService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a1b3c4be81313889f58f4807211cdc89</Hash>
+    <Hash>1dc2e3dff7e202a0f8d4c457019ee6c7</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class DeploymentRelatedMachineService: AbstractDeploymentRelatedMachineService, IDeploymentRelatedMachineService
         {
                 public DeploymentRelatedMachineService(
-                        ILogger<DeploymentRelatedMachineRepository> logger,
+                        ILogger<IDeploymentRelatedMachineRepository> logger,
                         IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository,
                         IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
                         IBOLDeploymentRelatedMachineMapper boldeploymentRelatedMachineMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbabf2c19b995049632488af9b34ffa9</Hash>
+    <Hash>995b7392a87b643258a13544bf359992</Hash>
 </Codenesium>*/

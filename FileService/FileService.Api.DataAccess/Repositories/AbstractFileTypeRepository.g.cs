@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FileServiceNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<FileType>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<FileType>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<FileType> Get(int id)
@@ -75,36 +76,31 @@ namespace FileServiceNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<FileType>> Where(Expression<Func<FileType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<FileType>> Where(
+                        Expression<Func<FileType, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<FileType, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<FileType> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<FileType>> SearchLinqEF(Expression<Func<FileType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(FileType.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<FileType>();
-                }
-
-                private async Task<List<FileType>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(FileType.Id)} ASC";
+                                return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
                         }
-
-                        return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<FileType>();
+                        else
+                        {
+                                return await this.Context.Set<FileType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<FileType>();
+                        }
                 }
 
                 private async Task<FileType> GetById(int id)
                 {
-                        List<FileType> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<FileType> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f5433bcdf1e4fcb98393afbbcb530fb</Hash>
+    <Hash>f5f0ec7addb37d363f4f50b565fb76be</Hash>
 </Codenesium>*/

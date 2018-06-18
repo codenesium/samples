@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractShiftController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractShiftController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IShiftService shiftService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiShiftResponseModel response = await this.ShiftService.GetName(name);
+                        ApiShiftResponseModel response = await this.ShiftService.ByName(name);
 
                         if (response == null)
                         {
@@ -181,13 +181,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getStartTimeEndTime/{startTime}/{endTime}")]
+                [Route("byStartTimeEndTime/{startTime}/{endTime}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiShiftResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
+                public async virtual Task<IActionResult> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
                 {
-                        ApiShiftResponseModel response = await this.ShiftService.GetStartTimeEndTime(startTime, endTime);
+                        ApiShiftResponseModel response = await this.ShiftService.ByStartTimeEndTime(startTime, endTime);
 
                         if (response == null)
                         {
@@ -216,5 +216,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a050a5600bda7e924709938e04497087</Hash>
+    <Hash>e56f45e1b76fd3376942c7a50c87cc54</Hash>
 </Codenesium>*/

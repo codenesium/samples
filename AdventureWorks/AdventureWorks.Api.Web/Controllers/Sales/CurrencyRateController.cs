@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class CurrencyRateController: AbstractCurrencyRateController
         {
                 public CurrencyRateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CurrencyRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICurrencyRateService currencyRateService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6ecc03b0c8c87aebb007f455a419e01d</Hash>
+    <Hash>80e68c160b0d90a1d340718e083afcb0</Hash>
 </Codenesium>*/

@@ -15,13 +15,15 @@ namespace NebulaNS.Api.DataAccess
 
                 Task<Team> Get(int id);
 
-                Task<List<Team>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Team>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Chain>> Chains(int teamId, int limit = int.MaxValue, int offset = 0);
                 Task<List<MachineRefTeam>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0);
+
+                Task<Organization> GetOrganization(int organizationId);
         }
 }
 
 /*<Codenesium>
-    <Hash>1f0749df860f256c679ee49deae5058f</Hash>
+    <Hash>8cc021b596743ca7dea3e287e1b2f5c9</Hash>
 </Codenesium>*/

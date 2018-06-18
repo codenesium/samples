@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class WorkerTaskLeaseService: AbstractWorkerTaskLeaseService, IWorkerTaskLeaseService
         {
                 public WorkerTaskLeaseService(
-                        ILogger<WorkerTaskLeaseRepository> logger,
+                        ILogger<IWorkerTaskLeaseRepository> logger,
                         IWorkerTaskLeaseRepository workerTaskLeaseRepository,
                         IApiWorkerTaskLeaseRequestModelValidator workerTaskLeaseModelValidator,
                         IBOLWorkerTaskLeaseMapper bolworkerTaskLeaseMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72f4db42375195f1ff26f8abd642a711</Hash>
+    <Hash>b592f429cf328db774de11c4829133aa</Hash>
 </Codenesium>*/

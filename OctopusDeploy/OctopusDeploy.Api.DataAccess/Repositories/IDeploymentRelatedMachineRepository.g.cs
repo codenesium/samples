@@ -15,13 +15,15 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<DeploymentRelatedMachine> Get(int id);
 
-                Task<List<DeploymentRelatedMachine>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<DeploymentRelatedMachine>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<DeploymentRelatedMachine>> GetDeploymentId(string deploymentId);
                 Task<List<DeploymentRelatedMachine>> GetMachineId(string machineId);
+
+                Task<Deployment> GetDeployment(string deploymentId);
         }
 }
 
 /*<Codenesium>
-    <Hash>b4d52fbdf901810381c3e3c67db08e89</Hash>
+    <Hash>b385a7d5ccf81839d8c73129b9b346ac</Hash>
 </Codenesium>*/

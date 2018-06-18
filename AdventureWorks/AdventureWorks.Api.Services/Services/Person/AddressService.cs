@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class AddressService: AbstractAddressService, IAddressService
         {
                 public AddressService(
-                        ILogger<AddressRepository> logger,
+                        ILogger<IAddressRepository> logger,
                         IAddressRepository addressRepository,
                         IApiAddressRequestModelValidator addressModelValidator,
                         IBOLAddressMapper boladdressMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5500468e1a16b04238f223815bff87f1</Hash>
+    <Hash>81c5b4c0039c7bdd18e56df279cd8de1</Hash>
 </Codenesium>*/

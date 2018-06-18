@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<TagSet> Get(string id);
 
-                Task<List<TagSet>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<TagSet> GetName(string name);
                 Task<List<TagSet>> GetDataVersion(byte[] dataVersion);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8e895895f36b179c376d40b4be8ac0b</Hash>
+    <Hash>dae2265c1ac585fef49525b9f470d493</Hash>
 </Codenesium>*/

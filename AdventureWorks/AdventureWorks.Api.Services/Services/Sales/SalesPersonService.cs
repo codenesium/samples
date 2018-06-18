@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SalesPersonService: AbstractSalesPersonService, ISalesPersonService
         {
                 public SalesPersonService(
-                        ILogger<SalesPersonRepository> logger,
+                        ILogger<ISalesPersonRepository> logger,
                         ISalesPersonRepository salesPersonRepository,
                         IApiSalesPersonRequestModelValidator salesPersonModelValidator,
                         IBOLSalesPersonMapper bolsalesPersonMapper,
@@ -56,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>036f1ca6933275c4023dd100a873ec66</Hash>
+    <Hash>db29ae462b7565d084d17151251bb414</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ExtensionConfigurationController: AbstractExtensionConfigurationController
         {
                 public ExtensionConfigurationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ExtensionConfigurationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IExtensionConfigurationService extensionConfigurationService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>07aaae6cbc2215df2d71e6d1f5aa33ef</Hash>
+    <Hash>600d63298bedb14532ae6f65de378815</Hash>
 </Codenesium>*/

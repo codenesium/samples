@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractAddressController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAddressService addressService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getAddressLine1AddressLine2CityStateProvinceIDPostalCode/{addressLine1}/{addressLine2}/{city}/{stateProvinceID}/{postalCode}")]
+                [Route("byAddressLine1AddressLine2CityStateProvinceIDPostalCode/{addressLine1}/{addressLine2}/{city}/{stateProvinceID}/{postalCode}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiAddressResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+                public async virtual Task<IActionResult> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
                 {
-                        ApiAddressResponseModel response = await this.AddressService.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1, addressLine2, city, stateProvinceID, postalCode);
+                        ApiAddressResponseModel response = await this.AddressService.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1, addressLine2, city, stateProvinceID, postalCode);
 
                         if (response == null)
                         {
@@ -181,12 +181,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getStateProvinceID/{stateProvinceID}")]
+                [Route("byStateProvinceID/{stateProvinceID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiAddressResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetStateProvinceID(int stateProvinceID)
+                public async virtual Task<IActionResult> ByStateProvinceID(int stateProvinceID)
                 {
-                        List<ApiAddressResponseModel> response = await this.AddressService.GetStateProvinceID(stateProvinceID);
+                        List<ApiAddressResponseModel> response = await this.AddressService.ByStateProvinceID(stateProvinceID);
 
                         return this.Ok(response);
                 }
@@ -208,5 +208,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>23ab85eed797c9518a824cfc700b8f34</Hash>
+    <Hash>302a443295fd7045d473366a1d721279</Hash>
 </Codenesium>*/

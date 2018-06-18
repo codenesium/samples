@@ -9,7 +9,9 @@ using NebulaNS.Api.Client;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "LinkStatus")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "LinkStatus")]
+        [Trait("Area", "Integration")]
         public class LinkStatusTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>0bbdb8f56cee0aa9d0a18854cdb46453</Hash>
+    <Hash>f9e6ca4e0fcfb11893d439088b03dcf4</Hash>
 </Codenesium>*/

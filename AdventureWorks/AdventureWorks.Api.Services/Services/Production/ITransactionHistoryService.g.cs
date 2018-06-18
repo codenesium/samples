@@ -19,13 +19,13 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiTransactionHistoryResponseModel> Get(int transactionID);
 
-                Task<List<ApiTransactionHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiTransactionHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiTransactionHistoryResponseModel>> GetProductID(int productID);
-                Task<List<ApiTransactionHistoryResponseModel>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
+                Task<List<ApiTransactionHistoryResponseModel>> ByProductID(int productID);
+                Task<List<ApiTransactionHistoryResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
         }
 }
 
 /*<Codenesium>
-    <Hash>974bdfecebe89bd22fcd05b96443cddc</Hash>
+    <Hash>fd7ff3ccb1ca16ed25b347cb86b19457</Hash>
 </Codenesium>*/

@@ -19,14 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCurrencyRateResponseModel> Get(int currencyRateID);
 
-                Task<List<ApiCurrencyRateResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiCurrencyRateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiCurrencyRateResponseModel> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
+                Task<ApiCurrencyRateResponseModel> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
 
                 Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int currencyRateID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>8f90e78545110e44d52d2b8d7479d905</Hash>
+    <Hash>d33ef27fe10a155a9ea3eafba5439656</Hash>
 </Codenesium>*/

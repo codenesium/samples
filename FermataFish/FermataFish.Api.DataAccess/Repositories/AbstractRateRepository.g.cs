@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Rate> Get(int id)
@@ -75,42 +76,46 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Rate>> Where(Expression<Func<Rate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Rate>> Where(
+                        Expression<Func<Rate, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Rate, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Rate> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Rate>> SearchLinqEF(Expression<Func<Rate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Rate.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Rate>();
-                }
-
-                private async Task<List<Rate>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Rate.Id)} ASC";
+                                return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
                         }
-
-                        return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Rate>();
+                        else
+                        {
+                                return await this.Context.Set<Rate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Rate>();
+                        }
                 }
 
                 private async Task<Rate> GetById(int id)
                 {
-                        List<Rate> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Rate> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Teacher> GetTeacher(int teacherId)
+                {
+                        return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
+                }
+                public async virtual Task<TeacherSkill> GetTeacherSkill(int teacherSkillId)
+                {
+                        return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b9161dd7fd0012e5810c44d441967364</Hash>
+    <Hash>93937b2d5624c2675458883c8181e64a</Hash>
 </Codenesium>*/

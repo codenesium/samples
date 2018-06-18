@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class VariableSetController: AbstractVariableSetController
         {
                 public VariableSetController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<VariableSetController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVariableSetService variableSetService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aabccafea3cdbb19b50abe97ca59fd4a</Hash>
+    <Hash>f4f6f5b591d4b6cf60536249d72a4dbb</Hash>
 </Codenesium>*/

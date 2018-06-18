@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.employeeRepository.All(limit, offset, orderClause);
+                        var records = await this.employeeRepository.All(limit, offset);
 
                         return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
                 }
@@ -79,7 +79,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.employeeRepository.Get(businessEntityID);
 
-                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
@@ -125,29 +132,31 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiEmployeeResponseModel> GetLoginID(string loginID)
+                public async Task<ApiEmployeeResponseModel> ByLoginID(string loginID)
                 {
-                        Employee record = await this.employeeRepository.GetLoginID(loginID);
+                        Employee record = await this.employeeRepository.ByLoginID(loginID);
 
-                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+                        }
                 }
-                public async Task<ApiEmployeeResponseModel> GetNationalIDNumber(string nationalIDNumber)
+                public async Task<ApiEmployeeResponseModel> ByNationalIDNumber(string nationalIDNumber)
                 {
-                        Employee record = await this.employeeRepository.GetNationalIDNumber(nationalIDNumber);
+                        Employee record = await this.employeeRepository.ByNationalIDNumber(nationalIDNumber);
 
-                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
-                }
-                public async Task<List<ApiEmployeeResponseModel>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel, Nullable<Guid> organizationNode)
-                {
-                        List<Employee> records = await this.employeeRepository.GetOrganizationLevelOrganizationNode(organizationLevel, organizationNode);
-
-                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
-                }
-                public async Task<List<ApiEmployeeResponseModel>> GetOrganizationNode(Nullable<Guid> organizationNode)
-                {
-                        List<Employee> records = await this.employeeRepository.GetOrganizationNode(organizationNode);
-
-                        return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
@@ -172,5 +181,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bfd385cd0324fb4c6e245f9399c5a781</Hash>
+    <Hash>a14c02086bc46c9548d3725359d31c14</Hash>
 </Codenesium>*/

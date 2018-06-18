@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiRateRequestModel model, int id)
+                IRateRepository rateRepository;
+
+                public AbstractApiRateRequestModelValidator(IRateRepository rateRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.rateRepository = rateRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiRateRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ITeacherRepository TeacherRepository { get; set; }
-
-                public ITeacherSkillRepository TeacherSkillRepository { get; set; }
 
                 public virtual void AmountPerMinuteRules()
                 {
@@ -45,14 +42,14 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidTeacher(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TeacherRepository.Get(id);
+                        var record = await this.rateRepository.GetTeacher(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidTeacherSkill(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TeacherSkillRepository.Get(id);
+                        var record = await this.rateRepository.GetTeacherSkill(id);
 
                         return record != null;
                 }
@@ -60,5 +57,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c03e87470a2ba27afe637ea595179f32</Hash>
+    <Hash>668cf406af35c57c61c066f7823756e7</Hash>
 </Codenesium>*/

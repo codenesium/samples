@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractWorkOrderController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractWorkOrderController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkOrderService workOrderService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductID/{productID}")]
+                [Route("byProductID/{productID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProductID(int productID)
+                public async virtual Task<IActionResult> ByProductID(int productID)
                 {
-                        List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.GetProductID(productID);
+                        List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByProductID(productID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getScrapReasonID/{scrapReasonID}")]
+                [Route("byScrapReasonID/{scrapReasonID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetScrapReasonID(Nullable<short> scrapReasonID)
+                public async virtual Task<IActionResult> ByScrapReasonID(Nullable<short> scrapReasonID)
                 {
-                        List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.GetScrapReasonID(scrapReasonID);
+                        List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByScrapReasonID(scrapReasonID);
 
                         return this.Ok(response);
                 }
@@ -200,5 +200,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f41552144c6b67c72e9bd986a6c2db83</Hash>
+    <Hash>db992206ea3d5cd207cbe18b116d5423</Hash>
 </Codenesium>*/

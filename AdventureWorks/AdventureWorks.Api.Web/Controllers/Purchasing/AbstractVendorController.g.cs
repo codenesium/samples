@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractVendorController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractVendorController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVendorService vendorService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getAccountNumber/{accountNumber}")]
+                [Route("byAccountNumber/{accountNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiVendorResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetAccountNumber(string accountNumber)
+                public async virtual Task<IActionResult> ByAccountNumber(string accountNumber)
                 {
-                        ApiVendorResponseModel response = await this.VendorService.GetAccountNumber(accountNumber);
+                        ApiVendorResponseModel response = await this.VendorService.ByAccountNumber(accountNumber);
 
                         if (response == null)
                         {
@@ -210,5 +210,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ba3466c9b54154b2f960caeed81c9fff</Hash>
+    <Hash>f7cc294fe587b3d2d884f5c5b8d1a193</Hash>
 </Codenesium>*/

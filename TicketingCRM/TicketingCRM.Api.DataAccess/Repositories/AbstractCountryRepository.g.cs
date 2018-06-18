@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Country>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Country>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Country> Get(int id)
@@ -75,36 +76,31 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Country>> Where(Expression<Func<Country, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Country>> Where(
+                        Expression<Func<Country, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Country, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Country> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Country>> SearchLinqEF(Expression<Func<Country, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Country.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Country>();
-                }
-
-                private async Task<List<Country>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Country.Id)} ASC";
+                                return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
                         }
-
-                        return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Country>();
+                        else
+                        {
+                                return await this.Context.Set<Country>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Country>();
+                        }
                 }
 
                 private async Task<Country> GetById(int id)
                 {
-                        List<Country> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Country> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6b09cc23312c1b11a3c0b3b9273a2517</Hash>
+    <Hash>3a5334222ac4efacd8f5fdf0433b9317</Hash>
 </Codenesium>*/

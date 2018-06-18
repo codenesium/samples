@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiProductInventoryRequestModel model, int id)
+                IProductInventoryRepository productInventoryRepository;
+
+                public AbstractApiProductInventoryRequestModelValidator(IProductInventoryRepository productInventoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.productInventoryRepository = productInventoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProductInventoryRequestModel model, int id)
@@ -54,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85485285a43c753a925452347e4473ae</Hash>
+    <Hash>a49becce6aaef7d6d5342ced66acee93</Hash>
 </Codenesium>*/

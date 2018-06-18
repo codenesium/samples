@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class DestinationService: AbstractDestinationService, IDestinationService
         {
                 public DestinationService(
-                        ILogger<DestinationRepository> logger,
+                        ILogger<IDestinationRepository> logger,
                         IDestinationRepository destinationRepository,
                         IApiDestinationRequestModelValidator destinationModelValidator,
                         IBOLDestinationMapper boldestinationMapper,
@@ -38,5 +38,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5caab255199b973b3c5c753a5b60281</Hash>
+    <Hash>9b3f23deadbaf1520ada5e77e433f8cc</Hash>
 </Codenesium>*/

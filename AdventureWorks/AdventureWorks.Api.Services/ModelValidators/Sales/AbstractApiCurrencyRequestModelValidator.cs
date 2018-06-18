@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiCurrencyRequestModel model, string id)
+                ICurrencyRepository currencyRepository;
+
+                public AbstractApiCurrencyRequestModelValidator(ICurrencyRepository currencyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.currencyRepository = currencyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCurrencyRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ICurrencyRepository CurrencyRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiCurrencyRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiCurrencyRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Currency record = await this.CurrencyRepository.GetName(model.Name);
+                        Currency record = await this.currencyRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.CurrencyCode == this.existingRecordId))
                         {
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd28523e5e7502750780755f19719063</Hash>
+    <Hash>b6dc7132889b8272c4b4e5ac73fc6982</Hash>
 </Codenesium>*/

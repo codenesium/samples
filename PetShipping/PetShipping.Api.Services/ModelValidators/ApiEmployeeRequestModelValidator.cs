@@ -8,7 +8,8 @@ namespace PetShippingNS.Api.Services
 {
         public class ApiEmployeeRequestModelValidator: AbstractApiEmployeeRequestModelValidator, IApiEmployeeRequestModelValidator
         {
-                public ApiEmployeeRequestModelValidator()
+                public ApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
+                        : base(employeeRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6f433dfa6d58801964d0a7366cb3c3b5</Hash>
+    <Hash>b1dcafa9763d457a6470f5e1ddc5daa7</Hash>
 </Codenesium>*/

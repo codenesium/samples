@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductProductPhoto>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProductProductPhoto>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProductProductPhoto> Get(int productID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ProductProductPhoto>> Where(Expression<Func<ProductProductPhoto, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProductProductPhoto>> Where(
+                        Expression<Func<ProductProductPhoto, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProductProductPhoto, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ProductProductPhoto> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ProductProductPhoto>> SearchLinqEF(Expression<Func<ProductProductPhoto, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProductProductPhoto.ProductID)} ASC";
+                                orderBy = x => x.ProductID;
                         }
 
-                        return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
-                }
-
-                private async Task<List<ProductProductPhoto>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProductProductPhoto.ProductID)} ASC";
+                                return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
                         }
-
-                        return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
+                        else
+                        {
+                                return await this.Context.Set<ProductProductPhoto>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
+                        }
                 }
 
                 private async Task<ProductProductPhoto> GetById(int productID)
                 {
-                        List<ProductProductPhoto> records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        List<ProductProductPhoto> records = await this.Where(x => x.ProductID == productID);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>151c25d36dfb65c2ff5105f915b71efc</Hash>
+    <Hash>eefe2dbb977f8082128759cf0a61291d</Hash>
 </Codenesium>*/

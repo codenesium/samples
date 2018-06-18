@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Studio> Get(int id)
@@ -75,36 +76,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Studio>> Where(Expression<Func<Studio, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Studio>> Where(
+                        Expression<Func<Studio, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Studio, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Studio> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Studio>> SearchLinqEF(Expression<Func<Studio, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Studio.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Studio>();
-                }
-
-                private async Task<List<Studio>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Studio.Id)} ASC";
+                                return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
                         }
-
-                        return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Studio>();
+                        else
+                        {
+                                return await this.Context.Set<Studio>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Studio>();
+                        }
                 }
 
                 private async Task<Studio> GetById(int id)
                 {
-                        List<Studio> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Studio> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -145,9 +141,14 @@ namespace FermataFishNS.Api.DataAccess
                 {
                         return await this.Context.Set<TeacherSkill>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
                 }
+
+                public async virtual Task<State> GetState(int stateId)
+                {
+                        return await this.Context.Set<State>().SingleOrDefaultAsync(x => x.Id == stateId);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>87fcae7cfb9078d90c1aca4e5277d65c</Hash>
+    <Hash>2be8be56c131fe4b636e4dd5e6864410</Hash>
 </Codenesium>*/

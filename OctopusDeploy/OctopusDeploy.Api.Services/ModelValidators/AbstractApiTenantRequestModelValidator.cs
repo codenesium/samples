@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiTenantRequestModel model, string id)
+                ITenantRepository tenantRepository;
+
+                public AbstractApiTenantRequestModelValidator(ITenantRepository tenantRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.tenantRepository = tenantRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTenantRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ITenantRepository TenantRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
                 }
@@ -53,7 +53,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiTenantRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Tenant record = await this.TenantRepository.GetName(model.Name);
+                        Tenant record = await this.tenantRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -68,5 +68,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>583ac73d7b719a84f08b6e6566592f20</Hash>
+    <Hash>1ebb05c7f6d73617c28a589bfe158223</Hash>
 </Codenesium>*/

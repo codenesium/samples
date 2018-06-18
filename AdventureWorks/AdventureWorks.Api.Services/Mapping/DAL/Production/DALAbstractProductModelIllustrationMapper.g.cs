@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOProductModelIllustration MapEFToBO(
                         ProductModelIllustration ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOProductModelIllustration();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac97e5c53a78a72793898979363759c2</Hash>
+    <Hash>04ffe6308d3c28564143ba9429f74355</Hash>
 </Codenesium>*/

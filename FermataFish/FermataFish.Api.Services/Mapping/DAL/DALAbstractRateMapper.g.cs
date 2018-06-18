@@ -24,11 +24,6 @@ namespace FermataFishNS.Api.Services
                 public virtual BORate MapEFToBO(
                         Rate ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BORate();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e650b8b8554d01c1cfcbbe593a7653df</Hash>
+    <Hash>ec9c39ec5abfa7bc2286906efb28a561</Hash>
 </Codenesium>*/

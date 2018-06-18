@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ErrorLog> Get(int errorLogID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ErrorLog>> Where(Expression<Func<ErrorLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ErrorLog>> Where(
+                        Expression<Func<ErrorLog, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ErrorLog, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ErrorLog> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ErrorLog>> SearchLinqEF(Expression<Func<ErrorLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ErrorLog.ErrorLogID)} ASC";
+                                orderBy = x => x.ErrorLogID;
                         }
 
-                        return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
-                }
-
-                private async Task<List<ErrorLog>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ErrorLog.ErrorLogID)} ASC";
+                                return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
                         }
-
-                        return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
+                        else
+                        {
+                                return await this.Context.Set<ErrorLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ErrorLog>();
+                        }
                 }
 
                 private async Task<ErrorLog> GetById(int errorLogID)
                 {
-                        List<ErrorLog> records = await this.SearchLinqEF(x => x.ErrorLogID == errorLogID);
+                        List<ErrorLog> records = await this.Where(x => x.ErrorLogID == errorLogID);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4a2a9ece03ca8241cceb3563031cb4b7</Hash>
+    <Hash>707787311fc8dc3365612bfa7ac21f92</Hash>
 </Codenesium>*/

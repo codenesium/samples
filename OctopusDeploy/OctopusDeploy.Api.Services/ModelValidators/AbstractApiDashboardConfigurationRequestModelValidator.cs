@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiDashboardConfigurationRequestModel model, string id)
+                IDashboardConfigurationRepository dashboardConfigurationRepository;
+
+                public AbstractApiDashboardConfigurationRequestModelValidator(IDashboardConfigurationRepository dashboardConfigurationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.dashboardConfigurationRepository = dashboardConfigurationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDashboardConfigurationRequestModel model, string id)
@@ -51,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2428cd84ff21ba349dcc84225de8d6b7</Hash>
+    <Hash>2a9e9d9ef403498aec770b2a28e28eb4</Hash>
 </Codenesium>*/

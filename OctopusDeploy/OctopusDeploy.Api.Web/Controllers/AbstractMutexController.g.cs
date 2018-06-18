@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractMutexController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractMutexController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMutexService mutexService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>871217f0bb115d564a9aa64b11e3aa34</Hash>
+    <Hash>5c13eb74b61c7ae784efd088c6f8268f</Hash>
 </Codenesium>*/

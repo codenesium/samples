@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiErrorLogRequestModel model, int id)
+                IErrorLogRepository errorLogRepository;
+
+                public AbstractApiErrorLogRequestModelValidator(IErrorLogRepository errorLogRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.errorLogRepository = errorLogRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiErrorLogRequestModel model, int id)
@@ -65,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>81c5395490532de681de3363fceb7a05</Hash>
+    <Hash>505a0fa431736f8fc1eccb245661d4a8</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Venue>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Venue>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Venue> Get(int id)
@@ -77,53 +78,57 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 public async Task<List<Venue>> GetAdminId(int adminId)
                 {
-                        var records = await this.SearchLinqEF(x => x.AdminId == adminId);
+                        var records = await this.Where(x => x.AdminId == adminId);
 
                         return records;
                 }
                 public async Task<List<Venue>> GetProvinceId(int provinceId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProvinceId == provinceId);
+                        var records = await this.Where(x => x.ProvinceId == provinceId);
 
                         return records;
                 }
 
-                protected async Task<List<Venue>> Where(Expression<Func<Venue, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Venue>> Where(
+                        Expression<Func<Venue, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Venue, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Venue> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Venue>> SearchLinqEF(Expression<Func<Venue, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Venue.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Venue>();
-                }
-
-                private async Task<List<Venue>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Venue.Id)} ASC";
+                                return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Venue>();
                         }
-
-                        return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Venue>();
+                        else
+                        {
+                                return await this.Context.Set<Venue>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Venue>();
+                        }
                 }
 
                 private async Task<Venue> GetById(int id)
                 {
-                        List<Venue> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Venue> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Admin> GetAdmin(int adminId)
+                {
+                        return await this.Context.Set<Admin>().SingleOrDefaultAsync(x => x.Id == adminId);
+                }
+                public async virtual Task<Province> GetProvince(int provinceId)
+                {
+                        return await this.Context.Set<Province>().SingleOrDefaultAsync(x => x.Id == provinceId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4cbd0ee139e041d6077c182d26168e85</Hash>
+    <Hash>03a4b1b2aa07a43312215585e0bef9ec</Hash>
 </Codenesium>*/

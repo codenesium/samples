@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiScrapReasonRequestModelValidator: AbstractApiScrapReasonRequestModelValidator, IApiScrapReasonRequestModelValidator
         {
-                public ApiScrapReasonRequestModelValidator()
+                public ApiScrapReasonRequestModelValidator(IScrapReasonRepository scrapReasonRepository)
+                        : base(scrapReasonRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33cd707cd090e4b06a8105da25764078</Hash>
+    <Hash>e9fb375b7848888d85f3ab3d006b1125</Hash>
 </Codenesium>*/

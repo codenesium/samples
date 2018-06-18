@@ -23,11 +23,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOPipeline MapEFToBO(
                         Pipeline ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPipeline();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f9a5f19509d55924e9d8c1b918e1bac</Hash>
+    <Hash>b88edd0679c21b6a84e0a5a0b66897b9</Hash>
 </Codenesium>*/

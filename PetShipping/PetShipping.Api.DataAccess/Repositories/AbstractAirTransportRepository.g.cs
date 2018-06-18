@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<AirTransport>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<AirTransport>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<AirTransport> Get(int airlineId)
@@ -75,42 +76,42 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<AirTransport>> Where(Expression<Func<AirTransport, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<AirTransport>> Where(
+                        Expression<Func<AirTransport, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<AirTransport, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<AirTransport> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<AirTransport>> SearchLinqEF(Expression<Func<AirTransport, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(AirTransport.AirlineId)} ASC";
+                                orderBy = x => x.AirlineId;
                         }
 
-                        return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<AirTransport>();
-                }
-
-                private async Task<List<AirTransport>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(AirTransport.AirlineId)} ASC";
+                                return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
                         }
-
-                        return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<AirTransport>();
+                        else
+                        {
+                                return await this.Context.Set<AirTransport>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<AirTransport>();
+                        }
                 }
 
                 private async Task<AirTransport> GetById(int airlineId)
                 {
-                        List<AirTransport> records = await this.SearchLinqEF(x => x.AirlineId == airlineId);
+                        List<AirTransport> records = await this.Where(x => x.AirlineId == airlineId);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Handler> GetHandler(int handlerId)
+                {
+                        return await this.Context.Set<Handler>().SingleOrDefaultAsync(x => x.Id == handlerId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a2f74b2356427ca77a0e4516c1ada6d9</Hash>
+    <Hash>9bc2d11644d6903c51f18dd1f68ee8be</Hash>
 </Codenesium>*/

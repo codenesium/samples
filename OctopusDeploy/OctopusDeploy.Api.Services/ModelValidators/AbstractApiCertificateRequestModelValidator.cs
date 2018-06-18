@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiCertificateRequestModel model, string id)
+                ICertificateRepository certificateRepository;
+
+                public AbstractApiCertificateRequestModelValidator(ICertificateRepository certificateRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.certificateRepository = certificateRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCertificateRequestModel model, string id)
@@ -78,5 +79,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef3854d9c49f077fff81e87e6df22cdd</Hash>
+    <Hash>8a547cb839b549d2f32971cbce53767d</Hash>
 </Codenesium>*/

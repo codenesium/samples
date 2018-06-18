@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractEmailAddressController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractEmailAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmailAddressService emailAddressService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getEmailAddress/{emailAddress1}")]
+                [Route("byEmailAddress/{emailAddress1}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEmailAddressResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetEmailAddress(string emailAddress1)
+                public async virtual Task<IActionResult> ByEmailAddress(string emailAddress1)
                 {
-                        List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.GetEmailAddress(emailAddress1);
+                        List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.ByEmailAddress(emailAddress1);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0fa21f3d8f160facd034468d4f2e4ca4</Hash>
+    <Hash>4826d70fcdd1eb876aa22de603959b7c</Hash>
 </Codenesium>*/

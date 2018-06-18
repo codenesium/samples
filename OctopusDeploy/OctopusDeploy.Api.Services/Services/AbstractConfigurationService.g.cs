@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.configurationRepository.All(limit, offset, orderClause);
+                        var records = await this.configurationRepository.All(limit, offset);
 
                         return this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.configurationRepository.Get(id);
 
-                        return this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiConfigurationResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16c0f89b1a7f6841516e0ef19873de6d</Hash>
+    <Hash>a80b337436fab8d8bba0a5ca67267c3c</Hash>
 </Codenesium>*/

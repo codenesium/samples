@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiDeploymentHistoryRequestModelValidator: AbstractApiDeploymentHistoryRequestModelValidator, IApiDeploymentHistoryRequestModelValidator
         {
-                public ApiDeploymentHistoryRequestModelValidator()
+                public ApiDeploymentHistoryRequestModelValidator(IDeploymentHistoryRepository deploymentHistoryRepository)
+                        : base(deploymentHistoryRepository)
                 {
                 }
 
@@ -70,5 +71,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c3f9dea4805e375db3cb05bb201ae5bf</Hash>
+    <Hash>87410ad32f3d7e44310c71ffb4d845f6</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PetStoreNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Pen>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Pen>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Pen> Get(int id)
@@ -75,36 +76,31 @@ namespace PetStoreNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Pen>> Where(Expression<Func<Pen, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Pen>> Where(
+                        Expression<Func<Pen, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Pen, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Pen> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Pen>> SearchLinqEF(Expression<Func<Pen, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Pen.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Pen>();
-                }
-
-                private async Task<List<Pen>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Pen.Id)} ASC";
+                                return await this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Pen>();
                         }
-
-                        return await this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Pen>();
+                        else
+                        {
+                                return await this.Context.Set<Pen>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Pen>();
+                        }
                 }
 
                 private async Task<Pen> GetById(int id)
                 {
-                        List<Pen> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Pen> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8371408c8c3339a5a5342b70f21aa5f</Hash>
+    <Hash>4226d6f215d986ecb2065343c9d01409</Hash>
 </Codenesium>*/

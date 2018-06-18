@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class ClientCommunicationController: AbstractClientCommunicationController
         {
                 public ClientCommunicationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ClientCommunicationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IClientCommunicationService clientCommunicationService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2c7a5a76aa48f517ed32ee99702f47fa</Hash>
+    <Hash>b3b02dbfac361e645548888f7f82e0f6</Hash>
 </Codenesium>*/

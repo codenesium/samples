@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class SubscriptionController: AbstractSubscriptionController
         {
                 public SubscriptionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SubscriptionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISubscriptionService subscriptionService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c59141b6149369e47b2b7b3725a9f87d</Hash>
+    <Hash>dad9b591c080f71947d815e77c01efa6</Hash>
 </Codenesium>*/

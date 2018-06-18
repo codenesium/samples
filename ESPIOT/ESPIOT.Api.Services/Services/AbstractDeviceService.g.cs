@@ -52,9 +52,9 @@ namespace ESPIOTNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeviceResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeviceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.deviceRepository.All(limit, offset, orderClause);
+                        var records = await this.deviceRepository.All(limit, offset);
 
                         return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace ESPIOTNS.Api.Services
                 {
                         var record = await this.deviceRepository.Get(id);
 
-                        return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiDeviceResponseModel>> Create(
@@ -113,7 +120,14 @@ namespace ESPIOTNS.Api.Services
                 {
                         Device record = await this.deviceRepository.ByPublicId(publicId);
 
-                        return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolDeviceMapper.MapBOToModel(this.dalDeviceMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0)
@@ -126,5 +140,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce5b8c6c08b20ee8f16f21e69d83d88d</Hash>
+    <Hash>d15329addee84b824f9a1525ee308e70</Hash>
 </Codenesium>*/

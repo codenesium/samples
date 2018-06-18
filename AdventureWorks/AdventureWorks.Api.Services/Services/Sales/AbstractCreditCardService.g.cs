@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.creditCardRepository.All(limit, offset, orderClause);
+                        var records = await this.creditCardRepository.All(limit, offset);
 
                         return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.creditCardRepository.Get(creditCardID);
 
-                        return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
@@ -117,11 +124,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiCreditCardResponseModel> GetCardNumber(string cardNumber)
+                public async Task<ApiCreditCardResponseModel> ByCardNumber(string cardNumber)
                 {
-                        CreditCard record = await this.creditCardRepository.GetCardNumber(cardNumber);
+                        CreditCard record = await this.creditCardRepository.ByCardNumber(cardNumber);
 
-                        return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0)
@@ -140,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7db3d60a545b2153e3ec25f3f07c961c</Hash>
+    <Hash>77b5bc20f2a91d12c9f04d444ae1c445</Hash>
 </Codenesium>*/

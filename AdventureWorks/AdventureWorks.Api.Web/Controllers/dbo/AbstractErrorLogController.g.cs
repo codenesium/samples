@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractErrorLogController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractErrorLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IErrorLogService errorLogService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c249a95534e85e7c397a3f7ae5d9b5db</Hash>
+    <Hash>d6fca68e78fe64411972f47c70b3e977</Hash>
 </Codenesium>*/

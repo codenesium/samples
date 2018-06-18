@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiUnitMeasureRequestModel model, string id)
+                IUnitMeasureRepository unitMeasureRepository;
+
+                public AbstractApiUnitMeasureRequestModelValidator(IUnitMeasureRepository unitMeasureRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.unitMeasureRepository = unitMeasureRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiUnitMeasureRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IUnitMeasureRepository UnitMeasureRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUnitMeasureRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiUnitMeasureRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiUnitMeasureRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiUnitMeasureRequestModel model,  CancellationToken cancellationToken)
                 {
-                        UnitMeasure record = await this.UnitMeasureRepository.GetName(model.Name);
+                        UnitMeasure record = await this.unitMeasureRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.UnitMeasureCode == this.existingRecordId))
                         {
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52b25aec506b79f3a541817617508808</Hash>
+    <Hash>0e5255393023c853225b2943850d6556</Hash>
 </Codenesium>*/

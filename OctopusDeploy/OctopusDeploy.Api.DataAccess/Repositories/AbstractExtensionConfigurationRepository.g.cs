@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ExtensionConfiguration>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ExtensionConfiguration>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ExtensionConfiguration> Get(string id)
@@ -75,36 +76,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ExtensionConfiguration>> Where(Expression<Func<ExtensionConfiguration, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ExtensionConfiguration>> Where(
+                        Expression<Func<ExtensionConfiguration, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ExtensionConfiguration, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ExtensionConfiguration> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ExtensionConfiguration>> SearchLinqEF(Expression<Func<ExtensionConfiguration, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ExtensionConfiguration.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<ExtensionConfiguration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ExtensionConfiguration>();
-                }
-
-                private async Task<List<ExtensionConfiguration>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ExtensionConfiguration.Id)} ASC";
+                                return await this.Context.Set<ExtensionConfiguration>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ExtensionConfiguration>();
                         }
-
-                        return await this.Context.Set<ExtensionConfiguration>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ExtensionConfiguration>();
+                        else
+                        {
+                                return await this.Context.Set<ExtensionConfiguration>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ExtensionConfiguration>();
+                        }
                 }
 
                 private async Task<ExtensionConfiguration> GetById(string id)
                 {
-                        List<ExtensionConfiguration> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<ExtensionConfiguration> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>44884da5199cf3c650de2418c051a84c</Hash>
+    <Hash>cd4dca683b3a79c23ba0944aeb7c31bf</Hash>
 </Codenesium>*/

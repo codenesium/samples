@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Invitation>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Invitation>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Invitation> Get(string id)
@@ -75,36 +76,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Invitation>> Where(Expression<Func<Invitation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Invitation>> Where(
+                        Expression<Func<Invitation, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Invitation, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Invitation> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Invitation>> SearchLinqEF(Expression<Func<Invitation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Invitation.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Invitation>();
-                }
-
-                private async Task<List<Invitation>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Invitation.Id)} ASC";
+                                return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Invitation>();
                         }
-
-                        return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Invitation>();
+                        else
+                        {
+                                return await this.Context.Set<Invitation>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Invitation>();
+                        }
                 }
 
                 private async Task<Invitation> GetById(string id)
                 {
-                        List<Invitation> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Invitation> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ac21c721859e6a3c1bd9e97aa713b4b7</Hash>
+    <Hash>9dac2e725e97b93cb0a66bc0eb3e3cf9</Hash>
 </Codenesium>*/

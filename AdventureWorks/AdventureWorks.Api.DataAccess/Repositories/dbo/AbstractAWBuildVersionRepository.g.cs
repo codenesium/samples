@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<AWBuildVersion> Get(int systemInformationID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<AWBuildVersion>> Where(Expression<Func<AWBuildVersion, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<AWBuildVersion>> Where(
+                        Expression<Func<AWBuildVersion, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<AWBuildVersion, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<AWBuildVersion> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<AWBuildVersion>> SearchLinqEF(Expression<Func<AWBuildVersion, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
+                                orderBy = x => x.SystemInformationID;
                         }
 
-                        return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
-                }
-
-                private async Task<List<AWBuildVersion>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(AWBuildVersion.SystemInformationID)} ASC";
+                                return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
                         }
-
-                        return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
+                        else
+                        {
+                                return await this.Context.Set<AWBuildVersion>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<AWBuildVersion>();
+                        }
                 }
 
                 private async Task<AWBuildVersion> GetById(int systemInformationID)
                 {
-                        List<AWBuildVersion> records = await this.SearchLinqEF(x => x.SystemInformationID == systemInformationID);
+                        List<AWBuildVersion> records = await this.Where(x => x.SystemInformationID == systemInformationID);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>768044740489026f1a87f9e243956167</Hash>
+    <Hash>1ff6e4a2d57aa3f170476fa0bd49c9da</Hash>
 </Codenesium>*/

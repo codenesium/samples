@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductPhoto>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProductPhoto>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProductPhoto> Get(int productPhotoID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<ProductPhoto>> Where(Expression<Func<ProductPhoto, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProductPhoto>> Where(
+                        Expression<Func<ProductPhoto, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProductPhoto, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ProductPhoto> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ProductPhoto>> SearchLinqEF(Expression<Func<ProductPhoto, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
+                                orderBy = x => x.ProductPhotoID;
                         }
 
-                        return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
-                }
-
-                private async Task<List<ProductPhoto>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProductPhoto.ProductPhotoID)} ASC";
+                                return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
                         }
-
-                        return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
+                        else
+                        {
+                                return await this.Context.Set<ProductPhoto>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductPhoto>();
+                        }
                 }
 
                 private async Task<ProductPhoto> GetById(int productPhotoID)
                 {
-                        List<ProductPhoto> records = await this.SearchLinqEF(x => x.ProductPhotoID == productPhotoID);
+                        List<ProductPhoto> records = await this.Where(x => x.ProductPhotoID == productPhotoID);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d010b72cad23ce154bad9b9669c22c9d</Hash>
+    <Hash>0448c9adee38eaa79073be3dadd3503f</Hash>
 </Codenesium>*/

@@ -9,7 +9,9 @@ using PetShippingNS.Api.Client;
 
 namespace PetShippingNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "CountryRequirement")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "CountryRequirement")]
+        [Trait("Area", "Integration")]
         public class CountryRequirementTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>07be6162151700cf4d5deba79b85834f</Hash>
+    <Hash>96932c97b585184fae0031cb24916210</Hash>
 </Codenesium>*/

@@ -28,11 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOProductReview MapEFToBO(
                         ProductReview ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOProductReview();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac1aed8e229a0507dc29d3424bdb9a78</Hash>
+    <Hash>29606a0c2a2c817cd78e40cdc81e2ebe</Hash>
 </Codenesium>*/

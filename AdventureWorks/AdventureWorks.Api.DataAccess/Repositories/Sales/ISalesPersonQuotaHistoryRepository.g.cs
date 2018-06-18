@@ -15,10 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<SalesPersonQuotaHistory> Get(int businessEntityID);
 
-                Task<List<SalesPersonQuotaHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<SalesPersonQuotaHistory>> All(int limit = int.MaxValue, int offset = 0);
+
+                Task<SalesPerson> GetSalesPerson(int businessEntityID);
         }
 }
 
 /*<Codenesium>
-    <Hash>90efb482b2f924889a500bb73f921c9d</Hash>
+    <Hash>ea13e2c2ebb8bb543e58eb83c5e7b336</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiShipMethodRequestModel model, int id)
+                IShipMethodRepository shipMethodRepository;
+
+                public AbstractApiShipMethodRequestModelValidator(IShipMethodRepository shipMethodRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.shipMethodRepository = shipMethodRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiShipMethodRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IShipMethodRepository ShipMethodRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -49,9 +49,9 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiShipMethodRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiShipMethodRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ShipMethod record = await this.ShipMethodRepository.GetName(model.Name);
+                        ShipMethod record = await this.shipMethodRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ShipMethodID == this.existingRecordId))
                         {
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7b76e5ac68bb809d85d97a8ff54bfb9</Hash>
+    <Hash>2a2ee156906d80709455ce50119930ac</Hash>
 </Codenesium>*/

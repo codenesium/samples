@@ -15,14 +15,16 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 Task<Sale> Get(int id);
 
-                Task<List<Sale>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Sale>> GetTransactionId(int transactionId);
 
                 Task<List<SaleTickets>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0);
+
+                Task<Transaction> GetTransaction(int transactionId);
         }
 }
 
 /*<Codenesium>
-    <Hash>d4ff0cb2c95f5677fff8899e8e34530e</Hash>
+    <Hash>74e8184daf0e25cd08aad60452a3132d</Hash>
 </Codenesium>*/

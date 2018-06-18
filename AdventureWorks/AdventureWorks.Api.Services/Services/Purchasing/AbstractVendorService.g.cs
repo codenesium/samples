@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.vendorRepository.All(limit, offset, orderClause);
+                        var records = await this.vendorRepository.All(limit, offset);
 
                         return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.vendorRepository.Get(businessEntityID);
 
-                        return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiVendorResponseModel>> Create(
@@ -117,11 +124,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiVendorResponseModel> GetAccountNumber(string accountNumber)
+                public async Task<ApiVendorResponseModel> ByAccountNumber(string accountNumber)
                 {
-                        Vendor record = await this.vendorRepository.GetAccountNumber(accountNumber);
+                        Vendor record = await this.vendorRepository.ByAccountNumber(accountNumber);
 
-                        return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiProductVendorResponseModel>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
@@ -140,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75cd670fbca4dce0637c80a01d6338a0</Hash>
+    <Hash>e9ae6bdbc610dfef67884ec991774be8</Hash>
 </Codenesium>*/

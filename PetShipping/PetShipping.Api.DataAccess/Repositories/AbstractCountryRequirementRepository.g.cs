@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<CountryRequirement> Get(int id)
@@ -75,42 +76,42 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<CountryRequirement>> Where(Expression<Func<CountryRequirement, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<CountryRequirement>> Where(
+                        Expression<Func<CountryRequirement, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<CountryRequirement, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<CountryRequirement> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<CountryRequirement>> SearchLinqEF(Expression<Func<CountryRequirement, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(CountryRequirement.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
-                }
-
-                private async Task<List<CountryRequirement>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(CountryRequirement.Id)} ASC";
+                                return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
                         }
-
-                        return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
+                        else
+                        {
+                                return await this.Context.Set<CountryRequirement>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
+                        }
                 }
 
                 private async Task<CountryRequirement> GetById(int id)
                 {
-                        List<CountryRequirement> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<CountryRequirement> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Country> GetCountry(int countryId)
+                {
+                        return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>03c2b98429d972f3d3cd36f6b96e0a1a</Hash>
+    <Hash>bb5962bc9a4a319a6a2dd009bb8a7cfc</Hash>
 </Codenesium>*/

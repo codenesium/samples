@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiSpaceRequestModelValidator: AbstractApiSpaceRequestModelValidator, IApiSpaceRequestModelValidator
         {
-                public ApiSpaceRequestModelValidator()
+                public ApiSpaceRequestModelValidator(ISpaceRepository spaceRepository)
+                        : base(spaceRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42f4b01bc5f0727f023df0e9be13b318</Hash>
+    <Hash>76f0e804106a1b4e639e82a3f183aff5</Hash>
 </Codenesium>*/

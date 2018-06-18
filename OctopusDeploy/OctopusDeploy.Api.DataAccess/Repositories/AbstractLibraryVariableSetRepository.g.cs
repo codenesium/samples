@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<LibraryVariableSet>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<LibraryVariableSet>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<LibraryVariableSet> Get(string id)
@@ -77,41 +78,36 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<LibraryVariableSet> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<LibraryVariableSet>> Where(Expression<Func<LibraryVariableSet, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<LibraryVariableSet>> Where(
+                        Expression<Func<LibraryVariableSet, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<LibraryVariableSet, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<LibraryVariableSet> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<LibraryVariableSet>> SearchLinqEF(Expression<Func<LibraryVariableSet, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(LibraryVariableSet.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<LibraryVariableSet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LibraryVariableSet>();
-                }
-
-                private async Task<List<LibraryVariableSet>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(LibraryVariableSet.Id)} ASC";
+                                return await this.Context.Set<LibraryVariableSet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LibraryVariableSet>();
                         }
-
-                        return await this.Context.Set<LibraryVariableSet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LibraryVariableSet>();
+                        else
+                        {
+                                return await this.Context.Set<LibraryVariableSet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<LibraryVariableSet>();
+                        }
                 }
 
                 private async Task<LibraryVariableSet> GetById(string id)
                 {
-                        List<LibraryVariableSet> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<LibraryVariableSet> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1ce43d054133bc4129914c42519578fd</Hash>
+    <Hash>cdcb951a4f2ef15c6e84c4a31461432d</Hash>
 </Codenesium>*/

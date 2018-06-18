@@ -8,7 +8,8 @@ namespace ESPIOTNS.Api.Services
 {
         public class ApiDeviceActionRequestModelValidator: AbstractApiDeviceActionRequestModelValidator, IApiDeviceActionRequestModelValidator
         {
-                public ApiDeviceActionRequestModelValidator()
+                public ApiDeviceActionRequestModelValidator(IDeviceActionRepository deviceActionRepository)
+                        : base(deviceActionRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb66df71172260f6ce1f9dbbb1600dd6</Hash>
+    <Hash>1de1a9bd098f52c8712adcf770194ed6</Hash>
 </Codenesium>*/

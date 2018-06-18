@@ -23,7 +23,7 @@ namespace Codenesium.Foundation.CommonMVC
     {
         DbContext context;
         public ApiHealthController(
-                       ServiceSettings settings,
+                       ApiSettings settings,
                        ILogger<ApiHealthController> logger,
                        ITransactionCoordinator transactionCoordinator,
                        DbContext context
@@ -147,11 +147,11 @@ namespace Codenesium.Foundation.CommonMVC
 
         protected ILogger Logger { get; private set;  }
 
-		protected ServiceSettings Settings { get; private set;  }
+		protected ApiSettings Settings { get; private set;  }
 
 
         public AbstractApiController(
-	        ServiceSettings settings,
+	        ApiSettings settings,
             ILogger logger,
             ITransactionCoordinator transactionCooordinator
             )
@@ -357,23 +357,23 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-	public class ServiceSettings
+	public class ApiSettings
     {
 
-        public string ExternalBaseUrl { get; set; }
+        public virtual string ExternalBaseUrl { get; set; }
 
-        public bool MigrateDatabase { get; set; }
+        public virtual bool MigrateDatabase { get; set; }
 
-        public bool SecurityEnabled { get; set; }
+        public virtual bool SecurityEnabled { get; set; }
 
-        public JwtSettings JwtSettings { get; set; }
+        public virtual JwtSettings JwtSettings { get; set; }
     }
 
     public class JwtSettings
     {
-        public string SigningKey { get; set; }
-        public string Issuer { get; set; }
-        public string Audience { get; set; }
+        public virtual string SigningKey { get; set; }
+        public virtual string Issuer { get; set; }
+        public virtual string Audience { get; set; }
     }
 
     public class SearchQuery

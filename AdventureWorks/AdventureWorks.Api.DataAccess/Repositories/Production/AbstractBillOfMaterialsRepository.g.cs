@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<BillOfMaterials>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<BillOfMaterials>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<BillOfMaterials> Get(int billOfMaterialsID)
@@ -75,49 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<BillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public async Task<BillOfMaterials> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
+                        var records = await this.Where(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<List<BillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode)
+                public async Task<List<BillOfMaterials>> ByUnitMeasureCode(string unitMeasureCode)
                 {
-                        var records = await this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode);
+                        var records = await this.Where(x => x.UnitMeasureCode == unitMeasureCode);
 
                         return records;
                 }
 
-                protected async Task<List<BillOfMaterials>> Where(Expression<Func<BillOfMaterials, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<BillOfMaterials>> Where(
+                        Expression<Func<BillOfMaterials, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<BillOfMaterials, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<BillOfMaterials> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<BillOfMaterials>> SearchLinqEF(Expression<Func<BillOfMaterials, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(BillOfMaterials.BillOfMaterialsID)} ASC";
+                                orderBy = x => x.BillOfMaterialsID;
                         }
 
-                        return await this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
-                }
-
-                private async Task<List<BillOfMaterials>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(BillOfMaterials.BillOfMaterialsID)} ASC";
+                                return await this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
                         }
-
-                        return await this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
+                        else
+                        {
+                                return await this.Context.Set<BillOfMaterials>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
+                        }
                 }
 
                 private async Task<BillOfMaterials> GetById(int billOfMaterialsID)
                 {
-                        List<BillOfMaterials> records = await this.SearchLinqEF(x => x.BillOfMaterialsID == billOfMaterialsID);
+                        List<BillOfMaterials> records = await this.Where(x => x.BillOfMaterialsID == billOfMaterialsID);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e4b6c13724668ef00836e37c5e8c656b</Hash>
+    <Hash>1835a60a5161a2dda3338eb338a568a5</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class StudioController: AbstractStudioController
         {
                 public StudioController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<StudioController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStudioService studioService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b8df7000b66286e88d37a5ddb4501a9a</Hash>
+    <Hash>c8a9c233858bbb2edebe71d252e3fcfc</Hash>
 </Codenesium>*/

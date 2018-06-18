@@ -68,9 +68,9 @@ namespace PetShippingNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiHandlerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiHandlerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.handlerRepository.All(limit, offset, orderClause);
+                        var records = await this.handlerRepository.All(limit, offset);
 
                         return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(records));
                 }
@@ -79,7 +79,14 @@ namespace PetShippingNS.Api.Services
                 {
                         var record = await this.handlerRepository.Get(id);
 
-                        return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolHandlerMapper.MapBOToModel(this.dalHandlerMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiHandlerResponseModel>> Create(
@@ -147,5 +154,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34c9e583223028686bf23d0d2ecb25fa</Hash>
+    <Hash>8ae300d2ceb7bfb47d6e7ce951c40ef6</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.machinePolicyRepository.All(limit, offset, orderClause);
+                        var records = await this.machinePolicyRepository.All(limit, offset);
 
                         return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.machinePolicyRepository.Get(id);
 
-                        return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiMachinePolicyResponseModel>> Create(
@@ -103,11 +110,18 @@ namespace OctopusDeployNS.Api.Services
                 {
                         MachinePolicy record = await this.machinePolicyRepository.GetName(name);
 
-                        return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fe87212dea8fb9e85b3cdb890f8eeee7</Hash>
+    <Hash>3229cff603d827a53acb850d2f7fde14</Hash>
 </Codenesium>*/

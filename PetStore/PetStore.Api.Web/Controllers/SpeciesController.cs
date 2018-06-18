@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Web
         public class SpeciesController: AbstractSpeciesController
         {
                 public SpeciesController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SpeciesController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpeciesService speciesService
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e735fb8cbcbeec7c63aaa26b797564ad</Hash>
+    <Hash>aedadef8f4aaf6ca20e7f156ff91330a</Hash>
 </Codenesium>*/

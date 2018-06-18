@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkerPoolResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkerPoolResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.workerPoolRepository.All(limit, offset, orderClause);
+                        var records = await this.workerPoolRepository.All(limit, offset);
 
                         return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.workerPoolRepository.Get(id);
 
-                        return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiWorkerPoolResponseModel>> Create(
@@ -103,11 +110,18 @@ namespace OctopusDeployNS.Api.Services
                 {
                         WorkerPool record = await this.workerPoolRepository.GetName(name);
 
-                        return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c3f2244abc915c7c9d9c5c03d83fb4f4</Hash>
+    <Hash>aeb9958e51f4bc170a5bb53488e24c0f</Hash>
 </Codenesium>*/

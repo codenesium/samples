@@ -15,12 +15,12 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<PipelineStepStatus> Get(int id);
 
-                Task<List<PipelineStepStatus>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<PipelineStepStatus>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<PipelineStep>> PipelineSteps(int pipelineStepStatusId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>da4595218b51faa82a19f0ae7d9f2487</Hash>
+    <Hash>c55eaa52a5bac4f6db0e6463e1e27a72</Hash>
 </Codenesium>*/

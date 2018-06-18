@@ -25,11 +25,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOSalesPersonQuotaHistory MapEFToBO(
                         SalesPersonQuotaHistory ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSalesPersonQuotaHistory();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b8cc718750cfee71ecfda7e50ee9939</Hash>
+    <Hash>c7cc75c3e76586a4d46392441da6dd43</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class LifecycleController: AbstractLifecycleController
         {
                 public LifecycleController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<LifecycleController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILifecycleService lifecycleService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>97cef635ba5de915dbf9af8262420559</Hash>
+    <Hash>dd9b643793eeb417562695eed3fbe612</Hash>
 </Codenesium>*/

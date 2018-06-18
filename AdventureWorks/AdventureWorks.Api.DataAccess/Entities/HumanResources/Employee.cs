@@ -24,7 +24,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         DateTime modifiedDate,
                         string nationalIDNumber,
                         Nullable<short> organizationLevel,
-                        Nullable<Guid> organizationNode,
                         Guid rowguid,
                         bool salariedFlag,
                         short sickLeaveHours,
@@ -41,7 +40,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
-                        this.OrganizationNode = organizationNode;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
                         this.SickLeaveHours = sickLeaveHours;
@@ -83,9 +81,6 @@ namespace AdventureWorksNS.Api.DataAccess
                 [Column("OrganizationLevel", TypeName="smallint")]
                 public Nullable<short> OrganizationLevel { get; private set; }
 
-                [Column("OrganizationNode", TypeName="hierarchyid(892)")]
-                public Nullable<Guid> OrganizationNode { get; private set; }
-
                 [Column("rowguid", TypeName="uniqueidentifier")]
                 public Guid Rowguid { get; private set; }
 
@@ -101,5 +96,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1a89e7b041ba64e95f5e0eae088da545</Hash>
+    <Hash>ad1461e48bbe8286e0c5ae0d3c8da1e4</Hash>
 </Codenesium>*/

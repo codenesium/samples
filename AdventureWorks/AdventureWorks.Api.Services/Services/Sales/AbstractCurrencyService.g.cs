@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCurrencyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCurrencyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.currencyRepository.All(limit, offset, orderClause);
+                        var records = await this.currencyRepository.All(limit, offset);
 
                         return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.currencyRepository.Get(currencyCode);
 
-                        return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiCurrencyResponseModel>> Create(
@@ -117,11 +124,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiCurrencyResponseModel> GetName(string name)
+                public async Task<ApiCurrencyResponseModel> ByName(string name)
                 {
-                        Currency record = await this.currencyRepository.GetName(name);
+                        Currency record = await this.currencyRepository.ByName(name);
 
-                        return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0)
@@ -140,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9595266ba082b5259a0260c67e1fdd1e</Hash>
+    <Hash>16ed112f48ad09eceba5dff77d9fde9e</Hash>
 </Codenesium>*/

@@ -23,11 +23,6 @@ namespace FileServiceNS.Api.Services
                 public virtual BOVersionInfo MapEFToBO(
                         VersionInfo ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOVersionInfo();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>065f2319f63af783cc6c13620cf5b1a2</Hash>
+    <Hash>e664af4d8003b9637486453c756891b7</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class StudioService: AbstractStudioService, IStudioService
         {
                 public StudioService(
-                        ILogger<StudioRepository> logger,
+                        ILogger<IStudioRepository> logger,
                         IStudioRepository studioRepository,
                         IApiStudioRequestModelValidator studioModelValidator,
                         IBOLStudioMapper bolstudioMapper,
@@ -86,5 +86,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0973a930a62c5d4408a0a52c6b07db7</Hash>
+    <Hash>d88e003d908a77157e02d7fabcfa5be2</Hash>
 </Codenesium>*/

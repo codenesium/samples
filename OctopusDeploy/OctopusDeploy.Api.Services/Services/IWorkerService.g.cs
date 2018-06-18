@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiWorkerResponseModel> Get(string id);
 
-                Task<List<ApiWorkerResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiWorkerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiWorkerResponseModel> GetName(string name);
                 Task<List<ApiWorkerResponseModel>> GetMachinePolicyId(string machinePolicyId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>987bb0b8db4cea38dca89a43bdcdfa87</Hash>
+    <Hash>6b2db4b853b8917ce9c8a0381d4aaaad</Hash>
 </Codenesium>*/

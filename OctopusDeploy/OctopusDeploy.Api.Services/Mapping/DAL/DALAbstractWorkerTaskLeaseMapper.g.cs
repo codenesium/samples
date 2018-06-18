@@ -26,11 +26,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOWorkerTaskLease MapEFToBO(
                         WorkerTaskLease ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOWorkerTaskLease();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c51c11ef35448e9dc65032388487f276</Hash>
+    <Hash>d205c2bb8913b70425ec82cde86597ae</Hash>
 </Codenesium>*/

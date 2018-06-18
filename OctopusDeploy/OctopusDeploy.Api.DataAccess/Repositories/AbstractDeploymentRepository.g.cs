@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Deployment>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Deployment>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Deployment> Get(string id)
@@ -77,53 +78,48 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<List<Deployment>> GetChannelId(string channelId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ChannelId == channelId);
+                        var records = await this.Where(x => x.ChannelId == channelId);
 
                         return records;
                 }
                 public async Task<List<Deployment>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.ProjectId == projectId && x.ProjectGroupId == projectGroupId && x.Name == name && x.Created == created && x.ReleaseId == releaseId && x.TaskId == taskId && x.EnvironmentId == environmentId);
+                        var records = await this.Where(x => x.Id == id && x.ProjectId == projectId && x.ProjectGroupId == projectGroupId && x.Name == name && x.Created == created && x.ReleaseId == releaseId && x.TaskId == taskId && x.EnvironmentId == environmentId);
 
                         return records;
                 }
                 public async Task<List<Deployment>> GetTenantId(string tenantId)
                 {
-                        var records = await this.SearchLinqEF(x => x.TenantId == tenantId);
+                        var records = await this.Where(x => x.TenantId == tenantId);
 
                         return records;
                 }
 
-                protected async Task<List<Deployment>> Where(Expression<Func<Deployment, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Deployment>> Where(
+                        Expression<Func<Deployment, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Deployment, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Deployment> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Deployment>> SearchLinqEF(Expression<Func<Deployment, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Deployment.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Deployment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Deployment>();
-                }
-
-                private async Task<List<Deployment>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Deployment.Id)} ASC";
+                                return await this.Context.Set<Deployment>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Deployment>();
                         }
-
-                        return await this.Context.Set<Deployment>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Deployment>();
+                        else
+                        {
+                                return await this.Context.Set<Deployment>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Deployment>();
+                        }
                 }
 
                 private async Task<Deployment> GetById(string id)
                 {
-                        List<Deployment> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Deployment> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -136,5 +132,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>733b5d70a051463157bc1a6085bba01b</Hash>
+    <Hash>6711e97a873bf3bf2a02c9e433d04a25</Hash>
 </Codenesium>*/

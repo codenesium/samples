@@ -25,7 +25,7 @@ namespace FermataFishNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractAdminController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractAdminController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAdminService adminService
@@ -164,5 +164,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>28ee381775acfa0b58011af38318d40b</Hash>
+    <Hash>fab2341c714f1ff34e8bfa60ee19853d</Hash>
 </Codenesium>*/

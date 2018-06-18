@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiClaspRequestModelValidator: AbstractApiClaspRequestModelValidator, IApiClaspRequestModelValidator
         {
-                public ApiClaspRequestModelValidator()
+                public ApiClaspRequestModelValidator(IClaspRepository claspRepository)
+                        : base(claspRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc27679505756a98186543bc99c4d15d</Hash>
+    <Hash>26c57cf6f509e31ed3955971b8fda6a4</Hash>
 </Codenesium>*/

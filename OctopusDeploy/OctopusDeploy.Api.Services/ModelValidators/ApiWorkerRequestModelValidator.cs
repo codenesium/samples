@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiWorkerRequestModelValidator: AbstractApiWorkerRequestModelValidator, IApiWorkerRequestModelValidator
         {
-                public ApiWorkerRequestModelValidator()
+                public ApiWorkerRequestModelValidator(IWorkerRepository workerRepository)
+                        : base(workerRepository)
                 {
                 }
 
@@ -48,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da61076e950b210a15a2d5b1eb14a8a1</Hash>
+    <Hash>141e0ef695336535c74e8c92dabe78ea</Hash>
 </Codenesium>*/

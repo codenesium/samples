@@ -26,11 +26,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOHandler MapEFToBO(
                         Handler ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOHandler();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6e41c55bb3214f35952851caabbccff3</Hash>
+    <Hash>ab800af4e360533c7679fe20a6854996</Hash>
 </Codenesium>*/

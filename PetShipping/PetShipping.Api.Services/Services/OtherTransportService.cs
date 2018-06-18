@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class OtherTransportService: AbstractOtherTransportService, IOtherTransportService
         {
                 public OtherTransportService(
-                        ILogger<OtherTransportRepository> logger,
+                        ILogger<IOtherTransportRepository> logger,
                         IOtherTransportRepository otherTransportRepository,
                         IApiOtherTransportRequestModelValidator otherTransportModelValidator,
                         IBOLOtherTransportMapper bolotherTransportMapper,
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aefffdbb9339b36808000d78f16fb763</Hash>
+    <Hash>2ae85392c857b171a2f2b63d1ab0ac17</Hash>
 </Codenesium>*/

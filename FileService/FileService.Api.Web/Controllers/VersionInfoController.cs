@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Web
         public class VersionInfoController: AbstractVersionInfoController
         {
                 public VersionInfoController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<VersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVersionInfoService versionInfoService
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7664c942f5c0bc555310221b2b51f273</Hash>
+    <Hash>9f71003152ae7c807f57a7ac494b81f5</Hash>
 </Codenesium>*/

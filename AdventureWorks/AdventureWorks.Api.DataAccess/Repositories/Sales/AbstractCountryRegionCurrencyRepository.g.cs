@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<CountryRegionCurrency>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<CountryRegionCurrency>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<CountryRegionCurrency> Get(string countryRegionCode)
@@ -75,49 +76,49 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<CountryRegionCurrency>> GetCurrencyCode(string currencyCode)
+                public async Task<List<CountryRegionCurrency>> ByCurrencyCode(string currencyCode)
                 {
-                        var records = await this.SearchLinqEF(x => x.CurrencyCode == currencyCode);
+                        var records = await this.Where(x => x.CurrencyCode == currencyCode);
 
                         return records;
                 }
 
-                protected async Task<List<CountryRegionCurrency>> Where(Expression<Func<CountryRegionCurrency, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<CountryRegionCurrency>> Where(
+                        Expression<Func<CountryRegionCurrency, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<CountryRegionCurrency, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<CountryRegionCurrency> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<CountryRegionCurrency>> SearchLinqEF(Expression<Func<CountryRegionCurrency, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(CountryRegionCurrency.CountryRegionCode)} ASC";
+                                orderBy = x => x.CountryRegionCode;
                         }
 
-                        return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
-                }
-
-                private async Task<List<CountryRegionCurrency>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(CountryRegionCurrency.CountryRegionCode)} ASC";
+                                return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
                         }
-
-                        return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
+                        else
+                        {
+                                return await this.Context.Set<CountryRegionCurrency>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
+                        }
                 }
 
                 private async Task<CountryRegionCurrency> GetById(string countryRegionCode)
                 {
-                        List<CountryRegionCurrency> records = await this.SearchLinqEF(x => x.CountryRegionCode == countryRegionCode);
+                        List<CountryRegionCurrency> records = await this.Where(x => x.CountryRegionCode == countryRegionCode);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Currency> GetCurrency(string currencyCode)
+                {
+                        return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == currencyCode);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>dbff45d05cc3d42d8897ae72cdac157c</Hash>
+    <Hash>de89bf20610c02fc35af3e48c13f69d0</Hash>
 </Codenesium>*/

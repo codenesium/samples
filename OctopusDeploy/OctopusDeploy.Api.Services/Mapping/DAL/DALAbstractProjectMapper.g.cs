@@ -33,11 +33,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOProject MapEFToBO(
                         Project ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOProject();
 
                         bo.SetProperties(
@@ -73,5 +68,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23bc77b827d479f278881914be11edde</Hash>
+    <Hash>d9b8aa391b3a97ac852fd5df2f90632d</Hash>
 </Codenesium>*/

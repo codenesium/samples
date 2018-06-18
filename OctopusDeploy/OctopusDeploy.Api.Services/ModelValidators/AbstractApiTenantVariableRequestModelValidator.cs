@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiTenantVariableRequestModel model, string id)
+                ITenantVariableRepository tenantVariableRepository;
+
+                public AbstractApiTenantVariableRequestModelValidator(ITenantVariableRepository tenantVariableRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.tenantVariableRepository = tenantVariableRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTenantVariableRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ITenantVariableRepository TenantVariableRepository { get; set; }
                 public virtual void EnvironmentIdRules()
                 {
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId).When(x => x ?.EnvironmentId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTenantVariableRequestModel.EnvironmentId));
@@ -64,7 +64,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetTenantIdOwnerIdEnvironmentIdVariableTemplateId(ApiTenantVariableRequestModel model,  CancellationToken cancellationToken)
                 {
-                        TenantVariable record = await this.TenantVariableRepository.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(model.TenantId, model.OwnerId, model.EnvironmentId, model.VariableTemplateId);
+                        TenantVariable record = await this.tenantVariableRepository.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(model.TenantId, model.OwnerId, model.EnvironmentId, model.VariableTemplateId);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -79,5 +79,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20323379054be91d441f1e1ae3b25999</Hash>
+    <Hash>b7f97758d7faadf3adbf1920a0dbe64f</Hash>
 </Codenesium>*/

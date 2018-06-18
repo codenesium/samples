@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPipelineStepDestinationRequestModel model, int id)
+                IPipelineStepDestinationRepository pipelineStepDestinationRepository;
+
+                public AbstractApiPipelineStepDestinationRequestModelValidator(IPipelineStepDestinationRepository pipelineStepDestinationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.pipelineStepDestinationRepository = pipelineStepDestinationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPipelineStepDestinationRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IDestinationRepository DestinationRepository { get; set; }
-
-                public IPipelineStepRepository PipelineStepRepository { get; set; }
 
                 public virtual void DestinationIdRules()
                 {
@@ -41,14 +38,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidDestination(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.DestinationRepository.Get(id);
+                        var record = await this.pipelineStepDestinationRepository.GetDestination(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidPipelineStep(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PipelineStepRepository.Get(id);
+                        var record = await this.pipelineStepDestinationRepository.GetPipelineStep(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>80725b3ff5a8da791bcc5d249a6ecde8</Hash>
+    <Hash>a1ea548a8100d286c8359cf1d3411836</Hash>
 </Codenesium>*/

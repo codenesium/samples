@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class LinkStatusService: AbstractLinkStatusService, ILinkStatusService
         {
                 public LinkStatusService(
-                        ILogger<LinkStatusRepository> logger,
+                        ILogger<ILinkStatusRepository> logger,
                         ILinkStatusRepository linkStatusRepository,
                         IApiLinkStatusRequestModelValidator linkStatusModelValidator,
                         IBOLLinkStatusMapper bollinkStatusMapper,
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>301c86b2f4777caede4011a861127509</Hash>
+    <Hash>56a629cb584df169d72ea9b6f02d7a4a</Hash>
 </Codenesium>*/

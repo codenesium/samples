@@ -27,11 +27,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOAdmin MapEFToBO(
                         Admin ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOAdmin();
 
                         bo.SetProperties(
@@ -61,5 +56,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>031664a4f5737791b00f3189d8625681</Hash>
+    <Hash>0eb478cb0ee9c4a244cba085d312bab6</Hash>
 </Codenesium>*/

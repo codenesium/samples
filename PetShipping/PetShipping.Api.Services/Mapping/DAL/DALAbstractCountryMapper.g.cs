@@ -22,11 +22,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOCountry MapEFToBO(
                         Country ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCountry();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d529246f10b2c62f9e223719866cfe3f</Hash>
+    <Hash>a0e03fa0670a35296b75ac342fd4623e</Hash>
 </Codenesium>*/

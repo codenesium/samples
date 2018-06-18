@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCountryRegionCurrencyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCountryRegionCurrencyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryRegionCurrencyService countryRegionCurrencyService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCurrencyCode/{currencyCode}")]
+                [Route("byCurrencyCode/{currencyCode}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCurrencyCode(string currencyCode)
+                public async virtual Task<IActionResult> ByCurrencyCode(string currencyCode)
                 {
-                        List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.GetCurrencyCode(currencyCode);
+                        List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.ByCurrencyCode(currencyCode);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>01257daa415444a82a781f5d8f709546</Hash>
+    <Hash>458f7eccd79e3d879204bd25490a082e</Hash>
 </Codenesium>*/

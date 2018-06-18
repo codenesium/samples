@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class CultureController: AbstractCultureController
         {
                 public CultureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICultureService cultureService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5468940995c222bcb206d52adc2b6942</Hash>
+    <Hash>24f2774255ba67afb6931d7204c61c55</Hash>
 </Codenesium>*/

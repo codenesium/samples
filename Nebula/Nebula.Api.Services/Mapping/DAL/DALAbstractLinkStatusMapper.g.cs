@@ -22,11 +22,6 @@ namespace NebulaNS.Api.Services
                 public virtual BOLinkStatus MapEFToBO(
                         LinkStatus ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOLinkStatus();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>824d0cbd335db49fdc76af10df457b79</Hash>
+    <Hash>ea961c0881e65a558d6ee9fbb2a7211a</Hash>
 </Codenesium>*/

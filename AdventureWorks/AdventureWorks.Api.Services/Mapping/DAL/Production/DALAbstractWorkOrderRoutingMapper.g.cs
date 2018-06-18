@@ -32,11 +32,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOWorkOrderRouting MapEFToBO(
                         WorkOrderRouting ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOWorkOrderRouting();
 
                         bo.SetProperties(
@@ -71,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>093e30f6aaa2f20e3ffea12154364969</Hash>
+    <Hash>2228a30f2fd650e1b61f780860b65074</Hash>
 </Codenesium>*/

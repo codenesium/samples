@@ -28,11 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOStateProvince MapEFToBO(
                         StateProvince ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOStateProvince();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb5f9c1442009c1d82654385b4e5b9ea</Hash>
+    <Hash>b6c1d2d3f386194d06dcb5350ed2e39a</Hash>
 </Codenesium>*/

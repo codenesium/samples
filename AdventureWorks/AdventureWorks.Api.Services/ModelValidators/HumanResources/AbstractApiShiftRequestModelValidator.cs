@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiShiftRequestModel model, int id)
+                IShiftRepository shiftRepository;
+
+                public AbstractApiShiftRequestModelValidator(IShiftRepository shiftRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.shiftRepository = shiftRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiShiftRequestModel model, int id)
@@ -25,10 +26,9 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IShiftRepository ShiftRepository { get; set; }
                 public virtual void EndTimeRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetStartTimeEndTime).When(x => x ?.EndTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.EndTime));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => x ?.EndTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.EndTime));
                 }
 
                 public virtual void ModifiedDateRules()
@@ -38,18 +38,18 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
                 public virtual void StartTimeRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetStartTimeEndTime).When(x => x ?.StartTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.StartTime));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByStartTimeEndTime).When(x => x ?.StartTime != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShiftRequestModel.StartTime));
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiShiftRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiShiftRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Shift record = await this.ShiftRepository.GetName(model.Name);
+                        Shift record = await this.shiftRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ShiftID == this.existingRecordId))
                         {
@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                                 return false;
                         }
                 }
-                private async Task<bool> BeUniqueGetStartTimeEndTime(ApiShiftRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByStartTimeEndTime(ApiShiftRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Shift record = await this.ShiftRepository.GetStartTimeEndTime(model.StartTime, model.EndTime);
+                        Shift record = await this.shiftRepository.ByStartTimeEndTime(model.StartTime, model.EndTime);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ShiftID == this.existingRecordId))
                         {
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>250e5f22f93d483673d0abe21280ccbe</Hash>
+    <Hash>f14a930f2c8b3ddd668c3aa6010870e3</Hash>
 </Codenesium>*/

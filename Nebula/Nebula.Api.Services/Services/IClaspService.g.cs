@@ -19,10 +19,10 @@ namespace NebulaNS.Api.Services
 
                 Task<ApiClaspResponseModel> Get(int id);
 
-                Task<List<ApiClaspResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiClaspResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>8318e977da31b308660d125cc24d8212</Hash>
+    <Hash>678ef1c20f226b404b8db5c452475957</Hash>
 </Codenesium>*/

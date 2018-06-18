@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ServerTaskService: AbstractServerTaskService, IServerTaskService
         {
                 public ServerTaskService(
-                        ILogger<ServerTaskRepository> logger,
+                        ILogger<IServerTaskRepository> logger,
                         IServerTaskRepository serverTaskRepository,
                         IApiServerTaskRequestModelValidator serverTaskModelValidator,
                         IBOLServerTaskMapper bolserverTaskMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dae1576d6965234d5dfe298f4c205d3e</Hash>
+    <Hash>c5e09c45edc440745d91e1005802fed7</Hash>
 </Codenesium>*/

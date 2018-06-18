@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractJobCandidateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractJobCandidateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IJobCandidateService jobCandidateService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getBusinessEntityID/{businessEntityID}")]
+                [Route("byBusinessEntityID/{businessEntityID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetBusinessEntityID(Nullable<int> businessEntityID)
+                public async virtual Task<IActionResult> ByBusinessEntityID(Nullable<int> businessEntityID)
                 {
-                        List<ApiJobCandidateResponseModel> response = await this.JobCandidateService.GetBusinessEntityID(businessEntityID);
+                        List<ApiJobCandidateResponseModel> response = await this.JobCandidateService.ByBusinessEntityID(businessEntityID);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cd1bd36a1bf2686c7206c60ede22de60</Hash>
+    <Hash>c3bb783206b8dfc987965158d4affd21</Hash>
 </Codenesium>*/

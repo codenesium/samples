@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ProductCostHistory> Get(int productID);
 
-                Task<List<ProductCostHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ProductCostHistory>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>4f477672fb6e34e1252bda15148e0c87</Hash>
+    <Hash>dd4e0a663db47a54b6d2486f6def2137</Hash>
 </Codenesium>*/

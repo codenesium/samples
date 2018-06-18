@@ -42,9 +42,9 @@ namespace PetShippingNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAirTransportResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAirTransportResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.airTransportRepository.All(limit, offset, orderClause);
+                        var records = await this.airTransportRepository.All(limit, offset);
 
                         return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace PetShippingNS.Api.Services
                 {
                         var record = await this.airTransportRepository.Get(airlineId);
 
-                        return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiAirTransportResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24d0714e63ac6764697a2180ab18d314</Hash>
+    <Hash>dfd4f18f8bcbd6d3c722d5022b8cf149</Hash>
 </Codenesium>*/

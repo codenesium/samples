@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Event> Get(int id)
@@ -77,47 +78,47 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 public async Task<List<Event>> GetCityId(int cityId)
                 {
-                        var records = await this.SearchLinqEF(x => x.CityId == cityId);
+                        var records = await this.Where(x => x.CityId == cityId);
 
                         return records;
                 }
 
-                protected async Task<List<Event>> Where(Expression<Func<Event, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Event>> Where(
+                        Expression<Func<Event, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Event, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Event> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Event>> SearchLinqEF(Expression<Func<Event, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Event.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Event>();
-                }
-
-                private async Task<List<Event>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Event.Id)} ASC";
+                                return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
                         }
-
-                        return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Event>();
+                        else
+                        {
+                                return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
+                        }
                 }
 
                 private async Task<Event> GetById(int id)
                 {
-                        List<Event> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Event> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<City> GetCity(int cityId)
+                {
+                        return await this.Context.Set<City>().SingleOrDefaultAsync(x => x.Id == cityId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f696c82b64ec878b21ad61e777c2b6c5</Hash>
+    <Hash>ddbb18c8bf0710064d0536dcb9d2436c</Hash>
 </Codenesium>*/

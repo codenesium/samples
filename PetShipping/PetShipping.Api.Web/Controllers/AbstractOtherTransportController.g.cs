@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractOtherTransportController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractOtherTransportController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IOtherTransportService otherTransportService
@@ -164,5 +164,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d42d14802e28e4220b6439be49a3d5ca</Hash>
+    <Hash>50311006c3bf7a69c0f57621ac373af3</Hash>
 </Codenesium>*/

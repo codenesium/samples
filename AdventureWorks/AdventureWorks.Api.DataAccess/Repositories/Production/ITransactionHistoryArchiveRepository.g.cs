@@ -15,13 +15,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<TransactionHistoryArchive> Get(int transactionID);
 
-                Task<List<TransactionHistoryArchive>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<TransactionHistoryArchive>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<TransactionHistoryArchive>> GetProductID(int productID);
-                Task<List<TransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
+                Task<List<TransactionHistoryArchive>> ByProductID(int productID);
+                Task<List<TransactionHistoryArchive>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
         }
 }
 
 /*<Codenesium>
-    <Hash>dc92a17049bb072d726406d8dd5bbee1</Hash>
+    <Hash>06b3ac143b80d6abf2f6dcde3d43faaa</Hash>
 </Codenesium>*/

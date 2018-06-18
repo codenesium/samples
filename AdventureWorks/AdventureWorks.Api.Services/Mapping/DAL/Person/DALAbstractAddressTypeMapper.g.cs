@@ -24,11 +24,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOAddressType MapEFToBO(
                         AddressType ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOAddressType();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4240cab08ed186dde6e65766c7ef5720</Hash>
+    <Hash>cbc82856d9a8ae333824b1880ad404d4</Hash>
 </Codenesium>*/

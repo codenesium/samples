@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class ClientController: AbstractClientController
         {
                 public ClientController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ClientController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IClientService clientService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0b4f892ee88b60d75d2113ce4c312b34</Hash>
+    <Hash>676119682e50123121d314beb031539c</Hash>
 </Codenesium>*/

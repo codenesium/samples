@@ -24,11 +24,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOPersonPhone MapEFToBO(
                         PersonPhone ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPersonPhone();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ca46270427a6e627a311d5aacc2bc2f1</Hash>
+    <Hash>b7581ecb9cac7eec6532751ab767a036</Hash>
 </Codenesium>*/

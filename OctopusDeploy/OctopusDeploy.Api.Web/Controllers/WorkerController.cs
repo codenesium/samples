@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class WorkerController: AbstractWorkerController
         {
                 public WorkerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<WorkerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkerService workerService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d0eb1b6083e602853a3f1b2156522ec5</Hash>
+    <Hash>0b2694127d265756efc00f288dedde1c</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiTeamRequestModelValidator: AbstractApiTeamRequestModelValidator, IApiTeamRequestModelValidator
         {
-                public ApiTeamRequestModelValidator()
+                public ApiTeamRequestModelValidator(ITeamRepository teamRepository)
+                        : base(teamRepository)
                 {
                 }
 
@@ -46,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e67dc7c2f6d2d70eaf40d44e1431f15a</Hash>
+    <Hash>b7c6612d1857da92968329b1ec7a4653</Hash>
 </Codenesium>*/

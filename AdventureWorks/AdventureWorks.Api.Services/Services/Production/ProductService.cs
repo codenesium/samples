@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductService: AbstractProductService, IProductService
         {
                 public ProductService(
-                        ILogger<ProductRepository> logger,
+                        ILogger<IProductRepository> logger,
                         IProductRepository productRepository,
                         IApiProductRequestModelValidator productModelValidator,
                         IBOLProductMapper bolproductMapper,
@@ -24,9 +24,6 @@ namespace AdventureWorksNS.Api.Services
                         ,
                         IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
                         IDALProductCostHistoryMapper dalProductCostHistoryMapper
-                        ,
-                        IBOLProductDocumentMapper bolProductDocumentMapper,
-                        IDALProductDocumentMapper dalProductDocumentMapper
                         ,
                         IBOLProductInventoryMapper bolProductInventoryMapper,
                         IDALProductInventoryMapper dalProductInventoryMapper
@@ -59,9 +56,6 @@ namespace AdventureWorksNS.Api.Services
                                bolProductCostHistoryMapper,
                                dalProductCostHistoryMapper
                                ,
-                               bolProductDocumentMapper,
-                               dalProductDocumentMapper
-                               ,
                                bolProductInventoryMapper,
                                dalProductInventoryMapper
                                ,
@@ -86,5 +80,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ba2719c29ff3844684499e6933e9cee0</Hash>
+    <Hash>c54523977c897b84c127c670930f0c05</Hash>
 </Codenesium>*/

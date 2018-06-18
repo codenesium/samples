@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<TagSet> Get(string id)
@@ -77,47 +78,42 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<TagSet> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<TagSet>> GetDataVersion(byte[] dataVersion)
                 {
-                        var records = await this.SearchLinqEF(x => x.DataVersion == dataVersion);
+                        var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
 
-                protected async Task<List<TagSet>> Where(Expression<Func<TagSet, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<TagSet>> Where(
+                        Expression<Func<TagSet, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<TagSet, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<TagSet> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<TagSet>> SearchLinqEF(Expression<Func<TagSet, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(TagSet.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<TagSet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<TagSet>();
-                }
-
-                private async Task<List<TagSet>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(TagSet.Id)} ASC";
+                                return await this.Context.Set<TagSet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TagSet>();
                         }
-
-                        return await this.Context.Set<TagSet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<TagSet>();
+                        else
+                        {
+                                return await this.Context.Set<TagSet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TagSet>();
+                        }
                 }
 
                 private async Task<TagSet> GetById(string id)
                 {
-                        List<TagSet> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<TagSet> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a066490cdc811021673320fc9d585d57</Hash>
+    <Hash>f3afcab813d1672edd8bc4962688e7d8</Hash>
 </Codenesium>*/

@@ -31,11 +31,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOSpecialOffer MapEFToBO(
                         SpecialOffer ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSpecialOffer();
 
                         bo.SetProperties(
@@ -69,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69247db5339992f0f4f4001a6ad76630</Hash>
+    <Hash>5bf7dae13b54a093a2bdf639299dafcb</Hash>
 </Codenesium>*/

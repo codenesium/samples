@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class PersonCreditCardController: AbstractPersonCreditCardController
         {
                 public PersonCreditCardController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PersonCreditCardController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPersonCreditCardService personCreditCardService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c37d083030c3556beec1a83672e82898</Hash>
+    <Hash>cabe57033777ff05eca4045099977727</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesTerritoryHistoryController: AbstractSalesTerritoryHistoryController
         {
                 public SalesTerritoryHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesTerritoryHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesTerritoryHistoryService salesTerritoryHistoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cf8137c14d5e17fce227c7ee5684f75d</Hash>
+    <Hash>4a3f2cf3792e41bfa96626a028525930</Hash>
 </Codenesium>*/

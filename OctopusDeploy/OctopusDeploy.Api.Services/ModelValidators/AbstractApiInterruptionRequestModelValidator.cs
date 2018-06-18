@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiInterruptionRequestModel model, string id)
+                IInterruptionRepository interruptionRepository;
+
+                public AbstractApiInterruptionRequestModelValidator(IInterruptionRepository interruptionRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.interruptionRepository = interruptionRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiInterruptionRequestModel model, string id)
@@ -82,5 +83,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6970949e89182fbd80044020df4f0b6a</Hash>
+    <Hash>68b72111065bb34b215f3cde094b93c2</Hash>
 </Codenesium>*/

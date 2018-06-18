@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiPersonPhoneRequestModelValidator: AbstractApiPersonPhoneRequestModelValidator, IApiPersonPhoneRequestModelValidator
         {
-                public ApiPersonPhoneRequestModelValidator()
+                public ApiPersonPhoneRequestModelValidator(IPersonPhoneRepository personPhoneRepository)
+                        : base(personPhoneRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>46b3b0263f87aff69e0be4cd7c39e1f8</Hash>
+    <Hash>1c8191bcaf6bf16bae61201b3b4c7860</Hash>
 </Codenesium>*/

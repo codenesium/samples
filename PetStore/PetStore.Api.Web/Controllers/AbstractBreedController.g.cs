@@ -25,7 +25,7 @@ namespace PetStoreNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractBreedController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractBreedController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBreedService breedService
@@ -178,5 +178,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>19578e0ed82745d68005df1b51c3f59f</Hash>
+    <Hash>f4a6f3951ccea2c5140c8b8e6cc67460</Hash>
 </Codenesium>*/

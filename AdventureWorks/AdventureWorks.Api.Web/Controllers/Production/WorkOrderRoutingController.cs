@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class WorkOrderRoutingController: AbstractWorkOrderRoutingController
         {
                 public WorkOrderRoutingController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<WorkOrderRoutingController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkOrderRoutingService workOrderRoutingService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2d75411ce7b3fff5bbe8a0f6114aeceb</Hash>
+    <Hash>04db38ed4b8167018fc3b0f865e83eeb</Hash>
 </Codenesium>*/

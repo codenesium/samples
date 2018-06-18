@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Interruption>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Interruption>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Interruption> Get(string id)
@@ -77,41 +78,36 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<List<Interruption>> GetTenantId(string tenantId)
                 {
-                        var records = await this.SearchLinqEF(x => x.TenantId == tenantId);
+                        var records = await this.Where(x => x.TenantId == tenantId);
 
                         return records;
                 }
 
-                protected async Task<List<Interruption>> Where(Expression<Func<Interruption, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Interruption>> Where(
+                        Expression<Func<Interruption, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Interruption, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Interruption> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Interruption>> SearchLinqEF(Expression<Func<Interruption, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Interruption.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Interruption>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Interruption>();
-                }
-
-                private async Task<List<Interruption>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Interruption.Id)} ASC";
+                                return await this.Context.Set<Interruption>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Interruption>();
                         }
-
-                        return await this.Context.Set<Interruption>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Interruption>();
+                        else
+                        {
+                                return await this.Context.Set<Interruption>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Interruption>();
+                        }
                 }
 
                 private async Task<Interruption> GetById(string id)
                 {
-                        List<Interruption> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Interruption> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2a7beb5469a1622fbef8d98c38e953c9</Hash>
+    <Hash>61dd4f90aa6ec875d2841119a77025e0</Hash>
 </Codenesium>*/

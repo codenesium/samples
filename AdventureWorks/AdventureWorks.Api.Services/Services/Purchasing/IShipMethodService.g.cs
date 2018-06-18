@@ -19,14 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiShipMethodResponseModel> Get(int shipMethodID);
 
-                Task<List<ApiShipMethodResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiShipMethodResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiShipMethodResponseModel> GetName(string name);
+                Task<ApiShipMethodResponseModel> ByName(string name);
 
                 Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>b63cc0dc6280d58bf68a04b6f7a7b06f</Hash>
+    <Hash>ed5d4a7ce53d162667989b311300c0e9</Hash>
 </Codenesium>*/

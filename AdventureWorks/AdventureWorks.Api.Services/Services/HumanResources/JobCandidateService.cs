@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class JobCandidateService: AbstractJobCandidateService, IJobCandidateService
         {
                 public JobCandidateService(
-                        ILogger<JobCandidateRepository> logger,
+                        ILogger<IJobCandidateRepository> logger,
                         IJobCandidateRepository jobCandidateRepository,
                         IApiJobCandidateRequestModelValidator jobCandidateModelValidator,
                         IBOLJobCandidateMapper boljobCandidateMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59aefa500feb254ef6417552da1ef2dc</Hash>
+    <Hash>44a8653776cda4ed6034114bb30e71d9</Hash>
 </Codenesium>*/

@@ -22,11 +22,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOCountry MapEFToBO(
                         Country ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCountry();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39be89c762e3d548f510b3391a196960</Hash>
+    <Hash>0c21e099098dc9995973b82dcd7de897</Hash>
 </Codenesium>*/

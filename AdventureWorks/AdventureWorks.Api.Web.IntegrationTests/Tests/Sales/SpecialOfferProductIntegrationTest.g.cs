@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "SpecialOfferProduct")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "SpecialOfferProduct")]
+        [Trait("Area", "Integration")]
         public class SpecialOfferProductTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>86ee708d1e63d7b47a847fcec723d99f</Hash>
+    <Hash>e1cb0dc87f190d6b5c999810ce858ef7</Hash>
 </Codenesium>*/

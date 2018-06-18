@@ -30,11 +30,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOUser MapEFToBO(
                         User ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOUser();
 
                         bo.SetProperties(
@@ -67,5 +62,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c8f0cbf2c087add029f61afcb6a5a66</Hash>
+    <Hash>e2dfc1901d6805e5450a05193f8a1e87</Hash>
 </Codenesium>*/

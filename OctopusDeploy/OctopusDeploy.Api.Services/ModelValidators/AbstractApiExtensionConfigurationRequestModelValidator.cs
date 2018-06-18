@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiExtensionConfigurationRequestModel model, string id)
+                IExtensionConfigurationRepository extensionConfigurationRepository;
+
+                public AbstractApiExtensionConfigurationRequestModelValidator(IExtensionConfigurationRepository extensionConfigurationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.extensionConfigurationRepository = extensionConfigurationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiExtensionConfigurationRequestModel model, string id)
@@ -43,5 +44,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f72231d8203790759c81f834032f6f80</Hash>
+    <Hash>2561c901cd849e7c3a656378974936f9</Hash>
 </Codenesium>*/

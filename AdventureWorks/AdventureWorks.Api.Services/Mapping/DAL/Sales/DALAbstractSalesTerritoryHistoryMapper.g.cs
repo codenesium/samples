@@ -26,11 +26,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOSalesTerritoryHistory MapEFToBO(
                         SalesTerritoryHistory ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSalesTerritoryHistory();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3322533f8b1013551cef85ca0869c529</Hash>
+    <Hash>5707877b74af7430cd20df4df96c5779</Hash>
 </Codenesium>*/

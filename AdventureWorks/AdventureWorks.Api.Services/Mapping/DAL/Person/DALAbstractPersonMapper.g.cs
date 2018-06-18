@@ -33,11 +33,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOPerson MapEFToBO(
                         Person ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPerson();
 
                         bo.SetProperties(
@@ -73,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e17b905b4deb10ffe7861cd13444d202</Hash>
+    <Hash>5dfad2e99f9b9edc91aa91fbd4c7c341</Hash>
 </Codenesium>*/

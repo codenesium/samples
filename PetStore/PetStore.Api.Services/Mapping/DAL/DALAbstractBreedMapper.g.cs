@@ -22,11 +22,6 @@ namespace PetStoreNS.Api.Services
                 public virtual BOBreed MapEFToBO(
                         Breed ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOBreed();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7aedb6074885839f2d37166f191763e</Hash>
+    <Hash>e6212d98eefce21242854f75c9d70f59</Hash>
 </Codenesium>*/

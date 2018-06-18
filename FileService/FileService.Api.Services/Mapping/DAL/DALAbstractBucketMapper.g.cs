@@ -23,11 +23,6 @@ namespace FileServiceNS.Api.Services
                 public virtual BOBucket MapEFToBO(
                         Bucket ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOBucket();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ffd88178dd7be75b1d5bd034f2903ea</Hash>
+    <Hash>ea015706a83c11e022aa0595804d7f5b</Hash>
 </Codenesium>*/

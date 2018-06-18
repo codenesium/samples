@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class InterruptionService: AbstractInterruptionService, IInterruptionService
         {
                 public InterruptionService(
-                        ILogger<InterruptionRepository> logger,
+                        ILogger<IInterruptionRepository> logger,
                         IInterruptionRepository interruptionRepository,
                         IApiInterruptionRequestModelValidator interruptionModelValidator,
                         IBOLInterruptionMapper bolinterruptionMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95eee1e6f62d18b6f0d8fd2bf0681bb4</Hash>
+    <Hash>cf1a62b85077d869ef04a565fc13f5e5</Hash>
 </Codenesium>*/

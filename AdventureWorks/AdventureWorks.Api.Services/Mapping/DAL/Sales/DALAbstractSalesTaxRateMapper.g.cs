@@ -27,11 +27,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOSalesTaxRate MapEFToBO(
                         SalesTaxRate ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSalesTaxRate();
 
                         bo.SetProperties(
@@ -61,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1254aaf2d6bf2535b2332bba722f016a</Hash>
+    <Hash>3840134e0c8284046b29b544230b3b27</Hash>
 </Codenesium>*/

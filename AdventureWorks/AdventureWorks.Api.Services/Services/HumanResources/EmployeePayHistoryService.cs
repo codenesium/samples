@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class EmployeePayHistoryService: AbstractEmployeePayHistoryService, IEmployeePayHistoryService
         {
                 public EmployeePayHistoryService(
-                        ILogger<EmployeePayHistoryRepository> logger,
+                        ILogger<IEmployeePayHistoryRepository> logger,
                         IEmployeePayHistoryRepository employeePayHistoryRepository,
                         IApiEmployeePayHistoryRequestModelValidator employeePayHistoryModelValidator,
                         IBOLEmployeePayHistoryMapper bolemployeePayHistoryMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b92f41e3998055f225fa23791dac8f8b</Hash>
+    <Hash>e33026f28f90064636619b1989933b95</Hash>
 </Codenesium>*/

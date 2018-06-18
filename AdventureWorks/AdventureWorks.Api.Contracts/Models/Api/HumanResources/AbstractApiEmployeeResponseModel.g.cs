@@ -21,7 +21,6 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime modifiedDate,
                         string nationalIDNumber,
                         Nullable<short> organizationLevel,
-                        Nullable<Guid> organizationNode,
                         Guid rowguid,
                         bool salariedFlag,
                         short sickLeaveHours,
@@ -38,7 +37,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
-                        this.OrganizationNode = organizationNode;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
                         this.SickLeaveHours = sickLeaveHours;
@@ -66,8 +64,6 @@ namespace AdventureWorksNS.Api.Contracts
                 public string NationalIDNumber { get; private set; }
 
                 public Nullable<short> OrganizationLevel { get; private set; }
-
-                public Nullable<Guid> OrganizationNode { get; private set; }
 
                 public Guid Rowguid { get; private set; }
 
@@ -166,14 +162,6 @@ namespace AdventureWorksNS.Api.Contracts
                 }
 
                 [JsonIgnore]
-                public bool ShouldSerializeOrganizationNodeValue { get; set; } = true;
-
-                public bool ShouldSerializeOrganizationNode()
-                {
-                        return this.ShouldSerializeOrganizationNodeValue;
-                }
-
-                [JsonIgnore]
                 public bool ShouldSerializeRowguidValue { get; set; } = true;
 
                 public bool ShouldSerializeRowguid()
@@ -218,7 +206,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ShouldSerializeModifiedDateValue = false;
                         this.ShouldSerializeNationalIDNumberValue = false;
                         this.ShouldSerializeOrganizationLevelValue = false;
-                        this.ShouldSerializeOrganizationNodeValue = false;
                         this.ShouldSerializeRowguidValue = false;
                         this.ShouldSerializeSalariedFlagValue = false;
                         this.ShouldSerializeSickLeaveHoursValue = false;
@@ -228,5 +215,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>12112f215caa784e6f26df7a86c6b038</Hash>
+    <Hash>c6b662826b1acf10ba0b57dbfc4482cd</Hash>
 </Codenesium>*/

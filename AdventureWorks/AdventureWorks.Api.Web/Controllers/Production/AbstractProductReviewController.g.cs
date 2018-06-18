@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductReviewController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductReviewController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductReviewService productReviewService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}")]
+                [Route("byCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                public async virtual Task<IActionResult> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
                 {
-                        List<ApiProductReviewResponseModel> response = await this.ProductReviewService.GetCommentsProductIDReviewerName(comments, productID, reviewerName);
+                        List<ApiProductReviewResponseModel> response = await this.ProductReviewService.ByCommentsProductIDReviewerName(comments, productID, reviewerName);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9b979c0e6cab633a83c22d863b6797a6</Hash>
+    <Hash>38892c6475cd8761f60d6d0a61784bbf</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<DatabaseLog> Get(int databaseLogID);
 
-                Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>189655744598c62a210ea22fe9ef0bf9</Hash>
+    <Hash>8ba2c58a291ad9609663dd1129ba26b7</Hash>
 </Codenesium>*/

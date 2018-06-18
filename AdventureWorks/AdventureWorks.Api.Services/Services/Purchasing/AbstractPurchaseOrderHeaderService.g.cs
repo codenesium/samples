@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.purchaseOrderHeaderRepository.All(limit, offset, orderClause);
+                        var records = await this.purchaseOrderHeaderRepository.All(limit, offset);
 
                         return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.purchaseOrderHeaderRepository.Get(purchaseOrderID);
 
-                        return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPurchaseOrderHeaderResponseModel>> Create(
@@ -109,15 +116,15 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetEmployeeID(int employeeID)
+                public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByEmployeeID(int employeeID)
                 {
-                        List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.GetEmployeeID(employeeID);
+                        List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.ByEmployeeID(employeeID);
 
                         return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetVendorID(int vendorID)
+                public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID)
                 {
-                        List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.GetVendorID(vendorID);
+                        List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.ByVendorID(vendorID);
 
                         return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
                 }
@@ -132,5 +139,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>815ba3679d688bfc44f134aa152a4990</Hash>
+    <Hash>21721fd7ef5189dc6b8b1c6a8d45262a</Hash>
 </Codenesium>*/

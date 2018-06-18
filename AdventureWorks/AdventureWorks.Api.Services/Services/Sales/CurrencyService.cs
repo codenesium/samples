@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class CurrencyService: AbstractCurrencyService, ICurrencyService
         {
                 public CurrencyService(
-                        ILogger<CurrencyRepository> logger,
+                        ILogger<ICurrencyRepository> logger,
                         ICurrencyRepository currencyRepository,
                         IApiCurrencyRequestModelValidator currencyModelValidator,
                         IBOLCurrencyMapper bolcurrencyMapper,
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce198a767fd3206126400480d0029b9c</Hash>
+    <Hash>cfcf10f5b9bf5d702d4ff4908e04f406</Hash>
 </Codenesium>*/

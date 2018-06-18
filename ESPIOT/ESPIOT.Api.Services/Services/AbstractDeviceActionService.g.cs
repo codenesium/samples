@@ -42,9 +42,9 @@ namespace ESPIOTNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDeviceActionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDeviceActionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.deviceActionRepository.All(limit, offset, orderClause);
+                        var records = await this.deviceActionRepository.All(limit, offset);
 
                         return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace ESPIOTNS.Api.Services
                 {
                         var record = await this.deviceActionRepository.Get(id);
 
-                        return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiDeviceActionResponseModel>> Create(
@@ -109,5 +116,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0f746964fa3746d01dca16dd7b98e01</Hash>
+    <Hash>d1e41b48d6fa7d130155b2747d0fc8b0</Hash>
 </Codenesium>*/

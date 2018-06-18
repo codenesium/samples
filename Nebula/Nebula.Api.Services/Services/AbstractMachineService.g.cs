@@ -60,9 +60,9 @@ namespace NebulaNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.machineRepository.All(limit, offset, orderClause);
+                        var records = await this.machineRepository.All(limit, offset);
 
                         return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace NebulaNS.Api.Services
                 {
                         var record = await this.machineRepository.Get(id);
 
-                        return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
@@ -133,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ed48271d34e827d7a19b337d36add7b</Hash>
+    <Hash>a74e61eaf597b7d217818eb4e984c6bc</Hash>
 </Codenesium>*/

@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Services", "Pe
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Web.IntegrationTests", "PetStore.Api.Web.IntegrationTests/PetStore.Api.Web.IntegrationTests.csproj", "{PetStore.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.DataAccess.Tests", "PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj", "{PetStore.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Services.Tests", "PetStore.Api.Services.Tests/PetStore.Api.Services.Tests.csproj", "{PetStore.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetStore.Api.Web.Tests", "PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj", "{PetStore.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{PetStore.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{PetStore.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {PetStore.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetStore.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetStore.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetStore.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {PetStore.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetStore.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetStore.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetStore.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {PetStore.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetStore.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetStore.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetStore.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

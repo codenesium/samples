@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<UserRole>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<UserRole>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<UserRole> Get(string id)
@@ -77,41 +78,36 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<UserRole> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<UserRole>> Where(Expression<Func<UserRole, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<UserRole>> Where(
+                        Expression<Func<UserRole, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<UserRole, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<UserRole> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<UserRole>> SearchLinqEF(Expression<Func<UserRole, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(UserRole.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UserRole>();
-                }
-
-                private async Task<List<UserRole>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(UserRole.Id)} ASC";
+                                return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<UserRole>();
                         }
-
-                        return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UserRole>();
+                        else
+                        {
+                                return await this.Context.Set<UserRole>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<UserRole>();
+                        }
                 }
 
                 private async Task<UserRole> GetById(string id)
                 {
-                        List<UserRole> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<UserRole> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f1e3d5678b3fa859ede6c9f6f66fe46</Hash>
+    <Hash>0323a70ee620e1b721d60b0562a65ac7</Hash>
 </Codenesium>*/

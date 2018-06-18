@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductCostHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductCostHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.productCostHistoryRepository.All(limit, offset, orderClause);
+                        var records = await this.productCostHistoryRepository.All(limit, offset);
 
                         return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.productCostHistoryRepository.Get(productID);
 
-                        return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiProductCostHistoryResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f63bae5bc7a4f53fcf6938fd5562fc3a</Hash>
+    <Hash>f204892fb63bf909a106048534a1c9dd</Hash>
 </Codenesium>*/

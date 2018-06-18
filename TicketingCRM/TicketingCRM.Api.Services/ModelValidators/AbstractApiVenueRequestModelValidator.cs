@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiVenueRequestModel model, int id)
+                IVenueRepository venueRepository;
+
+                public AbstractApiVenueRequestModelValidator(IVenueRepository venueRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.venueRepository = venueRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiVenueRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace TicketingCRMNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IAdminRepository AdminRepository { get; set; }
-
-                public IProvinceRepository ProvinceRepository { get; set; }
 
                 public virtual void Address1Rules()
                 {
@@ -83,14 +80,14 @@ namespace TicketingCRMNS.Api.Services
 
                 private async Task<bool> BeValidAdmin(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.AdminRepository.Get(id);
+                        var record = await this.venueRepository.GetAdmin(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidProvince(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.ProvinceRepository.Get(id);
+                        var record = await this.venueRepository.GetProvince(id);
 
                         return record != null;
                 }
@@ -98,5 +95,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b3beddace7082302ec473ab5079454e</Hash>
+    <Hash>e85f15e2624107689dec8fdcab4b2287</Hash>
 </Codenesium>*/

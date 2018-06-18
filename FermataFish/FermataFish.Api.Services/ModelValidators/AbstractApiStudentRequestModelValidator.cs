@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiStudentRequestModel model, int id)
+                IStudentRepository studentRepository;
+
+                public AbstractApiStudentRequestModelValidator(IStudentRepository studentRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.studentRepository = studentRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiStudentRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IFamilyRepository FamilyRepository { get; set; }
-
-                public IStudioRepository StudioRepository { get; set; }
 
                 public virtual void BirthdayRules()
                 {
@@ -81,14 +78,14 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.FamilyRepository.Get(id);
+                        var record = await this.studentRepository.GetFamily(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudioRepository.Get(id);
+                        var record = await this.studentRepository.GetStudio(id);
 
                         return record != null;
                 }
@@ -96,5 +93,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9e148105c7c34948df7739e7d283a833</Hash>
+    <Hash>9cc0d7c0e903a4da8bfbe107ee17028f</Hash>
 </Codenesium>*/

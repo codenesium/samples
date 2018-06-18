@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class ProvinceService: AbstractProvinceService, IProvinceService
         {
                 public ProvinceService(
-                        ILogger<ProvinceRepository> logger,
+                        ILogger<IProvinceRepository> logger,
                         IProvinceRepository provinceRepository,
                         IApiProvinceRequestModelValidator provinceModelValidator,
                         IBOLProvinceMapper bolprovinceMapper,
@@ -44,5 +44,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>19c5ae819aba3acf8b410362c30ea63a</Hash>
+    <Hash>d9840318165c74f02ba71778f6baaa77</Hash>
 </Codenesium>*/

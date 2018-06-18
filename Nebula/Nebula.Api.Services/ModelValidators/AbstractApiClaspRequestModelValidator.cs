@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiClaspRequestModel model, int id)
+                IClaspRepository claspRepository;
+
+                public AbstractApiClaspRequestModelValidator(IClaspRepository claspRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.claspRepository = claspRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiClaspRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace NebulaNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IChainRepository ChainRepository { get; set; }
 
                 public virtual void NextChainIdRules()
                 {
@@ -39,7 +38,7 @@ namespace NebulaNS.Api.Services
 
                 private async Task<bool> BeValidChain(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.ChainRepository.Get(id);
+                        var record = await this.claspRepository.GetChain(id);
 
                         return record != null;
                 }
@@ -47,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9233fdebc4764b822529be0451a72bc7</Hash>
+    <Hash>6c9415b94aa94023354ea9a87c808dca</Hash>
 </Codenesium>*/

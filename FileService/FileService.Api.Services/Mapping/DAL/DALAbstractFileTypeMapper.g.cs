@@ -22,11 +22,6 @@ namespace FileServiceNS.Api.Services
                 public virtual BOFileType MapEFToBO(
                         FileType ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOFileType();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>285c4341fbbd81d5322c02d61c0e97fc</Hash>
+    <Hash>8cee9624f505f41f6e625e5bd3b13dc8</Hash>
 </Codenesium>*/

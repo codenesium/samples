@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTagSetResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTagSetResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.tagSetRepository.All(limit, offset, orderClause);
+                        var records = await this.tagSetRepository.All(limit, offset);
 
                         return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.tagSetRepository.Get(id);
 
-                        return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiTagSetResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         TagSet record = await this.tagSetRepository.GetName(name);
 
-                        return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiTagSetResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
@@ -115,5 +129,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6291222958de1a640fc23e819725e28</Hash>
+    <Hash>b7ed15e9afe26190c611ea87761ae9ad</Hash>
 </Codenesium>*/

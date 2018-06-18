@@ -9,7 +9,9 @@ using FileServiceNS.Api.Client;
 
 namespace FileServiceNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "File")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "File")]
+        [Trait("Area", "Integration")]
         public class FileTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>76cae1c151693c8af7a11831f57b36eb</Hash>
+    <Hash>2ff394511588cf0c8d12ed362675df4a</Hash>
 </Codenesium>*/

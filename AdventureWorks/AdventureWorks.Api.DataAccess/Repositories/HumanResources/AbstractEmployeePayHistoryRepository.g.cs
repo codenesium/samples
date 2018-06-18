@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<EmployeePayHistory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<EmployeePayHistory>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<EmployeePayHistory> Get(int businessEntityID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<EmployeePayHistory>> Where(Expression<Func<EmployeePayHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<EmployeePayHistory>> Where(
+                        Expression<Func<EmployeePayHistory, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<EmployeePayHistory, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<EmployeePayHistory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<EmployeePayHistory>> SearchLinqEF(Expression<Func<EmployeePayHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(EmployeePayHistory.BusinessEntityID)} ASC";
+                                orderBy = x => x.BusinessEntityID;
                         }
 
-                        return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
-                }
-
-                private async Task<List<EmployeePayHistory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(EmployeePayHistory.BusinessEntityID)} ASC";
+                                return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
                         }
-
-                        return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
+                        else
+                        {
+                                return await this.Context.Set<EmployeePayHistory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
+                        }
                 }
 
                 private async Task<EmployeePayHistory> GetById(int businessEntityID)
                 {
-                        List<EmployeePayHistory> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        List<EmployeePayHistory> records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>409b44d7f3527e30192eea1d521e8304</Hash>
+    <Hash>6f55fe32383cf44b516aa5ae4b23fddb</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractBillOfMaterialsController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractBillOfMaterialsController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBillOfMaterialsService billOfMaterialsService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}")]
+                [Route("byProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public async virtual Task<IActionResult> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
                 {
-                        ApiBillOfMaterialsResponseModel response = await this.BillOfMaterialsService.GetProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
+                        ApiBillOfMaterialsResponseModel response = await this.BillOfMaterialsService.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
 
                         if (response == null)
                         {
@@ -181,12 +181,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getUnitMeasureCode/{unitMeasureCode}")]
+                [Route("byUnitMeasureCode/{unitMeasureCode}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiBillOfMaterialsResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetUnitMeasureCode(string unitMeasureCode)
+                public async virtual Task<IActionResult> ByUnitMeasureCode(string unitMeasureCode)
                 {
-                        List<ApiBillOfMaterialsResponseModel> response = await this.BillOfMaterialsService.GetUnitMeasureCode(unitMeasureCode);
+                        List<ApiBillOfMaterialsResponseModel> response = await this.BillOfMaterialsService.ByUnitMeasureCode(unitMeasureCode);
 
                         return this.Ok(response);
                 }
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8776a2f220de548b59d58ec4d968c288</Hash>
+    <Hash>37c23cc425a01234d3ebe15790b32a78</Hash>
 </Codenesium>*/

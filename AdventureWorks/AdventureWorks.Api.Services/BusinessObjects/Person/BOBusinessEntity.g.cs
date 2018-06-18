@@ -3,29 +3,14 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOBusinessEntity: AbstractBusinessObject
+        public partial class BOBusinessEntity: AbstractBOBusinessEntity
         {
                 public BOBusinessEntity() : base()
                 {
                 }
-
-                public void SetProperties(int businessEntityID,
-                                          DateTime modifiedDate,
-                                          Guid rowguid)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.ModifiedDate = modifiedDate;
-                        this.Rowguid = rowguid;
-                }
-
-                public int BusinessEntityID { get; private set; }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>43e91c614dda02702e3e03dd325a8a24</Hash>
+    <Hash>74b0b0085761e82eb042dd979fcfcaa2</Hash>
 </Codenesium>*/

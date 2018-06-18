@@ -15,10 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<PersonCreditCard> Get(int businessEntityID);
 
-                Task<List<PersonCreditCard>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<PersonCreditCard>> All(int limit = int.MaxValue, int offset = 0);
+
+                Task<CreditCard> GetCreditCard(int creditCardID);
         }
 }
 
 /*<Codenesium>
-    <Hash>2b35b2bb944e2f245419b0dcf7492493</Hash>
+    <Hash>f6d5f70235ccbd34309cc647580202d1</Hash>
 </Codenesium>*/

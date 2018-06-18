@@ -22,11 +22,6 @@ namespace PetStoreNS.Api.Services
                 public virtual BOPen MapEFToBO(
                         Pen ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPen();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d4108c153845d32d09907581a78d5b1</Hash>
+    <Hash>6019fb4b531401a0c74e0e3a601e8fbe</Hash>
 </Codenesium>*/

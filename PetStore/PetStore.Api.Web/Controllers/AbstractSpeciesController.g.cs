@@ -25,7 +25,7 @@ namespace PetStoreNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSpeciesController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSpeciesController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpeciesService speciesService
@@ -178,5 +178,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>514019172e61613f6fc3078d162536a4</Hash>
+    <Hash>61bc5ba8d3af55559cfa98fcc0726b1b</Hash>
 </Codenesium>*/

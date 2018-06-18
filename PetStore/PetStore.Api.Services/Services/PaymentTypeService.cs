@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Services
         public class PaymentTypeService: AbstractPaymentTypeService, IPaymentTypeService
         {
                 public PaymentTypeService(
-                        ILogger<PaymentTypeRepository> logger,
+                        ILogger<IPaymentTypeRepository> logger,
                         IPaymentTypeRepository paymentTypeRepository,
                         IApiPaymentTypeRequestModelValidator paymentTypeModelValidator,
                         IBOLPaymentTypeMapper bolpaymentTypeMapper,
@@ -38,5 +38,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec36bd43df621bc6dcfb0f515154c5ae</Hash>
+    <Hash>30676103265765bd3840075e9a41b5c2</Hash>
 </Codenesium>*/

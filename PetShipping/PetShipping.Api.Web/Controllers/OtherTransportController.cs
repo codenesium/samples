@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class OtherTransportController: AbstractOtherTransportController
         {
                 public OtherTransportController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<OtherTransportController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IOtherTransportService otherTransportService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>df5487e50cc085b8a0ded2cf92a65476</Hash>
+    <Hash>93da96c70190e0fe5dff440e04950073</Hash>
 </Codenesium>*/

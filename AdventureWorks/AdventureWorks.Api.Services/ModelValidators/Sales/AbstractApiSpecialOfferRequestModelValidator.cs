@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSpecialOfferRequestModel model, int id)
+                ISpecialOfferRepository specialOfferRepository;
+
+                public AbstractApiSpecialOfferRequestModelValidator(ISpecialOfferRepository specialOfferRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.specialOfferRepository = specialOfferRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSpecialOfferRequestModel model, int id)
@@ -74,5 +75,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>280f3318fc5716d42b65ce2f5c84f9fd</Hash>
+    <Hash>296d698ffb8f851b06157118efd9822d</Hash>
 </Codenesium>*/

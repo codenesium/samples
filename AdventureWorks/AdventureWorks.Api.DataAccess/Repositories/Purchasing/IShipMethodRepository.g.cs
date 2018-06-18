@@ -15,14 +15,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ShipMethod> Get(int shipMethodID);
 
-                Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ShipMethod> GetName(string name);
+                Task<ShipMethod> ByName(string name);
 
                 Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>41ce282c8c9b13b58b00db06ddae9f40</Hash>
+    <Hash>5d27c2c95d9560a0d446cd530a0bc0ff</Hash>
 </Codenesium>*/

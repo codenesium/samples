@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class CustomerService: AbstractCustomerService, ICustomerService
         {
                 public CustomerService(
-                        ILogger<CustomerRepository> logger,
+                        ILogger<ICustomerRepository> logger,
                         ICustomerRepository customerRepository,
                         IApiCustomerRequestModelValidator customerModelValidator,
                         IBOLCustomerMapper bolcustomerMapper,
@@ -32,5 +32,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>defcb39a98bd1416177e3d6e51852d3d</Hash>
+    <Hash>875e63513133daa3453bcb7bdaa8a10d</Hash>
 </Codenesium>*/

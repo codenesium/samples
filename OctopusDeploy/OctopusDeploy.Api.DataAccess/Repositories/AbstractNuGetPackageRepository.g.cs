@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<NuGetPackage>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<NuGetPackage>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<NuGetPackage> Get(string id)
@@ -75,36 +76,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<NuGetPackage>> Where(Expression<Func<NuGetPackage, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<NuGetPackage>> Where(
+                        Expression<Func<NuGetPackage, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<NuGetPackage, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<NuGetPackage> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<NuGetPackage>> SearchLinqEF(Expression<Func<NuGetPackage, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(NuGetPackage.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<NuGetPackage>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<NuGetPackage>();
-                }
-
-                private async Task<List<NuGetPackage>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(NuGetPackage.Id)} ASC";
+                                return await this.Context.Set<NuGetPackage>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<NuGetPackage>();
                         }
-
-                        return await this.Context.Set<NuGetPackage>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<NuGetPackage>();
+                        else
+                        {
+                                return await this.Context.Set<NuGetPackage>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<NuGetPackage>();
+                        }
                 }
 
                 private async Task<NuGetPackage> GetById(string id)
                 {
-                        List<NuGetPackage> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<NuGetPackage> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9a26ed50cc13525f649573e82e0ef413</Hash>
+    <Hash>98cf1d4c765416a802c68992d3725fa7</Hash>
 </Codenesium>*/

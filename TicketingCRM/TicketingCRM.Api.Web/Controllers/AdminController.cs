@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class AdminController: AbstractAdminController
         {
                 public AdminController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AdminController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAdminService adminService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>681bf0666bc287ffbbca545c26fa2416</Hash>
+    <Hash>0a80451e7d79c69d0ad63914c0d77df1</Hash>
 </Codenesium>*/

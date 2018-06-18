@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class UserRoleService: AbstractUserRoleService, IUserRoleService
         {
                 public UserRoleService(
-                        ILogger<UserRoleRepository> logger,
+                        ILogger<IUserRoleRepository> logger,
                         IUserRoleRepository userRoleRepository,
                         IApiUserRoleRequestModelValidator userRoleModelValidator,
                         IBOLUserRoleMapper boluserRoleMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3c45cc8f00e6e2942b7524376001370</Hash>
+    <Hash>b11f1b4c11e3bd0ce071205c0fead9a1</Hash>
 </Codenesium>*/

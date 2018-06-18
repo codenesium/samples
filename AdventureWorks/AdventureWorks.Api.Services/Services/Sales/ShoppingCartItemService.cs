@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ShoppingCartItemService: AbstractShoppingCartItemService, IShoppingCartItemService
         {
                 public ShoppingCartItemService(
-                        ILogger<ShoppingCartItemRepository> logger,
+                        ILogger<IShoppingCartItemRepository> logger,
                         IShoppingCartItemRepository shoppingCartItemRepository,
                         IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
                         IBOLShoppingCartItemMapper bolshoppingCartItemMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>055e07377e4099aa2f28e62105e9915e</Hash>
+    <Hash>742e5a661f05f15a1b79eddcd00397fc</Hash>
 </Codenesium>*/

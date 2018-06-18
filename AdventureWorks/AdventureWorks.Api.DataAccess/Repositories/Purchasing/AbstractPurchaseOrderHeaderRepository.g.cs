@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<PurchaseOrderHeader>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<PurchaseOrderHeader> Get(int purchaseOrderID)
@@ -75,49 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<PurchaseOrderHeader>> GetEmployeeID(int employeeID)
+                public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID)
                 {
-                        var records = await this.SearchLinqEF(x => x.EmployeeID == employeeID);
+                        var records = await this.Where(x => x.EmployeeID == employeeID);
 
                         return records;
                 }
-                public async Task<List<PurchaseOrderHeader>> GetVendorID(int vendorID)
+                public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID)
                 {
-                        var records = await this.SearchLinqEF(x => x.VendorID == vendorID);
-
-                        return records;
-                }
-
-                protected async Task<List<PurchaseOrderHeader>> Where(Expression<Func<PurchaseOrderHeader, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        List<PurchaseOrderHeader> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
+                        var records = await this.Where(x => x.VendorID == vendorID);
 
                         return records;
                 }
 
-                private async Task<List<PurchaseOrderHeader>> SearchLinqEF(Expression<Func<PurchaseOrderHeader, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<PurchaseOrderHeader>> Where(
+                        Expression<Func<PurchaseOrderHeader, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<PurchaseOrderHeader, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(PurchaseOrderHeader.PurchaseOrderID)} ASC";
+                                orderBy = x => x.PurchaseOrderID;
                         }
 
-                        return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-                }
-
-                private async Task<List<PurchaseOrderHeader>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(PurchaseOrderHeader.PurchaseOrderID)} ASC";
+                                return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
                         }
-
-                        return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+                        else
+                        {
+                                return await this.Context.Set<PurchaseOrderHeader>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+                        }
                 }
 
                 private async Task<PurchaseOrderHeader> GetById(int purchaseOrderID)
                 {
-                        List<PurchaseOrderHeader> records = await this.SearchLinqEF(x => x.PurchaseOrderID == purchaseOrderID);
+                        List<PurchaseOrderHeader> records = await this.Where(x => x.PurchaseOrderID == purchaseOrderID);
 
                         return records.FirstOrDefault();
                 }
@@ -130,5 +126,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb136774c753528621221926019307e7</Hash>
+    <Hash>7eee2a7a575d056d6f079f3bb0a592a7</Hash>
 </Codenesium>*/

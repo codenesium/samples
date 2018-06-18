@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Address>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Address>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Address> Get(int addressID)
@@ -75,49 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Address> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+                public async Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
                 {
-                        var records = await this.SearchLinqEF(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
+                        var records = await this.Where(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<List<Address>> GetStateProvinceID(int stateProvinceID)
+                public async Task<List<Address>> ByStateProvinceID(int stateProvinceID)
                 {
-                        var records = await this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID);
+                        var records = await this.Where(x => x.StateProvinceID == stateProvinceID);
 
                         return records;
                 }
 
-                protected async Task<List<Address>> Where(Expression<Func<Address, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Address>> Where(
+                        Expression<Func<Address, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Address, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Address> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Address>> SearchLinqEF(Expression<Func<Address, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Address.AddressID)} ASC";
+                                orderBy = x => x.AddressID;
                         }
 
-                        return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Address>();
-                }
-
-                private async Task<List<Address>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Address.AddressID)} ASC";
+                                return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
                         }
-
-                        return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Address>();
+                        else
+                        {
+                                return await this.Context.Set<Address>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Address>();
+                        }
                 }
 
                 private async Task<Address> GetById(int addressID)
                 {
-                        List<Address> records = await this.SearchLinqEF(x => x.AddressID == addressID);
+                        List<Address> records = await this.Where(x => x.AddressID == addressID);
 
                         return records.FirstOrDefault();
                 }
@@ -130,5 +126,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1c0e4e355cee0cc19ebcab77dcc09283</Hash>
+    <Hash>f17e320993befa1f464e13aa91daefa3</Hash>
 </Codenesium>*/

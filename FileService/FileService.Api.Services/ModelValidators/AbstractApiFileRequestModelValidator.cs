@@ -13,10 +13,11 @@ namespace FileServiceNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiFileRequestModel model, int id)
+                IFileRepository fileRepository;
+
+                public AbstractApiFileRequestModelValidator(IFileRepository fileRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.fileRepository = fileRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiFileRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FileServiceNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IBucketRepository BucketRepository { get; set; }
-
-                public IFileTypeRepository FileTypeRepository { get; set; }
 
                 public virtual void BucketIdRules()
                 {
@@ -86,14 +83,14 @@ namespace FileServiceNS.Api.Services
 
                 private async Task<bool> BeValidBucket(Nullable<int> id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.BucketRepository.Get(id.GetValueOrDefault());
+                        var record = await this.fileRepository.GetBucket(id.GetValueOrDefault());
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidFileType(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.FileTypeRepository.Get(id);
+                        var record = await this.fileRepository.GetFileType(id);
 
                         return record != null;
                 }
@@ -101,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71f1abf2120d3539187fd8a0f7d4366f</Hash>
+    <Hash>67ad38f6ae9da4e3aab9aa8f7fa67d7d</Hash>
 </Codenesium>*/

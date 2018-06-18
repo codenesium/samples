@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAWBuildVersionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAWBuildVersionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.aWBuildVersionRepository.All(limit, offset, orderClause);
+                        var records = await this.aWBuildVersionRepository.All(limit, offset);
 
                         return this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.aWBuildVersionRepository.Get(systemInformationID);
 
-                        return this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df437a9793676e4306ba410ca286a198</Hash>
+    <Hash>237d376670175555f226f8b6a9735a59</Hash>
 </Codenesium>*/

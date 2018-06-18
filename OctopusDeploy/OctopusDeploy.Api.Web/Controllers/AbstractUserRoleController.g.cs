@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractUserRoleController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractUserRoleController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IUserRoleService userRoleService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2d93f09f54a6260a0933bdb26d9479ac</Hash>
+    <Hash>d04f98a617a65b348684bbd6722611bd</Hash>
 </Codenesium>*/

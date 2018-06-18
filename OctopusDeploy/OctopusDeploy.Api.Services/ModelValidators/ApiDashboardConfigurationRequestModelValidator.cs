@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiDashboardConfigurationRequestModelValidator: AbstractApiDashboardConfigurationRequestModelValidator, IApiDashboardConfigurationRequestModelValidator
         {
-                public ApiDashboardConfigurationRequestModelValidator()
+                public ApiDashboardConfigurationRequestModelValidator(IDashboardConfigurationRepository dashboardConfigurationRepository)
+                        : base(dashboardConfigurationRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9fe798a81b31f2aaf1d142ede50e769a</Hash>
+    <Hash>4a01e117a02e06e99d5d4aa917414b23</Hash>
 </Codenesium>*/

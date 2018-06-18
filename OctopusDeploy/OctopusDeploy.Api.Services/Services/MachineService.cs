@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class MachineService: AbstractMachineService, IMachineService
         {
                 public MachineService(
-                        ILogger<MachineRepository> logger,
+                        ILogger<IMachineRepository> logger,
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
                         IBOLMachineMapper bolmachineMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b8607223160c3fad4cc9dbc4737323b</Hash>
+    <Hash>69745c9f025c52b892ed7c6873e12885</Hash>
 </Codenesium>*/

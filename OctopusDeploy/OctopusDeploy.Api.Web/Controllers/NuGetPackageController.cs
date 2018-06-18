@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class NuGetPackageController: AbstractNuGetPackageController
         {
                 public NuGetPackageController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<NuGetPackageController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         INuGetPackageService nuGetPackageService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>997820a30f6a6b090c906552750fe5ae</Hash>
+    <Hash>73dbe192445fc2f7bbda2c7cf05faa87</Hash>
 </Codenesium>*/

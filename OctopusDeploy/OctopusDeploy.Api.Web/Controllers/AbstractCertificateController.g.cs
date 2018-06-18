@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCertificateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCertificateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICertificateService certificateService
@@ -208,5 +208,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0ad3e5991fc4220dcee37cbc3a5a1653</Hash>
+    <Hash>9cc307b3625e91a39bb79e3e6a450a79</Hash>
 </Codenesium>*/

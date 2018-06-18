@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTransactionStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTransactionStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITransactionStatusService transactionStatusService
@@ -178,5 +178,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bacd4df17ea2fea132f0b8cb58ce1bcd</Hash>
+    <Hash>0eea7b14f29796931c5f394d2359d9a5</Hash>
 </Codenesium>*/

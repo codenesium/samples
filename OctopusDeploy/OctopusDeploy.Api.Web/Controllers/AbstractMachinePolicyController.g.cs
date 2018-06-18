@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractMachinePolicyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractMachinePolicyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMachinePolicyService machinePolicyService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1b4106d3056512b70997448ebee78eac</Hash>
+    <Hash>5b9205c2fc46c4461fc98b70a60cb7c9</Hash>
 </Codenesium>*/

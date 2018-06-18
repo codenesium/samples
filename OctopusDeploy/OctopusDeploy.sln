@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Services"
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Web.IntegrationTests", "OctopusDeploy.Api.Web.IntegrationTests/OctopusDeploy.Api.Web.IntegrationTests.csproj", "{OctopusDeploy.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.DataAccess.Tests", "OctopusDeploy.Api.DataAccess.Tests/OctopusDeploy.Api.DataAccess.Tests.csproj", "{OctopusDeploy.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Services.Tests", "OctopusDeploy.Api.Services.Tests/OctopusDeploy.Api.Services.Tests.csproj", "{OctopusDeploy.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Web.Tests", "OctopusDeploy.Api.Web.Tests/OctopusDeploy.Api.Web.Tests.csproj", "{OctopusDeploy.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{OctopusDeploy.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{OctopusDeploy.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {OctopusDeploy.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{OctopusDeploy.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{OctopusDeploy.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{OctopusDeploy.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {OctopusDeploy.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{OctopusDeploy.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{OctopusDeploy.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{OctopusDeploy.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {OctopusDeploy.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{OctopusDeploy.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{OctopusDeploy.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{OctopusDeploy.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

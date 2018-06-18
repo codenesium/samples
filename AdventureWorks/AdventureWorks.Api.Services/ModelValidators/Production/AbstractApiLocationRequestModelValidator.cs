@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private short existingRecordId;
 
-                public ValidationResult Validate(ApiLocationRequestModel model, short id)
+                ILocationRepository locationRepository;
+
+                public AbstractApiLocationRequestModelValidator(ILocationRepository locationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.locationRepository = locationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLocationRequestModel model, short id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ILocationRepository LocationRepository { get; set; }
                 public virtual void AvailabilityRules()
                 {
                 }
@@ -41,13 +41,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiLocationRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiLocationRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Location record = await this.LocationRepository.GetName(model.Name);
+                        Location record = await this.locationRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (short) && record.LocationID == this.existingRecordId))
                         {
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e8b6939c792ec77f7172b580b6626cf</Hash>
+    <Hash>43ba14ca6dcad79b0bd3fdb8d68ecc2b</Hash>
 </Codenesium>*/

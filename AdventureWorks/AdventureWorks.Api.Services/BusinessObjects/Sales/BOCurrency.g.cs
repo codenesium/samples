@@ -3,29 +3,14 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOCurrency: AbstractBusinessObject
+        public partial class BOCurrency: AbstractBOCurrency
         {
                 public BOCurrency() : base()
                 {
                 }
-
-                public void SetProperties(string currencyCode,
-                                          DateTime modifiedDate,
-                                          string name)
-                {
-                        this.CurrencyCode = currencyCode;
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                }
-
-                public string CurrencyCode { get; private set; }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f31a15d834237e88164803d47cbdfafa</Hash>
+    <Hash>141b833b1be5f863814951c73d6d834a</Hash>
 </Codenesium>*/

@@ -13,14 +13,11 @@ namespace AdventureWorksNS.Api.Services
         public class DocumentService: AbstractDocumentService, IDocumentService
         {
                 public DocumentService(
-                        ILogger<DocumentRepository> logger,
+                        ILogger<IDocumentRepository> logger,
                         IDocumentRepository documentRepository,
                         IApiDocumentRequestModelValidator documentModelValidator,
                         IBOLDocumentMapper boldocumentMapper,
                         IDALDocumentMapper daldocumentMapper
-                        ,
-                        IBOLProductDocumentMapper bolProductDocumentMapper,
-                        IDALProductDocumentMapper dalProductDocumentMapper
 
                         )
                         : base(logger,
@@ -28,9 +25,6 @@ namespace AdventureWorksNS.Api.Services
                                documentModelValidator,
                                boldocumentMapper,
                                daldocumentMapper
-                               ,
-                               bolProductDocumentMapper,
-                               dalProductDocumentMapper
                                )
                 {
                 }
@@ -38,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>241796ef02a86063ad2a6dd3377e1ab8</Hash>
+    <Hash>90a9a696fd588ffa1782af12badbabf0</Hash>
 </Codenesium>*/

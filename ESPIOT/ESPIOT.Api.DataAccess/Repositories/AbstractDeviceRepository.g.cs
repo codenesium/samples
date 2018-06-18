@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace ESPIOTNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Device>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Device>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Device> Get(int id)
@@ -77,41 +78,36 @@ namespace ESPIOTNS.Api.DataAccess
 
                 public async Task<Device> ByPublicId(Guid publicId)
                 {
-                        var records = await this.SearchLinqEF(x => x.PublicId == publicId);
+                        var records = await this.Where(x => x.PublicId == publicId);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Device>> Where(Expression<Func<Device, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Device>> Where(
+                        Expression<Func<Device, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Device, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Device> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Device>> SearchLinqEF(Expression<Func<Device, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Device.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Device>();
-                }
-
-                private async Task<List<Device>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Device.Id)} ASC";
+                                return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
                         }
-
-                        return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Device>();
+                        else
+                        {
+                                return await this.Context.Set<Device>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Device>();
+                        }
                 }
 
                 private async Task<Device> GetById(int id)
                 {
-                        List<Device> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Device> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -124,5 +120,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6bb34772a09b334f8bf85b3f6ff9f808</Hash>
+    <Hash>2b3ae02fc58e25e57f6df0c3249680c9</Hash>
 </Codenesium>*/

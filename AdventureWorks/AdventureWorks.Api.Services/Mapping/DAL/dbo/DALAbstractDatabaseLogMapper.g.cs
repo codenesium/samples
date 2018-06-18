@@ -28,11 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BODatabaseLog MapEFToBO(
                         DatabaseLog ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BODatabaseLog();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>487ff8ac2c23fb46f64a07164488af2e</Hash>
+    <Hash>dcfcd7a1ddbd7a9c67ec0c37438c02ae</Hash>
 </Codenesium>*/

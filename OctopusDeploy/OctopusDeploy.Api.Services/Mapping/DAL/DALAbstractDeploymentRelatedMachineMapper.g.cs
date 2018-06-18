@@ -23,11 +23,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BODeploymentRelatedMachine MapEFToBO(
                         DeploymentRelatedMachine ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BODeploymentRelatedMachine();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4282c957ade068d1aeb830ec0e9e107e</Hash>
+    <Hash>081b4d6ef82d250525499beef3f16623</Hash>
 </Codenesium>*/

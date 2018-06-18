@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSpecialOfferProductRequestModel model, int id)
+                ISpecialOfferProductRepository specialOfferProductRepository;
+
+                public AbstractApiSpecialOfferProductRequestModelValidator(ISpecialOfferProductRepository specialOfferProductRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.specialOfferProductRepository = specialOfferProductRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSpecialOfferProductRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISpecialOfferRepository SpecialOfferRepository { get; set; }
 
                 public virtual void ModifiedDateRules()
                 {
@@ -41,7 +40,7 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSpecialOffer(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SpecialOfferRepository.Get(id);
+                        var record = await this.specialOfferProductRepository.GetSpecialOffer(id);
 
                         return record != null;
                 }
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12a9d7e1fd022b833dd286fd3e161d65</Hash>
+    <Hash>ecf8bc1e51c82db092fc73271f7bd9c6</Hash>
 </Codenesium>*/

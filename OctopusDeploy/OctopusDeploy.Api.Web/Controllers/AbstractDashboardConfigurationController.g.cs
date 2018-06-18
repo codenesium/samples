@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractDashboardConfigurationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractDashboardConfigurationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDashboardConfigurationService dashboardConfigurationService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>17cf1d0efe38353341064ce36520f982</Hash>
+    <Hash>d4882f1ac1b8d4532a8f5568d894b2e5</Hash>
 </Codenesium>*/

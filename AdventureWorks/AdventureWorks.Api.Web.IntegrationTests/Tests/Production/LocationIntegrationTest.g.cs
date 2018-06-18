@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "Location")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "Location")]
+        [Trait("Area", "Integration")]
         public class LocationTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>2d1fd127f61b6cc52e3d255cf31dd2ff</Hash>
+    <Hash>15396d99c633bc34706d4f8e0634e626</Hash>
 </Codenesium>*/

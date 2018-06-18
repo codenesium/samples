@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPurchaseOrderDetailController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPurchaseOrderDetailController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPurchaseOrderDetailService purchaseOrderDetailService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductID/{productID}")]
+                [Route("byProductID/{productID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProductID(int productID)
+                public async virtual Task<IActionResult> ByProductID(int productID)
                 {
-                        List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.GetProductID(productID);
+                        List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.ByProductID(productID);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1b34e72ace93f56f077ea5d42df9e9d7</Hash>
+    <Hash>afd790bfa8afdd2d7db822d452979fbd</Hash>
 </Codenesium>*/

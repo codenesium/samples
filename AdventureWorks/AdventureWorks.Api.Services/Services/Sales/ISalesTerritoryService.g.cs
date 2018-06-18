@@ -19,9 +19,9 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiSalesTerritoryResponseModel> Get(int territoryID);
 
-                Task<List<ApiSalesTerritoryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiSalesTerritoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiSalesTerritoryResponseModel> GetName(string name);
+                Task<ApiSalesTerritoryResponseModel> ByName(string name);
 
                 Task<List<ApiCustomerResponseModel>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0);
@@ -31,5 +31,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f35d1db73591951d25f0bb25baa0d67c</Hash>
+    <Hash>491e4ffc0f1cfad55dbb96f1bfd59bf1</Hash>
 </Codenesium>*/

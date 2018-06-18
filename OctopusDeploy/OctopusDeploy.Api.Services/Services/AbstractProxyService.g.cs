@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProxyResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProxyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.proxyRepository.All(limit, offset, orderClause);
+                        var records = await this.proxyRepository.All(limit, offset);
 
                         return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.proxyRepository.Get(id);
 
-                        return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiProxyResponseModel>> Create(
@@ -103,11 +110,18 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Proxy record = await this.proxyRepository.GetName(name);
 
-                        return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>eb321922c0131d3b4a85a6946a92a4c5</Hash>
+    <Hash>f996f8b64f9fc3c0c005be0568222739</Hash>
 </Codenesium>*/

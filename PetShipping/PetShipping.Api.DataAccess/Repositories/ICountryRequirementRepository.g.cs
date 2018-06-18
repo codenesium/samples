@@ -15,10 +15,12 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<CountryRequirement> Get(int id);
 
-                Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<CountryRequirement>> All(int limit = int.MaxValue, int offset = 0);
+
+                Task<Country> GetCountry(int countryId);
         }
 }
 
 /*<Codenesium>
-    <Hash>50ad4304d103ce34299fb692ce967025</Hash>
+    <Hash>293207eaca36f44f37dbb3e3e171670c</Hash>
 </Codenesium>*/

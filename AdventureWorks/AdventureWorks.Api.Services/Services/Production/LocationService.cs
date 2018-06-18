@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class LocationService: AbstractLocationService, ILocationService
         {
                 public LocationService(
-                        ILogger<LocationRepository> logger,
+                        ILogger<ILocationRepository> logger,
                         ILocationRepository locationRepository,
                         IApiLocationRequestModelValidator locationModelValidator,
                         IBOLLocationMapper bollocationMapper,
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4ac4b0eb63ddce5aad508d0482af862</Hash>
+    <Hash>9f441e2e93b8a231c405f87d27627c36</Hash>
 </Codenesium>*/

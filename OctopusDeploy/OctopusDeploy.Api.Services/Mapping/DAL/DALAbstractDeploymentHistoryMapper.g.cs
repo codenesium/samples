@@ -41,11 +41,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BODeploymentHistory MapEFToBO(
                         DeploymentHistory ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BODeploymentHistory();
 
                         bo.SetProperties(
@@ -89,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>126749a5e978c1ed1cba34869118c94a</Hash>
+    <Hash>1532b29ed80b7d961a7b8227d227dcf7</Hash>
 </Codenesium>*/

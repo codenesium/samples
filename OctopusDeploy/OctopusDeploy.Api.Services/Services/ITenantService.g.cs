@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiTenantResponseModel> Get(string id);
 
-                Task<List<ApiTenantResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiTenantResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiTenantResponseModel> GetName(string name);
                 Task<List<ApiTenantResponseModel>> GetDataVersion(byte[] dataVersion);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>10c12f808e92d27e3467479639558d0a</Hash>
+    <Hash>eb25a81a1f2e2b7808e87d1afebc3039</Hash>
 </Codenesium>*/

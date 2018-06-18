@@ -13,7 +13,7 @@ namespace FileServiceNS.Api.Services
         public class FileService: AbstractFileService, IFileService
         {
                 public FileService(
-                        ILogger<FileRepository> logger,
+                        ILogger<IFileRepository> logger,
                         IFileRepository fileRepository,
                         IApiFileRequestModelValidator fileModelValidator,
                         IBOLFileMapper bolfileMapper,
@@ -32,5 +32,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79fdae4e4ba155713bd32a709b2cde95</Hash>
+    <Hash>1e2135cb5aadd53b11bdbad1f76000c4</Hash>
 </Codenesium>*/

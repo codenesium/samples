@@ -15,12 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Employee> Get(int businessEntityID);
 
-                Task<List<Employee>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Employee> GetLoginID(string loginID);
-                Task<Employee> GetNationalIDNumber(string nationalIDNumber);
-                Task<List<Employee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel, Nullable<Guid> organizationNode);
-                Task<List<Employee>> GetOrganizationNode(Nullable<Guid> organizationNode);
+                Task<Employee> ByLoginID(string loginID);
+                Task<Employee> ByNationalIDNumber(string nationalIDNumber);
 
                 Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
                 Task<List<EmployeePayHistory>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
@@ -29,5 +27,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a553117eaf7a7cf07632b3659d6aec93</Hash>
+    <Hash>4a9063bda6de4091ac00c7cc0e2712b2</Hash>
 </Codenesium>*/

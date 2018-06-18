@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiLifecycleRequestModel model, string id)
+                ILifecycleRepository lifecycleRepository;
+
+                public AbstractApiLifecycleRequestModelValidator(ILifecycleRepository lifecycleRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.lifecycleRepository = lifecycleRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLifecycleRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ILifecycleRepository LifecycleRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
                 }
@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiLifecycleRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Lifecycle record = await this.LifecycleRepository.GetName(model.Name);
+                        Lifecycle record = await this.lifecycleRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>624aa063a80362a65c6380e79f2a50c0</Hash>
+    <Hash>d970c2b955c619917069078f504d2834</Hash>
 </Codenesium>*/

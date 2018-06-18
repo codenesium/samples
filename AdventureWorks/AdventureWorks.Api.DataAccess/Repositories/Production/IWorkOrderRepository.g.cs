@@ -15,15 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<WorkOrder> Get(int workOrderID);
 
-                Task<List<WorkOrder>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<WorkOrder>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<WorkOrder>> GetProductID(int productID);
-                Task<List<WorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID);
+                Task<List<WorkOrder>> ByProductID(int productID);
+                Task<List<WorkOrder>> ByScrapReasonID(Nullable<short> scrapReasonID);
 
                 Task<List<WorkOrderRouting>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>59665f8589cc455093b64b0909e296d7</Hash>
+    <Hash>5fe3785768713bde1f983cfece4c3c91</Hash>
 </Codenesium>*/

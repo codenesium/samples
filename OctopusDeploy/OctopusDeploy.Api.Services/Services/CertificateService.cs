@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class CertificateService: AbstractCertificateService, ICertificateService
         {
                 public CertificateService(
-                        ILogger<CertificateRepository> logger,
+                        ILogger<ICertificateRepository> logger,
                         ICertificateRepository certificateRepository,
                         IApiCertificateRequestModelValidator certificateModelValidator,
                         IBOLCertificateMapper bolcertificateMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>080d454d3db79df117026b9d80656311</Hash>
+    <Hash>bed31cd76241bec89d160f65d450f43b</Hash>
 </Codenesium>*/

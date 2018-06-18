@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<WorkerTaskLease>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<WorkerTaskLease>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<WorkerTaskLease> Get(string id)
@@ -75,36 +76,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<WorkerTaskLease>> Where(Expression<Func<WorkerTaskLease, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<WorkerTaskLease>> Where(
+                        Expression<Func<WorkerTaskLease, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<WorkerTaskLease, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<WorkerTaskLease> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<WorkerTaskLease>> SearchLinqEF(Expression<Func<WorkerTaskLease, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(WorkerTaskLease.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<WorkerTaskLease>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkerTaskLease>();
-                }
-
-                private async Task<List<WorkerTaskLease>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(WorkerTaskLease.Id)} ASC";
+                                return await this.Context.Set<WorkerTaskLease>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<WorkerTaskLease>();
                         }
-
-                        return await this.Context.Set<WorkerTaskLease>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkerTaskLease>();
+                        else
+                        {
+                                return await this.Context.Set<WorkerTaskLease>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<WorkerTaskLease>();
+                        }
                 }
 
                 private async Task<WorkerTaskLease> GetById(string id)
                 {
-                        List<WorkerTaskLease> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<WorkerTaskLease> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b30fe9855aa921e7c2dbfd1df1d2a055</Hash>
+    <Hash>15f8de6c5e08fda14beb09a1fb974c82</Hash>
 </Codenesium>*/

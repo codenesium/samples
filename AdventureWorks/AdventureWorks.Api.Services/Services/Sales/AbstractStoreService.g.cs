@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStoreResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStoreResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.storeRepository.All(limit, offset, orderClause);
+                        var records = await this.storeRepository.All(limit, offset);
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.storeRepository.Get(businessEntityID);
 
-                        return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiStoreResponseModel>> Create(
@@ -109,15 +116,15 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiStoreResponseModel>> GetSalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<ApiStoreResponseModel>> BySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        List<Store> records = await this.storeRepository.GetSalesPersonID(salesPersonID);
+                        List<Store> records = await this.storeRepository.BySalesPersonID(salesPersonID);
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiStoreResponseModel>> GetDemographics(string demographics)
+                public async Task<List<ApiStoreResponseModel>> ByDemographics(string demographics)
                 {
-                        List<Store> records = await this.storeRepository.GetDemographics(demographics);
+                        List<Store> records = await this.storeRepository.ByDemographics(demographics);
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
@@ -132,5 +139,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b2cda70c057a8e0f3e29950430b1877</Hash>
+    <Hash>bd608d6d8233f3e512ff9b51c1ea9403</Hash>
 </Codenesium>*/

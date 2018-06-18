@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class CustomerController: AbstractCustomerController
         {
                 public CustomerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CustomerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICustomerService customerService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2d06c7b13ebbab243d9c20539aebb486</Hash>
+    <Hash>615a79e63491074ed18fb4c8e84c7e15</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTeamController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITeamService teamService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0362b50896b5ba08a5b76a7a93140104</Hash>
+    <Hash>c08789846815600906886212b6e0331e</Hash>
 </Codenesium>*/

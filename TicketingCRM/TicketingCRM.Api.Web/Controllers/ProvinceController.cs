@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class ProvinceController: AbstractProvinceController
         {
                 public ProvinceController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProvinceController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProvinceService provinceService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>46d6753e0624718d690a4ce15ef742eb</Hash>
+    <Hash>4f7395d81cdeee5b3ea77ed0e7c1b2c6</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class UserService: AbstractUserService, IUserService
         {
                 public UserService(
-                        ILogger<UserRepository> logger,
+                        ILogger<IUserRepository> logger,
                         IUserRepository userRepository,
                         IApiUserRequestModelValidator userModelValidator,
                         IBOLUserMapper boluserMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02f3f92bf5cbd80b75bc91b7cbd9c16f</Hash>
+    <Hash>6754a7dc0332af07f4a525eedcccff1a</Hash>
 </Codenesium>*/

@@ -9,7 +9,9 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "MachinePolicy")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "MachinePolicy")]
+        [Trait("Area", "Integration")]
         public class MachinePolicyTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>4693ad918b6eb39ec0dbedf7c6df553d</Hash>
+    <Hash>7e291a92e6e00918cbce4494f3529982</Hash>
 </Codenesium>*/

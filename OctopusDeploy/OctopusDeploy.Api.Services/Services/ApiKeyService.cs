@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ApiKeyService: AbstractApiKeyService, IApiKeyService
         {
                 public ApiKeyService(
-                        ILogger<ApiKeyRepository> logger,
+                        ILogger<IApiKeyRepository> logger,
                         IApiKeyRepository apiKeyRepository,
                         IApiApiKeyRequestModelValidator apiKeyModelValidator,
                         IBOLApiKeyMapper bolapiKeyMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e913d1d03b504a300ddf10df423e367a</Hash>
+    <Hash>16b5347829abacb39803ac6fbbbc78f4</Hash>
 </Codenesium>*/

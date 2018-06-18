@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class BillOfMaterialsService: AbstractBillOfMaterialsService, IBillOfMaterialsService
         {
                 public BillOfMaterialsService(
-                        ILogger<BillOfMaterialsRepository> logger,
+                        ILogger<IBillOfMaterialsRepository> logger,
                         IBillOfMaterialsRepository billOfMaterialsRepository,
                         IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
                         IBOLBillOfMaterialsMapper bolbillOfMaterialsMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4755b7e49dbd05e0b9deb9e9b9240cd8</Hash>
+    <Hash>f3dfd401d108bbd07aa0f4c45e4f5752</Hash>
 </Codenesium>*/

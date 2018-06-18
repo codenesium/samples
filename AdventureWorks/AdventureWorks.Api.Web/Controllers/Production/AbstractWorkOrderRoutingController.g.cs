@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractWorkOrderRoutingController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractWorkOrderRoutingController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkOrderRoutingService workOrderRoutingService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductID/{productID}")]
+                [Route("byProductID/{productID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProductID(int productID)
+                public async virtual Task<IActionResult> ByProductID(int productID)
                 {
-                        List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderRoutingService.GetProductID(productID);
+                        List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderRoutingService.ByProductID(productID);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c71b23f92e6d32ec313494291a2e6a3d</Hash>
+    <Hash>97ebcc9fb64bee667732c0e95e56352d</Hash>
 </Codenesium>*/

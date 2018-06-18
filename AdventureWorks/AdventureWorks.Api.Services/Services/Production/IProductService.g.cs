@@ -19,14 +19,13 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiProductResponseModel> Get(int productID);
 
-                Task<List<ApiProductResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiProductResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiProductResponseModel> GetName(string name);
-                Task<ApiProductResponseModel> GetProductNumber(string productNumber);
+                Task<ApiProductResponseModel> ByName(string name);
+                Task<ApiProductResponseModel> ByProductNumber(string productNumber);
 
                 Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
-                Task<List<ApiProductDocumentResponseModel>> ProductDocuments(int productID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiProductInventoryResponseModel>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
@@ -37,5 +36,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f6ce7b94265a7a54e3f7e5344a173d7</Hash>
+    <Hash>aab11e59efc568b0a601b203f41b2917</Hash>
 </Codenesium>*/

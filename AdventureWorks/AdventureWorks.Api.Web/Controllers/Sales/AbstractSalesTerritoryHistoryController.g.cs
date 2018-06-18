@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSalesTerritoryHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSalesTerritoryHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesTerritoryHistoryService salesTerritoryHistoryService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2bc092ede2c5071a5ff331e1caab60c7</Hash>
+    <Hash>38edc68b55a0ce53c182e02923371438</Hash>
 </Codenesium>*/

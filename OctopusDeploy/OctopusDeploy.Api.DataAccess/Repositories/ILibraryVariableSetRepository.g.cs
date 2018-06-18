@@ -15,12 +15,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<LibraryVariableSet> Get(string id);
 
-                Task<List<LibraryVariableSet>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<LibraryVariableSet>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<LibraryVariableSet> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>8519eb768089ef2063aab3412a6c2fee</Hash>
+    <Hash>76157c123469c11e077d58e581726718</Hash>
 </Codenesium>*/

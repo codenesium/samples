@@ -26,11 +26,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOActionTemplateVersion MapEFToBO(
                         ActionTemplateVersion ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOActionTemplateVersion();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6701cef12114abb0aada920f74f722cb</Hash>
+    <Hash>7fb7a6fcb9a0044635670b5254ed53fe</Hash>
 </Codenesium>*/

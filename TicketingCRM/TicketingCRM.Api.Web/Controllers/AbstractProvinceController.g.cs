@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProvinceController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProvinceController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProvinceService provinceService
@@ -202,5 +202,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0223b518cfc9adb78e6eb3f2673491b4</Hash>
+    <Hash>9466d57f9131462d40677572ee69f28c</Hash>
 </Codenesium>*/

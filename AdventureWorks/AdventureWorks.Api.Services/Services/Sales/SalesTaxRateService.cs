@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SalesTaxRateService: AbstractSalesTaxRateService, ISalesTaxRateService
         {
                 public SalesTaxRateService(
-                        ILogger<SalesTaxRateRepository> logger,
+                        ILogger<ISalesTaxRateRepository> logger,
                         ISalesTaxRateRepository salesTaxRateRepository,
                         IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
                         IBOLSalesTaxRateMapper bolsalesTaxRateMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d9f60ffc111c7c6a869018cf755f85c</Hash>
+    <Hash>22e7bb1025b1a279f0154a52247b8957</Hash>
 </Codenesium>*/

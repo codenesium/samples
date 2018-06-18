@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSalesTaxRateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSalesTaxRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesTaxRateService salesTaxRateService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getStateProvinceIDTaxType/{stateProvinceID}/{taxType}")]
+                [Route("byStateProvinceIDTaxType/{stateProvinceID}/{taxType}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiSalesTaxRateResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetStateProvinceIDTaxType(int stateProvinceID, int taxType)
+                public async virtual Task<IActionResult> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
                 {
-                        ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.GetStateProvinceIDTaxType(stateProvinceID, taxType);
+                        ApiSalesTaxRateResponseModel response = await this.SalesTaxRateService.ByStateProvinceIDTaxType(stateProvinceID, taxType);
 
                         if (response == null)
                         {
@@ -183,5 +183,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b5af9aa61136f555663304087dc8e6c3</Hash>
+    <Hash>693a1a101294381ab514ad76da63fef4</Hash>
 </Codenesium>*/

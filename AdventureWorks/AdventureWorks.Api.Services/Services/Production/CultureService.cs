@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class CultureService: AbstractCultureService, ICultureService
         {
                 public CultureService(
-                        ILogger<CultureRepository> logger,
+                        ILogger<ICultureRepository> logger,
                         ICultureRepository cultureRepository,
                         IApiCultureRequestModelValidator cultureModelValidator,
                         IBOLCultureMapper bolcultureMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfa0705da57ca5750aafb858aabf5810</Hash>
+    <Hash>cf168a744842e6b9b0a3dadd5a30876a</Hash>
 </Codenesium>*/

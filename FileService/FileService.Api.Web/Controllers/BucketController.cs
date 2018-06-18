@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Web
         public class BucketController: AbstractBucketController
         {
                 public BucketController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<BucketController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBucketService bucketService
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>337300f98884c9922f0edaf632c2afe6</Hash>
+    <Hash>f81e1938c96b4af6eb09eae487ad2de7</Hash>
 </Codenesium>*/

@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Contracts
                         int changeNumber,
                         byte[] document1,
                         Nullable<short> documentLevel,
-                        Guid documentNode,
                         string documentSummary,
                         string fileExtension,
                         string fileName,
@@ -28,7 +27,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ChangeNumber = changeNumber;
                         this.Document1 = document1;
                         this.DocumentLevel = documentLevel;
-                        this.DocumentNode = documentNode;
                         this.DocumentSummary = documentSummary;
                         this.FileExtension = fileExtension;
                         this.FileName = fileName;
@@ -46,8 +44,6 @@ namespace AdventureWorksNS.Api.Contracts
                 public byte[] Document1 { get; private set; }
 
                 public Nullable<short> DocumentLevel { get; private set; }
-
-                public Guid DocumentNode { get; private set; }
 
                 public string DocumentSummary { get; private set; }
 
@@ -91,14 +87,6 @@ namespace AdventureWorksNS.Api.Contracts
                 public bool ShouldSerializeDocumentLevel()
                 {
                         return this.ShouldSerializeDocumentLevelValue;
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeDocumentNodeValue { get; set; } = true;
-
-                public bool ShouldSerializeDocumentNode()
-                {
-                        return this.ShouldSerializeDocumentNodeValue;
                 }
 
                 [JsonIgnore]
@@ -186,7 +174,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ShouldSerializeChangeNumberValue = false;
                         this.ShouldSerializeDocument1Value = false;
                         this.ShouldSerializeDocumentLevelValue = false;
-                        this.ShouldSerializeDocumentNodeValue = false;
                         this.ShouldSerializeDocumentSummaryValue = false;
                         this.ShouldSerializeFileExtensionValue = false;
                         this.ShouldSerializeFileNameValue = false;
@@ -202,5 +189,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>59841bfd7b181d015fde911fc5160af8</Hash>
+    <Hash>4b9047d37ca0f40d653f41a5d2e75b40</Hash>
 </Codenesium>*/

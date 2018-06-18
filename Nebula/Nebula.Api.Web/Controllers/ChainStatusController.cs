@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class ChainStatusController: AbstractChainStatusController
         {
                 public ChainStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ChainStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IChainStatusService chainStatusService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4903ba4fad95722aaab75c2346274fa</Hash>
+    <Hash>6e40b806ceef1f725d0c438c63e3accd</Hash>
 </Codenesium>*/

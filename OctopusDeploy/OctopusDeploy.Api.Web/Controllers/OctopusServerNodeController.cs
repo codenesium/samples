@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class OctopusServerNodeController: AbstractOctopusServerNodeController
         {
                 public OctopusServerNodeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<OctopusServerNodeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IOctopusServerNodeService octopusServerNodeService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>88455e6ca23970b51083d7d3030581d2</Hash>
+    <Hash>c95d8f93dcdc70c683ab802b13fee4f8</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractEventController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractEventController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEventService eventService
@@ -222,5 +222,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8eb393b8326c0a1b968abcbc0b3730cf</Hash>
+    <Hash>d4e1d1c1462580eaf806944686b4731c</Hash>
 </Codenesium>*/

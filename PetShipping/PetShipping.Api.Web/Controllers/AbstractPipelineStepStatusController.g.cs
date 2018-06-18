@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPipelineStepStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPipelineStepStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPipelineStepStatusService pipelineStepStatusService
@@ -178,5 +178,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4bedb4e79ca3f79fdad40502ba70b97d</Hash>
+    <Hash>f4859f5b3d31f3868a81665347b66260</Hash>
 </Codenesium>*/

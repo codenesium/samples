@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class MachinePolicyController: AbstractMachinePolicyController
         {
                 public MachinePolicyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<MachinePolicyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMachinePolicyService machinePolicyService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>00f1f8c5eee3e282a6b1141452c7d4f8</Hash>
+    <Hash>a6fd649563f2339dfe72941da5979254</Hash>
 </Codenesium>*/

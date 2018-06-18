@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSchemaVersionsRequestModel model, int id)
+                ISchemaVersionsRepository schemaVersionsRepository;
+
+                public AbstractApiSchemaVersionsRequestModelValidator(ISchemaVersionsRepository schemaVersionsRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.schemaVersionsRepository = schemaVersionsRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSchemaVersionsRequestModel model, int id)
@@ -38,5 +39,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>052bf0cc35ece259c84405b33e52ac22</Hash>
+    <Hash>893f0c6362177ea1f22eb297329a12fc</Hash>
 </Codenesium>*/

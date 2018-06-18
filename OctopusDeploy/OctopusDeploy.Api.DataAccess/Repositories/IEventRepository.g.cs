@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Event> Get(string id);
 
-                Task<List<Event>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Event>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Event>> GetAutoId(long autoId);
                 Task<List<Event>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6302b7b35ad4197ad79a9f7c818be63</Hash>
+    <Hash>ccf7448b35b77e1cdf196588773fc21e</Hash>
 </Codenesium>*/

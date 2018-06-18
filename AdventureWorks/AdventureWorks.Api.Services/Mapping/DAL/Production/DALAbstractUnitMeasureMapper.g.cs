@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOUnitMeasure MapEFToBO(
                         UnitMeasure ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOUnitMeasure();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f8adf61886f12eb0bb71a2f033e3f40</Hash>
+    <Hash>a814cd857c339cf3de06a5519c7755df</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PersonCreditCard>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<PersonCreditCard>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<PersonCreditCard> Get(int businessEntityID)
@@ -75,42 +76,42 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<PersonCreditCard>> Where(Expression<Func<PersonCreditCard, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<PersonCreditCard>> Where(
+                        Expression<Func<PersonCreditCard, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<PersonCreditCard, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<PersonCreditCard> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<PersonCreditCard>> SearchLinqEF(Expression<Func<PersonCreditCard, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(PersonCreditCard.BusinessEntityID)} ASC";
+                                orderBy = x => x.BusinessEntityID;
                         }
 
-                        return await this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PersonCreditCard>();
-                }
-
-                private async Task<List<PersonCreditCard>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(PersonCreditCard.BusinessEntityID)} ASC";
+                                return await this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PersonCreditCard>();
                         }
-
-                        return await this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PersonCreditCard>();
+                        else
+                        {
+                                return await this.Context.Set<PersonCreditCard>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PersonCreditCard>();
+                        }
                 }
 
                 private async Task<PersonCreditCard> GetById(int businessEntityID)
                 {
-                        List<PersonCreditCard> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        List<PersonCreditCard> records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<CreditCard> GetCreditCard(int creditCardID)
+                {
+                        return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ea3ce106a59affbf59c52b112d1d1aa1</Hash>
+    <Hash>85d6806860b0c13c009270155bfdf32d</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiLibraryVariableSetRequestModel model, string id)
+                ILibraryVariableSetRepository libraryVariableSetRepository;
+
+                public AbstractApiLibraryVariableSetRequestModelValidator(ILibraryVariableSetRepository libraryVariableSetRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.libraryVariableSetRepository = libraryVariableSetRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLibraryVariableSetRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ILibraryVariableSetRepository LibraryVariableSetRepository { get; set; }
                 public virtual void ContentTypeRules()
                 {
                         this.RuleFor(x => x.ContentType).NotNull();
@@ -51,7 +51,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiLibraryVariableSetRequestModel model,  CancellationToken cancellationToken)
                 {
-                        LibraryVariableSet record = await this.LibraryVariableSetRepository.GetName(model.Name);
+                        LibraryVariableSet record = await this.libraryVariableSetRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -66,5 +66,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a541a2d320fee5e3c896706b7893342</Hash>
+    <Hash>ab221bffbf87189f4713ed36d665eea0</Hash>
 </Codenesium>*/

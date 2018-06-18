@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class UnitMeasureController: AbstractUnitMeasureController
         {
                 public UnitMeasureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<UnitMeasureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IUnitMeasureService unitMeasureService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7e0aecb5dc31b47df6de8dfbf6b5c127</Hash>
+    <Hash>1cbec24fd762b15ea4e626ef3d8b39b1</Hash>
 </Codenesium>*/

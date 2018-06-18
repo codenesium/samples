@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ProductCategoryController: AbstractProductCategoryController
         {
                 public ProductCategoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProductCategoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductCategoryService productCategoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>69cd1868d45db99ac4c99deec6d564cb</Hash>
+    <Hash>6d19357f41ad4e47b1729ddfc14b02b0</Hash>
 </Codenesium>*/

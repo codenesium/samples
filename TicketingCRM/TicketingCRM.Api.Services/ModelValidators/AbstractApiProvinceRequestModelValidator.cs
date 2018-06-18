@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiProvinceRequestModel model, int id)
+                IProvinceRepository provinceRepository;
+
+                public AbstractApiProvinceRequestModelValidator(IProvinceRepository provinceRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.provinceRepository = provinceRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProvinceRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace TicketingCRMNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ICountryRepository CountryRepository { get; set; }
 
                 public virtual void CountryIdRules()
                 {
@@ -40,7 +39,7 @@ namespace TicketingCRMNS.Api.Services
 
                 private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.CountryRepository.Get(id);
+                        var record = await this.provinceRepository.GetCountry(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>11f79a820688c79c87dd77f149f000c5</Hash>
+    <Hash>39592990c8ed14213a4a3145392b00cf</Hash>
 </Codenesium>*/

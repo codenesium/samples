@@ -15,10 +15,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<SchemaVersions> Get(int id);
 
-                Task<List<SchemaVersions>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<SchemaVersions>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>4b7a5650b3f1b6eeef459bc5aef45f27</Hash>
+    <Hash>788ebe4d671d41fc26a2b17c895d0e12</Hash>
 </Codenesium>*/

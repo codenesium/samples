@@ -8,7 +8,8 @@ namespace PetStoreNS.Api.Services
 {
         public class ApiPaymentTypeRequestModelValidator: AbstractApiPaymentTypeRequestModelValidator, IApiPaymentTypeRequestModelValidator
         {
-                public ApiPaymentTypeRequestModelValidator()
+                public ApiPaymentTypeRequestModelValidator(IPaymentTypeRepository paymentTypeRepository)
+                        : base(paymentTypeRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2644f4c2cad7ad2e76cf770043bbb1f5</Hash>
+    <Hash>224e0169bdcf1c2f4fd91166cdeadeeb</Hash>
 </Codenesium>*/

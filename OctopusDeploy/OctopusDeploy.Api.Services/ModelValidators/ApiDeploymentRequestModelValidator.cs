@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiDeploymentRequestModelValidator: AbstractApiDeploymentRequestModelValidator, IApiDeploymentRequestModelValidator
         {
-                public ApiDeploymentRequestModelValidator()
+                public ApiDeploymentRequestModelValidator(IDeploymentRepository deploymentRepository)
+                        : base(deploymentRepository)
                 {
                 }
 
@@ -54,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f25a1f6070ce54f65ce12a03695b31b</Hash>
+    <Hash>63f702fb098e62ed681085e49f4de9e6</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCountryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCountryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryService countryService
@@ -178,5 +178,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>52403e2838ad997eb338f6f31996de3f</Hash>
+    <Hash>dcfe0dcc69c57da89003b28eb65c52da</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTenantResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTenantResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.tenantRepository.All(limit, offset, orderClause);
+                        var records = await this.tenantRepository.All(limit, offset);
 
                         return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.tenantRepository.Get(id);
 
-                        return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiTenantResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Tenant record = await this.tenantRepository.GetName(name);
 
-                        return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiTenantResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
@@ -115,5 +129,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c384156d1bd513e9d0e066f5bb2fb500</Hash>
+    <Hash>88274b0a92dbf84308bf280912f6902d</Hash>
 </Codenesium>*/

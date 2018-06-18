@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class IllustrationService: AbstractIllustrationService, IIllustrationService
         {
                 public IllustrationService(
-                        ILogger<IllustrationRepository> logger,
+                        ILogger<IIllustrationRepository> logger,
                         IIllustrationRepository illustrationRepository,
                         IApiIllustrationRequestModelValidator illustrationModelValidator,
                         IBOLIllustrationMapper bolillustrationMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f479ee396492ea8fba9a860f9b3d7597</Hash>
+    <Hash>9e606979a07b05fe551cb131353ec77f</Hash>
 </Codenesium>*/

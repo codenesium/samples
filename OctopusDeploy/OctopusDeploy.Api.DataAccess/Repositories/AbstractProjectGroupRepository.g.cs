@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProjectGroup>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProjectGroup>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProjectGroup> Get(string id)
@@ -77,47 +78,42 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<ProjectGroup> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<ProjectGroup>> GetDataVersion(byte[] dataVersion)
                 {
-                        var records = await this.SearchLinqEF(x => x.DataVersion == dataVersion);
+                        var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
 
-                protected async Task<List<ProjectGroup>> Where(Expression<Func<ProjectGroup, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProjectGroup>> Where(
+                        Expression<Func<ProjectGroup, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProjectGroup, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ProjectGroup> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ProjectGroup>> SearchLinqEF(Expression<Func<ProjectGroup, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProjectGroup.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<ProjectGroup>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProjectGroup>();
-                }
-
-                private async Task<List<ProjectGroup>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProjectGroup.Id)} ASC";
+                                return await this.Context.Set<ProjectGroup>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProjectGroup>();
                         }
-
-                        return await this.Context.Set<ProjectGroup>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProjectGroup>();
+                        else
+                        {
+                                return await this.Context.Set<ProjectGroup>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProjectGroup>();
+                        }
                 }
 
                 private async Task<ProjectGroup> GetById(string id)
                 {
-                        List<ProjectGroup> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<ProjectGroup> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2df0d368e3a0474145b65384bac112c5</Hash>
+    <Hash>b259b4adc49abdba81c056e260ef2d91</Hash>
 </Codenesium>*/

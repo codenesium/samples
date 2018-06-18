@@ -19,7 +19,7 @@ namespace PetShippingNS.Api.Services
 
                 Task<ApiCountryResponseModel> Get(int id);
 
-                Task<List<ApiCountryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiCountryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiCountryRequirementResponseModel>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiDestinationResponseModel>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0);
@@ -27,5 +27,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a9a2dfcc8c4bb66341e0b7998537c848</Hash>
+    <Hash>20d0040eae4b446a9fdd2eafa8b36a47</Hash>
 </Codenesium>*/

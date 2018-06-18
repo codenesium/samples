@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private long existingRecordId;
 
-                public ValidationResult Validate(ApiVersionInfoRequestModel model, long id)
+                IVersionInfoRepository versionInfoRepository;
+
+                public AbstractApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.versionInfoRepository = versionInfoRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiVersionInfoRequestModel model, long id)
@@ -37,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9f61b47db323fe9ca80ba272e1e2f7b</Hash>
+    <Hash>186995574edb1665d6734b6082cd6811</Hash>
 </Codenesium>*/

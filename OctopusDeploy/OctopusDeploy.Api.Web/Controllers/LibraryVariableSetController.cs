@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class LibraryVariableSetController: AbstractLibraryVariableSetController
         {
                 public LibraryVariableSetController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<LibraryVariableSetController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILibraryVariableSetService libraryVariableSetService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ba5e4626f4c85c7c0ced411e3cf66466</Hash>
+    <Hash>9e9eb9b2f608ab45b97652e96df13fc2</Hash>
 </Codenesium>*/

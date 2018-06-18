@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Release>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Release>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Release> Get(string id)
@@ -77,65 +78,60 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<Release> GetVersionProjectId(string version, string projectId)
                 {
-                        var records = await this.SearchLinqEF(x => x.Version == version && x.ProjectId == projectId);
+                        var records = await this.Where(x => x.Version == version && x.ProjectId == projectId);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<Release>> GetIdAssembled(string id, DateTimeOffset assembled)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.Assembled == assembled);
+                        var records = await this.Where(x => x.Id == id && x.Assembled == assembled);
 
                         return records;
                 }
                 public async Task<List<Release>> GetProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId);
+                        var records = await this.Where(x => x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId);
 
                         return records;
                 }
                 public async Task<List<Release>> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.Version == version && x.ProjectVariableSetSnapshotId == projectVariableSetSnapshotId && x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId && x.JSON == jSON && x.ProjectId == projectId && x.ChannelId == channelId && x.Assembled == assembled);
+                        var records = await this.Where(x => x.Id == id && x.Version == version && x.ProjectVariableSetSnapshotId == projectVariableSetSnapshotId && x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId && x.JSON == jSON && x.ProjectId == projectId && x.ChannelId == channelId && x.Assembled == assembled);
 
                         return records;
                 }
                 public async Task<List<Release>> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.ChannelId == channelId && x.ProjectVariableSetSnapshotId == projectVariableSetSnapshotId && x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId && x.JSON == jSON && x.ProjectId == projectId && x.Version == version && x.Assembled == assembled);
+                        var records = await this.Where(x => x.Id == id && x.ChannelId == channelId && x.ProjectVariableSetSnapshotId == projectVariableSetSnapshotId && x.ProjectDeploymentProcessSnapshotId == projectDeploymentProcessSnapshotId && x.JSON == jSON && x.ProjectId == projectId && x.Version == version && x.Assembled == assembled);
 
                         return records;
                 }
 
-                protected async Task<List<Release>> Where(Expression<Func<Release, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Release>> Where(
+                        Expression<Func<Release, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Release, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Release> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Release>> SearchLinqEF(Expression<Func<Release, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Release.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Release>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Release>();
-                }
-
-                private async Task<List<Release>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Release.Id)} ASC";
+                                return await this.Context.Set<Release>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Release>();
                         }
-
-                        return await this.Context.Set<Release>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Release>();
+                        else
+                        {
+                                return await this.Context.Set<Release>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Release>();
+                        }
                 }
 
                 private async Task<Release> GetById(string id)
                 {
-                        List<Release> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Release> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -143,5 +139,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3f876b74a81ce12f3cfb2c124f2bd97c</Hash>
+    <Hash>b86f04b7b7ec5e7e2d704d5850e5dce3</Hash>
 </Codenesium>*/

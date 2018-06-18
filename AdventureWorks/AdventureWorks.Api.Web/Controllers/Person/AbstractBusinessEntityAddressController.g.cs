@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractBusinessEntityAddressController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractBusinessEntityAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBusinessEntityAddressService businessEntityAddressService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getAddressID/{addressID}")]
+                [Route("byAddressID/{addressID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetAddressID(int addressID)
+                public async virtual Task<IActionResult> ByAddressID(int addressID)
                 {
-                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.GetAddressID(addressID);
+                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.ByAddressID(addressID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getAddressTypeID/{addressTypeID}")]
+                [Route("byAddressTypeID/{addressTypeID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetAddressTypeID(int addressTypeID)
+                public async virtual Task<IActionResult> ByAddressTypeID(int addressTypeID)
                 {
-                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.GetAddressTypeID(addressTypeID);
+                        List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.ByAddressTypeID(addressTypeID);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee8258c2ae96ad96229ad72673fae59e</Hash>
+    <Hash>ab6845e43169dadd1f1f0aed639a035d</Hash>
 </Codenesium>*/

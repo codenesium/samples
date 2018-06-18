@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ActionTemplateVersion>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ActionTemplateVersion>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ActionTemplateVersion> Get(string id)
@@ -77,47 +78,42 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<ActionTemplateVersion> GetNameVersion(string name, int version)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name && x.Version == version);
+                        var records = await this.Where(x => x.Name == name && x.Version == version);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<ActionTemplateVersion>> GetLatestActionTemplateId(string latestActionTemplateId)
                 {
-                        var records = await this.SearchLinqEF(x => x.LatestActionTemplateId == latestActionTemplateId);
+                        var records = await this.Where(x => x.LatestActionTemplateId == latestActionTemplateId);
 
                         return records;
                 }
 
-                protected async Task<List<ActionTemplateVersion>> Where(Expression<Func<ActionTemplateVersion, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ActionTemplateVersion>> Where(
+                        Expression<Func<ActionTemplateVersion, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ActionTemplateVersion, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ActionTemplateVersion> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ActionTemplateVersion>> SearchLinqEF(Expression<Func<ActionTemplateVersion, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ActionTemplateVersion.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<ActionTemplateVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ActionTemplateVersion>();
-                }
-
-                private async Task<List<ActionTemplateVersion>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ActionTemplateVersion.Id)} ASC";
+                                return await this.Context.Set<ActionTemplateVersion>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ActionTemplateVersion>();
                         }
-
-                        return await this.Context.Set<ActionTemplateVersion>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ActionTemplateVersion>();
+                        else
+                        {
+                                return await this.Context.Set<ActionTemplateVersion>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ActionTemplateVersion>();
+                        }
                 }
 
                 private async Task<ActionTemplateVersion> GetById(string id)
                 {
-                        List<ActionTemplateVersion> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<ActionTemplateVersion> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c23dbd6b41fd156b65c4e20391468782</Hash>
+    <Hash>7e28b71b03f18cef2dc234f0fe797002</Hash>
 </Codenesium>*/

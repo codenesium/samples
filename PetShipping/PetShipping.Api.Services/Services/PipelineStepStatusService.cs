@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class PipelineStepStatusService: AbstractPipelineStepStatusService, IPipelineStepStatusService
         {
                 public PipelineStepStatusService(
-                        ILogger<PipelineStepStatusRepository> logger,
+                        ILogger<IPipelineStepStatusRepository> logger,
                         IPipelineStepStatusRepository pipelineStepStatusRepository,
                         IApiPipelineStepStatusRequestModelValidator pipelineStepStatusModelValidator,
                         IBOLPipelineStepStatusMapper bolpipelineStepStatusMapper,
@@ -38,5 +38,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8753f33c1dbdda00a155117bc17792c</Hash>
+    <Hash>5ab25a38d41fb0b78834f450a5852911</Hash>
 </Codenesium>*/

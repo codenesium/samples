@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiTransactionRequestModel model, int id)
+                ITransactionRepository transactionRepository;
+
+                public AbstractApiTransactionRequestModelValidator(ITransactionRepository transactionRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.transactionRepository = transactionRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTransactionRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace TicketingCRMNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ITransactionStatusRepository TransactionStatusRepository { get; set; }
 
                 public virtual void AmountRules()
                 {
@@ -44,7 +43,7 @@ namespace TicketingCRMNS.Api.Services
 
                 private async Task<bool> BeValidTransactionStatus(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TransactionStatusRepository.Get(id);
+                        var record = await this.transactionRepository.GetTransactionStatus(id);
 
                         return record != null;
                 }
@@ -52,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9602a813310766965fdb6dafd60cadb</Hash>
+    <Hash>f3e8026d4ae136db213f6a5d91c6e1fc</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesTerritoryController: AbstractSalesTerritoryController
         {
                 public SalesTerritoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesTerritoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesTerritoryService salesTerritoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da5bb31004ae0e06281db8ebd6995f5d</Hash>
+    <Hash>c8deba7a7f0676a859f49d69cf9d907c</Hash>
 </Codenesium>*/

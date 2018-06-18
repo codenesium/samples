@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private short existingRecordId;
 
-                public ValidationResult Validate(ApiDepartmentRequestModel model, short id)
+                IDepartmentRepository departmentRepository;
+
+                public AbstractApiDepartmentRequestModelValidator(IDepartmentRepository departmentRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.departmentRepository = departmentRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDepartmentRequestModel model, short id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IDepartmentRepository DepartmentRepository { get; set; }
                 public virtual void GroupNameRules()
                 {
                         this.RuleFor(x => x.GroupName).NotNull();
@@ -39,13 +39,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiDepartmentRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiDepartmentRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Department record = await this.DepartmentRepository.GetName(model.Name);
+                        Department record = await this.departmentRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (short) && record.DepartmentID == this.existingRecordId))
                         {
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62153f87a375e411acb3a9f86fb0e22d</Hash>
+    <Hash>c279afdf51f5f557b281bde3292714b9</Hash>
 </Codenesium>*/

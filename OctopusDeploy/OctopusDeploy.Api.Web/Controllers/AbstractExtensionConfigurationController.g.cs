@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractExtensionConfigurationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractExtensionConfigurationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IExtensionConfigurationService extensionConfigurationService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e8b95ae81b40f09ce8e9dbe46889be29</Hash>
+    <Hash>96b4ed829f9514a1c77cb90b27596546</Hash>
 </Codenesium>*/

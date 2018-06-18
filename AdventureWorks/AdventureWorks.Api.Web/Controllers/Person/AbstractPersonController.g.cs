@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPersonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPersonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPersonService personService
@@ -162,34 +162,34 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getLastNameFirstNameMiddleName/{lastName}/{firstName}/{middleName}")]
+                [Route("byLastNameFirstNameMiddleName/{lastName}/{firstName}/{middleName}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
+                public async virtual Task<IActionResult> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
                 {
-                        List<ApiPersonResponseModel> response = await this.PersonService.GetLastNameFirstNameMiddleName(lastName, firstName, middleName);
+                        List<ApiPersonResponseModel> response = await this.PersonService.ByLastNameFirstNameMiddleName(lastName, firstName, middleName);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getAdditionalContactInfo/{additionalContactInfo}")]
+                [Route("byAdditionalContactInfo/{additionalContactInfo}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetAdditionalContactInfo(string additionalContactInfo)
+                public async virtual Task<IActionResult> ByAdditionalContactInfo(string additionalContactInfo)
                 {
-                        List<ApiPersonResponseModel> response = await this.PersonService.GetAdditionalContactInfo(additionalContactInfo);
+                        List<ApiPersonResponseModel> response = await this.PersonService.ByAdditionalContactInfo(additionalContactInfo);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getDemographics/{demographics}")]
+                [Route("byDemographics/{demographics}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDemographics(string demographics)
+                public async virtual Task<IActionResult> ByDemographics(string demographics)
                 {
-                        List<ApiPersonResponseModel> response = await this.PersonService.GetDemographics(demographics);
+                        List<ApiPersonResponseModel> response = await this.PersonService.ByDemographics(demographics);
 
                         return this.Ok(response);
                 }
@@ -250,5 +250,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>37a6a8ccfbaacc443db4e881ad3c3b3e</Hash>
+    <Hash>341be5193371e60cb4183fea655e06e2</Hash>
 </Codenesium>*/

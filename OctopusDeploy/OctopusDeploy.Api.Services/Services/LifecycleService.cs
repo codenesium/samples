@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class LifecycleService: AbstractLifecycleService, ILifecycleService
         {
                 public LifecycleService(
-                        ILogger<LifecycleRepository> logger,
+                        ILogger<ILifecycleRepository> logger,
                         ILifecycleRepository lifecycleRepository,
                         IApiLifecycleRequestModelValidator lifecycleModelValidator,
                         IBOLLifecycleMapper bollifecycleMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3641314acdb424f86ba5ed6a5a8b5bc5</Hash>
+    <Hash>894a1986507b3eb20787f718a5a67312</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<VariableSet>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<VariableSet>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<VariableSet> Get(string id)
@@ -75,36 +76,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<VariableSet>> Where(Expression<Func<VariableSet, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<VariableSet>> Where(
+                        Expression<Func<VariableSet, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<VariableSet, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<VariableSet> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<VariableSet>> SearchLinqEF(Expression<Func<VariableSet, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(VariableSet.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<VariableSet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<VariableSet>();
-                }
-
-                private async Task<List<VariableSet>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(VariableSet.Id)} ASC";
+                                return await this.Context.Set<VariableSet>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VariableSet>();
                         }
-
-                        return await this.Context.Set<VariableSet>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<VariableSet>();
+                        else
+                        {
+                                return await this.Context.Set<VariableSet>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VariableSet>();
+                        }
                 }
 
                 private async Task<VariableSet> GetById(string id)
                 {
-                        List<VariableSet> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<VariableSet> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5f9186a4afa8f2eb0181e5da8b1b59b3</Hash>
+    <Hash>de923a8c1466ebf4a8144d064e04ff56</Hash>
 </Codenesium>*/

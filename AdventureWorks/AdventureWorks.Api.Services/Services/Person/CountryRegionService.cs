@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class CountryRegionService: AbstractCountryRegionService, ICountryRegionService
         {
                 public CountryRegionService(
-                        ILogger<CountryRegionRepository> logger,
+                        ILogger<ICountryRegionRepository> logger,
                         ICountryRegionRepository countryRegionRepository,
                         IApiCountryRegionRequestModelValidator countryRegionModelValidator,
                         IBOLCountryRegionMapper bolcountryRegionMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d846205044938fc04b3117c2feba4002</Hash>
+    <Hash>221bc6e9f5a5e4121cc6faf0e224f4d4</Hash>
 </Codenesium>*/

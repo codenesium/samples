@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class CreditCardController: AbstractCreditCardController
         {
                 public CreditCardController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CreditCardController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICreditCardService creditCardService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>700d1b5fd67a24c65149103f55f2ebad</Hash>
+    <Hash>9db04a1e77381c44a3389990eaf336bf</Hash>
 </Codenesium>*/

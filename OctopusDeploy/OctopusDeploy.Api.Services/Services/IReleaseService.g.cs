@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiReleaseResponseModel> Get(string id);
 
-                Task<List<ApiReleaseResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiReleaseResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiReleaseResponseModel> GetVersionProjectId(string version, string projectId);
                 Task<List<ApiReleaseResponseModel>> GetIdAssembled(string id, DateTimeOffset assembled);
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9de6c1e30ab26296c7dc64e0f45a565f</Hash>
+    <Hash>5d76d7dcf5731359a9dc0da4583b5072</Hash>
 </Codenesium>*/

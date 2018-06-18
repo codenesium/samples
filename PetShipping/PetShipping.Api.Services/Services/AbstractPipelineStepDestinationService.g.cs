@@ -42,9 +42,9 @@ namespace PetShippingNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.pipelineStepDestinationRepository.All(limit, offset, orderClause);
+                        var records = await this.pipelineStepDestinationRepository.All(limit, offset);
 
                         return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace PetShippingNS.Api.Services
                 {
                         var record = await this.pipelineStepDestinationRepository.Get(id);
 
-                        return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPipelineStepDestinationResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d434b8e4a980523a6cb968b8e6b9313</Hash>
+    <Hash>4bd9c506c36685726910583d5cf96c4f</Hash>
 </Codenesium>*/

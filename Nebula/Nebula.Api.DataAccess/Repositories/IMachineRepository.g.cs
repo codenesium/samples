@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 
                 Task<Machine> Get(int id);
 
-                Task<List<Machine>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Link>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
                 Task<List<MachineRefTeam>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0);
@@ -23,5 +23,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2e124a44fd00cd4722d182c735961415</Hash>
+    <Hash>fb9b831f7aa52043457f8c3b78dd8eeb</Hash>
 </Codenesium>*/

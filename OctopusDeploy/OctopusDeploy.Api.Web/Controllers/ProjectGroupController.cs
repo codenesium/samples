@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ProjectGroupController: AbstractProjectGroupController
         {
                 public ProjectGroupController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProjectGroupController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProjectGroupService projectGroupService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dae3cb9adc2af60003d994de97fb8dfb</Hash>
+    <Hash>6c2848b0d2f5e4cc9dae4774d14d1d88</Hash>
 </Codenesium>*/

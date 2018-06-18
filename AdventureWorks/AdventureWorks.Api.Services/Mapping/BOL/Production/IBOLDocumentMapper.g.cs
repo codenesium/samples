@@ -8,7 +8,7 @@ namespace AdventureWorksNS.Api.Services
         public interface IBOLDocumentMapper
         {
                 BODocument MapModelToBO(
-                        Guid documentNode,
+                        Guid rowguid,
                         ApiDocumentRequestModel model);
 
                 ApiDocumentResponseModel MapBOToModel(
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb171f4422355c72e5d6946cdf928e67</Hash>
+    <Hash>c7a3e910cfeda263442beb5f50ab17fb</Hash>
 </Codenesium>*/

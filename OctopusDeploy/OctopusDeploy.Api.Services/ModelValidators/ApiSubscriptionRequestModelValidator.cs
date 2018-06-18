@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiSubscriptionRequestModelValidator: AbstractApiSubscriptionRequestModelValidator, IApiSubscriptionRequestModelValidator
         {
-                public ApiSubscriptionRequestModelValidator()
+                public ApiSubscriptionRequestModelValidator(ISubscriptionRepository subscriptionRepository)
+                        : base(subscriptionRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>80273942eea0fdf845a85016e9be7792</Hash>
+    <Hash>c69788b941767bf9c3de605295f96c49</Hash>
 </Codenesium>*/

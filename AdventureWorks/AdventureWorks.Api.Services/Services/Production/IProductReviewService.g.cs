@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiProductReviewResponseModel> Get(int productReviewID);
 
-                Task<List<ApiProductReviewResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiProductReviewResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiProductReviewResponseModel>> GetCommentsProductIDReviewerName(string comments, int productID, string reviewerName);
+                Task<List<ApiProductReviewResponseModel>> ByCommentsProductIDReviewerName(string comments, int productID, string reviewerName);
         }
 }
 
 /*<Codenesium>
-    <Hash>910db6fa2dd18ae823fe1a551ec0e4d0</Hash>
+    <Hash>39e284820234638bd457aa1ad7fac20e</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractAirlineController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractAirlineController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAirlineService airlineService
@@ -164,5 +164,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>541877a612552e1bcc4f4e4507aa4cdb</Hash>
+    <Hash>8f04540708cad6d451e1415770d902ab</Hash>
 </Codenesium>*/

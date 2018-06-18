@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiJobCandidateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiJobCandidateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.jobCandidateRepository.All(limit, offset, orderClause);
+                        var records = await this.jobCandidateRepository.All(limit, offset);
 
                         return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.jobCandidateRepository.Get(jobCandidateID);
 
-                        return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
@@ -99,9 +106,9 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiJobCandidateResponseModel>> GetBusinessEntityID(Nullable<int> businessEntityID)
+                public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(Nullable<int> businessEntityID)
                 {
-                        List<JobCandidate> records = await this.jobCandidateRepository.GetBusinessEntityID(businessEntityID);
+                        List<JobCandidate> records = await this.jobCandidateRepository.ByBusinessEntityID(businessEntityID);
 
                         return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
                 }
@@ -109,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb998408df9a5a1391b2330083fc9df9</Hash>
+    <Hash>4f6a8a949773946f1dddbe61853c33d2</Hash>
 </Codenesium>*/

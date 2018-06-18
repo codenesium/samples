@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiProductPhotoResponseModel> Get(int productPhotoID);
 
-                Task<List<ApiProductPhotoResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiProductPhotoResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>79630fc67ed03df6b697532b49dbad1b</Hash>
+    <Hash>78d645b7ba3c12964ff8f46391d25250</Hash>
 </Codenesium>*/

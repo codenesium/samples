@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.addressRepository.All(limit, offset, orderClause);
+                        var records = await this.addressRepository.All(limit, offset);
 
                         return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.addressRepository.Get(addressID);
 
-                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiAddressResponseModel>> Create(
@@ -109,15 +116,22 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiAddressResponseModel> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+                public async Task<ApiAddressResponseModel> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
                 {
-                        Address record = await this.addressRepository.GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1, addressLine2, city, stateProvinceID, postalCode);
+                        Address record = await this.addressRepository.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(addressLine1, addressLine2, city, stateProvinceID, postalCode);
 
-                        return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
+                        }
                 }
-                public async Task<List<ApiAddressResponseModel>> GetStateProvinceID(int stateProvinceID)
+                public async Task<List<ApiAddressResponseModel>> ByStateProvinceID(int stateProvinceID)
                 {
-                        List<Address> records = await this.addressRepository.GetStateProvinceID(stateProvinceID);
+                        List<Address> records = await this.addressRepository.ByStateProvinceID(stateProvinceID);
 
                         return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
                 }
@@ -132,5 +146,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0305522272cba835b3afa2b15e0f8572</Hash>
+    <Hash>ea4601f35c17f46b6b82965b3309d3b3</Hash>
 </Codenesium>*/

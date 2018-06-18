@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiIllustrationRequestModel model, int id)
+                IIllustrationRepository illustrationRepository;
+
+                public AbstractApiIllustrationRequestModelValidator(IIllustrationRepository illustrationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.illustrationRepository = illustrationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiIllustrationRequestModel model, int id)
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e64f521e5072d7639ea0383a095977e1</Hash>
+    <Hash>d0f84780f430f13d790282f5445d015f</Hash>
 </Codenesium>*/

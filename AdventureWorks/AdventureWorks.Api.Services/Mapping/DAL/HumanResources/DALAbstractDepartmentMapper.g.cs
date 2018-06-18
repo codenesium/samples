@@ -24,11 +24,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BODepartment MapEFToBO(
                         Department ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BODepartment();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>315d79a79745c9cb25328e985af080a9</Hash>
+    <Hash>3b87d926bc80041d24b54c19524ac95c</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PipelineStepDestination>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<PipelineStepDestination>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<PipelineStepDestination> Get(int id)
@@ -75,42 +76,46 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<PipelineStepDestination>> Where(Expression<Func<PipelineStepDestination, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<PipelineStepDestination>> Where(
+                        Expression<Func<PipelineStepDestination, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<PipelineStepDestination, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<PipelineStepDestination> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<PipelineStepDestination>> SearchLinqEF(Expression<Func<PipelineStepDestination, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(PipelineStepDestination.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
-                }
-
-                private async Task<List<PipelineStepDestination>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(PipelineStepDestination.Id)} ASC";
+                                return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
                         }
-
-                        return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
+                        else
+                        {
+                                return await this.Context.Set<PipelineStepDestination>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
+                        }
                 }
 
                 private async Task<PipelineStepDestination> GetById(int id)
                 {
-                        List<PipelineStepDestination> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<PipelineStepDestination> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Destination> GetDestination(int destinationId)
+                {
+                        return await this.Context.Set<Destination>().SingleOrDefaultAsync(x => x.Id == destinationId);
+                }
+                public async virtual Task<PipelineStep> GetPipelineStep(int pipelineStepId)
+                {
+                        return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>48de846f1dbc4510445e11a902c866da</Hash>
+    <Hash>739deed6c2ed1e0f9b6d51d765bd77ed</Hash>
 </Codenesium>*/

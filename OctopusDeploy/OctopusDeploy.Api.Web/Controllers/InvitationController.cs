@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class InvitationController: AbstractInvitationController
         {
                 public InvitationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<InvitationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IInvitationService invitationService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>341fe414279cd83046df1a7cdaf204a4</Hash>
+    <Hash>e62a81c8dbd25e589148a1deacb72b15</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class PipelineStepController: AbstractPipelineStepController
         {
                 public PipelineStepController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PipelineStepController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPipelineStepService pipelineStepService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dbe4ef440fc360f8cdc51c7d62c7fc56</Hash>
+    <Hash>5e3d0313d4d70d5e23dd66694a1cbb25</Hash>
 </Codenesium>*/

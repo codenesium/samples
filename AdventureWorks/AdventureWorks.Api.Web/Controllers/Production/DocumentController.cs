@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class DocumentController: AbstractDocumentController
         {
                 public DocumentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DocumentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDocumentService documentService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2ad24b1993e520e48485de620edeb28f</Hash>
+    <Hash>a3b9e4a30ae3f85856bcae3319caae04</Hash>
 </Codenesium>*/

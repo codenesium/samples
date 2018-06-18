@@ -28,11 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOVendor MapEFToBO(
                         Vendor ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOVendor();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2cc48a25badbe0331120f89e81a5f0d9</Hash>
+    <Hash>58dcad8753442c4c1c59596475e2ae7b</Hash>
 </Codenesium>*/

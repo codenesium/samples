@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
                 private IDALDocumentMapper dalDocumentMapper;
 
-                private IBOLProductDocumentMapper bolProductDocumentMapper;
-
-                private IDALProductDocumentMapper dalProductDocumentMapper;
-
                 private ILogger logger;
 
                 public AbstractDocumentService(
@@ -35,10 +31,6 @@ namespace AdventureWorksNS.Api.Services
                         IBOLDocumentMapper bolDocumentMapper,
                         IDALDocumentMapper dalDocumentMapper
 
-                        ,
-                        IBOLProductDocumentMapper bolProductDocumentMapper,
-                        IDALProductDocumentMapper dalProductDocumentMapper
-
                         )
                         : base()
 
@@ -47,23 +39,28 @@ namespace AdventureWorksNS.Api.Services
                         this.documentModelValidator = documentModelValidator;
                         this.bolDocumentMapper = bolDocumentMapper;
                         this.dalDocumentMapper = dalDocumentMapper;
-                        this.bolProductDocumentMapper = bolProductDocumentMapper;
-                        this.dalProductDocumentMapper = dalProductDocumentMapper;
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.documentRepository.All(limit, offset, orderClause);
+                        var records = await this.documentRepository.All(limit, offset);
 
                         return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(records));
                 }
 
-                public virtual async Task<ApiDocumentResponseModel> Get(Guid documentNode)
+                public virtual async Task<ApiDocumentResponseModel> Get(Guid rowguid)
                 {
-                        var record = await this.documentRepository.Get(documentNode);
+                        var record = await this.documentRepository.Get(rowguid);
 
-                        return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiDocumentResponseModel>> Create(
@@ -82,14 +79,14 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual async Task<ActionResponse> Update(
-                        Guid documentNode,
+                        Guid rowguid,
                         ApiDocumentRequestModel model)
                 {
-                        ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateUpdateAsync(documentNode, model));
+                        ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateUpdateAsync(rowguid, model));
 
                         if (response.Success)
                         {
-                                var bo = this.bolDocumentMapper.MapModelToBO(documentNode, model);
+                                var bo = this.bolDocumentMapper.MapModelToBO(rowguid, model);
                                 await this.documentRepository.Update(this.dalDocumentMapper.MapBOToEF(bo));
                         }
 
@@ -97,40 +94,27 @@ namespace AdventureWorksNS.Api.Services
                 }
 
                 public virtual async Task<ActionResponse> Delete(
-                        Guid documentNode)
+                        Guid rowguid)
                 {
-                        ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateDeleteAsync(documentNode));
+                        ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateDeleteAsync(rowguid));
 
                         if (response.Success)
                         {
-                                await this.documentRepository.Delete(documentNode);
+                                await this.documentRepository.Delete(rowguid);
                         }
 
                         return response;
                 }
 
-                public async Task<ApiDocumentResponseModel> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode)
+                public async Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision)
                 {
-                        Document record = await this.documentRepository.GetDocumentLevelDocumentNode(documentLevel, documentNode);
-
-                        return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record));
-                }
-                public async Task<List<ApiDocumentResponseModel>> GetFileNameRevision(string fileName, string revision)
-                {
-                        List<Document> records = await this.documentRepository.GetFileNameRevision(fileName, revision);
+                        List<Document> records = await this.documentRepository.ByFileNameRevision(fileName, revision);
 
                         return this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(records));
-                }
-
-                public async virtual Task<List<ApiProductDocumentResponseModel>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0)
-                {
-                        List<ProductDocument> records = await this.documentRepository.ProductDocuments(documentNode, limit, offset);
-
-                        return this.bolProductDocumentMapper.MapBOToModel(this.dalProductDocumentMapper.MapEFToBO(records));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9cddc25ea293b4843428ca27f71b6410</Hash>
+    <Hash>a5c9ac72358a2b6867b918d763b9927a</Hash>
 </Codenesium>*/

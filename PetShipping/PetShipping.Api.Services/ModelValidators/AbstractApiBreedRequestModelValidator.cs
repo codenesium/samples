@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiBreedRequestModel model, int id)
+                IBreedRepository breedRepository;
+
+                public AbstractApiBreedRequestModelValidator(IBreedRepository breedRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.breedRepository = breedRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiBreedRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISpeciesRepository SpeciesRepository { get; set; }
 
                 public virtual void NameRules()
                 {
@@ -40,7 +39,7 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidSpecies(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SpeciesRepository.Get(id);
+                        var record = await this.breedRepository.GetSpecies(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7d4b42044119d7eee04be1a0f6252d9</Hash>
+    <Hash>0a88906ae2032323e233261ad84906f3</Hash>
 </Codenesium>*/

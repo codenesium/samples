@@ -23,11 +23,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOProxy MapEFToBO(
                         Proxy ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOProxy();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b1fb29167d0d409718d814e68f6f41c</Hash>
+    <Hash>6d0f9858523526f5d0305b80fc2bc814</Hash>
 </Codenesium>*/

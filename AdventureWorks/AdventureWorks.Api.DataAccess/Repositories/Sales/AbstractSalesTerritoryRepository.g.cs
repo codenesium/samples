@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SalesTerritory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SalesTerritory>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SalesTerritory> Get(int territoryID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<SalesTerritory> GetName(string name)
+                public async Task<SalesTerritory> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<SalesTerritory>> Where(Expression<Func<SalesTerritory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SalesTerritory>> Where(
+                        Expression<Func<SalesTerritory, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SalesTerritory, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SalesTerritory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SalesTerritory>> SearchLinqEF(Expression<Func<SalesTerritory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SalesTerritory.TerritoryID)} ASC";
+                                orderBy = x => x.TerritoryID;
                         }
 
-                        return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
-                }
-
-                private async Task<List<SalesTerritory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SalesTerritory.TerritoryID)} ASC";
+                                return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
                         }
-
-                        return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
+                        else
+                        {
+                                return await this.Context.Set<SalesTerritory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesTerritory>();
+                        }
                 }
 
                 private async Task<SalesTerritory> GetById(int territoryID)
                 {
-                        List<SalesTerritory> records = await this.SearchLinqEF(x => x.TerritoryID == territoryID);
+                        List<SalesTerritory> records = await this.Where(x => x.TerritoryID == territoryID);
 
                         return records.FirstOrDefault();
                 }
@@ -136,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70500910bff439c347b7d062b49c8131</Hash>
+    <Hash>55f7bcdeb07ea2f8919cfcc600efe580</Hash>
 </Codenesium>*/

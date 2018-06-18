@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiChannelRequestModel model, string id)
+                IChannelRepository channelRepository;
+
+                public AbstractApiChannelRequestModelValidator(IChannelRepository channelRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.channelRepository = channelRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiChannelRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IChannelRepository ChannelRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
                 }
@@ -60,7 +60,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetNameProjectId(ApiChannelRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Channel record = await this.ChannelRepository.GetNameProjectId(model.Name, model.ProjectId);
+                        Channel record = await this.channelRepository.GetNameProjectId(model.Name, model.ProjectId);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -75,5 +75,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>667a66a4c3f1481af394fd14b83a33a2</Hash>
+    <Hash>d9613ba62ff1949e9392ab16ed8b5dd4</Hash>
 </Codenesium>*/

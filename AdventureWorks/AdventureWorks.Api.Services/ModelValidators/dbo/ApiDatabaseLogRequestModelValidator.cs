@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiDatabaseLogRequestModelValidator: AbstractApiDatabaseLogRequestModelValidator, IApiDatabaseLogRequestModelValidator
         {
-                public ApiDatabaseLogRequestModelValidator()
+                public ApiDatabaseLogRequestModelValidator(IDatabaseLogRepository databaseLogRepository)
+                        : base(databaseLogRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4715e4e467d85412563715f4512f0ba9</Hash>
+    <Hash>f477bad6e87aeeb92f395ec1e7aad12e</Hash>
 </Codenesium>*/

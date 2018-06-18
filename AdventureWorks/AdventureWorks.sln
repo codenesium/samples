@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Services
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web.IntegrationTests", "AdventureWorks.Api.Web.IntegrationTests/AdventureWorks.Api.Web.IntegrationTests.csproj", "{AdventureWorks.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.DataAccess.Tests", "AdventureWorks.Api.DataAccess.Tests/AdventureWorks.Api.DataAccess.Tests.csproj", "{AdventureWorks.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Services.Tests", "AdventureWorks.Api.Services.Tests/AdventureWorks.Api.Services.Tests.csproj", "{AdventureWorks.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "AdventureWorks.Api.Web.Tests", "AdventureWorks.Api.Web.Tests/AdventureWorks.Api.Web.Tests.csproj", "{AdventureWorks.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{AdventureWorks.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AdventureWorks.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {AdventureWorks.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AdventureWorks.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AdventureWorks.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AdventureWorks.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {AdventureWorks.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AdventureWorks.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AdventureWorks.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AdventureWorks.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {AdventureWorks.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AdventureWorks.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AdventureWorks.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AdventureWorks.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

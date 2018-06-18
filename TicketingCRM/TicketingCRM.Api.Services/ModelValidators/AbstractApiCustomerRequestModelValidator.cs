@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiCustomerRequestModel model, int id)
+                ICustomerRepository customerRepository;
+
+                public AbstractApiCustomerRequestModelValidator(ICustomerRepository customerRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.customerRepository = customerRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCustomerRequestModel model, int id)
@@ -52,5 +53,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e4ce144e711bd82bca478229160e8b3</Hash>
+    <Hash>2948d69082ef3b5567fc82e93bb49988</Hash>
 </Codenesium>*/

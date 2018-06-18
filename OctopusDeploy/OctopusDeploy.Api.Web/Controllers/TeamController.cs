@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class TeamController: AbstractTeamController
         {
                 public TeamController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITeamService teamService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6a7d01ac1e6ed9844aa50258a410f521</Hash>
+    <Hash>2b905f8b16d00e17e067cbf7a2131107</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class CityService: AbstractCityService, ICityService
         {
                 public CityService(
-                        ILogger<CityRepository> logger,
+                        ILogger<ICityRepository> logger,
                         ICityRepository cityRepository,
                         IApiCityRequestModelValidator cityModelValidator,
                         IBOLCityMapper bolcityMapper,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>186753dc42a631685a527e07cd30c1a7</Hash>
+    <Hash>1f56e73cf215adcfcb90474672ca5c10</Hash>
 </Codenesium>*/

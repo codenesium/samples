@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAddressTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAddressTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.addressTypeRepository.All(limit, offset, orderClause);
+                        var records = await this.addressTypeRepository.All(limit, offset);
 
                         return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.addressTypeRepository.Get(addressTypeID);
 
-                        return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiAddressTypeResponseModel>> Create(
@@ -109,11 +116,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiAddressTypeResponseModel> GetName(string name)
+                public async Task<ApiAddressTypeResponseModel> ByName(string name)
                 {
-                        AddressType record = await this.addressTypeRepository.GetName(name);
+                        AddressType record = await this.addressTypeRepository.ByName(name);
 
-                        return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAddressTypeMapper.MapBOToModel(this.dalAddressTypeMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int addressTypeID, int limit = int.MaxValue, int offset = 0)
@@ -126,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b70c03b6f3c7f89fce19e88fe8d24e2</Hash>
+    <Hash>42b83fc78f579b623d74d154f3ba8f1f</Hash>
 </Codenesium>*/

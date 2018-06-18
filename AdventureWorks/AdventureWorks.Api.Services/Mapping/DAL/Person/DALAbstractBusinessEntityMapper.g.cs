@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOBusinessEntity MapEFToBO(
                         BusinessEntity ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOBusinessEntity();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>412eff9f267c4cfdac62891ebe590ce2</Hash>
+    <Hash>5bd0452970560a39ed7c762a47f83104</Hash>
 </Codenesium>*/

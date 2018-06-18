@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiTeamRequestModelValidator: AbstractApiTeamRequestModelValidator, IApiTeamRequestModelValidator
         {
-                public ApiTeamRequestModelValidator()
+                public ApiTeamRequestModelValidator(ITeamRepository teamRepository)
+                        : base(teamRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6a693c865506869da9a40e3c1f3a763</Hash>
+    <Hash>04cd979a3e67b9df6dd7518e72037ef9</Hash>
 </Codenesium>*/

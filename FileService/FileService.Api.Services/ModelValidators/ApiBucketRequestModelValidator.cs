@@ -8,7 +8,8 @@ namespace FileServiceNS.Api.Services
 {
         public class ApiBucketRequestModelValidator: AbstractApiBucketRequestModelValidator, IApiBucketRequestModelValidator
         {
-                public ApiBucketRequestModelValidator()
+                public ApiBucketRequestModelValidator(IBucketRepository bucketRepository)
+                        : base(bucketRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce1f4bddd8aa3c69ea8db24a0604f10b</Hash>
+    <Hash>0f4aa33b1a178c092e6858b08fe04eb1</Hash>
 </Codenesium>*/

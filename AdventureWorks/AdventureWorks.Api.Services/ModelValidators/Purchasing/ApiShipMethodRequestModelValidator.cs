@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiShipMethodRequestModelValidator: AbstractApiShipMethodRequestModelValidator, IApiShipMethodRequestModelValidator
         {
-                public ApiShipMethodRequestModelValidator()
+                public ApiShipMethodRequestModelValidator(IShipMethodRepository shipMethodRepository)
+                        : base(shipMethodRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ef5e526bc343591ba6a04abd886b3a1</Hash>
+    <Hash>95a96b15c05674fa46ae5f6ba7433a2d</Hash>
 </Codenesium>*/

@@ -52,9 +52,9 @@ namespace TicketingCRMNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiAdminResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiAdminResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.adminRepository.All(limit, offset, orderClause);
+                        var records = await this.adminRepository.All(limit, offset);
 
                         return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace TicketingCRMNS.Api.Services
                 {
                         var record = await this.adminRepository.Get(id);
 
-                        return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a77f2b5b7d0ae518df10663fe636f0d3</Hash>
+    <Hash>f4ab3dd6c6865b8ffe3f84afae5eb579</Hash>
 </Codenesium>*/

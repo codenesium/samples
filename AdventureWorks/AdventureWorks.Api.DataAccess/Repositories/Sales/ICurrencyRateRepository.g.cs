@@ -15,14 +15,16 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<CurrencyRate> Get(int currencyRateID);
 
-                Task<List<CurrencyRate>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<CurrencyRate>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<CurrencyRate> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
+                Task<CurrencyRate> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
 
                 Task<List<SalesOrderHeader>> SalesOrderHeaders(int currencyRateID, int limit = int.MaxValue, int offset = 0);
+
+                Task<Currency> GetCurrency(string fromCurrencyCode);
         }
 }
 
 /*<Codenesium>
-    <Hash>16c4aec145a4993bf401f3285f32c33d</Hash>
+    <Hash>ba45e6fb9cd7b153c5742917b4482edd</Hash>
 </Codenesium>*/

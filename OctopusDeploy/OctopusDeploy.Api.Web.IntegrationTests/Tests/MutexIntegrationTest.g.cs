@@ -9,7 +9,9 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "Mutex")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "Mutex")]
+        [Trait("Area", "Integration")]
         public class MutexTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a8e4dd1888ac06ba211dd77b6f3baf3a</Hash>
+    <Hash>a167c911f1738a8365e91b57160314df</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractDocumentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractDocumentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDocumentService documentService
@@ -79,8 +79,8 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.DocumentNode.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Documents/{result.Record.DocumentNode.ToString()}");
+                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Rowguid.ToString());
+                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Documents/{result.Record.Rowguid.ToString()}");
                                 return this.Ok(result.Record);
                         }
                         else
@@ -162,45 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDocumentLevelDocumentNode/{documentLevel}/{documentNode}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
-                [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode)
-                {
-                        ApiDocumentResponseModel response = await this.DocumentService.GetDocumentLevelDocumentNode(documentLevel, documentNode);
-
-                        if (response == null)
-                        {
-                                return this.StatusCode(StatusCodes.Status404NotFound);
-                        }
-                        else
-                        {
-                                return this.Ok(response);
-                        }
-                }
-
-                [HttpGet]
-                [Route("getFileNameRevision/{fileName}/{revision}")]
+                [Route("byFileNameRevision/{fileName}/{revision}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetFileNameRevision(string fileName, string revision)
+                public async virtual Task<IActionResult> ByFileNameRevision(string fileName, string revision)
                 {
-                        List<ApiDocumentResponseModel> response = await this.DocumentService.GetFileNameRevision(fileName, revision);
-
-                        return this.Ok(response);
-                }
-
-                [HttpGet]
-                [Route("{documentNode}/ProductDocuments")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
-                public async virtual Task<IActionResult> ProductDocuments(Guid documentNode, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiProductDocumentResponseModel> response = await this.DocumentService.ProductDocuments(documentNode, query.Limit, query.Offset);
+                        List<ApiDocumentResponseModel> response = await this.DocumentService.ByFileNameRevision(fileName, revision);
 
                         return this.Ok(response);
                 }
@@ -208,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dd698ef5b7700e22649aadfb7267d50e</Hash>
+    <Hash>2c743ca3d370dd90ab0ba801a923f732</Hash>
 </Codenesium>*/

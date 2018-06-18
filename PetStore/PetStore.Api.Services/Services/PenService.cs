@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Services
         public class PenService: AbstractPenService, IPenService
         {
                 public PenService(
-                        ILogger<PenRepository> logger,
+                        ILogger<IPenRepository> logger,
                         IPenRepository penRepository,
                         IApiPenRequestModelValidator penModelValidator,
                         IBOLPenMapper bolpenMapper,
@@ -38,5 +38,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2587f2f7869bb51a6d917ed21db1dd76</Hash>
+    <Hash>7c12afc62b82ab0aec4650cc61cf3b2a</Hash>
 </Codenesium>*/

@@ -24,11 +24,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOAWBuildVersion MapEFToBO(
                         AWBuildVersion ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOAWBuildVersion();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>004d6b2b2cbdba2988e43be9e29075be</Hash>
+    <Hash>1f1ad773f993361e4b6394d4d755904c</Hash>
 </Codenesium>*/

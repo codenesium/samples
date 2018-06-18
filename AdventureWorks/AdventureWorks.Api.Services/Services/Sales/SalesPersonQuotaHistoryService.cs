@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SalesPersonQuotaHistoryService: AbstractSalesPersonQuotaHistoryService, ISalesPersonQuotaHistoryService
         {
                 public SalesPersonQuotaHistoryService(
-                        ILogger<SalesPersonQuotaHistoryRepository> logger,
+                        ILogger<ISalesPersonQuotaHistoryRepository> logger,
                         ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
                         IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
                         IBOLSalesPersonQuotaHistoryMapper bolsalesPersonQuotaHistoryMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eaf3fa7dfb82fdfe85355c665d9394d4</Hash>
+    <Hash>1b3866a7362b35b6d74e7c37226678b0</Hash>
 </Codenesium>*/

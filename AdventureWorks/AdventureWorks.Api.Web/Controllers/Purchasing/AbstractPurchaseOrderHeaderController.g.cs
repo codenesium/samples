@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPurchaseOrderHeaderController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPurchaseOrderHeaderController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPurchaseOrderHeaderService purchaseOrderHeaderService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getEmployeeID/{employeeID}")]
+                [Route("byEmployeeID/{employeeID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetEmployeeID(int employeeID)
+                public async virtual Task<IActionResult> ByEmployeeID(int employeeID)
                 {
-                        List<ApiPurchaseOrderHeaderResponseModel> response = await this.PurchaseOrderHeaderService.GetEmployeeID(employeeID);
+                        List<ApiPurchaseOrderHeaderResponseModel> response = await this.PurchaseOrderHeaderService.ByEmployeeID(employeeID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getVendorID/{vendorID}")]
+                [Route("byVendorID/{vendorID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetVendorID(int vendorID)
+                public async virtual Task<IActionResult> ByVendorID(int vendorID)
                 {
-                        List<ApiPurchaseOrderHeaderResponseModel> response = await this.PurchaseOrderHeaderService.GetVendorID(vendorID);
+                        List<ApiPurchaseOrderHeaderResponseModel> response = await this.PurchaseOrderHeaderService.ByVendorID(vendorID);
 
                         return this.Ok(response);
                 }
@@ -200,5 +200,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c2e2c55509ba4dd2a1ac8d9da86dc5a6</Hash>
+    <Hash>402fee8f8abf5ad04a7edc94a32a0653</Hash>
 </Codenesium>*/

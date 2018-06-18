@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiEmailAddressRequestModel model, int id)
+                IEmailAddressRepository emailAddressRepository;
+
+                public AbstractApiEmailAddressRequestModelValidator(IEmailAddressRepository emailAddressRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.emailAddressRepository = emailAddressRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiEmailAddressRequestModel model, int id)
@@ -45,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f9618397ccdc047e96d771daec2ef5e</Hash>
+    <Hash>a702aaadcbb66419f7567c8b3f6be2dd</Hash>
 </Codenesium>*/

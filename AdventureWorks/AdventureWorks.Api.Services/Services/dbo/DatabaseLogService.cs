@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class DatabaseLogService: AbstractDatabaseLogService, IDatabaseLogService
         {
                 public DatabaseLogService(
-                        ILogger<DatabaseLogRepository> logger,
+                        ILogger<IDatabaseLogRepository> logger,
                         IDatabaseLogRepository databaseLogRepository,
                         IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
                         IBOLDatabaseLogMapper boldatabaseLogMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be61731abcdad4650c562d440683d170</Hash>
+    <Hash>0dae045226a6d2cccc063c1047b985db</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductModelController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductModelController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductModelService productModelService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProductModelResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiProductModelResponseModel response = await this.ProductModelService.GetName(name);
+                        ApiProductModelResponseModel response = await this.ProductModelService.ByName(name);
 
                         if (response == null)
                         {
@@ -181,23 +181,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCatalogDescription/{catalogDescription}")]
+                [Route("byCatalogDescription/{catalogDescription}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCatalogDescription(string catalogDescription)
+                public async virtual Task<IActionResult> ByCatalogDescription(string catalogDescription)
                 {
-                        List<ApiProductModelResponseModel> response = await this.ProductModelService.GetCatalogDescription(catalogDescription);
+                        List<ApiProductModelResponseModel> response = await this.ProductModelService.ByCatalogDescription(catalogDescription);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getInstructions/{instructions}")]
+                [Route("byInstructions/{instructions}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetInstructions(string instructions)
+                public async virtual Task<IActionResult> ByInstructions(string instructions)
                 {
-                        List<ApiProductModelResponseModel> response = await this.ProductModelService.GetInstructions(instructions);
+                        List<ApiProductModelResponseModel> response = await this.ProductModelService.ByInstructions(instructions);
 
                         return this.Ok(response);
                 }
@@ -245,5 +245,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b7b1478af602979e17ae74cdca5f272d</Hash>
+    <Hash>34dfe27299f2a4d247aef7af0e1d5e06</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiProductInventoryResponseModel> Get(int productID);
 
-                Task<List<ApiProductInventoryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiProductInventoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>3b5f83c5566b6c73216e12eb08a51b6f</Hash>
+    <Hash>d77448c7df4c7fcfbe360b500fa2b62e</Hash>
 </Codenesium>*/

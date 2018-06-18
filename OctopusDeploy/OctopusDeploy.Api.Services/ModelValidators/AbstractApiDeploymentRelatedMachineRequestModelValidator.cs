@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiDeploymentRelatedMachineRequestModel model, int id)
+                IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository;
+
+                public AbstractApiDeploymentRelatedMachineRequestModelValidator(IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.deploymentRelatedMachineRepository = deploymentRelatedMachineRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDeploymentRelatedMachineRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace OctopusDeployNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IDeploymentRepository DeploymentRepository { get; set; }
 
                 public virtual void DeploymentIdRules()
                 {
@@ -42,7 +41,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeValidDeployment(string id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.DeploymentRepository.Get(id);
+                        var record = await this.deploymentRelatedMachineRepository.GetDeployment(id);
 
                         return record != null;
                 }
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b45cbf0cdb7471e55875d431092a52d</Hash>
+    <Hash>b48a98cf3ba282d962afe7333febb43d</Hash>
 </Codenesium>*/

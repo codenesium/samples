@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<EventRelatedDocument>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<EventRelatedDocument>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<EventRelatedDocument> Get(int id)
@@ -77,53 +78,53 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<List<EventRelatedDocument>> GetEventId(string eventId)
                 {
-                        var records = await this.SearchLinqEF(x => x.EventId == eventId);
+                        var records = await this.Where(x => x.EventId == eventId);
 
                         return records;
                 }
                 public async Task<List<EventRelatedDocument>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
-                        var records = await this.SearchLinqEF(x => x.EventId == eventId && x.RelatedDocumentId == relatedDocumentId);
+                        var records = await this.Where(x => x.EventId == eventId && x.RelatedDocumentId == relatedDocumentId);
 
                         return records;
                 }
 
-                protected async Task<List<EventRelatedDocument>> Where(Expression<Func<EventRelatedDocument, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<EventRelatedDocument>> Where(
+                        Expression<Func<EventRelatedDocument, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<EventRelatedDocument, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<EventRelatedDocument> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<EventRelatedDocument>> SearchLinqEF(Expression<Func<EventRelatedDocument, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(EventRelatedDocument.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
-                }
-
-                private async Task<List<EventRelatedDocument>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(EventRelatedDocument.Id)} ASC";
+                                return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
                         }
-
-                        return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
+                        else
+                        {
+                                return await this.Context.Set<EventRelatedDocument>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
+                        }
                 }
 
                 private async Task<EventRelatedDocument> GetById(int id)
                 {
-                        List<EventRelatedDocument> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<EventRelatedDocument> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Event> GetEvent(string eventId)
+                {
+                        return await this.Context.Set<Event>().SingleOrDefaultAsync(x => x.Id == eventId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7631da76e622ee9eadf477f13759b0f4</Hash>
+    <Hash>fb5eb770ba05c5f8e93391bfdd07001d</Hash>
 </Codenesium>*/

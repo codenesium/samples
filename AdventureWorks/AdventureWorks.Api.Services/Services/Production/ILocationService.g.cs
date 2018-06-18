@@ -19,9 +19,9 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiLocationResponseModel> Get(short locationID);
 
-                Task<List<ApiLocationResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiLocationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiLocationResponseModel> GetName(string name);
+                Task<ApiLocationResponseModel> ByName(string name);
 
                 Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0);
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76d404221842d052a5c8509c79cf4021</Hash>
+    <Hash>72d1b49f26a89149ffe8351b225d9c8a</Hash>
 </Codenesium>*/

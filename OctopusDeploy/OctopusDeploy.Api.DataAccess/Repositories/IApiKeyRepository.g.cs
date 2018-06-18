@@ -15,12 +15,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<ApiKey> Get(string id);
 
-                Task<List<ApiKey>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ApiKey>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiKey> GetApiKeyHashed(string apiKeyHashed);
         }
 }
 
 /*<Codenesium>
-    <Hash>f8cc32f79663886649ca949955811cd9</Hash>
+    <Hash>53a399c9744ebaf4ef93705c67cfb087</Hash>
 </Codenesium>*/

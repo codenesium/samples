@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractNuGetPackageController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractNuGetPackageController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         INuGetPackageService nuGetPackageService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d5ba84548216ffd1c40b0f03d40f9dbf</Hash>
+    <Hash>4b57c6c3d5c8a0fe167310701cf04006</Hash>
 </Codenesium>*/

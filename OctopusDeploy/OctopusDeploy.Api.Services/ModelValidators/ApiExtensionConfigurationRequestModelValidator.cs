@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiExtensionConfigurationRequestModelValidator: AbstractApiExtensionConfigurationRequestModelValidator, IApiExtensionConfigurationRequestModelValidator
         {
-                public ApiExtensionConfigurationRequestModelValidator()
+                public ApiExtensionConfigurationRequestModelValidator(IExtensionConfigurationRepository extensionConfigurationRepository)
+                        : base(extensionConfigurationRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bdaadcf25d513fab3bc08df086a0e2f0</Hash>
+    <Hash>d77c9aa74bbe2acce61048531993f4e6</Hash>
 </Codenesium>*/

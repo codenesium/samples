@@ -19,12 +19,12 @@ namespace TicketingCRMNS.Api.Services
 
                 Task<ApiTransactionStatusResponseModel> Get(int id);
 
-                Task<List<ApiTransactionStatusResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiTransactionStatusResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiTransactionResponseModel>> Transactions(int transactionStatusId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>b65a75f88f85442b5ce363c4ec08d771</Hash>
+    <Hash>bf5469551c032848720548499e72a1c6</Hash>
 </Codenesium>*/

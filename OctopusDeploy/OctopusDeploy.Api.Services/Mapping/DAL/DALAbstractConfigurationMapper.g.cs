@@ -22,11 +22,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOConfiguration MapEFToBO(
                         Configuration ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOConfiguration();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc9cc396c09aaf276aae2c39307025b2</Hash>
+    <Hash>034ffdd434eb8eb9a4f4a8ce97c12313</Hash>
 </Codenesium>*/

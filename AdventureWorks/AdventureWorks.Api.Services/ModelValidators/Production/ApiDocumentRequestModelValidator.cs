@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiDocumentRequestModelValidator: AbstractApiDocumentRequestModelValidator, IApiDocumentRequestModelValidator
         {
-                public ApiDocumentRequestModelValidator()
+                public ApiDocumentRequestModelValidator(IDocumentRepository documentRepository)
+                        : base(documentRepository)
                 {
                 }
 
@@ -24,7 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.ModifiedDateRules();
                         this.OwnerRules();
                         this.RevisionRules();
-                        this.RowguidRules();
                         this.StatusRules();
                         this.TitleRules();
                         return await this.ValidateAsync(model);
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Services
                         this.ModifiedDateRules();
                         this.OwnerRules();
                         this.RevisionRules();
-                        this.RowguidRules();
                         this.StatusRules();
                         this.TitleRules();
                         return await this.ValidateAsync(model, id);
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2872101ecacca6ffaba93e08e396b449</Hash>
+    <Hash>e32c257eb1fc7ab1f8dcada5dbaa5244</Hash>
 </Codenesium>*/

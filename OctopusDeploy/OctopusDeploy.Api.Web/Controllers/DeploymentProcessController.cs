@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class DeploymentProcessController: AbstractDeploymentProcessController
         {
                 public DeploymentProcessController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DeploymentProcessController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeploymentProcessService deploymentProcessService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>775cf9cbbc463b553486366a9d4fabbc</Hash>
+    <Hash>fca4d03ad21666adace5fd7967c0fc02</Hash>
 </Codenesium>*/

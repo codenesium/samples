@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiProductCategoryRequestModel model, int id)
+                IProductCategoryRepository productCategoryRepository;
+
+                public AbstractApiProductCategoryRequestModelValidator(IProductCategoryRepository productCategoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.productCategoryRepository = productCategoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProductCategoryRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IProductCategoryRepository ProductCategoryRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductCategoryRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductCategoryRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -41,9 +41,9 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiProductCategoryRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiProductCategoryRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ProductCategory record = await this.ProductCategoryRepository.GetName(model.Name);
+                        ProductCategory record = await this.productCategoryRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ProductCategoryID == this.existingRecordId))
                         {
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aec9987e00cdabbda938b028d9e421ee</Hash>
+    <Hash>997b4b16a8c1c59c7bbc803854ec1f75</Hash>
 </Codenesium>*/

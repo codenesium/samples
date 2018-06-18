@@ -12,22 +12,19 @@ namespace AdventureWorksNS.Api.Services
                 Task<CreateResponse<ApiDocumentResponseModel>> Create(
                         ApiDocumentRequestModel model);
 
-                Task<ActionResponse> Update(Guid documentNode,
+                Task<ActionResponse> Update(Guid rowguid,
                                             ApiDocumentRequestModel model);
 
-                Task<ActionResponse> Delete(Guid documentNode);
+                Task<ActionResponse> Delete(Guid rowguid);
 
-                Task<ApiDocumentResponseModel> Get(Guid documentNode);
+                Task<ApiDocumentResponseModel> Get(Guid rowguid);
 
-                Task<List<ApiDocumentResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiDocumentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiDocumentResponseModel> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode);
-                Task<List<ApiDocumentResponseModel>> GetFileNameRevision(string fileName, string revision);
-
-                Task<List<ApiProductDocumentResponseModel>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0);
+                Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision);
         }
 }
 
 /*<Codenesium>
-    <Hash>eb7813d6b4911688c5642cd89310bece</Hash>
+    <Hash>dba35cbdfc6c72fa1155fa132b26cc21</Hash>
 </Codenesium>*/

@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiShipMethodResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiShipMethodResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.shipMethodRepository.All(limit, offset, orderClause);
+                        var records = await this.shipMethodRepository.All(limit, offset);
 
                         return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.shipMethodRepository.Get(shipMethodID);
 
-                        return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiShipMethodResponseModel>> Create(
@@ -109,11 +116,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiShipMethodResponseModel> GetName(string name)
+                public async Task<ApiShipMethodResponseModel> ByName(string name)
                 {
-                        ShipMethod record = await this.shipMethodRepository.GetName(name);
+                        ShipMethod record = await this.shipMethodRepository.ByName(name);
 
-                        return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
@@ -126,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>46e3d3dba658bd2d3cd9cf3b8a76e21c</Hash>
+    <Hash>c414effd478d8311e6f56e620d5476b4</Hash>
 </Codenesium>*/

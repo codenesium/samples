@@ -29,11 +29,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOBillOfMaterials MapEFToBO(
                         BillOfMaterials ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOBillOfMaterials();
 
                         bo.SetProperties(
@@ -65,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a86b5e27bd3b295ba7831968de83d47c</Hash>
+    <Hash>b7476698243599740a7c2bdde437181b</Hash>
 </Codenesium>*/

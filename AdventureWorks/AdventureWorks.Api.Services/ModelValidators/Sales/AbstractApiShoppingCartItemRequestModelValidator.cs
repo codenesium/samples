@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiShoppingCartItemRequestModel model, int id)
+                IShoppingCartItemRepository shoppingCartItemRepository;
+
+                public AbstractApiShoppingCartItemRequestModelValidator(IShoppingCartItemRepository shoppingCartItemRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.shoppingCartItemRepository = shoppingCartItemRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiShoppingCartItemRequestModel model, int id)
@@ -50,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f6137ad78c56de9958287811224d993</Hash>
+    <Hash>c8d5a3a87294dfab24d2e5df65ab10ca</Hash>
 </Codenesium>*/

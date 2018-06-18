@@ -23,11 +23,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOOtherTransport MapEFToBO(
                         OtherTransport ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOOtherTransport();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6174f4347d9b7824f07308981cf6fd36</Hash>
+    <Hash>226e77fddc952e2d3484d6e7a9e0f117</Hash>
 </Codenesium>*/

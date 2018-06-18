@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProductSubcategory> Get(int productSubcategoryID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<ProductSubcategory> GetName(string name)
+                public async Task<ProductSubcategory> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<ProductSubcategory>> Where(Expression<Func<ProductSubcategory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProductSubcategory>> Where(
+                        Expression<Func<ProductSubcategory, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProductSubcategory, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ProductSubcategory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ProductSubcategory>> SearchLinqEF(Expression<Func<ProductSubcategory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProductSubcategory.ProductSubcategoryID)} ASC";
+                                orderBy = x => x.ProductSubcategoryID;
                         }
 
-                        return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
-                }
-
-                private async Task<List<ProductSubcategory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProductSubcategory.ProductSubcategoryID)} ASC";
+                                return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
                         }
-
-                        return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
+                        else
+                        {
+                                return await this.Context.Set<ProductSubcategory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProductSubcategory>();
+                        }
                 }
 
                 private async Task<ProductSubcategory> GetById(int productSubcategoryID)
                 {
-                        List<ProductSubcategory> records = await this.SearchLinqEF(x => x.ProductSubcategoryID == productSubcategoryID);
+                        List<ProductSubcategory> records = await this.Where(x => x.ProductSubcategoryID == productSubcategoryID);
 
                         return records.FirstOrDefault();
                 }
@@ -124,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1bd614158b5b68b00500be444ea1521f</Hash>
+    <Hash>dbcb02ba5f54e8bb6a0a010c23254d08</Hash>
 </Codenesium>*/

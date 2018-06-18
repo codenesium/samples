@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class EventRelatedDocumentService: AbstractEventRelatedDocumentService, IEventRelatedDocumentService
         {
                 public EventRelatedDocumentService(
-                        ILogger<EventRelatedDocumentRepository> logger,
+                        ILogger<IEventRelatedDocumentRepository> logger,
                         IEventRelatedDocumentRepository eventRelatedDocumentRepository,
                         IApiEventRelatedDocumentRequestModelValidator eventRelatedDocumentModelValidator,
                         IBOLEventRelatedDocumentMapper boleventRelatedDocumentMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cba94c9a183728f26b265440262cb8b0</Hash>
+    <Hash>dde775fc1058b1342e7194bc1b10eb03</Hash>
 </Codenesium>*/

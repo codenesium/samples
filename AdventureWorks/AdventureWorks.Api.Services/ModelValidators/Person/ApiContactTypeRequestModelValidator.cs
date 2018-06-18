@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiContactTypeRequestModelValidator: AbstractApiContactTypeRequestModelValidator, IApiContactTypeRequestModelValidator
         {
-                public ApiContactTypeRequestModelValidator()
+                public ApiContactTypeRequestModelValidator(IContactTypeRepository contactTypeRepository)
+                        : base(contactTypeRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a068719d7fba1c2de133bbb81db2b5c3</Hash>
+    <Hash>77296a7499b6165e4b31b86e4ef7cb5e</Hash>
 </Codenesium>*/

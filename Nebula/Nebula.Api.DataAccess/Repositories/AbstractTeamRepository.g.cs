@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Team>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Team>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Team> Get(int id)
@@ -75,36 +76,31 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Team>> Where(Expression<Func<Team, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Team>> Where(
+                        Expression<Func<Team, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Team, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Team> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Team>> SearchLinqEF(Expression<Func<Team, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Team.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Team>();
-                }
-
-                private async Task<List<Team>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Team.Id)} ASC";
+                                return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
                         }
-
-                        return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Team>();
+                        else
+                        {
+                                return await this.Context.Set<Team>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Team>();
+                        }
                 }
 
                 private async Task<Team> GetById(int id)
                 {
-                        List<Team> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Team> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -117,9 +113,14 @@ namespace NebulaNS.Api.DataAccess
                 {
                         return await this.Context.Set<MachineRefTeam>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<MachineRefTeam>();
                 }
+
+                public async virtual Task<Organization> GetOrganization(int organizationId)
+                {
+                        return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c745a421dc3bec665e317d0dd389d246</Hash>
+    <Hash>8cabb90f8b031b2060eae9f524f7ef08</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiDeploymentHistoryRequestModel model, string id)
+                IDeploymentHistoryRepository deploymentHistoryRepository;
+
+                public AbstractApiDeploymentHistoryRequestModelValidator(IDeploymentHistoryRepository deploymentHistoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.deploymentHistoryRepository = deploymentHistoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDeploymentHistoryRequestModel model, string id)
@@ -133,5 +134,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc9e6ee351f5851e9307c332f62546e5</Hash>
+    <Hash>e9ccbcf36ba2335cc25e1f4c0b2f3490</Hash>
 </Codenesium>*/

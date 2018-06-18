@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class MachinePolicyService: AbstractMachinePolicyService, IMachinePolicyService
         {
                 public MachinePolicyService(
-                        ILogger<MachinePolicyRepository> logger,
+                        ILogger<IMachinePolicyRepository> logger,
                         IMachinePolicyRepository machinePolicyRepository,
                         IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
                         IBOLMachinePolicyMapper bolmachinePolicyMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7961a38719629a9ed145c0ccea016c2</Hash>
+    <Hash>9ea239edc024548321ca322bc3c3ec18</Hash>
 </Codenesium>*/

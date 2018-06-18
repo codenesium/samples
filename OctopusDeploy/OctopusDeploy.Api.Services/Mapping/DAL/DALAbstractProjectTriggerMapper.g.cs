@@ -26,11 +26,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOProjectTrigger MapEFToBO(
                         ProjectTrigger ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOProjectTrigger();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d55998d416f65793045610b135ccd262</Hash>
+    <Hash>5cb484f1a8acc3f6a7daf240e9d447e3</Hash>
 </Codenesium>*/

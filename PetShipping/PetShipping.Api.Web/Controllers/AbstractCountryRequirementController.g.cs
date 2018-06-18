@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCountryRequirementController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCountryRequirementController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryRequirementService countryRequirementService
@@ -164,5 +164,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>70fb376febecd0d701328f67d3c30e93</Hash>
+    <Hash>149898a5b094fd7d58d541883753cd32</Hash>
 </Codenesium>*/

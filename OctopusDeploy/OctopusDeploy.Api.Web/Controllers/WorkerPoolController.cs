@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class WorkerPoolController: AbstractWorkerPoolController
         {
                 public WorkerPoolController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<WorkerPoolController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkerPoolService workerPoolService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4cba8ab8d715ca095ad878726a79ed2d</Hash>
+    <Hash>3dd6221e83d32f2cfa29a44e1c41e43b</Hash>
 </Codenesium>*/

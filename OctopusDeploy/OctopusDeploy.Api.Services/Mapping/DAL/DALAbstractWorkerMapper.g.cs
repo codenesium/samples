@@ -30,11 +30,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOWorker MapEFToBO(
                         Worker ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOWorker();
 
                         bo.SetProperties(
@@ -67,5 +62,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4bc0f546ee55542ee75a773f5831aea6</Hash>
+    <Hash>164a699391baeb4bd299e07d21aa0c5b</Hash>
 </Codenesium>*/

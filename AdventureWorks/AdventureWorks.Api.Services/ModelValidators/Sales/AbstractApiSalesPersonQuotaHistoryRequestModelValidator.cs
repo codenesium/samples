@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSalesPersonQuotaHistoryRequestModel model, int id)
+                ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
+
+                public AbstractApiSalesPersonQuotaHistoryRequestModelValidator(ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSalesPersonQuotaHistoryRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISalesPersonRepository SalesPersonRepository { get; set; }
 
                 public virtual void ModifiedDateRules()
                 {
@@ -45,7 +44,7 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSalesPerson(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesPersonRepository.Get(id);
+                        var record = await this.salesPersonQuotaHistoryRepository.GetSalesPerson(id);
 
                         return record != null;
                 }
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>763cbf904f7949b90654fd2360d200ad</Hash>
+    <Hash>b88b3b77be6c82f08eaabac42a88f5e3</Hash>
 </Codenesium>*/

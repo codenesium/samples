@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ProductPhotoController: AbstractProductPhotoController
         {
                 public ProductPhotoController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProductPhotoController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductPhotoService productPhotoService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3f7df593c9ded8ab57ab2c422eb5e21b</Hash>
+    <Hash>439781b6be8d76c0c88cd0066a225e70</Hash>
 </Codenesium>*/

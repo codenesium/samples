@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiActionTemplateRequestModel model, string id)
+                IActionTemplateRepository actionTemplateRepository;
+
+                public AbstractApiActionTemplateRequestModelValidator(IActionTemplateRepository actionTemplateRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.actionTemplateRepository = actionTemplateRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiActionTemplateRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IActionTemplateRepository ActionTemplateRepository { get; set; }
                 public virtual void ActionTypeRules()
                 {
                         this.RuleFor(x => x.ActionType).NotNull();
@@ -55,7 +55,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiActionTemplateRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ActionTemplate record = await this.ActionTemplateRepository.GetName(model.Name);
+                        ActionTemplate record = await this.actionTemplateRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -70,5 +70,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f5cfb7edd350907bf3a1ef8f9b022e01</Hash>
+    <Hash>80456b82d606944dfd734aac799e4758</Hash>
 </Codenesium>*/

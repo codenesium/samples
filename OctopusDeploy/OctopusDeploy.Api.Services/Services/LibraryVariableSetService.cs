@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class LibraryVariableSetService: AbstractLibraryVariableSetService, ILibraryVariableSetService
         {
                 public LibraryVariableSetService(
-                        ILogger<LibraryVariableSetRepository> logger,
+                        ILogger<ILibraryVariableSetRepository> logger,
                         ILibraryVariableSetRepository libraryVariableSetRepository,
                         IApiLibraryVariableSetRequestModelValidator libraryVariableSetModelValidator,
                         IBOLLibraryVariableSetMapper bollibraryVariableSetMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>80345e3f105f3f911622f7da12f20406</Hash>
+    <Hash>d303a98eac81c5c1b0d04b007e2dab22</Hash>
 </Codenesium>*/

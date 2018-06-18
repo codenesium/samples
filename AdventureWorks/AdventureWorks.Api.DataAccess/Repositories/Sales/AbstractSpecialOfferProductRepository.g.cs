@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SpecialOfferProduct>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SpecialOfferProduct>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SpecialOfferProduct> Get(int specialOfferID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<SpecialOfferProduct>> GetProductID(int productID)
+                public async Task<List<SpecialOfferProduct>> ByProductID(int productID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        var records = await this.Where(x => x.ProductID == productID);
 
                         return records;
                 }
 
-                protected async Task<List<SpecialOfferProduct>> Where(Expression<Func<SpecialOfferProduct, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SpecialOfferProduct>> Where(
+                        Expression<Func<SpecialOfferProduct, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SpecialOfferProduct, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SpecialOfferProduct> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SpecialOfferProduct>> SearchLinqEF(Expression<Func<SpecialOfferProduct, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SpecialOfferProduct.SpecialOfferID)} ASC";
+                                orderBy = x => x.SpecialOfferID;
                         }
 
-                        return await this.Context.Set<SpecialOfferProduct>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpecialOfferProduct>();
-                }
-
-                private async Task<List<SpecialOfferProduct>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SpecialOfferProduct.SpecialOfferID)} ASC";
+                                return await this.Context.Set<SpecialOfferProduct>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOfferProduct>();
                         }
-
-                        return await this.Context.Set<SpecialOfferProduct>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpecialOfferProduct>();
+                        else
+                        {
+                                return await this.Context.Set<SpecialOfferProduct>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOfferProduct>();
+                        }
                 }
 
                 private async Task<SpecialOfferProduct> GetById(int specialOfferID)
                 {
-                        List<SpecialOfferProduct> records = await this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID);
+                        List<SpecialOfferProduct> records = await this.Where(x => x.SpecialOfferID == specialOfferID);
 
                         return records.FirstOrDefault();
                 }
@@ -120,9 +116,14 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                         return await this.Context.Set<SalesOrderDetail>().Where(x => x.SpecialOfferID == specialOfferID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
                 }
+
+                public async virtual Task<SpecialOffer> GetSpecialOffer(int specialOfferID)
+                {
+                        return await this.Context.Set<SpecialOffer>().SingleOrDefaultAsync(x => x.SpecialOfferID == specialOfferID);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>93b71faea2f35bec699d1c5530894f9a</Hash>
+    <Hash>7392d80010d95e994c9d689e30ead966</Hash>
 </Codenesium>*/

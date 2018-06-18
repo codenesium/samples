@@ -9,7 +9,9 @@ using TicketingCRMNS.Api.Client;
 
 namespace TicketingCRMNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "TransactionStatus")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "TransactionStatus")]
+        [Trait("Area", "Integration")]
         public class TransactionStatusTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>925a8128b7028f8e0e12a7fa7b16d10d</Hash>
+    <Hash>85bbf230120ea227473ee48eb5aea2ee</Hash>
 </Codenesium>*/

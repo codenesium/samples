@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiEmployeeDepartmentHistoryRequestModel model, int id)
+                IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
+
+                public AbstractApiEmployeeDepartmentHistoryRequestModelValidator(IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiEmployeeDepartmentHistoryRequestModel model, int id)
@@ -48,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e755b1fe8fd6d1ba028f69003bd09cc0</Hash>
+    <Hash>f34f4c02a47fd3a59d88a9b7eff9568c</Hash>
 </Codenesium>*/

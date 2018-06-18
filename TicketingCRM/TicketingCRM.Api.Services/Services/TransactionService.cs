@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class TransactionService: AbstractTransactionService, ITransactionService
         {
                 public TransactionService(
-                        ILogger<TransactionRepository> logger,
+                        ILogger<ITransactionRepository> logger,
                         ITransactionRepository transactionRepository,
                         IApiTransactionRequestModelValidator transactionModelValidator,
                         IBOLTransactionMapper boltransactionMapper,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>936060326959c66715e36a3ee5835084</Hash>
+    <Hash>f375ff05d40fe6d0cc75a1179d7c8f8b</Hash>
 </Codenesium>*/

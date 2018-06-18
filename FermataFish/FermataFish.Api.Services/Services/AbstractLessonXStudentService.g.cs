@@ -42,9 +42,9 @@ namespace FermataFishNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.lessonXStudentRepository.All(limit, offset, orderClause);
+                        var records = await this.lessonXStudentRepository.All(limit, offset);
 
                         return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace FermataFishNS.Api.Services
                 {
                         var record = await this.lessonXStudentRepository.Get(id);
 
-                        return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiLessonXStudentResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ade6bef39e50223ac17f343a4f4f4d73</Hash>
+    <Hash>fa1b4f1ed5a6b653ecc0545164aa59d0</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductModelProductDescriptionCultureService: AbstractProductModelProductDescriptionCultureService, IProductModelProductDescriptionCultureService
         {
                 public ProductModelProductDescriptionCultureService(
-                        ILogger<ProductModelProductDescriptionCultureRepository> logger,
+                        ILogger<IProductModelProductDescriptionCultureRepository> logger,
                         IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
                         IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
                         IBOLProductModelProductDescriptionCultureMapper bolproductModelProductDescriptionCultureMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>32bca333e348beb5a3ad2aa6c7b854c5</Hash>
+    <Hash>63eba0302f4cb7b7765cf213625bf2d0</Hash>
 </Codenesium>*/

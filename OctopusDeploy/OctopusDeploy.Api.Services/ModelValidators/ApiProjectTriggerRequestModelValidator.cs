@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiProjectTriggerRequestModelValidator: AbstractApiProjectTriggerRequestModelValidator, IApiProjectTriggerRequestModelValidator
         {
-                public ApiProjectTriggerRequestModelValidator()
+                public ApiProjectTriggerRequestModelValidator(IProjectTriggerRepository projectTriggerRepository)
+                        : base(projectTriggerRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>956d7f6a2cad91c09ed12dc612519795</Hash>
+    <Hash>6b8c392f3598f8c9651e9b80a12fc667</Hash>
 </Codenesium>*/

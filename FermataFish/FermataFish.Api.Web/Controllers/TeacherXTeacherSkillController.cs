@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class TeacherXTeacherSkillController: AbstractTeacherXTeacherSkillController
         {
                 public TeacherXTeacherSkillController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TeacherXTeacherSkillController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITeacherXTeacherSkillService teacherXTeacherSkillService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1737f036860fc7aebef392df38e0ecb2</Hash>
+    <Hash>5d2b5c6dc95bf65f004017bb788e8dcf</Hash>
 </Codenesium>*/

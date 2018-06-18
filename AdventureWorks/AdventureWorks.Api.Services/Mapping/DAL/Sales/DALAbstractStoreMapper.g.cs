@@ -26,11 +26,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOStore MapEFToBO(
                         Store ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOStore();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6aa84b230ee9167044b0f65d3cb3e075</Hash>
+    <Hash>131ecea07b93c08b6846eab9395daff0</Hash>
 </Codenesium>*/

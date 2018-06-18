@@ -15,12 +15,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Interruption> Get(string id);
 
-                Task<List<Interruption>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Interruption>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Interruption>> GetTenantId(string tenantId);
         }
 }
 
 /*<Codenesium>
-    <Hash>d15520bfecd7ac68ed481b2e49002bc2</Hash>
+    <Hash>d39ad3717a73c33fdf5845b5d5ccaa21</Hash>
 </Codenesium>*/

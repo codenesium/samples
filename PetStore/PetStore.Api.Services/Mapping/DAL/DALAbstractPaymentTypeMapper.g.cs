@@ -22,11 +22,6 @@ namespace PetStoreNS.Api.Services
                 public virtual BOPaymentType MapEFToBO(
                         PaymentType ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPaymentType();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0246cd1c7bbe591bc168913840e1c3b</Hash>
+    <Hash>525bd408a794bb9a0e10a76b3c3e5f6f</Hash>
 </Codenesium>*/

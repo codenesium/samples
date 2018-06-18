@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiUnitMeasureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.unitMeasureRepository.All(limit, offset, orderClause);
+                        var records = await this.unitMeasureRepository.All(limit, offset);
 
                         return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.unitMeasureRepository.Get(unitMeasureCode);
 
-                        return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
@@ -117,11 +124,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiUnitMeasureResponseModel> GetName(string name)
+                public async Task<ApiUnitMeasureResponseModel> ByName(string name)
                 {
-                        UnitMeasure record = await this.unitMeasureRepository.GetName(name);
+                        UnitMeasure record = await this.unitMeasureRepository.ByName(name);
 
-                        return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
@@ -140,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e05aa400c64f2de13946a638f1bfab3</Hash>
+    <Hash>dfb356100664b4e1fc233c31cc6b0f66</Hash>
 </Codenesium>*/

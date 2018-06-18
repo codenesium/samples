@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PetShippingNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Sale> Get(int id)
@@ -75,42 +76,46 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Sale>> Where(Expression<Func<Sale, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Sale>> Where(
+                        Expression<Func<Sale, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Sale, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Sale> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Sale>> SearchLinqEF(Expression<Func<Sale, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Sale.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Sale>();
-                }
-
-                private async Task<List<Sale>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Sale.Id)} ASC";
+                                return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
                         }
-
-                        return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Sale>();
+                        else
+                        {
+                                return await this.Context.Set<Sale>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Sale>();
+                        }
                 }
 
                 private async Task<Sale> GetById(int id)
                 {
-                        List<Sale> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Sale> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Client> GetClient(int clientId)
+                {
+                        return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
+                }
+                public async virtual Task<Pet> GetPet(int petId)
+                {
+                        return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1dda68749e4895b8d05d203b2f8ec899</Hash>
+    <Hash>f2b6066ec59ce9a4637ce9674430b2f8</Hash>
 </Codenesium>*/

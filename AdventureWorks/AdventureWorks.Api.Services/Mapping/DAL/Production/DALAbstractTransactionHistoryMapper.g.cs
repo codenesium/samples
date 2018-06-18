@@ -29,11 +29,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOTransactionHistory MapEFToBO(
                         TransactionHistory ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOTransactionHistory();
 
                         bo.SetProperties(
@@ -65,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b86b7a0a8e445af730ef1f02a8d74609</Hash>
+    <Hash>6e8117bf486db8b86d3496ba99d1862e</Hash>
 </Codenesium>*/

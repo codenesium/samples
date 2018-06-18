@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiStateRequestModelValidator: AbstractApiStateRequestModelValidator, IApiStateRequestModelValidator
         {
-                public ApiStateRequestModelValidator()
+                public ApiStateRequestModelValidator(IStateRepository stateRepository)
+                        : base(stateRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8548f1c70b9cc1e166cc826a4c0e962</Hash>
+    <Hash>fc65b25846ac101acd9aa0edd185d3cb</Hash>
 </Codenesium>*/

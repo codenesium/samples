@@ -15,14 +15,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Product> Get(int productID);
 
-                Task<List<Product>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Product>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Product> GetName(string name);
-                Task<Product> GetProductNumber(string productNumber);
+                Task<Product> ByName(string name);
+                Task<Product> ByProductNumber(string productNumber);
 
                 Task<List<BillOfMaterials>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
-                Task<List<ProductDocument>> ProductDocuments(int productID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ProductInventory>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ProductListPriceHistory>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ProductProductPhoto>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
@@ -33,5 +32,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af2940cb61db3ea1a3af5700e6e2f29a</Hash>
+    <Hash>e3fc3041c32a140d8b3512cab6658cda</Hash>
 </Codenesium>*/

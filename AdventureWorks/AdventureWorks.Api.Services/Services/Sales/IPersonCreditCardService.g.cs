@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiPersonCreditCardResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiPersonCreditCardResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiPersonCreditCardResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>82cb4dc00cac3e66a16bf27e574e65cf</Hash>
+    <Hash>9310b46e0eb718fd651d2de9908ceb3b</Hash>
 </Codenesium>*/

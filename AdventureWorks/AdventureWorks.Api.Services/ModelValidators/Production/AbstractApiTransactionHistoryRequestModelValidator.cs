@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiTransactionHistoryRequestModel model, int id)
+                ITransactionHistoryRepository transactionHistoryRepository;
+
+                public AbstractApiTransactionHistoryRequestModelValidator(ITransactionHistoryRepository transactionHistoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.transactionHistoryRepository = transactionHistoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTransactionHistoryRequestModel model, int id)
@@ -62,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cf66dec1e43d97f9e66e6fa1d6c18bc5</Hash>
+    <Hash>0853ce7acbb3537332177722969239ae</Hash>
 </Codenesium>*/

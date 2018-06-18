@@ -8,7 +8,8 @@ namespace PetStoreNS.Api.Services
 {
         public class ApiPetRequestModelValidator: AbstractApiPetRequestModelValidator, IApiPetRequestModelValidator
         {
-                public ApiPetRequestModelValidator()
+                public ApiPetRequestModelValidator(IPetRepository petRepository)
+                        : base(petRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e309f68890e969774857c0cbaed2654</Hash>
+    <Hash>0e76827546c7de259748075539485dac</Hash>
 </Codenesium>*/

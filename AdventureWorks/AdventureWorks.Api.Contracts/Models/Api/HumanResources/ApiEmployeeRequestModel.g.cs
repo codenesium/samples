@@ -23,7 +23,6 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime modifiedDate,
                         string nationalIDNumber,
                         Nullable<short> organizationLevel,
-                        Nullable<Guid> organizationNode,
                         Guid rowguid,
                         bool salariedFlag,
                         short sickLeaveHours,
@@ -39,7 +38,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                         this.NationalIDNumber = nationalIDNumber;
                         this.OrganizationLevel = organizationLevel;
-                        this.OrganizationNode = organizationNode;
                         this.Rowguid = rowguid;
                         this.SalariedFlag = salariedFlag;
                         this.SickLeaveHours = sickLeaveHours;
@@ -205,21 +203,6 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Nullable<Guid> organizationNode;
-
-                public Nullable<Guid> OrganizationNode
-                {
-                        get
-                        {
-                                return this.organizationNode.IsEmptyOrZeroOrNull() ? null : this.organizationNode;
-                        }
-
-                        set
-                        {
-                                this.organizationNode = value;
-                        }
-                }
-
                 private Guid rowguid;
 
                 [Required]
@@ -287,5 +270,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>07c7ebc920ffcae0c6ebe69bc6c49ab3</Hash>
+    <Hash>1a67296b48da522f27bbf95b4bc26b1d</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiEmployeePayHistoryRequestModelValidator: AbstractApiEmployeePayHistoryRequestModelValidator, IApiEmployeePayHistoryRequestModelValidator
         {
-                public ApiEmployeePayHistoryRequestModelValidator()
+                public ApiEmployeePayHistoryRequestModelValidator(IEmployeePayHistoryRepository employeePayHistoryRepository)
+                        : base(employeePayHistoryRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d15cc6a09f55fda3368e6ef8b29c8fe</Hash>
+    <Hash>c97008512a8766526643a195cdf42b78</Hash>
 </Codenesium>*/

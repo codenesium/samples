@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class AdminService: AbstractAdminService, IAdminService
         {
                 public AdminService(
-                        ILogger<AdminRepository> logger,
+                        ILogger<IAdminRepository> logger,
                         IAdminRepository adminRepository,
                         IApiAdminRequestModelValidator adminModelValidator,
                         IBOLAdminMapper boladminMapper,
@@ -32,5 +32,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>762eade70d52c6de92978333f7920077</Hash>
+    <Hash>ed93e48bf11439d6636e41eceb3d7c77</Hash>
 </Codenesium>*/

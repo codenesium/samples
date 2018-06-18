@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ActionTemplateVersionService: AbstractActionTemplateVersionService, IActionTemplateVersionService
         {
                 public ActionTemplateVersionService(
-                        ILogger<ActionTemplateVersionRepository> logger,
+                        ILogger<IActionTemplateVersionRepository> logger,
                         IActionTemplateVersionRepository actionTemplateVersionRepository,
                         IApiActionTemplateVersionRequestModelValidator actionTemplateVersionModelValidator,
                         IBOLActionTemplateVersionMapper bolactionTemplateVersionMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b90ce22895f08fdd98d879a7a401ff28</Hash>
+    <Hash>b4668abcb06aef022ce9cf4da053fa08</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSalesTerritoryRequestModel model, int id)
+                ISalesTerritoryRepository salesTerritoryRepository;
+
+                public AbstractApiSalesTerritoryRequestModelValidator(ISalesTerritoryRepository salesTerritoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.salesTerritoryRepository = salesTerritoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSalesTerritoryRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
                 public virtual void CostLastYearRules()
                 {
                 }
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -69,9 +69,9 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiSalesTerritoryRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiSalesTerritoryRequestModel model,  CancellationToken cancellationToken)
                 {
-                        SalesTerritory record = await this.SalesTerritoryRepository.GetName(model.Name);
+                        SalesTerritory record = await this.salesTerritoryRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.TerritoryID == this.existingRecordId))
                         {
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b521f366222075e0e52ed2b9bf6936e6</Hash>
+    <Hash>cafaf827c4bfa98a436eaeb24e80f7e4</Hash>
 </Codenesium>*/

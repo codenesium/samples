@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiArtifactRequestModel model, string id)
+                IArtifactRepository artifactRepository;
+
+                public AbstractApiArtifactRequestModelValidator(IArtifactRepository artifactRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.artifactRepository = artifactRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiArtifactRequestModel model, string id)
@@ -63,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>def7a2e6167e4c3136c9f59578e0201c</Hash>
+    <Hash>b4c806eb9915ea6ad300b334f9109db3</Hash>
 </Codenesium>*/

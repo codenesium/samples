@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class SchemaVersionsController: AbstractSchemaVersionsController
         {
                 public SchemaVersionsController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SchemaVersionsController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISchemaVersionsService schemaVersionsService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7a50ab3bbf2dc695f23627f64cf434e0</Hash>
+    <Hash>b40db0cc40854fdaf32a0d872c58a891</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class CountryService: AbstractCountryService, ICountryService
         {
                 public CountryService(
-                        ILogger<CountryRepository> logger,
+                        ILogger<ICountryRepository> logger,
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
                         IBOLCountryMapper bolcountryMapper,
@@ -44,5 +44,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>230d3cdb6d969372c0a965ea671638f3</Hash>
+    <Hash>de134983b2cda462ee9ddde8d2f8991b</Hash>
 </Codenesium>*/

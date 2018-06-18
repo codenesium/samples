@@ -15,12 +15,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Feed> Get(string id);
 
-                Task<List<Feed>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Feed>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Feed> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>fa25a6b823d5ed04fec50ad972f72f6d</Hash>
+    <Hash>157bce6636e8d6ef45da811a9172df1b</Hash>
 </Codenesium>*/

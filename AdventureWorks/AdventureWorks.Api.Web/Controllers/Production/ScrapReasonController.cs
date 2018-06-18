@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ScrapReasonController: AbstractScrapReasonController
         {
                 public ScrapReasonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ScrapReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IScrapReasonService scrapReasonService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>41eee607cf0b837655d367cf85fbbaf4</Hash>
+    <Hash>200b58b724765cb49b896f7b4e8ba629</Hash>
 </Codenesium>*/

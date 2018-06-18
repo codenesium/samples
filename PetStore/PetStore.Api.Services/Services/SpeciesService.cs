@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Services
         public class SpeciesService: AbstractSpeciesService, ISpeciesService
         {
                 public SpeciesService(
-                        ILogger<SpeciesRepository> logger,
+                        ILogger<ISpeciesRepository> logger,
                         ISpeciesRepository speciesRepository,
                         IApiSpeciesRequestModelValidator speciesModelValidator,
                         IBOLSpeciesMapper bolspeciesMapper,
@@ -38,5 +38,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01a5502019a7f83404cde5fb5ef85821</Hash>
+    <Hash>ab0ff586be0e16ea40121bf326f08949</Hash>
 </Codenesium>*/

@@ -15,13 +15,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ProductVendor> Get(int productID);
 
-                Task<List<ProductVendor>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ProductVendor>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ProductVendor>> GetBusinessEntityID(int businessEntityID);
-                Task<List<ProductVendor>> GetUnitMeasureCode(string unitMeasureCode);
+                Task<List<ProductVendor>> ByBusinessEntityID(int businessEntityID);
+                Task<List<ProductVendor>> ByUnitMeasureCode(string unitMeasureCode);
         }
 }
 
 /*<Codenesium>
-    <Hash>390260ff189f239a0f9a91549a718926</Hash>
+    <Hash>86218f0b3cd0a0b63838e7bf8705aad7</Hash>
 </Codenesium>*/

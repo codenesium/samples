@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiPhoneNumberTypeRequestModelValidator: AbstractApiPhoneNumberTypeRequestModelValidator, IApiPhoneNumberTypeRequestModelValidator
         {
-                public ApiPhoneNumberTypeRequestModelValidator()
+                public ApiPhoneNumberTypeRequestModelValidator(IPhoneNumberTypeRepository phoneNumberTypeRepository)
+                        : base(phoneNumberTypeRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1eb765f2c513cb97d5ae60ca274fe74</Hash>
+    <Hash>eb211516811ad647dcb45716c957c0f3</Hash>
 </Codenesium>*/

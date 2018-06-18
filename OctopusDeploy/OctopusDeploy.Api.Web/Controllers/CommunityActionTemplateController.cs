@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class CommunityActionTemplateController: AbstractCommunityActionTemplateController
         {
                 public CommunityActionTemplateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CommunityActionTemplateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICommunityActionTemplateService communityActionTemplateService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d9e8b664c159dd223816c3c6712e2457</Hash>
+    <Hash>0862717bf6b439d369350e5378352fa7</Hash>
 </Codenesium>*/

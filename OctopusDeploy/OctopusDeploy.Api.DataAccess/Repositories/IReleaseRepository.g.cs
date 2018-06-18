@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Release> Get(string id);
 
-                Task<List<Release>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Release>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Release> GetVersionProjectId(string version, string projectId);
                 Task<List<Release>> GetIdAssembled(string id, DateTimeOffset assembled);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b28b7ec2af4bc7e5442857233c9007a</Hash>
+    <Hash>3574c018001bc93b19d18f4ba1210291</Hash>
 </Codenesium>*/

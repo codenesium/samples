@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class EmployeeService: AbstractEmployeeService, IEmployeeService
         {
                 public EmployeeService(
-                        ILogger<EmployeeRepository> logger,
+                        ILogger<IEmployeeRepository> logger,
                         IEmployeeRepository employeeRepository,
                         IApiEmployeeRequestModelValidator employeeModelValidator,
                         IBOLEmployeeMapper bolemployeeMapper,
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2c747b213f3d79e0d1355624c0ebe62d</Hash>
+    <Hash>923a27876d930b608f045bfc0697bf5e</Hash>
 </Codenesium>*/

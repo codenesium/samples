@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductListPriceHistoryService: AbstractProductListPriceHistoryService, IProductListPriceHistoryService
         {
                 public ProductListPriceHistoryService(
-                        ILogger<ProductListPriceHistoryRepository> logger,
+                        ILogger<IProductListPriceHistoryRepository> logger,
                         IProductListPriceHistoryRepository productListPriceHistoryRepository,
                         IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
                         IBOLProductListPriceHistoryMapper bolproductListPriceHistoryMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>64973a4b3c2e630c508294f2d07b8657</Hash>
+    <Hash>38de349b6bd9bf5d6a749d3b7f10c795</Hash>
 </Codenesium>*/

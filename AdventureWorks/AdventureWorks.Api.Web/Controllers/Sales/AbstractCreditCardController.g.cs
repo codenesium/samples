@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCreditCardController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCreditCardController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICreditCardService creditCardService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCardNumber/{cardNumber}")]
+                [Route("byCardNumber/{cardNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetCardNumber(string cardNumber)
+                public async virtual Task<IActionResult> ByCardNumber(string cardNumber)
                 {
-                        ApiCreditCardResponseModel response = await this.CreditCardService.GetCardNumber(cardNumber);
+                        ApiCreditCardResponseModel response = await this.CreditCardService.ByCardNumber(cardNumber);
 
                         if (response == null)
                         {
@@ -210,5 +210,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b17313a6d91b91a972fdd59a33eba1ac</Hash>
+    <Hash>55c634f5074a89c4b38f188d327a5eac</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiServerTaskRequestModel model, string id)
+                IServerTaskRepository serverTaskRepository;
+
+                public AbstractApiServerTaskRequestModelValidator(IServerTaskRepository serverTaskRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.serverTaskRepository = serverTaskRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiServerTaskRequestModel model, string id)
@@ -103,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e173f9d374135f41174cd1c541d82bb3</Hash>
+    <Hash>7cc703739f74a6cbb1de5f0b6b666e31</Hash>
 </Codenesium>*/

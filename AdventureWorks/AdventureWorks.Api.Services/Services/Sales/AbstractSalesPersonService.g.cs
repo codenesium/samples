@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.salesPersonRepository.All(limit, offset, orderClause);
+                        var records = await this.salesPersonRepository.All(limit, offset);
 
                         return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(records));
                 }
@@ -87,7 +87,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.salesPersonRepository.Get(businessEntityID);
 
-                        return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiSalesPersonResponseModel>> Create(
@@ -161,5 +168,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5cc83b828f33330cccca7284d4916a9b</Hash>
+    <Hash>291b5197944558fef8702bfa1617adbc</Hash>
 </Codenesium>*/

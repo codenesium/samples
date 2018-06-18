@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOScrapReason MapEFToBO(
                         ScrapReason ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOScrapReason();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eec39c3951ab7d7b0b75367f245649c7</Hash>
+    <Hash>1902179640b4ddeb2338a0be6e1d0ade</Hash>
 </Codenesium>*/

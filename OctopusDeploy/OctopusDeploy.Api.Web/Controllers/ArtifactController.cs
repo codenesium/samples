@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ArtifactController: AbstractArtifactController
         {
                 public ArtifactController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ArtifactController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IArtifactService artifactService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d61b9c90419f0403ddf0bbeef95f85fe</Hash>
+    <Hash>53a73ace1b87a96dbd6130e50e74180c</Hash>
 </Codenesium>*/

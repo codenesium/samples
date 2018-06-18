@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class NuGetPackageService: AbstractNuGetPackageService, INuGetPackageService
         {
                 public NuGetPackageService(
-                        ILogger<NuGetPackageRepository> logger,
+                        ILogger<INuGetPackageRepository> logger,
                         INuGetPackageRepository nuGetPackageRepository,
                         IApiNuGetPackageRequestModelValidator nuGetPackageModelValidator,
                         IBOLNuGetPackageMapper bolnuGetPackageMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30242553695526f61626cb4088572d49</Hash>
+    <Hash>f1f424d899c03c6ccd6c74306813fc59</Hash>
 </Codenesium>*/

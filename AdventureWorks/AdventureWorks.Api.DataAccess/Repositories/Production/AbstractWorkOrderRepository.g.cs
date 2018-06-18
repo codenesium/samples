@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<WorkOrder>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<WorkOrder>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<WorkOrder> Get(int workOrderID)
@@ -75,49 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<WorkOrder>> GetProductID(int productID)
+                public async Task<List<WorkOrder>> ByProductID(int productID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        var records = await this.Where(x => x.ProductID == productID);
 
                         return records;
                 }
-                public async Task<List<WorkOrder>> GetScrapReasonID(Nullable<short> scrapReasonID)
+                public async Task<List<WorkOrder>> ByScrapReasonID(Nullable<short> scrapReasonID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID);
-
-                        return records;
-                }
-
-                protected async Task<List<WorkOrder>> Where(Expression<Func<WorkOrder, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        List<WorkOrder> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
+                        var records = await this.Where(x => x.ScrapReasonID == scrapReasonID);
 
                         return records;
                 }
 
-                private async Task<List<WorkOrder>> SearchLinqEF(Expression<Func<WorkOrder, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<WorkOrder>> Where(
+                        Expression<Func<WorkOrder, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<WorkOrder, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(WorkOrder.WorkOrderID)} ASC";
+                                orderBy = x => x.WorkOrderID;
                         }
 
-                        return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
-                }
-
-                private async Task<List<WorkOrder>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(WorkOrder.WorkOrderID)} ASC";
+                                return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
                         }
-
-                        return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
+                        else
+                        {
+                                return await this.Context.Set<WorkOrder>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrder>();
+                        }
                 }
 
                 private async Task<WorkOrder> GetById(int workOrderID)
                 {
-                        List<WorkOrder> records = await this.SearchLinqEF(x => x.WorkOrderID == workOrderID);
+                        List<WorkOrder> records = await this.Where(x => x.WorkOrderID == workOrderID);
 
                         return records.FirstOrDefault();
                 }
@@ -130,5 +126,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bfc07bd9c2e5e38c4484976334dfcbae</Hash>
+    <Hash>cde7b6feaaae47c976bdd7b82abda3bd</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Chain>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Chain> Get(int id)
@@ -75,36 +76,31 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Chain>> Where(Expression<Func<Chain, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Chain>> Where(
+                        Expression<Func<Chain, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Chain, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Chain> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Chain>> SearchLinqEF(Expression<Func<Chain, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Chain.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Chain>();
-                }
-
-                private async Task<List<Chain>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Chain.Id)} ASC";
+                                return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Chain>();
                         }
-
-                        return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Chain>();
+                        else
+                        {
+                                return await this.Context.Set<Chain>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Chain>();
+                        }
                 }
 
                 private async Task<Chain> GetById(int id)
                 {
-                        List<Chain> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Chain> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -117,9 +113,18 @@ namespace NebulaNS.Api.DataAccess
                 {
                         return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
                 }
+
+                public async virtual Task<ChainStatus> GetChainStatus(int chainStatusId)
+                {
+                        return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
+                }
+                public async virtual Task<Team> GetTeam(int teamId)
+                {
+                        return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0eabdd529cde2bd7a72570d6879bdb9c</Hash>
+    <Hash>3d8b814c13db98d133c4c27fe3607263</Hash>
 </Codenesium>*/

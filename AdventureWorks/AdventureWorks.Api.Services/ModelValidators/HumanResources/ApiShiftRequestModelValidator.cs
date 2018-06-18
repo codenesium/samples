@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiShiftRequestModelValidator: AbstractApiShiftRequestModelValidator, IApiShiftRequestModelValidator
         {
-                public ApiShiftRequestModelValidator()
+                public ApiShiftRequestModelValidator(IShiftRepository shiftRepository)
+                        : base(shiftRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9456fafa744d2a4c2a4ce6e70e5ddc06</Hash>
+    <Hash>0c2fb5c5b6d625bfc85a322c30fdcd33</Hash>
 </Codenesium>*/

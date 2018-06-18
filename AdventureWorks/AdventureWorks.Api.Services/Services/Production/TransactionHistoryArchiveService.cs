@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class TransactionHistoryArchiveService: AbstractTransactionHistoryArchiveService, ITransactionHistoryArchiveService
         {
                 public TransactionHistoryArchiveService(
-                        ILogger<TransactionHistoryArchiveRepository> logger,
+                        ILogger<ITransactionHistoryArchiveRepository> logger,
                         ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
                         IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
                         IBOLTransactionHistoryArchiveMapper boltransactionHistoryArchiveMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4f816aa4a3a222fefbd1c27b4f11c80</Hash>
+    <Hash>dcfcf4f4536d46b98d3e2973e07436ef</Hash>
 </Codenesium>*/

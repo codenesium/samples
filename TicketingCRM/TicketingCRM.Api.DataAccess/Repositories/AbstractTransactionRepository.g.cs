@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Transaction>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Transaction>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Transaction> Get(int id)
@@ -77,41 +78,36 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 public async Task<List<Transaction>> GetTransactionStatusId(int transactionStatusId)
                 {
-                        var records = await this.SearchLinqEF(x => x.TransactionStatusId == transactionStatusId);
+                        var records = await this.Where(x => x.TransactionStatusId == transactionStatusId);
 
                         return records;
                 }
 
-                protected async Task<List<Transaction>> Where(Expression<Func<Transaction, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Transaction>> Where(
+                        Expression<Func<Transaction, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Transaction, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Transaction> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Transaction>> SearchLinqEF(Expression<Func<Transaction, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Transaction.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Transaction>();
-                }
-
-                private async Task<List<Transaction>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Transaction.Id)} ASC";
+                                return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
                         }
-
-                        return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Transaction>();
+                        else
+                        {
+                                return await this.Context.Set<Transaction>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Transaction>();
+                        }
                 }
 
                 private async Task<Transaction> GetById(int id)
                 {
-                        List<Transaction> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Transaction> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -120,9 +116,14 @@ namespace TicketingCRMNS.Api.DataAccess
                 {
                         return await this.Context.Set<Sale>().Where(x => x.TransactionId == transactionId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
                 }
+
+                public async virtual Task<TransactionStatus> GetTransactionStatus(int transactionStatusId)
+                {
+                        return await this.Context.Set<TransactionStatus>().SingleOrDefaultAsync(x => x.Id == transactionStatusId);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d4ccf3ad5688b49065e422c9e6e95570</Hash>
+    <Hash>75b0f56cf2e58ffde2480d6c091d8e1b</Hash>
 </Codenesium>*/

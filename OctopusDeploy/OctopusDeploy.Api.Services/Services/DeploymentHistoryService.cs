@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class DeploymentHistoryService: AbstractDeploymentHistoryService, IDeploymentHistoryService
         {
                 public DeploymentHistoryService(
-                        ILogger<DeploymentHistoryRepository> logger,
+                        ILogger<IDeploymentHistoryRepository> logger,
                         IDeploymentHistoryRepository deploymentHistoryRepository,
                         IApiDeploymentHistoryRequestModelValidator deploymentHistoryModelValidator,
                         IBOLDeploymentHistoryMapper boldeploymentHistoryMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1878f4960d22b44d4a806da4bd37e052</Hash>
+    <Hash>b5c5d49ea06c9ea958a3aee1f981601b</Hash>
 </Codenesium>*/

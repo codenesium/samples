@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiCommunityActionTemplateResponseModel> Get(string id);
 
-                Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiCommunityActionTemplateResponseModel> GetExternalId(Guid externalId);
                 Task<ApiCommunityActionTemplateResponseModel> GetName(string name);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da1e26c11cd930e118fb4250f52ff935</Hash>
+    <Hash>05d22b15be49a8b5504247bcbe593df0</Hash>
 </Codenesium>*/

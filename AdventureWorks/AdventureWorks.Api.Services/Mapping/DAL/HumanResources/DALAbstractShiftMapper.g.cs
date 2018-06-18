@@ -25,11 +25,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOShift MapEFToBO(
                         Shift ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOShift();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc259d5e2abf19c2fc1ac98fd598f928</Hash>
+    <Hash>da3c6e0277a7fc217b081201a20bee30</Hash>
 </Codenesium>*/

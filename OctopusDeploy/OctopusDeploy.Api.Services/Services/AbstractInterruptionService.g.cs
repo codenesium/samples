@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiInterruptionResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiInterruptionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.interruptionRepository.All(limit, offset, orderClause);
+                        var records = await this.interruptionRepository.All(limit, offset);
 
                         return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.interruptionRepository.Get(id);
 
-                        return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiInterruptionResponseModel>> Create(
@@ -109,5 +116,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>54199ce79d41bf7b1b5c9f810ceb3095</Hash>
+    <Hash>59da9e3862711442633317c8cc357e96</Hash>
 </Codenesium>*/

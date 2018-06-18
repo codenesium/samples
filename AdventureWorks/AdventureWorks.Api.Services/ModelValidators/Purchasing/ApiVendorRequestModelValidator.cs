@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiVendorRequestModelValidator: AbstractApiVendorRequestModelValidator, IApiVendorRequestModelValidator
         {
-                public ApiVendorRequestModelValidator()
+                public ApiVendorRequestModelValidator(IVendorRepository vendorRepository)
+                        : base(vendorRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab08f4e992181f7e5918a29ace62c5fb</Hash>
+    <Hash>57740dd002413621d038b090f24c0148</Hash>
 </Codenesium>*/

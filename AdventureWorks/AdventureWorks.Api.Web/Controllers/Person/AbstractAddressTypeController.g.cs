@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractAddressTypeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractAddressTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAddressTypeService addressTypeService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiAddressTypeResponseModel response = await this.AddressTypeService.GetName(name);
+                        ApiAddressTypeResponseModel response = await this.AddressTypeService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>73f49df3c24d4bf44c9e48898bd73005</Hash>
+    <Hash>49fb30a40717a93fcf9c52618536aabf</Hash>
 </Codenesium>*/

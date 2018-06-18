@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiStudioRequestModelValidator: AbstractApiStudioRequestModelValidator, IApiStudioRequestModelValidator
         {
-                public ApiStudioRequestModelValidator()
+                public ApiStudioRequestModelValidator(IStudioRepository studioRepository)
+                        : base(studioRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a60790f3520d41d66053da93f6cf59b</Hash>
+    <Hash>31eddce6436189be2d35250be1bbb55e</Hash>
 </Codenesium>*/

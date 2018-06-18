@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class DeploymentProcessService: AbstractDeploymentProcessService, IDeploymentProcessService
         {
                 public DeploymentProcessService(
-                        ILogger<DeploymentProcessRepository> logger,
+                        ILogger<IDeploymentProcessRepository> logger,
                         IDeploymentProcessRepository deploymentProcessRepository,
                         IApiDeploymentProcessRequestModelValidator deploymentProcessModelValidator,
                         IBOLDeploymentProcessMapper boldeploymentProcessMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>865358b5fbcf497bb1ccc81afd46a36c</Hash>
+    <Hash>ce064da1e910674ea483806b0b00cde6</Hash>
 </Codenesium>*/

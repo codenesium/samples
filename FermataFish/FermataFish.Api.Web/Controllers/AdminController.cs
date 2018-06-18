@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class AdminController: AbstractAdminController
         {
                 public AdminController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AdminController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAdminService adminService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>23fe7595a5b0b685ff5e7e30787d12e6</Hash>
+    <Hash>c8efe45e0e5dfa0f11698861a5808552</Hash>
 </Codenesium>*/

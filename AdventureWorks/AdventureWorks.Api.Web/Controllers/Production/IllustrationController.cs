@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class IllustrationController: AbstractIllustrationController
         {
                 public IllustrationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<IllustrationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IIllustrationService illustrationService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f07d53eb28905905db3cdf897c390bdd</Hash>
+    <Hash>ca3739811a20494445feac265b138a94</Hash>
 </Codenesium>*/

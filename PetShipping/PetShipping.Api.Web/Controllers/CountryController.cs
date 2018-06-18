@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class CountryController: AbstractCountryController
         {
                 public CountryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CountryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryService countryService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d220d4649e8eade57feb0004266f82e9</Hash>
+    <Hash>1337b776bb763fcfa63277c5a6bda72e</Hash>
 </Codenesium>*/

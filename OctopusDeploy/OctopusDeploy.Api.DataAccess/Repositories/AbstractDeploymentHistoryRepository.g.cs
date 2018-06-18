@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<DeploymentHistory> Get(string deploymentId)
@@ -77,41 +78,36 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<List<DeploymentHistory>> GetCreated(DateTimeOffset created)
                 {
-                        var records = await this.SearchLinqEF(x => x.Created == created);
+                        var records = await this.Where(x => x.Created == created);
 
                         return records;
                 }
 
-                protected async Task<List<DeploymentHistory>> Where(Expression<Func<DeploymentHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<DeploymentHistory>> Where(
+                        Expression<Func<DeploymentHistory, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<DeploymentHistory, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<DeploymentHistory> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<DeploymentHistory>> SearchLinqEF(Expression<Func<DeploymentHistory, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(DeploymentHistory.DeploymentId)} ASC";
+                                orderBy = x => x.DeploymentId;
                         }
 
-                        return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
-                }
-
-                private async Task<List<DeploymentHistory>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(DeploymentHistory.DeploymentId)} ASC";
+                                return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
                         }
-
-                        return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
+                        else
+                        {
+                                return await this.Context.Set<DeploymentHistory>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentHistory>();
+                        }
                 }
 
                 private async Task<DeploymentHistory> GetById(string deploymentId)
                 {
-                        List<DeploymentHistory> records = await this.SearchLinqEF(x => x.DeploymentId == deploymentId);
+                        List<DeploymentHistory> records = await this.Where(x => x.DeploymentId == deploymentId);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a6a5bbc8d5e6f162eefeddad49b9f56a</Hash>
+    <Hash>ca1cc7b0d2f9b8452ef0d4f312e65fd4</Hash>
 </Codenesium>*/

@@ -23,11 +23,6 @@ namespace FermataFishNS.Api.Services
                 public virtual BOStudentXFamily MapEFToBO(
                         StudentXFamily ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOStudentXFamily();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c3a9dc71f3e18c00a221e85aaeef763</Hash>
+    <Hash>9cf63f9998744659cd0649a6bb3294c0</Hash>
 </Codenesium>*/

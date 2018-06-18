@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractLinkStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractLinkStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILinkStatusService linkStatusService
@@ -178,5 +178,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7d13e6bcdf4a4c299488c77d605e72cb</Hash>
+    <Hash>2aaf265324bd9c91dd1969e6bb1e9420</Hash>
 </Codenesium>*/

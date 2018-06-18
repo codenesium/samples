@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiTeamRequestModel model, int id)
+                ITeamRepository teamRepository;
+
+                public AbstractApiTeamRequestModelValidator(ITeamRepository teamRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.teamRepository = teamRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTeamRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace NebulaNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IOrganizationRepository OrganizationRepository { get; set; }
 
                 public virtual void NameRules()
                 {
@@ -40,7 +39,7 @@ namespace NebulaNS.Api.Services
 
                 private async Task<bool> BeValidOrganization(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.OrganizationRepository.Get(id);
+                        var record = await this.teamRepository.GetOrganization(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd579d633f4d61574065f323e5b42c08</Hash>
+    <Hash>bc371f055d7af2b46845034a55fb6e2c</Hash>
 </Codenesium>*/

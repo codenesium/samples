@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class PhoneNumberTypeService: AbstractPhoneNumberTypeService, IPhoneNumberTypeService
         {
                 public PhoneNumberTypeService(
-                        ILogger<PhoneNumberTypeRepository> logger,
+                        ILogger<IPhoneNumberTypeRepository> logger,
                         IPhoneNumberTypeRepository phoneNumberTypeRepository,
                         IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator,
                         IBOLPhoneNumberTypeMapper bolphoneNumberTypeMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23350f3bca986f848db26dc4008c6fdd</Hash>
+    <Hash>e006cd60124782c9170cce748aa44746</Hash>
 </Codenesium>*/

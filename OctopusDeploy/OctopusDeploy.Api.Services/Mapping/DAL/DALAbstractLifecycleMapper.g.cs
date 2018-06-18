@@ -24,11 +24,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOLifecycle MapEFToBO(
                         Lifecycle ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOLifecycle();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7687628028a7d50d948575b0e373512b</Hash>
+    <Hash>a1cc9b379599c23e190b5af36104626a</Hash>
 </Codenesium>*/

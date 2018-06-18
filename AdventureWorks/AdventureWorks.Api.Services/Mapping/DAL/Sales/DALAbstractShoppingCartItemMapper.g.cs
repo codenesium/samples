@@ -26,11 +26,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOShoppingCartItem MapEFToBO(
                         ShoppingCartItem ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOShoppingCartItem();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69f73809768d4959b5502c71e45fb73b</Hash>
+    <Hash>1450eb8ab7994be09045d798636ded18</Hash>
 </Codenesium>*/

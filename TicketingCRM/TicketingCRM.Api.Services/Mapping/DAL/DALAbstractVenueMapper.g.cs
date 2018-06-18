@@ -30,11 +30,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOVenue MapEFToBO(
                         Venue ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOVenue();
 
                         bo.SetProperties(
@@ -67,5 +62,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65aa6cbcfc3fc4715cff02085c0d073e</Hash>
+    <Hash>98153cc65c3209c63a705ca98713fde4</Hash>
 </Codenesium>*/

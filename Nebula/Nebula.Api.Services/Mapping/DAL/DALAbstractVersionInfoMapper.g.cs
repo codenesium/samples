@@ -23,11 +23,6 @@ namespace NebulaNS.Api.Services
                 public virtual BOVersionInfo MapEFToBO(
                         VersionInfo ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOVersionInfo();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7bb9fa05e6460346442326360dfa0a18</Hash>
+    <Hash>5b13a711f66a979138fc2344a8d6de6e</Hash>
 </Codenesium>*/

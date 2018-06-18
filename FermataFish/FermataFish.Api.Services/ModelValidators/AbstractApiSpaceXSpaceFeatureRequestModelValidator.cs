@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSpaceXSpaceFeatureRequestModel model, int id)
+                ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
+
+                public AbstractApiSpaceXSpaceFeatureRequestModelValidator(ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSpaceXSpaceFeatureRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISpaceFeatureRepository SpaceFeatureRepository { get; set; }
-
-                public ISpaceRepository SpaceRepository { get; set; }
 
                 public virtual void SpaceFeatureIdRules()
                 {
@@ -41,14 +38,14 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidSpaceFeature(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SpaceFeatureRepository.Get(id);
+                        var record = await this.spaceXSpaceFeatureRepository.GetSpaceFeature(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidSpace(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SpaceRepository.Get(id);
+                        var record = await this.spaceXSpaceFeatureRepository.GetSpace(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eed9f66375d6d2e9610c1cf74bbc4dfb</Hash>
+    <Hash>1a812c7abf5b39320191d8393418763a</Hash>
 </Codenesium>*/

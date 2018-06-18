@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class KeyAllocationService: AbstractKeyAllocationService, IKeyAllocationService
         {
                 public KeyAllocationService(
-                        ILogger<KeyAllocationRepository> logger,
+                        ILogger<IKeyAllocationRepository> logger,
                         IKeyAllocationRepository keyAllocationRepository,
                         IApiKeyAllocationRequestModelValidator keyAllocationModelValidator,
                         IBOLKeyAllocationMapper bolkeyAllocationMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02aecfaa227bbe55a814a6438ca25249</Hash>
+    <Hash>a6042270bd687dcfd5ad254a04aaf5af</Hash>
 </Codenesium>*/

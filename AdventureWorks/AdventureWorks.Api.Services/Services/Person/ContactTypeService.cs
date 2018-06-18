@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ContactTypeService: AbstractContactTypeService, IContactTypeService
         {
                 public ContactTypeService(
-                        ILogger<ContactTypeRepository> logger,
+                        ILogger<IContactTypeRepository> logger,
                         IContactTypeRepository contactTypeRepository,
                         IApiContactTypeRequestModelValidator contactTypeModelValidator,
                         IBOLContactTypeMapper bolcontactTypeMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89374e2460aea430f1b2f687f629b94d</Hash>
+    <Hash>5ff6eb43393fd6cd53b6c8cdf63b5495</Hash>
 </Codenesium>*/

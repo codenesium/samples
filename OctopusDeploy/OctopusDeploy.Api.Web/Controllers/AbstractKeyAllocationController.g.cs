@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractKeyAllocationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractKeyAllocationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IKeyAllocationService keyAllocationService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>426e899e88b8533073033cd577efdd0c</Hash>
+    <Hash>eeb1a9969ee36d1d4f5943108f5f8a3b</Hash>
 </Codenesium>*/

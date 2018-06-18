@@ -15,9 +15,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<UnitMeasure> Get(string unitMeasureCode);
 
-                Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<UnitMeasure> GetName(string name);
+                Task<UnitMeasure> ByName(string name);
 
                 Task<List<BillOfMaterials>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
                 Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
@@ -25,5 +25,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>202c806430e96d074bb29ad2a1495736</Hash>
+    <Hash>94084b48afff1186baf07067a4080d37</Hash>
 </Codenesium>*/

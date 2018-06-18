@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class BusinessEntityAddressController: AbstractBusinessEntityAddressController
         {
                 public BusinessEntityAddressController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<BusinessEntityAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBusinessEntityAddressService businessEntityAddressService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e621a7862490fde0f80237b88f582fe0</Hash>
+    <Hash>d0d789d35bbfd6061dd585feec80b017</Hash>
 </Codenesium>*/

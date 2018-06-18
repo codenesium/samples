@@ -3,33 +3,14 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOProductProductPhoto: AbstractBusinessObject
+        public partial class BOProductProductPhoto: AbstractBOProductProductPhoto
         {
                 public BOProductProductPhoto() : base()
                 {
                 }
-
-                public void SetProperties(int productID,
-                                          DateTime modifiedDate,
-                                          bool primary,
-                                          int productPhotoID)
-                {
-                        this.ModifiedDate = modifiedDate;
-                        this.Primary = primary;
-                        this.ProductID = productID;
-                        this.ProductPhotoID = productPhotoID;
-                }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public bool Primary { get; private set; }
-
-                public int ProductID { get; private set; }
-
-                public int ProductPhotoID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b7a1afd095394714b96671ee19e5d723</Hash>
+    <Hash>2ee5163f2a774230b25ba94670e8ed8c</Hash>
 </Codenesium>*/

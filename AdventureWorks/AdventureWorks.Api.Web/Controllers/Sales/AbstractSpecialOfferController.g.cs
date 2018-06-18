@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSpecialOfferController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSpecialOfferController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpecialOfferService specialOfferService
@@ -178,5 +178,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>227fde469c9bb582d7c025f70f88ada7</Hash>
+    <Hash>65beceda24897bb6e1624a0959f3e40e</Hash>
 </Codenesium>*/

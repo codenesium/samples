@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class WorkOrderService: AbstractWorkOrderService, IWorkOrderService
         {
                 public WorkOrderService(
-                        ILogger<WorkOrderRepository> logger,
+                        ILogger<IWorkOrderRepository> logger,
                         IWorkOrderRepository workOrderRepository,
                         IApiWorkOrderRequestModelValidator workOrderModelValidator,
                         IBOLWorkOrderMapper bolworkOrderMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb23ad7fa90e4c6fa09e064c33294317</Hash>
+    <Hash>736d34743e0c7662c290723b9a8c7ded</Hash>
 </Codenesium>*/

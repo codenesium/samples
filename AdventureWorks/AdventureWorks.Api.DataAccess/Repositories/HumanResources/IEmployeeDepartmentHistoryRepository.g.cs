@@ -15,13 +15,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<EmployeeDepartmentHistory> Get(int businessEntityID);
 
-                Task<List<EmployeeDepartmentHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<EmployeeDepartmentHistory>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<EmployeeDepartmentHistory>> GetDepartmentID(short departmentID);
-                Task<List<EmployeeDepartmentHistory>> GetShiftID(int shiftID);
+                Task<List<EmployeeDepartmentHistory>> ByDepartmentID(short departmentID);
+                Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID);
         }
 }
 
 /*<Codenesium>
-    <Hash>3f45fa83dc2df06d896ba9e7f59b21a0</Hash>
+    <Hash>5f5c5fe04d1ad0073d8e89f0f8788079</Hash>
 </Codenesium>*/

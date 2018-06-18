@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "TransactionHistoryArchive")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "TransactionHistoryArchive")]
+        [Trait("Area", "Integration")]
         public class TransactionHistoryArchiveTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d2fb7d55b46276fe73bd07ba43b08cd8</Hash>
+    <Hash>b35a2f83396f087dbb204264de847eed</Hash>
 </Codenesium>*/

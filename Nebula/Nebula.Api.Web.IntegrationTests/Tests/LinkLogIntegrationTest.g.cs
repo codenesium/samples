@@ -9,7 +9,9 @@ using NebulaNS.Api.Client;
 
 namespace NebulaNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "LinkLog")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "LinkLog")]
+        [Trait("Area", "Integration")]
         public class LinkLogTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3b4da1a11c248f4eab44e9c9767731b5</Hash>
+    <Hash>e6830042f1a01fd9235b5737f3947ebc</Hash>
 </Codenesium>*/

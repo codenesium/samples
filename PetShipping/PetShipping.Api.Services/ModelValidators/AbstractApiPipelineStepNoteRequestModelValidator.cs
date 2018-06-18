@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPipelineStepNoteRequestModel model, int id)
+                IPipelineStepNoteRepository pipelineStepNoteRepository;
+
+                public AbstractApiPipelineStepNoteRequestModelValidator(IPipelineStepNoteRepository pipelineStepNoteRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.pipelineStepNoteRepository = pipelineStepNoteRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPipelineStepNoteRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IEmployeeRepository EmployeeRepository { get; set; }
-
-                public IPipelineStepRepository PipelineStepRepository { get; set; }
 
                 public virtual void EmployeeIdRules()
                 {
@@ -47,14 +44,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.EmployeeRepository.Get(id);
+                        var record = await this.pipelineStepNoteRepository.GetEmployee(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidPipelineStep(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PipelineStepRepository.Get(id);
+                        var record = await this.pipelineStepNoteRepository.GetPipelineStep(id);
 
                         return record != null;
                 }
@@ -62,5 +59,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>289a23fc41a60a829b47b9ad342a4f83</Hash>
+    <Hash>fb713060a5dacf96d019ee8c3c830442</Hash>
 </Codenesium>*/

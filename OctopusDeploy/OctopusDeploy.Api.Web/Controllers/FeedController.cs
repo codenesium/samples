@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class FeedController: AbstractFeedController
         {
                 public FeedController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<FeedController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IFeedService feedService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0333b73e0f25e9e2bfd0a5a2bf8eca4d</Hash>
+    <Hash>50329622186d4d631bb414c8d58d3c46</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiLinkLogRequestModel model, int id)
+                ILinkLogRepository linkLogRepository;
+
+                public AbstractApiLinkLogRequestModelValidator(ILinkLogRepository linkLogRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.linkLogRepository = linkLogRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLinkLogRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace NebulaNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ILinkRepository LinkRepository { get; set; }
 
                 public virtual void DateEnteredRules()
                 {
@@ -44,7 +43,7 @@ namespace NebulaNS.Api.Services
 
                 private async Task<bool> BeValidLink(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.LinkRepository.Get(id);
+                        var record = await this.linkLogRepository.GetLink(id);
 
                         return record != null;
                 }
@@ -52,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2b2fb5a3e057743708bbf857ea014ab1</Hash>
+    <Hash>97c73827aff0631ceb8c133b3b43955d</Hash>
 </Codenesium>*/

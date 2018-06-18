@@ -52,9 +52,9 @@ namespace NebulaNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiOrganizationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiOrganizationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.organizationRepository.All(limit, offset, orderClause);
+                        var records = await this.organizationRepository.All(limit, offset);
 
                         return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace NebulaNS.Api.Services
                 {
                         var record = await this.organizationRepository.Get(id);
 
-                        return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e3f93261c00f191b26309ae300829ad</Hash>
+    <Hash>d8d653bcffab878c54a5b8bbff85604e</Hash>
 </Codenesium>*/

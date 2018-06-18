@@ -42,9 +42,9 @@ namespace FileServiceNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiFileResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiFileResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.fileRepository.All(limit, offset, orderClause);
+                        var records = await this.fileRepository.All(limit, offset);
 
                         return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace FileServiceNS.Api.Services
                 {
                         var record = await this.fileRepository.Get(id);
 
-                        return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiFileResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fedfe7dd8ec82422744ca332f570d86b</Hash>
+    <Hash>a4585d3a6f5c34eb7a35cd31947dee23</Hash>
 </Codenesium>*/

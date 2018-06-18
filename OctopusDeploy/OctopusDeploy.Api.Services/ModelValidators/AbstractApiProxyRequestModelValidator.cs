@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiProxyRequestModel model, string id)
+                IProxyRepository proxyRepository;
+
+                public AbstractApiProxyRequestModelValidator(IProxyRepository proxyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.proxyRepository = proxyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProxyRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IProxyRepository ProxyRepository { get; set; }
                 public virtual void JSONRules()
                 {
                         this.RuleFor(x => x.JSON).NotNull();
@@ -40,7 +40,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiProxyRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Proxy record = await this.ProxyRepository.GetName(model.Name);
+                        Proxy record = await this.proxyRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b150d44b1c49d45cb3a2dcf79d82033</Hash>
+    <Hash>9bf074afef0ca62cb9911a6a74196a90</Hash>
 </Codenesium>*/

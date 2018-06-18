@@ -26,11 +26,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOShipMethod MapEFToBO(
                         ShipMethod ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOShipMethod();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b4d769b733826812ea91f2f2fb22f4a</Hash>
+    <Hash>efdb0c0ceba0394830db554752397bbf</Hash>
 </Codenesium>*/

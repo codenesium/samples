@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ProjectGroupService: AbstractProjectGroupService, IProjectGroupService
         {
                 public ProjectGroupService(
-                        ILogger<ProjectGroupRepository> logger,
+                        ILogger<IProjectGroupRepository> logger,
                         IProjectGroupRepository projectGroupRepository,
                         IApiProjectGroupRequestModelValidator projectGroupModelValidator,
                         IBOLProjectGroupMapper bolprojectGroupMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bbce90158d3502a4f0f3b5618e4e6e47</Hash>
+    <Hash>2ad5eeb331562193506bec2ca2aa997e</Hash>
 </Codenesium>*/

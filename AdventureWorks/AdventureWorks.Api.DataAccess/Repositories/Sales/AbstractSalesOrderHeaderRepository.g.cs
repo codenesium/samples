@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SalesOrderHeader>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SalesOrderHeader>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SalesOrderHeader> Get(int salesOrderID)
@@ -75,55 +76,50 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<SalesOrderHeader> GetSalesOrderNumber(string salesOrderNumber)
+                public async Task<SalesOrderHeader> BySalesOrderNumber(string salesOrderNumber)
                 {
-                        var records = await this.SearchLinqEF(x => x.SalesOrderNumber == salesOrderNumber);
+                        var records = await this.Where(x => x.SalesOrderNumber == salesOrderNumber);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<List<SalesOrderHeader>> GetCustomerID(int customerID)
+                public async Task<List<SalesOrderHeader>> ByCustomerID(int customerID)
                 {
-                        var records = await this.SearchLinqEF(x => x.CustomerID == customerID);
+                        var records = await this.Where(x => x.CustomerID == customerID);
 
                         return records;
                 }
-                public async Task<List<SalesOrderHeader>> GetSalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<SalesOrderHeader>> BySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        var records = await this.SearchLinqEF(x => x.SalesPersonID == salesPersonID);
-
-                        return records;
-                }
-
-                protected async Task<List<SalesOrderHeader>> Where(Expression<Func<SalesOrderHeader, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        List<SalesOrderHeader> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
+                        var records = await this.Where(x => x.SalesPersonID == salesPersonID);
 
                         return records;
                 }
 
-                private async Task<List<SalesOrderHeader>> SearchLinqEF(Expression<Func<SalesOrderHeader, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SalesOrderHeader>> Where(
+                        Expression<Func<SalesOrderHeader, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SalesOrderHeader, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SalesOrderHeader.SalesOrderID)} ASC";
+                                orderBy = x => x.SalesOrderID;
                         }
 
-                        return await this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
-                }
-
-                private async Task<List<SalesOrderHeader>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SalesOrderHeader.SalesOrderID)} ASC";
+                                return await this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
                         }
-
-                        return await this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                        else
+                        {
+                                return await this.Context.Set<SalesOrderHeader>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                        }
                 }
 
                 private async Task<SalesOrderHeader> GetById(int salesOrderID)
                 {
-                        List<SalesOrderHeader> records = await this.SearchLinqEF(x => x.SalesOrderID == salesOrderID);
+                        List<SalesOrderHeader> records = await this.Where(x => x.SalesOrderID == salesOrderID);
 
                         return records.FirstOrDefault();
                 }
@@ -136,9 +132,30 @@ namespace AdventureWorksNS.Api.DataAccess
                 {
                         return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesOrderID == salesOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
                 }
+
+                public async virtual Task<CreditCard> GetCreditCard(int creditCardID)
+                {
+                        return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
+                }
+                public async virtual Task<CurrencyRate> GetCurrencyRate(int currencyRateID)
+                {
+                        return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateID == currencyRateID);
+                }
+                public async virtual Task<Customer> GetCustomer(int customerID)
+                {
+                        return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.CustomerID == customerID);
+                }
+                public async virtual Task<SalesPerson> GetSalesPerson(int salesPersonID)
+                {
+                        return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
+                }
+                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
+                {
+                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4758130a62381f26ede22f7a27310186</Hash>
+    <Hash>f7dcb310fcf277f8fb3c82979a720632</Hash>
 </Codenesium>*/

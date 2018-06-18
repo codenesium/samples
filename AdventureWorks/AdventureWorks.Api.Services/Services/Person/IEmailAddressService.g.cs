@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiEmailAddressResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiEmailAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiEmailAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiEmailAddressResponseModel>> GetEmailAddress(string emailAddress1);
+                Task<List<ApiEmailAddressResponseModel>> ByEmailAddress(string emailAddress1);
         }
 }
 
 /*<Codenesium>
-    <Hash>ac5c7e0d5c92755c3bbf4d253bce2c18</Hash>
+    <Hash>71c72d65f9b49b38f4944685bd59855e</Hash>
 </Codenesium>*/

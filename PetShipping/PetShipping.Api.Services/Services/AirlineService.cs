@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class AirlineService: AbstractAirlineService, IAirlineService
         {
                 public AirlineService(
-                        ILogger<AirlineRepository> logger,
+                        ILogger<IAirlineRepository> logger,
                         IAirlineRepository airlineRepository,
                         IApiAirlineRequestModelValidator airlineModelValidator,
                         IBOLAirlineMapper bolairlineMapper,
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a0291fd595ce8a32ba0c77164001e27</Hash>
+    <Hash>edb9b35c0fabe6ff17c61de49c0853a6</Hash>
 </Codenesium>*/

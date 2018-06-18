@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class ClientCommunicationService: AbstractClientCommunicationService, IClientCommunicationService
         {
                 public ClientCommunicationService(
-                        ILogger<ClientCommunicationRepository> logger,
+                        ILogger<IClientCommunicationRepository> logger,
                         IClientCommunicationRepository clientCommunicationRepository,
                         IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
                         IBOLClientCommunicationMapper bolclientCommunicationMapper,
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>171bc1b4014178381f363eb676c964c8</Hash>
+    <Hash>b05ac323b51e66b999ce5684c6dba396</Hash>
 </Codenesium>*/

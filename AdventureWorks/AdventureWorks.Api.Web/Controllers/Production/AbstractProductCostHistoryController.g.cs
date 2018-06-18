@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductCostHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductCostHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductCostHistoryService productCostHistoryService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>475febcb37156396c09440ff1ec3a15f</Hash>
+    <Hash>05c9b11a1febba59edc96ebd41853b6f</Hash>
 </Codenesium>*/

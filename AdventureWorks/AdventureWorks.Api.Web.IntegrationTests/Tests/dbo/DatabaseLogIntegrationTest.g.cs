@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "DatabaseLog")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "DatabaseLog")]
+        [Trait("Area", "Integration")]
         public class DatabaseLogTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>64902bc636720fc53b81b72f5f9df5b2</Hash>
+    <Hash>863857d9a1183989ba5d5584ae828d87</Hash>
 </Codenesium>*/

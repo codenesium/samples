@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class ChainService: AbstractChainService, IChainService
         {
                 public ChainService(
-                        ILogger<ChainRepository> logger,
+                        ILogger<IChainRepository> logger,
                         IChainRepository chainRepository,
                         IApiChainRequestModelValidator chainModelValidator,
                         IBOLChainMapper bolchainMapper,
@@ -44,5 +44,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>070e1eed9bd4c69c75452579e24995d8</Hash>
+    <Hash>9c42d9673ec9e7d61c2c7074e0237079</Hash>
 </Codenesium>*/

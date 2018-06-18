@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiAdminRequestModel model, int id)
+                IAdminRepository adminRepository;
+
+                public AbstractApiAdminRequestModelValidator(IAdminRepository adminRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.adminRepository = adminRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiAdminRequestModel model, int id)
@@ -64,5 +65,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f964ec06318af25e82e78cdef67b2243</Hash>
+    <Hash>5d3944cc0280a6ebb5d4cd84c5bbf91f</Hash>
 </Codenesium>*/

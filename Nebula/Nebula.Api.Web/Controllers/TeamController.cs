@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class TeamController: AbstractTeamController
         {
                 public TeamController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITeamService teamService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ddd5a65543c8a82454a896856a9279eb</Hash>
+    <Hash>9f4f964fade089de2415bb413493d013</Hash>
 </Codenesium>*/

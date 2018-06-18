@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSalesOrderHeaderController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSalesOrderHeaderController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesOrderHeaderService salesOrderHeaderService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getSalesOrderNumber/{salesOrderNumber}")]
+                [Route("bySalesOrderNumber/{salesOrderNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetSalesOrderNumber(string salesOrderNumber)
+                public async virtual Task<IActionResult> BySalesOrderNumber(string salesOrderNumber)
                 {
-                        ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.GetSalesOrderNumber(salesOrderNumber);
+                        ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.BySalesOrderNumber(salesOrderNumber);
 
                         if (response == null)
                         {
@@ -181,23 +181,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCustomerID/{customerID}")]
+                [Route("byCustomerID/{customerID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetCustomerID(int customerID)
+                public async virtual Task<IActionResult> ByCustomerID(int customerID)
                 {
-                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.GetCustomerID(customerID);
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.ByCustomerID(customerID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getSalesPersonID/{salesPersonID}")]
+                [Route("bySalesPersonID/{salesPersonID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetSalesPersonID(Nullable<int> salesPersonID)
+                public async virtual Task<IActionResult> BySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.GetSalesPersonID(salesPersonID);
+                        List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesPersonID(salesPersonID);
 
                         return this.Ok(response);
                 }
@@ -232,5 +232,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4bf80a51bbb45e5cd4132ca69a506c51</Hash>
+    <Hash>bb60e48d9be697a0c8cd20c8f9d51722</Hash>
 </Codenesium>*/

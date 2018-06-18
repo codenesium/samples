@@ -23,11 +23,6 @@ namespace ESPIOTNS.Api.Services
                 public virtual BODevice MapEFToBO(
                         Device ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BODevice();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05cbcbeb2699c99ade1bce6df4c12e2c</Hash>
+    <Hash>688ac6baaaedf1de296e50f44865ac4d</Hash>
 </Codenesium>*/

@@ -105,7 +105,7 @@ CREATE TABLE [HumanResources].[Employee](
 [NationalIDNumber] [nvarchar]  (15)   NOT NULL,
 [OrganizationLevel] [smallint]     NULL,
 [OrganizationNode] [hierarchyid]     NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalariedFlag] [bit]     NOT NULL,
 [SickLeaveHours] [smallint]     NOT NULL,
 [VacationHours] [smallint]     NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE [Person].[Address](
 [City] [nvarchar]  (30)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [PostalCode] [nvarchar]  (15)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SpatialLocation] [geography]     NULL,
 [StateProvinceID] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -165,14 +165,14 @@ CREATE TABLE [Person].[AddressType](
 [AddressTypeID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [Person].[BusinessEntity](
 [BusinessEntityID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -181,7 +181,7 @@ CREATE TABLE [Person].[BusinessEntityAddress](
 [AddressID] [int]     NOT NULL,
 [AddressTypeID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -190,7 +190,7 @@ CREATE TABLE [Person].[BusinessEntityContact](
 [ContactTypeID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [PersonID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -213,7 +213,7 @@ CREATE TABLE [Person].[EmailAddress](
 [EmailAddress] [nvarchar]  (50)   NULL,
 [EmailAddressID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -222,7 +222,7 @@ CREATE TABLE [Person].[Password](
 [ModifiedDate] [datetime]     NOT NULL,
 [PasswordHash] [varchar]  (128)   NOT NULL,
 [PasswordSalt] [varchar]  (10)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -237,7 +237,7 @@ CREATE TABLE [Person].[Person](
 [ModifiedDate] [datetime]     NOT NULL,
 [NameStyle] [bit]     NOT NULL,
 [PersonType] [nchar]  (2)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [Suffix] [nvarchar]  (10)   NULL,
 [Title] [nvarchar]  (8)   NULL,
 ) ON[PRIMARY]
@@ -264,7 +264,7 @@ CREATE TABLE [Person].[StateProvince](
 [IsOnlyStateProvinceFlag] [bit]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [StateProvinceCode] [nchar]  (3)   NOT NULL,
 [TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -302,7 +302,7 @@ CREATE TABLE [Production].[Document](
 [ModifiedDate] [datetime]     NOT NULL,
 [Owner] [int]     NOT NULL,
 [Revision] [nchar]  (5)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [Status] [tinyint]     NOT NULL,
 [Title] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
@@ -340,7 +340,7 @@ CREATE TABLE [Production].[Product](
 [ProductNumber] [nvarchar]  (25)   NOT NULL,
 [ProductSubcategoryID] [int]     NULL,
 [ReorderPoint] [smallint]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SafetyStockLevel] [smallint]     NOT NULL,
 [SellEndDate] [datetime]     NULL,
 [SellStartDate] [datetime]     NOT NULL,
@@ -357,7 +357,7 @@ CREATE TABLE [Production].[ProductCategory](
 [ProductCategoryID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -374,7 +374,7 @@ CREATE TABLE [Production].[ProductDescription](
 [ProductDescriptionID] [int]   IDENTITY(1,1)  NOT NULL,
 [Description] [nvarchar]  (400)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -391,7 +391,7 @@ CREATE TABLE [Production].[ProductInventory](
 [LocationID] [smallint]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Quantity] [smallint]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [Shelf] [nvarchar]  (10)   NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -411,7 +411,7 @@ CREATE TABLE [Production].[ProductModel](
 [Instructions] [xml]     NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -465,7 +465,7 @@ CREATE TABLE [Production].[ProductSubcategory](
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
 [ProductCategoryID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -590,7 +590,7 @@ CREATE TABLE [Purchasing].[ShipMethod](
 [ShipMethodID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [ShipBase] [money]     NOT NULL,
 [ShipRate] [money]     NOT NULL,
 ) ON[PRIMARY]
@@ -648,7 +648,7 @@ CREATE TABLE [Sales].[Customer](
 [AccountNumber] [varchar]  (10)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [PersonID] [int]     NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [StoreID] [int]     NULL,
 [TerritoryID] [int]     NULL,
 ) ON[PRIMARY]
@@ -668,7 +668,7 @@ CREATE TABLE [Sales].[SalesOrderDetail](
 [ModifiedDate] [datetime]     NOT NULL,
 [OrderQty] [smallint]     NOT NULL,
 [ProductID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalesOrderDetailID] [int]     NOT NULL,
 [SpecialOfferID] [int]     NOT NULL,
 [UnitPrice] [money]     NOT NULL,
@@ -692,7 +692,7 @@ CREATE TABLE [Sales].[SalesOrderHeader](
 [OrderDate] [datetime]     NOT NULL,
 [PurchaseOrderNumber] [nvarchar]  (25)   NULL,
 [RevisionNumber] [tinyint]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalesOrderNumber] [nvarchar]  (25)   NOT NULL,
 [SalesPersonID] [int]     NULL,
 [ShipDate] [datetime]     NULL,
@@ -718,7 +718,7 @@ CREATE TABLE [Sales].[SalesPerson](
 [Bonus] [money]     NOT NULL,
 [CommissionPct] [smallmoney]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalesLastYear] [money]     NOT NULL,
 [SalesQuota] [money]     NULL,
 [SalesYTD] [money]     NOT NULL,
@@ -730,7 +730,7 @@ CREATE TABLE [Sales].[SalesPersonQuotaHistory](
 [BusinessEntityID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [QuotaDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalesQuota] [money]     NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -747,7 +747,7 @@ CREATE TABLE [Sales].[SalesTaxRate](
 [SalesTaxRateID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [StateProvinceID] [int]     NOT NULL,
 [TaxRate] [smallmoney]     NOT NULL,
 [TaxType] [tinyint]     NOT NULL,
@@ -762,7 +762,7 @@ CREATE TABLE [Sales].[SalesTerritory](
 [Group] [nvarchar]  (50)   NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalesLastYear] [money]     NOT NULL,
 [SalesYTD] [money]     NOT NULL,
 ) ON[PRIMARY]
@@ -772,7 +772,7 @@ CREATE TABLE [Sales].[SalesTerritoryHistory](
 [BusinessEntityID] [int]     NOT NULL,
 [EndDate] [datetime]     NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [StartDate] [datetime]     NOT NULL,
 [TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -797,7 +797,7 @@ CREATE TABLE [Sales].[SpecialOffer](
 [MaxQty] [int]     NULL,
 [MinQty] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [StartDate] [datetime]     NOT NULL,
 [Type] [nvarchar]  (50)   NOT NULL,
 ) ON[PRIMARY]
@@ -807,7 +807,7 @@ CREATE TABLE [Sales].[SpecialOfferProduct](
 [SpecialOfferID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [ProductID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -816,7 +816,7 @@ CREATE TABLE [Sales].[Store](
 [Demographics] [xml]     NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [Name] [nvarchar]  (50)   NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 [SalesPersonID] [int]     NULL,
 ) ON[PRIMARY]
 GO
@@ -1768,614 +1768,6 @@ CREATE  NONCLUSTERED INDEX[IX_Store_SalesPersonID] ON[Sales].[Store]
 (
 [SalesPersonID] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
-
-ALTER TABLE[dbo].[AWBuildVersion]
-ADD CONSTRAINT[DF_AWBuildVersion_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[dbo].[ErrorLog]
-ADD CONSTRAINT[DF_ErrorLog_ErrorTime]  DEFAULT(getdate()) FOR[ErrorTime]
-GO
-
-ALTER TABLE[HumanResources].[Department]
-ADD CONSTRAINT[DF_Department_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[HumanResources].[Employee]
-ADD CONSTRAINT[DF_Employee_CurrentFlag]  DEFAULT((1)) FOR[CurrentFlag]
-GO
-
-ALTER TABLE[HumanResources].[Employee]
-ADD CONSTRAINT[DF_Employee_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[HumanResources].[Employee]
-ADD CONSTRAINT[DF_Employee_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[HumanResources].[Employee]
-ADD CONSTRAINT[DF_Employee_SalariedFlag]  DEFAULT((1)) FOR[SalariedFlag]
-GO
-
-ALTER TABLE[HumanResources].[Employee]
-ADD CONSTRAINT[DF_Employee_SickLeaveHours]  DEFAULT((0)) FOR[SickLeaveHours]
-GO
-
-ALTER TABLE[HumanResources].[Employee]
-ADD CONSTRAINT[DF_Employee_VacationHours]  DEFAULT((0)) FOR[VacationHours]
-GO
-
-ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]
-ADD CONSTRAINT[DF_EmployeeDepartmentHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[HumanResources].[EmployeePayHistory]
-ADD CONSTRAINT[DF_EmployeePayHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[HumanResources].[JobCandidate]
-ADD CONSTRAINT[DF_JobCandidate_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[HumanResources].[Shift]
-ADD CONSTRAINT[DF_Shift_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[Address]
-ADD CONSTRAINT[DF_Address_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[Address]
-ADD CONSTRAINT[DF_Address_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[AddressType]
-ADD CONSTRAINT[DF_AddressType_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[AddressType]
-ADD CONSTRAINT[DF_AddressType_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[BusinessEntity]
-ADD CONSTRAINT[DF_BusinessEntity_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[BusinessEntity]
-ADD CONSTRAINT[DF_BusinessEntity_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[BusinessEntityAddress]
-ADD CONSTRAINT[DF_BusinessEntityAddress_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[BusinessEntityAddress]
-ADD CONSTRAINT[DF_BusinessEntityAddress_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[BusinessEntityContact]
-ADD CONSTRAINT[DF_BusinessEntityContact_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[BusinessEntityContact]
-ADD CONSTRAINT[DF_BusinessEntityContact_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[ContactType]
-ADD CONSTRAINT[DF_ContactType_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[CountryRegion]
-ADD CONSTRAINT[DF_CountryRegion_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[EmailAddress]
-ADD CONSTRAINT[DF_EmailAddress_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[EmailAddress]
-ADD CONSTRAINT[DF_EmailAddress_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[Password]
-ADD CONSTRAINT[DF_Password_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[Password]
-ADD CONSTRAINT[DF_Password_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[Person]
-ADD CONSTRAINT[DF_Person_EmailPromotion]  DEFAULT((0)) FOR[EmailPromotion]
-GO
-
-ALTER TABLE[Person].[Person]
-ADD CONSTRAINT[DF_Person_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[Person]
-ADD CONSTRAINT[DF_Person_NameStyle]  DEFAULT((0)) FOR[NameStyle]
-GO
-
-ALTER TABLE[Person].[Person]
-ADD CONSTRAINT[DF_Person_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Person].[PersonPhone]
-ADD CONSTRAINT[DF_PersonPhone_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[PhoneNumberType]
-ADD CONSTRAINT[DF_PhoneNumberType_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[StateProvince]
-ADD CONSTRAINT[DF_StateProvince_IsOnlyStateProvinceFlag]  DEFAULT((1)) FOR[IsOnlyStateProvinceFlag]
-GO
-
-ALTER TABLE[Person].[StateProvince]
-ADD CONSTRAINT[DF_StateProvince_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Person].[StateProvince]
-ADD CONSTRAINT[DF_StateProvince_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[BillOfMaterials]
-ADD CONSTRAINT[DF_BillOfMaterials_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[BillOfMaterials]
-ADD CONSTRAINT[DF_BillOfMaterials_PerAssemblyQty]  DEFAULT((1.00)) FOR[PerAssemblyQty]
-GO
-
-ALTER TABLE[Production].[BillOfMaterials]
-ADD CONSTRAINT[DF_BillOfMaterials_StartDate]  DEFAULT(getdate()) FOR[StartDate]
-GO
-
-ALTER TABLE[Production].[Culture]
-ADD CONSTRAINT[DF_Culture_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[Document]
-ADD CONSTRAINT[DF_Document_ChangeNumber]  DEFAULT((0)) FOR[ChangeNumber]
-GO
-
-ALTER TABLE[Production].[Document]
-ADD CONSTRAINT[DF_Document_FolderFlag]  DEFAULT((0)) FOR[FolderFlag]
-GO
-
-ALTER TABLE[Production].[Document]
-ADD CONSTRAINT[DF_Document_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[Document]
-ADD CONSTRAINT[DF_Document_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[Illustration]
-ADD CONSTRAINT[DF_Illustration_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[Location]
-ADD CONSTRAINT[DF_Location_Availability]  DEFAULT((0.00)) FOR[Availability]
-GO
-
-ALTER TABLE[Production].[Location]
-ADD CONSTRAINT[DF_Location_CostRate]  DEFAULT((0.00)) FOR[CostRate]
-GO
-
-ALTER TABLE[Production].[Location]
-ADD CONSTRAINT[DF_Location_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[Product]
-ADD CONSTRAINT[DF_Product_FinishedGoodsFlag]  DEFAULT((1)) FOR[FinishedGoodsFlag]
-GO
-
-ALTER TABLE[Production].[Product]
-ADD CONSTRAINT[DF_Product_MakeFlag]  DEFAULT((1)) FOR[MakeFlag]
-GO
-
-ALTER TABLE[Production].[Product]
-ADD CONSTRAINT[DF_Product_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[Product]
-ADD CONSTRAINT[DF_Product_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[ProductCategory]
-ADD CONSTRAINT[DF_ProductCategory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductCategory]
-ADD CONSTRAINT[DF_ProductCategory_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[ProductCostHistory]
-ADD CONSTRAINT[DF_ProductCostHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductDescription]
-ADD CONSTRAINT[DF_ProductDescription_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductDescription]
-ADD CONSTRAINT[DF_ProductDescription_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[ProductDocument]
-ADD CONSTRAINT[DF_ProductDocument_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductInventory]
-ADD CONSTRAINT[DF_ProductInventory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductInventory]
-ADD CONSTRAINT[DF_ProductInventory_Quantity]  DEFAULT((0)) FOR[Quantity]
-GO
-
-ALTER TABLE[Production].[ProductInventory]
-ADD CONSTRAINT[DF_ProductInventory_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[ProductListPriceHistory]
-ADD CONSTRAINT[DF_ProductListPriceHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductModel]
-ADD CONSTRAINT[DF_ProductModel_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductModel]
-ADD CONSTRAINT[DF_ProductModel_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[ProductModelIllustration]
-ADD CONSTRAINT[DF_ProductModelIllustration_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductModelProductDescriptionCulture]
-ADD CONSTRAINT[DF_ProductModelProductDescriptionCulture_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductPhoto]
-ADD CONSTRAINT[DF_ProductPhoto_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductProductPhoto]
-ADD CONSTRAINT[DF_ProductProductPhoto_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductProductPhoto]
-ADD CONSTRAINT[DF_ProductProductPhoto_Primary]  DEFAULT((0)) FOR[Primary]
-GO
-
-ALTER TABLE[Production].[ProductReview]
-ADD CONSTRAINT[DF_ProductReview_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductReview]
-ADD CONSTRAINT[DF_ProductReview_ReviewDate]  DEFAULT(getdate()) FOR[ReviewDate]
-GO
-
-ALTER TABLE[Production].[ProductSubcategory]
-ADD CONSTRAINT[DF_ProductSubcategory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[ProductSubcategory]
-ADD CONSTRAINT[DF_ProductSubcategory_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Production].[ScrapReason]
-ADD CONSTRAINT[DF_ScrapReason_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[TransactionHistory]
-ADD CONSTRAINT[DF_TransactionHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[TransactionHistory]
-ADD CONSTRAINT[DF_TransactionHistory_ReferenceOrderLineID]  DEFAULT((0)) FOR[ReferenceOrderLineID]
-GO
-
-ALTER TABLE[Production].[TransactionHistory]
-ADD CONSTRAINT[DF_TransactionHistory_TransactionDate]  DEFAULT(getdate()) FOR[TransactionDate]
-GO
-
-ALTER TABLE[Production].[TransactionHistoryArchive]
-ADD CONSTRAINT[DF_TransactionHistoryArchive_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[TransactionHistoryArchive]
-ADD CONSTRAINT[DF_TransactionHistoryArchive_ReferenceOrderLineID]  DEFAULT((0)) FOR[ReferenceOrderLineID]
-GO
-
-ALTER TABLE[Production].[TransactionHistoryArchive]
-ADD CONSTRAINT[DF_TransactionHistoryArchive_TransactionDate]  DEFAULT(getdate()) FOR[TransactionDate]
-GO
-
-ALTER TABLE[Production].[UnitMeasure]
-ADD CONSTRAINT[DF_UnitMeasure_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[WorkOrder]
-ADD CONSTRAINT[DF_WorkOrder_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Production].[WorkOrderRouting]
-ADD CONSTRAINT[DF_WorkOrderRouting_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Purchasing].[ProductVendor]
-ADD CONSTRAINT[DF_ProductVendor_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderDetail]
-ADD CONSTRAINT[DF_PurchaseOrderDetail_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_Freight]  DEFAULT((0.00)) FOR[Freight]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_OrderDate]  DEFAULT(getdate()) FOR[OrderDate]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_RevisionNumber]  DEFAULT((0)) FOR[RevisionNumber]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_Status]  DEFAULT((1)) FOR[Status]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_SubTotal]  DEFAULT((0.00)) FOR[SubTotal]
-GO
-
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]
-ADD CONSTRAINT[DF_PurchaseOrderHeader_TaxAmt]  DEFAULT((0.00)) FOR[TaxAmt]
-GO
-
-ALTER TABLE[Purchasing].[ShipMethod]
-ADD CONSTRAINT[DF_ShipMethod_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Purchasing].[ShipMethod]
-ADD CONSTRAINT[DF_ShipMethod_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Purchasing].[ShipMethod]
-ADD CONSTRAINT[DF_ShipMethod_ShipBase]  DEFAULT((0.00)) FOR[ShipBase]
-GO
-
-ALTER TABLE[Purchasing].[ShipMethod]
-ADD CONSTRAINT[DF_ShipMethod_ShipRate]  DEFAULT((0.00)) FOR[ShipRate]
-GO
-
-ALTER TABLE[Purchasing].[Vendor]
-ADD CONSTRAINT[DF_Vendor_ActiveFlag]  DEFAULT((1)) FOR[ActiveFlag]
-GO
-
-ALTER TABLE[Purchasing].[Vendor]
-ADD CONSTRAINT[DF_Vendor_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Purchasing].[Vendor]
-ADD CONSTRAINT[DF_Vendor_PreferredVendorStatus]  DEFAULT((1)) FOR[PreferredVendorStatus]
-GO
-
-ALTER TABLE[Sales].[CountryRegionCurrency]
-ADD CONSTRAINT[DF_CountryRegionCurrency_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[CreditCard]
-ADD CONSTRAINT[DF_CreditCard_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[Currency]
-ADD CONSTRAINT[DF_Currency_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[CurrencyRate]
-ADD CONSTRAINT[DF_CurrencyRate_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[Customer]
-ADD CONSTRAINT[DF_Customer_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[Customer]
-ADD CONSTRAINT[DF_Customer_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[PersonCreditCard]
-ADD CONSTRAINT[DF_PersonCreditCard_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesOrderDetail]
-ADD CONSTRAINT[DF_SalesOrderDetail_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesOrderDetail]
-ADD CONSTRAINT[DF_SalesOrderDetail_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SalesOrderDetail]
-ADD CONSTRAINT[DF_SalesOrderDetail_UnitPriceDiscount]  DEFAULT((0.0)) FOR[UnitPriceDiscount]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_Freight]  DEFAULT((0.00)) FOR[Freight]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_OnlineOrderFlag]  DEFAULT((1)) FOR[OnlineOrderFlag]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_OrderDate]  DEFAULT(getdate()) FOR[OrderDate]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_RevisionNumber]  DEFAULT((0)) FOR[RevisionNumber]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_Status]  DEFAULT((1)) FOR[Status]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_SubTotal]  DEFAULT((0.00)) FOR[SubTotal]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeader]
-ADD CONSTRAINT[DF_SalesOrderHeader_TaxAmt]  DEFAULT((0.00)) FOR[TaxAmt]
-GO
-
-ALTER TABLE[Sales].[SalesOrderHeaderSalesReason]
-ADD CONSTRAINT[DF_SalesOrderHeaderSalesReason_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesPerson]
-ADD CONSTRAINT[DF_SalesPerson_Bonus]  DEFAULT((0.00)) FOR[Bonus]
-GO
-
-ALTER TABLE[Sales].[SalesPerson]
-ADD CONSTRAINT[DF_SalesPerson_CommissionPct]  DEFAULT((0.00)) FOR[CommissionPct]
-GO
-
-ALTER TABLE[Sales].[SalesPerson]
-ADD CONSTRAINT[DF_SalesPerson_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesPerson]
-ADD CONSTRAINT[DF_SalesPerson_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SalesPerson]
-ADD CONSTRAINT[DF_SalesPerson_SalesLastYear]  DEFAULT((0.00)) FOR[SalesLastYear]
-GO
-
-ALTER TABLE[Sales].[SalesPerson]
-ADD CONSTRAINT[DF_SalesPerson_SalesYTD]  DEFAULT((0.00)) FOR[SalesYTD]
-GO
-
-ALTER TABLE[Sales].[SalesPersonQuotaHistory]
-ADD CONSTRAINT[DF_SalesPersonQuotaHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesPersonQuotaHistory]
-ADD CONSTRAINT[DF_SalesPersonQuotaHistory_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SalesReason]
-ADD CONSTRAINT[DF_SalesReason_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesTaxRate]
-ADD CONSTRAINT[DF_SalesTaxRate_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesTaxRate]
-ADD CONSTRAINT[DF_SalesTaxRate_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SalesTaxRate]
-ADD CONSTRAINT[DF_SalesTaxRate_TaxRate]  DEFAULT((0.00)) FOR[TaxRate]
-GO
-
-ALTER TABLE[Sales].[SalesTerritory]
-ADD CONSTRAINT[DF_SalesTerritory_CostLastYear]  DEFAULT((0.00)) FOR[CostLastYear]
-GO
-
-ALTER TABLE[Sales].[SalesTerritory]
-ADD CONSTRAINT[DF_SalesTerritory_CostYTD]  DEFAULT((0.00)) FOR[CostYTD]
-GO
-
-ALTER TABLE[Sales].[SalesTerritory]
-ADD CONSTRAINT[DF_SalesTerritory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesTerritory]
-ADD CONSTRAINT[DF_SalesTerritory_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SalesTerritory]
-ADD CONSTRAINT[DF_SalesTerritory_SalesLastYear]  DEFAULT((0.00)) FOR[SalesLastYear]
-GO
-
-ALTER TABLE[Sales].[SalesTerritory]
-ADD CONSTRAINT[DF_SalesTerritory_SalesYTD]  DEFAULT((0.00)) FOR[SalesYTD]
-GO
-
-ALTER TABLE[Sales].[SalesTerritoryHistory]
-ADD CONSTRAINT[DF_SalesTerritoryHistory_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SalesTerritoryHistory]
-ADD CONSTRAINT[DF_SalesTerritoryHistory_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[ShoppingCartItem]
-ADD CONSTRAINT[DF_ShoppingCartItem_DateCreated]  DEFAULT(getdate()) FOR[DateCreated]
-GO
-
-ALTER TABLE[Sales].[ShoppingCartItem]
-ADD CONSTRAINT[DF_ShoppingCartItem_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[ShoppingCartItem]
-ADD CONSTRAINT[DF_ShoppingCartItem_Quantity]  DEFAULT((1)) FOR[Quantity]
-GO
-
-ALTER TABLE[Sales].[SpecialOffer]
-ADD CONSTRAINT[DF_SpecialOffer_DiscountPct]  DEFAULT((0.00)) FOR[DiscountPct]
-GO
-
-ALTER TABLE[Sales].[SpecialOffer]
-ADD CONSTRAINT[DF_SpecialOffer_MinQty]  DEFAULT((0)) FOR[MinQty]
-GO
-
-ALTER TABLE[Sales].[SpecialOffer]
-ADD CONSTRAINT[DF_SpecialOffer_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SpecialOffer]
-ADD CONSTRAINT[DF_SpecialOffer_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[SpecialOfferProduct]
-ADD CONSTRAINT[DF_SpecialOfferProduct_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SpecialOfferProduct]
-ADD CONSTRAINT[DF_SpecialOfferProduct_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
-ALTER TABLE[Sales].[Store]
-ADD CONSTRAINT[DF_Store_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[Store]
-ADD CONSTRAINT[DF_Store_rowguid]  DEFAULT(newid()) FOR[rowguid]
 GO
 
 

@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiFeedRequestModelValidator: AbstractApiFeedRequestModelValidator, IApiFeedRequestModelValidator
         {
-                public ApiFeedRequestModelValidator()
+                public ApiFeedRequestModelValidator(IFeedRepository feedRepository)
+                        : base(feedRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>874f6057693d8af912fd2afea4ba8a94</Hash>
+    <Hash>20149fa36e5ff542397be7951e206900</Hash>
 </Codenesium>*/

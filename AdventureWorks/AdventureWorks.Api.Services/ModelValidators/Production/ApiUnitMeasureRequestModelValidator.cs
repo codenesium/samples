@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiUnitMeasureRequestModelValidator: AbstractApiUnitMeasureRequestModelValidator, IApiUnitMeasureRequestModelValidator
         {
-                public ApiUnitMeasureRequestModelValidator()
+                public ApiUnitMeasureRequestModelValidator(IUnitMeasureRepository unitMeasureRepository)
+                        : base(unitMeasureRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>78acdd23f8e38f6e4c509be47125f74d</Hash>
+    <Hash>b4db7b24247d17b924babfebd006b85f</Hash>
 </Codenesium>*/

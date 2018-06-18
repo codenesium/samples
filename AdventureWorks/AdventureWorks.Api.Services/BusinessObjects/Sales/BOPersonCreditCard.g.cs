@@ -3,29 +3,14 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOPersonCreditCard: AbstractBusinessObject
+        public partial class BOPersonCreditCard: AbstractBOPersonCreditCard
         {
                 public BOPersonCreditCard() : base()
                 {
                 }
-
-                public void SetProperties(int businessEntityID,
-                                          int creditCardID,
-                                          DateTime modifiedDate)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.CreditCardID = creditCardID;
-                        this.ModifiedDate = modifiedDate;
-                }
-
-                public int BusinessEntityID { get; private set; }
-
-                public int CreditCardID { get; private set; }
-
-                public DateTime ModifiedDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ef660ee24ce76b02a6bcffa19cccd7f5</Hash>
+    <Hash>14730d102e82a18dd94254cf3cea7d7d</Hash>
 </Codenesium>*/

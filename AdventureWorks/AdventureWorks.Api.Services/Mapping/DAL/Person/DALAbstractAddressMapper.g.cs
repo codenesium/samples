@@ -28,11 +28,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOAddress MapEFToBO(
                         Address ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOAddress();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7db4f60823d5889f87f4499727273351</Hash>
+    <Hash>81fd2e7ac5e702d67b9df9042e5e1eda</Hash>
 </Codenesium>*/

@@ -102,8 +102,6 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 public virtual DbSet<ProductDescription> ProductDescriptions { get; set; }
 
-                public virtual DbSet<ProductDocument> ProductDocuments { get; set; }
-
                 public virtual DbSet<ProductInventory> ProductInventories { get; set; }
 
                 public virtual DbSet<ProductListPriceHistory> ProductListPriceHistories { get; set; }
@@ -208,5 +206,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e75d681a0d52257fccb033b47c0f820f</Hash>
+    <Hash>5dcdd5de5fe06f545dc91b003bfe7c7c</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProjectGroupResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProjectGroupResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.projectGroupRepository.All(limit, offset, orderClause);
+                        var records = await this.projectGroupRepository.All(limit, offset);
 
                         return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.projectGroupRepository.Get(id);
 
-                        return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiProjectGroupResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ProjectGroup record = await this.projectGroupRepository.GetName(name);
 
-                        return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiProjectGroupResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
@@ -115,5 +129,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb448e9368dd0939bf91a08c64034f32</Hash>
+    <Hash>72ca581f8cc7f772398309719c2a6440</Hash>
 </Codenesium>*/

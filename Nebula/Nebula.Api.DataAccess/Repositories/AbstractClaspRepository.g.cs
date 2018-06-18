@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Clasp> Get(int id)
@@ -75,42 +76,42 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Clasp>> Where(Expression<Func<Clasp, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Clasp>> Where(
+                        Expression<Func<Clasp, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Clasp, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Clasp> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Clasp>> SearchLinqEF(Expression<Func<Clasp, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Clasp.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Clasp>();
-                }
-
-                private async Task<List<Clasp>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Clasp.Id)} ASC";
+                                return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Clasp>();
                         }
-
-                        return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Clasp>();
+                        else
+                        {
+                                return await this.Context.Set<Clasp>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Clasp>();
+                        }
                 }
 
                 private async Task<Clasp> GetById(int id)
                 {
-                        List<Clasp> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Clasp> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Chain> GetChain(int nextChainId)
+                {
+                        return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == nextChainId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4e2c38a8a27d9b25153e765f6bbb3fe7</Hash>
+    <Hash>d30350a89754395b9984ec1d4fd5ce4f</Hash>
 </Codenesium>*/

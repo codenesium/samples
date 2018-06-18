@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class VersionInfoController: AbstractVersionInfoController
         {
                 public VersionInfoController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<VersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVersionInfoService versionInfoService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>675acf2742f804ddf6774b879ee2304f</Hash>
+    <Hash>779b201cb15dbf9af6b1da7e3cf68895</Hash>
 </Codenesium>*/

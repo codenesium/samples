@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>264ddac382f10513c0e3714df08ea4ba</Hash>
+    <Hash>1ce4b41943e37c8c84779d64f187fb4c</Hash>
 </Codenesium>*/

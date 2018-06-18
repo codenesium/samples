@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Vendor>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Vendor> Get(int businessEntityID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Vendor> GetAccountNumber(string accountNumber)
+                public async Task<Vendor> ByAccountNumber(string accountNumber)
                 {
-                        var records = await this.SearchLinqEF(x => x.AccountNumber == accountNumber);
+                        var records = await this.Where(x => x.AccountNumber == accountNumber);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Vendor>> Where(Expression<Func<Vendor, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Vendor>> Where(
+                        Expression<Func<Vendor, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Vendor, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Vendor> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Vendor>> SearchLinqEF(Expression<Func<Vendor, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Vendor.BusinessEntityID)} ASC";
+                                orderBy = x => x.BusinessEntityID;
                         }
 
-                        return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Vendor>();
-                }
-
-                private async Task<List<Vendor>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Vendor.BusinessEntityID)} ASC";
+                                return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
                         }
-
-                        return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Vendor>();
+                        else
+                        {
+                                return await this.Context.Set<Vendor>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Vendor>();
+                        }
                 }
 
                 private async Task<Vendor> GetById(int businessEntityID)
                 {
-                        List<Vendor> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        List<Vendor> records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
                         return records.FirstOrDefault();
                 }
@@ -128,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0a55c97e04dc2b7b59c874aec1e02d65</Hash>
+    <Hash>5f467d7a31d5427dcb75038d554441ba</Hash>
 </Codenesium>*/

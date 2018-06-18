@@ -23,11 +23,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOEventRelatedDocument MapEFToBO(
                         EventRelatedDocument ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOEventRelatedDocument();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6254fe75e966456259e7047fa19258ff</Hash>
+    <Hash>cda4ca595fae74d37227bd497de50e15</Hash>
 </Codenesium>*/

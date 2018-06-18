@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class HandlerService: AbstractHandlerService, IHandlerService
         {
                 public HandlerService(
-                        ILogger<HandlerRepository> logger,
+                        ILogger<IHandlerRepository> logger,
                         IHandlerRepository handlerRepository,
                         IApiHandlerRequestModelValidator handlerModelValidator,
                         IBOLHandlerMapper bolhandlerMapper,
@@ -50,5 +50,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c3418ea80c75710e25517bd28eae892</Hash>
+    <Hash>6d545369c83a51fc3773ce801f72e739</Hash>
 </Codenesium>*/

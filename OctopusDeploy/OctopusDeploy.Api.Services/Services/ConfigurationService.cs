@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ConfigurationService: AbstractConfigurationService, IConfigurationService
         {
                 public ConfigurationService(
-                        ILogger<ConfigurationRepository> logger,
+                        ILogger<IConfigurationRepository> logger,
                         IConfigurationRepository configurationRepository,
                         IApiConfigurationRequestModelValidator configurationModelValidator,
                         IBOLConfigurationMapper bolconfigurationMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e85465a6e6d32ae9e482c5f05ff433de</Hash>
+    <Hash>285c11f59483ae77d72481d0909acdd5</Hash>
 </Codenesium>*/

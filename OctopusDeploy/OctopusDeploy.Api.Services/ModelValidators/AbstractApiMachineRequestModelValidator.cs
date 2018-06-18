@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiMachineRequestModel model, string id)
+                IMachineRepository machineRepository;
+
+                public AbstractApiMachineRequestModelValidator(IMachineRepository machineRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.machineRepository = machineRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiMachineRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IMachineRepository MachineRepository { get; set; }
                 public virtual void CommunicationStyleRules()
                 {
                         this.RuleFor(x => x.CommunicationStyle).NotNull();
@@ -87,7 +87,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiMachineRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Machine record = await this.MachineRepository.GetName(model.Name);
+                        Machine record = await this.machineRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -102,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17b6fae17f4c7688dfa3cb128326a7dc</Hash>
+    <Hash>17e47a9d416555241c14000f2b4c3f38</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiBillOfMaterialsRequestModelValidator: AbstractApiBillOfMaterialsRequestModelValidator, IApiBillOfMaterialsRequestModelValidator
         {
-                public ApiBillOfMaterialsRequestModelValidator()
+                public ApiBillOfMaterialsRequestModelValidator(IBillOfMaterialsRepository billOfMaterialsRepository)
+                        : base(billOfMaterialsRepository)
                 {
                 }
 
@@ -46,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ec2ed94898894e02a4f9ec0945fb192</Hash>
+    <Hash>27d9d1687dbfa918a708be39f7fcf5d1</Hash>
 </Codenesium>*/

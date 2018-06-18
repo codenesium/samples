@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiFamilyRequestModel model, int id)
+                IFamilyRepository familyRepository;
+
+                public AbstractApiFamilyRequestModelValidator(IFamilyRepository familyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.familyRepository = familyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiFamilyRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IStudioRepository StudioRepository { get; set; }
 
                 public virtual void NotesRules()
                 {
@@ -64,7 +63,7 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudioRepository.Get(id);
+                        var record = await this.familyRepository.GetStudio(id);
 
                         return record != null;
                 }
@@ -72,5 +71,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6c5c8ecd558da22a5e73a4c1ecf33e0</Hash>
+    <Hash>d6a5019b4e3e07c1298e7cee57008201</Hash>
 </Codenesium>*/

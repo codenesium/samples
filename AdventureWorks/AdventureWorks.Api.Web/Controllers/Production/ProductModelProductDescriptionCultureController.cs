@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ProductModelProductDescriptionCultureController: AbstractProductModelProductDescriptionCultureController
         {
                 public ProductModelProductDescriptionCultureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProductModelProductDescriptionCultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductModelProductDescriptionCultureService productModelProductDescriptionCultureService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ac6e224478ff3d20920cef3942ad47f7</Hash>
+    <Hash>187344f5895ec1fe87c50bbfdf70741f</Hash>
 </Codenesium>*/

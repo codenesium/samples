@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiCommunityActionTemplateRequestModelValidator: AbstractApiCommunityActionTemplateRequestModelValidator, IApiCommunityActionTemplateRequestModelValidator
         {
-                public ApiCommunityActionTemplateRequestModelValidator()
+                public ApiCommunityActionTemplateRequestModelValidator(ICommunityActionTemplateRepository communityActionTemplateRepository)
+                        : base(communityActionTemplateRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df3438bf77b8ed1f6b3f1e0ea794721b</Hash>
+    <Hash>60901fa13b8b703fa941fb7dfe05c88a</Hash>
 </Codenesium>*/

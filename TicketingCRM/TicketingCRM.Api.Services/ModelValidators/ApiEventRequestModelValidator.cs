@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiEventRequestModelValidator: AbstractApiEventRequestModelValidator, IApiEventRequestModelValidator
         {
-                public ApiEventRequestModelValidator()
+                public ApiEventRequestModelValidator(IEventRepository eventRepository)
+                        : base(eventRepository)
                 {
                 }
 
@@ -50,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>40ba77471c931f2cd459ca8e6eb5c389</Hash>
+    <Hash>7839e7a1151424ed7e8cad7bc377fcae</Hash>
 </Codenesium>*/

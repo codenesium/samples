@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ActionTemplateVersionController: AbstractActionTemplateVersionController
         {
                 public ActionTemplateVersionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ActionTemplateVersionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IActionTemplateVersionService actionTemplateVersionService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3b05b58c884087f61f9d200fe1ef7425</Hash>
+    <Hash>f6fac2627bcb4aa337557262ad00a200</Hash>
 </Codenesium>*/

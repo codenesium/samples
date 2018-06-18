@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class SaleService: AbstractSaleService, ISaleService
         {
                 public SaleService(
-                        ILogger<SaleRepository> logger,
+                        ILogger<ISaleRepository> logger,
                         ISaleRepository saleRepository,
                         IApiSaleRequestModelValidator saleModelValidator,
                         IBOLSaleMapper bolsaleMapper,
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88d63292979b786283feb7f4dac137c8</Hash>
+    <Hash>9840f6603424141f58852621d0345319</Hash>
 </Codenesium>*/

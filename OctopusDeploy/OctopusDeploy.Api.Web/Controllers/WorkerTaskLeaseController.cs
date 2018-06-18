@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class WorkerTaskLeaseController: AbstractWorkerTaskLeaseController
         {
                 public WorkerTaskLeaseController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<WorkerTaskLeaseController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkerTaskLeaseService workerTaskLeaseService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cade0213f86593ef48574a38fba89bc6</Hash>
+    <Hash>26536f84e7e863c61ced01c0aa4e52ea</Hash>
 </Codenesium>*/

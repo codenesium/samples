@@ -9,7 +9,9 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "LibraryVariableSet")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "LibraryVariableSet")]
+        [Trait("Area", "Integration")]
         public class LibraryVariableSetTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>b247e58cc99e84f0c899c2c48d1c7ac7</Hash>
+    <Hash>a3ca330aa4fed7f68a6b5928ff3e93c9</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductInventoryService: AbstractProductInventoryService, IProductInventoryService
         {
                 public ProductInventoryService(
-                        ILogger<ProductInventoryRepository> logger,
+                        ILogger<IProductInventoryRepository> logger,
                         IProductInventoryRepository productInventoryRepository,
                         IApiProductInventoryRequestModelValidator productInventoryModelValidator,
                         IBOLProductInventoryMapper bolproductInventoryMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00208f044146dbc3a7f47db6ca356b10</Hash>
+    <Hash>fd8a9527a3be5394eb4ff9e14d517732</Hash>
 </Codenesium>*/

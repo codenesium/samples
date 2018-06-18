@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiDeploymentRelatedMachineResponseModel> Get(int id);
 
-                Task<List<ApiDeploymentRelatedMachineResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiDeploymentRelatedMachineResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentId(string deploymentId);
                 Task<List<ApiDeploymentRelatedMachineResponseModel>> GetMachineId(string machineId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f9b7b62aa8f8f03f9a066ebf6b34e8c</Hash>
+    <Hash>3ee90831aceafd83cd2e0d5925988554</Hash>
 </Codenesium>*/

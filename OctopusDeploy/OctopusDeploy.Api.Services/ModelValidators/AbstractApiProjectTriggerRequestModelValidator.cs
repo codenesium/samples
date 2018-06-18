@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiProjectTriggerRequestModel model, string id)
+                IProjectTriggerRepository projectTriggerRepository;
+
+                public AbstractApiProjectTriggerRequestModelValidator(IProjectTriggerRepository projectTriggerRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.projectTriggerRepository = projectTriggerRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProjectTriggerRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IProjectTriggerRepository ProjectTriggerRepository { get; set; }
                 public virtual void IsDisabledRules()
                 {
                 }
@@ -56,7 +56,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetProjectIdName(ApiProjectTriggerRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ProjectTrigger record = await this.ProjectTriggerRepository.GetProjectIdName(model.ProjectId, model.Name);
+                        ProjectTrigger record = await this.projectTriggerRepository.GetProjectIdName(model.ProjectId, model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -71,5 +71,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>40990cdbe512a7b3f5ca573ec5c3506a</Hash>
+    <Hash>ed3913ee6bb5b9e5e4d8f2c167de0905</Hash>
 </Codenesium>*/

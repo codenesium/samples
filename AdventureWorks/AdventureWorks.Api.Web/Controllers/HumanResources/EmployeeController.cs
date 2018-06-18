@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class EmployeeController: AbstractEmployeeController
         {
                 public EmployeeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EmployeeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmployeeService employeeService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>94347b9edc83493ceabab0ba8b58bb54</Hash>
+    <Hash>79af2d177c3ad4c8e37160b8eaad4b61</Hash>
 </Codenesium>*/

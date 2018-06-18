@@ -19,7 +19,7 @@ namespace TicketingCRMNS.Api.Services
 
                 Task<ApiProvinceResponseModel> Get(int id);
 
-                Task<List<ApiProvinceResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiProvinceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiProvinceResponseModel>> GetCountryId(int countryId);
 
@@ -29,5 +29,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6dd36679ac5a18f436421552344a3234</Hash>
+    <Hash>436b974bd6c0ecf6d063eba90c53e1c1</Hash>
 </Codenesium>*/

@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOCurrency MapEFToBO(
                         Currency ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCurrency();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b271a1b24e609ed98a570d21101c6255</Hash>
+    <Hash>eaf5d03a0667908064ecaade9860f06c</Hash>
 </Codenesium>*/

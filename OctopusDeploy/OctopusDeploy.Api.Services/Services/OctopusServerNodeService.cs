@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class OctopusServerNodeService: AbstractOctopusServerNodeService, IOctopusServerNodeService
         {
                 public OctopusServerNodeService(
-                        ILogger<OctopusServerNodeRepository> logger,
+                        ILogger<IOctopusServerNodeRepository> logger,
                         IOctopusServerNodeRepository octopusServerNodeRepository,
                         IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator,
                         IBOLOctopusServerNodeMapper boloctopusServerNodeMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00337a40d27b1f1b4858a79f67a8a050</Hash>
+    <Hash>3ff9af293c7fcf23e68aac8ef3114108</Hash>
 </Codenesium>*/

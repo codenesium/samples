@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class TeacherService: AbstractTeacherService, ITeacherService
         {
                 public TeacherService(
-                        ILogger<TeacherRepository> logger,
+                        ILogger<ITeacherRepository> logger,
                         ITeacherRepository teacherRepository,
                         IApiTeacherRequestModelValidator teacherModelValidator,
                         IBOLTeacherMapper bolteacherMapper,
@@ -44,5 +44,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0844f3c6a335a9ce5f6c0438bc619a0</Hash>
+    <Hash>f399445f8ca66177984418a4acda8cec</Hash>
 </Codenesium>*/

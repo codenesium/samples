@@ -25,7 +25,7 @@ namespace FermataFishNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractStudioController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractStudioController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStudioService studioService
@@ -282,5 +282,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7925e21c6dc93ece7ba6afb6cf391d5e</Hash>
+    <Hash>ba858bdba88d29cdfd2e2f2b63f509a1</Hash>
 </Codenesium>*/

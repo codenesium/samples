@@ -27,11 +27,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOTenantVariable MapEFToBO(
                         TenantVariable ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOTenantVariable();
 
                         bo.SetProperties(
@@ -61,5 +56,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>49cf6233289d598bce10358423c09ddb</Hash>
+    <Hash>6d099b036612c8ee4e939d31fdf47771</Hash>
 </Codenesium>*/

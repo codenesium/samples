@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiBusinessEntityRequestModel model, int id)
+                IBusinessEntityRepository businessEntityRepository;
+
+                public AbstractApiBusinessEntityRequestModelValidator(IBusinessEntityRepository businessEntityRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.businessEntityRepository = businessEntityRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiBusinessEntityRequestModel model, int id)
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>07e61a000ba09a9253ea6e2756d15341</Hash>
+    <Hash>37029adcbcfe73cac7ef5705db91c6bf</Hash>
 </Codenesium>*/

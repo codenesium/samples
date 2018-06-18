@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class TeamService: AbstractTeamService, ITeamService
         {
                 public TeamService(
-                        ILogger<TeamRepository> logger,
+                        ILogger<ITeamRepository> logger,
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolteamMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61eaf610f6745f3cdf383650f1c5ca8a</Hash>
+    <Hash>4bcd57699efe7bd92acc532c6ab7ac75</Hash>
 </Codenesium>*/

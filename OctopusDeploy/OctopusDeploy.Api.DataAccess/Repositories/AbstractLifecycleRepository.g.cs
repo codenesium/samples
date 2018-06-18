@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Lifecycle>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Lifecycle>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Lifecycle> Get(string id)
@@ -77,47 +78,42 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<Lifecycle> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<Lifecycle>> GetDataVersion(byte[] dataVersion)
                 {
-                        var records = await this.SearchLinqEF(x => x.DataVersion == dataVersion);
+                        var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
 
-                protected async Task<List<Lifecycle>> Where(Expression<Func<Lifecycle, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Lifecycle>> Where(
+                        Expression<Func<Lifecycle, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Lifecycle, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Lifecycle> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Lifecycle>> SearchLinqEF(Expression<Func<Lifecycle, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Lifecycle.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Lifecycle>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Lifecycle>();
-                }
-
-                private async Task<List<Lifecycle>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Lifecycle.Id)} ASC";
+                                return await this.Context.Set<Lifecycle>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Lifecycle>();
                         }
-
-                        return await this.Context.Set<Lifecycle>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Lifecycle>();
+                        else
+                        {
+                                return await this.Context.Set<Lifecycle>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Lifecycle>();
+                        }
                 }
 
                 private async Task<Lifecycle> GetById(string id)
                 {
-                        List<Lifecycle> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Lifecycle> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b230314610aabb21e3c12b09148e6f46</Hash>
+    <Hash>937b32269c95bfd35a2f7fc25cd27ee3</Hash>
 </Codenesium>*/

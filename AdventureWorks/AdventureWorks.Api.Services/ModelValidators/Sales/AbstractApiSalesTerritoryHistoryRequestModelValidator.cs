@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSalesTerritoryHistoryRequestModel model, int id)
+                ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
+
+                public AbstractApiSalesTerritoryHistoryRequestModelValidator(ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSalesTerritoryHistoryRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISalesPersonRepository SalesPersonRepository { get; set; }
-
-                public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 
                 public virtual void EndDateRules()
                 {
@@ -52,14 +49,14 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSalesPerson(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesPersonRepository.Get(id);
+                        var record = await this.salesTerritoryHistoryRepository.GetSalesPerson(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidSalesTerritory(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesTerritoryRepository.Get(id);
+                        var record = await this.salesTerritoryHistoryRepository.GetSalesTerritory(id);
 
                         return record != null;
                 }
@@ -67,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53fceb40f09225c9af47dccbfd1402ae</Hash>
+    <Hash>840e234ca3275df449e5c3df5beeba95</Hash>
 </Codenesium>*/

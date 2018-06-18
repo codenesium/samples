@@ -15,10 +15,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<SalesTerritoryHistory> Get(int businessEntityID);
 
-                Task<List<SalesTerritoryHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<SalesTerritoryHistory>> All(int limit = int.MaxValue, int offset = 0);
+
+                Task<SalesPerson> GetSalesPerson(int businessEntityID);
+                Task<SalesTerritory> GetSalesTerritory(int territoryID);
         }
 }
 
 /*<Codenesium>
-    <Hash>fac7f0bd8bcf7ed62b673ea6f7d9eb78</Hash>
+    <Hash>6fd7d1cda3fbdd896c019b6068fa61b9</Hash>
 </Codenesium>*/

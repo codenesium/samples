@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ProductListPriceHistoryController: AbstractProductListPriceHistoryController
         {
                 public ProductListPriceHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProductListPriceHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductListPriceHistoryService productListPriceHistoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e0faddf75fa62e69e35bbc22f43e6c4e</Hash>
+    <Hash>963f32aefa0ee5802832439f8e9ed690</Hash>
 </Codenesium>*/

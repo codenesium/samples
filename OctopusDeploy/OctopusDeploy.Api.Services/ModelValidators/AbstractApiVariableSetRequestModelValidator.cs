@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiVariableSetRequestModel model, string id)
+                IVariableSetRepository variableSetRepository;
+
+                public AbstractApiVariableSetRequestModelValidator(IVariableSetRepository variableSetRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.variableSetRepository = variableSetRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiVariableSetRequestModel model, string id)
@@ -51,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>51f15fec2472e6443d509b6314fd804a</Hash>
+    <Hash>cf8eb0c09beffc2683fa6b0445eb1ab3</Hash>
 </Codenesium>*/

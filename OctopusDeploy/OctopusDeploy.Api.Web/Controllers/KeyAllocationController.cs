@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class KeyAllocationController: AbstractKeyAllocationController
         {
                 public KeyAllocationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<KeyAllocationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IKeyAllocationService keyAllocationService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9b850e7b0de9803e7c0ff747398feb98</Hash>
+    <Hash>7da4d5397f9f2bcbad2aedac90a006c9</Hash>
 </Codenesium>*/

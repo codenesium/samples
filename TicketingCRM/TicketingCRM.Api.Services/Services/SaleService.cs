@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class SaleService: AbstractSaleService, ISaleService
         {
                 public SaleService(
-                        ILogger<SaleRepository> logger,
+                        ILogger<ISaleRepository> logger,
                         ISaleRepository saleRepository,
                         IApiSaleRequestModelValidator saleModelValidator,
                         IBOLSaleMapper bolsaleMapper,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a6229fdf88b99c9af3a38292d3aec49b</Hash>
+    <Hash>63638b823db863b75ebb570334e0e837</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiTransactionStatusRequestModelValidator: AbstractApiTransactionStatusRequestModelValidator, IApiTransactionStatusRequestModelValidator
         {
-                public ApiTransactionStatusRequestModelValidator()
+                public ApiTransactionStatusRequestModelValidator(ITransactionStatusRepository transactionStatusRepository)
+                        : base(transactionStatusRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>74fa9efbeff3b783da94fde4e1759ad2</Hash>
+    <Hash>57a9f1c3c018b3f41904b8ab1880bf52</Hash>
 </Codenesium>*/

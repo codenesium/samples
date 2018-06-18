@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class StoreController: AbstractStoreController
         {
                 public StoreController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<StoreController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStoreService storeService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f88ab912df3fdefe93144829e80935a</Hash>
+    <Hash>ba29c84eff4b8f4d066663c574103419</Hash>
 </Codenesium>*/

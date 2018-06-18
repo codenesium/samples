@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractAWBuildVersionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractAWBuildVersionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAWBuildVersionService aWBuildVersionService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d6c069519d6f8a2950b31eb17acc9473</Hash>
+    <Hash>7eb28e437d6ccff0069699b0b9ab0ead</Hash>
 </Codenesium>*/

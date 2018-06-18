@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<KeyAllocation>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<KeyAllocation>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<KeyAllocation> Get(string collectionName)
@@ -75,36 +76,31 @@ namespace OctopusDeployNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<KeyAllocation>> Where(Expression<Func<KeyAllocation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<KeyAllocation>> Where(
+                        Expression<Func<KeyAllocation, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<KeyAllocation, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<KeyAllocation> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<KeyAllocation>> SearchLinqEF(Expression<Func<KeyAllocation, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(KeyAllocation.CollectionName)} ASC";
+                                orderBy = x => x.CollectionName;
                         }
 
-                        return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<KeyAllocation>();
-                }
-
-                private async Task<List<KeyAllocation>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(KeyAllocation.CollectionName)} ASC";
+                                return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<KeyAllocation>();
                         }
-
-                        return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<KeyAllocation>();
+                        else
+                        {
+                                return await this.Context.Set<KeyAllocation>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<KeyAllocation>();
+                        }
                 }
 
                 private async Task<KeyAllocation> GetById(string collectionName)
                 {
-                        List<KeyAllocation> records = await this.SearchLinqEF(x => x.CollectionName == collectionName);
+                        List<KeyAllocation> records = await this.Where(x => x.CollectionName == collectionName);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad022bf96065f1fae74e5282c8076486</Hash>
+    <Hash>4c12c847410f44f67f1003ce7613e516</Hash>
 </Codenesium>*/

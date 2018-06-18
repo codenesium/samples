@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiProjectRequestModel model, string id)
+                IProjectRepository projectRepository;
+
+                public AbstractApiProjectRequestModelValidator(IProjectRepository projectRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.projectRepository = projectRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProjectRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IProjectRepository ProjectRepository { get; set; }
                 public virtual void AutoCreateReleaseRules()
                 {
                 }
@@ -89,7 +89,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiProjectRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Project record = await this.ProjectRepository.GetName(model.Name);
+                        Project record = await this.projectRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -102,7 +102,7 @@ namespace OctopusDeployNS.Api.Services
                 }
                 private async Task<bool> BeUniqueGetSlug(ApiProjectRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Project record = await this.ProjectRepository.GetSlug(model.Slug);
+                        Project record = await this.projectRepository.GetSlug(model.Slug);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -117,5 +117,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d68d341d2ed190c24c906e99a9444c45</Hash>
+    <Hash>0d325a9cadc9d8c96aaabbbc7424fc46</Hash>
 </Codenesium>*/

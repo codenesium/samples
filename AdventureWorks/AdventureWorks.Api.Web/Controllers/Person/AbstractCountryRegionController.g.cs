@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCountryRegionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCountryRegionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryRegionService countryRegionService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCountryRegionResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiCountryRegionResponseModel response = await this.CountryRegionService.GetName(name);
+                        ApiCountryRegionResponseModel response = await this.CountryRegionService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e76583b341bffe7f7d0aac0da58f9eb2</Hash>
+    <Hash>689c550c52f37c6874c5cb73c35ec643</Hash>
 </Codenesium>*/

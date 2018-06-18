@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ReleaseService: AbstractReleaseService, IReleaseService
         {
                 public ReleaseService(
-                        ILogger<ReleaseRepository> logger,
+                        ILogger<IReleaseRepository> logger,
                         IReleaseRepository releaseRepository,
                         IApiReleaseRequestModelValidator releaseModelValidator,
                         IBOLReleaseMapper bolreleaseMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>81da1589c049b4b9f46acb08ff74c416</Hash>
+    <Hash>3d9b2c209e96784458e32185990b79f5</Hash>
 </Codenesium>*/

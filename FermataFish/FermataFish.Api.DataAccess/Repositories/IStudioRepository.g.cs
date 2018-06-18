@@ -15,7 +15,7 @@ namespace FermataFishNS.Api.DataAccess
 
                 Task<Studio> Get(int id);
 
-                Task<List<Studio>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Studio>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Admin>> Admins(int studioId, int limit = int.MaxValue, int offset = 0);
                 Task<List<Family>> Families(int id, int limit = int.MaxValue, int offset = 0);
@@ -26,9 +26,11 @@ namespace FermataFishNS.Api.DataAccess
                 Task<List<Student>> Students(int studioId, int limit = int.MaxValue, int offset = 0);
                 Task<List<Teacher>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0);
                 Task<List<TeacherSkill>> TeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0);
+
+                Task<State> GetState(int stateId);
         }
 }
 
 /*<Codenesium>
-    <Hash>182b6bc8d1ede739c5d6190aa8252356</Hash>
+    <Hash>b518538e576959ea08bfeeb6f87c073f</Hash>
 </Codenesium>*/

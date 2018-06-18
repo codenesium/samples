@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiCountryRequestModel model, int id)
+                ICountryRepository countryRepository;
+
+                public AbstractApiCountryRequestModelValidator(ICountryRepository countryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.countryRepository = countryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCountryRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f28e6d363070fcb2aa2da7a7d06f7026</Hash>
+    <Hash>8ebbb5131e8bb5b81b19bbd7b154c6b6</Hash>
 </Codenesium>*/

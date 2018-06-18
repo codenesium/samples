@@ -19,14 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCultureResponseModel> Get(string cultureID);
 
-                Task<List<ApiCultureResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiCultureResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiCultureResponseModel> GetName(string name);
+                Task<ApiCultureResponseModel> ByName(string name);
 
                 Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>f06c7dc98366f9a35c6f8be527450257</Hash>
+    <Hash>aae7d515f520a64097f126bda63f503b</Hash>
 </Codenesium>*/

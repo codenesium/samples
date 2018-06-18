@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiActionTemplateVersionResponseModel> Get(string id);
 
-                Task<List<ApiActionTemplateVersionResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiActionTemplateVersionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiActionTemplateVersionResponseModel> GetNameVersion(string name, int version);
                 Task<List<ApiActionTemplateVersionResponseModel>> GetLatestActionTemplateId(string latestActionTemplateId);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>905b60c241730f571581c8406bf1012b</Hash>
+    <Hash>f938ac12c6a4d4a2eac9382b39bee6b8</Hash>
 </Codenesium>*/

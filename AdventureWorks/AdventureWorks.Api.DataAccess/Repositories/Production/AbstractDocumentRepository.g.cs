@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,14 +26,14 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Document>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Document>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
-                public async virtual Task<Document> Get(Guid documentNode)
+                public async virtual Task<Document> Get(Guid rowguid)
                 {
-                        return await this.GetById(documentNode);
+                        return await this.GetById(rowguid);
                 }
 
                 public async virtual Task<Document> Create(Document item)
@@ -46,7 +47,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 public async virtual Task Update(Document item)
                 {
-                        var entity = this.Context.Set<Document>().Local.FirstOrDefault(x => x.DocumentNode == item.DocumentNode);
+                        var entity = this.Context.Set<Document>().Local.FirstOrDefault(x => x.Rowguid == item.Rowguid);
                         if (entity == null)
                         {
                                 this.Context.Set<Document>().Attach(item);
@@ -60,9 +61,9 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 public async virtual Task Delete(
-                        Guid documentNode)
+                        Guid rowguid)
                 {
-                        Document record = await this.GetById(documentNode);
+                        Document record = await this.GetById(rowguid);
 
                         if (record == null)
                         {
@@ -75,60 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Document> GetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode)
+                public async Task<List<Document>> ByFileNameRevision(string fileName, string revision)
                 {
-                        var records = await this.SearchLinqEF(x => x.DocumentLevel == documentLevel && x.DocumentNode == documentNode);
-
-                        return records.FirstOrDefault();
-                }
-                public async Task<List<Document>> GetFileNameRevision(string fileName, string revision)
-                {
-                        var records = await this.SearchLinqEF(x => x.FileName == fileName && x.Revision == revision);
+                        var records = await this.Where(x => x.FileName == fileName && x.Revision == revision);
 
                         return records;
                 }
 
-                protected async Task<List<Document>> Where(Expression<Func<Document, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Document>> Where(
+                        Expression<Func<Document, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Document, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Document> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Document>> SearchLinqEF(Expression<Func<Document, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Document.DocumentNode)} ASC";
+                                orderBy = x => x.Rowguid;
                         }
 
-                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Document>();
-                }
-
-                private async Task<List<Document>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Document.DocumentNode)} ASC";
+                                return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
                         }
-
-                        return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Document>();
+                        else
+                        {
+                                return await this.Context.Set<Document>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Document>();
+                        }
                 }
 
-                private async Task<Document> GetById(Guid documentNode)
+                private async Task<Document> GetById(Guid rowguid)
                 {
-                        List<Document> records = await this.SearchLinqEF(x => x.DocumentNode == documentNode);
+                        List<Document> records = await this.Where(x => x.Rowguid == rowguid);
 
                         return records.FirstOrDefault();
-                }
-
-                public async virtual Task<List<ProductDocument>> ProductDocuments(Guid documentNode, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ProductDocument>().Where(x => x.DocumentNode == documentNode).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductDocument>();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>859e3f2ee74952b86774118294973262</Hash>
+    <Hash>de2393da7ba7faa273b293b37eeaf403</Hash>
 </Codenesium>*/

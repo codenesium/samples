@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiArtifactResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiArtifactResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.artifactRepository.All(limit, offset, orderClause);
+                        var records = await this.artifactRepository.All(limit, offset);
 
                         return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.artifactRepository.Get(id);
 
-                        return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiArtifactResponseModel>> Create(
@@ -109,5 +116,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d56ea114e41bd1ad261999751666e98</Hash>
+    <Hash>5f3a5c15e05ab9b8104768c19a48f5f7</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiWorkOrderRequestModel model, int id)
+                IWorkOrderRepository workOrderRepository;
+
+                public AbstractApiWorkOrderRequestModelValidator(IWorkOrderRepository workOrderRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.workOrderRepository = workOrderRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiWorkOrderRequestModel model, int id)
@@ -64,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>749d0dad535dea1a9c2a57f843a671b1</Hash>
+    <Hash>be71e71884bb042d91d0827ec8cc9d71</Hash>
 </Codenesium>*/

@@ -23,11 +23,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOCity MapEFToBO(
                         City ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCity();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f838c5185775bc76efe798eca13cc07</Hash>
+    <Hash>7f3ce348f3b35e0eecf8ac9f447b7fb5</Hash>
 </Codenesium>*/

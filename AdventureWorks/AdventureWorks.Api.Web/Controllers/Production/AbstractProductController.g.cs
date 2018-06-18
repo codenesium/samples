@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductService productService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProductResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiProductResponseModel response = await this.ProductService.GetName(name);
+                        ApiProductResponseModel response = await this.ProductService.ByName(name);
 
                         if (response == null)
                         {
@@ -181,13 +181,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductNumber/{productNumber}")]
+                [Route("byProductNumber/{productNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProductResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetProductNumber(string productNumber)
+                public async virtual Task<IActionResult> ByProductNumber(string productNumber)
                 {
-                        ApiProductResponseModel response = await this.ProductService.GetProductNumber(productNumber);
+                        ApiProductResponseModel response = await this.ProductService.ByProductNumber(productNumber);
 
                         if (response == null)
                         {
@@ -222,19 +222,6 @@ namespace AdventureWorksNS.Api.Web
 
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiProductCostHistoryResponseModel> response = await this.ProductService.ProductCostHistories(productID, query.Limit, query.Offset);
-
-                        return this.Ok(response);
-                }
-                [HttpGet]
-                [Route("{productID}/ProductDocuments")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
-                public async virtual Task<IActionResult> ProductDocuments(int productID, int? limit, int? offset)
-                {
-                        SearchQuery query = new SearchQuery();
-
-                        query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
-                        List<ApiProductDocumentResponseModel> response = await this.ProductService.ProductDocuments(productID, query.Limit, query.Offset);
 
                         return this.Ok(response);
                 }
@@ -320,5 +307,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d09472c05f158a7272fe7ca5559c7f11</Hash>
+    <Hash>7ff7e2ae6930a1b879695e8d8642c222</Hash>
 </Codenesium>*/

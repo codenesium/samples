@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiOtherTransportRequestModel model, int id)
+                IOtherTransportRepository otherTransportRepository;
+
+                public AbstractApiOtherTransportRequestModelValidator(IOtherTransportRepository otherTransportRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.otherTransportRepository = otherTransportRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiOtherTransportRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IHandlerRepository HandlerRepository { get; set; }
-
-                public IPipelineStepRepository PipelineStepRepository { get; set; }
 
                 public virtual void HandlerIdRules()
                 {
@@ -41,14 +38,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.HandlerRepository.Get(id);
+                        var record = await this.otherTransportRepository.GetHandler(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidPipelineStep(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PipelineStepRepository.Get(id);
+                        var record = await this.otherTransportRepository.GetPipelineStep(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47f43b34409e961ae9aca36fda844768</Hash>
+    <Hash>1c81c29d8b30f5e525bdc1731a82e4fd</Hash>
 </Codenesium>*/

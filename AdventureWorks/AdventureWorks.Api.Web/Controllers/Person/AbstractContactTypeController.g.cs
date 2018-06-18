@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractContactTypeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractContactTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IContactTypeService contactTypeService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiContactTypeResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiContactTypeResponseModel response = await this.ContactTypeService.GetName(name);
+                        ApiContactTypeResponseModel response = await this.ContactTypeService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb0ebfe8a1934200f36cf0eedd5e415d</Hash>
+    <Hash>8520e9cf60de3da9ba6690996102592d</Hash>
 </Codenesium>*/

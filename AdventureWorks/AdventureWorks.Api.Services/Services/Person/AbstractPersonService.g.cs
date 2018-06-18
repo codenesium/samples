@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.personRepository.All(limit, offset, orderClause);
+                        var records = await this.personRepository.All(limit, offset);
 
                         return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
                 }
@@ -87,7 +87,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.personRepository.Get(businessEntityID);
 
-                        return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
@@ -133,21 +140,21 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiPersonResponseModel>> GetLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
+                public async Task<List<ApiPersonResponseModel>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
                 {
-                        List<Person> records = await this.personRepository.GetLastNameFirstNameMiddleName(lastName, firstName, middleName);
+                        List<Person> records = await this.personRepository.ByLastNameFirstNameMiddleName(lastName, firstName, middleName);
 
                         return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiPersonResponseModel>> GetAdditionalContactInfo(string additionalContactInfo)
+                public async Task<List<ApiPersonResponseModel>> ByAdditionalContactInfo(string additionalContactInfo)
                 {
-                        List<Person> records = await this.personRepository.GetAdditionalContactInfo(additionalContactInfo);
+                        List<Person> records = await this.personRepository.ByAdditionalContactInfo(additionalContactInfo);
 
                         return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiPersonResponseModel>> GetDemographics(string demographics)
+                public async Task<List<ApiPersonResponseModel>> ByDemographics(string demographics)
                 {
-                        List<Person> records = await this.personRepository.GetDemographics(demographics);
+                        List<Person> records = await this.personRepository.ByDemographics(demographics);
 
                         return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
                 }
@@ -180,5 +187,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9e01d8683a506157392b84d10255de3</Hash>
+    <Hash>d2340cfd77bc10221607f24a3a4afff9</Hash>
 </Codenesium>*/

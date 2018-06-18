@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPersonPhoneController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPersonPhoneController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPersonPhoneService personPhoneService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getPhoneNumber/{phoneNumber}")]
+                [Route("byPhoneNumber/{phoneNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetPhoneNumber(string phoneNumber)
+                public async virtual Task<IActionResult> ByPhoneNumber(string phoneNumber)
                 {
-                        List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.GetPhoneNumber(phoneNumber);
+                        List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.ByPhoneNumber(phoneNumber);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0d9d64ad2cbd8b63d7a0130fd357ba87</Hash>
+    <Hash>94632808c8e4124bf3d770480a760334</Hash>
 </Codenesium>*/

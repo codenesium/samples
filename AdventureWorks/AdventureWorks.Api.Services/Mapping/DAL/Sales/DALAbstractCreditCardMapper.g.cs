@@ -26,11 +26,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOCreditCard MapEFToBO(
                         CreditCard ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCreditCard();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c3af6b42e96d311bb00a816cbcb11a8f</Hash>
+    <Hash>76d0469d468270b824ad4ed424076c83</Hash>
 </Codenesium>*/

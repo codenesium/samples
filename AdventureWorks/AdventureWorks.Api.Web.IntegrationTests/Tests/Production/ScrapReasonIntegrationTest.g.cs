@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "ScrapReason")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "ScrapReason")]
+        [Trait("Area", "Integration")]
         public class ScrapReasonTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>ea81d691f02089fbbe74fea9ff395e6f</Hash>
+    <Hash>f47efeb683fae329f677c0c49badf53f</Hash>
 </Codenesium>*/

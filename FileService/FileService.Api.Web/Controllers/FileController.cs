@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Web
         public class FileController: AbstractFileController
         {
                 public FileController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<FileController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IFileService fileService
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>61332a359b6a7246ff6e59e2065c8546</Hash>
+    <Hash>82b16f364b0860cd86b247556235233a</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiCountryRequestModelValidator: AbstractApiCountryRequestModelValidator, IApiCountryRequestModelValidator
         {
-                public ApiCountryRequestModelValidator()
+                public ApiCountryRequestModelValidator(ICountryRepository countryRepository)
+                        : base(countryRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0c43ec618b0ab3593d02e704e6b4371c</Hash>
+    <Hash>9cdc293c7d239658ef7e739593c8970f</Hash>
 </Codenesium>*/

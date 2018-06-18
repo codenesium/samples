@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiCountryRegionCurrencyRequestModelValidator: AbstractApiCountryRegionCurrencyRequestModelValidator, IApiCountryRegionCurrencyRequestModelValidator
         {
-                public ApiCountryRegionCurrencyRequestModelValidator()
+                public ApiCountryRegionCurrencyRequestModelValidator(ICountryRegionCurrencyRepository countryRegionCurrencyRepository)
+                        : base(countryRegionCurrencyRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>240952fa837a4f2dcafcb20f5e320a88</Hash>
+    <Hash>67c81e7f2ae6a990770269aea8306905</Hash>
 </Codenesium>*/

@@ -9,7 +9,9 @@ using PetShippingNS.Api.Client;
 
 namespace PetShippingNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "PipelineStepStepRequirement")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "PipelineStepStepRequirement")]
+        [Trait("Area", "Integration")]
         public class PipelineStepStepRequirementTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>ccbf267ef72724286fc53c887152ee3c</Hash>
+    <Hash>095569681eb04df6cf94bb1c0d9984f0</Hash>
 </Codenesium>*/

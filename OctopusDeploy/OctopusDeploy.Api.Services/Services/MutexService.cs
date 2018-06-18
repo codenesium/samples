@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class MutexService: AbstractMutexService, IMutexService
         {
                 public MutexService(
-                        ILogger<MutexRepository> logger,
+                        ILogger<IMutexRepository> logger,
                         IMutexRepository mutexRepository,
                         IApiMutexRequestModelValidator mutexModelValidator,
                         IBOLMutexMapper bolmutexMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87f926b4297dee5b6cff0e0244789f25</Hash>
+    <Hash>e5e0dd7a1d209d60d72544ca448f7efc</Hash>
 </Codenesium>*/

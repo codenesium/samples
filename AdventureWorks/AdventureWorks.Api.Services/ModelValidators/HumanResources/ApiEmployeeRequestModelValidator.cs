@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiEmployeeRequestModelValidator: AbstractApiEmployeeRequestModelValidator, IApiEmployeeRequestModelValidator
         {
-                public ApiEmployeeRequestModelValidator()
+                public ApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
+                        : base(employeeRepository)
                 {
                 }
 
@@ -24,7 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.ModifiedDateRules();
                         this.NationalIDNumberRules();
                         this.OrganizationLevelRules();
-                        this.OrganizationNodeRules();
                         this.RowguidRules();
                         this.SalariedFlagRules();
                         this.SickLeaveHoursRules();
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services
                         this.ModifiedDateRules();
                         this.NationalIDNumberRules();
                         this.OrganizationLevelRules();
-                        this.OrganizationNodeRules();
                         this.RowguidRules();
                         this.SalariedFlagRules();
                         this.SickLeaveHoursRules();
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b8a6515bdc951cb1152604cf0dbb13d</Hash>
+    <Hash>d962cec776e244d55ec7f83bcb90e492</Hash>
 </Codenesium>*/

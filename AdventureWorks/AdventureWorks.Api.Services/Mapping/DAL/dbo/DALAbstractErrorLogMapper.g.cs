@@ -29,11 +29,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOErrorLog MapEFToBO(
                         ErrorLog ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOErrorLog();
 
                         bo.SetProperties(
@@ -65,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da6db49b925ba87365f8c6a0df94198c</Hash>
+    <Hash>af6cf6721d8a6ad276201c998be5bd0c</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.teamRepository.All(limit, offset, orderClause);
+                        var records = await this.teamRepository.All(limit, offset);
 
                         return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.teamRepository.Get(id);
 
-                        return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiTeamResponseModel>> Create(
@@ -103,11 +110,18 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Team record = await this.teamRepository.GetName(name);
 
-                        return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a6b4082b07edea22310b9f0f226e7ba0</Hash>
+    <Hash>eebddcaec680d2f01dba5646c85aed82</Hash>
 </Codenesium>*/

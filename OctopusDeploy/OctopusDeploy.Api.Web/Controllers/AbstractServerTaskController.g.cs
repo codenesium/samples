@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractServerTaskController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractServerTaskController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IServerTaskService serverTaskService
@@ -197,5 +197,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>23a8f6366bd1e6fc24076b5acfea45b6</Hash>
+    <Hash>9c23e581e1b259f4cb1d8fbcf3555cb0</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiCreditCardRequestModelValidator: AbstractApiCreditCardRequestModelValidator, IApiCreditCardRequestModelValidator
         {
-                public ApiCreditCardRequestModelValidator()
+                public ApiCreditCardRequestModelValidator(ICreditCardRepository creditCardRepository)
+                        : base(creditCardRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb1a88ef99f97ce4d4c21281bd95e861</Hash>
+    <Hash>d89d8d2d8ebe8f06015461e966e51a2a</Hash>
 </Codenesium>*/

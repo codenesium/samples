@@ -19,7 +19,7 @@ namespace FermataFishNS.Api.Services
 
                 Task<ApiStudioResponseModel> Get(int id);
 
-                Task<List<ApiStudioResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiStudioResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiAdminResponseModel>> Admins(int studioId, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiFamilyResponseModel>> Families(int id, int limit = int.MaxValue, int offset = 0);
@@ -34,5 +34,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16a71ff67a50880ad0246031efe428f3</Hash>
+    <Hash>434214292f9e8d8908b35eece9dc7302</Hash>
 </Codenesium>*/

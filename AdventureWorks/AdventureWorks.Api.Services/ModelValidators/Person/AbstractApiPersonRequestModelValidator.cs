@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPersonRequestModel model, int id)
+                IPersonRepository personRepository;
+
+                public AbstractApiPersonRequestModelValidator(IPersonRepository personRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.personRepository = personRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPersonRequestModel model, int id)
@@ -85,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1fcb5d20d6b128b6881c6bab7cfed812</Hash>
+    <Hash>050c8bc6fd7b80dd1faa2965198b2597</Hash>
 </Codenesium>*/

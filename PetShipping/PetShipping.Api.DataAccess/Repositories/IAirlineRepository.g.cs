@@ -15,10 +15,10 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<Airline> Get(int id);
 
-                Task<List<Airline>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Airline>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>0ade54e37189ab7d640225cdf61e7c61</Hash>
+    <Hash>bca002f1b52ecee4ce159fca613dc517</Hash>
 </Codenesium>*/

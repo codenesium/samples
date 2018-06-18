@@ -3,29 +3,14 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOSchemaVersions: AbstractBusinessObject
+        public partial class BOSchemaVersions: AbstractBOSchemaVersions
         {
                 public BOSchemaVersions() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          DateTime applied,
-                                          string scriptName)
-                {
-                        this.Applied = applied;
-                        this.Id = id;
-                        this.ScriptName = scriptName;
-                }
-
-                public DateTime Applied { get; private set; }
-
-                public int Id { get; private set; }
-
-                public string ScriptName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e421166fb1fd759267afa759b97053db</Hash>
+    <Hash>7e50d1badb7f764632a933c3fae73d33</Hash>
 </Codenesium>*/

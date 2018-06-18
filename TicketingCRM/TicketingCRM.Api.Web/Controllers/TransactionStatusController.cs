@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class TransactionStatusController: AbstractTransactionStatusController
         {
                 public TransactionStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TransactionStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITransactionStatusService transactionStatusService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>db85dcb5344df7166461c9897b3e34b9</Hash>
+    <Hash>db6b448a9aefd4f3d015d1b0c554e83d</Hash>
 </Codenesium>*/

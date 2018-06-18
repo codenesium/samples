@@ -25,7 +25,7 @@ namespace ESPIOTNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractDeviceActionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractDeviceActionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeviceActionService deviceActionService
@@ -175,5 +175,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1668bd2966a63e4028de899dd6992626</Hash>
+    <Hash>982c884724befabd15677f70882274f2</Hash>
 </Codenesium>*/

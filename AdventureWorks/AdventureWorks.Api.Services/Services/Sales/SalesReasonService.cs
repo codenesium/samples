@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SalesReasonService: AbstractSalesReasonService, ISalesReasonService
         {
                 public SalesReasonService(
-                        ILogger<SalesReasonRepository> logger,
+                        ILogger<ISalesReasonRepository> logger,
                         ISalesReasonRepository salesReasonRepository,
                         IApiSalesReasonRequestModelValidator salesReasonModelValidator,
                         IBOLSalesReasonMapper bolsalesReasonMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75bff07d60f48292c70c1694fae2d306</Hash>
+    <Hash>68472098b78570a81fc8b9acf0470cdb</Hash>
 </Codenesium>*/

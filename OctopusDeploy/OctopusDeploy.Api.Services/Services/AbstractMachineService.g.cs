@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.machineRepository.All(limit, offset, orderClause);
+                        var records = await this.machineRepository.All(limit, offset);
 
                         return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.machineRepository.Get(id);
 
-                        return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Machine record = await this.machineRepository.GetName(name);
 
-                        return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiMachineResponseModel>> GetMachinePolicyId(string machinePolicyId)
                 {
@@ -115,5 +129,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfe38f970e4870a504b914ac981e61b2</Hash>
+    <Hash>24fe13b58d1bd8320b323ca31dc9d20c</Hash>
 </Codenesium>*/

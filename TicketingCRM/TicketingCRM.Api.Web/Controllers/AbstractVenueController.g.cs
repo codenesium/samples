@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractVenueController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractVenueController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVenueService venueService
@@ -186,5 +186,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f845cb8954b82d28a636688fa4ae83e8</Hash>
+    <Hash>45743e31e6113b54fe7619c2653b0ad7</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiMutexRequestModel model, string id)
+                IMutexRepository mutexRepository;
+
+                public AbstractApiMutexRequestModelValidator(IMutexRepository mutexRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.mutexRepository = mutexRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiMutexRequestModel model, string id)
@@ -33,5 +34,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0285184f8dacdd61a2084005192fcbc</Hash>
+    <Hash>70bd41c2d9895826ec20eaa937e7f370</Hash>
 </Codenesium>*/

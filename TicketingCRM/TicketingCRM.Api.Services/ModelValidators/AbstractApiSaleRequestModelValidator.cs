@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSaleRequestModel model, int id)
+                ISaleRepository saleRepository;
+
+                public AbstractApiSaleRequestModelValidator(ISaleRepository saleRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.saleRepository = saleRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSaleRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace TicketingCRMNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ITransactionRepository TransactionRepository { get; set; }
 
                 public virtual void IpAddressRules()
                 {
@@ -50,7 +49,7 @@ namespace TicketingCRMNS.Api.Services
 
                 private async Task<bool> BeValidTransaction(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TransactionRepository.Get(id);
+                        var record = await this.saleRepository.GetTransaction(id);
 
                         return record != null;
                 }
@@ -58,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f71e3f7290489342a32989df0f3de77</Hash>
+    <Hash>bff93c0b6a13ebb3a0caf006b880549d</Hash>
 </Codenesium>*/

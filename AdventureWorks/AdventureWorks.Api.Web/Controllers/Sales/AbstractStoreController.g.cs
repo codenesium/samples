@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractStoreController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractStoreController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStoreService storeService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getSalesPersonID/{salesPersonID}")]
+                [Route("bySalesPersonID/{salesPersonID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetSalesPersonID(Nullable<int> salesPersonID)
+                public async virtual Task<IActionResult> BySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        List<ApiStoreResponseModel> response = await this.StoreService.GetSalesPersonID(salesPersonID);
+                        List<ApiStoreResponseModel> response = await this.StoreService.BySalesPersonID(salesPersonID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getDemographics/{demographics}")]
+                [Route("byDemographics/{demographics}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiStoreResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDemographics(string demographics)
+                public async virtual Task<IActionResult> ByDemographics(string demographics)
                 {
-                        List<ApiStoreResponseModel> response = await this.StoreService.GetDemographics(demographics);
+                        List<ApiStoreResponseModel> response = await this.StoreService.ByDemographics(demographics);
 
                         return this.Ok(response);
                 }
@@ -200,5 +200,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9b6e1504ae1380c23d5cfed62fc84df8</Hash>
+    <Hash>cee13dfcc0bbe9d0ee24ff4841226dcb</Hash>
 </Codenesium>*/

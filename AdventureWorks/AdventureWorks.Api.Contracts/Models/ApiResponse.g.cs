@@ -59,7 +59,6 @@ namespace AdventureWorksNS.Api.Contracts
                         from.ProductCategories.ForEach(x => this.AddProductCategory(x));
                         from.ProductCostHistories.ForEach(x => this.AddProductCostHistory(x));
                         from.ProductDescriptions.ForEach(x => this.AddProductDescription(x));
-                        from.ProductDocuments.ForEach(x => this.AddProductDocument(x));
                         from.ProductInventories.ForEach(x => this.AddProductInventory(x));
                         from.ProductListPriceHistories.ForEach(x => this.AddProductListPriceHistory(x));
                         from.ProductModels.ForEach(x => this.AddProductModel(x));
@@ -162,8 +161,6 @@ namespace AdventureWorksNS.Api.Contracts
                 public List<ApiProductCostHistoryResponseModel> ProductCostHistories { get; private set; } = new List<ApiProductCostHistoryResponseModel>();
 
                 public List<ApiProductDescriptionResponseModel> ProductDescriptions { get; private set; } = new List<ApiProductDescriptionResponseModel>();
-
-                public List<ApiProductDocumentResponseModel> ProductDocuments { get; private set; } = new List<ApiProductDocumentResponseModel>();
 
                 public List<ApiProductInventoryResponseModel> ProductInventories { get; private set; } = new List<ApiProductInventoryResponseModel>();
 
@@ -637,7 +634,7 @@ namespace AdventureWorksNS.Api.Contracts
 
                 public void AddDocument(ApiDocumentResponseModel item)
                 {
-                        if (!this.Documents.Any(x => x.DocumentNode == item.DocumentNode))
+                        if (!this.Documents.Any(x => x.Rowguid == item.Rowguid))
                         {
                                 this.Documents.Add(item);
                         }
@@ -736,22 +733,6 @@ namespace AdventureWorksNS.Api.Contracts
                         if (!this.ProductDescriptions.Any(x => x.ProductDescriptionID == item.ProductDescriptionID))
                         {
                                 this.ProductDescriptions.Add(item);
-                        }
-                }
-
-                [JsonIgnore]
-                public bool ShouldSerializeProductDocumentsValue { get; private set; } = true;
-
-                public bool ShouldSerializeProductDocuments()
-                {
-                        return this.ShouldSerializeProductDocumentsValue;
-                }
-
-                public void AddProductDocument(ApiProductDocumentResponseModel item)
-                {
-                        if (!this.ProductDocuments.Any(x => x.ProductID == item.ProductID))
-                        {
-                                this.ProductDocuments.Add(item);
                         }
                 }
 
@@ -1536,11 +1517,6 @@ namespace AdventureWorksNS.Api.Contracts
                                 this.ShouldSerializeProductDescriptionsValue = false;
                         }
 
-                        if (this.ProductDocuments.Count == 0)
-                        {
-                                this.ShouldSerializeProductDocumentsValue = false;
-                        }
-
                         if (this.ProductInventories.Count == 0)
                         {
                                 this.ShouldSerializeProductInventoriesValue = false;
@@ -1740,5 +1716,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>044c38b033ee79d18e1b0a1ff5a9f901</Hash>
+    <Hash>34bf88cf3fd476035c9cfaca0596e82b</Hash>
 </Codenesium>*/

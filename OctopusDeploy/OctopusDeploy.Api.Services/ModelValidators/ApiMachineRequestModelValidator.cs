@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiMachineRequestModelValidator: AbstractApiMachineRequestModelValidator, IApiMachineRequestModelValidator
         {
-                public ApiMachineRequestModelValidator()
+                public ApiMachineRequestModelValidator(IMachineRepository machineRepository)
+                        : base(machineRepository)
                 {
                 }
 
@@ -54,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5066572e72a2f3f3ad97fa69ca916515</Hash>
+    <Hash>7b378726b4e8531bc5a95559e6d3a73c</Hash>
 </Codenesium>*/

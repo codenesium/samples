@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class PersonPhoneController: AbstractPersonPhoneController
         {
                 public PersonPhoneController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PersonPhoneController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPersonPhoneService personPhoneService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>272a3a4a5fd449faf7bc7b88622b7c53</Hash>
+    <Hash>e4050dc40e7ff64303400d90adac4a70</Hash>
 </Codenesium>*/

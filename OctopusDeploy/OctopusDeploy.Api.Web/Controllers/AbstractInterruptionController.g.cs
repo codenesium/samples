@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractInterruptionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractInterruptionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IInterruptionService interruptionService
@@ -175,5 +175,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f6727816bc0079516cbd2029fc5b6dd2</Hash>
+    <Hash>0aa4408cc3abe37ae34e5f5cadc0acb0</Hash>
 </Codenesium>*/

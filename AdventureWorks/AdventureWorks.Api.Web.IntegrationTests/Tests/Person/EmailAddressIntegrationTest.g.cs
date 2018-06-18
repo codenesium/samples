@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "EmailAddress")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "EmailAddress")]
+        [Trait("Area", "Integration")]
         public class EmailAddressTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>773a5be548b4a5423a5dd78b3f2012d8</Hash>
+    <Hash>5a0fe8e03c328df22e19b0ad32f3aed4</Hash>
 </Codenesium>*/

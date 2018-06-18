@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiHandlerPipelineStepRequestModel model, int id)
+                IHandlerPipelineStepRepository handlerPipelineStepRepository;
+
+                public AbstractApiHandlerPipelineStepRequestModelValidator(IHandlerPipelineStepRepository handlerPipelineStepRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.handlerPipelineStepRepository = handlerPipelineStepRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiHandlerPipelineStepRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IHandlerRepository HandlerRepository { get; set; }
-
-                public IPipelineStepRepository PipelineStepRepository { get; set; }
 
                 public virtual void HandlerIdRules()
                 {
@@ -41,14 +38,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.HandlerRepository.Get(id);
+                        var record = await this.handlerPipelineStepRepository.GetHandler(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidPipelineStep(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PipelineStepRepository.Get(id);
+                        var record = await this.handlerPipelineStepRepository.GetPipelineStep(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91c9ec4cd34839ae617f259d7777ed45</Hash>
+    <Hash>c9c4e1cf83236cd4b82e33ee121706c5</Hash>
 </Codenesium>*/

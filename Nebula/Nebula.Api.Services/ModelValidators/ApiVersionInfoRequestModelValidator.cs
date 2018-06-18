@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiVersionInfoRequestModelValidator: AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
         {
-                public ApiVersionInfoRequestModelValidator()
+                public ApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
+                        : base(versionInfoRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8dd0e8b652f20406f5fbd48a5ccad81a</Hash>
+    <Hash>cc533c91d79e1bf417361f8f24277577</Hash>
 </Codenesium>*/

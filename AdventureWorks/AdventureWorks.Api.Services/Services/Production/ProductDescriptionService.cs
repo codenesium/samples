@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductDescriptionService: AbstractProductDescriptionService, IProductDescriptionService
         {
                 public ProductDescriptionService(
-                        ILogger<ProductDescriptionRepository> logger,
+                        ILogger<IProductDescriptionRepository> logger,
                         IProductDescriptionRepository productDescriptionRepository,
                         IApiProductDescriptionRequestModelValidator productDescriptionModelValidator,
                         IBOLProductDescriptionMapper bolproductDescriptionMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e44fe5523fc35808ab45f66c206d20aa</Hash>
+    <Hash>dd7fea09381b636e70f0110e1a84241a</Hash>
 </Codenesium>*/

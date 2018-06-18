@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSaleRequestModel model, int id)
+                ISaleRepository saleRepository;
+
+                public AbstractApiSaleRequestModelValidator(ISaleRepository saleRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.saleRepository = saleRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSaleRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IClientRepository ClientRepository { get; set; }
-
-                public IPetRepository PetRepository { get; set; }
 
                 public virtual void AmountRules()
                 {
@@ -59,14 +56,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.ClientRepository.Get(id);
+                        var record = await this.saleRepository.GetClient(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidPet(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PetRepository.Get(id);
+                        var record = await this.saleRepository.GetPet(id);
 
                         return record != null;
                 }
@@ -74,5 +71,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>325e1e474d708f828e9ac8f9d904d235</Hash>
+    <Hash>1e5fa329a5034f5bd33e8ea36c87705f</Hash>
 </Codenesium>*/

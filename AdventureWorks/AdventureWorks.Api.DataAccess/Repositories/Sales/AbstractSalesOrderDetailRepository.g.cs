@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SalesOrderDetail>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SalesOrderDetail>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SalesOrderDetail> Get(int salesOrderID)
@@ -75,49 +76,53 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<SalesOrderDetail>> GetProductID(int productID)
+                public async Task<List<SalesOrderDetail>> ByProductID(int productID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        var records = await this.Where(x => x.ProductID == productID);
 
                         return records;
                 }
 
-                protected async Task<List<SalesOrderDetail>> Where(Expression<Func<SalesOrderDetail, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SalesOrderDetail>> Where(
+                        Expression<Func<SalesOrderDetail, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SalesOrderDetail, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SalesOrderDetail> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SalesOrderDetail>> SearchLinqEF(Expression<Func<SalesOrderDetail, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SalesOrderDetail.SalesOrderID)} ASC";
+                                orderBy = x => x.SalesOrderID;
                         }
 
-                        return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
-                }
-
-                private async Task<List<SalesOrderDetail>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SalesOrderDetail.SalesOrderID)} ASC";
+                                return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
                         }
-
-                        return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
+                        else
+                        {
+                                return await this.Context.Set<SalesOrderDetail>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
+                        }
                 }
 
                 private async Task<SalesOrderDetail> GetById(int salesOrderID)
                 {
-                        List<SalesOrderDetail> records = await this.SearchLinqEF(x => x.SalesOrderID == salesOrderID);
+                        List<SalesOrderDetail> records = await this.Where(x => x.SalesOrderID == salesOrderID);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<SpecialOfferProduct> GetSpecialOfferProduct(int productID)
+                {
+                        return await this.Context.Set<SpecialOfferProduct>().SingleOrDefaultAsync(x => x.SpecialOfferID == productID);
+                }
+                public async virtual Task<SalesOrderHeader> GetSalesOrderHeader(int salesOrderID)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderID == salesOrderID);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d90104cd90bc633ad11ad705184ac359</Hash>
+    <Hash>bbacf47e3eb036aa9a13fbabce532037</Hash>
 </Codenesium>*/

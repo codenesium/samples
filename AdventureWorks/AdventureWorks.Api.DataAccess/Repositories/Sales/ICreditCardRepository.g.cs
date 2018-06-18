@@ -15,9 +15,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<CreditCard> Get(int creditCardID);
 
-                Task<List<CreditCard>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<CreditCard>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<CreditCard> GetCardNumber(string cardNumber);
+                Task<CreditCard> ByCardNumber(string cardNumber);
 
                 Task<List<PersonCreditCard>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0);
                 Task<List<SalesOrderHeader>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0);
@@ -25,5 +25,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67c362ff9d1c20ed11f36ad59c566e9e</Hash>
+    <Hash>8b43c8998ca2eecb980e80cd937d23f4</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace PetStoreNS.Api.Services
 {
         public class ApiBreedRequestModelValidator: AbstractApiBreedRequestModelValidator, IApiBreedRequestModelValidator
         {
-                public ApiBreedRequestModelValidator()
+                public ApiBreedRequestModelValidator(IBreedRepository breedRepository)
+                        : base(breedRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4f5fd2277a6e7164a1c4ae7f44ecdc83</Hash>
+    <Hash>795923100d2e5f3a2f6ce77d3a85457d</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractWorkerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractWorkerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkerService workerService
@@ -194,5 +194,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8cc21c1f23543e99f7860c13ff6ca463</Hash>
+    <Hash>297b6846dddbf4b699a15e497a9cc512</Hash>
 </Codenesium>*/

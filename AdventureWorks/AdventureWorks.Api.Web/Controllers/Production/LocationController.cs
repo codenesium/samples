@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class LocationController: AbstractLocationController
         {
                 public LocationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<LocationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILocationService locationService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e98640911a81029d92134f6af25ba6c8</Hash>
+    <Hash>5319bf7d10c03bf8e2ebe2ed083a1556</Hash>
 </Codenesium>*/

@@ -29,11 +29,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOTeam MapEFToBO(
                         Team ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOTeam();
 
                         bo.SetProperties(
@@ -65,5 +60,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e52a39cae46207b2a470d3c3b1b88d80</Hash>
+    <Hash>2e02f136ab93402a3080de8a61ac8cce</Hash>
 </Codenesium>*/

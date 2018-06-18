@@ -13,10 +13,11 @@ namespace PetStoreNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPetRequestModel model, int id)
+                IPetRepository petRepository;
+
+                public AbstractApiPetRequestModelValidator(IPetRepository petRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.petRepository = petRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPetRequestModel model, int id)
@@ -24,12 +25,6 @@ namespace PetStoreNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IBreedRepository BreedRepository { get; set; }
-
-                public IPenRepository PenRepository { get; set; }
-
-                public ISpeciesRepository SpeciesRepository { get; set; }
 
                 public virtual void AcquiredDateRules()
                 {
@@ -62,21 +57,21 @@ namespace PetStoreNS.Api.Services
 
                 private async Task<bool> BeValidBreed(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.BreedRepository.Get(id);
+                        var record = await this.petRepository.GetBreed(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidPen(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PenRepository.Get(id);
+                        var record = await this.petRepository.GetPen(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidSpecies(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SpeciesRepository.Get(id);
+                        var record = await this.petRepository.GetSpecies(id);
 
                         return record != null;
                 }
@@ -84,5 +79,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b58940e40cb7dfa03737c3342815719</Hash>
+    <Hash>15dbaccba46f050fa6effa0e47d68d79</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class AddressTypeService: AbstractAddressTypeService, IAddressTypeService
         {
                 public AddressTypeService(
-                        ILogger<AddressTypeRepository> logger,
+                        ILogger<IAddressTypeRepository> logger,
                         IAddressTypeRepository addressTypeRepository,
                         IApiAddressTypeRequestModelValidator addressTypeModelValidator,
                         IBOLAddressTypeMapper boladdressTypeMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9cb4a65fa6cf78ef611efb6f5de97ad</Hash>
+    <Hash>ac06489ee00feb2683fc73e4b34ff080</Hash>
 </Codenesium>*/

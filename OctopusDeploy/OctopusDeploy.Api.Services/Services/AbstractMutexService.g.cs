@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiMutexResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiMutexResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.mutexRepository.All(limit, offset, orderClause);
+                        var records = await this.mutexRepository.All(limit, offset);
 
                         return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.mutexRepository.Get(id);
 
-                        return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiMutexResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2be76dfa28be39c18ce9f3dc2d0cdc06</Hash>
+    <Hash>bd87b4e7917e52a53fe0a02772fc23a2</Hash>
 </Codenesium>*/

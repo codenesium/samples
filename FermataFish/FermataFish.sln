@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FermataFish.Api.Services", 
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FermataFish.Api.Web.IntegrationTests", "FermataFish.Api.Web.IntegrationTests/FermataFish.Api.Web.IntegrationTests.csproj", "{FermataFish.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FermataFish.Api.DataAccess.Tests", "FermataFish.Api.DataAccess.Tests/FermataFish.Api.DataAccess.Tests.csproj", "{FermataFish.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FermataFish.Api.Services.Tests", "FermataFish.Api.Services.Tests/FermataFish.Api.Services.Tests.csproj", "{FermataFish.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FermataFish.Api.Web.Tests", "FermataFish.Api.Web.Tests/FermataFish.Api.Web.Tests.csproj", "{FermataFish.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{FermataFish.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FermataFish.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {FermataFish.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FermataFish.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FermataFish.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FermataFish.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {FermataFish.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FermataFish.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FermataFish.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FermataFish.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {FermataFish.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FermataFish.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FermataFish.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FermataFish.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

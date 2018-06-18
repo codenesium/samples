@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiOrganizationRequestModelValidator: AbstractApiOrganizationRequestModelValidator, IApiOrganizationRequestModelValidator
         {
-                public ApiOrganizationRequestModelValidator()
+                public ApiOrganizationRequestModelValidator(IOrganizationRepository organizationRepository)
+                        : base(organizationRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8d48f01cb355940d545f21cd7467e41d</Hash>
+    <Hash>d791eecf45f15e79db1ace32d2379027</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiMachineRequestModelValidator: AbstractApiMachineRequestModelValidator, IApiMachineRequestModelValidator
         {
-                public ApiMachineRequestModelValidator()
+                public ApiMachineRequestModelValidator(IMachineRepository machineRepository)
+                        : base(machineRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f032a8e4f7b8ed01be6467fe729598eb</Hash>
+    <Hash>06cd792094508cb30f99fdf10dd65da9</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPasswordController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPasswordController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPasswordService passwordService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2c8d580a9707ffeccae3373634f2019d</Hash>
+    <Hash>6f32a4131e2a922e29e39d3051044f4f</Hash>
 </Codenesium>*/

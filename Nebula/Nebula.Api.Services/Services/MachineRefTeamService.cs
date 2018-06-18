@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class MachineRefTeamService: AbstractMachineRefTeamService, IMachineRefTeamService
         {
                 public MachineRefTeamService(
-                        ILogger<MachineRefTeamRepository> logger,
+                        ILogger<IMachineRefTeamRepository> logger,
                         IMachineRefTeamRepository machineRefTeamRepository,
                         IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
                         IBOLMachineRefTeamMapper bolmachineRefTeamMapper,
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5a22c3dc0bc1448ef7c233d06c85c23d</Hash>
+    <Hash>ce3c5ac47551120fef7532d4713a504b</Hash>
 </Codenesium>*/

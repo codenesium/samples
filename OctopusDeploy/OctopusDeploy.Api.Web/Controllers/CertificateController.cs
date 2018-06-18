@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class CertificateController: AbstractCertificateController
         {
                 public CertificateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CertificateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICertificateService certificateService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f519aec8530389b2b6aab6a3bcca973d</Hash>
+    <Hash>74b344e612f769b02cfc7a7882d4456c</Hash>
 </Codenesium>*/

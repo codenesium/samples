@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class SubscriptionService: AbstractSubscriptionService, ISubscriptionService
         {
                 public SubscriptionService(
-                        ILogger<SubscriptionRepository> logger,
+                        ILogger<ISubscriptionRepository> logger,
                         ISubscriptionRepository subscriptionRepository,
                         IApiSubscriptionRequestModelValidator subscriptionModelValidator,
                         IBOLSubscriptionMapper bolsubscriptionMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6f9c440e514f47585b2bb5e652d52cb</Hash>
+    <Hash>c027af8ee452bd985964c03add47f80c</Hash>
 </Codenesium>*/

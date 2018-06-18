@@ -25,11 +25,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOSubscription MapEFToBO(
                         Subscription ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSubscription();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc4954d4fb895e31ebf91d4f2212706f</Hash>
+    <Hash>ce1c754ba46da744af116f98d1072ea3</Hash>
 </Codenesium>*/

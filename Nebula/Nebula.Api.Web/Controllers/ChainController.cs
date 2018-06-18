@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class ChainController: AbstractChainController
         {
                 public ChainController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ChainController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IChainService chainService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a959268fd2386aac4c1b728aca6d5181</Hash>
+    <Hash>f0329edf112ff3c4350b7bb3d0553e1b</Hash>
 </Codenesium>*/

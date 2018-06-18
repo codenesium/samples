@@ -19,10 +19,10 @@ namespace PetShippingNS.Api.Services
 
                 Task<ApiPipelineStepStepRequirementResponseModel> Get(int id);
 
-                Task<List<ApiPipelineStepStepRequirementResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiPipelineStepStepRequirementResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>c9887e0fde6f852e42f9318a1475eb3f</Hash>
+    <Hash>0690ffc4b908fb177227b5510ad1dd1f</Hash>
 </Codenesium>*/

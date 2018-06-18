@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSpaceRequestModel model, int id)
+                ISpaceRepository spaceRepository;
+
+                public AbstractApiSpaceRequestModelValidator(ISpaceRepository spaceRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.spaceRepository = spaceRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSpaceRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IStudioRepository StudioRepository { get; set; }
 
                 public virtual void DescriptionRules()
                 {
@@ -46,7 +45,7 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudioRepository.Get(id);
+                        var record = await this.spaceRepository.GetStudio(id);
 
                         return record != null;
                 }
@@ -54,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a80cc5a5d4c85541facd76c5fc6eeaa5</Hash>
+    <Hash>4006f44c119dc003b658b94c870a0b19</Hash>
 </Codenesium>*/

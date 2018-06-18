@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ErrorLog> Get(int errorLogID);
 
-                Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ErrorLog>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>71a2cc09f10d3028f8aff8a9aeb723b7</Hash>
+    <Hash>718bc71d44834afabafa2cdb7d7b6e0f</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<User>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<User> Get(string id)
@@ -77,59 +78,54 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<User> GetUsername(string username)
                 {
-                        var records = await this.SearchLinqEF(x => x.Username == username);
+                        var records = await this.Where(x => x.Username == username);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<User>> GetDisplayName(string displayName)
                 {
-                        var records = await this.SearchLinqEF(x => x.DisplayName == displayName);
+                        var records = await this.Where(x => x.DisplayName == displayName);
 
                         return records;
                 }
                 public async Task<List<User>> GetEmailAddress(string emailAddress)
                 {
-                        var records = await this.SearchLinqEF(x => x.EmailAddress == emailAddress);
+                        var records = await this.Where(x => x.EmailAddress == emailAddress);
 
                         return records;
                 }
                 public async Task<List<User>> GetExternalId(string externalId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ExternalId == externalId);
+                        var records = await this.Where(x => x.ExternalId == externalId);
 
                         return records;
                 }
 
-                protected async Task<List<User>> Where(Expression<Func<User, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<User>> Where(
+                        Expression<Func<User, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<User, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<User> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<User>> SearchLinqEF(Expression<Func<User, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(User.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<User>();
-                }
-
-                private async Task<List<User>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(User.Id)} ASC";
+                                return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
                         }
-
-                        return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<User>();
+                        else
+                        {
+                                return await this.Context.Set<User>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<User>();
+                        }
                 }
 
                 private async Task<User> GetById(string id)
                 {
-                        List<User> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<User> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -137,5 +133,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>14c8b4fd427f5a166aa3f0e066a9460e</Hash>
+    <Hash>264a036902a65940ab675b79d0037831</Hash>
 </Codenesium>*/

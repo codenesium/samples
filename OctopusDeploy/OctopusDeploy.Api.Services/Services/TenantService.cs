@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class TenantService: AbstractTenantService, ITenantService
         {
                 public TenantService(
-                        ILogger<TenantRepository> logger,
+                        ILogger<ITenantRepository> logger,
                         ITenantRepository tenantRepository,
                         IApiTenantRequestModelValidator tenantModelValidator,
                         IBOLTenantMapper boltenantMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>580d21bccd73d924c98f96c357292722</Hash>
+    <Hash>bc406d060a09c5a701d59be113bbad56</Hash>
 </Codenesium>*/

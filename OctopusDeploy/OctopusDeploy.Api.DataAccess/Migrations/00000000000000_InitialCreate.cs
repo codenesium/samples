@@ -1246,34 +1246,6 @@ ADD CONSTRAINT[PK_WorkerTaskLease_Id] PRIMARY KEY CLUSTERED
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 
-ALTER TABLE[dbo].[MachinePolicy]
-ADD CONSTRAINT[DF__MachinePo__IsDef__7C4F7684]  DEFAULT((0)) FOR[IsDefault]
-GO
-
-ALTER TABLE[dbo].[OctopusServerNode]
-ADD CONSTRAINT[DF_OctopusServerNode_IsMaintMode]  DEFAULT((0)) FOR[IsInMaintenanceMode]
-GO
-
-ALTER TABLE[dbo].[OctopusServerNode]
-ADD CONSTRAINT[DF_OctopusServerNode_MaxConTasks]  DEFAULT((5)) FOR[MaxConcurrentTasks]
-GO
-
-ALTER TABLE[dbo].[Project]
-ADD CONSTRAINT[DF__Project__Discret__25518C17]  DEFAULT((0)) FOR[DiscreteChannelRelease]
-GO
-
-ALTER TABLE[dbo].[ProjectTrigger]
-ADD CONSTRAINT[DF__ProjectTr__IsDis__4E53A1AA]  DEFAULT((0)) FOR[IsDisabled]
-GO
-
-ALTER TABLE[dbo].[Subscription]
-ADD CONSTRAINT[DF__Subscript__IsDis__18EBB532]  DEFAULT((0)) FOR[IsDisabled]
-GO
-
-ALTER TABLE[dbo].[WorkerTaskLease]
-ADD CONSTRAINT[DF__WorkerTas__Exclu__57DD0BE4]  DEFAULT((0)) FOR[Exclusive]
-GO
-
 
 ALTER TABLE[dbo].[DeploymentRelatedMachine]  WITH CHECK ADD  CONSTRAINT[FK_DeploymentRelatedMachine_DeploymentId] FOREIGN KEY([DeploymentId])
 REFERENCES[dbo].[Deployment]([Id])

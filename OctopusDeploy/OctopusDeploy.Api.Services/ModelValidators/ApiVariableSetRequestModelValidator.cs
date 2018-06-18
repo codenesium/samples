@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiVariableSetRequestModelValidator: AbstractApiVariableSetRequestModelValidator, IApiVariableSetRequestModelValidator
         {
-                public ApiVariableSetRequestModelValidator()
+                public ApiVariableSetRequestModelValidator(IVariableSetRepository variableSetRepository)
+                        : base(variableSetRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1be5d390454032722b7134788dfdd6e2</Hash>
+    <Hash>51a31696c289e1d639c0c059e7ad60c8</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<ServerTask> Get(string id);
 
-                Task<List<ServerTask>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ServerTask>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ServerTask>> GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId);
                 Task<List<ServerTask>> GetStateConcurrencyTag(string state, string concurrencyTag);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d32f0fcd1243d0f7125d6c6e342a443</Hash>
+    <Hash>71a4a825b867008a01d972f427c2d33e</Hash>
 </Codenesium>*/

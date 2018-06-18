@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class TicketStatusService: AbstractTicketStatusService, ITicketStatusService
         {
                 public TicketStatusService(
-                        ILogger<TicketStatusRepository> logger,
+                        ILogger<ITicketStatusRepository> logger,
                         ITicketStatusRepository ticketStatusRepository,
                         IApiTicketStatusRequestModelValidator ticketStatusModelValidator,
                         IBOLTicketStatusMapper bolticketStatusMapper,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cf529551199c80d1f4ec50244d1f6cc1</Hash>
+    <Hash>931900c0cbefed3568c623492f29bdfb</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ApiKeyController: AbstractApiKeyController
         {
                 public ApiKeyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ApiKeyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IApiKeyService apiKeyService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6bbc4f825d5ab96c17d99af9016addf3</Hash>
+    <Hash>46e8a398e47df3bdf29f3d60bc74d74d</Hash>
 </Codenesium>*/

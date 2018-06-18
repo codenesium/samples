@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiTeacherXTeacherSkillRequestModel model, int id)
+                ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
+
+                public AbstractApiTeacherXTeacherSkillRequestModelValidator(ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTeacherXTeacherSkillRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ITeacherRepository TeacherRepository { get; set; }
-
-                public ITeacherSkillRepository TeacherSkillRepository { get; set; }
 
                 public virtual void TeacherIdRules()
                 {
@@ -41,14 +38,14 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidTeacher(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TeacherRepository.Get(id);
+                        var record = await this.teacherXTeacherSkillRepository.GetTeacher(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidTeacherSkill(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TeacherSkillRepository.Get(id);
+                        var record = await this.teacherXTeacherSkillRepository.GetTeacherSkill(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5a4775a8bbd04b1dedd952856e2141c</Hash>
+    <Hash>dfa34bf613772449bbdb4d362319e996</Hash>
 </Codenesium>*/

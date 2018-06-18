@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractVersionInfoController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractVersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVersionInfoService versionInfoService
@@ -183,5 +183,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b0785643cd3cc790cecf1de21ca0ad4a</Hash>
+    <Hash>33929d46c89886603a1590c2d9993c83</Hash>
 </Codenesium>*/

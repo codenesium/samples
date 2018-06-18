@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ShiftService: AbstractShiftService, IShiftService
         {
                 public ShiftService(
-                        ILogger<ShiftRepository> logger,
+                        ILogger<IShiftRepository> logger,
                         IShiftRepository shiftRepository,
                         IApiShiftRequestModelValidator shiftModelValidator,
                         IBOLShiftMapper bolshiftMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0c72e2cad665f025b952d7b0a79871f</Hash>
+    <Hash>5441f9518c5ea6905545d66a8f6a789b</Hash>
 </Codenesium>*/

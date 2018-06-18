@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiEventRelatedDocumentRequestModel model, int id)
+                IEventRelatedDocumentRepository eventRelatedDocumentRepository;
+
+                public AbstractApiEventRelatedDocumentRequestModelValidator(IEventRelatedDocumentRepository eventRelatedDocumentRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.eventRelatedDocumentRepository = eventRelatedDocumentRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiEventRelatedDocumentRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace OctopusDeployNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IEventRepository EventRepository { get; set; }
 
                 public virtual void EventIdRules()
                 {
@@ -42,7 +41,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeValidEvent(string id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.EventRepository.Get(id);
+                        var record = await this.eventRelatedDocumentRepository.GetEvent(id);
 
                         return record != null;
                 }
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>396c15e21acd1c22b81c26222bf7456a</Hash>
+    <Hash>0dea1a1cedcc61f0dc5a01cf4164829c</Hash>
 </Codenesium>*/

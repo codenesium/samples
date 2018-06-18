@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Services", 
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Web.IntegrationTests", "PetShipping.Api.Web.IntegrationTests/PetShipping.Api.Web.IntegrationTests.csproj", "{PetShipping.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.DataAccess.Tests", "PetShipping.Api.DataAccess.Tests/PetShipping.Api.DataAccess.Tests.csproj", "{PetShipping.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Services.Tests", "PetShipping.Api.Services.Tests/PetShipping.Api.Services.Tests.csproj", "{PetShipping.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "PetShipping.Api.Web.Tests", "PetShipping.Api.Web.Tests/PetShipping.Api.Web.Tests.csproj", "{PetShipping.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{PetShipping.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{PetShipping.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {PetShipping.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetShipping.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetShipping.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetShipping.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {PetShipping.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetShipping.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetShipping.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetShipping.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {PetShipping.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{PetShipping.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{PetShipping.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{PetShipping.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

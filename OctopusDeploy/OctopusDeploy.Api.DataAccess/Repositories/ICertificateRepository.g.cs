@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Certificate> Get(string id);
 
-                Task<List<Certificate>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Certificate>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Certificate>> GetCreated(DateTimeOffset created);
                 Task<List<Certificate>> GetDataVersion(byte[] dataVersion);
@@ -25,5 +25,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7fc6819694fedf146c511564ec0371c6</Hash>
+    <Hash>941e61ff3d16ab914e9a37835eb3941a</Hash>
 </Codenesium>*/

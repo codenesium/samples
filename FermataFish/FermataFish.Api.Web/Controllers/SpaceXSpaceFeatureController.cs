@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class SpaceXSpaceFeatureController: AbstractSpaceXSpaceFeatureController
         {
                 public SpaceXSpaceFeatureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SpaceXSpaceFeatureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpaceXSpaceFeatureService spaceXSpaceFeatureService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7de172d98855bdeaed809f243b5f1bcc</Hash>
+    <Hash>a3c1e865fb7b5ca4c38aeedf473d74c0</Hash>
 </Codenesium>*/

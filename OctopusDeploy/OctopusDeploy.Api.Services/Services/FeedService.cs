@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class FeedService: AbstractFeedService, IFeedService
         {
                 public FeedService(
-                        ILogger<FeedRepository> logger,
+                        ILogger<IFeedRepository> logger,
                         IFeedRepository feedRepository,
                         IApiFeedRequestModelValidator feedModelValidator,
                         IBOLFeedMapper bolfeedMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b3402931e5a697773c0ad0f3ae669f8</Hash>
+    <Hash>f2b861b6a48eb1881b68d581c4633bfb</Hash>
 </Codenesium>*/

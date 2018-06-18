@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiStateProvinceRequestModelValidator: AbstractApiStateProvinceRequestModelValidator, IApiStateProvinceRequestModelValidator
         {
-                public ApiStateProvinceRequestModelValidator()
+                public ApiStateProvinceRequestModelValidator(IStateProvinceRepository stateProvinceRepository)
+                        : base(stateProvinceRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4def993a2ced7194c45056c05413d079</Hash>
+    <Hash>dd4ae1fc7e9df1acb7fb217090b8a6fc</Hash>
 </Codenesium>*/

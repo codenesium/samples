@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "ErrorLog")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "ErrorLog")]
+        [Trait("Area", "Integration")]
         public class ErrorLogTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7abec6db78ace91e5a7bfcbccccc4e59</Hash>
+    <Hash>b44ff3f42d409bc24c59d0d15aaba04a</Hash>
 </Codenesium>*/

@@ -15,10 +15,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Mutex> Get(string id);
 
-                Task<List<Mutex>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Mutex>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>3754819a62b3fe85b0bd5203bc66e700</Hash>
+    <Hash>02c1093879913ba66248bca3a3923e66</Hash>
 </Codenesium>*/

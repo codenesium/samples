@@ -24,11 +24,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOSalesReason MapEFToBO(
                         SalesReason ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSalesReason();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0c9b6a2cc31e3120dd4482edec9bc76</Hash>
+    <Hash>0f612c0b336b03feaddcb3d699841d66</Hash>
 </Codenesium>*/

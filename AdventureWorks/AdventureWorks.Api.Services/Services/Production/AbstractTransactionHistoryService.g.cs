@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiTransactionHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.transactionHistoryRepository.All(limit, offset, orderClause);
+                        var records = await this.transactionHistoryRepository.All(limit, offset);
 
                         return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.transactionHistoryRepository.Get(transactionID);
 
-                        return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiTransactionHistoryResponseModel>> Create(
@@ -99,15 +106,15 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiTransactionHistoryResponseModel>> GetProductID(int productID)
+                public async Task<List<ApiTransactionHistoryResponseModel>> ByProductID(int productID)
                 {
-                        List<TransactionHistory> records = await this.transactionHistoryRepository.GetProductID(productID);
+                        List<TransactionHistory> records = await this.transactionHistoryRepository.ByProductID(productID);
 
                         return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiTransactionHistoryResponseModel>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
+                public async Task<List<ApiTransactionHistoryResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
-                        List<TransactionHistory> records = await this.transactionHistoryRepository.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
+                        List<TransactionHistory> records = await this.transactionHistoryRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
 
                         return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
                 }
@@ -115,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f140502e2871a8ff9a19beaea871df7e</Hash>
+    <Hash>a858e9df2b9d6cbc9a2dc62ce1864293</Hash>
 </Codenesium>*/

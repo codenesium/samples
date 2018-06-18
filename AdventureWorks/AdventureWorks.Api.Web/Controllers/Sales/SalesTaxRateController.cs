@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesTaxRateController: AbstractSalesTaxRateController
         {
                 public SalesTaxRateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesTaxRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesTaxRateService salesTaxRateService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ef5260996328755fd36c0b721709fe5c</Hash>
+    <Hash>ded13a27194c58c3c8e7baa8258d55b6</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiSalesOrderHeaderSalesReasonRequestModelValidator: AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator, IApiSalesOrderHeaderSalesReasonRequestModelValidator
         {
-                public ApiSalesOrderHeaderSalesReasonRequestModelValidator()
+                public ApiSalesOrderHeaderSalesReasonRequestModelValidator(ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository)
+                        : base(salesOrderHeaderSalesReasonRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7cdf69768eb82f7eae85b3eb19316d6</Hash>
+    <Hash>1edef14c313a26d9eeea3259b12ba407</Hash>
 </Codenesium>*/

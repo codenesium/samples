@@ -31,11 +31,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOInterruption MapEFToBO(
                         Interruption ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOInterruption();
 
                         bo.SetProperties(
@@ -69,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15d64d8776bf0b55f82c5b619a3ea7ab</Hash>
+    <Hash>ab6814ae33573cb1cbf5be9bdd9f146b</Hash>
 </Codenesium>*/

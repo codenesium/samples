@@ -19,12 +19,12 @@ namespace ESPIOTNS.Api.Services
 
                 Task<ApiDeviceActionResponseModel> Get(int id);
 
-                Task<List<ApiDeviceActionResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiDeviceActionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiDeviceActionResponseModel>> ByDeviceId(int deviceId);
         }
 }
 
 /*<Codenesium>
-    <Hash>2d3ddb11c2463176eac653cf7d6c256d</Hash>
+    <Hash>09a83f25638f43dcefb76c1831d47df2</Hash>
 </Codenesium>*/

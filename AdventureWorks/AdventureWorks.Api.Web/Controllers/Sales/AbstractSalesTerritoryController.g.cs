@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSalesTerritoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSalesTerritoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesTerritoryService salesTerritoryService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiSalesTerritoryResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiSalesTerritoryResponseModel response = await this.SalesTerritoryService.GetName(name);
+                        ApiSalesTerritoryResponseModel response = await this.SalesTerritoryService.ByName(name);
 
                         if (response == null)
                         {
@@ -236,5 +236,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3497c317e044d0a5bf23314e0c3f2e0b</Hash>
+    <Hash>2677c62dcee0734a22b0de564263d523</Hash>
 </Codenesium>*/

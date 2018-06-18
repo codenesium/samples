@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Channel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Channel>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Channel> Get(string id)
@@ -77,53 +78,48 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<Channel> GetNameProjectId(string name, string projectId)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name && x.ProjectId == projectId);
+                        var records = await this.Where(x => x.Name == name && x.ProjectId == projectId);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<Channel>> GetDataVersion(byte[] dataVersion)
                 {
-                        var records = await this.SearchLinqEF(x => x.DataVersion == dataVersion);
+                        var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
                 public async Task<List<Channel>> GetProjectId(string projectId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProjectId == projectId);
+                        var records = await this.Where(x => x.ProjectId == projectId);
 
                         return records;
                 }
 
-                protected async Task<List<Channel>> Where(Expression<Func<Channel, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Channel>> Where(
+                        Expression<Func<Channel, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Channel, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Channel> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Channel>> SearchLinqEF(Expression<Func<Channel, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Channel.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Channel>();
-                }
-
-                private async Task<List<Channel>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Channel.Id)} ASC";
+                                return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Channel>();
                         }
-
-                        return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Channel>();
+                        else
+                        {
+                                return await this.Context.Set<Channel>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Channel>();
+                        }
                 }
 
                 private async Task<Channel> GetById(string id)
                 {
-                        List<Channel> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Channel> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -131,5 +127,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da2b159e1f999926b216b627dc5110d2</Hash>
+    <Hash>c6a89f25ec917ec3cda5d09110d53b27</Hash>
 </Codenesium>*/

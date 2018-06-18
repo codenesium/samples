@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class FamilyService: AbstractFamilyService, IFamilyService
         {
                 public FamilyService(
-                        ILogger<FamilyRepository> logger,
+                        ILogger<IFamilyRepository> logger,
                         IFamilyRepository familyRepository,
                         IApiFamilyRequestModelValidator familyModelValidator,
                         IBOLFamilyMapper bolfamilyMapper,
@@ -44,5 +44,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb8aca6ba93f7749870d9b7dd09aadb6</Hash>
+    <Hash>1b744cef2b96064076ebc7351b2a9160</Hash>
 </Codenesium>*/

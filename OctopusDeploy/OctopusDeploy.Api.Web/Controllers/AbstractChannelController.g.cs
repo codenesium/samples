@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractChannelController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractChannelController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IChannelService channelService
@@ -205,5 +205,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b857f56a603eb1e96475a933efd3dd58</Hash>
+    <Hash>8d1dec553398175eedebc40512f77275</Hash>
 </Codenesium>*/

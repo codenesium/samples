@@ -52,9 +52,9 @@ namespace TicketingCRMNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCountryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCountryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.countryRepository.All(limit, offset, orderClause);
+                        var records = await this.countryRepository.All(limit, offset);
 
                         return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace TicketingCRMNS.Api.Services
                 {
                         var record = await this.countryRepository.Get(id);
 
-                        return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiCountryResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>46de2bcdc978a4acba121584780d04fe</Hash>
+    <Hash>c86066b2d0eb289975da508d7b4dad3b</Hash>
 </Codenesium>*/

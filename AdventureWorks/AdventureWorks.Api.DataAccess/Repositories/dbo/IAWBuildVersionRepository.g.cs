@@ -15,10 +15,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<AWBuildVersion> Get(int systemInformationID);
 
-                Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<AWBuildVersion>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>491415bf763a750d02ccbbdec6873c99</Hash>
+    <Hash>b01317b06e5e45670c699a407dcf7bdf</Hash>
 </Codenesium>*/

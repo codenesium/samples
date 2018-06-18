@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class DepartmentService: AbstractDepartmentService, IDepartmentService
         {
                 public DepartmentService(
-                        ILogger<DepartmentRepository> logger,
+                        ILogger<IDepartmentRepository> logger,
                         IDepartmentRepository departmentRepository,
                         IApiDepartmentRequestModelValidator departmentModelValidator,
                         IBOLDepartmentMapper boldepartmentMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ebe38835f6ab45c3ca1fcd9b1817ca9</Hash>
+    <Hash>51257b6af3a35f9fe8710c9bcbfe42c7</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SpecialOffer>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SpecialOffer> Get(int specialOfferID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<SpecialOffer>> Where(Expression<Func<SpecialOffer, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SpecialOffer>> Where(
+                        Expression<Func<SpecialOffer, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SpecialOffer, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SpecialOffer> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SpecialOffer>> SearchLinqEF(Expression<Func<SpecialOffer, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SpecialOffer.SpecialOfferID)} ASC";
+                                orderBy = x => x.SpecialOfferID;
                         }
 
-                        return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
-                }
-
-                private async Task<List<SpecialOffer>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SpecialOffer.SpecialOfferID)} ASC";
+                                return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
                         }
-
-                        return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
+                        else
+                        {
+                                return await this.Context.Set<SpecialOffer>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SpecialOffer>();
+                        }
                 }
 
                 private async Task<SpecialOffer> GetById(int specialOfferID)
                 {
-                        List<SpecialOffer> records = await this.SearchLinqEF(x => x.SpecialOfferID == specialOfferID);
+                        List<SpecialOffer> records = await this.Where(x => x.SpecialOfferID == specialOfferID);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cf33187c71f0f77f05b6eea8b3aa547e</Hash>
+    <Hash>2faf9213b1df61351c9f08edcf33dd79</Hash>
 </Codenesium>*/

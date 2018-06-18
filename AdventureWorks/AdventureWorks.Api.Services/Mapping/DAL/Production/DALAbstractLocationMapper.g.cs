@@ -25,11 +25,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOLocation MapEFToBO(
                         Location ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOLocation();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4cff42ec3242553f0c07008b3bfa32bb</Hash>
+    <Hash>cd8a3a18c69103d4a3a24e81aa04cf42</Hash>
 </Codenesium>*/

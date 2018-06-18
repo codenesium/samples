@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<JobCandidate> Get(int jobCandidateID);
 
-                Task<List<JobCandidate>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<JobCandidate>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<JobCandidate>> GetBusinessEntityID(Nullable<int> businessEntityID);
+                Task<List<JobCandidate>> ByBusinessEntityID(Nullable<int> businessEntityID);
         }
 }
 
 /*<Codenesium>
-    <Hash>8d3783d6436bde48de1d276a5285f9d7</Hash>
+    <Hash>81950bd754c068d672a50daf842a7581</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiBillOfMaterialsRequestModel model, int id)
+                IBillOfMaterialsRepository billOfMaterialsRepository;
+
+                public AbstractApiBillOfMaterialsRequestModelValidator(IBillOfMaterialsRepository billOfMaterialsRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.billOfMaterialsRepository = billOfMaterialsRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiBillOfMaterialsRequestModel model, int id)
@@ -25,14 +26,13 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IBillOfMaterialsRepository BillOfMaterialsRepository { get; set; }
                 public virtual void BOMLevelRules()
                 {
                 }
 
                 public virtual void ComponentIDRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ComponentID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.ComponentID));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByProductAssemblyIDComponentIDStartDate).When(x => x ?.ComponentID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.ComponentID));
                 }
 
                 public virtual void EndDateRules()
@@ -49,12 +49,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ProductAssemblyIDRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.ProductAssemblyID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.ProductAssemblyID));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByProductAssemblyIDComponentIDStartDate).When(x => x ?.ProductAssemblyID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.ProductAssemblyID));
                 }
 
                 public virtual void StartDateRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetProductAssemblyIDComponentIDStartDate).When(x => x ?.StartDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.StartDate));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByProductAssemblyIDComponentIDStartDate).When(x => x ?.StartDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialsRequestModel.StartDate));
                 }
 
                 public virtual void UnitMeasureCodeRules()
@@ -63,9 +63,9 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
                 }
 
-                private async Task<bool> BeUniqueGetProductAssemblyIDComponentIDStartDate(ApiBillOfMaterialsRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByProductAssemblyIDComponentIDStartDate(ApiBillOfMaterialsRequestModel model,  CancellationToken cancellationToken)
                 {
-                        BillOfMaterials record = await this.BillOfMaterialsRepository.GetProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID, model.ComponentID, model.StartDate);
+                        BillOfMaterials record = await this.billOfMaterialsRepository.ByProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID, model.ComponentID, model.StartDate);
 
                         if (record == null || (this.existingRecordId != default (int) && record.BillOfMaterialsID == this.existingRecordId))
                         {
@@ -80,5 +80,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85209a48279146ae55220e5b7f0545e4</Hash>
+    <Hash>d291bd0c388f78b92eb70ff002cca1d4</Hash>
 </Codenesium>*/

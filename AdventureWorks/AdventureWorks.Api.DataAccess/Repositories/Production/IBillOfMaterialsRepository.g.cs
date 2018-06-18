@@ -15,13 +15,13 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<BillOfMaterials> Get(int billOfMaterialsID);
 
-                Task<List<BillOfMaterials>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<BillOfMaterials>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<BillOfMaterials> GetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate);
-                Task<List<BillOfMaterials>> GetUnitMeasureCode(string unitMeasureCode);
+                Task<BillOfMaterials> ByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate);
+                Task<List<BillOfMaterials>> ByUnitMeasureCode(string unitMeasureCode);
         }
 }
 
 /*<Codenesium>
-    <Hash>026c6116c47e354fbfd920988c2c2d22</Hash>
+    <Hash>161917d1e16e2e1c881f109b9d2fcdc7</Hash>
 </Codenesium>*/

@@ -19,9 +19,9 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiUnitMeasureResponseModel> Get(string unitMeasureCode);
 
-                Task<List<ApiUnitMeasureResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiUnitMeasureResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiUnitMeasureResponseModel> GetName(string name);
+                Task<ApiUnitMeasureResponseModel> ByName(string name);
 
                 Task<List<ApiBillOfMaterialsResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0);
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8575a4ecc87927171ea6f2807087e3f</Hash>
+    <Hash>5a9dbc2d70c135fc543e9607bda3f2f2</Hash>
 </Codenesium>*/

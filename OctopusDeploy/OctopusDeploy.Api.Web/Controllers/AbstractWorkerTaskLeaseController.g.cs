@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractWorkerTaskLeaseController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractWorkerTaskLeaseController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IWorkerTaskLeaseService workerTaskLeaseService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>42b1aeeb724fdd7536299b7abb08671e</Hash>
+    <Hash>f80eecb5a0fda615fd3b6e8ae5f35d09</Hash>
 </Codenesium>*/

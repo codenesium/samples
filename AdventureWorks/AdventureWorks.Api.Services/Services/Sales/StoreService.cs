@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class StoreService: AbstractStoreService, IStoreService
         {
                 public StoreService(
-                        ILogger<StoreRepository> logger,
+                        ILogger<IStoreRepository> logger,
                         IStoreRepository storeRepository,
                         IApiStoreRequestModelValidator storeModelValidator,
                         IBOLStoreMapper bolstoreMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70f4369fb1545c44b08ac0c881ef1c8b</Hash>
+    <Hash>cf27123ff559979da25a0475e2eeef10</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace FileServiceNS.Api.Services
         public class BucketService: AbstractBucketService, IBucketService
         {
                 public BucketService(
-                        ILogger<BucketRepository> logger,
+                        ILogger<IBucketRepository> logger,
                         IBucketRepository bucketRepository,
                         IApiBucketRequestModelValidator bucketModelValidator,
                         IBOLBucketMapper bolbucketMapper,
@@ -38,5 +38,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d95fa231c9aacdf31941003687cb3ecc</Hash>
+    <Hash>76c86bd7845e1e7d4eaec7f80bbd1fce</Hash>
 </Codenesium>*/

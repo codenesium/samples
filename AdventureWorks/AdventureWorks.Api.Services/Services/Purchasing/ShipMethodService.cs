@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ShipMethodService: AbstractShipMethodService, IShipMethodService
         {
                 public ShipMethodService(
-                        ILogger<ShipMethodRepository> logger,
+                        ILogger<IShipMethodRepository> logger,
                         IShipMethodRepository shipMethodRepository,
                         IApiShipMethodRequestModelValidator shipMethodModelValidator,
                         IBOLShipMethodMapper bolshipMethodMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f531c7a3563ee1f7c64d26e18142b1ed</Hash>
+    <Hash>352345f0f82de50cb9ed1528fc15926c</Hash>
 </Codenesium>*/

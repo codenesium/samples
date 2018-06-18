@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiShoppingCartItemRequestModelValidator: AbstractApiShoppingCartItemRequestModelValidator, IApiShoppingCartItemRequestModelValidator
         {
-                public ApiShoppingCartItemRequestModelValidator()
+                public ApiShoppingCartItemRequestModelValidator(IShoppingCartItemRepository shoppingCartItemRepository)
+                        : base(shoppingCartItemRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>556cdb71ecce19b499907cecf19e5368</Hash>
+    <Hash>fd612beed9a913a96f2cad818417c5f7</Hash>
 </Codenesium>*/

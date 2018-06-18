@@ -27,11 +27,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOChannel MapEFToBO(
                         Channel ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOChannel();
 
                         bo.SetProperties(
@@ -61,5 +56,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d413d26405a5350678b74a946ccefc71</Hash>
+    <Hash>b4aea671bbe3108fb3dab7de47ca136d</Hash>
 </Codenesium>*/

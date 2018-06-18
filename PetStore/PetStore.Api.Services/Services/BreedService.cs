@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Services
         public class BreedService: AbstractBreedService, IBreedService
         {
                 public BreedService(
-                        ILogger<BreedRepository> logger,
+                        ILogger<IBreedRepository> logger,
                         IBreedRepository breedRepository,
                         IApiBreedRequestModelValidator breedModelValidator,
                         IBOLBreedMapper bolbreedMapper,
@@ -38,5 +38,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f6c6f66d99fece1427e2f4d74d2fcdb</Hash>
+    <Hash>90236168733a60c572595de32fad06d5</Hash>
 </Codenesium>*/

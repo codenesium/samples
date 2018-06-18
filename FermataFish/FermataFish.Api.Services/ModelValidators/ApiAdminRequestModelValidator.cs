@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiAdminRequestModelValidator: AbstractApiAdminRequestModelValidator, IApiAdminRequestModelValidator
         {
-                public ApiAdminRequestModelValidator()
+                public ApiAdminRequestModelValidator(IAdminRepository adminRepository)
+                        : base(adminRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>287ced97adf278c79304f23445b81a71</Hash>
+    <Hash>2af6a81ff7b7b466b747e4dd6b121d95</Hash>
 </Codenesium>*/

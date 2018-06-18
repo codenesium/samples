@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ExtensionConfigurationService: AbstractExtensionConfigurationService, IExtensionConfigurationService
         {
                 public ExtensionConfigurationService(
-                        ILogger<ExtensionConfigurationRepository> logger,
+                        ILogger<IExtensionConfigurationRepository> logger,
                         IExtensionConfigurationRepository extensionConfigurationRepository,
                         IApiExtensionConfigurationRequestModelValidator extensionConfigurationModelValidator,
                         IBOLExtensionConfigurationMapper bolextensionConfigurationMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>23f231823065ce97cd6f75ab5e13e689</Hash>
+    <Hash>7bb79c381c66bbb02415f90dcccb8b1e</Hash>
 </Codenesium>*/

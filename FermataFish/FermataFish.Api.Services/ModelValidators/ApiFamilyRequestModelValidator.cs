@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiFamilyRequestModelValidator: AbstractApiFamilyRequestModelValidator, IApiFamilyRequestModelValidator
         {
-                public ApiFamilyRequestModelValidator()
+                public ApiFamilyRequestModelValidator(IFamilyRepository familyRepository)
+                        : base(familyRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47068eb97df596cade8cbe47aaf2c68d</Hash>
+    <Hash>ef4f3b40645fa4a62a3f2bbafee6f0fa</Hash>
 </Codenesium>*/

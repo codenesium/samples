@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiSalesTaxRateRequestModelValidator: AbstractApiSalesTaxRateRequestModelValidator, IApiSalesTaxRateRequestModelValidator
         {
-                public ApiSalesTaxRateRequestModelValidator()
+                public ApiSalesTaxRateRequestModelValidator(ISalesTaxRateRepository salesTaxRateRepository)
+                        : base(salesTaxRateRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>19b046c1a62e029fec26546d010e9dfc</Hash>
+    <Hash>f55d8256ae21b5099c01ac381708fd15</Hash>
 </Codenesium>*/

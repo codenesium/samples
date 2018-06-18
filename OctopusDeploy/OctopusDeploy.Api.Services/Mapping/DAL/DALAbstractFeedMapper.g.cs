@@ -25,11 +25,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOFeed MapEFToBO(
                         Feed ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOFeed();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5056a7943159fe1b1c1ede80d33deff</Hash>
+    <Hash>8f13d66ae34c2a699f6004ae102d00b5</Hash>
 </Codenesium>*/

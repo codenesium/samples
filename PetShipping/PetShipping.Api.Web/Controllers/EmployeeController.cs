@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class EmployeeController: AbstractEmployeeController
         {
                 public EmployeeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EmployeeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmployeeService employeeService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>293e856bafe7a8d67566de62bc853b90</Hash>
+    <Hash>2cd9541ced727201aa96d4140685c4f9</Hash>
 </Codenesium>*/

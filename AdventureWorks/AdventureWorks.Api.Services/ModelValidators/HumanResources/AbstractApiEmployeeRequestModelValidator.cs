@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiEmployeeRequestModel model, int id)
+                IEmployeeRepository employeeRepository;
+
+                public AbstractApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.employeeRepository = employeeRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiEmployeeRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IEmployeeRepository EmployeeRepository { get; set; }
                 public virtual void BirthDateRules()
                 {
                 }
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void LoginIDRules()
                 {
                         this.RuleFor(x => x.LoginID).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetLoginID).When(x => x ?.LoginID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.LoginID));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByLoginID).When(x => x ?.LoginID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.LoginID));
                         this.RuleFor(x => x.LoginID).Length(0, 256);
                 }
 
@@ -70,15 +70,11 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NationalIDNumberRules()
                 {
                         this.RuleFor(x => x.NationalIDNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetNationalIDNumber).When(x => x ?.NationalIDNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.NationalIDNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByNationalIDNumber).When(x => x ?.NationalIDNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.NationalIDNumber));
                         this.RuleFor(x => x.NationalIDNumber).Length(0, 15);
                 }
 
                 public virtual void OrganizationLevelRules()
-                {
-                }
-
-                public virtual void OrganizationNodeRules()
                 {
                 }
 
@@ -98,9 +94,9 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetLoginID(ApiEmployeeRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByLoginID(ApiEmployeeRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Employee record = await this.EmployeeRepository.GetLoginID(model.LoginID);
+                        Employee record = await this.employeeRepository.ByLoginID(model.LoginID);
 
                         if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
                         {
@@ -111,9 +107,9 @@ namespace AdventureWorksNS.Api.Services
                                 return false;
                         }
                 }
-                private async Task<bool> BeUniqueGetNationalIDNumber(ApiEmployeeRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByNationalIDNumber(ApiEmployeeRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Employee record = await this.EmployeeRepository.GetNationalIDNumber(model.NationalIDNumber);
+                        Employee record = await this.employeeRepository.ByNationalIDNumber(model.NationalIDNumber);
 
                         if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
                         {
@@ -128,5 +124,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>224d547396a714d60c365ca6572f3eed</Hash>
+    <Hash>038fe8cb90dc854dfe1770f877761652</Hash>
 </Codenesium>*/

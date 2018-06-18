@@ -19,11 +19,11 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiPersonResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<ApiPersonResponseModel>> GetLastNameFirstNameMiddleName(string lastName, string firstName, string middleName);
-                Task<List<ApiPersonResponseModel>> GetAdditionalContactInfo(string additionalContactInfo);
-                Task<List<ApiPersonResponseModel>> GetDemographics(string demographics);
+                Task<List<ApiPersonResponseModel>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName);
+                Task<List<ApiPersonResponseModel>> ByAdditionalContactInfo(string additionalContactInfo);
+                Task<List<ApiPersonResponseModel>> ByDemographics(string demographics);
 
                 Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiEmailAddressResponseModel>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0);
@@ -33,5 +33,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>821890c02442e17914ffcda9c7d83e23</Hash>
+    <Hash>ab34a68af0edf7324369314571e108da</Hash>
 </Codenesium>*/

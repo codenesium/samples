@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class EmailAddressService: AbstractEmailAddressService, IEmailAddressService
         {
                 public EmailAddressService(
-                        ILogger<EmailAddressRepository> logger,
+                        ILogger<IEmailAddressRepository> logger,
                         IEmailAddressRepository emailAddressRepository,
                         IApiEmailAddressRequestModelValidator emailAddressModelValidator,
                         IBOLEmailAddressMapper bolemailAddressMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b59e3a812cd84d2cae584679a1daaab</Hash>
+    <Hash>a7101cb51bbf54ce6821e7e53b412ba8</Hash>
 </Codenesium>*/

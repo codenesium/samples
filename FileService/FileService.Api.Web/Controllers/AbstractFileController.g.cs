@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractFileController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractFileController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IFileService fileService
@@ -164,5 +164,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>298b5b635408da9e9ae5c1a978f5d919</Hash>
+    <Hash>b63cd608710c535401b447d7918127af</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace NebulaNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.versionInfoRepository.All(limit, offset, orderClause);
+                        var records = await this.versionInfoRepository.All(limit, offset);
 
                         return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace NebulaNS.Api.Services
                 {
                         var record = await this.versionInfoRepository.Get(version);
 
-                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
@@ -103,11 +110,18 @@ namespace NebulaNS.Api.Services
                 {
                         VersionInfo record = await this.versionInfoRepository.GetVersion(version);
 
-                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1433d2bc58fad3fa8f927b631a9a8086</Hash>
+    <Hash>33be53fae755b63824dbc9119057e64c</Hash>
 </Codenesium>*/

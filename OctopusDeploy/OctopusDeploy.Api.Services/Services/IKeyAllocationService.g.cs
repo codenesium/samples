@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiKeyAllocationResponseModel> Get(string collectionName);
 
-                Task<List<ApiKeyAllocationResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiKeyAllocationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>aad40959ebc2d9bb6016f8bb8b75ee8f</Hash>
+    <Hash>9f47b652c66695b40cefeb2419c36855</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class LinkLogService: AbstractLinkLogService, ILinkLogService
         {
                 public LinkLogService(
-                        ILogger<LinkLogRepository> logger,
+                        ILogger<ILinkLogRepository> logger,
                         ILinkLogRepository linkLogRepository,
                         IApiLinkLogRequestModelValidator linkLogModelValidator,
                         IBOLLinkLogMapper bollinkLogMapper,
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d50df5f3a6135e8d1b6a73caceef7db</Hash>
+    <Hash>e4fc87009f8e163868d4766e03ef837d</Hash>
 </Codenesium>*/

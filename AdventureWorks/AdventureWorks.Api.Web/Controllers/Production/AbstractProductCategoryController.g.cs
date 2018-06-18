@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductCategoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductCategoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductCategoryService productCategoryService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiProductCategoryResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiProductCategoryResponseModel response = await this.ProductCategoryService.GetName(name);
+                        ApiProductCategoryResponseModel response = await this.ProductCategoryService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4506fb73ea2d66f9b02a2ab01dc8be20</Hash>
+    <Hash>4efd090114bc3aeb4bd52e5c0f107ef9</Hash>
 </Codenesium>*/

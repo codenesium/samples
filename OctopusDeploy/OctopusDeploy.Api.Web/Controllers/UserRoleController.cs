@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class UserRoleController: AbstractUserRoleController
         {
                 public UserRoleController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<UserRoleController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IUserRoleService userRoleService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b09559228ee17b2a7bf1d603af32a0f0</Hash>
+    <Hash>288e3ac5e24f74828eb1ddd2cfd8dd7a</Hash>
 </Codenesium>*/

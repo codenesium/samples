@@ -3,29 +3,14 @@ using System;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class BOProvince: AbstractBusinessObject
+        public partial class BOProvince: AbstractBOProvince
         {
                 public BOProvince() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          int countryId,
-                                          string name)
-                {
-                        this.CountryId = countryId;
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int CountryId { get; private set; }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>fe40054c8d7bbc942ca1b49a875447bc</Hash>
+    <Hash>564664f60a8e8189a45e03d339f725b8</Hash>
 </Codenesium>*/

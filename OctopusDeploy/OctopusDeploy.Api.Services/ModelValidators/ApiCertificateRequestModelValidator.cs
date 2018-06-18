@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiCertificateRequestModelValidator: AbstractApiCertificateRequestModelValidator, IApiCertificateRequestModelValidator
         {
-                public ApiCertificateRequestModelValidator()
+                public ApiCertificateRequestModelValidator(ICertificateRepository certificateRepository)
+                        : base(certificateRepository)
                 {
                 }
 
@@ -52,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93f612932ee7f339763a9f8c95d75e6f</Hash>
+    <Hash>eb98603e23bf52192eb8efc66bedb776</Hash>
 </Codenesium>*/

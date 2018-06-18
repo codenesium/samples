@@ -25,7 +25,6 @@ namespace AdventureWorksNS.Api.Services
                                 bo.ModifiedDate,
                                 bo.NationalIDNumber,
                                 bo.OrganizationLevel,
-                                bo.OrganizationNode,
                                 bo.Rowguid,
                                 bo.SalariedFlag,
                                 bo.SickLeaveHours,
@@ -36,11 +35,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOEmployee MapEFToBO(
                         Employee ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOEmployee();
 
                         bo.SetProperties(
@@ -55,7 +49,6 @@ namespace AdventureWorksNS.Api.Services
                                 ef.ModifiedDate,
                                 ef.NationalIDNumber,
                                 ef.OrganizationLevel,
-                                ef.OrganizationNode,
                                 ef.Rowguid,
                                 ef.SalariedFlag,
                                 ef.SickLeaveHours,
@@ -79,5 +72,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d320e578224ba2ef079f04f92645271</Hash>
+    <Hash>432540bed41ea4b997081b41245093fc</Hash>
 </Codenesium>*/

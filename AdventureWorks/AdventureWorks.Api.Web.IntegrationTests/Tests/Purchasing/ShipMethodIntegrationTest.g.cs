@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "ShipMethod")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "ShipMethod")]
+        [Trait("Area", "Integration")]
         public class ShipMethodTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>b28cfb1c87bfa51fb1bdcedbabc508d0</Hash>
+    <Hash>09bc8918b7ea0a7d244573792939710c</Hash>
 </Codenesium>*/

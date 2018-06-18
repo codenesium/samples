@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractOrganizationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractOrganizationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IOrganizationService organizationService
@@ -178,5 +178,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>97a55d70f05475985c4c5ed478db0ce6</Hash>
+    <Hash>8b8f8b7f6a0d2ef4cdbd551e63e52c01</Hash>
 </Codenesium>*/

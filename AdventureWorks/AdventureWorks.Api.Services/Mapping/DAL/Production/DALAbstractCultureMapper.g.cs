@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOCulture MapEFToBO(
                         Culture ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCulture();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f3e292b5749d5923f6d81cd74df706f9</Hash>
+    <Hash>a3da664c48dade28da78322a7ef755ed</Hash>
 </Codenesium>*/

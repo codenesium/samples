@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiMachineRefTeamRequestModel model, int id)
+                IMachineRefTeamRepository machineRefTeamRepository;
+
+                public AbstractApiMachineRefTeamRequestModelValidator(IMachineRefTeamRepository machineRefTeamRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.machineRefTeamRepository = machineRefTeamRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiMachineRefTeamRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace NebulaNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IMachineRepository MachineRepository { get; set; }
-
-                public ITeamRepository TeamRepository { get; set; }
 
                 public virtual void MachineIdRules()
                 {
@@ -41,14 +38,14 @@ namespace NebulaNS.Api.Services
 
                 private async Task<bool> BeValidMachine(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.MachineRepository.Get(id);
+                        var record = await this.machineRefTeamRepository.GetMachine(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidTeam(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TeamRepository.Get(id);
+                        var record = await this.machineRefTeamRepository.GetTeam(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9bb98672e2a240896baa4315554d483e</Hash>
+    <Hash>ffd439a7791aa091e162824e5e7b4d07</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiProjectGroupRequestModel model, string id)
+                IProjectGroupRepository projectGroupRepository;
+
+                public AbstractApiProjectGroupRequestModelValidator(IProjectGroupRepository projectGroupRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.projectGroupRepository = projectGroupRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProjectGroupRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IProjectGroupRepository ProjectGroupRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
                 }
@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiProjectGroupRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ProjectGroup record = await this.ProjectGroupRepository.GetName(model.Name);
+                        ProjectGroup record = await this.projectGroupRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2b04358668e3aa498ab2483e063c09b7</Hash>
+    <Hash>de3d608ce519c243cf84fdcaf20998d6</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductInventoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductInventoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductInventoryService productInventoryService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>de30f2fa257dc61e8d4ff9896fb0effe</Hash>
+    <Hash>63f5d9ee3c08636e77fa314e3957fe4a</Hash>
 </Codenesium>*/

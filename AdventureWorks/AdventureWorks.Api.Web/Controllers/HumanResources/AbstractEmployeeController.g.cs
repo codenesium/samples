@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractEmployeeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractEmployeeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmployeeService employeeService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getLoginID/{loginID}")]
+                [Route("byLoginID/{loginID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetLoginID(string loginID)
+                public async virtual Task<IActionResult> ByLoginID(string loginID)
                 {
-                        ApiEmployeeResponseModel response = await this.EmployeeService.GetLoginID(loginID);
+                        ApiEmployeeResponseModel response = await this.EmployeeService.ByLoginID(loginID);
 
                         if (response == null)
                         {
@@ -181,13 +181,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getNationalIDNumber/{nationalIDNumber}")]
+                [Route("byNationalIDNumber/{nationalIDNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiEmployeeResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetNationalIDNumber(string nationalIDNumber)
+                public async virtual Task<IActionResult> ByNationalIDNumber(string nationalIDNumber)
                 {
-                        ApiEmployeeResponseModel response = await this.EmployeeService.GetNationalIDNumber(nationalIDNumber);
+                        ApiEmployeeResponseModel response = await this.EmployeeService.ByNationalIDNumber(nationalIDNumber);
 
                         if (response == null)
                         {
@@ -197,28 +197,6 @@ namespace AdventureWorksNS.Api.Web
                         {
                                 return this.Ok(response);
                         }
-                }
-
-                [HttpGet]
-                [Route("getOrganizationLevelOrganizationNode/{organizationLevel}/{organizationNode}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel, Nullable<Guid> organizationNode)
-                {
-                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.GetOrganizationLevelOrganizationNode(organizationLevel, organizationNode);
-
-                        return this.Ok(response);
-                }
-
-                [HttpGet]
-                [Route("getOrganizationNode/{organizationNode}")]
-                [ReadOnly]
-                [ProducesResponseType(typeof(List<ApiEmployeeResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetOrganizationNode(Nullable<Guid> organizationNode)
-                {
-                        List<ApiEmployeeResponseModel> response = await this.EmployeeService.GetOrganizationNode(organizationNode);
-
-                        return this.Ok(response);
                 }
 
                 [HttpGet]
@@ -264,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dbaf04066a38c138745bc7f4eb1bc17e</Hash>
+    <Hash>193213cab089cd8a7c09eecf16094b07</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class BillOfMaterialsController: AbstractBillOfMaterialsController
         {
                 public BillOfMaterialsController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<BillOfMaterialsController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBillOfMaterialsService billOfMaterialsService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a18c4d9572df6d8fff2bf29a5d5f6731</Hash>
+    <Hash>99279f1e5abb10513ef68cd09cefcd82</Hash>
 </Codenesium>*/

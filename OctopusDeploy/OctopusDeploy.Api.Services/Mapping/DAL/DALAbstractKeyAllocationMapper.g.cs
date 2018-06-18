@@ -22,11 +22,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOKeyAllocation MapEFToBO(
                         KeyAllocation ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOKeyAllocation();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>030a5a9331d62325c16e5ad007541ee3</Hash>
+    <Hash>e5e77e368fb5ef07e3575c75a6501da4</Hash>
 </Codenesium>*/

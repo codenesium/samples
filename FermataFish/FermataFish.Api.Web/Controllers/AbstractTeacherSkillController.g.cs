@@ -25,7 +25,7 @@ namespace FermataFishNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTeacherSkillController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTeacherSkillController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITeacherSkillService teacherSkillService
@@ -191,5 +191,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>68614ff312ac17822dae245cde513280</Hash>
+    <Hash>fc1ee9a03e0e0e91453bc9726015f461</Hash>
 </Codenesium>*/

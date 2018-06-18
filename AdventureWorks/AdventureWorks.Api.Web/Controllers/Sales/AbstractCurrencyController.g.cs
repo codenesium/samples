@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCurrencyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCurrencyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICurrencyService currencyService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCurrencyResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiCurrencyResponseModel response = await this.CurrencyService.GetName(name);
+                        ApiCurrencyResponseModel response = await this.CurrencyService.ByName(name);
 
                         if (response == null)
                         {
@@ -210,5 +210,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>72aa847490b954ad23944bc00ad4a33d</Hash>
+    <Hash>66a9e3d873a9f98f05da1f1617935df1</Hash>
 </Codenesium>*/

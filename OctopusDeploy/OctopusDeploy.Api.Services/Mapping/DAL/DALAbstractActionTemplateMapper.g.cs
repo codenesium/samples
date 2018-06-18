@@ -26,11 +26,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOActionTemplate MapEFToBO(
                         ActionTemplate ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOActionTemplate();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29f4ff44aabc8daf679c264ccbfd1768</Hash>
+    <Hash>f47b0d7933de642089c1bdf848756528</Hash>
 </Codenesium>*/

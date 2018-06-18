@@ -15,15 +15,15 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Shift> Get(int shiftID);
 
-                Task<List<Shift>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Shift>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Shift> GetName(string name);
-                Task<Shift> GetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime);
+                Task<Shift> ByName(string name);
+                Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime);
 
                 Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>fc33246dce77e7e3a809feff07281b06</Hash>
+    <Hash>449a83118e042e57bd11ca8b094fbe1b</Hash>
 </Codenesium>*/

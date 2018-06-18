@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiCityRequestModelValidator: AbstractApiCityRequestModelValidator, IApiCityRequestModelValidator
         {
-                public ApiCityRequestModelValidator()
+                public ApiCityRequestModelValidator(ICityRepository cityRepository)
+                        : base(cityRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a49f0ce637ad79e197f06bc3a1241c5f</Hash>
+    <Hash>b559253ee411160610006d6d65b82280</Hash>
 </Codenesium>*/

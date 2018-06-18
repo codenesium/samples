@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiFeedRequestModel model, string id)
+                IFeedRepository feedRepository;
+
+                public AbstractApiFeedRequestModelValidator(IFeedRepository feedRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.feedRepository = feedRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiFeedRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IFeedRepository FeedRepository { get; set; }
                 public virtual void FeedTypeRules()
                 {
                         this.RuleFor(x => x.FeedType).NotNull();
@@ -52,7 +52,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiFeedRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Feed record = await this.FeedRepository.GetName(model.Name);
+                        Feed record = await this.feedRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -67,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb0282690df9fafbe15124e3c182e0c3</Hash>
+    <Hash>acdab6d41248a32b0fa9a51043599f23</Hash>
 </Codenesium>*/

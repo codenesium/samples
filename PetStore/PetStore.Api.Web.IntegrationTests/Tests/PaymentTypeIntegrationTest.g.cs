@@ -9,7 +9,9 @@ using PetStoreNS.Api.Client;
 
 namespace PetStoreNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "PaymentType")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "PaymentType")]
+        [Trait("Area", "Integration")]
         public class PaymentTypeTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>5c8e55d64204778035518bc533deb3ad</Hash>
+    <Hash>dca43ed4311ab6d7156dcb0e9cbf72f1</Hash>
 </Codenesium>*/

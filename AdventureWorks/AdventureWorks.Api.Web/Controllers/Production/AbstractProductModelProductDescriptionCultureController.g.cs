@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductModelProductDescriptionCultureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductModelProductDescriptionCultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductModelProductDescriptionCultureService productModelProductDescriptionCultureService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1900a0a570e86099920c49bcf5a6fe05</Hash>
+    <Hash>b725250086eade2c9b27748f73510b3e</Hash>
 </Codenesium>*/

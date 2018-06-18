@@ -3,25 +3,14 @@ using System;
 
 namespace FileServiceNS.Api.Services
 {
-        public partial class BOFileType: AbstractBusinessObject
+        public partial class BOFileType: AbstractBOFileType
         {
                 public BOFileType() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>91447fb8645bba86b92927e33c4e2e5c</Hash>
+    <Hash>c961fc56d799f6f2a17a0679879f9f95</Hash>
 </Codenesium>*/

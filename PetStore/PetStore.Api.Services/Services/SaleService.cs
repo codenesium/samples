@@ -13,7 +13,7 @@ namespace PetStoreNS.Api.Services
         public class SaleService: AbstractSaleService, ISaleService
         {
                 public SaleService(
-                        ILogger<SaleRepository> logger,
+                        ILogger<ISaleRepository> logger,
                         ISaleRepository saleRepository,
                         IApiSaleRequestModelValidator saleModelValidator,
                         IBOLSaleMapper bolsaleMapper,
@@ -32,5 +32,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0c4e943b93e28b499e1fb605e84ea84</Hash>
+    <Hash>f464466c456b425a02dfb8918f4cbda8</Hash>
 </Codenesium>*/

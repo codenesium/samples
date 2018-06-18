@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractBusinessEntityController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractBusinessEntityController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBusinessEntityService businessEntityService
@@ -204,5 +204,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9df030620a4681082da64f96bf659102</Hash>
+    <Hash>3572f255f55afc67ae5f3e33d0953d19</Hash>
 </Codenesium>*/

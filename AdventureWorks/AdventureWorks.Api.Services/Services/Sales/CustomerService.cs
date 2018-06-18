@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class CustomerService: AbstractCustomerService, ICustomerService
         {
                 public CustomerService(
-                        ILogger<CustomerRepository> logger,
+                        ILogger<ICustomerRepository> logger,
                         ICustomerRepository customerRepository,
                         IApiCustomerRequestModelValidator customerModelValidator,
                         IBOLCustomerMapper bolcustomerMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87f466c2b2d0904571796e8a3fbe2540</Hash>
+    <Hash>0da83ff3b8ca08f3975dc7f9886b4866</Hash>
 </Codenesium>*/

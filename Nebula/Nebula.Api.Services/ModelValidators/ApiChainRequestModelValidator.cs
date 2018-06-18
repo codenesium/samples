@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiChainRequestModelValidator: AbstractApiChainRequestModelValidator, IApiChainRequestModelValidator
         {
-                public ApiChainRequestModelValidator()
+                public ApiChainRequestModelValidator(IChainRepository chainRepository)
+                        : base(chainRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d26c207dd1cb442abd3752dccd1a32a</Hash>
+    <Hash>64adacb991ed92fbebab396ba0f24422</Hash>
 </Codenesium>*/

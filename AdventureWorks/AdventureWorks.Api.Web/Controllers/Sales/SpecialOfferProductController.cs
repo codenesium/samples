@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SpecialOfferProductController: AbstractSpecialOfferProductController
         {
                 public SpecialOfferProductController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SpecialOfferProductController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpecialOfferProductService specialOfferProductService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cca821dc720b9bc9ac27b68d407a187c</Hash>
+    <Hash>a3ec9a55d8b3cb15d4a7edcbd2b8eae0</Hash>
 </Codenesium>*/

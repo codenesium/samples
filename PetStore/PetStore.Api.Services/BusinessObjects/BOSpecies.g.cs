@@ -3,25 +3,14 @@ using System;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class BOSpecies: AbstractBusinessObject
+        public partial class BOSpecies: AbstractBOSpecies
         {
                 public BOSpecies() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b47e9bb202cef4f69cb659ddd3b4575a</Hash>
+    <Hash>5241f042b99b718d8b516a0a450352fb</Hash>
 </Codenesium>*/

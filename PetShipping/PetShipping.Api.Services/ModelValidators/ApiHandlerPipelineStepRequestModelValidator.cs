@@ -8,7 +8,8 @@ namespace PetShippingNS.Api.Services
 {
         public class ApiHandlerPipelineStepRequestModelValidator: AbstractApiHandlerPipelineStepRequestModelValidator, IApiHandlerPipelineStepRequestModelValidator
         {
-                public ApiHandlerPipelineStepRequestModelValidator()
+                public ApiHandlerPipelineStepRequestModelValidator(IHandlerPipelineStepRepository handlerPipelineStepRepository)
+                        : base(handlerPipelineStepRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98a4af15af38764fc12f6e859ebc5d67</Hash>
+    <Hash>142ae20e3af74c6435d118237da38ed3</Hash>
 </Codenesium>*/

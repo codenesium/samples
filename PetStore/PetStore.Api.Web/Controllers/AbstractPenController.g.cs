@@ -25,7 +25,7 @@ namespace PetStoreNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPenController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPenController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPenService penService
@@ -178,5 +178,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5c08fc5847f72b1d45e3316461f1d921</Hash>
+    <Hash>166a53e25187a293925f3bb5e7aefd1f</Hash>
 </Codenesium>*/

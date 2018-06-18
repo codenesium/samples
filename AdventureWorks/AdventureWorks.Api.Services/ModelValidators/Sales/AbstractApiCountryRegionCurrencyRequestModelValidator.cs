@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiCountryRegionCurrencyRequestModel model, string id)
+                ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
+
+                public AbstractApiCountryRegionCurrencyRequestModelValidator(ICountryRegionCurrencyRepository countryRegionCurrencyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCountryRegionCurrencyRequestModel model, string id)
@@ -24,8 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ICurrencyRepository CurrencyRepository { get; set; }
 
                 public virtual void CurrencyCodeRules()
                 {
@@ -40,7 +39,7 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidCurrency(string id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.CurrencyRepository.Get(id);
+                        var record = await this.countryRegionCurrencyRepository.GetCurrency(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8d1d9bcfc7e0f0b8e245c9a94b9ef2fa</Hash>
+    <Hash>d615baf8edda35dc6629280c5ac1bc7e</Hash>
 </Codenesium>*/

@@ -27,11 +27,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOSale MapEFToBO(
                         Sale ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSale();
 
                         bo.SetProperties(
@@ -61,5 +56,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>48a82c0bc5c1607ab429e6b4aa206aaf</Hash>
+    <Hash>92ff0be4fb53cd89c9de93f0b5649f79</Hash>
 </Codenesium>*/

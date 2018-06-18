@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.salesOrderDetailRepository.All(limit, offset, orderClause);
+                        var records = await this.salesOrderDetailRepository.All(limit, offset);
 
                         return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.salesOrderDetailRepository.Get(salesOrderID);
 
-                        return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiSalesOrderDetailResponseModel>> Create(
@@ -99,9 +106,9 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiSalesOrderDetailResponseModel>> GetProductID(int productID)
+                public async Task<List<ApiSalesOrderDetailResponseModel>> ByProductID(int productID)
                 {
-                        List<SalesOrderDetail> records = await this.salesOrderDetailRepository.GetProductID(productID);
+                        List<SalesOrderDetail> records = await this.salesOrderDetailRepository.ByProductID(productID);
 
                         return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
                 }
@@ -109,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e06c61d4c698a1f73a692ac056012d4</Hash>
+    <Hash>f381669e5ebe6a5ce1093a1285613fa5</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ErrorLogController: AbstractErrorLogController
         {
                 public ErrorLogController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ErrorLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IErrorLogService errorLogService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>09466e8a901a277cc4fc5bd304052b05</Hash>
+    <Hash>51d571fdf89a1ceec9efc3232d158439</Hash>
 </Codenesium>*/

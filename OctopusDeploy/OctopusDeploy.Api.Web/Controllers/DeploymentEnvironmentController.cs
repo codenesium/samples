@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class DeploymentEnvironmentController: AbstractDeploymentEnvironmentController
         {
                 public DeploymentEnvironmentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DeploymentEnvironmentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeploymentEnvironmentService deploymentEnvironmentService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>445fa5a10cf95d2e0a3fc186d2d6497a</Hash>
+    <Hash>19e9216f753b1abee539b63c180c7efd</Hash>
 </Codenesium>*/

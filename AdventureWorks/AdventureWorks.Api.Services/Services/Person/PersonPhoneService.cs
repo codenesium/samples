@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class PersonPhoneService: AbstractPersonPhoneService, IPersonPhoneService
         {
                 public PersonPhoneService(
-                        ILogger<PersonPhoneRepository> logger,
+                        ILogger<IPersonPhoneRepository> logger,
                         IPersonPhoneRepository personPhoneRepository,
                         IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
                         IBOLPersonPhoneMapper bolpersonPhoneMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6c19d8494855b4ebfb87ee0b562c63dd</Hash>
+    <Hash>95ac65995432862a29e7ae4d98c424d6</Hash>
 </Codenesium>*/

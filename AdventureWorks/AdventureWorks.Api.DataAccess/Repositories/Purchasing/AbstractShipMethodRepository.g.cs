@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ShipMethod>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ShipMethod> Get(int shipMethodID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<ShipMethod> GetName(string name)
+                public async Task<ShipMethod> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<ShipMethod>> Where(Expression<Func<ShipMethod, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ShipMethod>> Where(
+                        Expression<Func<ShipMethod, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ShipMethod, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ShipMethod> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ShipMethod>> SearchLinqEF(Expression<Func<ShipMethod, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ShipMethod.ShipMethodID)} ASC";
+                                orderBy = x => x.ShipMethodID;
                         }
 
-                        return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
-                }
-
-                private async Task<List<ShipMethod>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ShipMethod.ShipMethodID)} ASC";
+                                return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
                         }
-
-                        return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
+                        else
+                        {
+                                return await this.Context.Set<ShipMethod>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ShipMethod>();
+                        }
                 }
 
                 private async Task<ShipMethod> GetById(int shipMethodID)
                 {
-                        List<ShipMethod> records = await this.SearchLinqEF(x => x.ShipMethodID == shipMethodID);
+                        List<ShipMethod> records = await this.Where(x => x.ShipMethodID == shipMethodID);
 
                         return records.FirstOrDefault();
                 }
@@ -124,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c814491d6515281716712c897ffe201a</Hash>
+    <Hash>41b3c6f7e034ce6ae15a62bc86dd1074</Hash>
 </Codenesium>*/

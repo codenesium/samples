@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class WorkOrderRoutingService: AbstractWorkOrderRoutingService, IWorkOrderRoutingService
         {
                 public WorkOrderRoutingService(
-                        ILogger<WorkOrderRoutingRepository> logger,
+                        ILogger<IWorkOrderRoutingRepository> logger,
                         IWorkOrderRoutingRepository workOrderRoutingRepository,
                         IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
                         IBOLWorkOrderRoutingMapper bolworkOrderRoutingMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34eef0d8bbccf331499c96535678c8c9</Hash>
+    <Hash>bcfc2cd7c6d75fb24f03864d2c8e0116</Hash>
 </Codenesium>*/

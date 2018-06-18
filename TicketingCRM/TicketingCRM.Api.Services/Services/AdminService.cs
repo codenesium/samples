@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class AdminService: AbstractAdminService, IAdminService
         {
                 public AdminService(
-                        ILogger<AdminRepository> logger,
+                        ILogger<IAdminRepository> logger,
                         IAdminRepository adminRepository,
                         IApiAdminRequestModelValidator adminModelValidator,
                         IBOLAdminMapper boladminMapper,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7ff631508999ea3d01ff576554a90e64</Hash>
+    <Hash>16b53a9e140f144589be13a58c7b0925</Hash>
 </Codenesium>*/

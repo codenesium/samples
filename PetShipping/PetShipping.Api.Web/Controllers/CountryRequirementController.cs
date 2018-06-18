@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class CountryRequirementController: AbstractCountryRequirementController
         {
                 public CountryRequirementController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CountryRequirementController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryRequirementService countryRequirementService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>862c4bc495e732f470af3e6194856457</Hash>
+    <Hash>fde768c13f4d5674cbac6b7584fe0391</Hash>
 </Codenesium>*/

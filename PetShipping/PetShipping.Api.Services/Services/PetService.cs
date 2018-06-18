@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class PetService: AbstractPetService, IPetService
         {
                 public PetService(
-                        ILogger<PetRepository> logger,
+                        ILogger<IPetRepository> logger,
                         IPetRepository petRepository,
                         IApiPetRequestModelValidator petModelValidator,
                         IBOLPetMapper bolpetMapper,
@@ -38,5 +38,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2a25fff8c10097472527efa7a7b6dc50</Hash>
+    <Hash>507eb967b251458babfda566c3614078</Hash>
 </Codenesium>*/

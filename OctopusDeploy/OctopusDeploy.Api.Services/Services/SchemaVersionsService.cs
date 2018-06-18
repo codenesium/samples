@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class SchemaVersionsService: AbstractSchemaVersionsService, ISchemaVersionsService
         {
                 public SchemaVersionsService(
-                        ILogger<SchemaVersionsRepository> logger,
+                        ILogger<ISchemaVersionsRepository> logger,
                         ISchemaVersionsRepository schemaVersionsRepository,
                         IApiSchemaVersionsRequestModelValidator schemaVersionsModelValidator,
                         IBOLSchemaVersionsMapper bolschemaVersionsMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5e4e92d99d38dec0389f3b2a9e98d11</Hash>
+    <Hash>20d1fa999c62c040feb62eec56fb82d8</Hash>
 </Codenesium>*/

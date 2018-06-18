@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ContactType>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ContactType>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ContactType> Get(int contactTypeID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<ContactType> GetName(string name)
+                public async Task<ContactType> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<ContactType>> Where(Expression<Func<ContactType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ContactType>> Where(
+                        Expression<Func<ContactType, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ContactType, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ContactType> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ContactType>> SearchLinqEF(Expression<Func<ContactType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ContactType.ContactTypeID)} ASC";
+                                orderBy = x => x.ContactTypeID;
                         }
 
-                        return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ContactType>();
-                }
-
-                private async Task<List<ContactType>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ContactType.ContactTypeID)} ASC";
+                                return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
                         }
-
-                        return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ContactType>();
+                        else
+                        {
+                                return await this.Context.Set<ContactType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ContactType>();
+                        }
                 }
 
                 private async Task<ContactType> GetById(int contactTypeID)
                 {
-                        List<ContactType> records = await this.SearchLinqEF(x => x.ContactTypeID == contactTypeID);
+                        List<ContactType> records = await this.Where(x => x.ContactTypeID == contactTypeID);
 
                         return records.FirstOrDefault();
                 }
@@ -124,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>866a8e6c340649cda2ca6ec31de22295</Hash>
+    <Hash>5ff62a16ae67c4338aa887bdc10cac9f</Hash>
 </Codenesium>*/

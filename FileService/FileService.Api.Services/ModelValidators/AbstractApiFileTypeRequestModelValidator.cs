@@ -13,10 +13,11 @@ namespace FileServiceNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiFileTypeRequestModel model, int id)
+                IFileTypeRepository fileTypeRepository;
+
+                public AbstractApiFileTypeRequestModelValidator(IFileTypeRepository fileTypeRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.fileTypeRepository = fileTypeRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiFileTypeRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>90e6e0acbfd01bb6be9dd4f01716c03c</Hash>
+    <Hash>d805ad9bedb0a5b22c4e49ab430caae8</Hash>
 </Codenesium>*/

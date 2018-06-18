@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractLifecycleController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractLifecycleController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILifecycleService lifecycleService
@@ -194,5 +194,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5ebdcf63781166ed0d4c38f5bdbe4ee5</Hash>
+    <Hash>c65bbc45a737637e7a47635fdf5114ac</Hash>
 </Codenesium>*/

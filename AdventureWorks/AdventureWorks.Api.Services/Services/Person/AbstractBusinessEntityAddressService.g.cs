@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.businessEntityAddressRepository.All(limit, offset, orderClause);
+                        var records = await this.businessEntityAddressRepository.All(limit, offset);
 
                         return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.businessEntityAddressRepository.Get(businessEntityID);
 
-                        return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiBusinessEntityAddressResponseModel>> Create(
@@ -99,15 +106,15 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressID(int addressID)
+                public async Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressID(int addressID)
                 {
-                        List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.GetAddressID(addressID);
+                        List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.ByAddressID(addressID);
 
                         return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiBusinessEntityAddressResponseModel>> GetAddressTypeID(int addressTypeID)
+                public async Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressTypeID(int addressTypeID)
                 {
-                        List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.GetAddressTypeID(addressTypeID);
+                        List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.ByAddressTypeID(addressTypeID);
 
                         return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
                 }
@@ -115,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>027cd0bf43dec318d2173a48260aa912</Hash>
+    <Hash>20584b024bcec5127aa09b726d694aeb</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class DatabaseLogController: AbstractDatabaseLogController
         {
                 public DatabaseLogController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DatabaseLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDatabaseLogService databaseLogService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c1d12b8b5ca2a9c46f3e7b9defd189ab</Hash>
+    <Hash>908c061c3babf364f68c6fe30665fb51</Hash>
 </Codenesium>*/

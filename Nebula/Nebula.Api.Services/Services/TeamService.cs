@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class TeamService: AbstractTeamService, ITeamService
         {
                 public TeamService(
-                        ILogger<TeamRepository> logger,
+                        ILogger<ITeamRepository> logger,
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolteamMapper,
@@ -44,5 +44,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0213f4cbfe78bc009170dd5730736296</Hash>
+    <Hash>40d763df3284cabc8a07118456f2c089</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPasswordRequestModel model, int id)
+                IPasswordRepository passwordRepository;
+
+                public AbstractApiPasswordRequestModelValidator(IPasswordRepository passwordRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.passwordRepository = passwordRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPasswordRequestModel model, int id)
@@ -48,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2a6db9a4ac191f3565b10898cc495f16</Hash>
+    <Hash>d9dbfc102081846726123e45117f7861</Hash>
 </Codenesium>*/

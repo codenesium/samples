@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractShoppingCartItemController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractShoppingCartItemController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IShoppingCartItemService shoppingCartItemService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getShoppingCartIDProductID/{shoppingCartID}/{productID}")]
+                [Route("byShoppingCartIDProductID/{shoppingCartID}/{productID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetShoppingCartIDProductID(string shoppingCartID, int productID)
+                public async virtual Task<IActionResult> ByShoppingCartIDProductID(string shoppingCartID, int productID)
                 {
-                        List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.GetShoppingCartIDProductID(shoppingCartID, productID);
+                        List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID);
 
                         return this.Ok(response);
                 }
@@ -175,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0c49afa09f3c8eafa22f77828c7bed3a</Hash>
+    <Hash>4663a0a179a70611cbd525b8bab486e0</Hash>
 </Codenesium>*/

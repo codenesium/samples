@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractDatabaseLogController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractDatabaseLogController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDatabaseLogService databaseLogService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>23bb7a65e5dd1a6d46c1c1a9e286ee44</Hash>
+    <Hash>a369f7dccf1c72d35e851f4c6662fedd</Hash>
 </Codenesium>*/

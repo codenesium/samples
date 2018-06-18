@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class EventService: AbstractEventService, IEventService
         {
                 public EventService(
-                        ILogger<EventRepository> logger,
+                        ILogger<IEventRepository> logger,
                         IEventRepository eventRepository,
                         IApiEventRequestModelValidator eventModelValidator,
                         IBOLEventMapper boleventMapper,
@@ -38,5 +38,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>438a374e0e37d74d220ca40a98499add</Hash>
+    <Hash>a825856a007cbd96c62dc72585522ea0</Hash>
 </Codenesium>*/

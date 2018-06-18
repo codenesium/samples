@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class VenueController: AbstractVenueController
         {
                 public VenueController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<VenueController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVenueService venueService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9d6e631d5991309ead613dc27c8e27ea</Hash>
+    <Hash>34d6a12da5cc7a6114f3dcfec3577d3a</Hash>
 </Codenesium>*/

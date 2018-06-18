@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiAddressRequestModelValidator: AbstractApiAddressRequestModelValidator, IApiAddressRequestModelValidator
         {
-                public ApiAddressRequestModelValidator()
+                public ApiAddressRequestModelValidator(IAddressRepository addressRepository)
+                        : base(addressRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2596e4b85bfcab2fea9d89bf61eebd5a</Hash>
+    <Hash>7d3da16a859cb495fa62497f435503c6</Hash>
 </Codenesium>*/

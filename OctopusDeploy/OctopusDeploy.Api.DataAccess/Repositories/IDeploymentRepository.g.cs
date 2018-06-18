@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Deployment> Get(string id);
 
-                Task<List<Deployment>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Deployment>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Deployment>> GetChannelId(string channelId);
                 Task<List<Deployment>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b2bb69b090144e8ead4c6edd171364f1</Hash>
+    <Hash>4610f6dd09a9837bb901609ba4d0f9f8</Hash>
 </Codenesium>*/

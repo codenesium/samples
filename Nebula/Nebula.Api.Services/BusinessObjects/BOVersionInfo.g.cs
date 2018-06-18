@@ -3,29 +3,14 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOVersionInfo: AbstractBusinessObject
+        public partial class BOVersionInfo: AbstractBOVersionInfo
         {
                 public BOVersionInfo() : base()
                 {
                 }
-
-                public void SetProperties(long version,
-                                          Nullable<DateTime> appliedOn,
-                                          string description)
-                {
-                        this.AppliedOn = appliedOn;
-                        this.Description = description;
-                        this.Version = version;
-                }
-
-                public Nullable<DateTime> AppliedOn { get; private set; }
-
-                public string Description { get; private set; }
-
-                public long Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>50b9f052eacda93e639b0feac87d0fb9</Hash>
+    <Hash>f4b22a84a66adc22957e20f5faa8b765</Hash>
 </Codenesium>*/

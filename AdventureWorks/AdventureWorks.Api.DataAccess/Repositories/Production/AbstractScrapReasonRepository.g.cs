@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ScrapReason> Get(short scrapReasonID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<ScrapReason> GetName(string name)
+                public async Task<ScrapReason> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<ScrapReason>> Where(Expression<Func<ScrapReason, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ScrapReason>> Where(
+                        Expression<Func<ScrapReason, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ScrapReason, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ScrapReason> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ScrapReason>> SearchLinqEF(Expression<Func<ScrapReason, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ScrapReason.ScrapReasonID)} ASC";
+                                orderBy = x => x.ScrapReasonID;
                         }
 
-                        return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
-                }
-
-                private async Task<List<ScrapReason>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ScrapReason.ScrapReasonID)} ASC";
+                                return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
                         }
-
-                        return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
+                        else
+                        {
+                                return await this.Context.Set<ScrapReason>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ScrapReason>();
+                        }
                 }
 
                 private async Task<ScrapReason> GetById(short scrapReasonID)
                 {
-                        List<ScrapReason> records = await this.SearchLinqEF(x => x.ScrapReasonID == scrapReasonID);
+                        List<ScrapReason> records = await this.Where(x => x.ScrapReasonID == scrapReasonID);
 
                         return records.FirstOrDefault();
                 }
@@ -124,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0fd01d099a99f0dddafe54d41f53b932</Hash>
+    <Hash>0d57fdad35f549d0efa1912a6c30ff7b</Hash>
 </Codenesium>*/

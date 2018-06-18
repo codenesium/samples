@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiStoreRequestModel model, int id)
+                IStoreRepository storeRepository;
+
+                public AbstractApiStoreRequestModelValidator(IStoreRepository storeRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.storeRepository = storeRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiStoreRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISalesPersonRepository SalesPersonRepository { get; set; }
 
                 public virtual void DemographicsRules()
                 {
@@ -52,7 +51,7 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSalesPerson(Nullable<int> id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesPersonRepository.Get(id.GetValueOrDefault());
+                        var record = await this.storeRepository.GetSalesPerson(id.GetValueOrDefault());
 
                         return record != null;
                 }
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>50e7c9020af4eeb6affa3236ddfce0d0</Hash>
+    <Hash>314c3405368936c1e09190637da59f55</Hash>
 </Codenesium>*/

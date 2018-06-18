@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class RateService: AbstractRateService, IRateService
         {
                 public RateService(
-                        ILogger<RateRepository> logger,
+                        ILogger<IRateRepository> logger,
                         IRateRepository rateRepository,
                         IApiRateRequestModelValidator rateModelValidator,
                         IBOLRateMapper bolrateMapper,
@@ -32,5 +32,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>220f8c03911bd72dcd4fa7400c24718e</Hash>
+    <Hash>6ae8b8b1124c92f6ed47a93674d620e7</Hash>
 </Codenesium>*/

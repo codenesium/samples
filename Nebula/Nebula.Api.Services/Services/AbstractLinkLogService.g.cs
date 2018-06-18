@@ -42,9 +42,9 @@ namespace NebulaNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLinkLogResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLinkLogResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.linkLogRepository.All(limit, offset, orderClause);
+                        var records = await this.linkLogRepository.All(limit, offset);
 
                         return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace NebulaNS.Api.Services
                 {
                         var record = await this.linkLogRepository.Get(id);
 
-                        return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolLinkLogMapper.MapBOToModel(this.dalLinkLogMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiLinkLogResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66263ada3b55c5dcbb6e5d41f3288b36</Hash>
+    <Hash>e7e475e5f76b20a2156f6cc45b9e5e0e</Hash>
 </Codenesium>*/

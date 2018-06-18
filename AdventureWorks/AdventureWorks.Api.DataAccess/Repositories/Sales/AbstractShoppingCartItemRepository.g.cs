@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ShoppingCartItem>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ShoppingCartItem>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ShoppingCartItem> Get(int shoppingCartItemID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<ShoppingCartItem>> GetShoppingCartIDProductID(string shoppingCartID, int productID)
+                public async Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
+                        var records = await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
 
                         return records;
                 }
 
-                protected async Task<List<ShoppingCartItem>> Where(Expression<Func<ShoppingCartItem, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ShoppingCartItem>> Where(
+                        Expression<Func<ShoppingCartItem, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ShoppingCartItem, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ShoppingCartItem> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ShoppingCartItem>> SearchLinqEF(Expression<Func<ShoppingCartItem, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ShoppingCartItem.ShoppingCartItemID)} ASC";
+                                orderBy = x => x.ShoppingCartItemID;
                         }
 
-                        return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
-                }
-
-                private async Task<List<ShoppingCartItem>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ShoppingCartItem.ShoppingCartItemID)} ASC";
+                                return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
                         }
-
-                        return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
+                        else
+                        {
+                                return await this.Context.Set<ShoppingCartItem>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ShoppingCartItem>();
+                        }
                 }
 
                 private async Task<ShoppingCartItem> GetById(int shoppingCartItemID)
                 {
-                        List<ShoppingCartItem> records = await this.SearchLinqEF(x => x.ShoppingCartItemID == shoppingCartItemID);
+                        List<ShoppingCartItem> records = await this.Where(x => x.ShoppingCartItemID == shoppingCartItemID);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4692b8499ce42ba085b6b6751b099b44</Hash>
+    <Hash>52a408b7912329e2e5066fabc7fc432e</Hash>
 </Codenesium>*/

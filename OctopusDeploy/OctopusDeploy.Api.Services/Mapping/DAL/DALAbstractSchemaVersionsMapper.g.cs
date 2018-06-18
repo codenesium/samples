@@ -23,11 +23,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOSchemaVersions MapEFToBO(
                         SchemaVersions ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSchemaVersions();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eac49a08b90b81afed8af82f29135730</Hash>
+    <Hash>fdf09d7bdc25d9de4779e66c08a846b4</Hash>
 </Codenesium>*/

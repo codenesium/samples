@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesTerritoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.salesTerritoryRepository.All(limit, offset, orderClause);
+                        var records = await this.salesTerritoryRepository.All(limit, offset);
 
                         return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(records));
                 }
@@ -87,7 +87,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.salesTerritoryRepository.Get(territoryID);
 
-                        return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
@@ -133,11 +140,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiSalesTerritoryResponseModel> GetName(string name)
+                public async Task<ApiSalesTerritoryResponseModel> ByName(string name)
                 {
-                        SalesTerritory record = await this.salesTerritoryRepository.GetName(name);
+                        SalesTerritory record = await this.salesTerritoryRepository.ByName(name);
 
-                        return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSalesTerritoryMapper.MapBOToModel(this.dalSalesTerritoryMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiCustomerResponseModel>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
@@ -168,5 +182,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b422ae097cb3fb2ca95b42a2407a8fd3</Hash>
+    <Hash>230876898e7db8281564db7ebb75c101</Hash>
 </Codenesium>*/

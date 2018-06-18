@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class WorkerPoolService: AbstractWorkerPoolService, IWorkerPoolService
         {
                 public WorkerPoolService(
-                        ILogger<WorkerPoolRepository> logger,
+                        ILogger<IWorkerPoolRepository> logger,
                         IWorkerPoolRepository workerPoolRepository,
                         IApiWorkerPoolRequestModelValidator workerPoolModelValidator,
                         IBOLWorkerPoolMapper bolworkerPoolMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c1645bbc4ba69001f56510ddac5929a</Hash>
+    <Hash>2e28f20d9ceda0d4a316808d974122b2</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiReleaseRequestModelValidator: AbstractApiReleaseRequestModelValidator, IApiReleaseRequestModelValidator
         {
-                public ApiReleaseRequestModelValidator()
+                public ApiReleaseRequestModelValidator(IReleaseRepository releaseRepository)
+                        : base(releaseRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a96f91d72f4952c4a248c6045eb63e96</Hash>
+    <Hash>815eb11fa16808f28d38cfbe42d14780</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiContactTypeRequestModel model, int id)
+                IContactTypeRepository contactTypeRepository;
+
+                public AbstractApiContactTypeRequestModelValidator(IContactTypeRepository contactTypeRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.contactTypeRepository = contactTypeRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiContactTypeRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IContactTypeRepository ContactTypeRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiContactTypeRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiContactTypeRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiContactTypeRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiContactTypeRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ContactType record = await this.ContactTypeRepository.GetName(model.Name);
+                        ContactType record = await this.contactTypeRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ContactTypeID == this.existingRecordId))
                         {
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2dde1ab1a72ce6b0f3f3ca9a440391b4</Hash>
+    <Hash>0f53a15490bdcd3ad394bf38209d2c10</Hash>
 </Codenesium>*/

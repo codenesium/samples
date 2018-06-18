@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FileServiceNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Bucket> Get(int id)
@@ -77,47 +78,42 @@ namespace FileServiceNS.Api.DataAccess
 
                 public async Task<Bucket> GetExternalId(Guid externalId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ExternalId == externalId);
+                        var records = await this.Where(x => x.ExternalId == externalId);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<Bucket> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<Bucket>> Where(Expression<Func<Bucket, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Bucket>> Where(
+                        Expression<Func<Bucket, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Bucket, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Bucket> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Bucket>> SearchLinqEF(Expression<Func<Bucket, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Bucket.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Bucket>();
-                }
-
-                private async Task<List<Bucket>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Bucket.Id)} ASC";
+                                return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Bucket>();
                         }
-
-                        return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Bucket>();
+                        else
+                        {
+                                return await this.Context.Set<Bucket>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Bucket>();
+                        }
                 }
 
                 private async Task<Bucket> GetById(int id)
                 {
-                        List<Bucket> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Bucket> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -130,5 +126,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7fc19134a5e16588ef6799c3df184e6e</Hash>
+    <Hash>6a73f609a19999e72a835c3f83dc4679</Hash>
 </Codenesium>*/

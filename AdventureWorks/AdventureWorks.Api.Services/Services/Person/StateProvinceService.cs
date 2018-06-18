@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class StateProvinceService: AbstractStateProvinceService, IStateProvinceService
         {
                 public StateProvinceService(
-                        ILogger<StateProvinceRepository> logger,
+                        ILogger<IStateProvinceRepository> logger,
                         IStateProvinceRepository stateProvinceRepository,
                         IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
                         IBOLStateProvinceMapper bolstateProvinceMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88ebfbcb24f7de0719204557374f8fb5</Hash>
+    <Hash>55dabe04e0b894ff6dbdd168c89bc998</Hash>
 </Codenesium>*/

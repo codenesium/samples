@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiMachineRequestModel model, int id)
+                IMachineRepository machineRepository;
+
+                public AbstractApiMachineRequestModelValidator(IMachineRepository machineRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.machineRepository = machineRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiMachineRequestModel model, int id)
@@ -56,5 +57,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3502621d058ad0847b6e95ca91dd122f</Hash>
+    <Hash>2e975dabb3db5e4d44da63e9372e883a</Hash>
 </Codenesium>*/

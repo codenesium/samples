@@ -3,29 +3,14 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOLessonXTeacher: AbstractBusinessObject
+        public partial class BOLessonXTeacher: AbstractBOLessonXTeacher
         {
                 public BOLessonXTeacher() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          int lessonId,
-                                          int studentId)
-                {
-                        this.Id = id;
-                        this.LessonId = lessonId;
-                        this.StudentId = studentId;
-                }
-
-                public int Id { get; private set; }
-
-                public int LessonId { get; private set; }
-
-                public int StudentId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>880aeeda52b9f0394c859613e7ad8b3c</Hash>
+    <Hash>5a5ca7086c973fed772ffe0c00f9a979</Hash>
 </Codenesium>*/

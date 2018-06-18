@@ -13,10 +13,11 @@ namespace FileServiceNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiBucketRequestModel model, int id)
+                IBucketRepository bucketRepository;
+
+                public AbstractApiBucketRequestModelValidator(IBucketRepository bucketRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.bucketRepository = bucketRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiBucketRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace FileServiceNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IBucketRepository BucketRepository { get; set; }
                 public virtual void ExternalIdRules()
                 {
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.ExternalId));
@@ -40,7 +40,7 @@ namespace FileServiceNS.Api.Services
 
                 private async Task<bool> BeUniqueGetExternalId(ApiBucketRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Bucket record = await this.BucketRepository.GetExternalId(model.ExternalId);
+                        Bucket record = await this.bucketRepository.GetExternalId(model.ExternalId);
 
                         if (record == null || (this.existingRecordId != default (int) && record.Id == this.existingRecordId))
                         {
@@ -53,7 +53,7 @@ namespace FileServiceNS.Api.Services
                 }
                 private async Task<bool> BeUniqueGetName(ApiBucketRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Bucket record = await this.BucketRepository.GetName(model.Name);
+                        Bucket record = await this.bucketRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.Id == this.existingRecordId))
                         {
@@ -68,5 +68,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>093119be4700e1c1729eb477110f3629</Hash>
+    <Hash>4e5e8fa63f91b30b50d37d1576b92687</Hash>
 </Codenesium>*/

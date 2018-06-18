@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SalesOrderHeaderSalesReason>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SalesOrderHeaderSalesReason>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SalesOrderHeaderSalesReason> Get(int salesOrderID)
@@ -75,42 +76,46 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<SalesOrderHeaderSalesReason>> Where(Expression<Func<SalesOrderHeaderSalesReason, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SalesOrderHeaderSalesReason>> Where(
+                        Expression<Func<SalesOrderHeaderSalesReason, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SalesOrderHeaderSalesReason, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SalesOrderHeaderSalesReason> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SalesOrderHeaderSalesReason>> SearchLinqEF(Expression<Func<SalesOrderHeaderSalesReason, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SalesOrderHeaderSalesReason.SalesOrderID)} ASC";
+                                orderBy = x => x.SalesOrderID;
                         }
 
-                        return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
-                }
-
-                private async Task<List<SalesOrderHeaderSalesReason>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SalesOrderHeaderSalesReason.SalesOrderID)} ASC";
+                                return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
                         }
-
-                        return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
+                        else
+                        {
+                                return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
+                        }
                 }
 
                 private async Task<SalesOrderHeaderSalesReason> GetById(int salesOrderID)
                 {
-                        List<SalesOrderHeaderSalesReason> records = await this.SearchLinqEF(x => x.SalesOrderID == salesOrderID);
+                        List<SalesOrderHeaderSalesReason> records = await this.Where(x => x.SalesOrderID == salesOrderID);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<SalesOrderHeader> GetSalesOrderHeader(int salesOrderID)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderID == salesOrderID);
+                }
+                public async virtual Task<SalesReason> GetSalesReason(int salesReasonID)
+                {
+                        return await this.Context.Set<SalesReason>().SingleOrDefaultAsync(x => x.SalesReasonID == salesReasonID);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>006c63418c533e5b52f7cc48b1123c5c</Hash>
+    <Hash>b3b0950375467d9855ed258f4c7ef1a7</Hash>
 </Codenesium>*/

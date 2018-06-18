@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiProductRequestModel model, int id)
+                IProductRepository productRepository;
+
+                public AbstractApiProductRequestModelValidator(IProductRepository productRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.productRepository = productRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProductRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IProductRepository ProductRepository { get; set; }
                 public virtual void @ClassRules()
                 {
                         this.RuleFor(x => x.@Class).Length(0, 2);
@@ -63,7 +63,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -79,7 +79,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void ProductNumberRules()
                 {
                         this.RuleFor(x => x.ProductNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetProductNumber).When(x => x ?.ProductNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductRequestModel.ProductNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByProductNumber).When(x => x ?.ProductNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductRequestModel.ProductNumber));
                         this.RuleFor(x => x.ProductNumber).Length(0, 25);
                 }
 
@@ -135,9 +135,9 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.WeightUnitMeasureCode).Length(0, 3);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiProductRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiProductRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Product record = await this.ProductRepository.GetName(model.Name);
+                        Product record = await this.productRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ProductID == this.existingRecordId))
                         {
@@ -148,9 +148,9 @@ namespace AdventureWorksNS.Api.Services
                                 return false;
                         }
                 }
-                private async Task<bool> BeUniqueGetProductNumber(ApiProductRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByProductNumber(ApiProductRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Product record = await this.ProductRepository.GetProductNumber(model.ProductNumber);
+                        Product record = await this.productRepository.ByProductNumber(model.ProductNumber);
 
                         if (record == null || (this.existingRecordId != default (int) && record.ProductID == this.existingRecordId))
                         {
@@ -165,5 +165,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>594b2488420d3814c1fd38cf4fa0214f</Hash>
+    <Hash>29a116845e6d7569151359d08f99806c</Hash>
 </Codenesium>*/

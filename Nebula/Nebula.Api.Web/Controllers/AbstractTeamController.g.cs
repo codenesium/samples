@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTeamController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITeamService teamService
@@ -191,5 +191,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>be9f0bb208becfb3215353995c3efeff</Hash>
+    <Hash>f709a250af99e4c1e872b76584c80e4d</Hash>
 </Codenesium>*/

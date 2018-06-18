@@ -52,9 +52,9 @@ namespace PetStoreNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPenResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPenResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.penRepository.All(limit, offset, orderClause);
+                        var records = await this.penRepository.All(limit, offset);
 
                         return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace PetStoreNS.Api.Services
                 {
                         var record = await this.penRepository.Get(id);
 
-                        return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPenResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9ac3b05d2718641ca01cb73c005648c</Hash>
+    <Hash>9d0c6c7411b3ba6e94ff742989d84b4a</Hash>
 </Codenesium>*/

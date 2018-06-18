@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiTagSetRequestModelValidator: AbstractApiTagSetRequestModelValidator, IApiTagSetRequestModelValidator
         {
-                public ApiTagSetRequestModelValidator()
+                public ApiTagSetRequestModelValidator(ITagSetRepository tagSetRepository)
+                        : base(tagSetRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94caaa70e6d3dfc02102af30ef195d71</Hash>
+    <Hash>49f7c31bb08fa36412c2f5b3a0f3bee7</Hash>
 </Codenesium>*/

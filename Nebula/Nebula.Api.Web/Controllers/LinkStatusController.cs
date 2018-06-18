@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class LinkStatusController: AbstractLinkStatusController
         {
                 public LinkStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<LinkStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILinkStatusService linkStatusService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e2cafc09effe6a5219fe11e93f29aa18</Hash>
+    <Hash>951fb45c1b3a6190f58b3c34bf35133a</Hash>
 </Codenesium>*/

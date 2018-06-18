@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractChainStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractChainStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IChainStatusService chainStatusService
@@ -178,5 +178,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5061645b2b10e0829bd4a1a2f5950d46</Hash>
+    <Hash>6abf57dcdfc7ccdc35b7df02d3beaf71</Hash>
 </Codenesium>*/

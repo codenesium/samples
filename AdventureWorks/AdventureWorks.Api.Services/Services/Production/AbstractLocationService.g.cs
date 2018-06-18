@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiLocationResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiLocationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.locationRepository.All(limit, offset, orderClause);
+                        var records = await this.locationRepository.All(limit, offset);
 
                         return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.locationRepository.Get(locationID);
 
-                        return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
@@ -117,11 +124,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiLocationResponseModel> GetName(string name)
+                public async Task<ApiLocationResponseModel> ByName(string name)
                 {
-                        Location record = await this.locationRepository.GetName(name);
+                        Location record = await this.locationRepository.ByName(name);
 
-                        return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
@@ -140,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ccf4945c18d1614e7a0024c08758030</Hash>
+    <Hash>139969f52aac11c4b0f72d1300754fe0</Hash>
 </Codenesium>*/

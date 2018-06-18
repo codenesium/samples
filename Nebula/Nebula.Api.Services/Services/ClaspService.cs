@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class ClaspService: AbstractClaspService, IClaspService
         {
                 public ClaspService(
-                        ILogger<ClaspRepository> logger,
+                        ILogger<IClaspRepository> logger,
                         IClaspRepository claspRepository,
                         IApiClaspRequestModelValidator claspModelValidator,
                         IBOLClaspMapper bolclaspMapper,
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a53e3e80e6c88822361467c874095b8e</Hash>
+    <Hash>c41fee494baf3411946c94832609b89f</Hash>
 </Codenesium>*/

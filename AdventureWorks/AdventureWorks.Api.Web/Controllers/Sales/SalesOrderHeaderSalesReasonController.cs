@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesOrderHeaderSalesReasonController: AbstractSalesOrderHeaderSalesReasonController
         {
                 public SalesOrderHeaderSalesReasonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesOrderHeaderSalesReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesOrderHeaderSalesReasonService salesOrderHeaderSalesReasonService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2cecbe4be29116efc78172857defa429</Hash>
+    <Hash>5eebb14234a6af47434a0b073a212e9f</Hash>
 </Codenesium>*/

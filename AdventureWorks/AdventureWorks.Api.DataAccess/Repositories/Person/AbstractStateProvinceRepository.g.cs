@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<StateProvince>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<StateProvince> Get(int stateProvinceID)
@@ -75,49 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<StateProvince> GetName(string name)
+                public async Task<StateProvince> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<StateProvince> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
+                public async Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
                 {
-                        var records = await this.SearchLinqEF(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
+                        var records = await this.Where(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<StateProvince>> Where(Expression<Func<StateProvince, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<StateProvince>> Where(
+                        Expression<Func<StateProvince, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<StateProvince, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<StateProvince> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<StateProvince>> SearchLinqEF(Expression<Func<StateProvince, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
+                                orderBy = x => x.StateProvinceID;
                         }
 
-                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<StateProvince>();
-                }
-
-                private async Task<List<StateProvince>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(StateProvince.StateProvinceID)} ASC";
+                                return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
                         }
-
-                        return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<StateProvince>();
+                        else
+                        {
+                                return await this.Context.Set<StateProvince>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<StateProvince>();
+                        }
                 }
 
                 private async Task<StateProvince> GetById(int stateProvinceID)
                 {
-                        List<StateProvince> records = await this.SearchLinqEF(x => x.StateProvinceID == stateProvinceID);
+                        List<StateProvince> records = await this.Where(x => x.StateProvinceID == stateProvinceID);
 
                         return records.FirstOrDefault();
                 }
@@ -130,5 +126,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>64f148867df968bff0c750824f83e228</Hash>
+    <Hash>e35b6e8b7118e5745336cdd867601fab</Hash>
 </Codenesium>*/

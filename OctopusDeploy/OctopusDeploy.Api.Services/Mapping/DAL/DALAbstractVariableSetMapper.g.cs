@@ -26,11 +26,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOVariableSet MapEFToBO(
                         VariableSet ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOVariableSet();
 
                         bo.SetProperties(
@@ -59,5 +54,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e28adc7270e3d355527c27fc9ee4dca</Hash>
+    <Hash>9025062209eaab02eb9fed4ba7ed0605</Hash>
 </Codenesium>*/

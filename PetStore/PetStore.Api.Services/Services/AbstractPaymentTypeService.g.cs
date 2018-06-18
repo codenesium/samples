@@ -52,9 +52,9 @@ namespace PetStoreNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.paymentTypeRepository.All(limit, offset, orderClause);
+                        var records = await this.paymentTypeRepository.All(limit, offset);
 
                         return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace PetStoreNS.Api.Services
                 {
                         var record = await this.paymentTypeRepository.Get(id);
 
-                        return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2c0bc266b01a4ff4e8696f5a5209dcb6</Hash>
+    <Hash>792451a25512b400a2afca0d6c503cb0</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkerResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.workerRepository.All(limit, offset, orderClause);
+                        var records = await this.workerRepository.All(limit, offset);
 
                         return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.workerRepository.Get(id);
 
-                        return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiWorkerResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Worker record = await this.workerRepository.GetName(name);
 
-                        return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiWorkerResponseModel>> GetMachinePolicyId(string machinePolicyId)
                 {
@@ -115,5 +129,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30cc4f07ed015aa964d9f022fbc4e30c</Hash>
+    <Hash>f4e41e24d3f104796677c6cfdd50cb00</Hash>
 </Codenesium>*/

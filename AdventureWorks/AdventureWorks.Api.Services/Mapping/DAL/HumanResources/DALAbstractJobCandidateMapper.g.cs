@@ -24,11 +24,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOJobCandidate MapEFToBO(
                         JobCandidate ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOJobCandidate();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1ae47ca8b6607325f02eb4090f52a94</Hash>
+    <Hash>19bf3a55e40dc89c8ade993f2bfce599</Hash>
 </Codenesium>*/

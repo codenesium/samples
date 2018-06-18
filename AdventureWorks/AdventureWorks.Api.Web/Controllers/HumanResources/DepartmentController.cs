@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class DepartmentController: AbstractDepartmentController
         {
                 public DepartmentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DepartmentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDepartmentService departmentService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f0190233c4af5daea37268cbcdd14eaa</Hash>
+    <Hash>4b88b835289ecfa0e3b5f3f0e87bc0e8</Hash>
 </Codenesium>*/

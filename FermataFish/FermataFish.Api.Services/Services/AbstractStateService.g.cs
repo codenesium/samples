@@ -52,9 +52,9 @@ namespace FermataFishNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiStateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiStateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.stateRepository.All(limit, offset, orderClause);
+                        var records = await this.stateRepository.All(limit, offset);
 
                         return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace FermataFishNS.Api.Services
                 {
                         var record = await this.stateRepository.Get(id);
 
-                        return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiStateResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bff1473743146de22f5296f55790288</Hash>
+    <Hash>d57291519c705d7248aac951f1291c8c</Hash>
 </Codenesium>*/

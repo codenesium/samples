@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiVendorRequestModel model, int id)
+                IVendorRepository vendorRepository;
+
+                public AbstractApiVendorRequestModelValidator(IVendorRepository vendorRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.vendorRepository = vendorRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiVendorRequestModel model, int id)
@@ -25,11 +26,10 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IVendorRepository VendorRepository { get; set; }
                 public virtual void AccountNumberRules()
                 {
                         this.RuleFor(x => x.AccountNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorRequestModel.AccountNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiVendorRequestModel.AccountNumber));
                         this.RuleFor(x => x.AccountNumber).Length(0, 15);
                 }
 
@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.PurchasingWebServiceURL).Length(0, 1024);
                 }
 
-                private async Task<bool> BeUniqueGetAccountNumber(ApiVendorRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByAccountNumber(ApiVendorRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Vendor record = await this.VendorRepository.GetAccountNumber(model.AccountNumber);
+                        Vendor record = await this.vendorRepository.ByAccountNumber(model.AccountNumber);
 
                         if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
                         {
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c901a8d89b94880c626abb8cbf163dda</Hash>
+    <Hash>7a57736cdc2c928d95947f7d6db9b711</Hash>
 </Codenesium>*/

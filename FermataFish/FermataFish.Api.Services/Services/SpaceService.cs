@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class SpaceService: AbstractSpaceService, ISpaceService
         {
                 public SpaceService(
-                        ILogger<SpaceRepository> logger,
+                        ILogger<ISpaceRepository> logger,
                         ISpaceRepository spaceRepository,
                         IApiSpaceRequestModelValidator spaceModelValidator,
                         IBOLSpaceMapper bolspaceMapper,
@@ -38,5 +38,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4ba9274881bac454b5e887af353c8ac</Hash>
+    <Hash>d6fab576399670530ba4a85434b683b8</Hash>
 </Codenesium>*/

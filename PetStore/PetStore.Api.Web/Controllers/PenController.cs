@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Web
         public class PenController: AbstractPenController
         {
                 public PenController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PenController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPenService penService
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6ee34d718c64a6b73a6adb7105cd8f35</Hash>
+    <Hash>5f884b1cc2a544cf1158efec8d70adab</Hash>
 </Codenesium>*/

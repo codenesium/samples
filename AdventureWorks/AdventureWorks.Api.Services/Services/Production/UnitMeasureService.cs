@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class UnitMeasureService: AbstractUnitMeasureService, IUnitMeasureService
         {
                 public UnitMeasureService(
-                        ILogger<UnitMeasureRepository> logger,
+                        ILogger<IUnitMeasureRepository> logger,
                         IUnitMeasureRepository unitMeasureRepository,
                         IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
                         IBOLUnitMeasureMapper bolunitMeasureMapper,
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22038b256aec6cf651b050d0831c3c43</Hash>
+    <Hash>1ecb811f3ed19b184985d52add7d9a50</Hash>
 </Codenesium>*/

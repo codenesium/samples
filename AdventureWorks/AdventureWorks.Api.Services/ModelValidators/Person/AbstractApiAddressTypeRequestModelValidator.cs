@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiAddressTypeRequestModel model, int id)
+                IAddressTypeRepository addressTypeRepository;
+
+                public AbstractApiAddressTypeRequestModelValidator(IAddressTypeRepository addressTypeRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.addressTypeRepository = addressTypeRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiAddressTypeRequestModel model, int id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IAddressTypeRepository AddressTypeRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressTypeRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressTypeRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -41,9 +41,9 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiAddressTypeRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiAddressTypeRequestModel model,  CancellationToken cancellationToken)
                 {
-                        AddressType record = await this.AddressTypeRepository.GetName(model.Name);
+                        AddressType record = await this.addressTypeRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (int) && record.AddressTypeID == this.existingRecordId))
                         {
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8736083acc8bd37b96e312958b60d5f</Hash>
+    <Hash>22fb46ef2d67983ecd14f2f823b4bbfe</Hash>
 </Codenesium>*/

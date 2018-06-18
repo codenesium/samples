@@ -29,11 +29,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOSalesPerson MapEFToBO(
                         SalesPerson ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSalesPerson();
 
                         bo.SetProperties(
@@ -65,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1650745fd87be47191d89b5b0ac5e8b4</Hash>
+    <Hash>ee3a82a97421c9e226f708c14fcf4f6b</Hash>
 </Codenesium>*/

@@ -15,14 +15,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ProductSubcategory> Get(int productSubcategoryID);
 
-                Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ProductSubcategory>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ProductSubcategory> GetName(string name);
+                Task<ProductSubcategory> ByName(string name);
 
                 Task<List<Product>> Products(int productSubcategoryID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>fb52f7dc405f1715cd198e590941debb</Hash>
+    <Hash>4ba5396690fe6387ee6cc16a00f997cf</Hash>
 </Codenesium>*/

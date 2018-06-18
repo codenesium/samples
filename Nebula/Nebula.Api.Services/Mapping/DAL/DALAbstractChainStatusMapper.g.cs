@@ -22,11 +22,6 @@ namespace NebulaNS.Api.Services
                 public virtual BOChainStatus MapEFToBO(
                         ChainStatus ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOChainStatus();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b2a0a9760ffdc1f949364c5312e6460</Hash>
+    <Hash>485c72583e4eadeafdfd8c4b9eeae050</Hash>
 </Codenesium>*/

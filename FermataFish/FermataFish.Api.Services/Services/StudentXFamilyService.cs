@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class StudentXFamilyService: AbstractStudentXFamilyService, IStudentXFamilyService
         {
                 public StudentXFamilyService(
-                        ILogger<StudentXFamilyRepository> logger,
+                        ILogger<IStudentXFamilyRepository> logger,
                         IStudentXFamilyRepository studentXFamilyRepository,
                         IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
                         IBOLStudentXFamilyMapper bolstudentXFamilyMapper,
@@ -32,5 +32,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45fb04f308f7f32bf7e8129702189e27</Hash>
+    <Hash>aa64578b539251b14e4359e979b09a3b</Hash>
 </Codenesium>*/

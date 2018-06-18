@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractStateProvinceController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractStateProvinceController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStateProvinceService stateProvinceService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiStateProvinceResponseModel response = await this.StateProvinceService.GetName(name);
+                        ApiStateProvinceResponseModel response = await this.StateProvinceService.ByName(name);
 
                         if (response == null)
                         {
@@ -181,13 +181,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getStateProvinceCodeCountryRegionCode/{stateProvinceCode}/{countryRegionCode}")]
+                [Route("byStateProvinceCodeCountryRegionCode/{stateProvinceCode}/{countryRegionCode}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
+                public async virtual Task<IActionResult> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
                 {
-                        ApiStateProvinceResponseModel response = await this.StateProvinceService.GetStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
+                        ApiStateProvinceResponseModel response = await this.StateProvinceService.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
 
                         if (response == null)
                         {
@@ -216,5 +216,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ce8d1be0a1e2fc6dfd1bbc8b6873895e</Hash>
+    <Hash>cfb6c3bf5386285e84ff6e2004d784c2</Hash>
 </Codenesium>*/

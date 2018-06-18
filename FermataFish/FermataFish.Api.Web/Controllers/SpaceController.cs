@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class SpaceController: AbstractSpaceController
         {
                 public SpaceController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SpaceController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpaceService spaceService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2cc157e9a872015c3c46c7ee49332b68</Hash>
+    <Hash>00dc9d036cf96e6ccd634886f9962961</Hash>
 </Codenesium>*/

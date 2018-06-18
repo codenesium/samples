@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class CityController: AbstractCityController
         {
                 public CityController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CityController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICityService cityService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a8a9cd6dd8c615342d159ed6083c1b0b</Hash>
+    <Hash>d55cbe7b54c5a8713469b7360669621b</Hash>
 </Codenesium>*/

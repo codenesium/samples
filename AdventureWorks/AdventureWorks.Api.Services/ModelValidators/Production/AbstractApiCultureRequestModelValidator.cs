@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiCultureRequestModel model, string id)
+                ICultureRepository cultureRepository;
+
+                public AbstractApiCultureRequestModelValidator(ICultureRepository cultureRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.cultureRepository = cultureRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCultureRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ICultureRepository CultureRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiCultureRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiCultureRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Culture record = await this.CultureRepository.GetName(model.Name);
+                        Culture record = await this.cultureRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.CultureID == this.existingRecordId))
                         {
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>775d528e59763203e0ebd8e4a0e3ac85</Hash>
+    <Hash>322da4d1b19bcedf4604eca37048797b</Hash>
 </Codenesium>*/

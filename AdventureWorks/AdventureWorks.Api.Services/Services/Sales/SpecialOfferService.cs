@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SpecialOfferService: AbstractSpecialOfferService, ISpecialOfferService
         {
                 public SpecialOfferService(
-                        ILogger<SpecialOfferRepository> logger,
+                        ILogger<ISpecialOfferRepository> logger,
                         ISpecialOfferRepository specialOfferRepository,
                         IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
                         IBOLSpecialOfferMapper bolspecialOfferMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41e336a348945aed5e7849f9a01fd05e</Hash>
+    <Hash>3cc6a625d3bd641ccf448fc607bede52</Hash>
 </Codenesium>*/

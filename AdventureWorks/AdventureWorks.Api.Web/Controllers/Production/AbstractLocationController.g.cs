@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractLocationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractLocationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILocationService locationService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiLocationResponseModel response = await this.LocationService.GetName(name);
+                        ApiLocationResponseModel response = await this.LocationService.ByName(name);
 
                         if (response == null)
                         {
@@ -210,5 +210,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>41bb9737158ef8a1d5e8b3a09e942607</Hash>
+    <Hash>e9a4ab61604b136c63feaf64711b39cb</Hash>
 </Codenesium>*/

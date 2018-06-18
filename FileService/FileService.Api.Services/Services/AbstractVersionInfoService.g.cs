@@ -42,9 +42,9 @@ namespace FileServiceNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.versionInfoRepository.All(limit, offset, orderClause);
+                        var records = await this.versionInfoRepository.All(limit, offset);
 
                         return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace FileServiceNS.Api.Services
                 {
                         var record = await this.versionInfoRepository.Get(version);
 
-                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
@@ -103,11 +110,18 @@ namespace FileServiceNS.Api.Services
                 {
                         VersionInfo record = await this.versionInfoRepository.GetVersion(version);
 
-                        return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e6874e2d36f3329062d5703a25af500b</Hash>
+    <Hash>5e1474dc89f09a46711bbf907f6f7df1</Hash>
 </Codenesium>*/

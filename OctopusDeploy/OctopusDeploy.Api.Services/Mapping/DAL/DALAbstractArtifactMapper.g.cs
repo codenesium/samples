@@ -28,11 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOArtifact MapEFToBO(
                         Artifact ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOArtifact();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e377e1fd287748e835868b77fa69c1ab</Hash>
+    <Hash>fdc2ab568d62f890c74f1037e9e9f3d8</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ProjectService: AbstractProjectService, IProjectService
         {
                 public ProjectService(
-                        ILogger<ProjectRepository> logger,
+                        ILogger<IProjectRepository> logger,
                         IProjectRepository projectRepository,
                         IApiProjectRequestModelValidator projectModelValidator,
                         IBOLProjectMapper bolprojectMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1bf56aff7120d30771b3673805c9ccdb</Hash>
+    <Hash>014ca1c84d7765c4401af61b70acdadc</Hash>
 </Codenesium>*/

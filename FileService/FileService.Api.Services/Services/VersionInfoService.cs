@@ -13,7 +13,7 @@ namespace FileServiceNS.Api.Services
         public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
         {
                 public VersionInfoService(
-                        ILogger<VersionInfoRepository> logger,
+                        ILogger<IVersionInfoRepository> logger,
                         IVersionInfoRepository versionInfoRepository,
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
                         IBOLVersionInfoMapper bolversionInfoMapper,
@@ -32,5 +32,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af98fdb53400aa70219f3711307e3128</Hash>
+    <Hash>4d3218376d34ec41bf5d15d726b1241b</Hash>
 </Codenesium>*/

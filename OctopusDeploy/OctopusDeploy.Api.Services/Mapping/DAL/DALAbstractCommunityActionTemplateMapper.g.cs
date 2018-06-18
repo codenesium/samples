@@ -24,11 +24,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOCommunityActionTemplate MapEFToBO(
                         CommunityActionTemplate ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCommunityActionTemplate();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8086a372a3b4bed218a05e119033447</Hash>
+    <Hash>a743fe74475231f6b1597b25174b2533</Hash>
 </Codenesium>*/

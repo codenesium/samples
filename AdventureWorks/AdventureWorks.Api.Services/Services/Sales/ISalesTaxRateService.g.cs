@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiSalesTaxRateResponseModel> Get(int salesTaxRateID);
 
-                Task<List<ApiSalesTaxRateResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiSalesTaxRateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiSalesTaxRateResponseModel> GetStateProvinceIDTaxType(int stateProvinceID, int taxType);
+                Task<ApiSalesTaxRateResponseModel> ByStateProvinceIDTaxType(int stateProvinceID, int taxType);
         }
 }
 
 /*<Codenesium>
-    <Hash>307cae43c28d9806ff46f0af86acf8c3</Hash>
+    <Hash>1e7fdc897c109f3678e56f72d6e86542</Hash>
 </Codenesium>*/

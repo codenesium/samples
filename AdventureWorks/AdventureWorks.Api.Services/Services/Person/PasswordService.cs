@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class PasswordService: AbstractPasswordService, IPasswordService
         {
                 public PasswordService(
-                        ILogger<PasswordRepository> logger,
+                        ILogger<IPasswordRepository> logger,
                         IPasswordRepository passwordRepository,
                         IApiPasswordRequestModelValidator passwordModelValidator,
                         IBOLPasswordMapper bolpasswordMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c811089eb2218287078891f994f8d553</Hash>
+    <Hash>b7775b77482c79e7bb331785dda9b8ce</Hash>
 </Codenesium>*/

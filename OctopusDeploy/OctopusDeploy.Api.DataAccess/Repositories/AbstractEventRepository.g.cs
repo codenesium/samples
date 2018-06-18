@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Event>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Event> Get(string id)
@@ -77,59 +78,54 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<List<Event>> GetAutoId(long autoId)
                 {
-                        var records = await this.SearchLinqEF(x => x.AutoId == autoId);
+                        var records = await this.Where(x => x.AutoId == autoId);
 
                         return records;
                 }
                 public async Task<List<Event>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.Occurred == occurred && x.Category == category && x.AutoId == autoId);
+                        var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.Occurred == occurred && x.Category == category && x.AutoId == autoId);
 
                         return records;
                 }
                 public async Task<List<Event>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.Category == category && x.UserId == userId && x.Occurred == occurred && x.TenantId == tenantId);
+                        var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.Category == category && x.UserId == userId && x.Occurred == occurred && x.TenantId == tenantId);
 
                         return records;
                 }
                 public async Task<List<Event>> GetIdOccurred(string id, DateTimeOffset occurred)
                 {
-                        var records = await this.SearchLinqEF(x => x.Id == id && x.Occurred == occurred);
+                        var records = await this.Where(x => x.Id == id && x.Occurred == occurred);
 
                         return records;
                 }
 
-                protected async Task<List<Event>> Where(Expression<Func<Event, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Event>> Where(
+                        Expression<Func<Event, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Event, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Event> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Event>> SearchLinqEF(Expression<Func<Event, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Event.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Event>();
-                }
-
-                private async Task<List<Event>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Event.Id)} ASC";
+                                return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
                         }
-
-                        return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Event>();
+                        else
+                        {
+                                return await this.Context.Set<Event>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Event>();
+                        }
                 }
 
                 private async Task<Event> GetById(string id)
                 {
-                        List<Event> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Event> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -142,5 +138,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>353fe70f1ed3913e7d8f659bf50602ae</Hash>
+    <Hash>8b8a5df562477c4a4b23b018de95e754</Hash>
 </Codenesium>*/

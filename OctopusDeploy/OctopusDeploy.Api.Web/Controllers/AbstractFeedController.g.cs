@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractFeedController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractFeedController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IFeedService feedService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>21c6b51afa470250d5ad30e8a260e664</Hash>
+    <Hash>2234b598c926d6c3cf2ef0e06b023ea8</Hash>
 </Codenesium>*/

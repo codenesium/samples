@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiLibraryVariableSetRequestModelValidator: AbstractApiLibraryVariableSetRequestModelValidator, IApiLibraryVariableSetRequestModelValidator
         {
-                public ApiLibraryVariableSetRequestModelValidator()
+                public ApiLibraryVariableSetRequestModelValidator(ILibraryVariableSetRepository libraryVariableSetRepository)
+                        : base(libraryVariableSetRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e799dbc04b740723c74c431d57dd8c6d</Hash>
+    <Hash>c2a66f1d42d99deb168819eb154d4d73</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiMutexResponseModel> Get(string id);
 
-                Task<List<ApiMutexResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiMutexResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>26cc670c5a93c8398adda2bb55744b99</Hash>
+    <Hash>e79b209ad06fcfcbc3a938edda9ab41c</Hash>
 </Codenesium>*/

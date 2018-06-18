@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiSubscriptionRequestModel model, string id)
+                ISubscriptionRepository subscriptionRepository;
+
+                public AbstractApiSubscriptionRequestModelValidator(ISubscriptionRepository subscriptionRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.subscriptionRepository = subscriptionRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSubscriptionRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ISubscriptionRepository SubscriptionRepository { get; set; }
                 public virtual void IsDisabledRules()
                 {
                 }
@@ -49,7 +49,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiSubscriptionRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Subscription record = await this.SubscriptionRepository.GetName(model.Name);
+                        Subscription record = await this.subscriptionRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -64,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a24e1e174b8edbebd8cda2d380da9b9e</Hash>
+    <Hash>b49d2bfbdc24622906260d2e245f6a4c</Hash>
 </Codenesium>*/

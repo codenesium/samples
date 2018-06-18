@@ -42,9 +42,9 @@ namespace TicketingCRMNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSaleTicketsResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSaleTicketsResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.saleTicketsRepository.All(limit, offset, orderClause);
+                        var records = await this.saleTicketsRepository.All(limit, offset);
 
                         return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace TicketingCRMNS.Api.Services
                 {
                         var record = await this.saleTicketsRepository.Get(id);
 
-                        return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiSaleTicketsResponseModel>> Create(
@@ -109,5 +116,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ed9c638b7a2e1ba47bc4020a9fd6fe6</Hash>
+    <Hash>c26f3be95ec4386052c148aa7c8f66c6</Hash>
 </Codenesium>*/

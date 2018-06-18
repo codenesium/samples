@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiWorkOrderRequestModelValidator: AbstractApiWorkOrderRequestModelValidator, IApiWorkOrderRequestModelValidator
         {
-                public ApiWorkOrderRequestModelValidator()
+                public ApiWorkOrderRequestModelValidator(IWorkOrderRepository workOrderRepository)
+                        : base(workOrderRepository)
                 {
                 }
 
@@ -48,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>065f62fdfd332f9c70e1ac289ff17b33</Hash>
+    <Hash>054234d0183e9e46d928c8f2e65b1102</Hash>
 </Codenesium>*/

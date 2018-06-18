@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class LessonXStudentController: AbstractLessonXStudentController
         {
                 public LessonXStudentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<LessonXStudentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ILessonXStudentService lessonXStudentService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b11c859a1967e0fffbb0275dfa5c18c3</Hash>
+    <Hash>8677dd43a625772817d94e2f78269c14</Hash>
 </Codenesium>*/

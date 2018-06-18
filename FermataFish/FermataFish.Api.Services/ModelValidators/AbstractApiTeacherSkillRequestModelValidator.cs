@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiTeacherSkillRequestModel model, int id)
+                ITeacherSkillRepository teacherSkillRepository;
+
+                public AbstractApiTeacherSkillRequestModelValidator(ITeacherSkillRepository teacherSkillRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.teacherSkillRepository = teacherSkillRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTeacherSkillRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IStudioRepository StudioRepository { get; set; }
 
                 public virtual void NameRules()
                 {
@@ -40,7 +39,7 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudioRepository.Get(id);
+                        var record = await this.teacherSkillRepository.GetStudio(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac21acb1fb32d1b19a6180394c1b4722</Hash>
+    <Hash>b71beb4f916fddfb718cbfa2197e771d</Hash>
 </Codenesium>*/

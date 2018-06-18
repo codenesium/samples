@@ -9,7 +9,9 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "NuGetPackage")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "NuGetPackage")]
+        [Trait("Area", "Integration")]
         public class NuGetPackageTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>73bb37a8c48cbe61d941778f59efcc74</Hash>
+    <Hash>5486b1c1c5de593ebbfcd65fe0591040</Hash>
 </Codenesium>*/

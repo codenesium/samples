@@ -9,7 +9,9 @@ using AdventureWorksNS.Api.Client;
 
 namespace AdventureWorksNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "CurrencyRate")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "CurrencyRate")]
+        [Trait("Area", "Integration")]
         public class CurrencyRateTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>ea4558008b46eca9120710b01f18c02a</Hash>
+    <Hash>3e7eb0cbbc5615f005a371022011237d</Hash>
 </Codenesium>*/

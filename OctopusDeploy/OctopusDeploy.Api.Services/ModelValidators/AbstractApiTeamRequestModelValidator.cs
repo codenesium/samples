@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiTeamRequestModel model, string id)
+                ITeamRepository teamRepository;
+
+                public AbstractApiTeamRequestModelValidator(ITeamRepository teamRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.teamRepository = teamRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTeamRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ITeamRepository TeamRepository { get; set; }
                 public virtual void EnvironmentIdsRules()
                 {
                         this.RuleFor(x => x.EnvironmentIds).NotNull();
@@ -67,7 +67,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiTeamRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Team record = await this.TeamRepository.GetName(model.Name);
+                        Team record = await this.teamRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -82,5 +82,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f00ba34303f0216f604ff73081037f7</Hash>
+    <Hash>52f4b72ca95dbb61252471272d0bb444</Hash>
 </Codenesium>*/

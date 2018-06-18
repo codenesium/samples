@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTicketController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTicketController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITicketService ticketService
@@ -189,5 +189,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>780e8b77c02ec39c2e52c37d8a1a931c</Hash>
+    <Hash>d4fe538b68623765843215c33d566f9d</Hash>
 </Codenesium>*/

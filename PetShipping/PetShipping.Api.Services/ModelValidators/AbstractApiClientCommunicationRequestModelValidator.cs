@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiClientCommunicationRequestModel model, int id)
+                IClientCommunicationRepository clientCommunicationRepository;
+
+                public AbstractApiClientCommunicationRequestModelValidator(IClientCommunicationRepository clientCommunicationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.clientCommunicationRepository = clientCommunicationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiClientCommunicationRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IClientRepository ClientRepository { get; set; }
-
-                public IEmployeeRepository EmployeeRepository { get; set; }
 
                 public virtual void ClientIdRules()
                 {
@@ -51,14 +48,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.ClientRepository.Get(id);
+                        var record = await this.clientCommunicationRepository.GetClient(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.EmployeeRepository.Get(id);
+                        var record = await this.clientCommunicationRepository.GetEmployee(id);
 
                         return record != null;
                 }
@@ -66,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16c1923df9b9baba1995ce4442735317</Hash>
+    <Hash>609662e4986dcda13ad0067c48e395e4</Hash>
 </Codenesium>*/

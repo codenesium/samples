@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class CountryController: AbstractCountryController
         {
                 public CountryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CountryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryService countryService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d240229124a609fcaef964473f1f80b6</Hash>
+    <Hash>eeadd63c9ec0cdb23f1c4e145553cbb6</Hash>
 </Codenesium>*/

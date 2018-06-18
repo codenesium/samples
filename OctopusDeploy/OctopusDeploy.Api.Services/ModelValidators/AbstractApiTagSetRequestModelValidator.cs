@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiTagSetRequestModel model, string id)
+                ITagSetRepository tagSetRepository;
+
+                public AbstractApiTagSetRequestModelValidator(ITagSetRepository tagSetRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.tagSetRepository = tagSetRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTagSetRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ITagSetRepository TagSetRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
                 }
@@ -48,7 +48,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiTagSetRequestModel model,  CancellationToken cancellationToken)
                 {
-                        TagSet record = await this.TagSetRepository.GetName(model.Name);
+                        TagSet record = await this.tagSetRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -63,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac1a2455c7473bb27ed11444e80823be</Hash>
+    <Hash>72ad7790ad67399e80ce745602177585</Hash>
 </Codenesium>*/

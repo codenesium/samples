@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class PipelineStatusController: AbstractPipelineStatusController
         {
                 public PipelineStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PipelineStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPipelineStatusService pipelineStatusService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ce0bf6479835df40bde974baab27ff26</Hash>
+    <Hash>f649d42f4efbaf6c3eb5774a6eecc09b</Hash>
 </Codenesium>*/

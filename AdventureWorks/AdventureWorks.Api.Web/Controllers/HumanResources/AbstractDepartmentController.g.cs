@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractDepartmentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractDepartmentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDepartmentService departmentService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiDepartmentResponseModel response = await this.DepartmentService.GetName(name);
+                        ApiDepartmentResponseModel response = await this.DepartmentService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>09736eb5455ad3a30dd0418bd810e716</Hash>
+    <Hash>54ff4fb33ac2af8735b3d6050e23eabd</Hash>
 </Codenesium>*/

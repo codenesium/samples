@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class AccountController: AbstractAccountController
         {
                 public AccountController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AccountController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAccountService accountService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0b3e90113326f88a1613a34c344ecfdb</Hash>
+    <Hash>f5207b5f108c37786787311027f1b627</Hash>
 </Codenesium>*/

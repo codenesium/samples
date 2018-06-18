@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiReleaseResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiReleaseResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.releaseRepository.All(limit, offset, orderClause);
+                        var records = await this.releaseRepository.All(limit, offset);
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.releaseRepository.Get(id);
 
-                        return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiReleaseResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Release record = await this.releaseRepository.GetVersionProjectId(version, projectId);
 
-                        return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiReleaseResponseModel>> GetIdAssembled(string id, DateTimeOffset assembled)
                 {
@@ -133,5 +147,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbd1c11b5d1170c4e88540f072a6a25e</Hash>
+    <Hash>1b17a6ee52e4680a17cd5afb2faf3600</Hash>
 </Codenesium>*/

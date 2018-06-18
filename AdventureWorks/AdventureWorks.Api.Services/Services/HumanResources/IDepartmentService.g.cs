@@ -19,14 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiDepartmentResponseModel> Get(short departmentID);
 
-                Task<List<ApiDepartmentResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiDepartmentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiDepartmentResponseModel> GetName(string name);
+                Task<ApiDepartmentResponseModel> ByName(string name);
 
                 Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>620e09ce723310c53dd8a2c6976fed1d</Hash>
+    <Hash>c92427e08de326951548b1ae7a721e69</Hash>
 </Codenesium>*/

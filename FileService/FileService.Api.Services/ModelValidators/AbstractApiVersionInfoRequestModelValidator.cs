@@ -13,10 +13,11 @@ namespace FileServiceNS.Api.Services
         {
                 private long existingRecordId;
 
-                public ValidationResult Validate(ApiVersionInfoRequestModel model, long id)
+                IVersionInfoRepository versionInfoRepository;
+
+                public AbstractApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.versionInfoRepository = versionInfoRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiVersionInfoRequestModel model, long id)
@@ -37,5 +38,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f17f3bc53d3b8f0def211aef05aa192</Hash>
+    <Hash>c6931dabb84db93c125bd51c35c6a551</Hash>
 </Codenesium>*/

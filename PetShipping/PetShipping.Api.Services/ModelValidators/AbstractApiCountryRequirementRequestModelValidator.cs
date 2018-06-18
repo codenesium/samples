@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiCountryRequirementRequestModel model, int id)
+                ICountryRequirementRepository countryRequirementRepository;
+
+                public AbstractApiCountryRequirementRequestModelValidator(ICountryRequirementRepository countryRequirementRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.countryRequirementRepository = countryRequirementRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCountryRequirementRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ICountryRepository CountryRepository { get; set; }
 
                 public virtual void CountryIdRules()
                 {
@@ -40,7 +39,7 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.CountryRepository.Get(id);
+                        var record = await this.countryRequirementRepository.GetCountry(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e04863c4578afa89c1f4428b4939f85c</Hash>
+    <Hash>6eda635955d39c500bfe771f55cd8ba1</Hash>
 </Codenesium>*/

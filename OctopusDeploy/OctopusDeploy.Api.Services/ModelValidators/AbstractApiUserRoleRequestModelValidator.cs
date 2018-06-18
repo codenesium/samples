@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiUserRoleRequestModel model, string id)
+                IUserRoleRepository userRoleRepository;
+
+                public AbstractApiUserRoleRequestModelValidator(IUserRoleRepository userRoleRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.userRoleRepository = userRoleRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiUserRoleRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IUserRoleRepository UserRoleRepository { get; set; }
                 public virtual void JSONRules()
                 {
                         this.RuleFor(x => x.JSON).NotNull();
@@ -40,7 +40,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiUserRoleRequestModel model,  CancellationToken cancellationToken)
                 {
-                        UserRole record = await this.UserRoleRepository.GetName(model.Name);
+                        UserRole record = await this.userRoleRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -55,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61d1af3f413feef17834f0c233a00c03</Hash>
+    <Hash>82d9a03a79c123f6da585a7534e0abc4</Hash>
 </Codenesium>*/

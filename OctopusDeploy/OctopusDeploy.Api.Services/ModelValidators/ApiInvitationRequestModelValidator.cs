@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiInvitationRequestModelValidator: AbstractApiInvitationRequestModelValidator, IApiInvitationRequestModelValidator
         {
-                public ApiInvitationRequestModelValidator()
+                public ApiInvitationRequestModelValidator(IInvitationRepository invitationRepository)
+                        : base(invitationRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c7f22bedefa8d5f78ff243fac321c4e</Hash>
+    <Hash>424c4f046cdb2a4d6318a75845efe9c2</Hash>
 </Codenesium>*/

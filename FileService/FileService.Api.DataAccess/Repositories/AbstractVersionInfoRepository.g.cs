@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FileServiceNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<VersionInfo>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<VersionInfo> Get(long version)
@@ -77,41 +78,36 @@ namespace FileServiceNS.Api.DataAccess
 
                 public async Task<VersionInfo> GetVersion(long version)
                 {
-                        var records = await this.SearchLinqEF(x => x.Version == version);
+                        var records = await this.Where(x => x.Version == version);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<VersionInfo>> Where(Expression<Func<VersionInfo, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<VersionInfo>> Where(
+                        Expression<Func<VersionInfo, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<VersionInfo, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<VersionInfo> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<VersionInfo>> SearchLinqEF(Expression<Func<VersionInfo, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(VersionInfo.Version)} ASC";
+                                orderBy = x => x.Version;
                         }
 
-                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
-                }
-
-                private async Task<List<VersionInfo>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(VersionInfo.Version)} ASC";
+                                return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
                         }
-
-                        return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
+                        else
+                        {
+                                return await this.Context.Set<VersionInfo>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<VersionInfo>();
+                        }
                 }
 
                 private async Task<VersionInfo> GetById(long version)
                 {
-                        List<VersionInfo> records = await this.SearchLinqEF(x => x.Version == version);
+                        List<VersionInfo> records = await this.Where(x => x.Version == version);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2de82ca0b0c5e907b16bd297401cd4ba</Hash>
+    <Hash>8bbb264f04989bb719f37b2689c549dc</Hash>
 </Codenesium>*/

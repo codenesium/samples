@@ -22,11 +22,6 @@ namespace NebulaNS.Api.Services
                 public virtual BOOrganization MapEFToBO(
                         Organization ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOOrganization();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a887b2b8833fefe791fb7044b9bcbd97</Hash>
+    <Hash>08864a7aa91f7099971f77c4d20a977c</Hash>
 </Codenesium>*/

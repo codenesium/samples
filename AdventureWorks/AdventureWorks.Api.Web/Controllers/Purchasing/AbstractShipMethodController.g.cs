@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractShipMethodController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractShipMethodController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IShipMethodService shipMethodService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiShipMethodResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiShipMethodResponseModel response = await this.ShipMethodService.GetName(name);
+                        ApiShipMethodResponseModel response = await this.ShipMethodService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>508bd094ff2d7cf46b952305068e9358</Hash>
+    <Hash>4946b209a9950f42d481d2c6eaa599bf</Hash>
 </Codenesium>*/

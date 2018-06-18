@@ -32,11 +32,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOEvent MapEFToBO(
                         Event ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOEvent();
 
                         bo.SetProperties(
@@ -71,5 +66,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b611c6fc71e401ed240a9cc4dd49fd44</Hash>
+    <Hash>db30181a07cf11d5221fb183890a1312</Hash>
 </Codenesium>*/

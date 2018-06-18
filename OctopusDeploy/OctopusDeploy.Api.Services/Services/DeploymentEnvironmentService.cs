@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class DeploymentEnvironmentService: AbstractDeploymentEnvironmentService, IDeploymentEnvironmentService
         {
                 public DeploymentEnvironmentService(
-                        ILogger<DeploymentEnvironmentRepository> logger,
+                        ILogger<IDeploymentEnvironmentRepository> logger,
                         IDeploymentEnvironmentRepository deploymentEnvironmentRepository,
                         IApiDeploymentEnvironmentRequestModelValidator deploymentEnvironmentModelValidator,
                         IBOLDeploymentEnvironmentMapper boldeploymentEnvironmentMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e49d0609227a71df34570fe09d0deda5</Hash>
+    <Hash>aa100f6208c7fcb27d6d89f00b81a171</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class DeploymentRelatedMachineController: AbstractDeploymentRelatedMachineController
         {
                 public DeploymentRelatedMachineController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DeploymentRelatedMachineController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeploymentRelatedMachineService deploymentRelatedMachineService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>721bb1241a9d8b50bb784a98825a9285</Hash>
+    <Hash>d39dedcf6534983c4f25cbf5c9148e84</Hash>
 </Codenesium>*/

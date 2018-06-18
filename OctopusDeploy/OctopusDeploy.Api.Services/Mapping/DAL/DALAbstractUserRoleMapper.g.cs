@@ -23,11 +23,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOUserRole MapEFToBO(
                         UserRole ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOUserRole();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e1a2761ad0b16a3c138b35590944203</Hash>
+    <Hash>8eff2dfd8e64e383eafdbacf54376240</Hash>
 </Codenesium>*/

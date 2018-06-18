@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class VariableSetService: AbstractVariableSetService, IVariableSetService
         {
                 public VariableSetService(
-                        ILogger<VariableSetRepository> logger,
+                        ILogger<IVariableSetRepository> logger,
                         IVariableSetRepository variableSetRepository,
                         IApiVariableSetRequestModelValidator variableSetModelValidator,
                         IBOLVariableSetMapper bolvariableSetMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>356ee435eb92f143a71d3658c3d1370e</Hash>
+    <Hash>e15cb51e244ecd9714722217d75cb261</Hash>
 </Codenesium>*/

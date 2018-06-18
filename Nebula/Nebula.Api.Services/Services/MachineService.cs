@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class MachineService: AbstractMachineService, IMachineService
         {
                 public MachineService(
-                        ILogger<MachineRepository> logger,
+                        ILogger<IMachineRepository> logger,
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
                         IBOLMachineMapper bolmachineMapper,
@@ -44,5 +44,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b58242b645984988fbb1db0ad147d0a</Hash>
+    <Hash>f7e683a6844f223c02b25b09d45ea7a0</Hash>
 </Codenesium>*/

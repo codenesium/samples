@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSaleTicketsRequestModel model, int id)
+                ISaleTicketsRepository saleTicketsRepository;
+
+                public AbstractApiSaleTicketsRequestModelValidator(ISaleTicketsRepository saleTicketsRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.saleTicketsRepository = saleTicketsRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSaleTicketsRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace TicketingCRMNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISaleRepository SaleRepository { get; set; }
-
-                public ITicketRepository TicketRepository { get; set; }
 
                 public virtual void SaleIdRules()
                 {
@@ -41,14 +38,14 @@ namespace TicketingCRMNS.Api.Services
 
                 private async Task<bool> BeValidSale(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SaleRepository.Get(id);
+                        var record = await this.saleTicketsRepository.GetSale(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidTicket(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TicketRepository.Get(id);
+                        var record = await this.saleTicketsRepository.GetTicket(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d8862699f5e9af3c1e168ca230da7e7</Hash>
+    <Hash>190485a80e9db0fec3a73a2a1bc8ef69</Hash>
 </Codenesium>*/

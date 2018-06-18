@@ -23,11 +23,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOProvince MapEFToBO(
                         Province ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOProvince();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f04753908e6af37c3d99cb0b423e0ee2</Hash>
+    <Hash>6aeb0917c9cce4be71f069dca72d8dbb</Hash>
 </Codenesium>*/

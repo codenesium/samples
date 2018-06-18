@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class TagSetController: AbstractTagSetController
         {
                 public TagSetController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TagSetController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITagSetService tagSetService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>293e7d97dc997999025fa984f4c613c8</Hash>
+    <Hash>c5c5a3b85437b81fd2bb910f6a4da264</Hash>
 </Codenesium>*/

@@ -19,15 +19,15 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiAddressResponseModel> Get(int addressID);
 
-                Task<List<ApiAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiAddressResponseModel> GetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode);
-                Task<List<ApiAddressResponseModel>> GetStateProvinceID(int stateProvinceID);
+                Task<ApiAddressResponseModel> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode);
+                Task<List<ApiAddressResponseModel>> ByStateProvinceID(int stateProvinceID);
 
                 Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>38ff17ead453a7fc9b7562ac390e810b</Hash>
+    <Hash>b4a72746a2b539da5f658952b5894e21</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class BusinessEntityService: AbstractBusinessEntityService, IBusinessEntityService
         {
                 public BusinessEntityService(
-                        ILogger<BusinessEntityRepository> logger,
+                        ILogger<IBusinessEntityRepository> logger,
                         IBusinessEntityRepository businessEntityRepository,
                         IApiBusinessEntityRequestModelValidator businessEntityModelValidator,
                         IBOLBusinessEntityMapper bolbusinessEntityMapper,
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27e8276416a0bbdfa1623bdf20655031</Hash>
+    <Hash>236437fe72848ce8e55dcd72e170e345</Hash>
 </Codenesium>*/

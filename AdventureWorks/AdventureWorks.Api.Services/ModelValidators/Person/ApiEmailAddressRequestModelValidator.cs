@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiEmailAddressRequestModelValidator: AbstractApiEmailAddressRequestModelValidator, IApiEmailAddressRequestModelValidator
         {
-                public ApiEmailAddressRequestModelValidator()
+                public ApiEmailAddressRequestModelValidator(IEmailAddressRepository emailAddressRepository)
+                        : base(emailAddressRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d691c87e72a4b291e8774822602134b</Hash>
+    <Hash>496f04042be5b9b97afd67e66cc383c1</Hash>
 </Codenesium>*/

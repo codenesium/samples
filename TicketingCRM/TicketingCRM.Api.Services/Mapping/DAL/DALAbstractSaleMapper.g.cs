@@ -25,11 +25,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOSale MapEFToBO(
                         Sale ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSale();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c24442c8050951e0539de33787a1c39f</Hash>
+    <Hash>cbd7b009c7619f209e67fbd70eb4762f</Hash>
 </Codenesium>*/

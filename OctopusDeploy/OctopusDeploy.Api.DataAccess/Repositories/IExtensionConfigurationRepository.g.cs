@@ -15,10 +15,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<ExtensionConfiguration> Get(string id);
 
-                Task<List<ExtensionConfiguration>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ExtensionConfiguration>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>ad6f9f41cad97e9ed12632bf23511b9d</Hash>
+    <Hash>e439feeed27f02e02047d0c98e34c383</Hash>
 </Codenesium>*/

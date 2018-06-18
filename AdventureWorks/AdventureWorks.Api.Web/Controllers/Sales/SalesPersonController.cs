@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesPersonController: AbstractSalesPersonController
         {
                 public SalesPersonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesPersonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesPersonService salesPersonService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4058f83f42ad9b399728a1af6f4f4b90</Hash>
+    <Hash>e04997ddd6f7de2b5a692bd56462fcca</Hash>
 </Codenesium>*/

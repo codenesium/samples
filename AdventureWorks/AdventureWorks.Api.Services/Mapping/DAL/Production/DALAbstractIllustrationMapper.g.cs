@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOIllustration MapEFToBO(
                         Illustration ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOIllustration();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0172f28d920137af3d46c6d49935adf1</Hash>
+    <Hash>fe9f0c4415847def8f89369b0211c81e</Hash>
 </Codenesium>*/

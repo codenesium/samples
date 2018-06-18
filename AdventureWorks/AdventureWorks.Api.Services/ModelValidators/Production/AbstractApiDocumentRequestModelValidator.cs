@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private Guid existingRecordId;
 
-                public ValidationResult Validate(ApiDocumentRequestModel model, Guid id)
+                IDocumentRepository documentRepository;
+
+                public AbstractApiDocumentRequestModelValidator(IDocumentRepository documentRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.documentRepository = documentRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDocumentRequestModel model, Guid id)
@@ -71,10 +72,6 @@ namespace AdventureWorksNS.Api.Services
                         this.RuleFor(x => x.Revision).Length(0, 5);
                 }
 
-                public virtual void RowguidRules()
-                {
-                }
-
                 public virtual void StatusRules()
                 {
                 }
@@ -88,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5315903f4edd8bc44fb3b1d5c13627c8</Hash>
+    <Hash>7533e4a3375fac117b9405ba4eb7e633</Hash>
 </Codenesium>*/

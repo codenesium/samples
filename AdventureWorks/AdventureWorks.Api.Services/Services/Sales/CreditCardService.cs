@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class CreditCardService: AbstractCreditCardService, ICreditCardService
         {
                 public CreditCardService(
-                        ILogger<CreditCardRepository> logger,
+                        ILogger<ICreditCardRepository> logger,
                         ICreditCardRepository creditCardRepository,
                         IApiCreditCardRequestModelValidator creditCardModelValidator,
                         IBOLCreditCardMapper bolcreditCardMapper,
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2b2a95b16a4ad121f7497c9ecd18a9e4</Hash>
+    <Hash>74457a8ee0cb3dab8a7614d96a909cd1</Hash>
 </Codenesium>*/

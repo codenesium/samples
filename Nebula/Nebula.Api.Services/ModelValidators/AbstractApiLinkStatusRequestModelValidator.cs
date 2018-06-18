@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiLinkStatusRequestModel model, int id)
+                ILinkStatusRepository linkStatusRepository;
+
+                public AbstractApiLinkStatusRequestModelValidator(ILinkStatusRepository linkStatusRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.linkStatusRepository = linkStatusRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLinkStatusRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>577338ae041680159a926870615647b3</Hash>
+    <Hash>fcbe335354dfdd18e40fcc69c5dc5b81</Hash>
 </Codenesium>*/

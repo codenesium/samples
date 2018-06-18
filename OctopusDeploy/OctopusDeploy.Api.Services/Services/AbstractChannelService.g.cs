@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiChannelResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiChannelResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.channelRepository.All(limit, offset, orderClause);
+                        var records = await this.channelRepository.All(limit, offset);
 
                         return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.channelRepository.Get(id);
 
-                        return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiChannelResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Channel record = await this.channelRepository.GetNameProjectId(name, projectId);
 
-                        return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiChannelResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
@@ -121,5 +135,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83d1f8e43ee0eef3bedee0c1fa050d2f</Hash>
+    <Hash>75632fafa9c190ca517436105d0b0aeb</Hash>
 </Codenesium>*/

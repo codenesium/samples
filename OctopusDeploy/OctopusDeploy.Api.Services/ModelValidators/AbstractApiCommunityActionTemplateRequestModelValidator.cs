@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiCommunityActionTemplateRequestModel model, string id)
+                ICommunityActionTemplateRepository communityActionTemplateRepository;
+
+                public AbstractApiCommunityActionTemplateRequestModelValidator(ICommunityActionTemplateRepository communityActionTemplateRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.communityActionTemplateRepository = communityActionTemplateRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCommunityActionTemplateRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ICommunityActionTemplateRepository CommunityActionTemplateRepository { get; set; }
                 public virtual void ExternalIdRules()
                 {
                         this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.ExternalId));
@@ -45,7 +45,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetExternalId(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
                 {
-                        CommunityActionTemplate record = await this.CommunityActionTemplateRepository.GetExternalId(model.ExternalId);
+                        CommunityActionTemplate record = await this.communityActionTemplateRepository.GetExternalId(model.ExternalId);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -58,7 +58,7 @@ namespace OctopusDeployNS.Api.Services
                 }
                 private async Task<bool> BeUniqueGetName(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
                 {
-                        CommunityActionTemplate record = await this.CommunityActionTemplateRepository.GetName(model.Name);
+                        CommunityActionTemplate record = await this.communityActionTemplateRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -73,5 +73,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84aa3fcbefea08fcf92575d9a01a414f</Hash>
+    <Hash>1d00c9a5941571db5e096fb66196c834</Hash>
 </Codenesium>*/

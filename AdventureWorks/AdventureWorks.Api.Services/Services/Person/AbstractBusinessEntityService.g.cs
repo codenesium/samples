@@ -68,9 +68,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBusinessEntityResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBusinessEntityResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.businessEntityRepository.All(limit, offset, orderClause);
+                        var records = await this.businessEntityRepository.All(limit, offset);
 
                         return this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(records));
                 }
@@ -79,7 +79,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.businessEntityRepository.Get(businessEntityID);
 
-                        return this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBusinessEntityMapper.MapBOToModel(this.dalBusinessEntityMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiBusinessEntityResponseModel>> Create(
@@ -147,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41955341a2870067082e577aed68c1ad</Hash>
+    <Hash>5f047cfbefa3e6bff0c54c7b53ab81f0</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiCultureRequestModelValidator: AbstractApiCultureRequestModelValidator, IApiCultureRequestModelValidator
         {
-                public ApiCultureRequestModelValidator()
+                public ApiCultureRequestModelValidator(ICultureRepository cultureRepository)
+                        : base(cultureRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eb0dcc75e2477bf23a5caf7e3e366247</Hash>
+    <Hash>fcd8e7c70b60ea670c62933895bfe8b3</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProductVendorController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProductVendorController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductVendorService productVendorService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getBusinessEntityID/{businessEntityID}")]
+                [Route("byBusinessEntityID/{businessEntityID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetBusinessEntityID(int businessEntityID)
+                public async virtual Task<IActionResult> ByBusinessEntityID(int businessEntityID)
                 {
-                        List<ApiProductVendorResponseModel> response = await this.ProductVendorService.GetBusinessEntityID(businessEntityID);
+                        List<ApiProductVendorResponseModel> response = await this.ProductVendorService.ByBusinessEntityID(businessEntityID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getUnitMeasureCode/{unitMeasureCode}")]
+                [Route("byUnitMeasureCode/{unitMeasureCode}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetUnitMeasureCode(string unitMeasureCode)
+                public async virtual Task<IActionResult> ByUnitMeasureCode(string unitMeasureCode)
                 {
-                        List<ApiProductVendorResponseModel> response = await this.ProductVendorService.GetUnitMeasureCode(unitMeasureCode);
+                        List<ApiProductVendorResponseModel> response = await this.ProductVendorService.ByUnitMeasureCode(unitMeasureCode);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>75452c5371da8641181bafd9c6220986</Hash>
+    <Hash>cb33245e89b5e0a7d9aef7f216065b98</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ErrorLogService: AbstractErrorLogService, IErrorLogService
         {
                 public ErrorLogService(
-                        ILogger<ErrorLogRepository> logger,
+                        ILogger<IErrorLogRepository> logger,
                         IErrorLogRepository errorLogRepository,
                         IApiErrorLogRequestModelValidator errorLogModelValidator,
                         IBOLErrorLogMapper bolerrorLogMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d287e06649673ca424b94e7365bc3a0f</Hash>
+    <Hash>a64a2bb6679156d1c8efe7fac3a959e7</Hash>
 </Codenesium>*/

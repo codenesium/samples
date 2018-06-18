@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SaleTickets>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SaleTickets>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SaleTickets> Get(int id)
@@ -77,47 +78,51 @@ namespace TicketingCRMNS.Api.DataAccess
 
                 public async Task<List<SaleTickets>> GetTicketId(int ticketId)
                 {
-                        var records = await this.SearchLinqEF(x => x.TicketId == ticketId);
+                        var records = await this.Where(x => x.TicketId == ticketId);
 
                         return records;
                 }
 
-                protected async Task<List<SaleTickets>> Where(Expression<Func<SaleTickets, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SaleTickets>> Where(
+                        Expression<Func<SaleTickets, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SaleTickets, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SaleTickets> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SaleTickets>> SearchLinqEF(Expression<Func<SaleTickets, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SaleTickets.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<SaleTickets>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SaleTickets>();
-                }
-
-                private async Task<List<SaleTickets>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SaleTickets.Id)} ASC";
+                                return await this.Context.Set<SaleTickets>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SaleTickets>();
                         }
-
-                        return await this.Context.Set<SaleTickets>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SaleTickets>();
+                        else
+                        {
+                                return await this.Context.Set<SaleTickets>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SaleTickets>();
+                        }
                 }
 
                 private async Task<SaleTickets> GetById(int id)
                 {
-                        List<SaleTickets> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<SaleTickets> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Sale> GetSale(int saleId)
+                {
+                        return await this.Context.Set<Sale>().SingleOrDefaultAsync(x => x.Id == saleId);
+                }
+                public async virtual Task<Ticket> GetTicket(int ticketId)
+                {
+                        return await this.Context.Set<Ticket>().SingleOrDefaultAsync(x => x.Id == ticketId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2a780031be34c1555aa7e4881fd4ef97</Hash>
+    <Hash>220b26fce745fd53d7a43e2e2d801c3f</Hash>
 </Codenesium>*/

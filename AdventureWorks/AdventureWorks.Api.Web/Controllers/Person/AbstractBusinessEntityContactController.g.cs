@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractBusinessEntityContactController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractBusinessEntityContactController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBusinessEntityContactService businessEntityContactService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getContactTypeID/{contactTypeID}")]
+                [Route("byContactTypeID/{contactTypeID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetContactTypeID(int contactTypeID)
+                public async virtual Task<IActionResult> ByContactTypeID(int contactTypeID)
                 {
-                        List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.GetContactTypeID(contactTypeID);
+                        List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.ByContactTypeID(contactTypeID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getPersonID/{personID}")]
+                [Route("byPersonID/{personID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetPersonID(int personID)
+                public async virtual Task<IActionResult> ByPersonID(int personID)
                 {
-                        List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.GetPersonID(personID);
+                        List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.ByPersonID(personID);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6f13e487d64b0d8e5300252ffb414f84</Hash>
+    <Hash>e82e92f65ecb924e045fc49e9d738330</Hash>
 </Codenesium>*/

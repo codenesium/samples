@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiAdminRequestModelValidator: AbstractApiAdminRequestModelValidator, IApiAdminRequestModelValidator
         {
-                public ApiAdminRequestModelValidator()
+                public ApiAdminRequestModelValidator(IAdminRepository adminRepository)
+                        : base(adminRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f1bf0ece932fa97d553169f55946136</Hash>
+    <Hash>3b69cbccb8c13e4cd7f1adb32a5ba0d5</Hash>
 </Codenesium>*/

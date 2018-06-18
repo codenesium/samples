@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTagSetController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTagSetController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITagSetService tagSetService
@@ -194,5 +194,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b797cd5014423664bf6d7937eb4d19c1</Hash>
+    <Hash>d149408e67c75f72c395cb7370e630c3</Hash>
 </Codenesium>*/

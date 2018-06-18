@@ -17,7 +17,7 @@ namespace ESPIOTNS.Api.Web
         public class DeviceController: AbstractDeviceController
         {
                 public DeviceController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DeviceController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeviceService deviceService
@@ -35,5 +35,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>208425d5793102db0bef44e8639aa59c</Hash>
+    <Hash>a3eab978f358559aef3bd10c99ed723c</Hash>
 </Codenesium>*/

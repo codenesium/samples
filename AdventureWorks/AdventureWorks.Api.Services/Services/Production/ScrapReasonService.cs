@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ScrapReasonService: AbstractScrapReasonService, IScrapReasonService
         {
                 public ScrapReasonService(
-                        ILogger<ScrapReasonRepository> logger,
+                        ILogger<IScrapReasonRepository> logger,
                         IScrapReasonRepository scrapReasonRepository,
                         IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
                         IBOLScrapReasonMapper bolscrapReasonMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acb55a6274eef24b011bb24b6459f1de</Hash>
+    <Hash>06eeb6a68618564ef5f1b413b4a308f5</Hash>
 </Codenesium>*/

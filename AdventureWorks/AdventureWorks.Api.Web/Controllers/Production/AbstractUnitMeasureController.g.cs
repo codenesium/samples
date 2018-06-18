@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractUnitMeasureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractUnitMeasureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IUnitMeasureService unitMeasureService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiUnitMeasureResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiUnitMeasureResponseModel response = await this.UnitMeasureService.GetName(name);
+                        ApiUnitMeasureResponseModel response = await this.UnitMeasureService.ByName(name);
 
                         if (response == null)
                         {
@@ -210,5 +210,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7933bee111e9672eec17d43000725b6c</Hash>
+    <Hash>b84cde72ea2434ec04273fd731f644e1</Hash>
 </Codenesium>*/

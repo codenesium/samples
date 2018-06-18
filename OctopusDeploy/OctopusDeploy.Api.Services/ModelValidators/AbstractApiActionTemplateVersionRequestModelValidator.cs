@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiActionTemplateVersionRequestModel model, string id)
+                IActionTemplateVersionRepository actionTemplateVersionRepository;
+
+                public AbstractApiActionTemplateVersionRequestModelValidator(IActionTemplateVersionRepository actionTemplateVersionRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.actionTemplateVersionRepository = actionTemplateVersionRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiActionTemplateVersionRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IActionTemplateVersionRepository ActionTemplateVersionRepository { get; set; }
                 public virtual void ActionTypeRules()
                 {
                         this.RuleFor(x => x.ActionType).NotNull();
@@ -57,7 +57,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetNameVersion(ApiActionTemplateVersionRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ActionTemplateVersion record = await this.ActionTemplateVersionRepository.GetNameVersion(model.Name, model.Version);
+                        ActionTemplateVersion record = await this.actionTemplateVersionRepository.GetNameVersion(model.Name, model.Version);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -72,5 +72,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>349923d3ae53134db8db805cf521d8d3</Hash>
+    <Hash>ab81b9cb8e99cbbdae90f070696e7a5c</Hash>
 </Codenesium>*/

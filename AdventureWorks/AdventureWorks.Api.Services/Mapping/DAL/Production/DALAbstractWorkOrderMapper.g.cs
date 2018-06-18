@@ -30,11 +30,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOWorkOrder MapEFToBO(
                         WorkOrder ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOWorkOrder();
 
                         bo.SetProperties(
@@ -67,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d037a93f83682aa53839853a984f8173</Hash>
+    <Hash>29d51b90e22e9dddf574e8baa3adcdc3</Hash>
 </Codenesium>*/

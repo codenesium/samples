@@ -23,11 +23,6 @@ namespace FermataFishNS.Api.Services
                 public virtual BOLessonStatus MapEFToBO(
                         LessonStatus ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOLessonStatus();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acf6851a02cc2ca056357d902d404f61</Hash>
+    <Hash>7803fc16da2518e5612bcbb4324fb865</Hash>
 </Codenesium>*/

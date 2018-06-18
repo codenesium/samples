@@ -60,9 +60,9 @@ namespace TicketingCRMNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProvinceResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProvinceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.provinceRepository.All(limit, offset, orderClause);
+                        var records = await this.provinceRepository.All(limit, offset);
 
                         return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace TicketingCRMNS.Api.Services
                 {
                         var record = await this.provinceRepository.Get(id);
 
-                        return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiProvinceResponseModel>> Create(
@@ -140,5 +147,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c09f25a50d31cfda028c6212e8fbb9b6</Hash>
+    <Hash>a7d93286cd267c67c356bfc30c2445c4</Hash>
 </Codenesium>*/

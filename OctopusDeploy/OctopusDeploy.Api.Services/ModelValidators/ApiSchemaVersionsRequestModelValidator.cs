@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiSchemaVersionsRequestModelValidator: AbstractApiSchemaVersionsRequestModelValidator, IApiSchemaVersionsRequestModelValidator
         {
-                public ApiSchemaVersionsRequestModelValidator()
+                public ApiSchemaVersionsRequestModelValidator(ISchemaVersionsRepository schemaVersionsRepository)
+                        : base(schemaVersionsRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6ef1e1e40d9b1f5505371626147cc98</Hash>
+    <Hash>2ce3c275641959068766760e3970f726</Hash>
 </Codenesium>*/

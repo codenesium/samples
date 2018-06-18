@@ -25,7 +25,7 @@ namespace FermataFishNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractStudentXFamilyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractStudentXFamilyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStudentXFamilyService studentXFamilyService
@@ -164,5 +164,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>67d568366518e7a7babd6a34749e04a4</Hash>
+    <Hash>d58db8f6c80035a0ebe067d362ef1dd5</Hash>
 </Codenesium>*/

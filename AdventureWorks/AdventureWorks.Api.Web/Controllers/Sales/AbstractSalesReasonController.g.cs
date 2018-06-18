@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSalesReasonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSalesReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesReasonService salesReasonService
@@ -178,5 +178,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e82e3a7ba34e118f6dff1af6a3bbd428</Hash>
+    <Hash>29c5729f99a3c9a27e17b71b0a06d531</Hash>
 </Codenesium>*/

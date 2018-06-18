@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractActionTemplateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractActionTemplateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IActionTemplateService actionTemplateService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2304900897f897b93932da8dd643fff3</Hash>
+    <Hash>8e96b1668c51141c9b7e8164a115e2b7</Hash>
 </Codenesium>*/

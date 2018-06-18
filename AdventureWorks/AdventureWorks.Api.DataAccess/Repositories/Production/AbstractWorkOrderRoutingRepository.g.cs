@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<WorkOrderRouting>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<WorkOrderRouting>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<WorkOrderRouting> Get(int workOrderID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<WorkOrderRouting>> GetProductID(int productID)
+                public async Task<List<WorkOrderRouting>> ByProductID(int productID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        var records = await this.Where(x => x.ProductID == productID);
 
                         return records;
                 }
 
-                protected async Task<List<WorkOrderRouting>> Where(Expression<Func<WorkOrderRouting, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<WorkOrderRouting>> Where(
+                        Expression<Func<WorkOrderRouting, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<WorkOrderRouting, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<WorkOrderRouting> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<WorkOrderRouting>> SearchLinqEF(Expression<Func<WorkOrderRouting, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(WorkOrderRouting.WorkOrderID)} ASC";
+                                orderBy = x => x.WorkOrderID;
                         }
 
-                        return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
-                }
-
-                private async Task<List<WorkOrderRouting>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(WorkOrderRouting.WorkOrderID)} ASC";
+                                return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
                         }
-
-                        return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
+                        else
+                        {
+                                return await this.Context.Set<WorkOrderRouting>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
+                        }
                 }
 
                 private async Task<WorkOrderRouting> GetById(int workOrderID)
                 {
-                        List<WorkOrderRouting> records = await this.SearchLinqEF(x => x.WorkOrderID == workOrderID);
+                        List<WorkOrderRouting> records = await this.Where(x => x.WorkOrderID == workOrderID);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b9cc745bb751953fcb4a435766e1ebdd</Hash>
+    <Hash>aa2250b3d2d687e0023e8726c45cac5f</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiStudentXFamilyRequestModel model, int id)
+                IStudentXFamilyRepository studentXFamilyRepository;
+
+                public AbstractApiStudentXFamilyRequestModelValidator(IStudentXFamilyRepository studentXFamilyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.studentXFamilyRepository = studentXFamilyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiStudentXFamilyRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IFamilyRepository FamilyRepository { get; set; }
-
-                public IStudentRepository StudentRepository { get; set; }
 
                 public virtual void FamilyIdRules()
                 {
@@ -41,14 +38,14 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.FamilyRepository.Get(id);
+                        var record = await this.studentXFamilyRepository.GetFamily(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudentRepository.Get(id);
+                        var record = await this.studentXFamilyRepository.GetStudent(id);
 
                         return record != null;
                 }
@@ -56,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55d43b53b84f00f1ef0dccb71892cd30</Hash>
+    <Hash>0b50ea7df1e5193407a3f69389c16130</Hash>
 </Codenesium>*/

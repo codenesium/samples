@@ -19,9 +19,9 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiCurrencyResponseModel> Get(string currencyCode);
 
-                Task<List<ApiCurrencyResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiCurrencyResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiCurrencyResponseModel> GetName(string name);
+                Task<ApiCurrencyResponseModel> ByName(string name);
 
                 Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f942ca407892dc78bd1ac5c37329cf74</Hash>
+    <Hash>067840214c3d3cd86bcb1fc55fa5e083</Hash>
 </Codenesium>*/

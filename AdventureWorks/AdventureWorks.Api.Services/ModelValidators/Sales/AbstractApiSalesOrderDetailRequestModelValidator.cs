@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSalesOrderDetailRequestModel model, int id)
+                ISalesOrderDetailRepository salesOrderDetailRepository;
+
+                public AbstractApiSalesOrderDetailRequestModelValidator(ISalesOrderDetailRepository salesOrderDetailRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.salesOrderDetailRepository = salesOrderDetailRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSalesOrderDetailRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISpecialOfferProductRepository SpecialOfferProductRepository { get; set; }
-
-                public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
 
                 public virtual void CarrierTrackingNumberRules()
                 {
@@ -74,14 +71,14 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSpecialOfferProduct(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SpecialOfferProductRepository.Get(id);
+                        var record = await this.salesOrderDetailRepository.GetSpecialOfferProduct(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesOrderHeaderRepository.Get(id);
+                        var record = await this.salesOrderDetailRepository.GetSalesOrderHeader(id);
 
                         return record != null;
                 }
@@ -89,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a13f2ea8e3d5c3482b9def365aaec641</Hash>
+    <Hash>21c29966a920d5b97d3fa2591ad16bfc</Hash>
 </Codenesium>*/

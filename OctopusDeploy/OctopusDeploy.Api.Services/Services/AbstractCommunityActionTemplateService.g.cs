@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.communityActionTemplateRepository.All(limit, offset, orderClause);
+                        var records = await this.communityActionTemplateRepository.All(limit, offset);
 
                         return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.communityActionTemplateRepository.Get(id);
 
-                        return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiCommunityActionTemplateResponseModel>> Create(
@@ -103,17 +110,31 @@ namespace OctopusDeployNS.Api.Services
                 {
                         CommunityActionTemplate record = await this.communityActionTemplateRepository.GetExternalId(externalId);
 
-                        return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<ApiCommunityActionTemplateResponseModel> GetName(string name)
                 {
                         CommunityActionTemplate record = await this.communityActionTemplateRepository.GetName(name);
 
-                        return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+                        }
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f26bbd7462595f5f33c095c043563983</Hash>
+    <Hash>637b9a68d34d55e8f4f693cb6de5f334</Hash>
 </Codenesium>*/

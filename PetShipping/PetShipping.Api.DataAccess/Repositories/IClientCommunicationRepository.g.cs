@@ -15,10 +15,13 @@ namespace PetShippingNS.Api.DataAccess
 
                 Task<ClientCommunication> Get(int id);
 
-                Task<List<ClientCommunication>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ClientCommunication>> All(int limit = int.MaxValue, int offset = 0);
+
+                Task<Client> GetClient(int clientId);
+                Task<Employee> GetEmployee(int employeeId);
         }
 }
 
 /*<Codenesium>
-    <Hash>807433fafd1e2bbacc771cbfb8720494</Hash>
+    <Hash>fded0ef0710f7a0aecf77be2e9c66678</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiAccountRequestModelValidator: AbstractApiAccountRequestModelValidator, IApiAccountRequestModelValidator
         {
-                public ApiAccountRequestModelValidator()
+                public ApiAccountRequestModelValidator(IAccountRepository accountRepository)
+                        : base(accountRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb9c903684052987097841dcaf366144</Hash>
+    <Hash>20617b6b22227ce18d3a83002bc51ca5</Hash>
 </Codenesium>*/

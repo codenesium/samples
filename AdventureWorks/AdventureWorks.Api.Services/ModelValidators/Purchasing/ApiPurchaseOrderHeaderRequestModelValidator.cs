@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiPurchaseOrderHeaderRequestModelValidator: AbstractApiPurchaseOrderHeaderRequestModelValidator, IApiPurchaseOrderHeaderRequestModelValidator
         {
-                public ApiPurchaseOrderHeaderRequestModelValidator()
+                public ApiPurchaseOrderHeaderRequestModelValidator(IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository)
+                        : base(purchaseOrderHeaderRepository)
                 {
                 }
 
@@ -54,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4f218c2bffc86a8ac853e227ea3923b</Hash>
+    <Hash>0563a86fb82ec8daee66bdfcd0c7c68a</Hash>
 </Codenesium>*/

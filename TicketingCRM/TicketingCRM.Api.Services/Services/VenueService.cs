@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class VenueService: AbstractVenueService, IVenueService
         {
                 public VenueService(
-                        ILogger<VenueRepository> logger,
+                        ILogger<IVenueRepository> logger,
                         IVenueRepository venueRepository,
                         IApiVenueRequestModelValidator venueModelValidator,
                         IBOLVenueMapper bolvenueMapper,
@@ -32,5 +32,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e4e6cc7745c74b7f0b449ed16f18956</Hash>
+    <Hash>7f44d7ea412f396284e06aba1f3e645a</Hash>
 </Codenesium>*/

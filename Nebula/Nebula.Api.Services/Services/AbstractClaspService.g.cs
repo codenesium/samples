@@ -42,9 +42,9 @@ namespace NebulaNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiClaspResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiClaspResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.claspRepository.All(limit, offset, orderClause);
+                        var records = await this.claspRepository.All(limit, offset);
 
                         return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace NebulaNS.Api.Services
                 {
                         var record = await this.claspRepository.Get(id);
 
-                        return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiClaspResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>787e8af4d1d0b19a8a8ddb02104be6c0</Hash>
+    <Hash>cc0e825d3bf9516ba52479e234e9951a</Hash>
 </Codenesium>*/

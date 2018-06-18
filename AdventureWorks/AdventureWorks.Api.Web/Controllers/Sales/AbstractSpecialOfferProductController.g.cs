@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSpecialOfferProductController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSpecialOfferProductController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISpecialOfferProductService specialOfferProductService
@@ -162,12 +162,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductID/{productID}")]
+                [Route("byProductID/{productID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProductID(int productID)
+                public async virtual Task<IActionResult> ByProductID(int productID)
                 {
-                        List<ApiSpecialOfferProductResponseModel> response = await this.SpecialOfferProductService.GetProductID(productID);
+                        List<ApiSpecialOfferProductResponseModel> response = await this.SpecialOfferProductService.ByProductID(productID);
 
                         return this.Ok(response);
                 }
@@ -189,5 +189,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f85060a02c2b71fcfef695a86f90a8c1</Hash>
+    <Hash>db0c1c59a1e205601e7ba56e3ebade46</Hash>
 </Codenesium>*/

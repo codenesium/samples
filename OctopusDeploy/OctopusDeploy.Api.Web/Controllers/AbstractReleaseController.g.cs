@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractReleaseController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractReleaseController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IReleaseService releaseService
@@ -227,5 +227,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f969ff5cba5c53527f683ffc7fd8a1b9</Hash>
+    <Hash>ef45f8e07685374806bd062b418c5645</Hash>
 </Codenesium>*/

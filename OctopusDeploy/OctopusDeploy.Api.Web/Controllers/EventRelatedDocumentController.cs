@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class EventRelatedDocumentController: AbstractEventRelatedDocumentController
         {
                 public EventRelatedDocumentController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EventRelatedDocumentController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEventRelatedDocumentService eventRelatedDocumentService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>490faa3d049fcc310c81b339c1131920</Hash>
+    <Hash>dd7b20fe20a8c85dcc51628e59853457</Hash>
 </Codenesium>*/

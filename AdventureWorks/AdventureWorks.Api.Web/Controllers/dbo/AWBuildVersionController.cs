@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class AWBuildVersionController: AbstractAWBuildVersionController
         {
                 public AWBuildVersionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AWBuildVersionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAWBuildVersionService aWBuildVersionService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5186ba642ea45f8de39aba712c978bdc</Hash>
+    <Hash>c5770258fef303d54bf43e6def272eed</Hash>
 </Codenesium>*/

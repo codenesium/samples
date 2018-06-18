@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiSalesPersonResponseModel> Get(int businessEntityID);
 
-                Task<List<ApiSalesPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiSalesPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int salesPersonID, int limit = int.MaxValue, int offset = 0);
                 Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
@@ -29,5 +29,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be54b866a4565f7c0544b4bc76167da4</Hash>
+    <Hash>4739f13316a9232dba447bf7a1ae608a</Hash>
 </Codenesium>*/

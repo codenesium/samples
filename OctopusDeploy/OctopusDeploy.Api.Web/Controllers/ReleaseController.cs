@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ReleaseController: AbstractReleaseController
         {
                 public ReleaseController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ReleaseController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IReleaseService releaseService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f5604977e8ca9c36c8baac1c63d37734</Hash>
+    <Hash>0dca18c1b2293232f5aa7a64bc9e99d0</Hash>
 </Codenesium>*/

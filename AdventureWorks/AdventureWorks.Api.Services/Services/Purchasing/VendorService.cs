@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class VendorService: AbstractVendorService, IVendorService
         {
                 public VendorService(
-                        ILogger<VendorRepository> logger,
+                        ILogger<IVendorRepository> logger,
                         IVendorRepository vendorRepository,
                         IApiVendorRequestModelValidator vendorModelValidator,
                         IBOLVendorMapper bolvendorMapper,
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>afffb48747f52682ea826b968a42f2b2</Hash>
+    <Hash>a0d6467787f659185932c641b7c03853</Hash>
 </Codenesium>*/

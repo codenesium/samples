@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductModelService: AbstractProductModelService, IProductModelService
         {
                 public ProductModelService(
-                        ILogger<ProductModelRepository> logger,
+                        ILogger<IProductModelRepository> logger,
                         IProductModelRepository productModelRepository,
                         IApiProductModelRequestModelValidator productModelModelValidator,
                         IBOLProductModelMapper bolproductModelMapper,
@@ -50,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c1f1ef10c324ba8b05c8c263ad19e077</Hash>
+    <Hash>79f8ccd7f99adb76ae17c73e688be4be</Hash>
 </Codenesium>*/

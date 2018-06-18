@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ChannelController: AbstractChannelController
         {
                 public ChannelController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ChannelController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IChannelService channelService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6ea3991bbda6d8a3b06dbb912f993bc1</Hash>
+    <Hash>d67e8a9479f6682b5def9cd6b144a524</Hash>
 </Codenesium>*/

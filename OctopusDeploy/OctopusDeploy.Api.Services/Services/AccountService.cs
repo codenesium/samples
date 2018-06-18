@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class AccountService: AbstractAccountService, IAccountService
         {
                 public AccountService(
-                        ILogger<AccountRepository> logger,
+                        ILogger<IAccountRepository> logger,
                         IAccountRepository accountRepository,
                         IApiAccountRequestModelValidator accountModelValidator,
                         IBOLAccountMapper bolaccountMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d944e5ec2782dce7f44efa394de33eb8</Hash>
+    <Hash>1c0b143b8991a2de70f84e220cf9739b</Hash>
 </Codenesium>*/

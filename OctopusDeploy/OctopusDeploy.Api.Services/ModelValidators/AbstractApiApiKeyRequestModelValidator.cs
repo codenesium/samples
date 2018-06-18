@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiApiKeyRequestModel model, string id)
+                IApiKeyRepository apiKeyRepository;
+
+                public AbstractApiApiKeyRequestModelValidator(IApiKeyRepository apiKeyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.apiKeyRepository = apiKeyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiApiKeyRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IApiKeyRepository ApiKeyRepository { get; set; }
                 public virtual void ApiKeyHashedRules()
                 {
                         this.RuleFor(x => x.ApiKeyHashed).NotNull();
@@ -50,7 +50,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetApiKeyHashed(ApiApiKeyRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ApiKey record = await this.ApiKeyRepository.GetApiKeyHashed(model.ApiKeyHashed);
+                        ApiKey record = await this.apiKeyRepository.GetApiKeyHashed(model.ApiKeyHashed);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -65,5 +65,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>63382f3bda7b195c3e23794a6edac3d4</Hash>
+    <Hash>0e271c230c0ab33d49f694158f5e75f2</Hash>
 </Codenesium>*/

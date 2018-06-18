@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiOrganizationRequestModel model, int id)
+                IOrganizationRepository organizationRepository;
+
+                public AbstractApiOrganizationRequestModelValidator(IOrganizationRepository organizationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.organizationRepository = organizationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiOrganizationRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>428321d99f4da3bad338bc1922d06660</Hash>
+    <Hash>c7c1eede6fb58aedc8d8f1cd74a3e68a</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<EmailAddress>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<EmailAddress>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<EmailAddress> Get(int businessEntityID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<EmailAddress>> GetEmailAddress(string emailAddress1)
+                public async Task<List<EmailAddress>> ByEmailAddress(string emailAddress1)
                 {
-                        var records = await this.SearchLinqEF(x => x.EmailAddress1 == emailAddress1);
+                        var records = await this.Where(x => x.EmailAddress1 == emailAddress1);
 
                         return records;
                 }
 
-                protected async Task<List<EmailAddress>> Where(Expression<Func<EmailAddress, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<EmailAddress>> Where(
+                        Expression<Func<EmailAddress, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<EmailAddress, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<EmailAddress> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<EmailAddress>> SearchLinqEF(Expression<Func<EmailAddress, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(EmailAddress.BusinessEntityID)} ASC";
+                                orderBy = x => x.BusinessEntityID;
                         }
 
-                        return await this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EmailAddress>();
-                }
-
-                private async Task<List<EmailAddress>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(EmailAddress.BusinessEntityID)} ASC";
+                                return await this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<EmailAddress>();
                         }
-
-                        return await this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<EmailAddress>();
+                        else
+                        {
+                                return await this.Context.Set<EmailAddress>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<EmailAddress>();
+                        }
                 }
 
                 private async Task<EmailAddress> GetById(int businessEntityID)
                 {
-                        List<EmailAddress> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        List<EmailAddress> records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>035c927b475439ef399c5316b802dea4</Hash>
+    <Hash>b5dd7021e84034ab9986dc7deb781691</Hash>
 </Codenesium>*/

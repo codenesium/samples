@@ -19,14 +19,14 @@ namespace AdventureWorksNS.Api.Services
 
                 Task<ApiAddressTypeResponseModel> Get(int addressTypeID);
 
-                Task<List<ApiAddressTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiAddressTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ApiAddressTypeResponseModel> GetName(string name);
+                Task<ApiAddressTypeResponseModel> ByName(string name);
 
                 Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int addressTypeID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>8b394678cb6666fba9884107b4a6643f</Hash>
+    <Hash>619d4493c9a5e27000cc9852420283e0</Hash>
 </Codenesium>*/

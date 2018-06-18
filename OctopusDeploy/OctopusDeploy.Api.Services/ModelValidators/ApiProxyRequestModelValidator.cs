@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiProxyRequestModelValidator: AbstractApiProxyRequestModelValidator, IApiProxyRequestModelValidator
         {
-                public ApiProxyRequestModelValidator()
+                public ApiProxyRequestModelValidator(IProxyRepository proxyRepository)
+                        : base(proxyRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de5c8106eecf1ca81a16eeeb5a7dd682</Hash>
+    <Hash>27eed7ddf7fdfa8b54ae553ba13aba3c</Hash>
 </Codenesium>*/

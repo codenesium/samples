@@ -26,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                                 model.ModifiedDate,
                                 model.NationalIDNumber,
                                 model.OrganizationLevel,
-                                model.OrganizationNode,
                                 model.Rowguid,
                                 model.SalariedFlag,
                                 model.SickLeaveHours,
@@ -39,7 +38,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var model = new ApiEmployeeResponseModel();
 
-                        model.SetProperties(boEmployee.BirthDate, boEmployee.BusinessEntityID, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatus, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.OrganizationNode, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHours, boEmployee.VacationHours);
+                        model.SetProperties(boEmployee.BirthDate, boEmployee.BusinessEntityID, boEmployee.CurrentFlag, boEmployee.Gender, boEmployee.HireDate, boEmployee.JobTitle, boEmployee.LoginID, boEmployee.MaritalStatus, boEmployee.ModifiedDate, boEmployee.NationalIDNumber, boEmployee.OrganizationLevel, boEmployee.Rowguid, boEmployee.SalariedFlag, boEmployee.SickLeaveHours, boEmployee.VacationHours);
 
                         return model;
                 }
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0c46310a468725523caf763df464dba3</Hash>
+    <Hash>adc4a21cc54937228c1cc5fa6ab15917</Hash>
 </Codenesium>*/

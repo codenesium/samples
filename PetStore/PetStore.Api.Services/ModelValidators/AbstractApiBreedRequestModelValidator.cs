@@ -13,10 +13,11 @@ namespace PetStoreNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiBreedRequestModel model, int id)
+                IBreedRepository breedRepository;
+
+                public AbstractApiBreedRequestModelValidator(IBreedRepository breedRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.breedRepository = breedRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiBreedRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>257af251b94e4ded18fc5ffb36b8c582</Hash>
+    <Hash>27712a4087073d0a01c4f018663665a1</Hash>
 </Codenesium>*/

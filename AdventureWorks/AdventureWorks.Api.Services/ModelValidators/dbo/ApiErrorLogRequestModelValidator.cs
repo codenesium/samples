@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiErrorLogRequestModelValidator: AbstractApiErrorLogRequestModelValidator, IApiErrorLogRequestModelValidator
         {
-                public ApiErrorLogRequestModelValidator()
+                public ApiErrorLogRequestModelValidator(IErrorLogRepository errorLogRepository)
+                        : base(errorLogRepository)
                 {
                 }
 
@@ -46,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c616b4251e67d42ee13d665beca2d58e</Hash>
+    <Hash>2a1de9e387220189ff24fc3ba474a633</Hash>
 </Codenesium>*/

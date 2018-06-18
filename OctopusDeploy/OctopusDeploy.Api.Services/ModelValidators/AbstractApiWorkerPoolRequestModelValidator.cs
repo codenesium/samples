@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiWorkerPoolRequestModel model, string id)
+                IWorkerPoolRepository workerPoolRepository;
+
+                public AbstractApiWorkerPoolRequestModelValidator(IWorkerPoolRepository workerPoolRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.workerPoolRepository = workerPoolRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiWorkerPoolRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IWorkerPoolRepository WorkerPoolRepository { get; set; }
                 public virtual void IsDefaultRules()
                 {
                 }
@@ -48,7 +48,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiWorkerPoolRequestModel model,  CancellationToken cancellationToken)
                 {
-                        WorkerPool record = await this.WorkerPoolRepository.GetName(model.Name);
+                        WorkerPool record = await this.workerPoolRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -63,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5450749edcca809f8105adb7a0716b53</Hash>
+    <Hash>6a770e94d4edeb05b60afa8bee282b41</Hash>
 </Codenesium>*/

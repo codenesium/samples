@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProjectResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProjectResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.projectRepository.All(limit, offset, orderClause);
+                        var records = await this.projectRepository.All(limit, offset);
 
                         return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.projectRepository.Get(id);
 
-                        return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiProjectResponseModel>> Create(
@@ -103,13 +110,27 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Project record = await this.projectRepository.GetName(name);
 
-                        return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<ApiProjectResponseModel> GetSlug(string slug)
                 {
                         Project record = await this.projectRepository.GetSlug(slug);
 
-                        return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiProjectResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
@@ -127,5 +148,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9d295ba51370e1684bcbbbce2a543a3</Hash>
+    <Hash>7fdb1fb5306de022c65641b685c80a9d</Hash>
 </Codenesium>*/

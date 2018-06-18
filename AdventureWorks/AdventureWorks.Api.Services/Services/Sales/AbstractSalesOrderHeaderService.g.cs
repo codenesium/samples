@@ -60,9 +60,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.salesOrderHeaderRepository.All(limit, offset, orderClause);
+                        var records = await this.salesOrderHeaderRepository.All(limit, offset);
 
                         return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
                 }
@@ -71,7 +71,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.salesOrderHeaderRepository.Get(salesOrderID);
 
-                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiSalesOrderHeaderResponseModel>> Create(
@@ -117,21 +124,28 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiSalesOrderHeaderResponseModel> GetSalesOrderNumber(string salesOrderNumber)
+                public async Task<ApiSalesOrderHeaderResponseModel> BySalesOrderNumber(string salesOrderNumber)
                 {
-                        SalesOrderHeader record = await this.salesOrderHeaderRepository.GetSalesOrderNumber(salesOrderNumber);
+                        SalesOrderHeader record = await this.salesOrderHeaderRepository.BySalesOrderNumber(salesOrderNumber);
 
-                        return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(record));
+                        }
                 }
-                public async Task<List<ApiSalesOrderHeaderResponseModel>> GetCustomerID(int customerID)
+                public async Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID)
                 {
-                        List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.GetCustomerID(customerID);
+                        List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.ByCustomerID(customerID);
 
                         return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesPersonID(Nullable<int> salesPersonID)
+                public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.GetSalesPersonID(salesPersonID);
+                        List<SalesOrderHeader> records = await this.salesOrderHeaderRepository.BySalesPersonID(salesPersonID);
 
                         return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
                 }
@@ -152,5 +166,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00d54ec407de36ef8f703fde7621797f</Hash>
+    <Hash>73d4055cef180ee30e35889f378d4494</Hash>
 </Codenesium>*/

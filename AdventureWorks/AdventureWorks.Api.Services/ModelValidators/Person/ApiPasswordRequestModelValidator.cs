@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiPasswordRequestModelValidator: AbstractApiPasswordRequestModelValidator, IApiPasswordRequestModelValidator
         {
-                public ApiPasswordRequestModelValidator()
+                public ApiPasswordRequestModelValidator(IPasswordRepository passwordRepository)
+                        : base(passwordRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4d7b03d96cd0197b5fa00ffaff41be84</Hash>
+    <Hash>276afa9d6b3e61f63c13b73555b1cbef</Hash>
 </Codenesium>*/

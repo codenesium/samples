@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractMachineRefTeamController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractMachineRefTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMachineRefTeamService machineRefTeamService
@@ -164,5 +164,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>82e1a0c34d1e09ce4b1be9258a77fb9e</Hash>
+    <Hash>ceb17f3abc7046400ead6e058ad72278</Hash>
 </Codenesium>*/

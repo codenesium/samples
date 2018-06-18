@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiServerTaskRequestModelValidator: AbstractApiServerTaskRequestModelValidator, IApiServerTaskRequestModelValidator
         {
-                public ApiServerTaskRequestModelValidator()
+                public ApiServerTaskRequestModelValidator(IServerTaskRepository serverTaskRepository)
+                        : base(serverTaskRepository)
                 {
                 }
 
@@ -62,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>506f280164cc2c073158d549d86c41ce</Hash>
+    <Hash>c9ff5c3046a9f79d5a063b4ddcdcbacf</Hash>
 </Codenesium>*/

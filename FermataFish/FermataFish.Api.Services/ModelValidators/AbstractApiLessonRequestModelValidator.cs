@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiLessonRequestModel model, int id)
+                ILessonRepository lessonRepository;
+
+                public AbstractApiLessonRequestModelValidator(ILessonRepository lessonRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.lessonRepository = lessonRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLessonRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace FermataFishNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ILessonStatusRepository LessonStatusRepository { get; set; }
-
-                public IStudioRepository StudioRepository { get; set; }
 
                 public virtual void ActualEndDateRules()
                 {
@@ -71,14 +68,14 @@ namespace FermataFishNS.Api.Services
 
                 private async Task<bool> BeValidLessonStatus(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.LessonStatusRepository.Get(id);
+                        var record = await this.lessonRepository.GetLessonStatus(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StudioRepository.Get(id);
+                        var record = await this.lessonRepository.GetStudio(id);
 
                         return record != null;
                 }
@@ -86,5 +83,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>56ed10c8af7b33a2dc05e471d3a8d837</Hash>
+    <Hash>b4f9739eba547ae033d2e96aa8999857</Hash>
 </Codenesium>*/

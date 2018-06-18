@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class StateService: AbstractStateService, IStateService
         {
                 public StateService(
-                        ILogger<StateRepository> logger,
+                        ILogger<IStateRepository> logger,
                         IStateRepository stateRepository,
                         IApiStateRequestModelValidator stateModelValidator,
                         IBOLStateMapper bolstateMapper,
@@ -38,5 +38,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c792d73f4e69b2403072d5770a2423e</Hash>
+    <Hash>9db6cfbdef94b7063d7ecda8d1d1f3a1</Hash>
 </Codenesium>*/

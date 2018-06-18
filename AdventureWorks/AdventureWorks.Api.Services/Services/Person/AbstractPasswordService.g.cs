@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPasswordResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPasswordResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.passwordRepository.All(limit, offset, orderClause);
+                        var records = await this.passwordRepository.All(limit, offset);
 
                         return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.passwordRepository.Get(businessEntityID);
 
-                        return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPasswordResponseModel>> Create(
@@ -102,5 +109,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83076a3f6814a8b88103aa9616841776</Hash>
+    <Hash>a15da1b3dfae908e4f14ce0381d8177b</Hash>
 </Codenesium>*/

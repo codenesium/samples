@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiTicketRequestModelValidator: AbstractApiTicketRequestModelValidator, IApiTicketRequestModelValidator
         {
-                public ApiTicketRequestModelValidator()
+                public ApiTicketRequestModelValidator(ITicketRepository ticketRepository)
+                        : base(ticketRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fcc9e284fa559c461aa66dceb5461592</Hash>
+    <Hash>5395941f56a473577a63c9faf9327fff</Hash>
 </Codenesium>*/

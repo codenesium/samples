@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiRateRequestModelValidator: AbstractApiRateRequestModelValidator, IApiRateRequestModelValidator
         {
-                public ApiRateRequestModelValidator()
+                public ApiRateRequestModelValidator(IRateRepository rateRepository)
+                        : base(rateRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>baa7a6d6783da83edf9849157637db22</Hash>
+    <Hash>563b1949f9d651029ba38eeddb13b473</Hash>
 </Codenesium>*/

@@ -25,11 +25,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOEmployee MapEFToBO(
                         Employee ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOEmployee();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b22538cf6f151b5eabe38f62403ae683</Hash>
+    <Hash>741bddbe856f995c35462697134d366f</Hash>
 </Codenesium>*/

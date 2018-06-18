@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPipelineStepRequestModel model, int id)
+                IPipelineStepRepository pipelineStepRepository;
+
+                public AbstractApiPipelineStepRequestModelValidator(IPipelineStepRepository pipelineStepRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.pipelineStepRepository = pipelineStepRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPipelineStepRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IPipelineStepStatusRepository PipelineStepStatusRepository { get; set; }
-
-                public IEmployeeRepository EmployeeRepository { get; set; }
 
                 public virtual void NameRules()
                 {
@@ -47,14 +44,14 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidPipelineStepStatus(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.PipelineStepStatusRepository.Get(id);
+                        var record = await this.pipelineStepRepository.GetPipelineStepStatus(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.EmployeeRepository.Get(id);
+                        var record = await this.pipelineStepRepository.GetEmployee(id);
 
                         return record != null;
                 }
@@ -62,5 +59,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e0d85de08606c00e7268149392dbf0c0</Hash>
+    <Hash>95e64bb9ed663d09580547f61244886b</Hash>
 </Codenesium>*/

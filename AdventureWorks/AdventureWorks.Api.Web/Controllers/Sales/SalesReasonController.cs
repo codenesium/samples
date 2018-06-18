@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesReasonController: AbstractSalesReasonController
         {
                 public SalesReasonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesReasonService salesReasonService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>29d6d7f8a263552fa5935226987bfe33</Hash>
+    <Hash>e02a07a16a485a4a3272c59034cae5f9</Hash>
 </Codenesium>*/

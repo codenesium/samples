@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractScrapReasonController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractScrapReasonController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IScrapReasonService scrapReasonService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiScrapReasonResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiScrapReasonResponseModel response = await this.ScrapReasonService.GetName(name);
+                        ApiScrapReasonResponseModel response = await this.ScrapReasonService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>db34237f6ce2b54fd87d602a46b4e7bf</Hash>
+    <Hash>e88f20afc5184331316fca56d09c5a83</Hash>
 </Codenesium>*/

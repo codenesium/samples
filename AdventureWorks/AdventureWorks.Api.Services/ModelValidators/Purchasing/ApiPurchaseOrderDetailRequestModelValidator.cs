@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiPurchaseOrderDetailRequestModelValidator: AbstractApiPurchaseOrderDetailRequestModelValidator, IApiPurchaseOrderDetailRequestModelValidator
         {
-                public ApiPurchaseOrderDetailRequestModelValidator()
+                public ApiPurchaseOrderDetailRequestModelValidator(IPurchaseOrderDetailRepository purchaseOrderDetailRepository)
+                        : base(purchaseOrderDetailRepository)
                 {
                 }
 
@@ -50,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9bae7328e9a995da01d427e9d7ebadc7</Hash>
+    <Hash>f3802c8a044e67ab8ac287fea0e522a2</Hash>
 </Codenesium>*/

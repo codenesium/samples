@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Student>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Student>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Student> Get(int id)
@@ -75,36 +76,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<Student>> Where(Expression<Func<Student, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<Student>> Where(
+                        Expression<Func<Student, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Student, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<Student> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Student>> SearchLinqEF(Expression<Func<Student, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Student.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Student>();
-                }
-
-                private async Task<List<Student>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Student.Id)} ASC";
+                                return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
                         }
-
-                        return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Student>();
+                        else
+                        {
+                                return await this.Context.Set<Student>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Student>();
+                        }
                 }
 
                 private async Task<Student> GetById(int id)
                 {
-                        List<Student> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<Student> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -121,9 +117,18 @@ namespace FermataFishNS.Api.DataAccess
                 {
                         return await this.Context.Set<StudentXFamily>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<StudentXFamily>();
                 }
+
+                public async virtual Task<Family> GetFamily(int familyId)
+                {
+                        return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
+                }
+                public async virtual Task<Studio> GetStudio(int studioId)
+                {
+                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>13676ca6592cb016b5c882395de562cb</Hash>
+    <Hash>84b4bf1d0dc5c3ac39121ba84613ae11</Hash>
 </Codenesium>*/

@@ -20,9 +20,15 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Services", 
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Web.IntegrationTests", "FileService.Api.Web.IntegrationTests/FileService.Api.Web.IntegrationTests.csproj", "{FileService.Api.Web.IntegrationTests}"
 	EndProject
 	
-
-
-
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.DataAccess.Tests", "FileService.Api.DataAccess.Tests/FileService.Api.DataAccess.Tests.csproj", "{FileService.Api.DataAccess.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Services.Tests", "FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj", "{FileService.Api.Services.Tests}"
+	EndProject
+	
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "FileService.Api.Web.Tests", "FileService.Api.Web.Tests/FileService.Api.Web.Tests.csproj", "{FileService.Api.Web.Tests}"
+	EndProject
+	
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,8 +62,20 @@ Global
 		{FileService.Api.Web.IntegrationTests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FileService.Api.Web.IntegrationTests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
-	    
+	            {FileService.Api.DataAccess.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FileService.Api.DataAccess.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FileService.Api.DataAccess.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FileService.Api.DataAccess.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {FileService.Api.Services.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FileService.Api.Services.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FileService.Api.Services.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FileService.Api.Services.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		        {FileService.Api.Web.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FileService.Api.Web.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FileService.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FileService.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

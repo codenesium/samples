@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.personPhoneRepository.All(limit, offset, orderClause);
+                        var records = await this.personPhoneRepository.All(limit, offset);
 
                         return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.personPhoneRepository.Get(businessEntityID);
 
-                        return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiPersonPhoneResponseModel>> Create(
@@ -99,9 +106,9 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiPersonPhoneResponseModel>> GetPhoneNumber(string phoneNumber)
+                public async Task<List<ApiPersonPhoneResponseModel>> ByPhoneNumber(string phoneNumber)
                 {
-                        List<PersonPhone> records = await this.personPhoneRepository.GetPhoneNumber(phoneNumber);
+                        List<PersonPhone> records = await this.personPhoneRepository.ByPhoneNumber(phoneNumber);
 
                         return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
                 }
@@ -109,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fcd67f36d8110479ab2063dde2d309f2</Hash>
+    <Hash>ebd68ea3fea2641c617085e968c7fce7</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class TicketController: AbstractTicketController
         {
                 public TicketController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TicketController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITicketService ticketService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f1c0c674a8540d514e618a535c7f28b5</Hash>
+    <Hash>7d0597e7eb93f1f510f4558e0a2b9c18</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace FermataFishNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractRateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IRateService rateService
@@ -164,5 +164,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>449cd44382d6591033f7d31291ceaa86</Hash>
+    <Hash>0c37290e369d622fa10cce38865d93e3</Hash>
 </Codenesium>*/

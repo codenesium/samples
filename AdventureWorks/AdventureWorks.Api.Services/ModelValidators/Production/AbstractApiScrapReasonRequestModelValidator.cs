@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private short existingRecordId;
 
-                public ValidationResult Validate(ApiScrapReasonRequestModel model, short id)
+                IScrapReasonRepository scrapReasonRepository;
+
+                public AbstractApiScrapReasonRequestModelValidator(IScrapReasonRepository scrapReasonRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.scrapReasonRepository = scrapReasonRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiScrapReasonRequestModel model, short id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IScrapReasonRepository ScrapReasonRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiScrapReasonRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiScrapReasonRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiScrapReasonRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiScrapReasonRequestModel model,  CancellationToken cancellationToken)
                 {
-                        ScrapReason record = await this.ScrapReasonRepository.GetName(model.Name);
+                        ScrapReason record = await this.scrapReasonRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (short) && record.ScrapReasonID == this.existingRecordId))
                         {
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dd5467cfec731cbc0c2d9d214ae2bc20</Hash>
+    <Hash>0b2398c21b773b6a311627c3792faa9e</Hash>
 </Codenesium>*/

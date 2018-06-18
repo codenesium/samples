@@ -22,11 +22,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOAirline MapEFToBO(
                         Airline ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOAirline();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d7f88c827ee7f61c171ba9134c9da04</Hash>
+    <Hash>cf63f17ccf0d90bf58c00ec9059330ec</Hash>
 </Codenesium>*/

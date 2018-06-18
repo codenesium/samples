@@ -25,7 +25,7 @@ namespace FileServiceNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractBucketController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractBucketController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBucketService bucketService
@@ -216,5 +216,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8e4c8b78066540015b2b54b06fd20aea</Hash>
+    <Hash>58b3a7573221dca3a91b327d492a2108</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiUserRequestModel model, string id)
+                IUserRepository userRepository;
+
+                public AbstractApiUserRequestModelValidator(IUserRepository userRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.userRepository = userRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiUserRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IUserRepository UserRepository { get; set; }
                 public virtual void DisplayNameRules()
                 {
                         this.RuleFor(x => x.DisplayName).Length(0, 200);
@@ -71,7 +71,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetUsername(ApiUserRequestModel model,  CancellationToken cancellationToken)
                 {
-                        User record = await this.UserRepository.GetUsername(model.Username);
+                        User record = await this.userRepository.GetUsername(model.Username);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -86,5 +86,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6b94f19d0f786d13304aef238695c9d</Hash>
+    <Hash>5a4dea374ba282eb52e32fd5fbf757b5</Hash>
 </Codenesium>*/

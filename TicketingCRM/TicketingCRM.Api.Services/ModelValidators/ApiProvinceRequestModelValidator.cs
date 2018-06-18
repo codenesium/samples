@@ -8,7 +8,8 @@ namespace TicketingCRMNS.Api.Services
 {
         public class ApiProvinceRequestModelValidator: AbstractApiProvinceRequestModelValidator, IApiProvinceRequestModelValidator
         {
-                public ApiProvinceRequestModelValidator()
+                public ApiProvinceRequestModelValidator(IProvinceRepository provinceRepository)
+                        : base(provinceRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1cedb9b1f3ce783ce9f70065f7e0d21a</Hash>
+    <Hash>3faea0054782d6a39213f089fcc88a34</Hash>
 </Codenesium>*/

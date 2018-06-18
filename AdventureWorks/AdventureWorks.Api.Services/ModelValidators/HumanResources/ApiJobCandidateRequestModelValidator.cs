@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiJobCandidateRequestModelValidator: AbstractApiJobCandidateRequestModelValidator, IApiJobCandidateRequestModelValidator
         {
-                public ApiJobCandidateRequestModelValidator()
+                public ApiJobCandidateRequestModelValidator(IJobCandidateRepository jobCandidateRepository)
+                        : base(jobCandidateRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>635bb7e995da546c9cde0ac113634639</Hash>
+    <Hash>72c7c2271e5339181d459aa7ce98de21</Hash>
 </Codenesium>*/

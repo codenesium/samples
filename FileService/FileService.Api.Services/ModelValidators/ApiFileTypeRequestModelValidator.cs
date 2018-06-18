@@ -8,7 +8,8 @@ namespace FileServiceNS.Api.Services
 {
         public class ApiFileTypeRequestModelValidator: AbstractApiFileTypeRequestModelValidator, IApiFileTypeRequestModelValidator
         {
-                public ApiFileTypeRequestModelValidator()
+                public ApiFileTypeRequestModelValidator(IFileTypeRepository fileTypeRepository)
+                        : base(fileTypeRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7be9037af76c2d9323783d9da00cbcb</Hash>
+    <Hash>0db3daa7a9af4b6b34432ac6b957ec5a</Hash>
 </Codenesium>*/

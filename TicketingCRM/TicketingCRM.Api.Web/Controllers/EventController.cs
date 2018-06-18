@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class EventController: AbstractEventController
         {
                 public EventController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EventController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEventService eventService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>950c8ec5687585aa08cae655cca7ef64</Hash>
+    <Hash>f18f15305b1494b21861eb84852b0968</Hash>
 </Codenesium>*/

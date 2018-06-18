@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiLinkRequestModel model, int id)
+                ILinkRepository linkRepository;
+
+                public AbstractApiLinkRequestModelValidator(ILinkRepository linkRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.linkRepository = linkRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiLinkRequestModel model, int id)
@@ -24,12 +25,6 @@ namespace NebulaNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IMachineRepository MachineRepository { get; set; }
-
-                public IChainRepository ChainRepository { get; set; }
-
-                public ILinkStatusRepository LinkStatusRepository { get; set; }
 
                 public virtual void AssignedMachineIdRules()
                 {
@@ -89,21 +84,21 @@ namespace NebulaNS.Api.Services
 
                 private async Task<bool> BeValidMachine(Nullable<int> id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.MachineRepository.Get(id.GetValueOrDefault());
+                        var record = await this.linkRepository.GetMachine(id.GetValueOrDefault());
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidChain(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.ChainRepository.Get(id);
+                        var record = await this.linkRepository.GetChain(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidLinkStatus(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.LinkStatusRepository.Get(id);
+                        var record = await this.linkRepository.GetLinkStatus(id);
 
                         return record != null;
                 }
@@ -111,5 +106,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3714d064ce79edc614eac5a3089768b8</Hash>
+    <Hash>bb34bd3f88fa37c8479f5125139ea088</Hash>
 </Codenesium>*/

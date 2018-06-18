@@ -17,7 +17,7 @@ namespace TicketingCRMNS.Api.Web
         public class TicketStatusController: AbstractTicketStatusController
         {
                 public TicketStatusController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TicketStatusController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITicketStatusService ticketStatusService
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ebc70961ea3888c1980170f2173991d2</Hash>
+    <Hash>a5d9e6babedfc6cf004fb412b914d31a</Hash>
 </Codenesium>*/

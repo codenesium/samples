@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class UserController: AbstractUserController
         {
                 public UserController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<UserController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IUserService userService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>14daa95a389fa3e0f982026cb8b3d840</Hash>
+    <Hash>969b69c2befcf9ca56dbc97c4d56d7cf</Hash>
 </Codenesium>*/

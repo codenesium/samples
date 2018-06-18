@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<LessonXTeacher>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<LessonXTeacher>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<LessonXTeacher> Get(int id)
@@ -75,42 +76,46 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<LessonXTeacher>> Where(Expression<Func<LessonXTeacher, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<LessonXTeacher>> Where(
+                        Expression<Func<LessonXTeacher, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<LessonXTeacher, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<LessonXTeacher> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<LessonXTeacher>> SearchLinqEF(Expression<Func<LessonXTeacher, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(LessonXTeacher.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
-                }
-
-                private async Task<List<LessonXTeacher>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(LessonXTeacher.Id)} ASC";
+                                return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
                         }
-
-                        return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
+                        else
+                        {
+                                return await this.Context.Set<LessonXTeacher>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
+                        }
                 }
 
                 private async Task<LessonXTeacher> GetById(int id)
                 {
-                        List<LessonXTeacher> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<LessonXTeacher> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Lesson> GetLesson(int lessonId)
+                {
+                        return await this.Context.Set<Lesson>().SingleOrDefaultAsync(x => x.Id == lessonId);
+                }
+                public async virtual Task<Student> GetStudent(int studentId)
+                {
+                        return await this.Context.Set<Student>().SingleOrDefaultAsync(x => x.Id == studentId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>30f65918a5994ac8cc3b97b544b918b3</Hash>
+    <Hash>832ccbd71cf8f94fb98678e55af557af</Hash>
 </Codenesium>*/

@@ -15,7 +15,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<Tenant> Get(string id);
 
-                Task<List<Tenant>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Tenant>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Tenant> GetName(string name);
                 Task<List<Tenant>> GetDataVersion(byte[] dataVersion);
@@ -23,5 +23,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f72d954e957cf9ad2979e9a7833524b2</Hash>
+    <Hash>cfd3f38e3f688d394d8451b6ec11f9ea</Hash>
 </Codenesium>*/

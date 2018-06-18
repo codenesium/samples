@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiSalesTerritoryHistoryRequestModelValidator: AbstractApiSalesTerritoryHistoryRequestModelValidator, IApiSalesTerritoryHistoryRequestModelValidator
         {
-                public ApiSalesTerritoryHistoryRequestModelValidator()
+                public ApiSalesTerritoryHistoryRequestModelValidator(ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository)
+                        : base(salesTerritoryHistoryRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3024bb0336486a8cbc46b4dfcf5f5852</Hash>
+    <Hash>42749a32a2b4d7e16450202de47e3f3f</Hash>
 </Codenesium>*/

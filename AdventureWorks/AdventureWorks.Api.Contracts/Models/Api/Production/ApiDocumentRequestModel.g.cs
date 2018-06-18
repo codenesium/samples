@@ -23,7 +23,6 @@ namespace AdventureWorksNS.Api.Contracts
                         DateTime modifiedDate,
                         int owner,
                         string revision,
-                        Guid rowguid,
                         int status,
                         string title)
                 {
@@ -37,7 +36,6 @@ namespace AdventureWorksNS.Api.Contracts
                         this.ModifiedDate = modifiedDate;
                         this.Owner = owner;
                         this.Revision = revision;
-                        this.Rowguid = rowguid;
                         this.Status = status;
                         this.Title = title;
                 }
@@ -199,22 +197,6 @@ namespace AdventureWorksNS.Api.Contracts
                         }
                 }
 
-                private Guid rowguid;
-
-                [Required]
-                public Guid Rowguid
-                {
-                        get
-                        {
-                                return this.rowguid;
-                        }
-
-                        set
-                        {
-                                this.rowguid = value;
-                        }
-                }
-
                 private int status;
 
                 [Required]
@@ -250,5 +232,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8e73c6e6102effad1dcfaa76b2015b12</Hash>
+    <Hash>4154a5689ec7225dbed51dbe51b94931</Hash>
 </Codenesium>*/

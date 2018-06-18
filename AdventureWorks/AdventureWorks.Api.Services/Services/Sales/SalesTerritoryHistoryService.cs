@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SalesTerritoryHistoryService: AbstractSalesTerritoryHistoryService, ISalesTerritoryHistoryService
         {
                 public SalesTerritoryHistoryService(
-                        ILogger<SalesTerritoryHistoryRepository> logger,
+                        ILogger<ISalesTerritoryHistoryRepository> logger,
                         ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository,
                         IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator,
                         IBOLSalesTerritoryHistoryMapper bolsalesTerritoryHistoryMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6c24c4c04af1c46e35fc6407f9ee3ce</Hash>
+    <Hash>2b8027f63647ef7c982bdfe1128236be</Hash>
 </Codenesium>*/

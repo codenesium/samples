@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class DashboardConfigurationController: AbstractDashboardConfigurationController
         {
                 public DashboardConfigurationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DashboardConfigurationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDashboardConfigurationService dashboardConfigurationService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ca6445f5c7a6fefb6282dfefd6ca62cd</Hash>
+    <Hash>90eec7f03871f352bc05408677bd0b41</Hash>
 </Codenesium>*/

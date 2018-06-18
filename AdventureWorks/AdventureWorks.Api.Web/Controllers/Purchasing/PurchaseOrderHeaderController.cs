@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class PurchaseOrderHeaderController: AbstractPurchaseOrderHeaderController
         {
                 public PurchaseOrderHeaderController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PurchaseOrderHeaderController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPurchaseOrderHeaderService purchaseOrderHeaderService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0214920cb974c9abc33c160b88a5e027</Hash>
+    <Hash>ad6e231f042a765a6bd46a2bf6b92e5b</Hash>
 </Codenesium>*/

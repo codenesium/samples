@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class TenantVariableController: AbstractTenantVariableController
         {
                 public TenantVariableController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<TenantVariableController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITenantVariableService tenantVariableService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da90e5751d0964aee914825652bc8ac2</Hash>
+    <Hash>b261e8afedc14fa4e6b3ab95fec1e1a3</Hash>
 </Codenesium>*/

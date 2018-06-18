@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSalesOrderHeaderSalesReasonRequestModel model, int id)
+                ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
+
+                public AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator(ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSalesOrderHeaderSalesReasonRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISalesOrderHeaderRepository SalesOrderHeaderRepository { get; set; }
-
-                public ISalesReasonRepository SalesReasonRepository { get; set; }
 
                 public virtual void ModifiedDateRules()
                 {
@@ -40,14 +37,14 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesOrderHeaderRepository.Get(id);
+                        var record = await this.salesOrderHeaderSalesReasonRepository.GetSalesOrderHeader(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidSalesReason(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesReasonRepository.Get(id);
+                        var record = await this.salesOrderHeaderSalesReasonRepository.GetSalesReason(id);
 
                         return record != null;
                 }
@@ -55,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33da463d92e20400c98c1720052021d7</Hash>
+    <Hash>6369d9aa9c1602d1b7694d075a5f2be7</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiStateRequestModel model, int id)
+                IStateRepository stateRepository;
+
+                public AbstractApiStateRequestModelValidator(IStateRepository stateRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.stateRepository = stateRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiStateRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8a728951fcf82256c269df98e226066</Hash>
+    <Hash>b155d299d2db067b8f76d3798b6a47a3</Hash>
 </Codenesium>*/

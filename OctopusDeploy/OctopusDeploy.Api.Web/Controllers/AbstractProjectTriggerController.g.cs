@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractProjectTriggerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractProjectTriggerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProjectTriggerService projectTriggerService
@@ -194,5 +194,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1741511a277eff8f79098b26eee6bb4d</Hash>
+    <Hash>031248de36279bfbfc8243103d179c12</Hash>
 </Codenesium>*/

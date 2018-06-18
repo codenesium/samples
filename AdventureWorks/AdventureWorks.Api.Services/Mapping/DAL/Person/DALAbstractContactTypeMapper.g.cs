@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOContactType MapEFToBO(
                         ContactType ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOContactType();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9c26fd4c1338b219d88291648aff12a</Hash>
+    <Hash>391c9bfedd14fe5d4437849614118ca7</Hash>
 </Codenesium>*/

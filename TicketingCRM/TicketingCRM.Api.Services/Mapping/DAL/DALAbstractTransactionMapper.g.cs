@@ -24,11 +24,6 @@ namespace TicketingCRMNS.Api.Services
                 public virtual BOTransaction MapEFToBO(
                         Transaction ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOTransaction();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a26f03b39aab2b4025266882266b1765</Hash>
+    <Hash>2611f92f5c050fd55c5bb8aaaa74cbe8</Hash>
 </Codenesium>*/

@@ -25,11 +25,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOTagSet MapEFToBO(
                         TagSet ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOTagSet();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d2722b27df60e86350cebd4bb5740b04</Hash>
+    <Hash>c27b08ef1438ab9001f6024b70225f25</Hash>
 </Codenesium>*/

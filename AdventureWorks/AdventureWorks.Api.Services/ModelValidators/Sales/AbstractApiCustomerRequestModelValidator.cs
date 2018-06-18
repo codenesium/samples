@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiCustomerRequestModel model, int id)
+                ICustomerRepository customerRepository;
+
+                public AbstractApiCustomerRequestModelValidator(ICustomerRepository customerRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.customerRepository = customerRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCustomerRequestModel model, int id)
@@ -25,15 +26,10 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IStoreRepository StoreRepository { get; set; }
-
-                public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
-
-                public ICustomerRepository CustomerRepository { get; set; }
                 public virtual void AccountNumberRules()
                 {
                         this.RuleFor(x => x.AccountNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCustomerRequestModel.AccountNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCustomerRequestModel.AccountNumber));
                         this.RuleFor(x => x.AccountNumber).Length(0, 10);
                 }
 
@@ -61,21 +57,21 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidStore(Nullable<int> id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.StoreRepository.Get(id.GetValueOrDefault());
+                        var record = await this.customerRepository.GetStore(id.GetValueOrDefault());
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidSalesTerritory(Nullable<int> id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesTerritoryRepository.Get(id.GetValueOrDefault());
+                        var record = await this.customerRepository.GetSalesTerritory(id.GetValueOrDefault());
 
                         return record != null;
                 }
 
-                private async Task<bool> BeUniqueGetAccountNumber(ApiCustomerRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByAccountNumber(ApiCustomerRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Customer record = await this.CustomerRepository.GetAccountNumber(model.AccountNumber);
+                        Customer record = await this.customerRepository.ByAccountNumber(model.AccountNumber);
 
                         if (record == null || (this.existingRecordId != default (int) && record.CustomerID == this.existingRecordId))
                         {
@@ -90,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fb91b2d614ae1443366bb24b062ed61b</Hash>
+    <Hash>592cc8891673889103b20d78906e0901</Hash>
 </Codenesium>*/

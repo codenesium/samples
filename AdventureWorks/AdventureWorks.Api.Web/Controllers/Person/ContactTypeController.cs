@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ContactTypeController: AbstractContactTypeController
         {
                 public ContactTypeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ContactTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IContactTypeService contactTypeService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>239cd345a94e469cd3d477857f89049e</Hash>
+    <Hash>8dbeca98978282a2c2e2adaf078e94ec</Hash>
 </Codenesium>*/

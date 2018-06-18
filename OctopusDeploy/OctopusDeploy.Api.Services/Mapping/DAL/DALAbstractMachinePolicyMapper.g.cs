@@ -24,11 +24,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOMachinePolicy MapEFToBO(
                         MachinePolicy ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOMachinePolicy();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f56016ee08a483c90103fb98902ba4c0</Hash>
+    <Hash>4586acd53079b3cf4b4343735c055ff1</Hash>
 </Codenesium>*/

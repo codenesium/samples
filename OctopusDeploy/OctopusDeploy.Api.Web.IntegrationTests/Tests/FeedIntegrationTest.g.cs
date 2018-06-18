@@ -9,7 +9,9 @@ using OctopusDeployNS.Api.Client;
 
 namespace OctopusDeployNS.Api.Web.IntegrationTests
 {
-        [Trait("Integration", "Feed")]
+        [Trait("Type", "Integration")]
+        [Trait("Table", "Feed")]
+        [Trait("Area", "Integration")]
         public class FeedTests
         {
                 private TestServer server;
@@ -82,5 +84,5 @@ namespace OctopusDeployNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>0fc0c588cd2a9af2f4da8ff0e5dad87d</Hash>
+    <Hash>6fac5b9c8cd75b56090dc61fa2039e63</Hash>
 </Codenesium>*/

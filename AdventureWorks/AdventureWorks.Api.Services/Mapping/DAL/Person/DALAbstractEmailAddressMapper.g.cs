@@ -25,11 +25,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOEmailAddress MapEFToBO(
                         EmailAddress ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOEmailAddress();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b97dd9cba81fc7e509ed697f19ca62c</Hash>
+    <Hash>60f9579f320cf74514e79206ad115935</Hash>
 </Codenesium>*/

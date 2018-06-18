@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiStudentXFamilyRequestModelValidator: AbstractApiStudentXFamilyRequestModelValidator, IApiStudentXFamilyRequestModelValidator
         {
-                public ApiStudentXFamilyRequestModelValidator()
+                public ApiStudentXFamilyRequestModelValidator(IStudentXFamilyRepository studentXFamilyRepository)
+                        : base(studentXFamilyRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d311f4882164a9eaff00ba8ec3e99b84</Hash>
+    <Hash>5ee7396d56a9286083439b3972e0c275</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class EmployeeDepartmentHistoryService: AbstractEmployeeDepartmentHistoryService, IEmployeeDepartmentHistoryService
         {
                 public EmployeeDepartmentHistoryService(
-                        ILogger<EmployeeDepartmentHistoryRepository> logger,
+                        ILogger<IEmployeeDepartmentHistoryRepository> logger,
                         IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
                         IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
                         IBOLEmployeeDepartmentHistoryMapper bolemployeeDepartmentHistoryMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b94be6b44bc59d91fc29e30a9c94d8ec</Hash>
+    <Hash>de603e43e1c07cc1a8b60d92e6743fc1</Hash>
 </Codenesium>*/

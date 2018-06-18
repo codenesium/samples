@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class StudentService: AbstractStudentService, IStudentService
         {
                 public StudentService(
-                        ILogger<StudentRepository> logger,
+                        ILogger<IStudentRepository> logger,
                         IStudentRepository studentRepository,
                         IApiStudentRequestModelValidator studentModelValidator,
                         IBOLStudentMapper bolstudentMapper,
@@ -50,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>196226ba05ff6146b7428dc795d45b96</Hash>
+    <Hash>6d0ff1d45c36e369d9884a025481bc48</Hash>
 </Codenesium>*/

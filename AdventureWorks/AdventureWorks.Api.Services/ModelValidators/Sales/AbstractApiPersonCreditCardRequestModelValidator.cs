@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiPersonCreditCardRequestModel model, int id)
+                IPersonCreditCardRepository personCreditCardRepository;
+
+                public AbstractApiPersonCreditCardRequestModelValidator(IPersonCreditCardRepository personCreditCardRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.personCreditCardRepository = personCreditCardRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiPersonCreditCardRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ICreditCardRepository CreditCardRepository { get; set; }
 
                 public virtual void CreditCardIDRules()
                 {
@@ -38,7 +37,7 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidCreditCard(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.CreditCardRepository.Get(id);
+                        var record = await this.personCreditCardRepository.GetCreditCard(id);
 
                         return record != null;
                 }
@@ -46,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>780273685149e33dda457d6123edf881</Hash>
+    <Hash>cb4067fa82c9e3ecf57ba48a6dbe38b4</Hash>
 </Codenesium>*/

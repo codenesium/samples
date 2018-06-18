@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ArtifactService: AbstractArtifactService, IArtifactService
         {
                 public ArtifactService(
-                        ILogger<ArtifactRepository> logger,
+                        ILogger<IArtifactRepository> logger,
                         IArtifactRepository artifactRepository,
                         IApiArtifactRequestModelValidator artifactModelValidator,
                         IBOLArtifactMapper bolartifactMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08dc909302cabb5d2bc5aee79e580651</Hash>
+    <Hash>682c7b1d50372081635113b364c22bec</Hash>
 </Codenesium>*/

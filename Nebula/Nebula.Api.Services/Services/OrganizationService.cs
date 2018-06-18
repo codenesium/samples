@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class OrganizationService: AbstractOrganizationService, IOrganizationService
         {
                 public OrganizationService(
-                        ILogger<OrganizationRepository> logger,
+                        ILogger<IOrganizationRepository> logger,
                         IOrganizationRepository organizationRepository,
                         IApiOrganizationRequestModelValidator organizationModelValidator,
                         IBOLOrganizationMapper bolorganizationMapper,
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f066c97e79aa784bdfd7262fb40e718a</Hash>
+    <Hash>ee28c1a24969eef7951c372f1fb51d78</Hash>
 </Codenesium>*/

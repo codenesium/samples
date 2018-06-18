@@ -3,33 +3,14 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOSalesReason: AbstractBusinessObject
+        public partial class BOSalesReason: AbstractBOSalesReason
         {
                 public BOSalesReason() : base()
                 {
                 }
-
-                public void SetProperties(int salesReasonID,
-                                          DateTime modifiedDate,
-                                          string name,
-                                          string reasonType)
-                {
-                        this.ModifiedDate = modifiedDate;
-                        this.Name = name;
-                        this.ReasonType = reasonType;
-                        this.SalesReasonID = salesReasonID;
-                }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public string Name { get; private set; }
-
-                public string ReasonType { get; private set; }
-
-                public int SalesReasonID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1aa6afbb1faf696de8f3df9d03740641</Hash>
+    <Hash>76b1c467eebf87e3bf0748d8b961c1d1</Hash>
 </Codenesium>*/

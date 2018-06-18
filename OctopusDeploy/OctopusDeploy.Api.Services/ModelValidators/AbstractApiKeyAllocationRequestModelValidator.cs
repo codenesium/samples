@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiKeyAllocationRequestModel model, string id)
+                IKeyAllocationRepository keyAllocationRepository;
+
+                public AbstractApiKeyAllocationRequestModelValidator(IKeyAllocationRepository keyAllocationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.keyAllocationRepository = keyAllocationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiKeyAllocationRequestModel model, string id)
@@ -32,5 +33,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87908dde668e0a456582ce0dfd94c5b7</Hash>
+    <Hash>250b9502550b83fbfe8456c36073f682</Hash>
 </Codenesium>*/

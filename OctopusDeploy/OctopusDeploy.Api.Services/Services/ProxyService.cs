@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ProxyService: AbstractProxyService, IProxyService
         {
                 public ProxyService(
-                        ILogger<ProxyRepository> logger,
+                        ILogger<IProxyRepository> logger,
                         IProxyRepository proxyRepository,
                         IApiProxyRequestModelValidator proxyModelValidator,
                         IBOLProxyMapper bolproxyMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>07e5c10a571e0cbe3b9be4c3a36291f7</Hash>
+    <Hash>334b6d58d015925b7fff310765942eef</Hash>
 </Codenesium>*/

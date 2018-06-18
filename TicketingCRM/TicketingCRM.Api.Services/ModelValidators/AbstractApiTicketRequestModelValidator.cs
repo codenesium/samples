@@ -13,10 +13,11 @@ namespace TicketingCRMNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiTicketRequestModel model, int id)
+                ITicketRepository ticketRepository;
+
+                public AbstractApiTicketRequestModelValidator(ITicketRepository ticketRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.ticketRepository = ticketRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiTicketRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace TicketingCRMNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ITicketStatusRepository TicketStatusRepository { get; set; }
 
                 public virtual void PublicIdRules()
                 {
@@ -40,7 +39,7 @@ namespace TicketingCRMNS.Api.Services
 
                 private async Task<bool> BeValidTicketStatus(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TicketStatusRepository.Get(id);
+                        var record = await this.ticketRepository.GetTicketStatus(id);
 
                         return record != null;
                 }
@@ -48,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eead6ca2343621cf55a62056b7a36574</Hash>
+    <Hash>dbda7316fa1e15463aaa97018adfaa80</Hash>
 </Codenesium>*/

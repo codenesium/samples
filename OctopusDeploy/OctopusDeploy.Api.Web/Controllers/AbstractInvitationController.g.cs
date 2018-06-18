@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractInvitationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractInvitationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IInvitationService invitationService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>72e5fd8baca5a0c73f9a937669208c01</Hash>
+    <Hash>1d108e00ca9c9bba6d3f9f4a4782098d</Hash>
 </Codenesium>*/

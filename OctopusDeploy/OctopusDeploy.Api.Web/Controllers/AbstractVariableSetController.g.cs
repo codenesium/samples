@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractVariableSetController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractVariableSetController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVariableSetService variableSetService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3a67f6eb3dd7dda11029929bde1cffc3</Hash>
+    <Hash>6fb18f1a7724208bd11af1f2b2f8896e</Hash>
 </Codenesium>*/

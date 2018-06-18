@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class StateProvinceController: AbstractStateProvinceController
         {
                 public StateProvinceController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<StateProvinceController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStateProvinceService stateProvinceService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3120dd3139d7ed7a23dbf97f8634baab</Hash>
+    <Hash>2d14dedff43e1d0c87fcf72a37abd617</Hash>
 </Codenesium>*/

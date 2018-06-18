@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractArtifactController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractArtifactController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IArtifactService artifactService
@@ -175,5 +175,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>df1c90d73965a39a14ef7173bf3450a6</Hash>
+    <Hash>726b923e93784b81b10decb7dc627279</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class MachineController: AbstractMachineController
         {
                 public MachineController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<MachineController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMachineService machineService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eaa4f702f45e61aa1fec68f633e2e6dd</Hash>
+    <Hash>eb7a49d683541925708f051146c73ba6</Hash>
 </Codenesium>*/

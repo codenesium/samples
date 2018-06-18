@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiTeacherSkillRequestModelValidator: AbstractApiTeacherSkillRequestModelValidator, IApiTeacherSkillRequestModelValidator
         {
-                public ApiTeacherSkillRequestModelValidator()
+                public ApiTeacherSkillRequestModelValidator(ITeacherSkillRepository teacherSkillRepository)
+                        : base(teacherSkillRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fce5fe753314694725b7132c1c219a59</Hash>
+    <Hash>a9afedd3e5d2c4ab936e634a579e24ed</Hash>
 </Codenesium>*/

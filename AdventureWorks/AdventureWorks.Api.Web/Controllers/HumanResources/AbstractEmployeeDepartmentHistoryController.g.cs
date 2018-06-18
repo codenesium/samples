@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractEmployeeDepartmentHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractEmployeeDepartmentHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmployeeDepartmentHistoryService employeeDepartmentHistoryService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getDepartmentID/{departmentID}")]
+                [Route("byDepartmentID/{departmentID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetDepartmentID(short departmentID)
+                public async virtual Task<IActionResult> ByDepartmentID(short departmentID)
                 {
-                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.GetDepartmentID(departmentID);
+                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.ByDepartmentID(departmentID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getShiftID/{shiftID}")]
+                [Route("byShiftID/{shiftID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetShiftID(int shiftID)
+                public async virtual Task<IActionResult> ByShiftID(int shiftID)
                 {
-                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.GetShiftID(shiftID);
+                        List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.ByShiftID(shiftID);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>151787a7a6e55a974b519c62bd552037</Hash>
+    <Hash>f8b773dd988fc23ee4e75e065c24ca8e</Hash>
 </Codenesium>*/

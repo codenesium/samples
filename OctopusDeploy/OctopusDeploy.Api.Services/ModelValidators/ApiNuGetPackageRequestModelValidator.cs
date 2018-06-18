@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiNuGetPackageRequestModelValidator: AbstractApiNuGetPackageRequestModelValidator, IApiNuGetPackageRequestModelValidator
         {
-                public ApiNuGetPackageRequestModelValidator()
+                public ApiNuGetPackageRequestModelValidator(INuGetPackageRepository nuGetPackageRepository)
+                        : base(nuGetPackageRepository)
                 {
                 }
 
@@ -46,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7580065159e444e14643cf583e72173b</Hash>
+    <Hash>b59412e2ed9bb0fa6054e56f06a51b82</Hash>
 </Codenesium>*/

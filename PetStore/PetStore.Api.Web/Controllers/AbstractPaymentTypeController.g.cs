@@ -25,7 +25,7 @@ namespace PetStoreNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPaymentTypeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPaymentTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPaymentTypeService paymentTypeService
@@ -178,5 +178,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>90d1d0aeeb62aaec0c237948897e7635</Hash>
+    <Hash>56e84d95655d0d8902087fcefd66669c</Hash>
 </Codenesium>*/

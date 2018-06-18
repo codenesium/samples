@@ -13,7 +13,7 @@ namespace NebulaNS.Api.Services
         public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
         {
                 public VersionInfoService(
-                        ILogger<VersionInfoRepository> logger,
+                        ILogger<IVersionInfoRepository> logger,
                         IVersionInfoRepository versionInfoRepository,
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
                         IBOLVersionInfoMapper bolversionInfoMapper,
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ac310395157beb68437085947301b3d</Hash>
+    <Hash>e1a122efc4dde10e4b692592c94d6371</Hash>
 </Codenesium>*/

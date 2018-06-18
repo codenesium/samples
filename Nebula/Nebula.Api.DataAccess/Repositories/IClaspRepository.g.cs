@@ -15,10 +15,12 @@ namespace NebulaNS.Api.DataAccess
 
                 Task<Clasp> Get(int id);
 
-                Task<List<Clasp>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Clasp>> All(int limit = int.MaxValue, int offset = 0);
+
+                Task<Chain> GetChain(int nextChainId);
         }
 }
 
 /*<Codenesium>
-    <Hash>af411227ef7b602046ceb2f4ffd41199</Hash>
+    <Hash>38a6e291f06c19227c01ef8579aacf00</Hash>
 </Codenesium>*/

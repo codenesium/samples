@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiWorkerTaskLeaseRequestModelValidator: AbstractApiWorkerTaskLeaseRequestModelValidator, IApiWorkerTaskLeaseRequestModelValidator
         {
-                public ApiWorkerTaskLeaseRequestModelValidator()
+                public ApiWorkerTaskLeaseRequestModelValidator(IWorkerTaskLeaseRepository workerTaskLeaseRepository)
+                        : base(workerTaskLeaseRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e7b5f08f7f3272e1d0f3b84bcc2a3f5</Hash>
+    <Hash>0e79d4b6b0a70a962a3f163fbf63f2c2</Hash>
 </Codenesium>*/

@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiEmailAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiEmailAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.emailAddressRepository.All(limit, offset, orderClause);
+                        var records = await this.emailAddressRepository.All(limit, offset);
 
                         return this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.emailAddressRepository.Get(businessEntityID);
 
-                        return this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiEmailAddressResponseModel>> Create(
@@ -99,9 +106,9 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiEmailAddressResponseModel>> GetEmailAddress(string emailAddress1)
+                public async Task<List<ApiEmailAddressResponseModel>> ByEmailAddress(string emailAddress1)
                 {
-                        List<EmailAddress> records = await this.emailAddressRepository.GetEmailAddress(emailAddress1);
+                        List<EmailAddress> records = await this.emailAddressRepository.ByEmailAddress(emailAddress1);
 
                         return this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(records));
                 }
@@ -109,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a91be037e72bc2a3f080fae0220182b6</Hash>
+    <Hash>aeb381ee7f765246d0417ab1bf0c5ec6</Hash>
 </Codenesium>*/

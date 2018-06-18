@@ -1,0 +1,300 @@
+using FluentAssertions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using System;
+using Xunit;
+using Moq;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using System.Linq;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
+
+namespace OctopusDeployNS.Api.Services.Tests
+{
+        [Trait("Type", "Unit")]
+        [Trait("Table", "ActionTemplateVersion")]
+        [Trait("Area", "ModelValidators")]
+        public partial class ApiActionTemplateVersionRequestModelValidatorTest
+        {
+                public ApiActionTemplateVersionRequestModelValidatorTest()
+                {
+                }
+
+                [Fact]
+                public async void ActionType_Create_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.ActionType, null as string);
+                }
+
+                [Fact]
+                public async void ActionType_Update_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.ActionType, null as string);
+                }
+
+                [Fact]
+                public async void ActionType_Create_length()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.ActionType, new string('A', 51));
+                }
+
+                [Fact]
+                public async void ActionType_Update_length()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.ActionType, new string('A', 51));
+                }
+
+                [Fact]
+                public async void ActionType_Delete()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+
+                        response.Should().BeOfType(typeof(ValidationResult));
+                }
+
+                [Fact]
+                public async void JSON_Create_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
+                }
+
+                [Fact]
+                public async void JSON_Update_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
+                }
+
+                [Fact]
+                public async void LatestActionTemplateId_Create_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.LatestActionTemplateId, null as string);
+                }
+
+                [Fact]
+                public async void LatestActionTemplateId_Update_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.LatestActionTemplateId, null as string);
+                }
+
+                [Fact]
+                public async void LatestActionTemplateId_Create_length()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.LatestActionTemplateId, new string('A', 51));
+                }
+
+                [Fact]
+                public async void LatestActionTemplateId_Update_length()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.LatestActionTemplateId, new string('A', 51));
+                }
+
+                [Fact]
+                public async void LatestActionTemplateId_Delete()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+
+                        response.Should().BeOfType(typeof(ValidationResult));
+                }
+
+                [Fact]
+                public async void Name_Create_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+                }
+
+                [Fact]
+                public async void Name_Update_null()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+                }
+
+                [Fact]
+                public async void Name_Create_length()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+                }
+
+                [Fact]
+                public async void Name_Update_length()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
+                }
+
+                [Fact]
+                public async void Name_Delete()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplateVersion()));
+
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+
+                        response.Should().BeOfType(typeof(ValidationResult));
+                }
+
+                [Fact]
+                private async void BeUniqueGetNameVersion_Create_Exists()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(new ActionTemplateVersion()));
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+                }
+
+                [Fact]
+                private async void BeUniqueGetNameVersion_Create_Not_Exists()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateCreateAsync(new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+                }
+
+                [Fact]
+                private async void BeUniqueGetNameVersion_Update_Exists()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(new ActionTemplateVersion()));
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+                }
+
+                [Fact]
+                private async void BeUniqueGetNameVersion_Update_Not_Exists()
+                {
+                        Mock<IActionTemplateVersionRepository> actionTemplateVersionRepository = new Mock<IActionTemplateVersionRepository>();
+                        actionTemplateVersionRepository.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult<ActionTemplateVersion>(null));
+                        var validator = new ApiActionTemplateVersionRequestModelValidator(actionTemplateVersionRepository.Object);
+
+                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateVersionRequestModel());
+
+                        validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+                }
+        }
+}
+
+/*<Codenesium>
+    <Hash>71c8331163b2f9df9d3846aba25ada61</Hash>
+</Codenesium>*/

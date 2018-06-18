@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class SalesOrderDetailService: AbstractSalesOrderDetailService, ISalesOrderDetailService
         {
                 public SalesOrderDetailService(
-                        ILogger<SalesOrderDetailRepository> logger,
+                        ILogger<ISalesOrderDetailRepository> logger,
                         ISalesOrderDetailRepository salesOrderDetailRepository,
                         IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
                         IBOLSalesOrderDetailMapper bolsalesOrderDetailMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c73109c8533d314a9ffb6462dea3c564</Hash>
+    <Hash>11d68fa0f010e8af1d21a1b8fcad0a5e</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiDepartmentRequestModelValidator: AbstractApiDepartmentRequestModelValidator, IApiDepartmentRequestModelValidator
         {
-                public ApiDepartmentRequestModelValidator()
+                public ApiDepartmentRequestModelValidator(IDepartmentRepository departmentRepository)
+                        : base(departmentRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82141cac2150a0fedd0bee0f9cd0cd82</Hash>
+    <Hash>6414ee2aa87644552c6fe096e9802df5</Hash>
 </Codenesium>*/

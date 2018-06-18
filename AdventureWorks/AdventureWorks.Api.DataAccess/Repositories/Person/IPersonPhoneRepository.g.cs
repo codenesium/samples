@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<PersonPhone> Get(int businessEntityID);
 
-                Task<List<PersonPhone>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<PersonPhone>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<List<PersonPhone>> GetPhoneNumber(string phoneNumber);
+                Task<List<PersonPhone>> ByPhoneNumber(string phoneNumber);
         }
 }
 
 /*<Codenesium>
-    <Hash>99cbd882e60b4feccd69c58268fe319e</Hash>
+    <Hash>301ec641d7f53fe057ce40079a72c365</Hash>
 </Codenesium>*/

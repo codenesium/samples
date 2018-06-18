@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class SalesPersonQuotaHistoryController: AbstractSalesPersonQuotaHistoryController
         {
                 public SalesPersonQuotaHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<SalesPersonQuotaHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISalesPersonQuotaHistoryService salesPersonQuotaHistoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cbb42ab5520fcb1573085d438028ecf3</Hash>
+    <Hash>d25172e4543360114aafea05850e7f6f</Hash>
 </Codenesium>*/

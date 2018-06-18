@@ -237,9 +237,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDepartmentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiDepartmentResponseModel> GetDepartmentGetName(string name)
+                public virtual async Task<ApiDepartmentResponseModel> GetDepartmentByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Departments/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDepartmentResponseModel>(httpResponse.Content.ContentToString());
@@ -292,36 +292,20 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiEmployeeResponseModel> GetEmployeeGetLoginID(string loginID)
+                public virtual async Task<ApiEmployeeResponseModel> GetEmployeeByLoginID(string loginID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/getLoginID/{loginID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/byLoginID/{loginID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiEmployeeResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiEmployeeResponseModel> GetEmployeeGetNationalIDNumber(string nationalIDNumber)
+                public virtual async Task<ApiEmployeeResponseModel> GetEmployeeByNationalIDNumber(string nationalIDNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/getNationalIDNumber/{nationalIDNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/byNationalIDNumber/{nationalIDNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiEmployeeResponseModel>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<List<ApiEmployeeResponseModel>> GetEmployeeGetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel, Nullable<Guid> organizationNode)
-                {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/getOrganizationLevelOrganizationNode/{organizationLevel}/{organizationNode}");
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<List<ApiEmployeeResponseModel>> GetEmployeeGetOrganizationNode(Nullable<Guid> organizationNode)
-                {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/getOrganizationNode/{organizationNode}");
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiEmployeeDepartmentHistoryResponseModel> EmployeeDepartmentHistoryCreateAsync(ApiEmployeeDepartmentHistoryRequestModel item)
@@ -371,17 +355,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEmployeeDepartmentHistoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetEmployeeDepartmentHistoryGetDepartmentID(short departmentID)
+                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetEmployeeDepartmentHistoryByDepartmentID(short departmentID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories/getDepartmentID/{departmentID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories/byDepartmentID/{departmentID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmployeeDepartmentHistoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetEmployeeDepartmentHistoryGetShiftID(int shiftID)
+                public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> GetEmployeeDepartmentHistoryByShiftID(int shiftID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories/getShiftID/{shiftID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmployeeDepartmentHistories/byShiftID/{shiftID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmployeeDepartmentHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -481,9 +465,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiJobCandidateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiJobCandidateResponseModel>> GetJobCandidateGetBusinessEntityID(Nullable<int> businessEntityID)
+                public virtual async Task<List<ApiJobCandidateResponseModel>> GetJobCandidateByBusinessEntityID(Nullable<int> businessEntityID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates/getBusinessEntityID/{businessEntityID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/JobCandidates/byBusinessEntityID/{businessEntityID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiJobCandidateResponseModel>>(httpResponse.Content.ContentToString());
@@ -536,17 +520,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiShiftResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiShiftResponseModel> GetShiftGetName(string name)
+                public virtual async Task<ApiShiftResponseModel> GetShiftByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiShiftResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiShiftResponseModel> GetShiftGetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
+                public virtual async Task<ApiShiftResponseModel> GetShiftByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts/getStartTimeEndTime/{startTime}/{endTime}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Shifts/byStartTimeEndTime/{startTime}/{endTime}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiShiftResponseModel>(httpResponse.Content.ContentToString());
@@ -599,17 +583,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiAddressResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiAddressResponseModel> GetAddressGetAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
+                public virtual async Task<ApiAddressResponseModel> GetAddressByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses/getAddressLine1AddressLine2CityStateProvinceIDPostalCode/{addressLine1}/{addressLine2}/{city}/{stateProvinceID}/{postalCode}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses/byAddressLine1AddressLine2CityStateProvinceIDPostalCode/{addressLine1}/{addressLine2}/{city}/{stateProvinceID}/{postalCode}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiAddressResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiAddressResponseModel>> GetAddressGetStateProvinceID(int stateProvinceID)
+                public virtual async Task<List<ApiAddressResponseModel>> GetAddressByStateProvinceID(int stateProvinceID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses/getStateProvinceID/{stateProvinceID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Addresses/byStateProvinceID/{stateProvinceID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiAddressResponseModel>>(httpResponse.Content.ContentToString());
@@ -662,9 +646,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiAddressTypeResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiAddressTypeResponseModel> GetAddressTypeGetName(string name)
+                public virtual async Task<ApiAddressTypeResponseModel> GetAddressTypeByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/AddressTypes/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiAddressTypeResponseModel>(httpResponse.Content.ContentToString());
@@ -764,17 +748,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityAddressResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> GetBusinessEntityAddressGetAddressID(int addressID)
+                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> GetBusinessEntityAddressByAddressID(int addressID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses/getAddressID/{addressID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses/byAddressID/{addressID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityAddressResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> GetBusinessEntityAddressGetAddressTypeID(int addressTypeID)
+                public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> GetBusinessEntityAddressByAddressTypeID(int addressTypeID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses/getAddressTypeID/{addressTypeID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityAddresses/byAddressTypeID/{addressTypeID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityAddressResponseModel>>(httpResponse.Content.ContentToString());
@@ -827,17 +811,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityContactResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> GetBusinessEntityContactGetContactTypeID(int contactTypeID)
+                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> GetBusinessEntityContactByContactTypeID(int contactTypeID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts/getContactTypeID/{contactTypeID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts/byContactTypeID/{contactTypeID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityContactResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> GetBusinessEntityContactGetPersonID(int personID)
+                public virtual async Task<List<ApiBusinessEntityContactResponseModel>> GetBusinessEntityContactByPersonID(int personID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts/getPersonID/{personID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BusinessEntityContacts/byPersonID/{personID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBusinessEntityContactResponseModel>>(httpResponse.Content.ContentToString());
@@ -890,9 +874,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiContactTypeResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiContactTypeResponseModel> GetContactTypeGetName(string name)
+                public virtual async Task<ApiContactTypeResponseModel> GetContactTypeByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ContactTypes/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiContactTypeResponseModel>(httpResponse.Content.ContentToString());
@@ -945,9 +929,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCountryRegionResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCountryRegionResponseModel> GetCountryRegionGetName(string name)
+                public virtual async Task<ApiCountryRegionResponseModel> GetCountryRegionByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegions/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCountryRegionResponseModel>(httpResponse.Content.ContentToString());
@@ -1000,9 +984,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEmailAddressResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiEmailAddressResponseModel>> GetEmailAddressGetEmailAddress(string emailAddress1)
+                public virtual async Task<List<ApiEmailAddressResponseModel>> GetEmailAddressByEmailAddress(string emailAddress1)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses/getEmailAddress/{emailAddress1}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EmailAddresses/byEmailAddress/{emailAddress1}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEmailAddressResponseModel>>(httpResponse.Content.ContentToString());
@@ -1102,25 +1086,25 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonResponseModel>> GetPersonGetLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
+                public virtual async Task<List<ApiPersonResponseModel>> GetPersonByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/getLastNameFirstNameMiddleName/{lastName}/{firstName}/{middleName}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/byLastNameFirstNameMiddleName/{lastName}/{firstName}/{middleName}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonResponseModel>> GetPersonGetAdditionalContactInfo(string additionalContactInfo)
+                public virtual async Task<List<ApiPersonResponseModel>> GetPersonByAdditionalContactInfo(string additionalContactInfo)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/getAdditionalContactInfo/{additionalContactInfo}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/byAdditionalContactInfo/{additionalContactInfo}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonResponseModel>> GetPersonGetDemographics(string demographics)
+                public virtual async Task<List<ApiPersonResponseModel>> GetPersonByDemographics(string demographics)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/getDemographics/{demographics}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/byDemographics/{demographics}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
@@ -1173,9 +1157,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiPersonPhoneResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPersonPhoneResponseModel>> GetPersonPhoneGetPhoneNumber(string phoneNumber)
+                public virtual async Task<List<ApiPersonPhoneResponseModel>> GetPersonPhoneByPhoneNumber(string phoneNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones/getPhoneNumber/{phoneNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PersonPhones/byPhoneNumber/{phoneNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPersonPhoneResponseModel>>(httpResponse.Content.ContentToString());
@@ -1275,17 +1259,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiStateProvinceResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiStateProvinceResponseModel> GetStateProvinceGetName(string name)
+                public virtual async Task<ApiStateProvinceResponseModel> GetStateProvinceByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiStateProvinceResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiStateProvinceResponseModel> GetStateProvinceGetStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
+                public virtual async Task<ApiStateProvinceResponseModel> GetStateProvinceByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces/getStateProvinceCodeCountryRegionCode/{stateProvinceCode}/{countryRegionCode}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/StateProvinces/byStateProvinceCodeCountryRegionCode/{stateProvinceCode}/{countryRegionCode}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiStateProvinceResponseModel>(httpResponse.Content.ContentToString());
@@ -1338,17 +1322,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBillOfMaterialsResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiBillOfMaterialsResponseModel> GetBillOfMaterialsGetProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
+                public virtual async Task<ApiBillOfMaterialsResponseModel> GetBillOfMaterialsByProductAssemblyIDComponentIDStartDate(Nullable<int> productAssemblyID, int componentID, DateTime startDate)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials/getProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials/byProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBillOfMaterialsResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> GetBillOfMaterialsGetUnitMeasureCode(string unitMeasureCode)
+                public virtual async Task<List<ApiBillOfMaterialsResponseModel>> GetBillOfMaterialsByUnitMeasureCode(string unitMeasureCode)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials/getUnitMeasureCode/{unitMeasureCode}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/BillOfMaterials/byUnitMeasureCode/{unitMeasureCode}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBillOfMaterialsResponseModel>>(httpResponse.Content.ContentToString());
@@ -1401,9 +1385,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCultureResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCultureResponseModel> GetCultureGetName(string name)
+                public virtual async Task<ApiCultureResponseModel> GetCultureByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cultures/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCultureResponseModel>(httpResponse.Content.ContentToString());
@@ -1456,17 +1440,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDocumentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiDocumentResponseModel> GetDocumentGetDocumentLevelDocumentNode(Nullable<short> documentLevel, Guid documentNode)
+                public virtual async Task<List<ApiDocumentResponseModel>> GetDocumentByFileNameRevision(string fileName, string revision)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents/getDocumentLevelDocumentNode/{documentLevel}/{documentNode}");
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<ApiDocumentResponseModel>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<List<ApiDocumentResponseModel>> GetDocumentGetFileNameRevision(string fileName, string revision)
-                {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents/getFileNameRevision/{fileName}/{revision}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Documents/byFileNameRevision/{fileName}/{revision}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDocumentResponseModel>>(httpResponse.Content.ContentToString());
@@ -1566,9 +1542,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiLocationResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiLocationResponseModel> GetLocationGetName(string name)
+                public virtual async Task<ApiLocationResponseModel> GetLocationByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiLocationResponseModel>(httpResponse.Content.ContentToString());
@@ -1621,17 +1597,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProductResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProductResponseModel> GetProductGetName(string name)
+                public virtual async Task<ApiProductResponseModel> GetProductByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProductResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProductResponseModel> GetProductGetProductNumber(string productNumber)
+                public virtual async Task<ApiProductResponseModel> GetProductByProductNumber(string productNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/getProductNumber/{productNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/byProductNumber/{productNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProductResponseModel>(httpResponse.Content.ContentToString());
@@ -1684,9 +1660,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProductCategoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProductCategoryResponseModel> GetProductCategoryGetName(string name)
+                public virtual async Task<ApiProductCategoryResponseModel> GetProductCategoryByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductCategories/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProductCategoryResponseModel>(httpResponse.Content.ContentToString());
@@ -1784,53 +1760,6 @@ namespace AdventureWorksNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductDescriptionResponseModel>>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<ApiProductDocumentResponseModel> ProductDocumentCreateAsync(ApiProductDocumentRequestModel item)
-                {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ProductDocuments", item);
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<ApiProductDocumentResponseModel>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<ApiProductDocumentResponseModel> ProductDocumentUpdateAsync(int id, ApiProductDocumentRequestModel item)
-                {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ProductDocuments/{id}", item);
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<ApiProductDocumentResponseModel>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task ProductDocumentDeleteAsync(int id)
-                {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/ProductDocuments/{id}");
-
-                        httpResponse.EnsureSuccessStatusCode();
-                }
-
-                public virtual async Task<ApiProductDocumentResponseModel> ProductDocumentGetAsync(int id)
-                {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments/{id}");
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<ApiProductDocumentResponseModel>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<List<ApiProductDocumentResponseModel>> ProductDocumentAllAsync(int limit = 1000, int offset = 0)
-                {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductDocuments?limit={limit}&offset={offset}");
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<List<ApiProductDocumentResponseModel>>(httpResponse.Content.ContentToString());
-                }
-
-                public virtual async Task<List<ApiProductDocumentResponseModel>> ProductDocumentBulkInsertAsync(List<ApiProductDocumentRequestModel> items)
-                {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ProductDocuments/BulkInsert", items);
-
-                        httpResponse.EnsureSuccessStatusCode();
-                        return JsonConvert.DeserializeObject<List<ApiProductDocumentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiProductInventoryResponseModel> ProductInventoryCreateAsync(ApiProductInventoryRequestModel item)
@@ -1974,25 +1903,25 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProductModelResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProductModelResponseModel> GetProductModelGetName(string name)
+                public virtual async Task<ApiProductModelResponseModel> GetProductModelByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProductModelResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductModelResponseModel>> GetProductModelGetCatalogDescription(string catalogDescription)
+                public virtual async Task<List<ApiProductModelResponseModel>> GetProductModelByCatalogDescription(string catalogDescription)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/getCatalogDescription/{catalogDescription}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/byCatalogDescription/{catalogDescription}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductModelResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductModelResponseModel>> GetProductModelGetInstructions(string instructions)
+                public virtual async Task<List<ApiProductModelResponseModel>> GetProductModelByInstructions(string instructions)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/getInstructions/{instructions}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductModels/byInstructions/{instructions}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductModelResponseModel>>(httpResponse.Content.ContentToString());
@@ -2233,9 +2162,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProductReviewResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductReviewResponseModel>> GetProductReviewGetCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
+                public virtual async Task<List<ApiProductReviewResponseModel>> GetProductReviewByCommentsProductIDReviewerName(string comments, int productID, string reviewerName)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews/getCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductReviews/byCommentsProductIDReviewerName/{comments}/{productID}/{reviewerName}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductReviewResponseModel>>(httpResponse.Content.ContentToString());
@@ -2288,9 +2217,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProductSubcategoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiProductSubcategoryResponseModel> GetProductSubcategoryGetName(string name)
+                public virtual async Task<ApiProductSubcategoryResponseModel> GetProductSubcategoryByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductSubcategories/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiProductSubcategoryResponseModel>(httpResponse.Content.ContentToString());
@@ -2343,9 +2272,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiScrapReasonResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiScrapReasonResponseModel> GetScrapReasonGetName(string name)
+                public virtual async Task<ApiScrapReasonResponseModel> GetScrapReasonByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ScrapReasons/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiScrapReasonResponseModel>(httpResponse.Content.ContentToString());
@@ -2398,17 +2327,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryResponseModel>> GetTransactionHistoryGetProductID(int productID)
+                public virtual async Task<List<ApiTransactionHistoryResponseModel>> GetTransactionHistoryByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryResponseModel>> GetTransactionHistoryGetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
+                public virtual async Task<List<ApiTransactionHistoryResponseModel>> GetTransactionHistoryByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories/getReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistories/byReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryResponseModel>>(httpResponse.Content.ContentToString());
@@ -2461,17 +2390,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryArchiveResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> GetTransactionHistoryArchiveGetProductID(int productID)
+                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> GetTransactionHistoryArchiveByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryArchiveResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> GetTransactionHistoryArchiveGetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
+                public virtual async Task<List<ApiTransactionHistoryArchiveResponseModel>> GetTransactionHistoryArchiveByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives/getReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionHistoryArchives/byReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTransactionHistoryArchiveResponseModel>>(httpResponse.Content.ContentToString());
@@ -2524,9 +2453,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiUnitMeasureResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiUnitMeasureResponseModel> GetUnitMeasureGetName(string name)
+                public virtual async Task<ApiUnitMeasureResponseModel> GetUnitMeasureByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiUnitMeasureResponseModel>(httpResponse.Content.ContentToString());
@@ -2579,17 +2508,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkOrderResponseModel>> GetWorkOrderGetProductID(int productID)
+                public virtual async Task<List<ApiWorkOrderResponseModel>> GetWorkOrderByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkOrderResponseModel>> GetWorkOrderGetScrapReasonID(Nullable<short> scrapReasonID)
+                public virtual async Task<List<ApiWorkOrderResponseModel>> GetWorkOrderByScrapReasonID(Nullable<short> scrapReasonID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders/getScrapReasonID/{scrapReasonID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrders/byScrapReasonID/{scrapReasonID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderResponseModel>>(httpResponse.Content.ContentToString());
@@ -2642,9 +2571,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderRoutingResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> GetWorkOrderRoutingGetProductID(int productID)
+                public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> GetWorkOrderRoutingByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/WorkOrderRoutings/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiWorkOrderRoutingResponseModel>>(httpResponse.Content.ContentToString());
@@ -2697,17 +2626,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiProductVendorResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductVendorResponseModel>> GetProductVendorGetBusinessEntityID(int businessEntityID)
+                public virtual async Task<List<ApiProductVendorResponseModel>> GetProductVendorByBusinessEntityID(int businessEntityID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors/getBusinessEntityID/{businessEntityID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors/byBusinessEntityID/{businessEntityID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductVendorResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiProductVendorResponseModel>> GetProductVendorGetUnitMeasureCode(string unitMeasureCode)
+                public virtual async Task<List<ApiProductVendorResponseModel>> GetProductVendorByUnitMeasureCode(string unitMeasureCode)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors/getUnitMeasureCode/{unitMeasureCode}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ProductVendors/byUnitMeasureCode/{unitMeasureCode}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiProductVendorResponseModel>>(httpResponse.Content.ContentToString());
@@ -2760,9 +2689,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderDetailResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderDetailResponseModel>> GetPurchaseOrderDetailGetProductID(int productID)
+                public virtual async Task<List<ApiPurchaseOrderDetailResponseModel>> GetPurchaseOrderDetailByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderDetails/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderDetailResponseModel>>(httpResponse.Content.ContentToString());
@@ -2815,17 +2744,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetPurchaseOrderHeaderGetEmployeeID(int employeeID)
+                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetPurchaseOrderHeaderByEmployeeID(int employeeID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders/getEmployeeID/{employeeID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders/byEmployeeID/{employeeID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetPurchaseOrderHeaderGetVendorID(int vendorID)
+                public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> GetPurchaseOrderHeaderByVendorID(int vendorID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders/getVendorID/{vendorID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PurchaseOrderHeaders/byVendorID/{vendorID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPurchaseOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
@@ -2878,9 +2807,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiShipMethodResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiShipMethodResponseModel> GetShipMethodGetName(string name)
+                public virtual async Task<ApiShipMethodResponseModel> GetShipMethodByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShipMethods/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiShipMethodResponseModel>(httpResponse.Content.ContentToString());
@@ -2933,9 +2862,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiVendorResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiVendorResponseModel> GetVendorGetAccountNumber(string accountNumber)
+                public virtual async Task<ApiVendorResponseModel> GetVendorByAccountNumber(string accountNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors/getAccountNumber/{accountNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Vendors/byAccountNumber/{accountNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVendorResponseModel>(httpResponse.Content.ContentToString());
@@ -2988,9 +2917,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCountryRegionCurrencyResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> GetCountryRegionCurrencyGetCurrencyCode(string currencyCode)
+                public virtual async Task<List<ApiCountryRegionCurrencyResponseModel>> GetCountryRegionCurrencyByCurrencyCode(string currencyCode)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies/getCurrencyCode/{currencyCode}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CountryRegionCurrencies/byCurrencyCode/{currencyCode}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCountryRegionCurrencyResponseModel>>(httpResponse.Content.ContentToString());
@@ -3043,9 +2972,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCreditCardResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCreditCardResponseModel> GetCreditCardGetCardNumber(string cardNumber)
+                public virtual async Task<ApiCreditCardResponseModel> GetCreditCardByCardNumber(string cardNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards/getCardNumber/{cardNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CreditCards/byCardNumber/{cardNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCreditCardResponseModel>(httpResponse.Content.ContentToString());
@@ -3098,9 +3027,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCurrencyResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCurrencyResponseModel> GetCurrencyGetName(string name)
+                public virtual async Task<ApiCurrencyResponseModel> GetCurrencyByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Currencies/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCurrencyResponseModel>(httpResponse.Content.ContentToString());
@@ -3153,9 +3082,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCurrencyRateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCurrencyRateResponseModel> GetCurrencyRateGetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
+                public virtual async Task<ApiCurrencyRateResponseModel> GetCurrencyRateByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates/getCurrencyRateDateFromCurrencyCodeToCurrencyCode/{currencyRateDate}/{fromCurrencyCode}/{toCurrencyCode}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CurrencyRates/byCurrencyRateDateFromCurrencyCodeToCurrencyCode/{currencyRateDate}/{fromCurrencyCode}/{toCurrencyCode}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCurrencyRateResponseModel>(httpResponse.Content.ContentToString());
@@ -3208,17 +3137,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCustomerResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiCustomerResponseModel> GetCustomerGetAccountNumber(string accountNumber)
+                public virtual async Task<ApiCustomerResponseModel> GetCustomerByAccountNumber(string accountNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers/getAccountNumber/{accountNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers/byAccountNumber/{accountNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiCustomerResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiCustomerResponseModel>> GetCustomerGetTerritoryID(Nullable<int> territoryID)
+                public virtual async Task<List<ApiCustomerResponseModel>> GetCustomerByTerritoryID(Nullable<int> territoryID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers/getTerritoryID/{territoryID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Customers/byTerritoryID/{territoryID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiCustomerResponseModel>>(httpResponse.Content.ContentToString());
@@ -3318,9 +3247,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderDetailResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> GetSalesOrderDetailGetProductID(int productID)
+                public virtual async Task<List<ApiSalesOrderDetailResponseModel>> GetSalesOrderDetailByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderDetails/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderDetailResponseModel>>(httpResponse.Content.ContentToString());
@@ -3373,25 +3302,25 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiSalesOrderHeaderResponseModel> GetSalesOrderHeaderGetSalesOrderNumber(string salesOrderNumber)
+                public virtual async Task<ApiSalesOrderHeaderResponseModel> GetSalesOrderHeaderBySalesOrderNumber(string salesOrderNumber)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/getSalesOrderNumber/{salesOrderNumber}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/bySalesOrderNumber/{salesOrderNumber}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiSalesOrderHeaderResponseModel>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesOrderHeaderGetCustomerID(int customerID)
+                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesOrderHeaderByCustomerID(int customerID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/getCustomerID/{customerID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/byCustomerID/{customerID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesOrderHeaderGetSalesPersonID(Nullable<int> salesPersonID)
+                public virtual async Task<List<ApiSalesOrderHeaderResponseModel>> GetSalesOrderHeaderBySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/getSalesPersonID/{salesPersonID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesOrderHeaders/bySalesPersonID/{salesPersonID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSalesOrderHeaderResponseModel>>(httpResponse.Content.ContentToString());
@@ -3632,9 +3561,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSalesTaxRateResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiSalesTaxRateResponseModel> GetSalesTaxRateGetStateProvinceIDTaxType(int stateProvinceID, int taxType)
+                public virtual async Task<ApiSalesTaxRateResponseModel> GetSalesTaxRateByStateProvinceIDTaxType(int stateProvinceID, int taxType)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates/getStateProvinceIDTaxType/{stateProvinceID}/{taxType}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTaxRates/byStateProvinceIDTaxType/{stateProvinceID}/{taxType}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiSalesTaxRateResponseModel>(httpResponse.Content.ContentToString());
@@ -3687,9 +3616,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSalesTerritoryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<ApiSalesTerritoryResponseModel> GetSalesTerritoryGetName(string name)
+                public virtual async Task<ApiSalesTerritoryResponseModel> GetSalesTerritoryByName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SalesTerritories/byName/{name}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiSalesTerritoryResponseModel>(httpResponse.Content.ContentToString());
@@ -3789,9 +3718,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiShoppingCartItemResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiShoppingCartItemResponseModel>> GetShoppingCartItemGetShoppingCartIDProductID(string shoppingCartID, int productID)
+                public virtual async Task<List<ApiShoppingCartItemResponseModel>> GetShoppingCartItemByShoppingCartIDProductID(string shoppingCartID, int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems/getShoppingCartIDProductID/{shoppingCartID}/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ShoppingCartItems/byShoppingCartIDProductID/{shoppingCartID}/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiShoppingCartItemResponseModel>>(httpResponse.Content.ContentToString());
@@ -3891,9 +3820,9 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSpecialOfferProductResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiSpecialOfferProductResponseModel>> GetSpecialOfferProductGetProductID(int productID)
+                public virtual async Task<List<ApiSpecialOfferProductResponseModel>> GetSpecialOfferProductByProductID(int productID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts/getProductID/{productID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpecialOfferProducts/byProductID/{productID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpecialOfferProductResponseModel>>(httpResponse.Content.ContentToString());
@@ -3946,17 +3875,17 @@ namespace AdventureWorksNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiStoreResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStoreResponseModel>> GetStoreGetSalesPersonID(Nullable<int> salesPersonID)
+                public virtual async Task<List<ApiStoreResponseModel>> GetStoreBySalesPersonID(Nullable<int> salesPersonID)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores/getSalesPersonID/{salesPersonID}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores/bySalesPersonID/{salesPersonID}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStoreResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
-                public virtual async Task<List<ApiStoreResponseModel>> GetStoreGetDemographics(string demographics)
+                public virtual async Task<List<ApiStoreResponseModel>> GetStoreByDemographics(string demographics)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores/getDemographics/{demographics}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Stores/byDemographics/{demographics}");
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStoreResponseModel>>(httpResponse.Content.ContentToString());
@@ -3965,5 +3894,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>b3f366058a2afd555e216751acb6168f</Hash>
+    <Hash>17d6c7199fde6eaaf2f50ae9b3787d73</Hash>
 </Codenesium>*/

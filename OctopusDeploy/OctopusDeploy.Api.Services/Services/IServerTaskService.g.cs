@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiServerTaskResponseModel> Get(string id);
 
-                Task<List<ApiServerTaskResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiServerTaskResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiServerTaskResponseModel>> GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId);
                 Task<List<ApiServerTaskResponseModel>> GetStateConcurrencyTag(string state, string concurrencyTag);
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce87d83b827df638403de3159f7d6ff8</Hash>
+    <Hash>443dde7bc6bdcde8f046b0bc50379aaf</Hash>
 </Codenesium>*/

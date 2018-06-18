@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class AddressController: AbstractAddressController
         {
                 public AddressController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAddressService addressService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0bbf95d509302633d07786b9a2a815d4</Hash>
+    <Hash>dad4f893829e24299409dd178ebfa457</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class DeploymentHistoryController: AbstractDeploymentHistoryController
         {
                 public DeploymentHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DeploymentHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeploymentHistoryService deploymentHistoryService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee39a6fd1a33725f20aec345f132b105</Hash>
+    <Hash>9911a1dfb59ef43028763bb481f62973</Hash>
 </Codenesium>*/

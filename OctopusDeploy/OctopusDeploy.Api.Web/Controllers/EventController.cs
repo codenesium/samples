@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class EventController: AbstractEventController
         {
                 public EventController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EventController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEventService eventService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6b5ea354b6b4fb2abb900753a2dd854d</Hash>
+    <Hash>37bcf9d10254feec6c1264892e0e79c1</Hash>
 </Codenesium>*/

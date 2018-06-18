@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ShipMethodController: AbstractShipMethodController
         {
                 public ShipMethodController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ShipMethodController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IShipMethodService shipMethodService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>371c152f54f8b4881bf65801306a1d8a</Hash>
+    <Hash>5441b8c3913e81e249ffc4c4bff163c7</Hash>
 </Codenesium>*/

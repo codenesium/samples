@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class CountryRegionCurrencyService: AbstractCountryRegionCurrencyService, ICountryRegionCurrencyService
         {
                 public CountryRegionCurrencyService(
-                        ILogger<CountryRegionCurrencyRepository> logger,
+                        ILogger<ICountryRegionCurrencyRepository> logger,
                         ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
                         IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
                         IBOLCountryRegionCurrencyMapper bolcountryRegionCurrencyMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de4834201a16354add11585aa85eb9d7</Hash>
+    <Hash>105494021763240ffa86b4d2f1a5ba89</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractClaspController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractClaspController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IClaspService claspService
@@ -164,5 +164,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>25d76bc4d03cc85493869e01638c045f</Hash>
+    <Hash>1f34b366a7ea47194107b395ac436245</Hash>
 </Codenesium>*/

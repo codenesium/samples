@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiMutexRequestModelValidator: AbstractApiMutexRequestModelValidator, IApiMutexRequestModelValidator
         {
-                public ApiMutexRequestModelValidator()
+                public ApiMutexRequestModelValidator(IMutexRepository mutexRepository)
+                        : base(mutexRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b913e33640bdbbe2a9950bb95917fa29</Hash>
+    <Hash>7ce9bd53c8eb79e0ec125992708db821</Hash>
 </Codenesium>*/

@@ -49,7 +49,7 @@ namespace NebulaNS.Api.Web
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-		    services.Configure<ServiceSettings>(this.Configuration);
+		    services.Configure<ApiSettings>(this.Configuration);
 
 			services.AddMvcCore(config =>
             {
@@ -163,7 +163,7 @@ namespace NebulaNS.Api.Web
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
-            builder.Register(ctx => ctx.Resolve<IOptions<ServiceSettings>>().Value);
+            builder.Register(ctx => ctx.Resolve<IOptions<ApiSettings>>().Value);
 
             // set up entity framework options
 			DbContextOptionsBuilder options = new DbContextOptionsBuilder();

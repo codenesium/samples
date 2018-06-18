@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractSubscriptionController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractSubscriptionController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ISubscriptionService subscriptionService
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d415cebb39fee429d2ea54816b26d091</Hash>
+    <Hash>541b3397c51f574f4912a436c2b9359c</Hash>
 </Codenesium>*/

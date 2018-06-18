@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiCertificateResponseModel> Get(string id);
 
-                Task<List<ApiCertificateResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiCertificateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiCertificateResponseModel>> GetCreated(DateTimeOffset created);
                 Task<List<ApiCertificateResponseModel>> GetDataVersion(byte[] dataVersion);
@@ -29,5 +29,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d573428023c508886314e0a2a62b0994</Hash>
+    <Hash>655b1dc9513220246454ff4814d236d5</Hash>
 </Codenesium>*/

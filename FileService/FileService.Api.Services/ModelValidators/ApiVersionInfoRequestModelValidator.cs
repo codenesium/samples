@@ -8,7 +8,8 @@ namespace FileServiceNS.Api.Services
 {
         public class ApiVersionInfoRequestModelValidator: AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
         {
-                public ApiVersionInfoRequestModelValidator()
+                public ApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
+                        : base(versionInfoRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d49320a392ca6b2c60f3e10dbeb068d</Hash>
+    <Hash>18f922fa5e91bf75f2f505d176c974ec</Hash>
 </Codenesium>*/

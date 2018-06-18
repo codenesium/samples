@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class FamilyController: AbstractFamilyController
         {
                 public FamilyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<FamilyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IFamilyService familyService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b9985259f0e9c862183b51a4b9733852</Hash>
+    <Hash>74f5dc094618581193cb4b1f5b8055cb</Hash>
 </Codenesium>*/

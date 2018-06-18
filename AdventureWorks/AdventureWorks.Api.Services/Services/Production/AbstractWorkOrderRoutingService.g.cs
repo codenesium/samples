@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiWorkOrderRoutingResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.workOrderRoutingRepository.All(limit, offset, orderClause);
+                        var records = await this.workOrderRoutingRepository.All(limit, offset);
 
                         return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.workOrderRoutingRepository.Get(workOrderID);
 
-                        return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiWorkOrderRoutingResponseModel>> Create(
@@ -99,9 +106,9 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiWorkOrderRoutingResponseModel>> GetProductID(int productID)
+                public async Task<List<ApiWorkOrderRoutingResponseModel>> ByProductID(int productID)
                 {
-                        List<WorkOrderRouting> records = await this.workOrderRoutingRepository.GetProductID(productID);
+                        List<WorkOrderRouting> records = await this.workOrderRoutingRepository.ByProductID(productID);
 
                         return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
                 }
@@ -109,5 +116,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>14d306f7eb4226b2b0313eeac8fb6d5e</Hash>
+    <Hash>bccf260ea0ba49ae6f975d088971ee76</Hash>
 </Codenesium>*/

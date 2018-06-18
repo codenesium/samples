@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractPersonCreditCardController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractPersonCreditCardController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPersonCreditCardService personCreditCardService
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b1666f8853e623d0203a1874b5e19067</Hash>
+    <Hash>404fb4e266ae4ccd299ef0f11951be58</Hash>
 </Codenesium>*/

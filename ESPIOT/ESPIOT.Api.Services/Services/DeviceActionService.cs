@@ -13,7 +13,7 @@ namespace ESPIOTNS.Api.Services
         public class DeviceActionService: AbstractDeviceActionService, IDeviceActionService
         {
                 public DeviceActionService(
-                        ILogger<DeviceActionRepository> logger,
+                        ILogger<IDeviceActionRepository> logger,
                         IDeviceActionRepository deviceActionRepository,
                         IApiDeviceActionRequestModelValidator deviceActionModelValidator,
                         IBOLDeviceActionMapper boldeviceActionMapper,
@@ -32,5 +32,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a9d553d1804a424871331cdccceb6182</Hash>
+    <Hash>3613aaf950b1aa8fc6b291d4e25c8fb4</Hash>
 </Codenesium>*/

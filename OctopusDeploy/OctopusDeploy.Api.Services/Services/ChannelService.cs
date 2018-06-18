@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ChannelService: AbstractChannelService, IChannelService
         {
                 public ChannelService(
-                        ILogger<ChannelRepository> logger,
+                        ILogger<IChannelRepository> logger,
                         IChannelRepository channelRepository,
                         IApiChannelRequestModelValidator channelModelValidator,
                         IBOLChannelMapper bolchannelMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7938c82e331c5642e58d033d113ce30b</Hash>
+    <Hash>533f56682888e57fa09c74576df1f6a3</Hash>
 </Codenesium>*/

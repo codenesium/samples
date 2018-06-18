@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Web
         public class StateController: AbstractStateController
         {
                 public StateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<StateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IStateService stateService
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4b2e1ef14b1330f76a135d9983550b1e</Hash>
+    <Hash>40a31661b4e8f9f8ba65d3720aabe827</Hash>
 </Codenesium>*/

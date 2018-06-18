@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class PhoneNumberTypeController: AbstractPhoneNumberTypeController
         {
                 public PhoneNumberTypeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PhoneNumberTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPhoneNumberTypeService phoneNumberTypeService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>219948105159cc3b3a6196c12e181bb5</Hash>
+    <Hash>075722cbac7172d199e28599be41548c</Hash>
 </Codenesium>*/

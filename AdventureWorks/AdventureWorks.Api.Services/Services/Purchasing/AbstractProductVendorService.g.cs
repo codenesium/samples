@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiProductVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiProductVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.productVendorRepository.All(limit, offset, orderClause);
+                        var records = await this.productVendorRepository.All(limit, offset);
 
                         return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.productVendorRepository.Get(productID);
 
-                        return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiProductVendorResponseModel>> Create(
@@ -99,15 +106,15 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<List<ApiProductVendorResponseModel>> GetBusinessEntityID(int businessEntityID)
+                public async Task<List<ApiProductVendorResponseModel>> ByBusinessEntityID(int businessEntityID)
                 {
-                        List<ProductVendor> records = await this.productVendorRepository.GetBusinessEntityID(businessEntityID);
+                        List<ProductVendor> records = await this.productVendorRepository.ByBusinessEntityID(businessEntityID);
 
                         return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
                 }
-                public async Task<List<ApiProductVendorResponseModel>> GetUnitMeasureCode(string unitMeasureCode)
+                public async Task<List<ApiProductVendorResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
                 {
-                        List<ProductVendor> records = await this.productVendorRepository.GetUnitMeasureCode(unitMeasureCode);
+                        List<ProductVendor> records = await this.productVendorRepository.ByUnitMeasureCode(unitMeasureCode);
 
                         return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
                 }
@@ -115,5 +122,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4340190ccb28ff74df00fc3ca8fef37</Hash>
+    <Hash>950af9be2e1d00f9b78f44cf54047c31</Hash>
 </Codenesium>*/

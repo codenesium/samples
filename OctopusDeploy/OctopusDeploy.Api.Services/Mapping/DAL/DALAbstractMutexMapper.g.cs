@@ -22,11 +22,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOMutex MapEFToBO(
                         Mutex ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOMutex();
 
                         bo.SetProperties(
@@ -51,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a2a49327d91a275bfaa7cdee62edeca3</Hash>
+    <Hash>6755074ee46c926bf4b74fd4690a805f</Hash>
 </Codenesium>*/

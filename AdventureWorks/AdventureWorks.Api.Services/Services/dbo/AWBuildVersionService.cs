@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class AWBuildVersionService: AbstractAWBuildVersionService, IAWBuildVersionService
         {
                 public AWBuildVersionService(
-                        ILogger<AWBuildVersionRepository> logger,
+                        ILogger<IAWBuildVersionRepository> logger,
                         IAWBuildVersionRepository aWBuildVersionRepository,
                         IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
                         IBOLAWBuildVersionMapper bolaWBuildVersionMapper,
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8850fb312d5fd61f10b1ad4c16d946c9</Hash>
+    <Hash>919f88eded8f12a26321681ec39b7129</Hash>
 </Codenesium>*/

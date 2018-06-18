@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractIllustrationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractIllustrationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IIllustrationService illustrationService
@@ -178,5 +178,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>770991183b93b3990dd4076405ab0e41</Hash>
+    <Hash>bb77697ffad40f56c1b7bdbff196f452</Hash>
 </Codenesium>*/

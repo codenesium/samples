@@ -8,7 +8,8 @@ namespace FermataFishNS.Api.Services
 {
         public class ApiLessonXStudentRequestModelValidator: AbstractApiLessonXStudentRequestModelValidator, IApiLessonXStudentRequestModelValidator
         {
-                public ApiLessonXStudentRequestModelValidator()
+                public ApiLessonXStudentRequestModelValidator(ILessonXStudentRepository lessonXStudentRepository)
+                        : base(lessonXStudentRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee72ef757be737aa9c003733584d86be</Hash>
+    <Hash>2194ba445ea93df407018d207708db6a</Hash>
 </Codenesium>*/

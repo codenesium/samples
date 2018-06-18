@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOPhoneNumberType MapEFToBO(
                         PhoneNumberType ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPhoneNumberType();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>759b31a3ede5c0de238052bf54480fb7</Hash>
+    <Hash>051236b9d5be71073a00390e68d734ec</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class DestinationController: AbstractDestinationController
         {
                 public DestinationController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<DestinationController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDestinationService destinationService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4bf646cedb825b51607d734cf4db1686</Hash>
+    <Hash>44d4cf9dc58e9d8b2077f55176c6b3ac</Hash>
 </Codenesium>*/

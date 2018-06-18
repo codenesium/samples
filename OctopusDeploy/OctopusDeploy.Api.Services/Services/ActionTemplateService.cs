@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class ActionTemplateService: AbstractActionTemplateService, IActionTemplateService
         {
                 public ActionTemplateService(
-                        ILogger<ActionTemplateRepository> logger,
+                        ILogger<IActionTemplateRepository> logger,
                         IActionTemplateRepository actionTemplateRepository,
                         IApiActionTemplateRequestModelValidator actionTemplateModelValidator,
                         IBOLActionTemplateMapper bolactionTemplateMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62f0cf31ebf6a163201055d9bb0c0b3d</Hash>
+    <Hash>c43ac4b632149899c7ef6eab497a2c5d</Hash>
 </Codenesium>*/

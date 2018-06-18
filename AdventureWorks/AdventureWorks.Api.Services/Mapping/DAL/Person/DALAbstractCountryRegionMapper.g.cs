@@ -23,11 +23,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOCountryRegion MapEFToBO(
                         CountryRegion ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCountryRegion();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91ae14d409870e729bf2c80832f1abaa</Hash>
+    <Hash>2adeb102c4f67aa23bcab03522600176</Hash>
 </Codenesium>*/

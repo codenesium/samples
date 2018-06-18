@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSpeciesRequestModel model, int id)
+                ISpeciesRepository speciesRepository;
+
+                public AbstractApiSpeciesRequestModelValidator(ISpeciesRepository speciesRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.speciesRepository = speciesRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSpeciesRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>120e7ecaf156ab5e54c590bf6c4fd483</Hash>
+    <Hash>30a59695ad56d7dc8002e37d89662c17</Hash>
 </Codenesium>*/

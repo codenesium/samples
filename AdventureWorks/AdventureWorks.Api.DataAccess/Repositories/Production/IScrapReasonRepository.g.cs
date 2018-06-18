@@ -15,14 +15,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<ScrapReason> Get(short scrapReasonID);
 
-                Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<ScrapReason>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<ScrapReason> GetName(string name);
+                Task<ScrapReason> ByName(string name);
 
                 Task<List<WorkOrder>> WorkOrders(short scrapReasonID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>8efc88ba0b156c78b19435ba628c241c</Hash>
+    <Hash>7b3f98def6fbcf983202a0557b4d139e</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCurrencyRateController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCurrencyRateController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICurrencyRateService currencyRateService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getCurrencyRateDateFromCurrencyCodeToCurrencyCode/{currencyRateDate}/{fromCurrencyCode}/{toCurrencyCode}")]
+                [Route("byCurrencyRateDateFromCurrencyCodeToCurrencyCode/{currencyRateDate}/{fromCurrencyCode}/{toCurrencyCode}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCurrencyRateResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
+                public async virtual Task<IActionResult> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode)
                 {
-                        ApiCurrencyRateResponseModel response = await this.CurrencyRateService.GetCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate, fromCurrencyCode, toCurrencyCode);
+                        ApiCurrencyRateResponseModel response = await this.CurrencyRateService.ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(currencyRateDate, fromCurrencyCode, toCurrencyCode);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ba3e66ef0d990e9abe28f016d0344ba2</Hash>
+    <Hash>af9e4d630d78e76c28a0656eb5810d29</Hash>
 </Codenesium>*/

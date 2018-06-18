@@ -13,10 +13,11 @@ namespace ESPIOTNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiDeviceActionRequestModel model, int id)
+                IDeviceActionRepository deviceActionRepository;
+
+                public AbstractApiDeviceActionRequestModelValidator(IDeviceActionRepository deviceActionRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.deviceActionRepository = deviceActionRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDeviceActionRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace ESPIOTNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IDeviceRepository DeviceRepository { get; set; }
 
                 public virtual void DeviceIdRules()
                 {
@@ -46,7 +45,7 @@ namespace ESPIOTNS.Api.Services
 
                 private async Task<bool> BeValidDevice(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.DeviceRepository.Get(id);
+                        var record = await this.deviceActionRepository.GetDevice(id);
 
                         return record != null;
                 }
@@ -54,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15aaf2d9af22325036ca443eee62a865</Hash>
+    <Hash>e8d09ed412b3ce8d7a0f8cd77cbbf3a9</Hash>
 </Codenesium>*/

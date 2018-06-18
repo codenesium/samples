@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiInvitationRequestModel model, string id)
+                IInvitationRepository invitationRepository;
+
+                public AbstractApiInvitationRequestModelValidator(IInvitationRepository invitationRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.invitationRepository = invitationRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiInvitationRequestModel model, string id)
@@ -39,5 +40,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>362fd1f7b6a25cd3d82e0fedaf20238a</Hash>
+    <Hash>0075fdf82fced53f158732b90491b7d3</Hash>
 </Codenesium>*/

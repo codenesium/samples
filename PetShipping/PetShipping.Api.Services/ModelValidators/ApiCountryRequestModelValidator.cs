@@ -8,7 +8,8 @@ namespace PetShippingNS.Api.Services
 {
         public class ApiCountryRequestModelValidator: AbstractApiCountryRequestModelValidator, IApiCountryRequestModelValidator
         {
-                public ApiCountryRequestModelValidator()
+                public ApiCountryRequestModelValidator(ICountryRepository countryRepository)
+                        : base(countryRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>291d710b62ce7956c3c64fdd27dc8803</Hash>
+    <Hash>58e0f408568b28e9f00f6919cbe60b52</Hash>
 </Codenesium>*/

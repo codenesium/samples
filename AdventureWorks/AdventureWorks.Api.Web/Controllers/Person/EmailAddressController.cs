@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class EmailAddressController: AbstractEmailAddressController
         {
                 public EmailAddressController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EmailAddressController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmailAddressService emailAddressService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ea789c2601c834c448391ed1f4c56b3</Hash>
+    <Hash>fb485fd3f5fba3e601473be8808eba9f</Hash>
 </Codenesium>*/

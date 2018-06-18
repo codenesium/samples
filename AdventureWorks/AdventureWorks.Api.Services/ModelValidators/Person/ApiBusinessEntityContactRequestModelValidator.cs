@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiBusinessEntityContactRequestModelValidator: AbstractApiBusinessEntityContactRequestModelValidator, IApiBusinessEntityContactRequestModelValidator
         {
-                public ApiBusinessEntityContactRequestModelValidator()
+                public ApiBusinessEntityContactRequestModelValidator(IBusinessEntityContactRepository businessEntityContactRepository)
+                        : base(businessEntityContactRepository)
                 {
                 }
 
@@ -38,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db49d38fb8e6204202e7cc501e614892</Hash>
+    <Hash>2ced83513b0ef7942f53cb7265e01b04</Hash>
 </Codenesium>*/

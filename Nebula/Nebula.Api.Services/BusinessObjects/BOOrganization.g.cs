@@ -3,25 +3,14 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOOrganization: AbstractBusinessObject
+        public partial class BOOrganization: AbstractBOOrganization
         {
                 public BOOrganization() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3e0c45bc9f2f0aa694917cd4fd2820dd</Hash>
+    <Hash>6dba6a3839bb9a54075aec8afc808fb7</Hash>
 </Codenesium>*/

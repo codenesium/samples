@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiProjectResponseModel> Get(string id);
 
-                Task<List<ApiProjectResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiProjectResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiProjectResponseModel> GetName(string name);
                 Task<ApiProjectResponseModel> GetSlug(string slug);
@@ -29,5 +29,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>186b1717147c4795a071dfd62e6e81a4</Hash>
+    <Hash>c7bcccd62238468e4e08fe51bd9e1816</Hash>
 </Codenesium>*/

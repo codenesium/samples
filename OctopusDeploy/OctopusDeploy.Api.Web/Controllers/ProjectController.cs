@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ProjectController: AbstractProjectController
         {
                 public ProjectController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProjectController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProjectService projectService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0f6c34edb0029272e98fe2a0c2e216f1</Hash>
+    <Hash>74885123b9ebec75652dab95b83f3e05</Hash>
 </Codenesium>*/

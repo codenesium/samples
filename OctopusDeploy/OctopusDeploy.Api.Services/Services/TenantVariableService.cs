@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class TenantVariableService: AbstractTenantVariableService, ITenantVariableService
         {
                 public TenantVariableService(
-                        ILogger<TenantVariableRepository> logger,
+                        ILogger<ITenantVariableRepository> logger,
                         ITenantVariableRepository tenantVariableRepository,
                         IApiTenantVariableRequestModelValidator tenantVariableModelValidator,
                         IBOLTenantVariableMapper boltenantVariableMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35fffd5af7c2b4edf15466094495693b</Hash>
+    <Hash>805a402a305d028dfdb02f7fedaf4655</Hash>
 </Codenesium>*/

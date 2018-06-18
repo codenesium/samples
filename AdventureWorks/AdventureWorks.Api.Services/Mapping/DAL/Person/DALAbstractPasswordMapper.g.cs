@@ -25,11 +25,6 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BOPassword MapEFToBO(
                         Password ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPassword();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>786cbb2f791ab8659294da245be13434</Hash>
+    <Hash>999ec5dae4aafb2410fafb394826d88f</Hash>
 </Codenesium>*/

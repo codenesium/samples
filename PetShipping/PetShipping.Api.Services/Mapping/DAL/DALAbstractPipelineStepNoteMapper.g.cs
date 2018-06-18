@@ -24,11 +24,6 @@ namespace PetShippingNS.Api.Services
                 public virtual BOPipelineStepNote MapEFToBO(
                         PipelineStepNote ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOPipelineStepNote();
 
                         bo.SetProperties(
@@ -55,5 +50,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5452bcae0b1fc949d3d938cb9caf5c7</Hash>
+    <Hash>9d8b29ce2b9d01085fcd48a9ebf47491</Hash>
 </Codenesium>*/

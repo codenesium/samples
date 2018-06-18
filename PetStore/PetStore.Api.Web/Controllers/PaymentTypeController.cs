@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Web
         public class PaymentTypeController: AbstractPaymentTypeController
         {
                 public PaymentTypeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PaymentTypeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPaymentTypeService paymentTypeService
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9006d2c54ac989c0ce2e84bcfc6b4cd2</Hash>
+    <Hash>ac0c9c4276e0c047f423eaf3ed1561f3</Hash>
 </Codenesium>*/

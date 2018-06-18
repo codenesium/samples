@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PersonPhone>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<PersonPhone>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<PersonPhone> Get(int businessEntityID)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<PersonPhone>> GetPhoneNumber(string phoneNumber)
+                public async Task<List<PersonPhone>> ByPhoneNumber(string phoneNumber)
                 {
-                        var records = await this.SearchLinqEF(x => x.PhoneNumber == phoneNumber);
+                        var records = await this.Where(x => x.PhoneNumber == phoneNumber);
 
                         return records;
                 }
 
-                protected async Task<List<PersonPhone>> Where(Expression<Func<PersonPhone, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<PersonPhone>> Where(
+                        Expression<Func<PersonPhone, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<PersonPhone, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<PersonPhone> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<PersonPhone>> SearchLinqEF(Expression<Func<PersonPhone, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(PersonPhone.BusinessEntityID)} ASC";
+                                orderBy = x => x.BusinessEntityID;
                         }
 
-                        return await this.Context.Set<PersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PersonPhone>();
-                }
-
-                private async Task<List<PersonPhone>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(PersonPhone.BusinessEntityID)} ASC";
+                                return await this.Context.Set<PersonPhone>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PersonPhone>();
                         }
-
-                        return await this.Context.Set<PersonPhone>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PersonPhone>();
+                        else
+                        {
+                                return await this.Context.Set<PersonPhone>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PersonPhone>();
+                        }
                 }
 
                 private async Task<PersonPhone> GetById(int businessEntityID)
                 {
-                        List<PersonPhone> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        List<PersonPhone> records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
                         return records.FirstOrDefault();
                 }
@@ -119,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7cd2ffc90836c932a665d624b966a0cc</Hash>
+    <Hash>4a6248794c9a3120651a5bad41898702</Hash>
 </Codenesium>*/

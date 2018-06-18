@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractHandlerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractHandlerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IHandlerService handlerService
@@ -204,5 +204,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>02fdef5564d568aaf5a171ced318e3df</Hash>
+    <Hash>867978d001af2e2b997107b3626bada4</Hash>
 </Codenesium>*/

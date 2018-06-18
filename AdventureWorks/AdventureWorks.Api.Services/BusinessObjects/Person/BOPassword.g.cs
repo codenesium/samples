@@ -3,37 +3,14 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOPassword: AbstractBusinessObject
+        public partial class BOPassword: AbstractBOPassword
         {
                 public BOPassword() : base()
                 {
                 }
-
-                public void SetProperties(int businessEntityID,
-                                          DateTime modifiedDate,
-                                          string passwordHash,
-                                          string passwordSalt,
-                                          Guid rowguid)
-                {
-                        this.BusinessEntityID = businessEntityID;
-                        this.ModifiedDate = modifiedDate;
-                        this.PasswordHash = passwordHash;
-                        this.PasswordSalt = passwordSalt;
-                        this.Rowguid = rowguid;
-                }
-
-                public int BusinessEntityID { get; private set; }
-
-                public DateTime ModifiedDate { get; private set; }
-
-                public string PasswordHash { get; private set; }
-
-                public string PasswordSalt { get; private set; }
-
-                public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e437b4cb32d89bd840833c4784666029</Hash>
+    <Hash>9ebf29d3335edc8750dba20190fe2223</Hash>
 </Codenesium>*/

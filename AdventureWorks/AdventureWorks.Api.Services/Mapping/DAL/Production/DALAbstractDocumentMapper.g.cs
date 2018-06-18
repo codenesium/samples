@@ -17,7 +17,6 @@ namespace AdventureWorksNS.Api.Services
                                 bo.ChangeNumber,
                                 bo.Document1,
                                 bo.DocumentLevel,
-                                bo.DocumentNode,
                                 bo.DocumentSummary,
                                 bo.FileExtension,
                                 bo.FileName,
@@ -34,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                 public virtual BODocument MapEFToBO(
                         Document ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BODocument();
 
                         bo.SetProperties(
-                                ef.DocumentNode,
+                                ef.Rowguid,
                                 ef.ChangeNumber,
                                 ef.Document1,
                                 ef.DocumentLevel,
@@ -53,7 +47,6 @@ namespace AdventureWorksNS.Api.Services
                                 ef.ModifiedDate,
                                 ef.Owner,
                                 ef.Revision,
-                                ef.Rowguid,
                                 ef.Status,
                                 ef.Title);
                         return bo;
@@ -75,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1af52bc38c89b9e5f4ba142cca52510</Hash>
+    <Hash>65928a85cc91324f99c11207442cc1dc</Hash>
 </Codenesium>*/

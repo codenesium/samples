@@ -29,11 +29,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BONuGetPackage MapEFToBO(
                         NuGetPackage ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BONuGetPackage();
 
                         bo.SetProperties(
@@ -65,5 +60,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3f61fa6d05b5aee12a493d2a3537d95</Hash>
+    <Hash>84aa33f3a210a94808a08adc4ab264cc</Hash>
 </Codenesium>*/

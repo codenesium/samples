@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiIllustrationRequestModelValidator: AbstractApiIllustrationRequestModelValidator, IApiIllustrationRequestModelValidator
         {
-                public ApiIllustrationRequestModelValidator()
+                public ApiIllustrationRequestModelValidator(IIllustrationRepository illustrationRepository)
+                        : base(illustrationRepository)
                 {
                 }
 
@@ -34,5 +35,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8844045807bbfe3106f7f839e723ff3</Hash>
+    <Hash>2630dc4d6b45d1d3748f65e8cfbd2ba4</Hash>
 </Codenesium>*/

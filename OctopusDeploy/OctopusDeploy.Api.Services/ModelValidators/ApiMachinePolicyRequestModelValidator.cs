@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiMachinePolicyRequestModelValidator: AbstractApiMachinePolicyRequestModelValidator, IApiMachinePolicyRequestModelValidator
         {
-                public ApiMachinePolicyRequestModelValidator()
+                public ApiMachinePolicyRequestModelValidator(IMachinePolicyRepository machinePolicyRepository)
+                        : base(machinePolicyRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5a4884fc8fdb91fc3b38576b3f09e1c</Hash>
+    <Hash>2c348c07302cafe5aa3229311657079c</Hash>
 </Codenesium>*/

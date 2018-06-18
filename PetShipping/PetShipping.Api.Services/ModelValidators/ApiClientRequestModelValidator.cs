@@ -8,7 +8,8 @@ namespace PetShippingNS.Api.Services
 {
         public class ApiClientRequestModelValidator: AbstractApiClientRequestModelValidator, IApiClientRequestModelValidator
         {
-                public ApiClientRequestModelValidator()
+                public ApiClientRequestModelValidator(IClientRepository clientRepository)
+                        : base(clientRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df3bfbdcd58095038ffffb214568f71a</Hash>
+    <Hash>a2c6419f4d2e39565c4a14888a589cce</Hash>
 </Codenesium>*/

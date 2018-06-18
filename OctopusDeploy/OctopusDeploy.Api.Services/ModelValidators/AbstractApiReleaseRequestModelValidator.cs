@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiReleaseRequestModel model, string id)
+                IReleaseRepository releaseRepository;
+
+                public AbstractApiReleaseRequestModelValidator(IReleaseRepository releaseRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.releaseRepository = releaseRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiReleaseRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IReleaseRepository ReleaseRepository { get; set; }
                 public virtual void AssembledRules()
                 {
                 }
@@ -69,7 +69,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetVersionProjectId(ApiReleaseRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Release record = await this.ReleaseRepository.GetVersionProjectId(model.Version, model.ProjectId);
+                        Release record = await this.releaseRepository.GetVersionProjectId(model.Version, model.ProjectId);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -84,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7f19ed6a67711e898a499a02176ca30</Hash>
+    <Hash>46dad78bfd9a880be88de7a672d20210</Hash>
 </Codenesium>*/

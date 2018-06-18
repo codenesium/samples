@@ -23,11 +23,6 @@ namespace FermataFishNS.Api.Services
                 public virtual BOSpaceFeature MapEFToBO(
                         SpaceFeature ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOSpaceFeature();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8fa30b1814b31c589cbcf232cad6eb61</Hash>
+    <Hash>f2ad69737776d620d94d2788dd12b951</Hash>
 </Codenesium>*/

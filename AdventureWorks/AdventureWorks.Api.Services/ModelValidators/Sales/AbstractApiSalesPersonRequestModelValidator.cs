@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiSalesPersonRequestModel model, int id)
+                ISalesPersonRepository salesPersonRepository;
+
+                public AbstractApiSalesPersonRequestModelValidator(ISalesPersonRepository salesPersonRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.salesPersonRepository = salesPersonRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiSalesPersonRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace AdventureWorksNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public ISalesTerritoryRepository SalesTerritoryRepository { get; set; }
 
                 public virtual void BonusRules()
                 {
@@ -62,7 +61,7 @@ namespace AdventureWorksNS.Api.Services
 
                 private async Task<bool> BeValidSalesTerritory(Nullable<int> id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.SalesTerritoryRepository.Get(id.GetValueOrDefault());
+                        var record = await this.salesPersonRepository.GetSalesTerritory(id.GetValueOrDefault());
 
                         return record != null;
                 }
@@ -70,5 +69,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3aa5c682c4dac4ca3f6a4d064f800aa6</Hash>
+    <Hash>b5287fa368c938b7187949f1dc802de2</Hash>
 </Codenesium>*/

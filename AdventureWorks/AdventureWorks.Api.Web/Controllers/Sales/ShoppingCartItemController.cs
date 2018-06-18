@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ShoppingCartItemController: AbstractShoppingCartItemController
         {
                 public ShoppingCartItemController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ShoppingCartItemController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IShoppingCartItemService shoppingCartItemService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0ab3f21e039854f2a7ff2f3aec843d5b</Hash>
+    <Hash>63f61a4b7ab29140b567c528621dadb0</Hash>
 </Codenesium>*/

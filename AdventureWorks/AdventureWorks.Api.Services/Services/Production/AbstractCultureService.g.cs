@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.cultureRepository.All(limit, offset, orderClause);
+                        var records = await this.cultureRepository.All(limit, offset);
 
                         return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.cultureRepository.Get(cultureID);
 
-                        return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiCultureResponseModel>> Create(
@@ -109,11 +116,18 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiCultureResponseModel> GetName(string name)
+                public async Task<ApiCultureResponseModel> ByName(string name)
                 {
-                        Culture record = await this.cultureRepository.GetName(name);
+                        Culture record = await this.cultureRepository.ByName(name);
 
-                        return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
@@ -126,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>910c1f71914be097a2dfad5502870dab</Hash>
+    <Hash>52a521276303af8e45043f5e14085fa3</Hash>
 </Codenesium>*/

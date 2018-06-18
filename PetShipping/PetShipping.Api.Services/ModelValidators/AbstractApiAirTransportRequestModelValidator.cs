@@ -13,10 +13,11 @@ namespace PetShippingNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiAirTransportRequestModel model, int id)
+                IAirTransportRepository airTransportRepository;
+
+                public AbstractApiAirTransportRequestModelValidator(IAirTransportRepository airTransportRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.airTransportRepository = airTransportRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiAirTransportRequestModel model, int id)
@@ -24,8 +25,6 @@ namespace PetShippingNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IHandlerRepository HandlerRepository { get; set; }
 
                 public virtual void FlightNumberRules()
                 {
@@ -56,7 +55,7 @@ namespace PetShippingNS.Api.Services
 
                 private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.HandlerRepository.Get(id);
+                        var record = await this.airTransportRepository.GetHandler(id);
 
                         return record != null;
                 }
@@ -64,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b841d4a4d7c761a7038ad8d8399e5600</Hash>
+    <Hash>7035234c55e235e106ed45dc9d41ff43</Hash>
 </Codenesium>*/

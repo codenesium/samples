@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiCountryRegionRequestModel model, string id)
+                ICountryRegionRepository countryRegionRepository;
+
+                public AbstractApiCountryRegionRequestModelValidator(ICountryRegionRepository countryRegionRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.countryRegionRepository = countryRegionRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCountryRegionRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ICountryRegionRepository CountryRegionRepository { get; set; }
                 public virtual void ModifiedDateRules()
                 {
                 }
@@ -33,13 +33,13 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCountryRegionRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCountryRegionRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
-                private async Task<bool> BeUniqueGetName(ApiCountryRegionRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByName(ApiCountryRegionRequestModel model,  CancellationToken cancellationToken)
                 {
-                        CountryRegion record = await this.CountryRegionRepository.GetName(model.Name);
+                        CountryRegion record = await this.countryRegionRepository.ByName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.CountryRegionCode == this.existingRecordId))
                         {
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d54be00fa15fdcbe33492db66b4e519d</Hash>
+    <Hash>ab631f9187cdcba9cd27dc86329fa515</Hash>
 </Codenesium>*/

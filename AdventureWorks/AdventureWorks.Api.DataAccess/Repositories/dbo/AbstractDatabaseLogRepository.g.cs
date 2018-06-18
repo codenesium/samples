@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<DatabaseLog>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<DatabaseLog> Get(int databaseLogID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<DatabaseLog>> Where(Expression<Func<DatabaseLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<DatabaseLog>> Where(
+                        Expression<Func<DatabaseLog, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<DatabaseLog, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<DatabaseLog> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<DatabaseLog>> SearchLinqEF(Expression<Func<DatabaseLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(DatabaseLog.DatabaseLogID)} ASC";
+                                orderBy = x => x.DatabaseLogID;
                         }
 
-                        return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
-                }
-
-                private async Task<List<DatabaseLog>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(DatabaseLog.DatabaseLogID)} ASC";
+                                return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
                         }
-
-                        return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
+                        else
+                        {
+                                return await this.Context.Set<DatabaseLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DatabaseLog>();
+                        }
                 }
 
                 private async Task<DatabaseLog> GetById(int databaseLogID)
                 {
-                        List<DatabaseLog> records = await this.SearchLinqEF(x => x.DatabaseLogID == databaseLogID);
+                        List<DatabaseLog> records = await this.Where(x => x.DatabaseLogID == databaseLogID);
 
                         return records.FirstOrDefault();
                 }
@@ -112,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ba8ddbdc355e1a3035c86013bc507f12</Hash>
+    <Hash>ae4f0a8705c449c137af86db080aaa08</Hash>
 </Codenesium>*/

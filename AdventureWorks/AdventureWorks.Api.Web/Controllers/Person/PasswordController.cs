@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class PasswordController: AbstractPasswordController
         {
                 public PasswordController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<PasswordController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IPasswordService passwordService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>046dd691493c26c4cffef362813b55a7</Hash>
+    <Hash>608699bd7069a5070fc6f49f4f12912d</Hash>
 </Codenesium>*/

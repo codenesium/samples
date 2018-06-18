@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class CountryRegionCurrencyController: AbstractCountryRegionCurrencyController
         {
                 public CountryRegionCurrencyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<CountryRegionCurrencyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICountryRegionCurrencyService countryRegionCurrencyService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>85990cf60a186263fee822f533fc63a1</Hash>
+    <Hash>4ab33f3f8ab0ef51ccfe2ab724fb0860</Hash>
 </Codenesium>*/

@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiMachinePolicyRequestModel model, string id)
+                IMachinePolicyRepository machinePolicyRepository;
+
+                public AbstractApiMachinePolicyRequestModelValidator(IMachinePolicyRepository machinePolicyRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.machinePolicyRepository = machinePolicyRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiMachinePolicyRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IMachinePolicyRepository MachinePolicyRepository { get; set; }
                 public virtual void IsDefaultRules()
                 {
                 }
@@ -44,7 +44,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiMachinePolicyRequestModel model,  CancellationToken cancellationToken)
                 {
-                        MachinePolicy record = await this.MachinePolicyRepository.GetName(model.Name);
+                        MachinePolicy record = await this.machinePolicyRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d056baba4b95826f5e9993fec238dd70</Hash>
+    <Hash>da34a68aef82c43737b5335ebc5beeb6</Hash>
 </Codenesium>*/

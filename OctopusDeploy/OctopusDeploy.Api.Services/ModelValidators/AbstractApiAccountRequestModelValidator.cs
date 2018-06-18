@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiAccountRequestModel model, string id)
+                IAccountRepository accountRepository;
+
+                public AbstractApiAccountRequestModelValidator(IAccountRepository accountRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.accountRepository = accountRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiAccountRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IAccountRepository AccountRepository { get; set; }
                 public virtual void AccountTypeRules()
                 {
                         this.RuleFor(x => x.AccountType).NotNull();
@@ -59,7 +59,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiAccountRequestModel model,  CancellationToken cancellationToken)
                 {
-                        Account record = await this.AccountRepository.GetName(model.Name);
+                        Account record = await this.accountRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -74,5 +74,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bf8568dfd84cb14a281b18b1ff70a6ef</Hash>
+    <Hash>c55cbea28a92c55194e1605dfd0b9483</Hash>
 </Codenesium>*/

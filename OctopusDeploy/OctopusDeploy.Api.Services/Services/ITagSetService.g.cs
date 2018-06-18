@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiTagSetResponseModel> Get(string id);
 
-                Task<List<ApiTagSetResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiTagSetResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiTagSetResponseModel> GetName(string name);
                 Task<List<ApiTagSetResponseModel>> GetDataVersion(byte[] dataVersion);
@@ -27,5 +27,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc5570de4e167e410225d398ebabe3d0</Hash>
+    <Hash>3164ac4ce01eca39026da52a62dc239b</Hash>
 </Codenesium>*/

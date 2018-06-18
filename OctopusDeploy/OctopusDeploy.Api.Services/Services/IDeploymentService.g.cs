@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiDeploymentResponseModel> Get(string id);
 
-                Task<List<ApiDeploymentResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiDeploymentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiDeploymentResponseModel>> GetChannelId(string channelId);
                 Task<List<ApiDeploymentResponseModel>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId);
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>40938e42f385884215a1b2442e0c3b4c</Hash>
+    <Hash>7be032ca936e83f6ab4058711565a194</Hash>
 </Codenesium>*/

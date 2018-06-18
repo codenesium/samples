@@ -8,7 +8,8 @@ namespace PetShippingNS.Api.Services
 {
         public class ApiAirlineRequestModelValidator: AbstractApiAirlineRequestModelValidator, IApiAirlineRequestModelValidator
         {
-                public ApiAirlineRequestModelValidator()
+                public ApiAirlineRequestModelValidator(IAirlineRepository airlineRepository)
+                        : base(airlineRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>524b1653f3f0e932fa1e24db73fbb7e7</Hash>
+    <Hash>3da417a24d0797e51ffad051636cca9a</Hash>
 </Codenesium>*/

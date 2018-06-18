@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class EmployeeDepartmentHistoryController: AbstractEmployeeDepartmentHistoryController
         {
                 public EmployeeDepartmentHistoryController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<EmployeeDepartmentHistoryController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmployeeDepartmentHistoryService employeeDepartmentHistoryService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>05977d74d534742246e7c9e1689b4544</Hash>
+    <Hash>c5b708608f91a526bc008d15c7db7f7b</Hash>
 </Codenesium>*/

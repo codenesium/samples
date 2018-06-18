@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCultureController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCultureController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICultureService cultureService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getName/{name}")]
+                [Route("byName/{name}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetName(string name)
+                public async virtual Task<IActionResult> ByName(string name)
                 {
-                        ApiCultureResponseModel response = await this.CultureService.GetName(name);
+                        ApiCultureResponseModel response = await this.CultureService.ByName(name);
 
                         if (response == null)
                         {
@@ -197,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>015a15fc410f517ac8e21e4c6648450e</Hash>
+    <Hash>5795a5710cfdbaba7e0c9a55a86087ee</Hash>
 </Codenesium>*/

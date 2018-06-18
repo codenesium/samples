@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiChannelRequestModelValidator: AbstractApiChannelRequestModelValidator, IApiChannelRequestModelValidator
         {
-                public ApiChannelRequestModelValidator()
+                public ApiChannelRequestModelValidator(IChannelRepository channelRepository)
+                        : base(channelRepository)
                 {
                 }
 
@@ -42,5 +43,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47582c5231dd95699988ca9d671ec298</Hash>
+    <Hash>747f85bfd4931041cf100d43280d0a6f</Hash>
 </Codenesium>*/

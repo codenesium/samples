@@ -25,11 +25,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOApiKey MapEFToBO(
                         ApiKey ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOApiKey();
 
                         bo.SetProperties(
@@ -57,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8cc78d12f682f8bd48a0d9e8ad5d0b33</Hash>
+    <Hash>b16040ad2f76abdebeb8fea06d964d72</Hash>
 </Codenesium>*/

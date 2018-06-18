@@ -23,11 +23,6 @@ namespace NebulaNS.Api.Services
                 public virtual BOClasp MapEFToBO(
                         Clasp ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOClasp();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86a4ae63e7ec86ef01b5f85828945077</Hash>
+    <Hash>2df86b92c1dfc953d6aa2380a1bc6d72</Hash>
 </Codenesium>*/

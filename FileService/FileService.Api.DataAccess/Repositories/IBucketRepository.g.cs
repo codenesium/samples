@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.DataAccess
 
                 Task<Bucket> Get(int id);
 
-                Task<List<Bucket>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Bucket> GetExternalId(Guid externalId);
                 Task<Bucket> GetName(string name);
@@ -25,5 +25,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9879f3ba3e1aa2e0e436dc7a60411f93</Hash>
+    <Hash>9a2b0e673736906ebf8baf5775230244</Hash>
 </Codenesium>*/

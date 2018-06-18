@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace FermataFishNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<SpaceXSpaceFeature>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<SpaceXSpaceFeature>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<SpaceXSpaceFeature> Get(int id)
@@ -75,42 +76,46 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<SpaceXSpaceFeature>> Where(Expression<Func<SpaceXSpaceFeature, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<SpaceXSpaceFeature>> Where(
+                        Expression<Func<SpaceXSpaceFeature, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<SpaceXSpaceFeature, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<SpaceXSpaceFeature> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<SpaceXSpaceFeature>> SearchLinqEF(Expression<Func<SpaceXSpaceFeature, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(SpaceXSpaceFeature.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<SpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
-                }
-
-                private async Task<List<SpaceXSpaceFeature>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(SpaceXSpaceFeature.Id)} ASC";
+                                return await this.Context.Set<SpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
                         }
-
-                        return await this.Context.Set<SpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
+                        else
+                        {
+                                return await this.Context.Set<SpaceXSpaceFeature>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
+                        }
                 }
 
                 private async Task<SpaceXSpaceFeature> GetById(int id)
                 {
-                        List<SpaceXSpaceFeature> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<SpaceXSpaceFeature> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<SpaceFeature> GetSpaceFeature(int spaceFeatureId)
+                {
+                        return await this.Context.Set<SpaceFeature>().SingleOrDefaultAsync(x => x.Id == spaceFeatureId);
+                }
+                public async virtual Task<Space> GetSpace(int spaceId)
+                {
+                        return await this.Context.Set<Space>().SingleOrDefaultAsync(x => x.Id == spaceId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>82ce070ba3739b1d673e10000684bcf4</Hash>
+    <Hash>7ef0521ae38882f6adb2845d88fc4eac</Hash>
 </Codenesium>*/

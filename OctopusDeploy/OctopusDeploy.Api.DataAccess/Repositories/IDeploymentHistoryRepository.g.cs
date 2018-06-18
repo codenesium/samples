@@ -15,12 +15,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 Task<DeploymentHistory> Get(string deploymentId);
 
-                Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<DeploymentHistory>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<DeploymentHistory>> GetCreated(DateTimeOffset created);
         }
 }
 
 /*<Codenesium>
-    <Hash>61ff4c98aaa1e6128a9478e8c6b14d2c</Hash>
+    <Hash>da6d5dd95f227ecf856dae58d7fca5a3</Hash>
 </Codenesium>*/

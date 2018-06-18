@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ShiftController: AbstractShiftController
         {
                 public ShiftController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ShiftController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IShiftService shiftService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a3c7b1766a10f749dbcbb8e1b0976444</Hash>
+    <Hash>6c7de69d692ef8b5ae0aa592793816e3</Hash>
 </Codenesium>*/

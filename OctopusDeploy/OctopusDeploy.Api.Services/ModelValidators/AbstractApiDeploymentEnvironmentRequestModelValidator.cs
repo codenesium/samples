@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiDeploymentEnvironmentRequestModel model, string id)
+                IDeploymentEnvironmentRepository deploymentEnvironmentRepository;
+
+                public AbstractApiDeploymentEnvironmentRequestModelValidator(IDeploymentEnvironmentRepository deploymentEnvironmentRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.deploymentEnvironmentRepository = deploymentEnvironmentRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiDeploymentEnvironmentRequestModel model, string id)
@@ -25,7 +26,6 @@ namespace OctopusDeployNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public IDeploymentEnvironmentRepository DeploymentEnvironmentRepository { get; set; }
                 public virtual void DataVersionRules()
                 {
                 }
@@ -48,7 +48,7 @@ namespace OctopusDeployNS.Api.Services
 
                 private async Task<bool> BeUniqueGetName(ApiDeploymentEnvironmentRequestModel model,  CancellationToken cancellationToken)
                 {
-                        DeploymentEnvironment record = await this.DeploymentEnvironmentRepository.GetName(model.Name);
+                        DeploymentEnvironment record = await this.deploymentEnvironmentRepository.GetName(model.Name);
 
                         if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
                         {
@@ -63,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52adfaae5094f292fdf35969f399d092</Hash>
+    <Hash>60397752f30d85eef1e0c3a3bd535eab</Hash>
 </Codenesium>*/

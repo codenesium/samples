@@ -52,9 +52,9 @@ namespace AdventureWorksNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiShiftResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiShiftResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.shiftRepository.All(limit, offset, orderClause);
+                        var records = await this.shiftRepository.All(limit, offset);
 
                         return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace AdventureWorksNS.Api.Services
                 {
                         var record = await this.shiftRepository.Get(shiftID);
 
-                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiShiftResponseModel>> Create(
@@ -109,17 +116,31 @@ namespace AdventureWorksNS.Api.Services
                         return response;
                 }
 
-                public async Task<ApiShiftResponseModel> GetName(string name)
+                public async Task<ApiShiftResponseModel> ByName(string name)
                 {
-                        Shift record = await this.shiftRepository.GetName(name);
+                        Shift record = await this.shiftRepository.ByName(name);
 
-                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                        }
                 }
-                public async Task<ApiShiftResponseModel> GetStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
+                public async Task<ApiShiftResponseModel> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
                 {
-                        Shift record = await this.shiftRepository.GetStartTimeEndTime(startTime, endTime);
+                        Shift record = await this.shiftRepository.ByStartTimeEndTime(startTime, endTime);
 
-                        return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0)
@@ -132,5 +153,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5456f17aef050ab538966a1fea7dd979</Hash>
+    <Hash>ef9bcb413bc9515cdec44b47e4c6977b</Hash>
 </Codenesium>*/

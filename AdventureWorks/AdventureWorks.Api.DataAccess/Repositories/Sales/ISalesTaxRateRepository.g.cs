@@ -15,12 +15,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<SalesTaxRate> Get(int salesTaxRateID);
 
-                Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<SalesTaxRate>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<SalesTaxRate> GetStateProvinceIDTaxType(int stateProvinceID, int taxType);
+                Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType);
         }
 }
 
 /*<Codenesium>
-    <Hash>ecf7714b56c941517660e025d1f91a88</Hash>
+    <Hash>3c6750af73bc3f97155185d73a95df6e</Hash>
 </Codenesium>*/

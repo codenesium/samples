@@ -13,7 +13,7 @@ namespace AdventureWorksNS.Api.Services
         public class ProductPhotoService: AbstractProductPhotoService, IProductPhotoService
         {
                 public ProductPhotoService(
-                        ILogger<ProductPhotoRepository> logger,
+                        ILogger<IProductPhotoRepository> logger,
                         IProductPhotoRepository productPhotoRepository,
                         IApiProductPhotoRequestModelValidator productPhotoModelValidator,
                         IBOLProductPhotoMapper bolproductPhotoMapper,
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>993dd0b214a1eb51fb6221693930ecbc</Hash>
+    <Hash>79bd62e73ee4e74f3ada0915479af410</Hash>
 </Codenesium>*/

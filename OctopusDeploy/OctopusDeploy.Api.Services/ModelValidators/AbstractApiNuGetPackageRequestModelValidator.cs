@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiNuGetPackageRequestModel model, string id)
+                INuGetPackageRepository nuGetPackageRepository;
+
+                public AbstractApiNuGetPackageRequestModelValidator(INuGetPackageRepository nuGetPackageRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.nuGetPackageRepository = nuGetPackageRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiNuGetPackageRequestModel model, string id)
@@ -66,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6b5dfb0d7f2f658c8088bd531f326f5</Hash>
+    <Hash>d3c036041a72d6a2fd4c30c31fab5545</Hash>
 </Codenesium>*/

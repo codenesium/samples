@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class CommunityActionTemplateService: AbstractCommunityActionTemplateService, ICommunityActionTemplateService
         {
                 public CommunityActionTemplateService(
-                        ILogger<CommunityActionTemplateRepository> logger,
+                        ILogger<ICommunityActionTemplateRepository> logger,
                         ICommunityActionTemplateRepository communityActionTemplateRepository,
                         IApiCommunityActionTemplateRequestModelValidator communityActionTemplateModelValidator,
                         IBOLCommunityActionTemplateMapper bolcommunityActionTemplateMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61d0190f08a66f555519dd19852464de</Hash>
+    <Hash>6f350790be2594b35e40849897369190</Hash>
 </Codenesium>*/

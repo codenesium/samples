@@ -17,7 +17,7 @@ namespace PetStoreNS.Api.Web
         public class BreedController: AbstractBreedController
         {
                 public BreedController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<BreedController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IBreedService breedService
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>383069f630beb9f895c1fc9939c19d7b</Hash>
+    <Hash>209683dd824578daae404aab7ce8c68b</Hash>
 </Codenesium>*/

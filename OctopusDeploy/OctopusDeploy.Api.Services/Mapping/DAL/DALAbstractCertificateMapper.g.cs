@@ -32,11 +32,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOCertificate MapEFToBO(
                         Certificate ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOCertificate();
 
                         bo.SetProperties(
@@ -71,5 +66,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>592de4816138e11bbeb58667edba5f89</Hash>
+    <Hash>b5daac5ccc2353dab062ada7272c6005</Hash>
 </Codenesium>*/

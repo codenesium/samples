@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiLinkLogRequestModelValidator: AbstractApiLinkLogRequestModelValidator, IApiLinkLogRequestModelValidator
         {
-                public ApiLinkLogRequestModelValidator()
+                public ApiLinkLogRequestModelValidator(ILinkLogRepository linkLogRepository)
+                        : base(linkLogRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e149593d47d1856ac8fba55b15b569d7</Hash>
+    <Hash>2b62ea17b46b0aeb63c424957e6e8256</Hash>
 </Codenesium>*/

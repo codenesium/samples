@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiChainRequestModel model, int id)
+                IChainRepository chainRepository;
+
+                public AbstractApiChainRequestModelValidator(IChainRepository chainRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.chainRepository = chainRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiChainRequestModel model, int id)
@@ -24,10 +25,6 @@ namespace NebulaNS.Api.Services
                         this.existingRecordId = id;
                         return await this.ValidateAsync(model);
                 }
-
-                public IChainStatusRepository ChainStatusRepository { get; set; }
-
-                public ITeamRepository TeamRepository { get; set; }
 
                 public virtual void ChainStatusIdRules()
                 {
@@ -51,14 +48,14 @@ namespace NebulaNS.Api.Services
 
                 private async Task<bool> BeValidChainStatus(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.ChainStatusRepository.Get(id);
+                        var record = await this.chainRepository.GetChainStatus(id);
 
                         return record != null;
                 }
 
                 private async Task<bool> BeValidTeam(int id,  CancellationToken cancellationToken)
                 {
-                        var record = await this.TeamRepository.Get(id);
+                        var record = await this.chainRepository.GetTeam(id);
 
                         return record != null;
                 }
@@ -66,5 +63,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0a4cc61d30ea7bc543e23a1f532eb0a1</Hash>
+    <Hash>bb03d2635d98fb27dbc6f66f7616cdf7</Hash>
 </Codenesium>*/

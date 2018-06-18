@@ -23,11 +23,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BOInvitation MapEFToBO(
                         Invitation ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOInvitation();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d2c60530eddd3a9d540e18ae4587cd83</Hash>
+    <Hash>aa153272b1f72ba011e42438f22a9462</Hash>
 </Codenesium>*/

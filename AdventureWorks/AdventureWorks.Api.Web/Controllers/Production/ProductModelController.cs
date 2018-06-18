@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.Web
         public class ProductModelController: AbstractProductModelController
         {
                 public ProductModelController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProductModelController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProductModelService productModelService
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>48fa906b966dec821ff95226de6f90c7</Hash>
+    <Hash>ad42ef0229383b63e1634f91477b34d1</Hash>
 </Codenesium>*/

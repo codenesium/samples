@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class PipelineStepNoteService: AbstractPipelineStepNoteService, IPipelineStepNoteService
         {
                 public PipelineStepNoteService(
-                        ILogger<PipelineStepNoteRepository> logger,
+                        ILogger<IPipelineStepNoteRepository> logger,
                         IPipelineStepNoteRepository pipelineStepNoteRepository,
                         IApiPipelineStepNoteRequestModelValidator pipelineStepNoteModelValidator,
                         IBOLPipelineStepNoteMapper bolpipelineStepNoteMapper,
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d76cf70df89a595054c8feb61bcc7dc8</Hash>
+    <Hash>16e50e9e3a4ff7e416d00465fb6d3f7a</Hash>
 </Codenesium>*/

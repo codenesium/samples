@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractDeploymentProcessController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractDeploymentProcessController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IDeploymentProcessService deploymentProcessService
@@ -164,5 +164,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ddd8a8b6b749bee42737cb7e685f492e</Hash>
+    <Hash>f66b27e4866c57fdc11c0d66e490e672</Hash>
 </Codenesium>*/

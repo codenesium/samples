@@ -42,9 +42,9 @@ namespace OctopusDeployNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiUserResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiUserResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.userRepository.All(limit, offset, orderClause);
+                        var records = await this.userRepository.All(limit, offset);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
@@ -53,7 +53,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         var record = await this.userRepository.Get(id);
 
-                        return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiUserResponseModel>> Create(
@@ -103,7 +110,14 @@ namespace OctopusDeployNS.Api.Services
                 {
                         User record = await this.userRepository.GetUsername(username);
 
-                        return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<List<ApiUserResponseModel>> GetDisplayName(string displayName)
                 {
@@ -127,5 +141,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fde87286214eda6698cb565c8bc0380a</Hash>
+    <Hash>c680877a5429aa11cb7ce3c29a585468</Hash>
 </Codenesium>*/

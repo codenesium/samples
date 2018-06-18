@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace NebulaNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<LinkLog> Get(int id)
@@ -75,42 +76,42 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<LinkLog>> Where(Expression<Func<LinkLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<LinkLog>> Where(
+                        Expression<Func<LinkLog, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<LinkLog, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<LinkLog> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<LinkLog>> SearchLinqEF(Expression<Func<LinkLog, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(LinkLog.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LinkLog>();
-                }
-
-                private async Task<List<LinkLog>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(LinkLog.Id)} ASC";
+                                return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
                         }
-
-                        return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<LinkLog>();
+                        else
+                        {
+                                return await this.Context.Set<LinkLog>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<LinkLog>();
+                        }
                 }
 
                 private async Task<LinkLog> GetById(int id)
                 {
-                        List<LinkLog> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<LinkLog> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Link> GetLink(int linkId)
+                {
+                        return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.Id == linkId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>10c0734e119604850a245d98770f9050</Hash>
+    <Hash>e9af11ee4cc5cffa069caa01075713dd</Hash>
 </Codenesium>*/

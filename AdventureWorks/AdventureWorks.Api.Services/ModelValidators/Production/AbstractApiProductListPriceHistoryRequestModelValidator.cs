@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiProductListPriceHistoryRequestModel model, int id)
+                IProductListPriceHistoryRepository productListPriceHistoryRepository;
+
+                public AbstractApiProductListPriceHistoryRequestModelValidator(IProductListPriceHistoryRepository productListPriceHistoryRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.productListPriceHistoryRepository = productListPriceHistoryRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiProductListPriceHistoryRequestModel model, int id)
@@ -44,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65001752201223428f9e3f8443ad3d05</Hash>
+    <Hash>125092bf345c0aba3c7c0e9fbdb0dca9</Hash>
 </Codenesium>*/

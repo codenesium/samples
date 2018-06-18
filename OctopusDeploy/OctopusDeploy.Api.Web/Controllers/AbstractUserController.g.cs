@@ -25,7 +25,7 @@ namespace OctopusDeployNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractUserController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractUserController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IUserService userService
@@ -216,5 +216,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bf9b3dd974dc9aa3453107f4f13a935f</Hash>
+    <Hash>ab7e0844bbe82d99c3828eb58c7fd6c4</Hash>
 </Codenesium>*/

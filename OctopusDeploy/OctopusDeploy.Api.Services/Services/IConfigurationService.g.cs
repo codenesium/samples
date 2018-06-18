@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiConfigurationResponseModel> Get(string id);
 
-                Task<List<ApiConfigurationResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiConfigurationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>f0b659869ae5eb9c5d01440db647b56d</Hash>
+    <Hash>3949a267117bfde86194a5f034d38b31</Hash>
 </Codenesium>*/

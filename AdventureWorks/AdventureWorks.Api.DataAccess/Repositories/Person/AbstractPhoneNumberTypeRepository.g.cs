@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<PhoneNumberType>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<PhoneNumberType>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<PhoneNumberType> Get(int phoneNumberTypeID)
@@ -75,36 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                protected async Task<List<PhoneNumberType>> Where(Expression<Func<PhoneNumberType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<PhoneNumberType>> Where(
+                        Expression<Func<PhoneNumberType, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<PhoneNumberType, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<PhoneNumberType> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<PhoneNumberType>> SearchLinqEF(Expression<Func<PhoneNumberType, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(PhoneNumberType.PhoneNumberTypeID)} ASC";
+                                orderBy = x => x.PhoneNumberTypeID;
                         }
 
-                        return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
-                }
-
-                private async Task<List<PhoneNumberType>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(PhoneNumberType.PhoneNumberTypeID)} ASC";
+                                return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
                         }
-
-                        return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
+                        else
+                        {
+                                return await this.Context.Set<PhoneNumberType>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<PhoneNumberType>();
+                        }
                 }
 
                 private async Task<PhoneNumberType> GetById(int phoneNumberTypeID)
                 {
-                        List<PhoneNumberType> records = await this.SearchLinqEF(x => x.PhoneNumberTypeID == phoneNumberTypeID);
+                        List<PhoneNumberType> records = await this.Where(x => x.PhoneNumberTypeID == phoneNumberTypeID);
 
                         return records.FirstOrDefault();
                 }
@@ -117,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f69af2bc53db10380fc8e9bb3f32c04a</Hash>
+    <Hash>46c2f86cc6c5f472275a836217b8b588</Hash>
 </Codenesium>*/

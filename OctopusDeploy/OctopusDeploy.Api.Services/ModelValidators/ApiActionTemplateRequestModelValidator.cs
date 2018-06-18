@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiActionTemplateRequestModelValidator: AbstractApiActionTemplateRequestModelValidator, IApiActionTemplateRequestModelValidator
         {
-                public ApiActionTemplateRequestModelValidator()
+                public ApiActionTemplateRequestModelValidator(IActionTemplateRepository actionTemplateRepository)
+                        : base(actionTemplateRepository)
                 {
                 }
 
@@ -40,5 +41,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ba8d1051f665d9a265e20a3649af46a</Hash>
+    <Hash>a8ad78017b7f81a238953ba8c85a3597</Hash>
 </Codenesium>*/

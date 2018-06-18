@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiAWBuildVersionRequestModelValidator: AbstractApiAWBuildVersionRequestModelValidator, IApiAWBuildVersionRequestModelValidator
         {
-                public ApiAWBuildVersionRequestModelValidator()
+                public ApiAWBuildVersionRequestModelValidator(IAWBuildVersionRepository aWBuildVersionRepository)
+                        : base(aWBuildVersionRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76e64e6efd3e69208503bf0f7004e35f</Hash>
+    <Hash>85baeffd1a74e8b703797852247c8474</Hash>
 </Codenesium>*/

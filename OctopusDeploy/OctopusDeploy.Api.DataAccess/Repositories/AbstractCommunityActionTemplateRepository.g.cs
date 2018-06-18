@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<CommunityActionTemplate>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<CommunityActionTemplate>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<CommunityActionTemplate> Get(string id)
@@ -77,47 +78,42 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<CommunityActionTemplate> GetExternalId(Guid externalId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ExternalId == externalId);
+                        var records = await this.Where(x => x.ExternalId == externalId);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<CommunityActionTemplate> GetName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<CommunityActionTemplate>> Where(Expression<Func<CommunityActionTemplate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<CommunityActionTemplate>> Where(
+                        Expression<Func<CommunityActionTemplate, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<CommunityActionTemplate, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<CommunityActionTemplate> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<CommunityActionTemplate>> SearchLinqEF(Expression<Func<CommunityActionTemplate, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(CommunityActionTemplate.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<CommunityActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CommunityActionTemplate>();
-                }
-
-                private async Task<List<CommunityActionTemplate>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(CommunityActionTemplate.Id)} ASC";
+                                return await this.Context.Set<CommunityActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<CommunityActionTemplate>();
                         }
-
-                        return await this.Context.Set<CommunityActionTemplate>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<CommunityActionTemplate>();
+                        else
+                        {
+                                return await this.Context.Set<CommunityActionTemplate>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<CommunityActionTemplate>();
+                        }
                 }
 
                 private async Task<CommunityActionTemplate> GetById(string id)
                 {
-                        List<CommunityActionTemplate> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<CommunityActionTemplate> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23b52d16aefad3430b685cdcbde32619</Hash>
+    <Hash>f1c15819b86a61041fa43162be5febc1</Hash>
 </Codenesium>*/

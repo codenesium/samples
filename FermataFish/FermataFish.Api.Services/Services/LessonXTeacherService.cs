@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Services
         public class LessonXTeacherService: AbstractLessonXTeacherService, ILessonXTeacherService
         {
                 public LessonXTeacherService(
-                        ILogger<LessonXTeacherRepository> logger,
+                        ILogger<ILessonXTeacherRepository> logger,
                         ILessonXTeacherRepository lessonXTeacherRepository,
                         IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
                         IBOLLessonXTeacherMapper bollessonXTeacherMapper,
@@ -32,5 +32,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17c67c3e68b29d221aadf894619eb77e</Hash>
+    <Hash>ce82c12e74cd1fb7fcd9ee9eae669014</Hash>
 </Codenesium>*/

@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractTransactionHistoryArchiveController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractTransactionHistoryArchiveController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ITransactionHistoryArchiveService transactionHistoryArchiveService
@@ -162,23 +162,23 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getProductID/{productID}")]
+                [Route("byProductID/{productID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetProductID(int productID)
+                public async virtual Task<IActionResult> ByProductID(int productID)
                 {
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.GetProductID(productID);
+                        List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.ByProductID(productID);
 
                         return this.Ok(response);
                 }
 
                 [HttpGet]
-                [Route("getReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
+                [Route("byReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiTransactionHistoryArchiveResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
+                public async virtual Task<IActionResult> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
-                        List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.GetReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
+                        List<ApiTransactionHistoryArchiveResponseModel> response = await this.TransactionHistoryArchiveService.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
 
                         return this.Ok(response);
                 }
@@ -186,5 +186,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fae2852df832449db89eccfca90df46b</Hash>
+    <Hash>e4ee066762ec673c3701b7716d44d6c1</Hash>
 </Codenesium>*/

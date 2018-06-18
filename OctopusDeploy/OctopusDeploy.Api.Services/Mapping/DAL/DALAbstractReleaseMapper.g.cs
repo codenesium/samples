@@ -28,11 +28,6 @@ namespace OctopusDeployNS.Api.Services
                 public virtual BORelease MapEFToBO(
                         Release ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BORelease();
 
                         bo.SetProperties(
@@ -63,5 +58,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e43cb06302892de49da10858061a5370</Hash>
+    <Hash>649c794302c769905844ab727e3ea04b</Hash>
 </Codenesium>*/

@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<TransactionHistoryArchive>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<TransactionHistoryArchive>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<TransactionHistoryArchive> Get(int transactionID)
@@ -75,49 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<List<TransactionHistoryArchive>> GetProductID(int productID)
+                public async Task<List<TransactionHistoryArchive>> ByProductID(int productID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProductID == productID);
+                        var records = await this.Where(x => x.ProductID == productID);
 
                         return records;
                 }
-                public async Task<List<TransactionHistoryArchive>> GetReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
+                public async Task<List<TransactionHistoryArchive>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
-                        var records = await this.SearchLinqEF(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID);
-
-                        return records;
-                }
-
-                protected async Task<List<TransactionHistoryArchive>> Where(Expression<Func<TransactionHistoryArchive, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        List<TransactionHistoryArchive> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
+                        var records = await this.Where(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID);
 
                         return records;
                 }
 
-                private async Task<List<TransactionHistoryArchive>> SearchLinqEF(Expression<Func<TransactionHistoryArchive, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<TransactionHistoryArchive>> Where(
+                        Expression<Func<TransactionHistoryArchive, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<TransactionHistoryArchive, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(TransactionHistoryArchive.TransactionID)} ASC";
+                                orderBy = x => x.TransactionID;
                         }
 
-                        return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
-                }
-
-                private async Task<List<TransactionHistoryArchive>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(TransactionHistoryArchive.TransactionID)} ASC";
+                                return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
                         }
-
-                        return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
+                        else
+                        {
+                                return await this.Context.Set<TransactionHistoryArchive>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<TransactionHistoryArchive>();
+                        }
                 }
 
                 private async Task<TransactionHistoryArchive> GetById(int transactionID)
                 {
-                        List<TransactionHistoryArchive> records = await this.SearchLinqEF(x => x.TransactionID == transactionID);
+                        List<TransactionHistoryArchive> records = await this.Where(x => x.TransactionID == transactionID);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81edeefacdaa4bd49ed0fdb7b7275c77</Hash>
+    <Hash>103d8021a69ce692b0f5f646d3d852f6</Hash>
 </Codenesium>*/

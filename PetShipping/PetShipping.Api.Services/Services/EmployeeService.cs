@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
         public class EmployeeService: AbstractEmployeeService, IEmployeeService
         {
                 public EmployeeService(
-                        ILogger<EmployeeRepository> logger,
+                        ILogger<IEmployeeRepository> logger,
                         IEmployeeRepository employeeRepository,
                         IApiEmployeeRequestModelValidator employeeModelValidator,
                         IBOLEmployeeMapper bolemployeeMapper,
@@ -50,5 +50,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a322768504a3c1f5300f0af81843610</Hash>
+    <Hash>cb501e1d03f09b913da1dd7b87929f10</Hash>
 </Codenesium>*/

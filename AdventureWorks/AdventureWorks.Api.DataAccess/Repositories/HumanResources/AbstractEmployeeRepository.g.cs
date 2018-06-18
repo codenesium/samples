@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<Employee>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<Employee> Get(int businessEntityID)
@@ -75,61 +76,44 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<Employee> GetLoginID(string loginID)
+                public async Task<Employee> ByLoginID(string loginID)
                 {
-                        var records = await this.SearchLinqEF(x => x.LoginID == loginID);
+                        var records = await this.Where(x => x.LoginID == loginID);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<Employee> GetNationalIDNumber(string nationalIDNumber)
+                public async Task<Employee> ByNationalIDNumber(string nationalIDNumber)
                 {
-                        var records = await this.SearchLinqEF(x => x.NationalIDNumber == nationalIDNumber);
+                        var records = await this.Where(x => x.NationalIDNumber == nationalIDNumber);
 
                         return records.FirstOrDefault();
                 }
-                public async Task<List<Employee>> GetOrganizationLevelOrganizationNode(Nullable<short> organizationLevel, Nullable<Guid> organizationNode)
+
+                protected async Task<List<Employee>> Where(
+                        Expression<Func<Employee, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<Employee, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        var records = await this.SearchLinqEF(x => x.OrganizationLevel == organizationLevel && x.OrganizationNode == organizationNode);
-
-                        return records;
-                }
-                public async Task<List<Employee>> GetOrganizationNode(Nullable<Guid> organizationNode)
-                {
-                        var records = await this.SearchLinqEF(x => x.OrganizationNode == organizationNode);
-
-                        return records;
-                }
-
-                protected async Task<List<Employee>> Where(Expression<Func<Employee, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        List<Employee> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<Employee>> SearchLinqEF(Expression<Func<Employee, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(Employee.BusinessEntityID)} ASC";
+                                orderBy = x => x.BusinessEntityID;
                         }
 
-                        return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Employee>();
-                }
-
-                private async Task<List<Employee>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(Employee.BusinessEntityID)} ASC";
+                                return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
                         }
-
-                        return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<Employee>();
+                        else
+                        {
+                                return await this.Context.Set<Employee>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<Employee>();
+                        }
                 }
 
                 private async Task<Employee> GetById(int businessEntityID)
                 {
-                        List<Employee> records = await this.SearchLinqEF(x => x.BusinessEntityID == businessEntityID);
+                        List<Employee> records = await this.Where(x => x.BusinessEntityID == businessEntityID);
 
                         return records.FirstOrDefault();
                 }
@@ -150,5 +134,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>984ae7548706365e00542b49aec9758a</Hash>
+    <Hash>26fc65938ea12b146b6aa01c575c31ed</Hash>
 </Codenesium>*/

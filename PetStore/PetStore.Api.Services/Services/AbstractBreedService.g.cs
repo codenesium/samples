@@ -52,9 +52,9 @@ namespace PetStoreNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBreedResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBreedResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.breedRepository.All(limit, offset, orderClause);
+                        var records = await this.breedRepository.All(limit, offset);
 
                         return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace PetStoreNS.Api.Services
                 {
                         var record = await this.breedRepository.Get(id);
 
-                        return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiBreedResponseModel>> Create(
@@ -119,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f77d8f1f11712e62ba27fd70522be56</Hash>
+    <Hash>e3a9a9a447841d43bfc781bea4e56f56</Hash>
 </Codenesium>*/

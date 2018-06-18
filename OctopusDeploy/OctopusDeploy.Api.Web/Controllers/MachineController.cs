@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class MachineController: AbstractMachineController
         {
                 public MachineController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<MachineController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMachineService machineService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b7cde7a02eee398646e8deaa27e39bca</Hash>
+    <Hash>42c553679105989c09890efafcde6545</Hash>
 </Codenesium>*/

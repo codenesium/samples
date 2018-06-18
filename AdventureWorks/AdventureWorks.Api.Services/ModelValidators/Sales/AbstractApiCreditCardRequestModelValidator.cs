@@ -13,10 +13,11 @@ namespace AdventureWorksNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiCreditCardRequestModel model, int id)
+                ICreditCardRepository creditCardRepository;
+
+                public AbstractApiCreditCardRequestModelValidator(ICreditCardRepository creditCardRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.creditCardRepository = creditCardRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiCreditCardRequestModel model, int id)
@@ -25,11 +26,10 @@ namespace AdventureWorksNS.Api.Services
                         return await this.ValidateAsync(model);
                 }
 
-                public ICreditCardRepository CreditCardRepository { get; set; }
                 public virtual void CardNumberRules()
                 {
                         this.RuleFor(x => x.CardNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetCardNumber).When(x => x ?.CardNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardRequestModel.CardNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCardNumber).When(x => x ?.CardNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardRequestModel.CardNumber));
                         this.RuleFor(x => x.CardNumber).Length(0, 25);
                 }
 
@@ -51,9 +51,9 @@ namespace AdventureWorksNS.Api.Services
                 {
                 }
 
-                private async Task<bool> BeUniqueGetCardNumber(ApiCreditCardRequestModel model,  CancellationToken cancellationToken)
+                private async Task<bool> BeUniqueByCardNumber(ApiCreditCardRequestModel model,  CancellationToken cancellationToken)
                 {
-                        CreditCard record = await this.CreditCardRepository.GetCardNumber(model.CardNumber);
+                        CreditCard record = await this.creditCardRepository.ByCardNumber(model.CardNumber);
 
                         if (record == null || (this.existingRecordId != default (int) && record.CreditCardID == this.existingRecordId))
                         {
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd3476d139cb048acb397a659d310683</Hash>
+    <Hash>90da73cc86597896eba9ddef38294e49</Hash>
 </Codenesium>*/

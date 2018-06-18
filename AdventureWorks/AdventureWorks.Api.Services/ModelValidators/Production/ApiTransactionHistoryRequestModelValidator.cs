@@ -8,7 +8,8 @@ namespace AdventureWorksNS.Api.Services
 {
         public class ApiTransactionHistoryRequestModelValidator: AbstractApiTransactionHistoryRequestModelValidator, IApiTransactionHistoryRequestModelValidator
         {
-                public ApiTransactionHistoryRequestModelValidator()
+                public ApiTransactionHistoryRequestModelValidator(ITransactionHistoryRepository transactionHistoryRepository)
+                        : base(transactionHistoryRepository)
                 {
                 }
 
@@ -46,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>485505b15bf4116c2562703b9301ab43</Hash>
+    <Hash>12a603099d81c11003183c9123663ea2</Hash>
 </Codenesium>*/

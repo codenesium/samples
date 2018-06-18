@@ -17,7 +17,7 @@ namespace NebulaNS.Api.Web
         public class MachineRefTeamController: AbstractMachineRefTeamController
         {
                 public MachineRefTeamController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<MachineRefTeamController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IMachineRefTeamService machineRefTeamService
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c64f29fca6e0054fdf5d150d51629d14</Hash>
+    <Hash>c8125e9749be8f1e24fc852a68322fd7</Hash>
 </Codenesium>*/

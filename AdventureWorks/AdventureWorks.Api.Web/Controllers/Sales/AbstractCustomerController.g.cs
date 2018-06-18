@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractCustomerController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractCustomerController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         ICustomerService customerService
@@ -162,13 +162,13 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getAccountNumber/{accountNumber}")]
+                [Route("byAccountNumber/{accountNumber}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(ApiCustomerResponseModel), 200)]
                 [ProducesResponseType(typeof(void), 404)]
-                public async virtual Task<IActionResult> GetAccountNumber(string accountNumber)
+                public async virtual Task<IActionResult> ByAccountNumber(string accountNumber)
                 {
-                        ApiCustomerResponseModel response = await this.CustomerService.GetAccountNumber(accountNumber);
+                        ApiCustomerResponseModel response = await this.CustomerService.ByAccountNumber(accountNumber);
 
                         if (response == null)
                         {
@@ -181,12 +181,12 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpGet]
-                [Route("getTerritoryID/{territoryID}")]
+                [Route("byTerritoryID/{territoryID}")]
                 [ReadOnly]
                 [ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
-                public async virtual Task<IActionResult> GetTerritoryID(Nullable<int> territoryID)
+                public async virtual Task<IActionResult> ByTerritoryID(Nullable<int> territoryID)
                 {
-                        List<ApiCustomerResponseModel> response = await this.CustomerService.GetTerritoryID(territoryID);
+                        List<ApiCustomerResponseModel> response = await this.CustomerService.ByTerritoryID(territoryID);
 
                         return this.Ok(response);
                 }
@@ -208,5 +208,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b0852fcd89cee2b1991dab3d163f4666</Hash>
+    <Hash>ac78c79dcb8675cb15f28737e19f6013</Hash>
 </Codenesium>*/

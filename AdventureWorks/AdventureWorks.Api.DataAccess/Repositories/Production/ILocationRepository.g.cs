@@ -15,9 +15,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<Location> Get(short locationID);
 
-                Task<List<Location>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<Location>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<Location> GetName(string name);
+                Task<Location> ByName(string name);
 
                 Task<List<ProductInventory>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0);
                 Task<List<WorkOrderRouting>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0);
@@ -25,5 +25,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>628ffa65cc7bbd9a68c62c84d554b5d3</Hash>
+    <Hash>baa689a00f17bcd70120fc438677961b</Hash>
 </Codenesium>*/

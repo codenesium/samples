@@ -8,7 +8,8 @@ namespace NebulaNS.Api.Services
 {
         public class ApiChainStatusRequestModelValidator: AbstractApiChainStatusRequestModelValidator, IApiChainStatusRequestModelValidator
         {
-                public ApiChainStatusRequestModelValidator()
+                public ApiChainStatusRequestModelValidator(IChainStatusRepository chainStatusRepository)
+                        : base(chainStatusRepository)
                 {
                 }
 
@@ -32,5 +33,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc3e23b8d27af240cc396f2266080aef</Hash>
+    <Hash>5c4d67181ef52315571b542020a9f16f</Hash>
 </Codenesium>*/

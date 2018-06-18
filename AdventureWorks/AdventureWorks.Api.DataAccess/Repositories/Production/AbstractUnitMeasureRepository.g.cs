@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<UnitMeasure>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<UnitMeasure> Get(string unitMeasureCode)
@@ -75,43 +76,38 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
-                public async Task<UnitMeasure> GetName(string name)
+                public async Task<UnitMeasure> ByName(string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.Name == name);
+                        var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
                 }
 
-                protected async Task<List<UnitMeasure>> Where(Expression<Func<UnitMeasure, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<UnitMeasure>> Where(
+                        Expression<Func<UnitMeasure, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<UnitMeasure, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<UnitMeasure> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<UnitMeasure>> SearchLinqEF(Expression<Func<UnitMeasure, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(UnitMeasure.UnitMeasureCode)} ASC";
+                                orderBy = x => x.UnitMeasureCode;
                         }
 
-                        return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
-                }
-
-                private async Task<List<UnitMeasure>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(UnitMeasure.UnitMeasureCode)} ASC";
+                                return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
                         }
-
-                        return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
+                        else
+                        {
+                                return await this.Context.Set<UnitMeasure>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<UnitMeasure>();
+                        }
                 }
 
                 private async Task<UnitMeasure> GetById(string unitMeasureCode)
                 {
-                        List<UnitMeasure> records = await this.SearchLinqEF(x => x.UnitMeasureCode == unitMeasureCode);
+                        List<UnitMeasure> records = await this.Where(x => x.UnitMeasureCode == unitMeasureCode);
 
                         return records.FirstOrDefault();
                 }
@@ -128,5 +124,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd245aa8ef46c04d5fb38510b75454a3</Hash>
+    <Hash>15d80f4946198b47abebe52ad90a0b0b</Hash>
 </Codenesium>*/

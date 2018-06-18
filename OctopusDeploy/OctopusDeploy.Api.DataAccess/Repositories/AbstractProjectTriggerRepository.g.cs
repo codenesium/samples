@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<ProjectTrigger> Get(string id)
@@ -77,47 +78,42 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<ProjectTrigger> GetProjectIdName(string projectId, string name)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProjectId == projectId && x.Name == name);
+                        var records = await this.Where(x => x.ProjectId == projectId && x.Name == name);
 
                         return records.FirstOrDefault();
                 }
                 public async Task<List<ProjectTrigger>> GetProjectId(string projectId)
                 {
-                        var records = await this.SearchLinqEF(x => x.ProjectId == projectId);
+                        var records = await this.Where(x => x.ProjectId == projectId);
 
                         return records;
                 }
 
-                protected async Task<List<ProjectTrigger>> Where(Expression<Func<ProjectTrigger, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<ProjectTrigger>> Where(
+                        Expression<Func<ProjectTrigger, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<ProjectTrigger, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<ProjectTrigger> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<ProjectTrigger>> SearchLinqEF(Expression<Func<ProjectTrigger, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(ProjectTrigger.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProjectTrigger>();
-                }
-
-                private async Task<List<ProjectTrigger>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(ProjectTrigger.Id)} ASC";
+                                return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<ProjectTrigger>();
                         }
-
-                        return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<ProjectTrigger>();
+                        else
+                        {
+                                return await this.Context.Set<ProjectTrigger>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<ProjectTrigger>();
+                        }
                 }
 
                 private async Task<ProjectTrigger> GetById(string id)
                 {
-                        List<ProjectTrigger> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<ProjectTrigger> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
                 }
@@ -125,5 +121,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b0f6e4ec0997c451e653d7a72d0ddfc3</Hash>
+    <Hash>87fc947b46366bc74193ed9b9ad8ffb1</Hash>
 </Codenesium>*/

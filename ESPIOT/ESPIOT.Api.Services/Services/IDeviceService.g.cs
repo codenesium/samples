@@ -19,7 +19,7 @@ namespace ESPIOTNS.Api.Services
 
                 Task<ApiDeviceResponseModel> Get(int id);
 
-                Task<List<ApiDeviceResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiDeviceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiDeviceResponseModel> ByPublicId(Guid publicId);
 
@@ -28,5 +28,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7f168690b2063170ea3aae2cb380d93</Hash>
+    <Hash>250aa95c6ddcd5dd951707570f6c1a2a</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiEventRequestModelValidator: AbstractApiEventRequestModelValidator, IApiEventRequestModelValidator
         {
-                public ApiEventRequestModelValidator()
+                public ApiEventRequestModelValidator(IEventRepository eventRepository)
+                        : base(eventRepository)
                 {
                 }
 
@@ -52,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfd2374e5e3f5ae26900156afb7c99ba</Hash>
+    <Hash>418e88f14a9f3c3a03d1384eb069b7f1</Hash>
 </Codenesium>*/

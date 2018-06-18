@@ -1,6 +1,7 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Context = context;
                 }
 
-                public virtual Task<List<DeploymentRelatedMachine>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                public virtual Task<List<DeploymentRelatedMachine>> All(int limit = int.MaxValue, int offset = 0)
                 {
-                        return this.SearchLinqEF(x => true, limit, offset, orderClause);
+                        return this.Where(x => true, limit, offset);
                 }
 
                 public async virtual Task<DeploymentRelatedMachine> Get(int id)
@@ -77,53 +78,53 @@ namespace OctopusDeployNS.Api.DataAccess
 
                 public async Task<List<DeploymentRelatedMachine>> GetDeploymentId(string deploymentId)
                 {
-                        var records = await this.SearchLinqEF(x => x.DeploymentId == deploymentId);
+                        var records = await this.Where(x => x.DeploymentId == deploymentId);
 
                         return records;
                 }
                 public async Task<List<DeploymentRelatedMachine>> GetMachineId(string machineId)
                 {
-                        var records = await this.SearchLinqEF(x => x.MachineId == machineId);
+                        var records = await this.Where(x => x.MachineId == machineId);
 
                         return records;
                 }
 
-                protected async Task<List<DeploymentRelatedMachine>> Where(Expression<Func<DeploymentRelatedMachine, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
+                protected async Task<List<DeploymentRelatedMachine>> Where(
+                        Expression<Func<DeploymentRelatedMachine, bool>> predicate,
+                        int limit = int.MaxValue,
+                        int offset = 0,
+                        Expression<Func<DeploymentRelatedMachine, dynamic>> orderBy = null,
+                        ListSortDirection sortDirection = ListSortDirection.Ascending)
                 {
-                        List<DeploymentRelatedMachine> records = await this.SearchLinqEF(predicate, limit, offset, orderClause);
-
-                        return records;
-                }
-
-                private async Task<List<DeploymentRelatedMachine>> SearchLinqEF(Expression<Func<DeploymentRelatedMachine, bool>> predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (orderBy == null)
                         {
-                                orderClause = $"{nameof(DeploymentRelatedMachine.Id)} ASC";
+                                orderBy = x => x.Id;
                         }
 
-                        return await this.Context.Set<DeploymentRelatedMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentRelatedMachine>();
-                }
-
-                private async Task<List<DeploymentRelatedMachine>> SearchLinqEFDynamic(string predicate, int limit = int.MaxValue, int offset = 0, string orderClause = "")
-                {
-                        if (string.IsNullOrWhiteSpace(orderClause))
+                        if (sortDirection == ListSortDirection.Ascending)
                         {
-                                orderClause = $"{nameof(DeploymentRelatedMachine.Id)} ASC";
+                                return await this.Context.Set<DeploymentRelatedMachine>().Where(predicate).AsQueryable().OrderBy(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentRelatedMachine>();
                         }
-
-                        return await this.Context.Set<DeploymentRelatedMachine>().Where(predicate).AsQueryable().OrderBy(orderClause).Skip(offset).Take(limit).ToListAsync<DeploymentRelatedMachine>();
+                        else
+                        {
+                                return await this.Context.Set<DeploymentRelatedMachine>().Where(predicate).AsQueryable().OrderByDescending(orderBy).Skip(offset).Take(limit).ToListAsync<DeploymentRelatedMachine>();
+                        }
                 }
 
                 private async Task<DeploymentRelatedMachine> GetById(int id)
                 {
-                        List<DeploymentRelatedMachine> records = await this.SearchLinqEF(x => x.Id == id);
+                        List<DeploymentRelatedMachine> records = await this.Where(x => x.Id == id);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<Deployment> GetDeployment(string deploymentId)
+                {
+                        return await this.Context.Set<Deployment>().SingleOrDefaultAsync(x => x.Id == deploymentId);
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c6743bfdbfc6a53a41830cc8bf5a19f1</Hash>
+    <Hash>f1c9feb3880124d555c139a5f6ba66c8</Hash>
 </Codenesium>*/

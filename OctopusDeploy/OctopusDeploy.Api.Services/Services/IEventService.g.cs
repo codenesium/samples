@@ -19,7 +19,7 @@ namespace OctopusDeployNS.Api.Services
 
                 Task<ApiEventResponseModel> Get(string id);
 
-                Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0, string orderClause = "");
+                Task<List<ApiEventResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiEventResponseModel>> GetAutoId(long autoId);
                 Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
@@ -31,5 +31,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d87fb79fc946f3ab72fbfc93182eee20</Hash>
+    <Hash>c298d3beef9dd88eecde7866da1c3724</Hash>
 </Codenesium>*/

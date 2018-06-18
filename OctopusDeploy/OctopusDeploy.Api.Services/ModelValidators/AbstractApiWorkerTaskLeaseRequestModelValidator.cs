@@ -13,10 +13,11 @@ namespace OctopusDeployNS.Api.Services
         {
                 private string existingRecordId;
 
-                public ValidationResult Validate(ApiWorkerTaskLeaseRequestModel model, string id)
+                IWorkerTaskLeaseRepository workerTaskLeaseRepository;
+
+                public AbstractApiWorkerTaskLeaseRequestModelValidator(IWorkerTaskLeaseRepository workerTaskLeaseRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.workerTaskLeaseRepository = workerTaskLeaseRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiWorkerTaskLeaseRequestModel model, string id)
@@ -55,5 +56,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4472dfaa24ea3fc4eae6cef1ac20095e</Hash>
+    <Hash>29b97e8851c42d9734ecfe6c5f5283bb</Hash>
 </Codenesium>*/

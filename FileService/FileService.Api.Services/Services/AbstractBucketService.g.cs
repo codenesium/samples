@@ -52,9 +52,9 @@ namespace FileServiceNS.Api.Services
                         this.logger = logger;
                 }
 
-                public virtual async Task<List<ApiBucketResponseModel>> All(int limit = 0, int offset = int.MaxValue, string orderClause = "")
+                public virtual async Task<List<ApiBucketResponseModel>> All(int limit = 0, int offset = int.MaxValue)
                 {
-                        var records = await this.bucketRepository.All(limit, offset, orderClause);
+                        var records = await this.bucketRepository.All(limit, offset);
 
                         return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(records));
                 }
@@ -63,7 +63,14 @@ namespace FileServiceNS.Api.Services
                 {
                         var record = await this.bucketRepository.Get(id);
 
-                        return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
+                        }
                 }
 
                 public virtual async Task<CreateResponse<ApiBucketResponseModel>> Create(
@@ -113,13 +120,27 @@ namespace FileServiceNS.Api.Services
                 {
                         Bucket record = await this.bucketRepository.GetExternalId(externalId);
 
-                        return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
+                        }
                 }
                 public async Task<ApiBucketResponseModel> GetName(string name)
                 {
                         Bucket record = await this.bucketRepository.GetName(name);
 
-                        return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
+                        if (record == null)
+                        {
+                                return null;
+                        }
+                        else
+                        {
+                                return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
+                        }
                 }
 
                 public async virtual Task<List<ApiFileResponseModel>> Files(int bucketId, int limit = int.MaxValue, int offset = 0)
@@ -132,5 +153,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bb09e9d4fb1ac6edadbe3f62ca4b642</Hash>
+    <Hash>45c06b49da962e9a302287cd0a41730a</Hash>
 </Codenesium>*/

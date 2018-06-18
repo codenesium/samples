@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ServerTaskController: AbstractServerTaskController
         {
                 public ServerTaskController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ServerTaskController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IServerTaskService serverTaskService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>06ca1225dfa926222a3b13ec85b06c7e</Hash>
+    <Hash>eb2336385804c28b2efda17356fcba06</Hash>
 </Codenesium>*/

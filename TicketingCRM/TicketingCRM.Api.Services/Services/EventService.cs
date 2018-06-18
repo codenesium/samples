@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class EventService: AbstractEventService, IEventService
         {
                 public EventService(
-                        ILogger<EventRepository> logger,
+                        ILogger<IEventRepository> logger,
                         IEventRepository eventRepository,
                         IApiEventRequestModelValidator eventModelValidator,
                         IBOLEventMapper boleventMapper,
@@ -32,5 +32,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6e6db22b906cb4034bb538bb31a764e</Hash>
+    <Hash>71a90b51d6d924287124ec067c771c1e</Hash>
 </Codenesium>*/

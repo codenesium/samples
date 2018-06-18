@@ -17,7 +17,7 @@ namespace OctopusDeployNS.Api.Web
         public class ProxyController: AbstractProxyController
         {
                 public ProxyController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<ProxyController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IProxyService proxyService
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a564f52fabf7b167669a73bd1b02bfe1</Hash>
+    <Hash>bf1a6f5de8c30580dfd185e11ca80d6e</Hash>
 </Codenesium>*/

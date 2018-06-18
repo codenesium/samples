@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiArtifactRequestModelValidator: AbstractApiArtifactRequestModelValidator, IApiArtifactRequestModelValidator
         {
-                public ApiArtifactRequestModelValidator()
+                public ApiArtifactRequestModelValidator(IArtifactRepository artifactRepository)
+                        : base(artifactRepository)
                 {
                 }
 
@@ -44,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e87167d374243ca8b4169f8f9d763d0a</Hash>
+    <Hash>0eb5bac20a1b7aceee8145d31e2c34d2</Hash>
 </Codenesium>*/

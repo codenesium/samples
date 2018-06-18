@@ -3,25 +3,14 @@ using System;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class BOTransactionStatus: AbstractBusinessObject
+        public partial class BOTransactionStatus: AbstractBOTransactionStatus
         {
                 public BOTransactionStatus() : base()
                 {
                 }
-
-                public void SetProperties(int id,
-                                          string name)
-                {
-                        this.Id = id;
-                        this.Name = name;
-                }
-
-                public int Id { get; private set; }
-
-                public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>26e8746365ad33b3597d4cafc4c36487</Hash>
+    <Hash>dd5e3d09efcb1ab3cc327a3882ed4a9d</Hash>
 </Codenesium>*/

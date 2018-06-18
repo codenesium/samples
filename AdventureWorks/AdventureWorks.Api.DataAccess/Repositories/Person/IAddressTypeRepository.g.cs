@@ -15,14 +15,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
                 Task<AddressType> Get(int addressTypeID);
 
-                Task<List<AddressType>> All(int limit = int.MaxValue, int offset =  0, string orderClause = "");
+                Task<List<AddressType>> All(int limit = int.MaxValue, int offset = 0);
 
-                Task<AddressType> GetName(string name);
+                Task<AddressType> ByName(string name);
 
                 Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressTypeID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>fbfc232c30688a352b4d2d0201ad8d8b</Hash>
+    <Hash>44c84f05ea16cf0c77e8e704a380475b</Hash>
 </Codenesium>*/

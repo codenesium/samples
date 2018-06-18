@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiLifecycleRequestModelValidator: AbstractApiLifecycleRequestModelValidator, IApiLifecycleRequestModelValidator
         {
-                public ApiLifecycleRequestModelValidator()
+                public ApiLifecycleRequestModelValidator(ILifecycleRepository lifecycleRepository)
+                        : base(lifecycleRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc65fad3c6aba729fc0450cddb14bd0d</Hash>
+    <Hash>4d5470d9f7cfad40ed998c54132260a5</Hash>
 </Codenesium>*/

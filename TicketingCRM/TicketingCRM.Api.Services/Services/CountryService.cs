@@ -13,7 +13,7 @@ namespace TicketingCRMNS.Api.Services
         public class CountryService: AbstractCountryService, ICountryService
         {
                 public CountryService(
-                        ILogger<CountryRepository> logger,
+                        ILogger<ICountryRepository> logger,
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
                         IBOLCountryMapper bolcountryMapper,
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9907e67be997f54cd92abeda60439272</Hash>
+    <Hash>5c221baba48b7b6b28ce1e36363012aa</Hash>
 </Codenesium>*/

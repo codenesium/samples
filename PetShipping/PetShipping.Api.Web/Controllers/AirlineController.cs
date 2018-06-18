@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Web
         public class AirlineController: AbstractAirlineController
         {
                 public AirlineController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AirlineController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IAirlineService airlineService
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c8fd21d8c99b4484d8f1ba4549d6bc97</Hash>
+    <Hash>76505b991de7805e3dfd57625f39de9a</Hash>
 </Codenesium>*/

@@ -8,7 +8,8 @@ namespace OctopusDeployNS.Api.Services
 {
         public class ApiProjectGroupRequestModelValidator: AbstractApiProjectGroupRequestModelValidator, IApiProjectGroupRequestModelValidator
         {
-                public ApiProjectGroupRequestModelValidator()
+                public ApiProjectGroupRequestModelValidator(IProjectGroupRepository projectGroupRepository)
+                        : base(projectGroupRepository)
                 {
                 }
 
@@ -36,5 +37,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>38b67bb3fc7157f5b3e900b8391564a4</Hash>
+    <Hash>85ba46b236ede75380aca424c2972f80</Hash>
 </Codenesium>*/

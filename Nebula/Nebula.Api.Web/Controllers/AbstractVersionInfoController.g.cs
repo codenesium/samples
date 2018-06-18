@@ -25,7 +25,7 @@ namespace NebulaNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractVersionInfoController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractVersionInfoController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IVersionInfoService versionInfoService
@@ -183,5 +183,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c31b812e8ac854ae68429d3a5e02fb34</Hash>
+    <Hash>37f20eb53cdbfe63534d67df7e0e6072</Hash>
 </Codenesium>*/

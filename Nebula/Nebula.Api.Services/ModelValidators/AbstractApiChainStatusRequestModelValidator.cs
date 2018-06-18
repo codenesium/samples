@@ -13,10 +13,11 @@ namespace NebulaNS.Api.Services
         {
                 private int existingRecordId;
 
-                public ValidationResult Validate(ApiChainStatusRequestModel model, int id)
+                IChainStatusRepository chainStatusRepository;
+
+                public AbstractApiChainStatusRequestModelValidator(IChainStatusRepository chainStatusRepository)
                 {
-                        this.existingRecordId = id;
-                        return this.Validate(model);
+                        this.chainStatusRepository = chainStatusRepository;
                 }
 
                 public async Task<ValidationResult> ValidateAsync(ApiChainStatusRequestModel model, int id)
@@ -34,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f1999150ecbbc221268bc0c716185343</Hash>
+    <Hash>82427b32cc7f9d056fc83d42e010f76a</Hash>
 </Codenesium>*/

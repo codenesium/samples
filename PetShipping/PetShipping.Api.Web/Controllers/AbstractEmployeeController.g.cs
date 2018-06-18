@@ -25,7 +25,7 @@ namespace PetShippingNS.Api.Web
                 protected int DefaultLimit { get; set; }
 
                 public AbstractEmployeeController(
-                        ServiceSettings settings,
+                        ApiSettings settings,
                         ILogger<AbstractEmployeeController> logger,
                         ITransactionCoordinator transactionCoordinator,
                         IEmployeeService employeeService
@@ -204,5 +204,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb3061510c624e4b57c6eb797acd54dc</Hash>
+    <Hash>d71d42ac18581161010f31a0cbff73a0</Hash>
 </Codenesium>*/

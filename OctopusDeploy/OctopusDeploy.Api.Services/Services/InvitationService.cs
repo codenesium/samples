@@ -13,7 +13,7 @@ namespace OctopusDeployNS.Api.Services
         public class InvitationService: AbstractInvitationService, IInvitationService
         {
                 public InvitationService(
-                        ILogger<InvitationRepository> logger,
+                        ILogger<IInvitationRepository> logger,
                         IInvitationRepository invitationRepository,
                         IApiInvitationRequestModelValidator invitationModelValidator,
                         IBOLInvitationMapper bolinvitationMapper,
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6947582d235256e77dd501933c20f608</Hash>
+    <Hash>fc46bce49cc04429d8e191d22ade780f</Hash>
 </Codenesium>*/

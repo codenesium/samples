@@ -23,11 +23,6 @@ namespace NebulaNS.Api.Services
                 public virtual BOMachineRefTeam MapEFToBO(
                         MachineRefTeam ef)
                 {
-                        if (ef == null)
-                        {
-                                return null;
-                        }
-
                         var bo = new BOMachineRefTeam();
 
                         bo.SetProperties(
@@ -53,5 +48,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e07018289e73bff9c4963d6b80d16fc0</Hash>
+    <Hash>0d32805b57b4efed15af21575a4c9776</Hash>
 </Codenesium>*/
