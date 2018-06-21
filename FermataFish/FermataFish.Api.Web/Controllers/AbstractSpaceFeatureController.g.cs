@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/SpaceFeatures/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpaceFeatures/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -175,5 +175,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ba848c38560c07896848ba4a973c264</Hash>
+    <Hash>7c9c9083d34aa453e081abf782c5a6e0</Hash>
 </Codenesium>*/

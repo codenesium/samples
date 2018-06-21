@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 public AbstractDeploymentHistoryRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>510b53ee0a73031631001b2e28df1ce7</Hash>
+    <Hash>ab507ed09239661e97240790f67e0b76</Hash>
 </Codenesium>*/

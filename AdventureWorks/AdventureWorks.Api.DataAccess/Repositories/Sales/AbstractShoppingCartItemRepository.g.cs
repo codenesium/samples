@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public AbstractShoppingCartItemRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>606c02568984dea8142bc3d980287336</Hash>
+    <Hash>2fee7550d95d48bf44d198e936d62fff</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 public AbstractSalesOrderHeaderRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2161be5f6946a39b5e7faa5310fa2c5f</Hash>
+    <Hash>14c36d092cf55319b7f940509aa892c4</Hash>
 </Codenesium>*/

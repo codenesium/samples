@@ -1,6 +1,6 @@
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd11341e4bd8197615486393d6f2b128</Hash>
+    <Hash>76c6fe8c536f2553e8203fb31bf64e8e</Hash>
 </Codenesium>*/

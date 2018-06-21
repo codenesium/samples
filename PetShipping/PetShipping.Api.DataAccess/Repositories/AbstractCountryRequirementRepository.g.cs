@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace PetShippingNS.Api.DataAccess
                 public AbstractCountryRequirementRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -113,5 +113,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d9c2544c2d63d0bed65742d3edcead3f</Hash>
+    <Hash>2257b151db444ce6b9fbd9e11acf35f1</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace FermataFishNS.Api.DataAccess
                 public AbstractStudentXFamilyRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -118,5 +118,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c21aac340749ecae96add59bb01e4ed</Hash>
+    <Hash>4f1d746751f40d15eaf5aee0538e68f7</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5d5f88b0dd5b1639dcd44b28b4fa794d</Hash>
+    <Hash>63ecb8ee0cce856073f26930f39cf0f8</Hash>
 </Codenesium>*/

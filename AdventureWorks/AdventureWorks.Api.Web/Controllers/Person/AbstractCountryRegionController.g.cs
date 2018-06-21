@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/CountryRegions/{result.Record.CountryRegionCode}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRegions/{result.Record.CountryRegionCode}", result.Record);
                         }
                         else
                         {
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>61926a69157046b31f169825f98912d7</Hash>
+    <Hash>a33ee394f7ad4cba71d7d49ab86a2dc3</Hash>
 </Codenesium>*/

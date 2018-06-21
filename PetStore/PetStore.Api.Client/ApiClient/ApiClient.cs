@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Newtonsoft.Json;
 using PetStoreNS.Api.Contracts;
 using System;
@@ -25,5 +25,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>4729fa1f0b57599b20f80022eb326708</Hash>
+    <Hash>70d7b31efde9d45ec9318b5f6550616c</Hash>
 </Codenesium>*/

@@ -78,7 +78,7 @@ namespace FileServiceNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result.Record);
                         }
                         else
                         {
@@ -180,5 +180,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d78a61a3037a6dd60984ba970cbb51fe</Hash>
+    <Hash>9c7e14ef94c7148e310ef2207acc02a3</Hash>
 </Codenesium>*/

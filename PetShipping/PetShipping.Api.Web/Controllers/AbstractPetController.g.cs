@@ -78,7 +78,7 @@ namespace PetShippingNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Pets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Pets/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -175,5 +175,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b8c38a17e749b731ab30def89f48fb31</Hash>
+    <Hash>b690a843ca5c635328f4921331bd8c6d</Hash>
 </Codenesium>*/

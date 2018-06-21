@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,5 +20,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a865e6f273a82a57bbfb20e151194387</Hash>
+    <Hash>f59ed05d4be38f9a2841c1d422b12616</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace PetStoreNS.Api.DataAccess
                 public AbstractSpeciesRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -113,5 +113,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cec5e3c4e00e94fedd09823fbe1b8612</Hash>
+    <Hash>676b702b6e7d1f283b1298632f9f1127</Hash>
 </Codenesium>*/

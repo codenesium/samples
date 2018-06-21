@@ -78,7 +78,7 @@ namespace FileServiceNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Buckets/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Buckets/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -213,5 +213,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>31fa0fa3562ff6ce6cdf5e70cc6d8559</Hash>
+    <Hash>4f0f1f79415b8c4ee848d09eda711c4f</Hash>
 </Codenesium>*/

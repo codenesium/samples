@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace TicketingCRMNS.Api.DataAccess
                 public AbstractVenueRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -132,5 +132,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff5ccb3ad43deb80aafd6c97a9a5c5e6</Hash>
+    <Hash>e501cf61e0befbd8d71859a4e1a5ba77</Hash>
 </Codenesium>*/

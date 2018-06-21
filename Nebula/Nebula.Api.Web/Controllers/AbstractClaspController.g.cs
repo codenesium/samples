@@ -78,7 +78,7 @@ namespace NebulaNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Clasps/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Clasps/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -161,5 +161,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c41810861f650d3012d7e098ae3a8314</Hash>
+    <Hash>809143cd52ad3aa4001868cf085bf7fb</Hash>
 </Codenesium>*/

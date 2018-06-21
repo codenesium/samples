@@ -3,3 +3,7 @@ mono: none
 dotnet: 2.1
 script:
    -  dotnet build ESPIOT.Api.Web.csproj
+   -  dotnet test ESPIOT.Api.DataAccess.csproj
+   -  dotnet test ESPIOT.Api.Servicea.csproj
+   -  dotnet test ESPIOT.Api.Client.csproj
+   -  dotnet test ESPIOT.Api.Web.csproj

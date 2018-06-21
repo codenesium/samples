@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace ESPIOTNS.Api.DataAccess
                 public AbstractDeviceRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -120,5 +120,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc635af9186d396311ad4ff2fce2ec07</Hash>
+    <Hash>a93d8a429bfaea320bfc287103e0bb1b</Hash>
 </Codenesium>*/

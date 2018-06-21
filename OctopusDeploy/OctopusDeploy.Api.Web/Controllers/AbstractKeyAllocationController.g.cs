@@ -78,7 +78,7 @@ namespace OctopusDeployNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/KeyAllocations/{result.Record.CollectionName}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/KeyAllocations/{result.Record.CollectionName}", result.Record);
                         }
                         else
                         {
@@ -161,5 +161,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aa752dc05c54068ae2ab16938c88355e</Hash>
+    <Hash>557a643c258ae23f6e4e56d39110fa80</Hash>
 </Codenesium>*/

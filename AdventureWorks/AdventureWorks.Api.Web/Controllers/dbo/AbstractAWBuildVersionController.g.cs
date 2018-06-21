@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/AWBuildVersions/{result.Record.SystemInformationID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/AWBuildVersions/{result.Record.SystemInformationID}", result.Record);
                         }
                         else
                         {
@@ -161,5 +161,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7b719d5f8d2abf3e75d8a04207c955d6</Hash>
+    <Hash>747cdd5abd60e492c4f86efb9783da12</Hash>
 </Codenesium>*/

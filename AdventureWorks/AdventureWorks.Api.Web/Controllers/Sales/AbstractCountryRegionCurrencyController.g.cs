@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/CountryRegionCurrencies/{result.Record.CountryRegionCode}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CountryRegionCurrencies/{result.Record.CountryRegionCode}", result.Record);
                         }
                         else
                         {
@@ -172,5 +172,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b3cc8ec91ca3bb5bb3896b8c4f53621a</Hash>
+    <Hash>997a549f9e14bb5b818ff885ccda2fec</Hash>
 </Codenesium>*/

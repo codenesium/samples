@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +20,7 @@ namespace NebulaNS.Api.DataAccess
                 public AbstractChainRepository(
                         ILogger logger,
                         ApplicationDbContext context)
-                        : base ()
+                        : base()
                 {
                         this.Logger = logger;
                         this.Context = context;
@@ -128,5 +128,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b6d2fc962ef8845cc3667a9b8e1f99a8</Hash>
+    <Hash>38fa02e43a1ed6b1949131da88c8fc99</Hash>
 </Codenesium>*/

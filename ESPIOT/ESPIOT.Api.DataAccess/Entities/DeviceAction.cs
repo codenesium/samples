@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,5 +43,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e8e7ff3c25c6835ef65e6aec6aa7975</Hash>
+    <Hash>47eb008d5141d71a51ec484ffe812cc0</Hash>
 </Codenesium>*/

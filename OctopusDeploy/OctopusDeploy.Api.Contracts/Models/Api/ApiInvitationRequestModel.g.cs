@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>29c3e8a080c43ee6ea8ed5bfc7caf9ad</Hash>
+    <Hash>96c8c4891162701aff27ab55e629b18b</Hash>
 </Codenesium>*/

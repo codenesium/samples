@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 
 namespace ESPIOTNS.Api.Services
@@ -13,5 +13,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa8570f5b8aa7141ef8ad7bc95a52403</Hash>
+    <Hash>da762ac1930ab79e4e85ef45cbcbdba4</Hash>
 </Codenesium>*/

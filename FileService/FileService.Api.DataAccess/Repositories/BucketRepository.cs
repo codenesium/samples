@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,5 +20,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d6e3b26b18373d8078ce13da1a9f26c9</Hash>
+    <Hash>8e1c8be34afff413393cd6e2ccf4e69d</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -104,5 +104,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6cb311028d35b6462e426076bced39eb</Hash>
+    <Hash>6253ad2d8b73e47c80ea7e9ea883c645</Hash>
 </Codenesium>*/

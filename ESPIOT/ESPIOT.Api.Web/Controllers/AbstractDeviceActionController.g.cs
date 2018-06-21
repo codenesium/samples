@@ -78,7 +78,7 @@ namespace ESPIOTNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -172,5 +172,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2507b4ac10685a997b4cc5f2b0a8927d</Hash>
+    <Hash>191582a6ca93e8f60dd425f6b3d0ba95</Hash>
 </Codenesium>*/

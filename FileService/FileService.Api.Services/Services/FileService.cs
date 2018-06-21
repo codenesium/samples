@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
@@ -30,5 +30,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5128c41f6cb382451b2d1b62114d14b3</Hash>
+    <Hash>0d983af37d55b517490fb538de6d6e4e</Hash>
 </Codenesium>*/

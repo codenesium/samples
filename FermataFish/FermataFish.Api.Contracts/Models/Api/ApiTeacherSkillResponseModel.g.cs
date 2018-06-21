@@ -1,4 +1,3 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,5 +16,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>52de89525a38ad2253e261971084ba26</Hash>
+    <Hash>b5a53807f39687e70f43f918aa064bfc</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using ESPIOTNS.Api.Contracts;
 using Newtonsoft.Json;
 using System;
@@ -23,16 +23,11 @@ namespace ESPIOTNS.Api.Client
                         this.client = client;
                 }
 
-                public AbstractApiClient(string apiUri, string apiVersion)
+                public AbstractApiClient(string apiUrl, string apiVersion)
                 {
-                        if (string.IsNullOrWhiteSpace(apiUri))
+                        if (string.IsNullOrWhiteSpace(apiUrl))
                         {
                                 throw new ArgumentException("apiUrl is not set");
-                        }
-
-                        if (apiUri[apiUri.Length - 1] != '/')
-                        {
-                                throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
 
                         if (string.IsNullOrWhiteSpace(apiVersion))
@@ -40,10 +35,15 @@ namespace ESPIOTNS.Api.Client
                                 throw new ArgumentException("apiVersion is not set");
                         }
 
-                        this.ApiUrl = apiUri;
+                        if (!apiUrl.EndsWith("/"))
+                        {
+                                apiUrl += "/";
+                        }
+
+                        this.ApiUrl = apiUrl;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-                        this.client.BaseAddress = new Uri(apiUri);
+                        this.client.BaseAddress = new Uri(apiUrl);
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -51,7 +51,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<ApiDeviceResponseModel> DeviceCreateAsync(ApiDeviceRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
@@ -59,7 +59,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<ApiDeviceResponseModel> DeviceUpdateAsync(int id, ApiDeviceRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Devices/{id}", item);
+                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Devices/{id}", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
@@ -67,14 +67,14 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task DeviceDeleteAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Devices/{id}");
+                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Devices/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                 }
 
                 public virtual async Task<ApiDeviceResponseModel> DeviceGetAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/{id}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
@@ -82,7 +82,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<List<ApiDeviceResponseModel>> DeviceAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?limit={limit}&offset={offset}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices?limit={limit}&offset={offset}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeviceResponseModel>>(httpResponse.Content.ContentToString());
@@ -90,7 +90,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<List<ApiDeviceResponseModel>> DeviceBulkInsertAsync(List<ApiDeviceRequestModel> items)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeviceResponseModel>>(httpResponse.Content.ContentToString());
@@ -98,7 +98,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<ApiDeviceResponseModel> GetDeviceByPublicId(Guid publicId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/byPublicId/{publicId}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/byPublicId/{publicId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
@@ -106,7 +106,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/DeviceActions/{deviceId}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/DeviceActions/{deviceId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
@@ -114,7 +114,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<ApiDeviceActionResponseModel> DeviceActionCreateAsync(ApiDeviceActionRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions", item);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceActionResponseModel>(httpResponse.Content.ContentToString());
@@ -122,7 +122,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<ApiDeviceActionResponseModel> DeviceActionUpdateAsync(int id, ApiDeviceActionRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DeviceActions/{id}", item);
+                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/DeviceActions/{id}", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceActionResponseModel>(httpResponse.Content.ContentToString());
@@ -130,14 +130,14 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task DeviceActionDeleteAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/DeviceActions/{id}");
+                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/DeviceActions/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                 }
 
                 public virtual async Task<ApiDeviceActionResponseModel> DeviceActionGetAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/{id}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiDeviceActionResponseModel>(httpResponse.Content.ContentToString());
@@ -145,7 +145,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActionAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions?limit={limit}&offset={offset}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions?limit={limit}&offset={offset}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
@@ -153,7 +153,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActionBulkInsertAsync(List<ApiDeviceActionRequestModel> items)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
@@ -161,7 +161,7 @@ namespace ESPIOTNS.Api.Client
 
                 public virtual async Task<List<ApiDeviceActionResponseModel>> GetDeviceActionByDeviceId(int deviceId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/byDeviceId/{deviceId}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/byDeviceId/{deviceId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
@@ -170,5 +170,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>1b88cad3a62050e8a60398f1b6cff4c5</Hash>
+    <Hash>9dd7f07bf06f7101a21b6fc2ab54f597</Hash>
 </Codenesium>*/

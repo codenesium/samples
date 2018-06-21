@@ -78,7 +78,7 @@ namespace OctopusDeployNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/DeploymentRelatedMachines/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentRelatedMachines/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -183,5 +183,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b4792ad98b9655a08b5ab8f25a199977</Hash>
+    <Hash>4c2e2f6f9f128e3e7c5de779eb19b1a4</Hash>
 </Codenesium>*/

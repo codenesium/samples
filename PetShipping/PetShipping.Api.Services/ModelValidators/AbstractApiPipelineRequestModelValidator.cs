@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
 using PetShippingNS.Api.Contracts;
@@ -45,5 +45,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9536ebc447101a6396ee12ca8bc347f4</Hash>
+    <Hash>75f86554e139affc8c7d306e49cfd439</Hash>
 </Codenesium>*/

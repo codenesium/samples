@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -56,5 +56,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>60838fc60fcb0bbcbc21d1ce4d2a591d</Hash>
+    <Hash>419ee465d520482c81c5199447946c3a</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OctopusDeployNS.Api.Contracts;
@@ -147,5 +147,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b7d904f297a8ed7f39c283796e8c9a7</Hash>
+    <Hash>43cd6dcb9b08750ee290e124e04a167e</Hash>
 </Codenesium>*/

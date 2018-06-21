@@ -3,3 +3,7 @@ mono: none
 dotnet: 2.1
 script:
    -  dotnet build Nebula.Api.Web.csproj
+   -  dotnet test Nebula.Api.DataAccess.csproj
+   -  dotnet test Nebula.Api.Servicea.csproj
+   -  dotnet test Nebula.Api.Client.csproj
+   -  dotnet test Nebula.Api.Web.csproj

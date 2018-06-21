@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FluentValidation;
 using FluentValidation.Results;
 using OctopusDeployNS.Api.Contracts;
@@ -118,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16115050f0e8e8de3d8d8d23b2492858</Hash>
+    <Hash>b86a5af52e14c726b808ebe659c1c1fd</Hash>
 </Codenesium>*/

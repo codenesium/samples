@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>244c3b95e808d42cfa3a0a4a1a5b10a2</Hash>
+    <Hash>6280f472e7072207372ad379248c6772</Hash>
 </Codenesium>*/

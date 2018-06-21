@@ -29,7 +29,9 @@ Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Services.
 Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Web.Tests", "OctopusDeploy.Api.Web.Tests/OctopusDeploy.Api.Web.Tests.csproj", "{OctopusDeploy.Api.Web.Tests}"
 	EndProject
 	
-Global
+Project("{f301a503-8b94-4fe4-bad4-b04edacc8777}") = "OctopusDeploy.Api.Client.Tests", "OctopusDeploy.Api.Client.Tests/OctopusDeploy.Api.Client.Tests.csproj", "{OctopusDeploy.Api.Client.Tests}"
+	EndProject
+	Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -77,6 +79,10 @@ Global
 		{OctopusDeploy.Api.Web.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{OctopusDeploy.Api.Web.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 		
+		        {OctopusDeploy.Api.Client.Tests}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{OctopusDeploy.Api.Client.Tests}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{OctopusDeploy.Api.Client.Tests}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{OctopusDeploy.Api.Client.Tests}.Release|Any CPU.Build.0 = Release|Any CPU
 			    EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

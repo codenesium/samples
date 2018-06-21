@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FileServiceNS.Api.Contracts;
 using Newtonsoft.Json;
 using System;
@@ -23,16 +23,11 @@ namespace FileServiceNS.Api.Client
                         this.client = client;
                 }
 
-                public AbstractApiClient(string apiUri, string apiVersion)
+                public AbstractApiClient(string apiUrl, string apiVersion)
                 {
-                        if (string.IsNullOrWhiteSpace(apiUri))
+                        if (string.IsNullOrWhiteSpace(apiUrl))
                         {
                                 throw new ArgumentException("apiUrl is not set");
-                        }
-
-                        if (apiUri[apiUri.Length - 1] != '/')
-                        {
-                                throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
 
                         if (string.IsNullOrWhiteSpace(apiVersion))
@@ -40,10 +35,15 @@ namespace FileServiceNS.Api.Client
                                 throw new ArgumentException("apiVersion is not set");
                         }
 
-                        this.ApiUrl = apiUri;
+                        if (!apiUrl.EndsWith("/"))
+                        {
+                                apiUrl += "/";
+                        }
+
+                        this.ApiUrl = apiUrl;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-                        this.client.BaseAddress = new Uri(apiUri);
+                        this.client.BaseAddress = new Uri(apiUrl);
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -51,7 +51,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiBucketResponseModel> BucketCreateAsync(ApiBucketRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
@@ -59,7 +59,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiBucketResponseModel> BucketUpdateAsync(int id, ApiBucketRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Buckets/{id}", item);
+                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Buckets/{id}", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
@@ -67,14 +67,14 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task BucketDeleteAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Buckets/{id}");
+                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Buckets/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                 }
 
                 public virtual async Task<ApiBucketResponseModel> BucketGetAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/{id}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
@@ -82,7 +82,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiBucketResponseModel>> BucketAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?limit={limit}&offset={offset}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets?limit={limit}&offset={offset}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
@@ -90,7 +90,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiBucketResponseModel>> BucketBulkInsertAsync(List<ApiBucketRequestModel> items)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
@@ -98,7 +98,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiBucketResponseModel> GetBucketGetExternalId(Guid externalId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/getExternalId/{externalId}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/getExternalId/{externalId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
@@ -106,7 +106,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiBucketResponseModel> GetBucketGetName(string name)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/getName/{name}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/getName/{name}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
@@ -114,7 +114,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiFileResponseModel>> Files(int bucketId)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/Files/{bucketId}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/Files/{bucketId}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
@@ -122,7 +122,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiFileResponseModel> FileCreateAsync(ApiFileRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files", item);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFileResponseModel>(httpResponse.Content.ContentToString());
@@ -130,7 +130,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiFileResponseModel> FileUpdateAsync(int id, ApiFileRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Files/{id}", item);
+                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Files/{id}", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFileResponseModel>(httpResponse.Content.ContentToString());
@@ -138,14 +138,14 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task FileDeleteAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Files/{id}");
+                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Files/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                 }
 
                 public virtual async Task<ApiFileResponseModel> FileGetAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files/{id}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFileResponseModel>(httpResponse.Content.ContentToString());
@@ -153,7 +153,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiFileResponseModel>> FileAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?limit={limit}&offset={offset}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Files?limit={limit}&offset={offset}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
@@ -161,7 +161,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiFileResponseModel>> FileBulkInsertAsync(List<ApiFileRequestModel> items)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
@@ -169,7 +169,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiFileTypeResponseModel> FileTypeCreateAsync(ApiFileTypeRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes", item);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFileTypeResponseModel>(httpResponse.Content.ContentToString());
@@ -177,7 +177,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiFileTypeResponseModel> FileTypeUpdateAsync(int id, ApiFileTypeRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/FileTypes/{id}", item);
+                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/FileTypes/{id}", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFileTypeResponseModel>(httpResponse.Content.ContentToString());
@@ -185,14 +185,14 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task FileTypeDeleteAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/FileTypes/{id}");
+                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/FileTypes/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                 }
 
                 public virtual async Task<ApiFileTypeResponseModel> FileTypeGetAsync(int id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes/{id}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiFileTypeResponseModel>(httpResponse.Content.ContentToString());
@@ -200,7 +200,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiFileTypeResponseModel>> FileTypeAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?limit={limit}&offset={offset}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes?limit={limit}&offset={offset}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -208,7 +208,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiFileTypeResponseModel>> FileTypeBulkInsertAsync(List<ApiFileTypeRequestModel> items)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
@@ -216,7 +216,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiVersionInfoResponseModel> VersionInfoCreateAsync(ApiVersionInfoRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
@@ -224,7 +224,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiVersionInfoResponseModel> VersionInfoUpdateAsync(long id, ApiVersionInfoRequestModel item)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item);
+                        HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
@@ -232,14 +232,14 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task VersionInfoDeleteAsync(long id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VersionInfoes/{id}");
+                        HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VersionInfoes/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                 }
 
                 public virtual async Task<ApiVersionInfoResponseModel> VersionInfoGetAsync(long id)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/{id}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/{id}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
@@ -247,7 +247,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoAllAsync(int limit = 1000, int offset = 0)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?limit={limit}&offset={offset}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?limit={limit}&offset={offset}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
@@ -255,7 +255,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoBulkInsertAsync(List<ApiVersionInfoRequestModel> items)
                 {
-                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items);
+                        HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items).ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
@@ -263,7 +263,7 @@ namespace FileServiceNS.Api.Client
 
                 public virtual async Task<ApiVersionInfoResponseModel> GetVersionInfoGetVersion(long version)
                 {
-                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/getVersion/{version}");
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/getVersion/{version}").ConfigureAwait(false);
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
@@ -272,5 +272,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>db990597269efb518e7e45f937cf1d4d</Hash>
+    <Hash>14abe9d8b9046832c0e59d3dd3695f18</Hash>
 </Codenesium>*/

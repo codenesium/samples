@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 
 namespace FileServiceNS.Api.Services
@@ -64,5 +64,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a374e2b7a929fa948109d7f3a08d66e6</Hash>
+    <Hash>7e988a2bb51ffa6783eb51e3a157410b</Hash>
 </Codenesium>*/

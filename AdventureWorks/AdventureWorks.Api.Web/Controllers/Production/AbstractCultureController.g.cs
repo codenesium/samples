@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Record.CultureID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Record.CultureID}", result.Record);
                         }
                         else
                         {
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3c71d0e75153f4f077028292e494aca0</Hash>
+    <Hash>be589ab021c7ef1db9f4aeb118e73f91</Hash>
 </Codenesium>*/

@@ -78,7 +78,7 @@ namespace TicketingCRMNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Transactions/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Transactions/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -186,5 +186,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f567bc0b7382fd7544386f6293f6264d</Hash>
+    <Hash>a9d505238d4da011344d1f228a762c01</Hash>
 </Codenesium>*/

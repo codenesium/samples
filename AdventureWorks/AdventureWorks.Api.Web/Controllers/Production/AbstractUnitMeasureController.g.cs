@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/UnitMeasures/{result.Record.UnitMeasureCode}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/UnitMeasures/{result.Record.UnitMeasureCode}", result.Record);
                         }
                         else
                         {
@@ -208,5 +208,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d6c565aeb3e4e46e7110b8fa0d37b6c9</Hash>
+    <Hash>64f9bf4f20d6097d938c4fcb69856a68</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FluentValidation;
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e95d20f5fa88842bb3e1802418677a94</Hash>
+    <Hash>84dd4e1e908c2f7ef7d595e613eb761c</Hash>
 </Codenesium>*/

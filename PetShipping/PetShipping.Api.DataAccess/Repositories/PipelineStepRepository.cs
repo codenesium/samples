@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8a312b944cf2b785fcf66d9dfaf24136</Hash>
+    <Hash>e09b54e2a477cf2a2df7e7e8dfaa9e77</Hash>
 </Codenesium>*/

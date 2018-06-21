@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/CreditCards/{result.Record.CreditCardID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CreditCards/{result.Record.CreditCardID}", result.Record);
                         }
                         else
                         {
@@ -208,5 +208,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e0634767be32ce0d8932fd0acafc287b</Hash>
+    <Hash>3d0911301631fb8ad12f1eb3eb29faec</Hash>
 </Codenesium>*/

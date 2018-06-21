@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 
 namespace AdventureWorksNS.Api.Services
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f1e2e6b0503e84b3f5389f0336df25f3</Hash>
+    <Hash>9569d2320c69d824fd3cfb6c4dcd3a85</Hash>
 </Codenesium>*/

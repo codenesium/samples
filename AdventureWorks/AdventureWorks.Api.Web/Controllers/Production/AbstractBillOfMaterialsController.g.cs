@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/BillOfMaterials/{result.Record.BillOfMaterialsID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BillOfMaterials/{result.Record.BillOfMaterialsID}", result.Record);
                         }
                         else
                         {
@@ -191,5 +191,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e5050979d45f7e032ce57c6c899a43b5</Hash>
+    <Hash>5b6cfc757908b3dd4a7535ffde91665e</Hash>
 </Codenesium>*/

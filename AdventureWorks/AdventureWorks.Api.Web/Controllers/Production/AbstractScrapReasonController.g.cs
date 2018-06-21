@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/ScrapReasons/{result.Record.ScrapReasonID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ScrapReasons/{result.Record.ScrapReasonID}", result.Record);
                         }
                         else
                         {
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2d947a75c3b72248fd459ed54c7f0c12</Hash>
+    <Hash>02696e938192df43165882e67f92c85c</Hash>
 </Codenesium>*/

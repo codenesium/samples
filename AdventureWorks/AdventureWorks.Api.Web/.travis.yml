@@ -3,3 +3,7 @@ mono: none
 dotnet: 2.1
 script:
    -  dotnet build AdventureWorks.Api.Web.csproj
+   -  dotnet test AdventureWorks.Api.DataAccess.csproj
+   -  dotnet test AdventureWorks.Api.Servicea.csproj
+   -  dotnet test AdventureWorks.Api.Client.csproj
+   -  dotnet test AdventureWorks.Api.Web.csproj

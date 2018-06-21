@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/StateProvinces/{result.Record.StateProvinceID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/StateProvinces/{result.Record.StateProvinceID}", result.Record);
                         }
                         else
                         {
@@ -213,5 +213,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>08817df6010c43fba2f4f339322afa65</Hash>
+    <Hash>5a85f32d8becd98b99c7c7e43dd63a2c</Hash>
 </Codenesium>*/

@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 
 namespace NebulaNS.Api.Services
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>938cf5c83bcc48d748f8839143adc91c</Hash>
+    <Hash>2527f257b0841cf7d228a89b92a075a8</Hash>
 </Codenesium>*/

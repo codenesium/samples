@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5c4f5309aa67058ce5aa44a7f1fe80f7</Hash>
+    <Hash>9b661b58c2280a8ce6b52b7e5ce5abfc</Hash>
 </Codenesium>*/

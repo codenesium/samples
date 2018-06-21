@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Teachers/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Teachers/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -189,5 +189,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dd3aa82e4f9a95887966b5203a87b547</Hash>
+    <Hash>11bd4acfe4785ae5d02ec0cdb654c2f6</Hash>
 </Codenesium>*/

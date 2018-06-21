@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 
 namespace PetStoreNS.Api.Services
@@ -44,5 +44,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a05dffefc40c459b85649823aa29993</Hash>
+    <Hash>24482179aa4b6fc8d5a73a446d65ed2d</Hash>
 </Codenesium>*/

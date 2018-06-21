@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -164,5 +164,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0480396d76fbfbda11fba8d1283d4b9a</Hash>
+    <Hash>38ab3d276037df9254011ca1fa377e9e</Hash>
 </Codenesium>*/

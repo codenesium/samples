@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -54,5 +54,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2020ce5a18286931fd60f14160ed571f</Hash>
+    <Hash>cc80e4ddcbf5dfdda7b4cd9cab4b2451</Hash>
 </Codenesium>*/

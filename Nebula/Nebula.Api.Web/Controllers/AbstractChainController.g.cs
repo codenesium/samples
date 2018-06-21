@@ -78,7 +78,7 @@ namespace NebulaNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Chains/{result.Record.Id}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Chains/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -189,5 +189,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dbda5a244db4ba81099eb7547996f58b</Hash>
+    <Hash>b0be14d913ae1079a4e2ae864cc85320</Hash>
 </Codenesium>*/

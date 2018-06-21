@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -104,5 +104,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2dff934d6493dc48ee66d9f302d3145</Hash>
+    <Hash>a91f2ba0fddbeb27459a3da68d64f380</Hash>
 </Codenesium>*/

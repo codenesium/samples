@@ -1,4 +1,3 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,5 +16,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>49b7ae0be3992bad5b413122f295fb7e</Hash>
+    <Hash>e970cc259932696f050e2748d4108fa2</Hash>
 </Codenesium>*/

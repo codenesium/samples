@@ -1,4 +1,3 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,5 +16,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8efb45f64a64ff31b19b6463f107e61b</Hash>
+    <Hash>353ebd90236a5df0b93316058278bb32</Hash>
 </Codenesium>*/

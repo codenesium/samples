@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using FluentValidation;
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f07f212d811745a73f91121d9a6fb1a4</Hash>
+    <Hash>bef8e486db0e90345c9b164452aeda08</Hash>
 </Codenesium>*/

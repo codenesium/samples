@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -128,5 +128,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>63458980bd50009a52dcd583f58c809d</Hash>
+    <Hash>b28cff1373d28e2f7ea3fb777e04f342</Hash>
 </Codenesium>*/

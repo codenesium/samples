@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Record.ShiftID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Shifts/{result.Record.ShiftID}", result.Record);
                         }
                         else
                         {
@@ -213,5 +213,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>13b975f05df7f06ad882cef27f65531c</Hash>
+    <Hash>9e42675d26f87a0c696dc392b713c500</Hash>
 </Codenesium>*/

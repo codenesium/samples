@@ -1,4 +1,4 @@
-using Codenesium.DataConversionExtensions.AspNetCore;
+using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39d943f2b5a50d6456f3b6a8d700d252</Hash>
+    <Hash>cd2a74f16af58934b30a7c7a5b91ef82</Hash>
 </Codenesium>*/

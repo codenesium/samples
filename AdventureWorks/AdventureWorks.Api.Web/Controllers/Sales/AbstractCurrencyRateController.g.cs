@@ -78,7 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/CurrencyRates/{result.Record.CurrencyRateID}", result.Record);
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CurrencyRates/{result.Record.CurrencyRateID}", result.Record);
                         }
                         else
                         {
@@ -194,5 +194,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>08b4d3ed7ad5f31987cbb70baec701a9</Hash>
+    <Hash>1bed0156a42b8601d53a56731eda4736</Hash>
 </Codenesium>*/

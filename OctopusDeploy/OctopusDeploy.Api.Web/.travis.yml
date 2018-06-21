@@ -3,3 +3,7 @@ mono: none
 dotnet: 2.1
 script:
    -  dotnet build OctopusDeploy.Api.Web.csproj
+   -  dotnet test OctopusDeploy.Api.DataAccess.csproj
+   -  dotnet test OctopusDeploy.Api.Servicea.csproj
+   -  dotnet test OctopusDeploy.Api.Client.csproj
+   -  dotnet test OctopusDeploy.Api.Web.csproj
