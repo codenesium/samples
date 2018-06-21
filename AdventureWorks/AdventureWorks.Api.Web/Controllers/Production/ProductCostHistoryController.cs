@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/productCostHistories")]
         [ApiVersion("1.0")]
-        public class ProductCostHistoryController: AbstractProductCostHistoryController
+        public class ProductCostHistoryController : AbstractProductCostHistoryController
         {
                 public ProductCostHistoryController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c0c8bd1e36bc8d863a9615493e3eac66</Hash>
+    <Hash>b486a495ab85dd7249d6b35f3aeb944a</Hash>
 </Codenesium>*/

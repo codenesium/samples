@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new SubscriptionRepository(loggerMoc.Object, context);
 
                         Subscription entity = new Subscription();
-
                         context.Set<Subscription>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new SubscriptionRepository(loggerMoc.Object, context);
 
                         Subscription entity = new Subscription();
-
                         context.Set<Subscription>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new SubscriptionRepository(loggerMoc.Object, context);
 
                         var entity = new Subscription();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Subscription>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<SubscriptionRepository>> loggerMoc = SubscriptionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SubscriptionRepositoryMoc.GetContext();
                         var repository = new SubscriptionRepository(loggerMoc.Object, context);
-
                         Subscription entity = new Subscription();
-
                         context.Set<Subscription>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<SubscriptionRepository>> loggerMoc = SubscriptionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SubscriptionRepositoryMoc.GetContext();
                         var repository = new SubscriptionRepository(loggerMoc.Object, context);
-
                         Subscription entity = new Subscription();
-
                         context.Set<Subscription>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<SubscriptionRepository>> loggerMoc = SubscriptionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SubscriptionRepositoryMoc.GetContext();
                         var repository = new SubscriptionRepository(loggerMoc.Object, context);
-
                         Subscription entity = new Subscription();
-
                         context.Set<Subscription>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Subscription modifiedRecord = await context.Set<Subscription>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>75046e381891c93570191fc6ef84518b</Hash>
+    <Hash>3404483961dc87a7f1bbe84cdf0f3e7e</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOBillOfMaterials boBillOfMaterials = new BOBillOfMaterials();
-
                         boBillOfMaterials.SetProperties(
                                 billOfMaterialsID,
                                 model.BOMLevel,
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30b78ca2190660ac7c65fc9594d7d512</Hash>
+    <Hash>84ec1e3584ba0e3447b712be5dab5912</Hash>
 </Codenesium>*/

@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/certificates")]
         [ApiVersion("1.0")]
-        public class CertificateController: AbstractCertificateController
+        public class CertificateController : AbstractCertificateController
         {
                 public CertificateController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>74b344e612f769b02cfc7a7882d4456c</Hash>
+    <Hash>94bdae6bbe712146f3a33245ebf48a00</Hash>
 </Codenesium>*/

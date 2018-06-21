@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductModel bo)
                 {
                         ProductModel efProductModel = new ProductModel();
-
                         efProductModel.SetProperties(
                                 bo.CatalogDescription,
                                 bo.Instructions,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5ef14b4f58eb13df7ececb2afc785a8</Hash>
+    <Hash>a731a8211a8c560f6094e56738d770a4</Hash>
 </Codenesium>*/

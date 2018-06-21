@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         configurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Configuration()));
 
                         var validator = new ApiConfigurationRequestModelValidator(configurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         configurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Configuration()));
 
                         var validator = new ApiConfigurationRequestModelValidator(configurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -53,5 +51,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e38137aea543c547fffdf9c48e1a9953</Hash>
+    <Hash>05a9ab6a5782e2a9b335601a99848a6d</Hash>
 </Codenesium>*/

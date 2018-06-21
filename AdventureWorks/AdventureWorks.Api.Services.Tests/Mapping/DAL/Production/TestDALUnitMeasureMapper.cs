@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "UnitMeasure")]
         [Trait("Area", "DALMapper")]
-        public class TestDALUnitMeasureActionMapper
+        public class TestDALUnitMeasureMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALUnitMeasureMapper();
-
                         var bo = new BOUnitMeasure();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         UnitMeasure response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALUnitMeasureMapper();
-
                         UnitMeasure entity = new UnitMeasure();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
-                        BOUnitMeasure  response = mapper.MapEFToBO(entity);
+                        BOUnitMeasure response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALUnitMeasureMapper();
-
                         UnitMeasure entity = new UnitMeasure();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
                         List<BOUnitMeasure> response = mapper.MapEFToBO(new List<UnitMeasure>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9388df237a9f617e89d15c48525904be</Hash>
+    <Hash>03b6b46995a8f484350d54b302739edd</Hash>
 </Codenesium>*/

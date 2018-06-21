@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOCountryRegionCurrency boCountryRegionCurrency = new BOCountryRegionCurrency();
-
                         boCountryRegionCurrency.SetProperties(
                                 countryRegionCode,
                                 model.CurrencyCode,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d95e37aacbb5963ca27c3770d15cb84</Hash>
+    <Hash>c8366051c2b66caa2a18b09f6c43672f</Hash>
 </Codenesium>*/

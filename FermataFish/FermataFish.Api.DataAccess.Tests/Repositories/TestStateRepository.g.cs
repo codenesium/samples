@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new StateRepository(loggerMoc.Object, context);
 
                         State entity = new State();
-
                         context.Set<State>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new StateRepository(loggerMoc.Object, context);
 
                         State entity = new State();
-
                         context.Set<State>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new StateRepository(loggerMoc.Object, context);
 
                         var entity = new State();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<State>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<StateRepository>> loggerMoc = StateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StateRepositoryMoc.GetContext();
                         var repository = new StateRepository(loggerMoc.Object, context);
-
                         State entity = new State();
-
                         context.Set<State>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<StateRepository>> loggerMoc = StateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StateRepositoryMoc.GetContext();
                         var repository = new StateRepository(loggerMoc.Object, context);
-
                         State entity = new State();
-
                         context.Set<State>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<StateRepository>> loggerMoc = StateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StateRepositoryMoc.GetContext();
                         var repository = new StateRepository(loggerMoc.Object, context);
-
                         State entity = new State();
-
                         context.Set<State>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         State modifiedRecord = await context.Set<State>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1b686cd9ca29ae78ea1b92c559034f4b</Hash>
+    <Hash>d50db07eedd6a35b550f9ddff1c3049a</Hash>
 </Codenesium>*/

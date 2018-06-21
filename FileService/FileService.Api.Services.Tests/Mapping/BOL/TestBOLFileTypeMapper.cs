@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FileServiceNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "FileType")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLFileTypeActionMapper
+        public class TestBOLFileTypeMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLFileTypeMapper();
-
                         ApiFileTypeRequestModel model = new ApiFileTypeRequestModel();
-
                         model.SetProperties("A");
                         BOFileType response = mapper.MapModelToBO(1, model);
 
@@ -30,9 +28,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLFileTypeMapper();
-
                         BOFileType bo = new BOFileType();
-
                         bo.SetProperties(1, "A");
                         ApiFileTypeResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLFileTypeMapper();
-
                         BOFileType bo = new BOFileType();
-
                         bo.SetProperties(1, "A");
                         List<ApiFileTypeResponseModel> response = mapper.MapBOToModel(new List<BOFileType>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b4f9bee81946cc1460b2aa87e2edacf7</Hash>
+    <Hash>c979dcbfdde34a62f4c999f87518f950</Hash>
 </Codenesium>*/

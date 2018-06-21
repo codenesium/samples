@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiLocationResponseModel: AbstractApiLocationResponseModel
+        public partial class ApiLocationResponseModel : AbstractApiLocationResponseModel
         {
                 public ApiLocationResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>22b8bfa164af35d4f1951b2b156858b0</Hash>
+    <Hash>8be24efd429814c29759f6083f5f34d3</Hash>
 </Codenesium>*/

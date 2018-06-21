@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<List<Shift>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Shift> ByName(string name);
+
                 Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime);
 
                 Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0);
@@ -25,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>449a83118e042e57bd11ca8b094fbe1b</Hash>
+    <Hash>3851ef2a80151b7bb19e477945b49ae6</Hash>
 </Codenesium>*/

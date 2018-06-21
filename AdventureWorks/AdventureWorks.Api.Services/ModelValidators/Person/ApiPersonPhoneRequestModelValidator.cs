@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiPersonPhoneRequestModelValidator: AbstractApiPersonPhoneRequestModelValidator, IApiPersonPhoneRequestModelValidator
+        public class ApiPersonPhoneRequestModelValidator : AbstractApiPersonPhoneRequestModelValidator, IApiPersonPhoneRequestModelValidator
         {
                 public ApiPersonPhoneRequestModelValidator(IPersonPhoneRepository personPhoneRepository)
                         : base(personPhoneRepository)
@@ -31,11 +31,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1c8191bcaf6bf16bae61201b3b4c7860</Hash>
+    <Hash>ca344aee0f59382fe847a342430cf79a</Hash>
 </Codenesium>*/

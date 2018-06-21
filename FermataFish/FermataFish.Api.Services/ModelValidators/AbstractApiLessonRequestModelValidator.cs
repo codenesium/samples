@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiLessonRequestModelValidator: AbstractValidator<ApiLessonRequestModel>
+        public abstract class AbstractApiLessonRequestModelValidator : AbstractValidator<ApiLessonRequestModel>
         {
                 private int existingRecordId;
 
-                ILessonRepository lessonRepository;
+                private ILessonRepository lessonRepository;
 
                 public AbstractApiLessonRequestModelValidator(ILessonRepository lessonRepository)
                 {
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void LessonStatusIdRules()
                 {
-                        this.RuleFor(x => x.LessonStatusId).MustAsync(this.BeValidLessonStatus).When(x => x ?.LessonStatusId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.LessonStatusId).MustAsync(this.BeValidLessonStatus).When(x => x?.LessonStatusId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ScheduledEndDateRules()
@@ -58,7 +58,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TeacherNotesRules()
@@ -83,5 +83,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4f9739eba547ae033d2e96aa8999857</Hash>
+    <Hash>0c0704c5535063e3b7f8cc978b81abe3</Hash>
 </Codenesium>*/

@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using ESPIOTNS.Api.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using ESPIOTNS.Api.Contracts;
 
 namespace ESPIOTNS.Api.Client
 {
@@ -29,10 +29,12 @@ namespace ESPIOTNS.Api.Client
                         {
                                 throw new ArgumentException("apiUrl is not set");
                         }
+
                         if (apiUri[apiUri.Length - 1] != '/')
                         {
                                 throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
+
                         if (string.IsNullOrWhiteSpace(apiVersion))
                         {
                                 throw new ArgumentException("apiVersion is not set");
@@ -41,9 +43,7 @@ namespace ESPIOTNS.Api.Client
                         this.ApiUrl = apiUri;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-
                         this.client.BaseAddress = new Uri(apiUri);
-
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -104,6 +104,14 @@ namespace ESPIOTNS.Api.Client
                         return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/DeviceActions/{deviceId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiDeviceActionResponseModel> DeviceActionCreateAsync(ApiDeviceActionRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions", item);
@@ -162,5 +170,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>07d5f1000e6276866d240166a9061b56</Hash>
+    <Hash>1b88cad3a62050e8a60398f1b6cff4c5</Hash>
 </Codenesium>*/

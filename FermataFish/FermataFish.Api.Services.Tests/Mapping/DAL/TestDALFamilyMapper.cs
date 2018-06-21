@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Family")]
         [Trait("Area", "DALMapper")]
-        public class TestDALFamilyActionMapper
+        public class TestDALFamilyMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALFamilyMapper();
-
                         var bo = new BOFamily();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A", 1);
 
                         Family response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALFamilyMapper();
-
                         Family entity = new Family();
-
                         entity.SetProperties(1, "A", "A", "A", "A", "A", 1);
 
-                        BOFamily  response = mapper.MapEFToBO(entity);
+                        BOFamily response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Notes.Should().Be("A");
@@ -56,9 +52,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALFamilyMapper();
-
                         Family entity = new Family();
-
                         entity.SetProperties(1, "A", "A", "A", "A", "A", 1);
 
                         List<BOFamily> response = mapper.MapEFToBO(new List<Family>() { entity });
@@ -69,5 +63,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7069abc04099d0fff4fbe307eae2f59a</Hash>
+    <Hash>46e71d4362e0e42cdebe7460117fee0d</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
 
                         MachineRefTeam entity = new MachineRefTeam();
-
                         context.Set<MachineRefTeam>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
 
                         MachineRefTeam entity = new MachineRefTeam();
-
                         context.Set<MachineRefTeam>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
 
                         var entity = new MachineRefTeam();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<MachineRefTeam>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
                         var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
-
                         MachineRefTeam entity = new MachineRefTeam();
-
                         context.Set<MachineRefTeam>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
                         var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
-
                         MachineRefTeam entity = new MachineRefTeam();
-
                         context.Set<MachineRefTeam>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<MachineRefTeamRepository>> loggerMoc = MachineRefTeamRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MachineRefTeamRepositoryMoc.GetContext();
                         var repository = new MachineRefTeamRepository(loggerMoc.Object, context);
-
                         MachineRefTeam entity = new MachineRefTeam();
-
                         context.Set<MachineRefTeam>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         MachineRefTeam modifiedRecord = await context.Set<MachineRefTeam>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>adc93ab086ee9c7d118e363023f9d820</Hash>
+    <Hash>972211e1fa86a65fd4f47582609e887c</Hash>
 </Codenesium>*/

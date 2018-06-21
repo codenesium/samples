@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductModelIllustration boProductModelIllustration = new BOProductModelIllustration();
-
                         boProductModelIllustration.SetProperties(
                                 productModelID,
                                 model.IllustrationID,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c2be3dc5f3446d99356925ffc68a4e2</Hash>
+    <Hash>7aa505883ee4a40c5ae8149a33791e66</Hash>
 </Codenesium>*/

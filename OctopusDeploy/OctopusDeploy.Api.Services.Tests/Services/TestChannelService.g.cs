@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var record = new Channel();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ApiChannelResponseModel response = await service.Get(default (string));
+                        ApiChannelResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ApiChannelResponseModel response = await service.Get(default (string));
+                        ApiChannelResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var model = new ApiChannelRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Channel>())).Returns(Task.FromResult(new Channel()));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var model = new ApiChannelRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Channel>())).Returns(Task.FromResult(new Channel()));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiChannelRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var model = new ApiChannelRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChannelRepository>();
                         var record = new Channel();
-
                         mock.RepositoryMock.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ChannelService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ApiChannelResponseModel response = await service.GetNameProjectId(default (string), default (string));
+                        ApiChannelResponseModel response = await service.GetNameProjectId(default(string), default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        ApiChannelResponseModel response = await service.GetNameProjectId(default (string), default (string));
+                        ApiChannelResponseModel response = await service.GetNameProjectId(default(string), default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>()));
@@ -182,7 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiChannelResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -199,7 +194,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiChannelResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -218,7 +213,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetProjectId(default (string));
+                        List<ApiChannelResponseModel> response = await service.GetProjectId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetProjectId(It.IsAny<string>()));
@@ -235,7 +230,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLChannelMapperMock,
                                                          mock.DALMapperMockFactory.DALChannelMapperMock);
 
-                        List<ApiChannelResponseModel> response = await service.GetProjectId(default (string));
+                        List<ApiChannelResponseModel> response = await service.GetProjectId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetProjectId(It.IsAny<string>()));
@@ -244,5 +239,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0c209b43126f7807d37b4a298f76bde1</Hash>
+    <Hash>4fb252b55c7bd6e2d009ef537f83ccc4</Hash>
 </Codenesium>*/

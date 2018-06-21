@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
                 }
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WorkerId, null as string);
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WorkerId, null as string);
                 }
@@ -213,7 +199,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WorkerId, new string('A', 51));
@@ -226,8 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiWorkerTaskLeaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiWorkerTaskLeaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WorkerId, new string('A', 51));
                 }
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         workerTaskLeaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new WorkerTaskLease()));
 
                         var validator = new ApiWorkerTaskLeaseRequestModelValidator(workerTaskLeaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -248,5 +231,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cd7029a4e94dad6c63d1ccb98c4e245b</Hash>
+    <Hash>578ff7ea6c641c97bc234807b1a68b13</Hash>
 </Codenesium>*/

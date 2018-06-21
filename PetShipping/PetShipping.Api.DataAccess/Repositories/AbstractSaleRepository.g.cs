@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractSaleRepository: AbstractRepository
+        public abstract class AbstractSaleRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Client> GetClient(int clientId)
+                {
+                        return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
+                }
+
+                public async virtual Task<Pet> GetPet(int petId)
+                {
+                        return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
+                }
+
                 protected async Task<List<Sale>> Where(
                         Expression<Func<Sale, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Client> GetClient(int clientId)
-                {
-                        return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
-                }
-                public async virtual Task<Pet> GetPet(int petId)
-                {
-                        return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f2b6066ec59ce9a4637ce9674430b2f8</Hash>
+    <Hash>9afa420c17b31982cc6069ee3e16a6fb</Hash>
 </Codenesium>*/

@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/projects")]
         [ApiVersion("1.0")]
-        public class ProjectController: AbstractProjectController
+        public class ProjectController : AbstractProjectController
         {
                 public ProjectController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>74885123b9ebec75652dab95b83f3e05</Hash>
+    <Hash>05080ac092b1e549366456177b292aa9</Hash>
 </Codenesium>*/

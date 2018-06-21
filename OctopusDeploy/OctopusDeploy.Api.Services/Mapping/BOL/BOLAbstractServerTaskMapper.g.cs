@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOServerTask boServerTask = new BOServerTask();
-
                         boServerTask.SetProperties(
                                 id,
                                 model.CompletedTime,
@@ -61,5 +60,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4883f1a691987fb9307164cf2a6a86e</Hash>
+    <Hash>540dc397bbef2e16e843f4663928178e</Hash>
 </Codenesium>*/

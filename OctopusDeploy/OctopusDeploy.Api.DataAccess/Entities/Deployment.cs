@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Deployment", Schema="dbo")]
-        public partial class Deployment: AbstractEntity
+        public partial class Deployment : AbstractEntity
         {
                 public Deployment()
                 {
@@ -42,48 +42,48 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.TenantId = tenantId;
                 }
 
-                [Column("ChannelId", TypeName="nvarchar(50)")]
+                [Column("ChannelId")]
                 public string ChannelId { get; private set; }
 
-                [Column("Created", TypeName="datetimeoffset")]
+                [Column("Created")]
                 public DateTimeOffset Created { get; private set; }
 
-                [Column("DeployedBy", TypeName="nvarchar(200)")]
+                [Column("DeployedBy")]
                 public string DeployedBy { get; private set; }
 
-                [Column("DeployedToMachineIds", TypeName="nvarchar(-1)")]
+                [Column("DeployedToMachineIds")]
                 public string DeployedToMachineIds { get; private set; }
 
-                [Column("EnvironmentId", TypeName="nvarchar(50)")]
+                [Column("EnvironmentId")]
                 public string EnvironmentId { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("ProjectGroupId", TypeName="nvarchar(50)")]
+                [Column("ProjectGroupId")]
                 public string ProjectGroupId { get; private set; }
 
-                [Column("ProjectId", TypeName="nvarchar(50)")]
+                [Column("ProjectId")]
                 public string ProjectId { get; private set; }
 
-                [Column("ReleaseId", TypeName="nvarchar(50)")]
+                [Column("ReleaseId")]
                 public string ReleaseId { get; private set; }
 
-                [Column("TaskId", TypeName="nvarchar(50)")]
+                [Column("TaskId")]
                 public string TaskId { get; private set; }
 
-                [Column("TenantId", TypeName="nvarchar(50)")]
+                [Column("TenantId")]
                 public string TenantId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2ee40e20839e526386335d9784448fb4</Hash>
+    <Hash>3946c4b50ad886e99c4c56889b972835</Hash>
 </Codenesium>*/

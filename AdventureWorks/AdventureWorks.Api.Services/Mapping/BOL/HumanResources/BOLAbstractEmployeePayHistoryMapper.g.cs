@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOEmployeePayHistory boEmployeePayHistory = new BOEmployeePayHistory();
-
                         boEmployeePayHistory.SetProperties(
                                 businessEntityID,
                                 model.ModifiedDate,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb9f0defa394a10fb497fbfbdd99d2b6</Hash>
+    <Hash>cd1d803e29b548b55b830928c64e8b1e</Hash>
 </Codenesium>*/

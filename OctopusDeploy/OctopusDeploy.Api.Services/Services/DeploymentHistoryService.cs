@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DeploymentHistoryService: AbstractDeploymentHistoryService, IDeploymentHistoryService
+        public class DeploymentHistoryService : AbstractDeploymentHistoryService, IDeploymentHistoryService
         {
                 public DeploymentHistoryService(
                         ILogger<IDeploymentHistoryRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiDeploymentHistoryRequestModelValidator deploymentHistoryModelValidator,
                         IBOLDeploymentHistoryMapper boldeploymentHistoryMapper,
                         IDALDeploymentHistoryMapper daldeploymentHistoryMapper
-
                         )
                         : base(logger,
                                deploymentHistoryRepository,
                                deploymentHistoryModelValidator,
                                boldeploymentHistoryMapper,
-                               daldeploymentHistoryMapper
-                               )
+                               daldeploymentHistoryMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b5c5d49ea06c9ea958a3aee1f981601b</Hash>
+    <Hash>4577b566551f59df06c413420b3e52a4</Hash>
 </Codenesium>*/

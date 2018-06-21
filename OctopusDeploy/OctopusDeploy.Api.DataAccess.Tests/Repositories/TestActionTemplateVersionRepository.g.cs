@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
 
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         context.Set<ActionTemplateVersion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
 
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         context.Set<ActionTemplateVersion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
 
                         var entity = new ActionTemplateVersion();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
                         var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
-
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         context.Set<ActionTemplateVersion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
                         var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
-
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         context.Set<ActionTemplateVersion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ActionTemplateVersionRepository>> loggerMoc = ActionTemplateVersionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ActionTemplateVersionRepositoryMoc.GetContext();
                         var repository = new ActionTemplateVersionRepository(loggerMoc.Object, context);
-
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         context.Set<ActionTemplateVersion>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ActionTemplateVersion modifiedRecord = await context.Set<ActionTemplateVersion>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2bc82b1a47f57b4102734cd0f9ac79cf</Hash>
+    <Hash>c69231d039fdc6323a1075f03d459ca3</Hash>
 </Codenesium>*/

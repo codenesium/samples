@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/teams")]
         [ApiVersion("1.0")]
-        public class TeamController: AbstractTeamController
+        public class TeamController : AbstractTeamController
         {
                 public TeamController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2b905f8b16d00e17e067cbf7a2131107</Hash>
+    <Hash>b9196c5963172c84b55f2e2b4b4768e9</Hash>
 </Codenesium>*/

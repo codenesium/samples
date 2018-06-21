@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var record = new Store();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        ApiStoreResponseModel response = await service.Get(default (int));
+                        ApiStoreResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        ApiStoreResponseModel response = await service.Get(default (int));
+                        ApiStoreResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var model = new ApiStoreRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Store>())).Returns(Task.FromResult(new Store()));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var model = new ApiStoreRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Store>())).Returns(Task.FromResult(new Store()));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.StoreModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStoreRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var model = new ApiStoreRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -160,7 +156,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiStoreResponseModel> response = await service.BySalesPersonID(default (Nullable<int>));
+                        List<ApiStoreResponseModel> response = await service.BySalesPersonID(default(Nullable<int>));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.BySalesPersonID(It.IsAny<Nullable<int>>()));
@@ -179,7 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiStoreResponseModel> response = await service.BySalesPersonID(default (Nullable<int>));
+                        List<ApiStoreResponseModel> response = await service.BySalesPersonID(default(Nullable<int>));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.BySalesPersonID(It.IsAny<Nullable<int>>()));
@@ -200,7 +196,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiStoreResponseModel> response = await service.ByDemographics(default (string));
+                        List<ApiStoreResponseModel> response = await service.ByDemographics(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.ByDemographics(It.IsAny<string>()));
@@ -219,7 +215,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiStoreResponseModel> response = await service.ByDemographics(default (string));
+                        List<ApiStoreResponseModel> response = await service.ByDemographics(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.ByDemographics(It.IsAny<string>()));
@@ -231,7 +227,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IStoreRepository>();
                         var records = new List<Customer>();
                         records.Add(new Customer());
-                        mock.RepositoryMock.Setup(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -240,17 +236,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiCustomerResponseModel> response = await service.Customers(default (int));
+                        List<ApiCustomerResponseModel> response = await service.Customers(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Customers_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IStoreRepository>();
-                        mock.RepositoryMock.Setup(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
+                        mock.RepositoryMock.Setup(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
                         var service = new StoreService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -259,14 +255,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLCustomerMapperMock,
                                                        mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-                        List<ApiCustomerResponseModel> response = await service.Customers(default (int));
+                        List<ApiCustomerResponseModel> response = await service.Customers(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>504b3f8a4ed52d499b04d602e3d5e91a</Hash>
+    <Hash>93fa8063fe46f4200922d4e3a09db4b9</Hash>
 </Codenesium>*/

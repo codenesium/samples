@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiSalesTerritoryResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiSalesTerritoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal costLastYear,
@@ -150,5 +150,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5cf8c81c8710acd09173b5bcfe1fbdd6</Hash>
+    <Hash>5ae2d98d0da22e6e584e6f6a2591a636</Hash>
 </Codenesium>*/

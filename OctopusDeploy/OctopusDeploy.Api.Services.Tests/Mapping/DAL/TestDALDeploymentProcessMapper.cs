@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentProcess")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDeploymentProcessActionMapper
+        public class TestDALDeploymentProcessMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDeploymentProcessMapper();
-
                         var bo = new BODeploymentProcess();
-
                         bo.SetProperties("A", true, "A", "A", "A", 1);
 
                         DeploymentProcess response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDeploymentProcessMapper();
-
                         DeploymentProcess entity = new DeploymentProcess();
-
                         entity.SetProperties("A", true, "A", "A", "A", 1);
 
-                        BODeploymentProcess  response = mapper.MapEFToBO(entity);
+                        BODeploymentProcess response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.IsFrozen.Should().Be(true);
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDeploymentProcessMapper();
-
                         DeploymentProcess entity = new DeploymentProcess();
-
                         entity.SetProperties("A", true, "A", "A", "A", 1);
 
                         List<BODeploymentProcess> response = mapper.MapEFToBO(new List<DeploymentProcess>() { entity });
@@ -67,5 +61,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ac33481ad1c710c7478c3fe4c73dfecd</Hash>
+    <Hash>6d7b4f1d31c4db28ebfe9fd87716abf0</Hash>
 </Codenesium>*/

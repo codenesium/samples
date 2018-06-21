@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -18,6 +18,7 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<List<Store>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Store>> BySalesPersonID(Nullable<int> salesPersonID);
+
                 Task<List<Store>> ByDemographics(string demographics);
 
                 Task<List<Customer>> Customers(int storeID, int limit = int.MaxValue, int offset = 0);
@@ -27,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>852af8026a2b7c55e7163668bf2784b2</Hash>
+    <Hash>1b6eb715e623eb068a2581d662ea8cd9</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("BusinessEntityAddress", Schema="Person")]
-        public partial class BusinessEntityAddress: AbstractEntity
+        public partial class BusinessEntityAddress : AbstractEntity
         {
                 public BusinessEntityAddress()
                 {
@@ -26,24 +26,24 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Rowguid = rowguid;
                 }
 
-                [Column("AddressID", TypeName="int")]
+                [Column("AddressID")]
                 public int AddressID { get; private set; }
 
-                [Column("AddressTypeID", TypeName="int")]
+                [Column("AddressTypeID")]
                 public int AddressTypeID { get; private set; }
 
                 [Key]
-                [Column("BusinessEntityID", TypeName="int")]
+                [Column("BusinessEntityID")]
                 public int BusinessEntityID { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3c993a51837ffc6b553e923a0c8d6e9d</Hash>
+    <Hash>2086a31baf3e38b1ca0734158f34be71</Hash>
 </Codenesium>*/

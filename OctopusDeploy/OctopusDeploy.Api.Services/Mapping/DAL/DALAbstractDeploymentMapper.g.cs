@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BODeployment bo)
                 {
                         Deployment efDeployment = new Deployment();
-
                         efDeployment.SetProperties(
                                 bo.ChannelId,
                                 bo.Created,
@@ -68,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e13b4171f6b85dd37bddf683f0785fdd</Hash>
+    <Hash>d38eeaa27d06af2f1d28fab8083f5423</Hash>
 </Codenesium>*/

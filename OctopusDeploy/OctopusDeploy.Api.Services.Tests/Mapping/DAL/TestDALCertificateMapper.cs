@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Certificate")]
         [Trait("Area", "DALMapper")]
-        public class TestDALCertificateActionMapper
+        public class TestDALCertificateMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALCertificateMapper();
-
                         var bo = new BOCertificate();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
 
                         Certificate response = mapper.MapBOToEF(bo);
@@ -41,12 +39,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALCertificateMapper();
-
                         Certificate entity = new Certificate();
-
                         entity.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
 
-                        BOCertificate  response = mapper.MapEFToBO(entity);
+                        BOCertificate response = mapper.MapEFToBO(entity);
 
                         response.Archived.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
                         response.Created.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
@@ -66,9 +62,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALCertificateMapper();
-
                         Certificate entity = new Certificate();
-
                         entity.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
 
                         List<BOCertificate> response = mapper.MapEFToBO(new List<Certificate>() { entity });
@@ -79,5 +73,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2d4fe6c22336def38b2899b1d813f592</Hash>
+    <Hash>e6ae28cc054b3622df3897c6766310a8</Hash>
 </Codenesium>*/

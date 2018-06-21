@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOTagSet boTagSet = new BOTagSet();
-
                         boTagSet.SetProperties(
                                 id,
                                 model.DataVersion,
@@ -49,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f755e94f550b91e9cbc47bd835b27441</Hash>
+    <Hash>07e06b73fb37fa288c2dacffe8bb6d53</Hash>
 </Codenesium>*/

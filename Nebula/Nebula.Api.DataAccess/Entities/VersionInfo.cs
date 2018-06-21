@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("VersionInfo", Schema="dbo")]
-        public partial class VersionInfo: AbstractEntity
+        public partial class VersionInfo : AbstractEntity
         {
                 public VersionInfo()
                 {
@@ -22,18 +22,18 @@ namespace NebulaNS.Api.DataAccess
                         this.Version = version;
                 }
 
-                [Column("AppliedOn", TypeName="datetime")]
+                [Column("AppliedOn")]
                 public Nullable<DateTime> AppliedOn { get; private set; }
 
-                [Column("Description", TypeName="nvarchar(1024)")]
+                [Column("Description")]
                 public string Description { get; private set; }
 
                 [Key]
-                [Column("Version", TypeName="bigint")]
+                [Column("Version")]
                 public long Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>00e4099b7f68c363bcef1c58222a6d16</Hash>
+    <Hash>39d943f2b5a50d6456f3b6a8d700d252</Hash>
 </Codenesium>*/

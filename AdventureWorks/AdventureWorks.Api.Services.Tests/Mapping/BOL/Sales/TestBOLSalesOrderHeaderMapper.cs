@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesOrderHeader")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSalesOrderHeaderActionMapper
+        public class TestBOLSalesOrderHeaderMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSalesOrderHeaderMapper();
-
                         ApiSalesOrderHeaderRequestModel model = new ApiSalesOrderHeaderRequestModel();
-
                         model.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
                         BOSalesOrderHeader response = mapper.MapModelToBO(1, model);
 
@@ -54,9 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSalesOrderHeaderMapper();
-
                         BOSalesOrderHeader bo = new BOSalesOrderHeader();
-
                         bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
                         ApiSalesOrderHeaderResponseModel response = mapper.MapBOToModel(bo);
 
@@ -92,9 +88,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSalesOrderHeaderMapper();
-
                         BOSalesOrderHeader bo = new BOSalesOrderHeader();
-
                         bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
                         List<ApiSalesOrderHeaderResponseModel> response = mapper.MapBOToModel(new List<BOSalesOrderHeader>() { { bo } });
 
@@ -104,5 +98,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c4cc2ad45dcf2f422e33b8e154c7737c</Hash>
+    <Hash>22875a51da617140de836c6872b574aa</Hash>
 </Codenesium>*/

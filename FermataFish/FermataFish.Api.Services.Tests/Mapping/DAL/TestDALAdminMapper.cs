@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Admin")]
         [Trait("Area", "DALMapper")]
-        public class TestDALAdminActionMapper
+        public class TestDALAdminMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALAdminMapper();
-
                         var bo = new BOAdmin();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 
                         Admin response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALAdminMapper();
-
                         Admin entity = new Admin();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
 
-                        BOAdmin  response = mapper.MapEFToBO(entity);
+                        BOAdmin response = mapper.MapEFToBO(entity);
 
                         response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Email.Should().Be("A");
@@ -56,9 +52,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALAdminMapper();
-
                         Admin entity = new Admin();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
 
                         List<BOAdmin> response = mapper.MapEFToBO(new List<Admin>() { entity });
@@ -69,5 +63,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4f8f5d977303293e5553c53d20e934cd</Hash>
+    <Hash>4e38ce698a784669f2460994d605140b</Hash>
 </Codenesium>*/

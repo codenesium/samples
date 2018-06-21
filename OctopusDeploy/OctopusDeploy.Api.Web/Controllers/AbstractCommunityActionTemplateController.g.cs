@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Web
 {
-        public abstract class AbstractCommunityActionTemplateController: AbstractApiController
+        public abstract class AbstractCommunityActionTemplateController : AbstractApiController
         {
                 protected ICommunityActionTemplateService CommunityActionTemplateService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiCommunityActionTemplateResponseModel> response = await this.CommunityActionTemplateService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCommunityActionTemplateResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiCommunityActionTemplateResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<string>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiCommunityActionTemplateRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace OctopusDeployNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/CommunityActionTemplates/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/CommunityActionTemplates/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -202,5 +199,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bd597bb6bb72cd71f2f353f99abf816b</Hash>
+    <Hash>87195ab771a80f11e08bcf516873967d</Hash>
 </Codenesium>*/

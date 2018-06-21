@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
@@ -44,8 +43,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
                 }
@@ -57,7 +55,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
@@ -70,8 +67,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
@@ -122,8 +116,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.FamilyId, 1);
                 }
@@ -136,7 +129,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FamilyId, 1);
                 }
@@ -148,7 +141,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
@@ -161,8 +153,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
@@ -174,7 +165,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
@@ -187,8 +177,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
                 }
@@ -200,8 +189,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -213,7 +201,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
@@ -226,8 +213,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
                 }
@@ -239,7 +225,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
@@ -252,8 +237,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
                 }
@@ -265,8 +249,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -278,7 +261,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
@@ -291,8 +273,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
                 }
@@ -304,7 +285,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
@@ -317,8 +297,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
                 }
@@ -330,8 +309,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Student()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -343,7 +321,6 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
@@ -369,8 +346,7 @@ namespace FermataFishNS.Api.Services.Tests
                         studentRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
                 }
@@ -383,7 +359,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
                 }
@@ -391,5 +367,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>266ab97afa0059130e25926639e6e278</Hash>
+    <Hash>4bc44d831911271f06ca09d0e8d85e05</Hash>
 </Codenesium>*/

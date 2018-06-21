@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Admin")]
         [Trait("Area", "DALMapper")]
-        public class TestDALAdminActionMapper
+        public class TestDALAdminMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALAdminMapper();
-
                         var bo = new BOAdmin();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A", "A");
 
                         Admin response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALAdminMapper();
-
                         Admin entity = new Admin();
-
                         entity.SetProperties("A", "A", 1, "A", "A", "A", "A");
 
-                        BOAdmin  response = mapper.MapEFToBO(entity);
+                        BOAdmin response = mapper.MapEFToBO(entity);
 
                         response.Email.Should().Be("A");
                         response.FirstName.Should().Be("A");
@@ -56,9 +52,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALAdminMapper();
-
                         Admin entity = new Admin();
-
                         entity.SetProperties("A", "A", 1, "A", "A", "A", "A");
 
                         List<BOAdmin> response = mapper.MapEFToBO(new List<Admin>() { entity });
@@ -69,5 +63,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>002d73c6a46a1c1a8bf76aa1c5eee429</Hash>
+    <Hash>3750f1c221277d450e871da836d6d8ff</Hash>
 </Codenesium>*/

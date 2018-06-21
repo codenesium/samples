@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Subscription", Schema="dbo")]
-        public partial class Subscription: AbstractEntity
+        public partial class Subscription : AbstractEntity
         {
                 public Subscription()
                 {
@@ -27,23 +27,23 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IsDisabled", TypeName="bit")]
+                [Column("IsDisabled")]
                 public bool IsDisabled { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("Type", TypeName="nvarchar(50)")]
+                [Column("Type")]
                 public string Type { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a44a248343f1f147d2ecc9386e6f4b39</Hash>
+    <Hash>cd2f9e9c6a73eaab1759730162fb8fb0</Hash>
 </Codenesium>*/

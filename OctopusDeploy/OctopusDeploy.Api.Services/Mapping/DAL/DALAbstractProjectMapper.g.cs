@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOProject bo)
                 {
                         Project efProject = new Project();
-
                         efProject.SetProperties(
                                 bo.AutoCreateRelease,
                                 bo.DataVersion,
@@ -68,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9b8aa391b3a97ac852fd5df2f90632d</Hash>
+    <Hash>a0423fb20dea756fa7f4dc2acc7c3907</Hash>
 </Codenesium>*/

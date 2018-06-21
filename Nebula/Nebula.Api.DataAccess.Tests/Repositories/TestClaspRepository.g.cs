@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new ClaspRepository(loggerMoc.Object, context);
 
                         Clasp entity = new Clasp();
-
                         context.Set<Clasp>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new ClaspRepository(loggerMoc.Object, context);
 
                         Clasp entity = new Clasp();
-
                         context.Set<Clasp>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new ClaspRepository(loggerMoc.Object, context);
 
                         var entity = new Clasp();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Clasp>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
                         var repository = new ClaspRepository(loggerMoc.Object, context);
-
                         Clasp entity = new Clasp();
-
                         context.Set<Clasp>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
                         var repository = new ClaspRepository(loggerMoc.Object, context);
-
                         Clasp entity = new Clasp();
-
                         context.Set<Clasp>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<ClaspRepository>> loggerMoc = ClaspRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClaspRepositoryMoc.GetContext();
                         var repository = new ClaspRepository(loggerMoc.Object, context);
-
                         Clasp entity = new Clasp();
-
                         context.Set<Clasp>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Clasp modifiedRecord = await context.Set<Clasp>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>583a14a7a059c9966176f2d5ea903ed2</Hash>
+    <Hash>96510bb1c18e0ba6371612d27d5adf6b</Hash>
 </Codenesium>*/

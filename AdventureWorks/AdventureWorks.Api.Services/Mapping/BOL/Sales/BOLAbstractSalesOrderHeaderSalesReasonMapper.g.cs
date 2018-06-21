@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSalesOrderHeaderSalesReason boSalesOrderHeaderSalesReason = new BOSalesOrderHeaderSalesReason();
-
                         boSalesOrderHeaderSalesReason.SetProperties(
                                 salesOrderID,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>778d5bcd85e5cdc7d89cb20dfb6f229e</Hash>
+    <Hash>53e0cfdba9a83043316289ca610706ce</Hash>
 </Codenesium>*/

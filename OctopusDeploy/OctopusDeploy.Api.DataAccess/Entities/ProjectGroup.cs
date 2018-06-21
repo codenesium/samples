@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("ProjectGroup", Schema="dbo")]
-        public partial class ProjectGroup: AbstractEntity
+        public partial class ProjectGroup : AbstractEntity
         {
                 public ProjectGroup()
                 {
@@ -24,21 +24,21 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Name = name;
                 }
 
-                [Column("DataVersion", TypeName="timestamp")]
+                [Column("DataVersion")]
                 public byte[] DataVersion { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>04cf286c5525713916ffcb28e4f92abf</Hash>
+    <Hash>dda27d720af5cc04ec6e84bdb38af199</Hash>
 </Codenesium>*/

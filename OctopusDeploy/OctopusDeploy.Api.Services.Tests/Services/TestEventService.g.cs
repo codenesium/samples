@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var record = new Event();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        ApiEventResponseModel response = await service.Get(default (string));
+                        ApiEventResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -73,7 +72,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        ApiEventResponseModel response = await service.Get(default (string));
+                        ApiEventResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -84,7 +83,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiEventRequestModel>()));
@@ -128,7 +125,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -160,7 +156,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetAutoId(default (long));
+                        List<ApiEventResponseModel> response = await service.GetAutoId(default(long));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetAutoId(It.IsAny<long>()));
@@ -179,7 +175,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetAutoId(default (long));
+                        List<ApiEventResponseModel> response = await service.GetAutoId(default(long));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetAutoId(It.IsAny<long>()));
@@ -200,7 +196,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsOccurredCategoryAutoId(default (string), default (string), default (DateTimeOffset), default (string), default (long));
+                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsOccurredCategoryAutoId(default(string), default(string), default(DateTimeOffset), default(string), default(long));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>()));
@@ -219,7 +215,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsOccurredCategoryAutoId(default (string), default (string), default (DateTimeOffset), default (string), default (long));
+                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsOccurredCategoryAutoId(default(string), default(string), default(DateTimeOffset), default(string), default(long));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsOccurredCategoryAutoId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<long>()));
@@ -240,7 +236,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default (string), default (string), default (string), default (string), default (string), default (string), default (DateTimeOffset), default (string));
+                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>()));
@@ -259,7 +255,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default (string), default (string), default (string), default (string), default (string), default (string), default (DateTimeOffset), default (string));
+                        List<ApiEventResponseModel> response = await service.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>()));
@@ -280,7 +276,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdOccurred(default (string), default (DateTimeOffset));
+                        List<ApiEventResponseModel> response = await service.GetIdOccurred(default(string), default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -299,7 +295,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetIdOccurred(default (string), default (DateTimeOffset));
+                        List<ApiEventResponseModel> response = await service.GetIdOccurred(default(string), default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdOccurred(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -311,7 +307,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var records = new List<EventRelatedDocument>();
                         records.Add(new EventRelatedDocument());
-                        mock.RepositoryMock.Setup(x => x.EventRelatedDocuments(default (string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.EventRelatedDocuments(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -320,17 +316,17 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventRelatedDocumentResponseModel> response = await service.EventRelatedDocuments(default (string));
+                        List<ApiEventRelatedDocumentResponseModel> response = await service.EventRelatedDocuments(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.EventRelatedDocuments(default (string), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.EventRelatedDocuments(default(string), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void EventRelatedDocuments_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
-                        mock.RepositoryMock.Setup(x => x.EventRelatedDocuments(default (string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
+                        mock.RepositoryMock.Setup(x => x.EventRelatedDocuments(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -339,14 +335,14 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventRelatedDocumentMapperMock,
                                                        mock.DALMapperMockFactory.DALEventRelatedDocumentMapperMock);
 
-                        List<ApiEventRelatedDocumentResponseModel> response = await service.EventRelatedDocuments(default (string));
+                        List<ApiEventRelatedDocumentResponseModel> response = await service.EventRelatedDocuments(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.EventRelatedDocuments(default (string), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.EventRelatedDocuments(default(string), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>974d24427a471d2e46fe5dac49e54a32</Hash>
+    <Hash>38b6790fc3d308a1fe0a14e2797be095</Hash>
 </Codenesium>*/

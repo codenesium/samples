@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSalesTaxRate boSalesTaxRate = new BOSalesTaxRate();
-
                         boSalesTaxRate.SetProperties(
                                 salesTaxRateID,
                                 model.ModifiedDate,
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d27257736a63747db83cb3fdac225c05</Hash>
+    <Hash>7cf3a59e01cc4f1483bf3007079f0e2e</Hash>
 </Codenesium>*/

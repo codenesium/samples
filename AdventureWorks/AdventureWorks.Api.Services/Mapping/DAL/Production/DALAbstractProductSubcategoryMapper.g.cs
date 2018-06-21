@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductSubcategory bo)
                 {
                         ProductSubcategory efProductSubcategory = new ProductSubcategory();
-
                         efProductSubcategory.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f11b4463bfb626c7089963d26bd4337</Hash>
+    <Hash>29ae100477716affabec3ee9b25486bd</Hash>
 </Codenesium>*/

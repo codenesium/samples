@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetShippingNS.Api.DataAccess
 {
         [Table("PipelineStepStepRequirement", Schema="dbo")]
-        public partial class PipelineStepStepRequirement: AbstractEntity
+        public partial class PipelineStepStepRequirement : AbstractEntity
         {
                 public PipelineStepStepRequirement()
                 {
@@ -24,17 +24,17 @@ namespace PetShippingNS.Api.DataAccess
                         this.RequirementMet = requirementMet;
                 }
 
-                [Column("details", TypeName="text(2147483647)")]
+                [Column("details")]
                 public string Details { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("pipelineStepId", TypeName="int")]
+                [Column("pipelineStepId")]
                 public int PipelineStepId { get; private set; }
 
-                [Column("requirementMet", TypeName="bit")]
+                [Column("requirementMet")]
                 public bool RequirementMet { get; private set; }
 
                 [ForeignKey("PipelineStepId")]
@@ -43,5 +43,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a78cb89d652a5dea8431f3c3333469db</Hash>
+    <Hash>d69179a5ce5bc568cd8853b0a5fe6ebf</Hash>
 </Codenesium>*/

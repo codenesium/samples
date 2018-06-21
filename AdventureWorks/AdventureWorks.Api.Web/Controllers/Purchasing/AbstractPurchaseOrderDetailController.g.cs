@@ -1,20 +1,20 @@
-using System;
-using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
+using Codenesium.Foundation.CommonMVC;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractPurchaseOrderDetailController: AbstractApiController
+        public abstract class AbstractPurchaseOrderDetailController : AbstractApiController
         {
                 protected IPurchaseOrderDetailService PurchaseOrderDetailService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderDetailService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiPurchaseOrderDetailResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderDetailRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.PurchaseOrderID.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Record.PurchaseOrderID.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderDetails/{result.Record.PurchaseOrderID}", result.Record);
                         }
                         else
                         {
@@ -175,5 +172,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>afd790bfa8afdd2d7db822d452979fbd</Hash>
+    <Hash>5688c5147ab9bfc4396f14c371ca3ee3</Hash>
 </Codenesium>*/

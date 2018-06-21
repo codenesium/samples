@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "BillOfMaterials")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLBillOfMaterialsActionMapper
+        public class TestBOLBillOfMaterialsMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLBillOfMaterialsMapper();
-
                         ApiBillOfMaterialsRequestModel model = new ApiBillOfMaterialsRequestModel();
-
                         model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOBillOfMaterials response = mapper.MapModelToBO(1, model);
 
@@ -37,9 +35,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLBillOfMaterialsMapper();
-
                         BOBillOfMaterials bo = new BOBillOfMaterials();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiBillOfMaterialsResponseModel response = mapper.MapBOToModel(bo);
 
@@ -58,9 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLBillOfMaterialsMapper();
-
                         BOBillOfMaterials bo = new BOBillOfMaterials();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiBillOfMaterialsResponseModel> response = mapper.MapBOToModel(new List<BOBillOfMaterials>() { { bo } });
 
@@ -70,5 +64,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cd6a90cbe9d789b4b6349b578de0a7d4</Hash>
+    <Hash>2f3661730128e543dccde4279569becb</Hash>
 </Codenesium>*/

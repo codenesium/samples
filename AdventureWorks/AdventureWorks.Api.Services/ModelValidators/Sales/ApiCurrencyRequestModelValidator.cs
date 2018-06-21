@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiCurrencyRequestModelValidator: AbstractApiCurrencyRequestModelValidator, IApiCurrencyRequestModelValidator
+        public class ApiCurrencyRequestModelValidator : AbstractApiCurrencyRequestModelValidator, IApiCurrencyRequestModelValidator
         {
                 public ApiCurrencyRequestModelValidator(ICurrencyRepository currencyRepository)
                         : base(currencyRepository)
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fafde1ccbe687d3cfdcf0521953c2ad2</Hash>
+    <Hash>9187116dd63debda56c9b47606b88170</Hash>
 </Codenesium>*/

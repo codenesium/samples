@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProduct bo)
                 {
                         Product efProduct = new Product();
-
                         efProduct.SetProperties(
                                 bo.@Class,
                                 bo.Color,
@@ -92,5 +91,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e05f490f3cac79c465a0d1d4fd4f858f</Hash>
+    <Hash>0bf5c3c8f55563906c359f8cdd75a4bb</Hash>
 </Codenesium>*/

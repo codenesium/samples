@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TagSet")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTagSetActionMapper
+        public class TestBOLTagSetMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTagSetMapper();
-
                         ApiTagSetRequestModel model = new ApiTagSetRequestModel();
-
                         model.SetProperties(BitConverter.GetBytes(1), "A", "A", 1);
                         BOTagSet response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTagSetMapper();
-
                         BOTagSet bo = new BOTagSet();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
                         ApiTagSetResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTagSetMapper();
-
                         BOTagSet bo = new BOTagSet();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
                         List<ApiTagSetResponseModel> response = mapper.MapBOToModel(new List<BOTagSet>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9b60b3dc147939ace3caf1330dab9f8e</Hash>
+    <Hash>ecb4465839b487af66226a3b9b0b1937</Hash>
 </Codenesium>*/

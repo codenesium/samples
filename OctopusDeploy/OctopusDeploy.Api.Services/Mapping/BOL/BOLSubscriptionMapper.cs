@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLSubscriptionMapper: BOLAbstractSubscriptionMapper, IBOLSubscriptionMapper
+        public class BOLSubscriptionMapper : BOLAbstractSubscriptionMapper, IBOLSubscriptionMapper
         {
                 public BOLSubscriptionMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>208ac7b6b35cea532c4272e8499f0b91</Hash>
+    <Hash>8ce1f004e2f99e80dcedd675e44e8fb5</Hash>
 </Codenesium>*/

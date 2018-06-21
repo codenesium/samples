@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiProductVendorResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiProductVendorResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int averageLeadTime,
@@ -163,5 +163,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9770ecd76b5800c552d4a5545979dbf3</Hash>
+    <Hash>5935a3e1f38076127140114564449f09</Hash>
 </Codenesium>*/

@@ -3,9 +3,10 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOAWBuildVersion: AbstractBusinessObject
+        public abstract class AbstractBOAWBuildVersion : AbstractBusinessObject
         {
-                public AbstractBOAWBuildVersion() : base()
+                public AbstractBOAWBuildVersion()
+                        : base()
                 {
                 }
 
@@ -31,5 +32,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db7470a1c767c5518fa1d6c81888148c</Hash>
+    <Hash>66094c6a5b9d0d82e7917f05b2827fd2</Hash>
 </Codenesium>*/

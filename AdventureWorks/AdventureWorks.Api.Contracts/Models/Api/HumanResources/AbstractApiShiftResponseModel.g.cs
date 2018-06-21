@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiShiftResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiShiftResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         TimeSpan endTime,
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>22e9fa0ca800931e2ec3909e131cc555</Hash>
+    <Hash>493f1d0ffa82c14ec9212def1ff1dd60</Hash>
 </Codenesium>*/

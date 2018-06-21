@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Configuration")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLConfigurationActionMapper
+        public class TestBOLConfigurationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLConfigurationMapper();
-
                         ApiConfigurationRequestModel model = new ApiConfigurationRequestModel();
-
                         model.SetProperties("A");
                         BOConfiguration response = mapper.MapModelToBO("A", model);
 
@@ -30,9 +28,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLConfigurationMapper();
-
                         BOConfiguration bo = new BOConfiguration();
-
                         bo.SetProperties("A", "A");
                         ApiConfigurationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLConfigurationMapper();
-
                         BOConfiguration bo = new BOConfiguration();
-
                         bo.SetProperties("A", "A");
                         List<ApiConfigurationResponseModel> response = mapper.MapBOToModel(new List<BOConfiguration>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1773e378c68287b8e2190cf8d9f3475e</Hash>
+    <Hash>59cd3366b1b1b3a9d1b3ce1043b4ed1b</Hash>
 </Codenesium>*/

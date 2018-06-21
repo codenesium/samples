@@ -2,87 +2,64 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using System;
-using Xunit;
+using TicketingCRMNS.Api.Client;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.Services;
-using TicketingCRMNS.Api.Client;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Web.IntegrationTests
 {
         [Trait("Type", "Integration")]
         [Trait("Table", "SaleTickets")]
         [Trait("Area", "Integration")]
-        public class SaleTicketsTests
+        public class SaleTicketsIntegrationTests
         {
-                private TestServer server;
-                private ApiClient client;
-
-                public SaleTicketsTests()
+                public SaleTicketsIntegrationTests()
                 {
                 }
 
                 [Fact]
                 public async void TestCreate()
                 {
-                        // setup
-                        this.server = new TestServer(new WebHostBuilder()
-                                                     .UseStartup<TestStartup>());
-
-                        this.client = new ApiClient(this.server.CreateClient());
+                        TestServer server = new TestServer(new WebHostBuilder()
+                                                           .UseStartup<TestStartup>());
+                        ApiClient client = new ApiClient(server.CreateClient());
                 }
 
                 [Fact]
                 public async void TestUpdate()
                 {
-                        // setup
-                        this.server = new TestServer(new WebHostBuilder()
-                                                     .UseStartup<TestStartup>());
-
-                        this.client = new ApiClient(this.server.CreateClient());
+                        TestServer server = new TestServer(new WebHostBuilder()
+                                                           .UseStartup<TestStartup>());
+                        ApiClient client = new ApiClient(server.CreateClient());
                 }
 
                 [Fact]
                 public async void TestDelete()
                 {
-                        // setup
-                        this.server = new TestServer(new WebHostBuilder()
-                                                     .UseStartup<TestStartup>());
-
-                        this.client = new ApiClient(this.server.CreateClient());
+                        TestServer server = new TestServer(new WebHostBuilder()
+                                                           .UseStartup<TestStartup>());
+                        ApiClient client = new ApiClient(server.CreateClient());
                 }
 
                 [Fact]
-                public async void TestGetById()
+                public async void TestGet()
                 {
-                        // setup
-                        this.server = new TestServer(new WebHostBuilder()
-                                                     .UseStartup<TestStartup>());
-
-                        this.client = new ApiClient(this.server.CreateClient());
+                        TestServer server = new TestServer(new WebHostBuilder()
+                                                           .UseStartup<TestStartup>());
+                        ApiClient client = new ApiClient(server.CreateClient());
                 }
 
                 [Fact]
-                public async void TestSearch()
+                public async void TestAll()
                 {
-                        // setup
-                        this.server = new TestServer(new WebHostBuilder()
-                                                     .UseStartup<TestStartup>());
-
-                        this.client = new ApiClient(this.server.CreateClient());
-                }
-
-                [Fact]
-                public async void TestBulkInsert()
-                {
-                        // setup
-                        this.server = new TestServer(new WebHostBuilder()
-                                                     .UseStartup<TestStartup>());
-
-                        this.client = new ApiClient(this.server.CreateClient());
+                        TestServer server = new TestServer(new WebHostBuilder()
+                                                           .UseStartup<TestStartup>());
+                        ApiClient client = new ApiClient(server.CreateClient());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9242820648051c5a7645b6b79961812b</Hash>
+    <Hash>2b9793ce5530fc1d6eb74028c7e9c8da</Hash>
 </Codenesium>*/

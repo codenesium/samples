@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractProjectService: AbstractService
+        public abstract class AbstractProjectService : AbstractService
         {
                 private IProjectRepository projectRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IProjectRepository projectRepository,
                         IApiProjectRequestModelValidator projectModelValidator,
                         IBOLProjectMapper bolProjectMapper,
-                        IDALProjectMapper dalProjectMapper
-
-                        )
+                        IDALProjectMapper dalProjectMapper)
                         : base()
-
                 {
                         this.projectRepository = projectRepository;
                         this.projectModelValidator = projectModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiProjectResponseModel> response = new CreateResponse<ApiProjectResponseModel>(await this.projectModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProjectMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolProjectMapper.MapModelToBO(default(string), model);
                                 var record = await this.projectRepository.Create(this.dalProjectMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiProjectRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.projectModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProjectMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.projectModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.projectRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<ApiProjectResponseModel> GetSlug(string slug)
                 {
                         Project record = await this.projectRepository.GetSlug(slug);
@@ -132,12 +128,14 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiProjectResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<Project> records = await this.projectRepository.GetDataVersion(dataVersion);
 
                         return this.bolProjectMapper.MapBOToModel(this.dalProjectMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiProjectResponseModel>> GetDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
                 {
                         List<Project> records = await this.projectRepository.GetDiscreteChannelReleaseId(discreteChannelRelease, id);
@@ -148,5 +146,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7fdb1fb5306de022c65641b685c80a9d</Hash>
+    <Hash>d3307a82196aeeb63e4f5bf96afa4723</Hash>
 </Codenesium>*/

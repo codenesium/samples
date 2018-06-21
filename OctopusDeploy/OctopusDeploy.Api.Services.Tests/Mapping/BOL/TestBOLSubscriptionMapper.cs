@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Subscription")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSubscriptionActionMapper
+        public class TestBOLSubscriptionMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSubscriptionMapper();
-
                         ApiSubscriptionRequestModel model = new ApiSubscriptionRequestModel();
-
                         model.SetProperties(true, "A", "A", "A");
                         BOSubscription response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSubscriptionMapper();
-
                         BOSubscription bo = new BOSubscription();
-
                         bo.SetProperties("A", true, "A", "A", "A");
                         ApiSubscriptionResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSubscriptionMapper();
-
                         BOSubscription bo = new BOSubscription();
-
                         bo.SetProperties("A", true, "A", "A", "A");
                         List<ApiSubscriptionResponseModel> response = mapper.MapBOToModel(new List<BOSubscription>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>eea2cc6020a6d5d65b68d00d2cdc4c6f</Hash>
+    <Hash>e43594bf52bbe453da535eeef63afedb</Hash>
 </Codenesium>*/

@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOEvent: AbstractBOEvent
+        public partial class BOEvent : AbstractBOEvent
         {
-                public BOEvent() : base()
+                public BOEvent()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c1efcd30670323486358ea35697ae4e5</Hash>
+    <Hash>1e0c732341fa753212613f89e6cb1ec2</Hash>
 </Codenesium>*/

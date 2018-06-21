@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOMachine bo)
                 {
                         Machine efMachine = new Machine();
-
                         efMachine.SetProperties(
                                 bo.CommunicationStyle,
                                 bo.EnvironmentIds,
@@ -68,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>260421583e3075e91d43c160e477ccf1</Hash>
+    <Hash>831bcc18b66a84a82c78aa55785c9412</Hash>
 </Codenesium>*/

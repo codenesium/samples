@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FileServiceNS.Api.DataAccess
 {
         [Table("Bucket", Schema="dbo")]
-        public partial class Bucket:AbstractEntity
+        public partial class Bucket : AbstractEntity
         {
                 public Bucket()
                 {
@@ -22,18 +22,18 @@ namespace FileServiceNS.Api.DataAccess
                         this.Name = name;
                 }
 
-                [Column("externalId", TypeName="uniqueidentifier")]
+                [Column("externalId")]
                 public Guid ExternalId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="nvarchar(255)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>43a29341ad83c5901dcd21cf00a6c02a</Hash>
+    <Hash>2dbc3aac184a5ffb07d221391321bf7f</Hash>
 </Codenesium>*/

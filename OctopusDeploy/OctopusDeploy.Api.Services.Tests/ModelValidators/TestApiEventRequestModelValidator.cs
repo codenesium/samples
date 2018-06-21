@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Category, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Category, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Category, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
                 }
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -135,7 +127,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Message, null as string);
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Message, null as string);
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
                 }
@@ -252,7 +235,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
@@ -265,8 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
@@ -278,8 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -291,7 +271,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
@@ -304,8 +283,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
                 }
@@ -317,7 +295,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, new string('A', 51));
@@ -330,8 +307,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, new string('A', 51));
                 }
@@ -343,8 +319,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -356,7 +331,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
@@ -369,8 +343,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
                 }
@@ -382,7 +355,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 201));
@@ -395,8 +367,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 201));
                 }
@@ -408,8 +379,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -417,5 +387,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5f0c2b4f1a46dbca0c01ecb9eeee2d06</Hash>
+    <Hash>91753cee93fa17d9dff9c4ff0d3d15dd</Hash>
 </Codenesium>*/

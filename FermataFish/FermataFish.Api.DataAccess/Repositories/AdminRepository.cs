@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public class AdminRepository: AbstractAdminRepository, IAdminRepository
+        public class AdminRepository : AbstractAdminRepository, IAdminRepository
         {
                 public AdminRepository(
                         ILogger<AdminRepository> logger,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9d1c834f58d90f186a1b34c1d9b4cb00</Hash>
+    <Hash>d5c3b7c87bc32793334bc4861a0a9ea3</Hash>
 </Codenesium>*/

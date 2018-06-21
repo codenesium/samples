@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBusinessEntityAddressService: AbstractService
+        public abstract class AbstractBusinessEntityAddressService : AbstractService
         {
                 private IBusinessEntityAddressRepository businessEntityAddressRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IBusinessEntityAddressRepository businessEntityAddressRepository,
                         IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator,
                         IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
-                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
-
-                        )
+                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper)
                         : base()
-
                 {
                         this.businessEntityAddressRepository = businessEntityAddressRepository;
                         this.businessEntityAddressModelValidator = businessEntityAddressModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiBusinessEntityAddressResponseModel> response = new CreateResponse<ApiBusinessEntityAddressResponseModel>(await this.businessEntityAddressModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(default(int), model);
                                 var record = await this.businessEntityAddressRepository.Create(this.dalBusinessEntityAddressMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiBusinessEntityAddressRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.businessEntityAddressModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(businessEntityID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.businessEntityAddressModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.businessEntityAddressRepository.Delete(businessEntityID);
@@ -112,6 +107,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressTypeID(int addressTypeID)
                 {
                         List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.ByAddressTypeID(addressTypeID);
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20584b024bcec5127aa09b726d694aeb</Hash>
+    <Hash>339d883f5805e1db444ee8dae6f1ce80</Hash>
 </Codenesium>*/

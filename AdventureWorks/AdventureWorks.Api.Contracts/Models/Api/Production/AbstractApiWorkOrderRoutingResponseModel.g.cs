@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiWorkOrderRoutingResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiWorkOrderRoutingResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         Nullable<decimal> actualCost,
@@ -176,5 +176,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>58ebf0135e027be8bc92be3bb1dad99e</Hash>
+    <Hash>7c996ccf73a20b61eabb25f85fea9241</Hash>
 </Codenesium>*/

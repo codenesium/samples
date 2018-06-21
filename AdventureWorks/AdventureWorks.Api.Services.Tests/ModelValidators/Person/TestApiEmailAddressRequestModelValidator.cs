@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         emailAddressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmailAddress()));
 
                         var validator = new ApiEmailAddressRequestModelValidator(emailAddressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmailAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailAddress1, new string('A', 51));
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         emailAddressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmailAddress()));
 
                         var validator = new ApiEmailAddressRequestModelValidator(emailAddressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmailAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmailAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailAddress1, new string('A', 51));
                 }
@@ -57,8 +55,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         emailAddressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EmailAddress()));
 
                         var validator = new ApiEmailAddressRequestModelValidator(emailAddressRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -66,5 +63,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dd06b60c445307b1b113a999a28f59e3</Hash>
+    <Hash>7c1fd8992c78bd205d8ad2539263cb90</Hash>
 </Codenesium>*/

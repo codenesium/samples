@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/countryRegions")]
         [ApiVersion("1.0")]
-        public class CountryRegionController: AbstractCountryRegionController
+        public class CountryRegionController : AbstractCountryRegionController
         {
                 public CountryRegionController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aa01642377bfa6292097e0516ea0291a</Hash>
+    <Hash>5bf86ab68cc3a58457e1ed6f51b7f8f8</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesPersonQuotaHistoryRequestModelValidator: AbstractValidator<ApiSalesPersonQuotaHistoryRequestModel>
+        public abstract class AbstractApiSalesPersonQuotaHistoryRequestModelValidator : AbstractValidator<ApiSalesPersonQuotaHistoryRequestModel>
         {
                 private int existingRecordId;
 
-                ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
+                private ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
 
                 public AbstractApiSalesPersonQuotaHistoryRequestModelValidator(ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository)
                 {
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b88b3b77be6c82f08eaabac42a88f5e3</Hash>
+    <Hash>7ff160c57890ff1cbd6143c73cdd7a0f</Hash>
 </Codenesium>*/

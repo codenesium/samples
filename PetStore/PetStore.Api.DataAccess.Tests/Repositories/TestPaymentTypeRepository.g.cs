@@ -38,7 +38,6 @@ namespace PetStoreNS.Api.DataAccess
                         var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 
                         PaymentType entity = new PaymentType();
-
                         context.Set<PaymentType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetStoreNS.Api.DataAccess
                         var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 
                         PaymentType entity = new PaymentType();
-
                         context.Set<PaymentType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetStoreNS.Api.DataAccess
                         var repository = new PaymentTypeRepository(loggerMoc.Object, context);
 
                         var entity = new PaymentType();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<PaymentType>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetStoreNS.Api.DataAccess
                         Mock<ILogger<PaymentTypeRepository>> loggerMoc = PaymentTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
                         var repository = new PaymentTypeRepository(loggerMoc.Object, context);
-
                         PaymentType entity = new PaymentType();
-
                         context.Set<PaymentType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetStoreNS.Api.DataAccess
                         Mock<ILogger<PaymentTypeRepository>> loggerMoc = PaymentTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
                         var repository = new PaymentTypeRepository(loggerMoc.Object, context);
-
                         PaymentType entity = new PaymentType();
-
                         context.Set<PaymentType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetStoreNS.Api.DataAccess
                         Mock<ILogger<PaymentTypeRepository>> loggerMoc = PaymentTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PaymentTypeRepositoryMoc.GetContext();
                         var repository = new PaymentTypeRepository(loggerMoc.Object, context);
-
                         PaymentType entity = new PaymentType();
-
                         context.Set<PaymentType>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         PaymentType modifiedRecord = await context.Set<PaymentType>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>01f80c0ca0b8d2c79892e3e95e85fa16</Hash>
+    <Hash>69ae36ab724eec137ff3bc24a859c62e</Hash>
 </Codenesium>*/

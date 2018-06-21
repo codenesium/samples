@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new StoreRepository(loggerMoc.Object, context);
 
                         Store entity = new Store();
-
                         context.Set<Store>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new StoreRepository(loggerMoc.Object, context);
 
                         Store entity = new Store();
-
                         context.Set<Store>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new StoreRepository(loggerMoc.Object, context);
 
                         var entity = new Store();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Store>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<StoreRepository>> loggerMoc = StoreRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StoreRepositoryMoc.GetContext();
                         var repository = new StoreRepository(loggerMoc.Object, context);
-
                         Store entity = new Store();
-
                         context.Set<Store>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<StoreRepository>> loggerMoc = StoreRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StoreRepositoryMoc.GetContext();
                         var repository = new StoreRepository(loggerMoc.Object, context);
-
                         Store entity = new Store();
-
                         context.Set<Store>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<StoreRepository>> loggerMoc = StoreRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StoreRepositoryMoc.GetContext();
                         var repository = new StoreRepository(loggerMoc.Object, context);
-
                         Store entity = new Store();
-
                         context.Set<Store>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         Store modifiedRecord = await context.Set<Store>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>214aabb99492ca9efd05260b8fa6ef0f</Hash>
+    <Hash>110575851a6e84a7f35f1bca864c0e14</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOOctopusServerNode boOctopusServerNode = new BOOctopusServerNode();
-
                         boOctopusServerNode.SetProperties(
                                 id,
                                 model.IsInMaintenanceMode,
@@ -51,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e21af825b693c61520d5fbbeb3e562ba</Hash>
+    <Hash>ad5258a497497e10cbb4a985772cf6f1</Hash>
 </Codenesium>*/

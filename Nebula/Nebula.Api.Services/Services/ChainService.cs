@@ -1,48 +1,42 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class ChainService: AbstractChainService, IChainService
+        public class ChainService : AbstractChainService, IChainService
         {
                 public ChainService(
                         ILogger<IChainRepository> logger,
                         IChainRepository chainRepository,
                         IApiChainRequestModelValidator chainModelValidator,
                         IBOLChainMapper bolchainMapper,
-                        IDALChainMapper dalchainMapper
-                        ,
+                        IDALChainMapper dalchainMapper,
                         IBOLClaspMapper bolClaspMapper,
-                        IDALClaspMapper dalClaspMapper
-                        ,
+                        IDALClaspMapper dalClaspMapper,
                         IBOLLinkMapper bolLinkMapper,
                         IDALLinkMapper dalLinkMapper
-
                         )
                         : base(logger,
                                chainRepository,
                                chainModelValidator,
                                bolchainMapper,
-                               dalchainMapper
-                               ,
+                               dalchainMapper,
                                bolClaspMapper,
-                               dalClaspMapper
-                               ,
+                               dalClaspMapper,
                                bolLinkMapper,
-                               dalLinkMapper
-                               )
+                               dalLinkMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9c42d9673ec9e7d61c2c7074e0237079</Hash>
+    <Hash>d7b5af094eae47c1d7cea9bdc2662a84</Hash>
 </Codenesium>*/

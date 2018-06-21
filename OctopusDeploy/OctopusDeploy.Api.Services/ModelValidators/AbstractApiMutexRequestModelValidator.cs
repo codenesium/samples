@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiMutexRequestModelValidator: AbstractValidator<ApiMutexRequestModel>
+        public abstract class AbstractApiMutexRequestModelValidator : AbstractValidator<ApiMutexRequestModel>
         {
                 private string existingRecordId;
 
-                IMutexRepository mutexRepository;
+                private IMutexRepository mutexRepository;
 
                 public AbstractApiMutexRequestModelValidator(IMutexRepository mutexRepository)
                 {
@@ -34,5 +34,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70bd41c2d9895826ec20eaa937e7f370</Hash>
+    <Hash>313af8d41e0fea48576fab126f6b486e</Hash>
 </Codenesium>*/

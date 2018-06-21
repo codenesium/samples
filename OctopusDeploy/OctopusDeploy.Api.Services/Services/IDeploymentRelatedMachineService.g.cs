@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace OctopusDeployNS.Api.Services
                 Task<List<ApiDeploymentRelatedMachineResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiDeploymentRelatedMachineResponseModel>> GetDeploymentId(string deploymentId);
+
                 Task<List<ApiDeploymentRelatedMachineResponseModel>> GetMachineId(string machineId);
         }
 }
 
 /*<Codenesium>
-    <Hash>3ee90831aceafd83cd2e0d5925988554</Hash>
+    <Hash>9e8aecf7bc2c7bdab083dda0b62436cd</Hash>
 </Codenesium>*/

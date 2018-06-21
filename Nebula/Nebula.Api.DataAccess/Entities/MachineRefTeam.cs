@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("MachineRefTeam", Schema="dbo")]
-        public partial class MachineRefTeam: AbstractEntity
+        public partial class MachineRefTeam : AbstractEntity
         {
                 public MachineRefTeam()
                 {
@@ -23,13 +23,13 @@ namespace NebulaNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("machineId", TypeName="int")]
+                [Column("machineId")]
                 public int MachineId { get; private set; }
 
-                [Column("teamId", TypeName="int")]
+                [Column("teamId")]
                 public int TeamId { get; private set; }
 
                 [ForeignKey("MachineId")]
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>607b712dc57804a1580a30531d189aca</Hash>
+    <Hash>e288684bb9ca0624a977a8a6f4b1d2c6</Hash>
 </Codenesium>*/

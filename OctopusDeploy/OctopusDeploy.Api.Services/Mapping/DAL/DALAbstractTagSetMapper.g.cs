@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOTagSet bo)
                 {
                         TagSet efTagSet = new TagSet();
-
                         efTagSet.SetProperties(
                                 bo.DataVersion,
                                 bo.Id,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c27b08ef1438ab9001f6024b70225f25</Hash>
+    <Hash>3a4fe37f0a97fa1e02880f0c3d0a0d7e</Hash>
 </Codenesium>*/

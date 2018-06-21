@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class TeamService: AbstractTeamService, ITeamService
+        public class TeamService : AbstractTeamService, ITeamService
         {
                 public TeamService(
                         ILogger<ITeamRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolteamMapper,
                         IDALTeamMapper dalteamMapper
-
                         )
                         : base(logger,
                                teamRepository,
                                teamModelValidator,
                                bolteamMapper,
-                               dalteamMapper
-                               )
+                               dalteamMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4bcd57699efe7bd92acc532c6ab7ac75</Hash>
+    <Hash>5a897f50e8a1b296c0bfc0d65afec4dd</Hash>
 </Codenesium>*/

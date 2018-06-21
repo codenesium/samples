@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Destination")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDestinationActionMapper
+        public class TestBOLDestinationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDestinationMapper();
-
                         ApiDestinationRequestModel model = new ApiDestinationRequestModel();
-
                         model.SetProperties(1, "A", 1);
                         BODestination response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDestinationMapper();
-
                         BODestination bo = new BODestination();
-
                         bo.SetProperties(1, 1, "A", 1);
                         ApiDestinationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDestinationMapper();
-
                         BODestination bo = new BODestination();
-
                         bo.SetProperties(1, 1, "A", 1);
                         List<ApiDestinationResponseModel> response = mapper.MapBOToModel(new List<BODestination>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aef33f8ee2a7b77701e12a45e022fb31</Hash>
+    <Hash>49189afe4d04d00762c08baeedf0a680</Hash>
 </Codenesium>*/

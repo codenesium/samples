@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOMachineRefTeam boMachineRefTeam = new BOMachineRefTeam();
-
                         boMachineRefTeam.SetProperties(
                                 id,
                                 model.MachineId,
@@ -47,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b49a2652f23ad4a80d9ec39d51ea49b</Hash>
+    <Hash>7a252066f41755c8283a65145b0056f6</Hash>
 </Codenesium>*/

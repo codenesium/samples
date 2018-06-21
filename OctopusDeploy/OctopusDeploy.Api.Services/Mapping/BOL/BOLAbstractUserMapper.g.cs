@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOUser boUser = new BOUser();
-
                         boUser.SetProperties(
                                 id,
                                 model.DisplayName,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>212e04e13276a3fa2544078a80529d31</Hash>
+    <Hash>6dab95d9b6a09e5cb230eed6932a40cf</Hash>
 </Codenesium>*/

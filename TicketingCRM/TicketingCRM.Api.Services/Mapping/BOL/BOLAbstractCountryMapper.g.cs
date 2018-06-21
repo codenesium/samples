@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOCountry boCountry = new BOCountry();
-
                         boCountry.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8f44c4b2c7353312477e7aaeff31cee</Hash>
+    <Hash>2fa87221b21fd8b57b5d5065aa50d9f5</Hash>
 </Codenesium>*/

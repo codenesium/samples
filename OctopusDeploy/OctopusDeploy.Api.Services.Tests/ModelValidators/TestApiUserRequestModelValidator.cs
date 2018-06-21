@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DisplayName, new string('A', 201));
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DisplayName, new string('A', 201));
                 }
@@ -57,8 +55,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 401));
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmailAddress, new string('A', 401));
                 }
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -109,7 +103,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExternalId, new string('A', 401));
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExternalId, new string('A', 401));
                 }
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -174,7 +163,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
@@ -187,8 +175,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
                 }
@@ -200,7 +187,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 201));
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 201));
                 }
@@ -226,8 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new User()));
 
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -263,7 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(new User()));
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, "A");
                 }
@@ -275,7 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         userRepository.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult<User>(null));
                         var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiUserRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiUserRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Username, "A");
                 }
@@ -283,5 +267,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5a2317dccf472eaa062e61f32e2ea612</Hash>
+    <Hash>b79610e85f68457381cd3aceb1831345</Hash>
 </Codenesium>*/

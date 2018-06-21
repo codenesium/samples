@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FileServiceNS.Api.DataAccess;
 using FileServiceNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Bucket")]
         [Trait("Area", "DALMapper")]
-        public class TestDALBucketActionMapper
+        public class TestDALBucketMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALBucketMapper();
-
                         var bo = new BOBucket();
-
                         bo.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
 
                         Bucket response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALBucketMapper();
-
                         Bucket entity = new Bucket();
-
                         entity.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
 
-                        BOBucket  response = mapper.MapEFToBO(entity);
+                        BOBucket response = mapper.MapEFToBO(entity);
 
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         response.Id.Should().Be(1);
@@ -48,9 +44,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALBucketMapper();
-
                         Bucket entity = new Bucket();
-
                         entity.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
 
                         List<BOBucket> response = mapper.MapEFToBO(new List<Bucket>() { entity });
@@ -61,5 +55,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7e0624c22bff796f6d1cb38ab6e5b7d1</Hash>
+    <Hash>3aa0363f4f69faecca6ec6c239a97926</Hash>
 </Codenesium>*/

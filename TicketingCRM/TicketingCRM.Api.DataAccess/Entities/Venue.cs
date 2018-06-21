@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
         [Table("Venue", Schema="dbo")]
-        public partial class Venue:AbstractEntity
+        public partial class Venue : AbstractEntity
         {
                 public Venue()
                 {
@@ -36,35 +36,35 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Website = website;
                 }
 
-                [Column("address1", TypeName="varchar(128)")]
+                [Column("address1")]
                 public string Address1 { get; private set; }
 
-                [Column("address2", TypeName="varchar(128)")]
+                [Column("address2")]
                 public string Address2 { get; private set; }
 
-                [Column("adminId", TypeName="int")]
+                [Column("adminId")]
                 public int AdminId { get; private set; }
 
-                [Column("email", TypeName="varchar(128)")]
+                [Column("email")]
                 public string Email { get; private set; }
 
-                [Column("facebook", TypeName="varchar(128)")]
+                [Column("facebook")]
                 public string Facebook { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("phone", TypeName="varchar(128)")]
+                [Column("phone")]
                 public string Phone { get; private set; }
 
-                [Column("provinceId", TypeName="int")]
+                [Column("provinceId")]
                 public int ProvinceId { get; private set; }
 
-                [Column("website", TypeName="varchar(128)")]
+                [Column("website")]
                 public string Website { get; private set; }
 
                 [ForeignKey("AdminId")]
@@ -76,5 +76,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>823d1f1360c1a9f615950ee617326926</Hash>
+    <Hash>3df7f7a83566f9c35e1c3c9a537b14a3</Hash>
 </Codenesium>*/

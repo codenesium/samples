@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Account")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLAccountActionMapper
+        public class TestBOLAccountMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLAccountMapper();
-
                         ApiAccountRequestModel model = new ApiAccountRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", "A", "A");
                         BOAccount response = mapper.MapModelToBO("A", model);
 
@@ -35,9 +33,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLAccountMapper();
-
                         BOAccount bo = new BOAccount();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
                         ApiAccountResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLAccountMapper();
-
                         BOAccount bo = new BOAccount();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
                         List<ApiAccountResponseModel> response = mapper.MapBOToModel(new List<BOAccount>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9d63608c7155a47c0708328f835b3cd3</Hash>
+    <Hash>b573c831d6dfb80d687ee5bd52e0b1d7</Hash>
 </Codenesium>*/

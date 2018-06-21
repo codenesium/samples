@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DatabaseLogService: AbstractDatabaseLogService, IDatabaseLogService
+        public class DatabaseLogService : AbstractDatabaseLogService, IDatabaseLogService
         {
                 public DatabaseLogService(
                         ILogger<IDatabaseLogRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
                         IBOLDatabaseLogMapper boldatabaseLogMapper,
                         IDALDatabaseLogMapper daldatabaseLogMapper
-
                         )
                         : base(logger,
                                databaseLogRepository,
                                databaseLogModelValidator,
                                boldatabaseLogMapper,
-                               daldatabaseLogMapper
-                               )
+                               daldatabaseLogMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0dae045226a6d2cccc063c1047b985db</Hash>
+    <Hash>ff159bccd7c95b53c4f2fe02cc880f93</Hash>
 </Codenesium>*/

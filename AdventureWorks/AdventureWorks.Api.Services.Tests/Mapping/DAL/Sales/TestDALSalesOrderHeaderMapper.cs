@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesOrderHeader")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSalesOrderHeaderActionMapper
+        public class TestDALSalesOrderHeaderMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSalesOrderHeaderMapper();
-
                         var bo = new BOSalesOrderHeader();
-
                         bo.SetProperties(1, "A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
 
                         SalesOrderHeader response = mapper.MapBOToEF(bo);
@@ -55,12 +53,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSalesOrderHeaderMapper();
-
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         entity.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
 
-                        BOSalesOrderHeader  response = mapper.MapEFToBO(entity);
+                        BOSalesOrderHeader response = mapper.MapEFToBO(entity);
 
                         response.AccountNumber.Should().Be("A");
                         response.BillToAddressID.Should().Be(1);
@@ -94,9 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSalesOrderHeaderMapper();
-
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         entity.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
 
                         List<BOSalesOrderHeader> response = mapper.MapEFToBO(new List<SalesOrderHeader>() { entity });
@@ -107,5 +101,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1e2396f20157f95028137b74647c17ce</Hash>
+    <Hash>4ffb9c8cd7cf51eb6c4cfa8362b91ea3</Hash>
 </Codenesium>*/

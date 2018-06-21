@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new LifecycleRepository(loggerMoc.Object, context);
 
                         Lifecycle entity = new Lifecycle();
-
                         context.Set<Lifecycle>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new LifecycleRepository(loggerMoc.Object, context);
 
                         Lifecycle entity = new Lifecycle();
-
                         context.Set<Lifecycle>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new LifecycleRepository(loggerMoc.Object, context);
 
                         var entity = new Lifecycle();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Lifecycle>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<LifecycleRepository>> loggerMoc = LifecycleRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LifecycleRepositoryMoc.GetContext();
                         var repository = new LifecycleRepository(loggerMoc.Object, context);
-
                         Lifecycle entity = new Lifecycle();
-
                         context.Set<Lifecycle>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<LifecycleRepository>> loggerMoc = LifecycleRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LifecycleRepositoryMoc.GetContext();
                         var repository = new LifecycleRepository(loggerMoc.Object, context);
-
                         Lifecycle entity = new Lifecycle();
-
                         context.Set<Lifecycle>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<LifecycleRepository>> loggerMoc = LifecycleRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LifecycleRepositoryMoc.GetContext();
                         var repository = new LifecycleRepository(loggerMoc.Object, context);
-
                         Lifecycle entity = new Lifecycle();
-
                         context.Set<Lifecycle>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Lifecycle modifiedRecord = await context.Set<Lifecycle>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>526733cbf28338d0058456fb0261461a</Hash>
+    <Hash>aa9b475fd4edcd6ebbb018b0804b4b87</Hash>
 </Codenesium>*/

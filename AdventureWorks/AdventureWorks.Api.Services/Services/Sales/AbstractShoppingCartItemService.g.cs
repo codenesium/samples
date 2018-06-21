@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractShoppingCartItemService: AbstractService
+        public abstract class AbstractShoppingCartItemService : AbstractService
         {
                 private IShoppingCartItemRepository shoppingCartItemRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IShoppingCartItemRepository shoppingCartItemRepository,
                         IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator,
                         IBOLShoppingCartItemMapper bolShoppingCartItemMapper,
-                        IDALShoppingCartItemMapper dalShoppingCartItemMapper
-
-                        )
+                        IDALShoppingCartItemMapper dalShoppingCartItemMapper)
                         : base()
-
                 {
                         this.shoppingCartItemRepository = shoppingCartItemRepository;
                         this.shoppingCartItemModelValidator = shoppingCartItemModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiShoppingCartItemResponseModel> response = new CreateResponse<ApiShoppingCartItemResponseModel>(await this.shoppingCartItemModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolShoppingCartItemMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolShoppingCartItemMapper.MapModelToBO(default(int), model);
                                 var record = await this.shoppingCartItemRepository.Create(this.dalShoppingCartItemMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiShoppingCartItemRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.shoppingCartItemModelValidator.ValidateUpdateAsync(shoppingCartItemID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int shoppingCartItemID)
                 {
                         ActionResponse response = new ActionResponse(await this.shoppingCartItemModelValidator.ValidateDeleteAsync(shoppingCartItemID));
-
                         if (response.Success)
                         {
                                 await this.shoppingCartItemRepository.Delete(shoppingCartItemID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7afb1e5d069769ea0ead23a0914e4340</Hash>
+    <Hash>ac61705adda7f57569e21264587d00a7</Hash>
 </Codenesium>*/

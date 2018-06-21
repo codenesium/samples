@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public abstract class AbstractApiBucketResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiBucketResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         Guid externalId,
@@ -59,5 +59,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d9696e13be195b38c2cddee0b66bfdcd</Hash>
+    <Hash>6ed5d626477c0de698f90fa7b57e04ec</Hash>
 </Codenesium>*/

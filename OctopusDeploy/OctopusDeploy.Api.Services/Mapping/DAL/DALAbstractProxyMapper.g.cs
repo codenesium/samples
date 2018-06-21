@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOProxy bo)
                 {
                         Proxy efProxy = new Proxy();
-
                         efProxy.SetProperties(
                                 bo.Id,
                                 bo.JSON,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d0f9858523526f5d0305b80fc2bc814</Hash>
+    <Hash>c904dffd55d5a79bb22bd941df7ae7c6</Hash>
 </Codenesium>*/

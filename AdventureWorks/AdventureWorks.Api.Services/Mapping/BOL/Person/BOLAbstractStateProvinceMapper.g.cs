@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOStateProvince boStateProvince = new BOStateProvince();
-
                         boStateProvince.SetProperties(
                                 stateProvinceID,
                                 model.CountryRegionCode,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ea06ed74ee00db5a3ff4f8555e4eba5</Hash>
+    <Hash>d4a0857f710c704095f49bc6b1204679</Hash>
 </Codenesium>*/

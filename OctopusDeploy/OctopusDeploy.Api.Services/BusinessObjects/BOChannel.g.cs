@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOChannel: AbstractBOChannel
+        public partial class BOChannel : AbstractBOChannel
         {
-                public BOChannel() : base()
+                public BOChannel()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ba6b8cb74295cf8c9b9567c0d57fabed</Hash>
+    <Hash>2010aefdbc71d9d6f6f735b9a53a912c</Hash>
 </Codenesium>*/

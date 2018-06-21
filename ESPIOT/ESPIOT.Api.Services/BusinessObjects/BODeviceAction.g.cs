@@ -3,14 +3,15 @@ using System;
 
 namespace ESPIOTNS.Api.Services
 {
-        public partial class BODeviceAction: AbstractBODeviceAction
+        public partial class BODeviceAction : AbstractBODeviceAction
         {
-                public BODeviceAction() : base()
+                public BODeviceAction()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5f31e96ca1317ff616227f04e6d0701d</Hash>
+    <Hash>a0f78fcb8624c2bc6b8490f60192c17c</Hash>
 </Codenesium>*/

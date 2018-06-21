@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiSpaceRequestModelValidator: AbstractValidator<ApiSpaceRequestModel>
+        public abstract class AbstractApiSpaceRequestModelValidator : AbstractValidator<ApiSpaceRequestModel>
         {
                 private int existingRecordId;
 
-                ISpaceRepository spaceRepository;
+                private ISpaceRepository spaceRepository;
 
                 public AbstractApiSpaceRequestModelValidator(ISpaceRepository spaceRepository)
                 {
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4006f44c119dc003b658b94c870a0b19</Hash>
+    <Hash>1b8a310af9ac9085a24e2ff0209dd021</Hash>
 </Codenesium>*/

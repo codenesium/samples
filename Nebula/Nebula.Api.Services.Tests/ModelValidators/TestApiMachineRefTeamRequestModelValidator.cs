@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
                         var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.MachineId, 1);
@@ -57,8 +56,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRefTeamRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
                         var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRefTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.MachineId, 1);
                 }
@@ -71,7 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRefTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MachineId, 1);
                 }
@@ -83,7 +81,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
                         var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRefTeamRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
@@ -109,8 +106,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRefTeamRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
                         var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRefTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TeamId, 1);
                 }
@@ -123,7 +119,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiMachineRefTeamRequestModelValidator(machineRefTeamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRefTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRefTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
                 }
@@ -131,5 +127,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>eda2c9970f88f827257ed4c9e2fdeb44</Hash>
+    <Hash>ea90e5f521c20fe69db144024a8fc7dd</Hash>
 </Codenesium>*/

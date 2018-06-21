@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "LibraryVariableSet")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLLibraryVariableSetActionMapper
+        public class TestBOLLibraryVariableSetMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLLibraryVariableSetMapper();
-
                         ApiLibraryVariableSetRequestModel model = new ApiLibraryVariableSetRequestModel();
-
                         model.SetProperties("A", "A", "A", "A");
                         BOLibraryVariableSet response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLLibraryVariableSetMapper();
-
                         BOLibraryVariableSet bo = new BOLibraryVariableSet();
-
                         bo.SetProperties("A", "A", "A", "A", "A");
                         ApiLibraryVariableSetResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLLibraryVariableSetMapper();
-
                         BOLibraryVariableSet bo = new BOLibraryVariableSet();
-
                         bo.SetProperties("A", "A", "A", "A", "A");
                         List<ApiLibraryVariableSetResponseModel> response = mapper.MapBOToModel(new List<BOLibraryVariableSet>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>05b243822845dd23d4eb1123ea016650</Hash>
+    <Hash>4d3900b0ce685725fa0fe75667279e7e</Hash>
 </Codenesium>*/

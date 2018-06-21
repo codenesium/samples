@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractIllustrationRepository: AbstractRepository
+        public abstract class AbstractIllustrationRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductModelIllustration>().Where(x => x.IllustrationID == illustrationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
+                }
+
                 protected async Task<List<Illustration>> Where(
                         Expression<Func<Illustration, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ProductModelIllustration>().Where(x => x.IllustrationID == illustrationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a27fdca3313c534f779b36e85521ba5d</Hash>
+    <Hash>4f48eeb4f8a48e6a8ac4a4e94c96ec75</Hash>
 </Codenesium>*/

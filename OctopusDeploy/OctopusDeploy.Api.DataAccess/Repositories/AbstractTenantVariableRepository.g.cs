@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractTenantVariableRepository: AbstractRepository
+        public abstract class AbstractTenantVariableRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,6 +82,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<TenantVariable>> GetTenantId(string tenantId)
                 {
                         var records = await this.Where(x => x.TenantId == tenantId);
@@ -121,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cdf932b5cfe62dcab02e2052c4ce713b</Hash>
+    <Hash>3cd424981883c514f9c86d6b32f8f621</Hash>
 </Codenesium>*/

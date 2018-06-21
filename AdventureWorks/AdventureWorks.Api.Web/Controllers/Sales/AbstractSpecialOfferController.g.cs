@@ -1,20 +1,20 @@
-using System;
-using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
+using Codenesium.Foundation.CommonMVC;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractSpecialOfferController: AbstractApiController
+        public abstract class AbstractSpecialOfferController : AbstractApiController
         {
                 protected ISpecialOfferService SpecialOfferService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiSpecialOfferResponseModel> response = await this.SpecialOfferService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSpecialOfferResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiSpecialOfferResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSpecialOfferRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.SpecialOfferID.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SpecialOffers/{result.Record.SpecialOfferID.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/SpecialOffers/{result.Record.SpecialOfferID}", result.Record);
                         }
                         else
                         {
@@ -178,5 +175,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>65beceda24897bb6e1624a0959f3e40e</Hash>
+    <Hash>41ff679d012c710affc26123b91dcb76</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
                         var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonPhoneRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
                         var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonPhoneRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonPhoneRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
                         var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonPhoneRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, new string('A', 26));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
                         var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonPhoneRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonPhoneRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, new string('A', 26));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personPhoneRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PersonPhone()));
 
                         var validator = new ApiPersonPhoneRequestModelValidator(personPhoneRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>16e7529066f10ef0f85f3c547f11004a</Hash>
+    <Hash>6ef72df15b1aff3bdbc85849cdc22a8e</Hash>
 </Codenesium>*/

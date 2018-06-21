@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Shift")]
         [Trait("Area", "DALMapper")]
-        public class TestDALShiftActionMapper
+        public class TestDALShiftMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALShiftMapper();
-
                         var bo = new BOShift();
-
                         bo.SetProperties(1, TimeSpan.Parse("0"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", TimeSpan.Parse("0"));
 
                         Shift response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALShiftMapper();
-
                         Shift entity = new Shift();
-
                         entity.SetProperties(TimeSpan.Parse("0"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, TimeSpan.Parse("0"));
 
-                        BOShift  response = mapper.MapEFToBO(entity);
+                        BOShift response = mapper.MapEFToBO(entity);
 
                         response.EndTime.Should().Be(TimeSpan.Parse("0"));
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALShiftMapper();
-
                         Shift entity = new Shift();
-
                         entity.SetProperties(TimeSpan.Parse("0"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, TimeSpan.Parse("0"));
 
                         List<BOShift> response = mapper.MapEFToBO(new List<Shift>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>85c45cad687aadab8c2ea99504029c95</Hash>
+    <Hash>cac7c92447185d26f75d284ccd858476</Hash>
 </Codenesium>*/

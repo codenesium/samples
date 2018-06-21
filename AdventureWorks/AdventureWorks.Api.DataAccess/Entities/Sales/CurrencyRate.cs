@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("CurrencyRate", Schema="Sales")]
-        public partial class CurrencyRate: AbstractEntity
+        public partial class CurrencyRate : AbstractEntity
         {
                 public CurrencyRate()
                 {
@@ -30,26 +30,26 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ToCurrencyCode = toCurrencyCode;
                 }
 
-                [Column("AverageRate", TypeName="money")]
+                [Column("AverageRate")]
                 public decimal AverageRate { get; private set; }
 
-                [Column("CurrencyRateDate", TypeName="datetime")]
+                [Column("CurrencyRateDate")]
                 public DateTime CurrencyRateDate { get; private set; }
 
                 [Key]
-                [Column("CurrencyRateID", TypeName="int")]
+                [Column("CurrencyRateID")]
                 public int CurrencyRateID { get; private set; }
 
-                [Column("EndOfDayRate", TypeName="money")]
+                [Column("EndOfDayRate")]
                 public decimal EndOfDayRate { get; private set; }
 
-                [Column("FromCurrencyCode", TypeName="nchar(3)")]
+                [Column("FromCurrencyCode")]
                 public string FromCurrencyCode { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("ToCurrencyCode", TypeName="nchar(3)")]
+                [Column("ToCurrencyCode")]
                 public string ToCurrencyCode { get; private set; }
 
                 [ForeignKey("FromCurrencyCode")]
@@ -61,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6abc13cd7b610ec0eec01f477399eddd</Hash>
+    <Hash>5d5f88b0dd5b1639dcd44b28b4fa794d</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("Link", Schema="dbo")]
-        public partial class Link:AbstractEntity
+        public partial class Link : AbstractEntity
         {
                 public Link()
                 {
@@ -42,44 +42,44 @@ namespace NebulaNS.Api.DataAccess
                         this.TimeoutInSeconds = timeoutInSeconds;
                 }
 
-                [Column("assignedMachineId", TypeName="int")]
+                [Column("assignedMachineId")]
                 public Nullable<int> AssignedMachineId { get; private set; }
 
-                [Column("chainId", TypeName="int")]
+                [Column("chainId")]
                 public int ChainId { get; private set; }
 
-                [Column("dateCompleted", TypeName="datetime")]
+                [Column("dateCompleted")]
                 public Nullable<DateTime> DateCompleted { get; private set; }
 
-                [Column("dateStarted", TypeName="datetime")]
+                [Column("dateStarted")]
                 public Nullable<DateTime> DateStarted { get; private set; }
 
-                [Column("dynamicParameters", TypeName="text(2147483647)")]
+                [Column("dynamicParameters")]
                 public string DynamicParameters { get; private set; }
 
-                [Column("externalId", TypeName="uniqueidentifier")]
+                [Column("externalId")]
                 public Guid ExternalId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("linkStatusId", TypeName="int")]
+                [Column("linkStatusId")]
                 public int LinkStatusId { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("order", TypeName="int")]
+                [Column("order")]
                 public int Order { get; private set; }
 
-                [Column("response", TypeName="text(2147483647)")]
+                [Column("response")]
                 public string Response { get; private set; }
 
-                [Column("staticParameters", TypeName="text(2147483647)")]
+                [Column("staticParameters")]
                 public string StaticParameters { get; private set; }
 
-                [Column("timeoutInSeconds", TypeName="int")]
+                [Column("timeoutInSeconds")]
                 public int TimeoutInSeconds { get; private set; }
 
                 [ForeignKey("AssignedMachineId")]
@@ -94,5 +94,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d744833bd1ebde2f288b7532aa982666</Hash>
+    <Hash>928688ad94b5a7e84c31cd1521d03cbe</Hash>
 </Codenesium>*/

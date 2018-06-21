@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("WorkerTaskLease", Schema="dbo")]
-        public partial class WorkerTaskLease: AbstractEntity
+        public partial class WorkerTaskLease : AbstractEntity
         {
                 public WorkerTaskLease()
                 {
@@ -28,27 +28,27 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.WorkerId = workerId;
                 }
 
-                [Column("Exclusive", TypeName="bit")]
+                [Column("Exclusive")]
                 public bool Exclusive { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("TaskId", TypeName="nvarchar(50)")]
+                [Column("TaskId")]
                 public string TaskId { get; private set; }
 
-                [Column("WorkerId", TypeName="nvarchar(50)")]
+                [Column("WorkerId")]
                 public string WorkerId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>7a0fe65ee4b361ed9282220144919dd1</Hash>
+    <Hash>36eb62e2d6c81f5a04efa11d694df0f5</Hash>
 </Codenesium>*/

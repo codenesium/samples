@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOVersionInfo bo)
                 {
                         VersionInfo efVersionInfo = new VersionInfo();
-
                         efVersionInfo.SetProperties(
                                 bo.AppliedOn,
                                 bo.Description,
@@ -48,5 +47,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b13a711f66a979138fc2344a8d6de6e</Hash>
+    <Hash>e46fcc644f96bdc7f51f833352983145</Hash>
 </Codenesium>*/

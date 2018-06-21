@@ -3,9 +3,10 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractBOLinkLog: AbstractBusinessObject
+        public abstract class AbstractBOLinkLog : AbstractBusinessObject
         {
-                public AbstractBOLinkLog() : base()
+                public AbstractBOLinkLog()
+                        : base()
                 {
                 }
 
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c9152ac8a4c81ca39c8ede1525df387</Hash>
+    <Hash>d3a3a6cf614e2fe0509ca4912f5f7225</Hash>
 </Codenesium>*/

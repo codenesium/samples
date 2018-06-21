@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TenantVariable")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTenantVariableActionMapper
+        public class TestBOLTenantVariableMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTenantVariableMapper();
-
                         ApiTenantVariableRequestModel model = new ApiTenantVariableRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", "A", "A");
                         BOTenantVariable response = mapper.MapModelToBO("A", model);
 
@@ -35,9 +33,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTenantVariableMapper();
-
                         BOTenantVariable bo = new BOTenantVariable();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
                         ApiTenantVariableResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTenantVariableMapper();
-
                         BOTenantVariable bo = new BOTenantVariable();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
                         List<ApiTenantVariableResponseModel> response = mapper.MapBOToModel(new List<BOTenantVariable>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8e74f6b410d3f8af22c92b5749b74aef</Hash>
+    <Hash>6a06ae47a23e28d909079192ae161246</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -27,5 +27,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e12fac87ad9bf231d1f81bff5fce70a4</Hash>
+    <Hash>2c2124df094d35056b65345377bfb2a3</Hash>
 </Codenesium>*/

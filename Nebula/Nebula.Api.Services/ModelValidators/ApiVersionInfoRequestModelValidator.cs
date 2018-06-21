@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public class ApiVersionInfoRequestModelValidator: AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
+        public class ApiVersionInfoRequestModelValidator : AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
         {
                 public ApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
                         : base(versionInfoRepository)
@@ -29,11 +29,11 @@ namespace NebulaNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(long id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cc533c91d79e1bf417361f8f24277577</Hash>
+    <Hash>63bc35eed86934c815ca1ffc753c9441</Hash>
 </Codenesium>*/

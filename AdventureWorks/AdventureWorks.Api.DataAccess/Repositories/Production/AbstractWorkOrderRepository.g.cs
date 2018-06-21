@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractWorkOrderRepository: AbstractRepository
+        public abstract class AbstractWorkOrderRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<WorkOrder>> ByScrapReasonID(Nullable<short> scrapReasonID)
                 {
                         var records = await this.Where(x => x.ScrapReasonID == scrapReasonID);
 
                         return records;
+                }
+
+                public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<WorkOrderRouting>().Where(x => x.WorkOrderID == workOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
                 }
 
                 protected async Task<List<WorkOrder>> Where(
@@ -117,14 +123,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<WorkOrderRouting>().Where(x => x.WorkOrderID == workOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>cde7b6feaaae47c976bdd7b82abda3bd</Hash>
+    <Hash>2343241676f01896db0a769c920a0d55</Hash>
 </Codenesium>*/

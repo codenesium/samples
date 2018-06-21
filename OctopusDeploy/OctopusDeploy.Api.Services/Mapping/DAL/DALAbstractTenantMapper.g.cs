@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOTenant bo)
                 {
                         Tenant efTenant = new Tenant();
-
                         efTenant.SetProperties(
                                 bo.DataVersion,
                                 bo.Id,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62ec349c7257d5ddc5d4bbe52c703ff7</Hash>
+    <Hash>1fb091eb2c361073adece138055d5239</Hash>
 </Codenesium>*/

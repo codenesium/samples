@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Web
 {
-        public abstract class AbstractClientCommunicationController: AbstractApiController
+        public abstract class AbstractClientCommunicationController : AbstractApiController
         {
                 protected IClientCommunicationService ClientCommunicationService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace PetShippingNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiClientCommunicationResponseModel> response = await this.ClientCommunicationService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiClientCommunicationResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiClientCommunicationResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiClientCommunicationRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace PetShippingNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ClientCommunications/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/ClientCommunications/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -164,5 +161,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>249b90772cb7d75689a3b0df4dee7e97</Hash>
+    <Hash>a4702976a22129acd43fe43634c013c1</Hash>
 </Codenesium>*/

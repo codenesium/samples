@@ -3,9 +3,10 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOShift: AbstractBusinessObject
+        public abstract class AbstractBOShift : AbstractBusinessObject
         {
-                public AbstractBOShift() : base()
+                public AbstractBOShift()
+                        : base()
                 {
                 }
 
@@ -35,5 +36,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d9ee39132bceb1b973fcaea1c08f2d0</Hash>
+    <Hash>6f2ba9a6c0827e53a517be004efac38a</Hash>
 </Codenesium>*/

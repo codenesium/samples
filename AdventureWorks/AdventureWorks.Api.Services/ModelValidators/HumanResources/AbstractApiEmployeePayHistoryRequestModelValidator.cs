@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiEmployeePayHistoryRequestModelValidator: AbstractValidator<ApiEmployeePayHistoryRequestModel>
+        public abstract class AbstractApiEmployeePayHistoryRequestModelValidator : AbstractValidator<ApiEmployeePayHistoryRequestModel>
         {
                 private int existingRecordId;
 
-                IEmployeePayHistoryRepository employeePayHistoryRepository;
+                private IEmployeePayHistoryRepository employeePayHistoryRepository;
 
                 public AbstractApiEmployeePayHistoryRequestModelValidator(IEmployeePayHistoryRepository employeePayHistoryRepository)
                 {
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff412ca3949b10d12ddfdd339ada31ad</Hash>
+    <Hash>2774f20bc4c36a82c1f2f669a33706f6</Hash>
 </Codenesium>*/

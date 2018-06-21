@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetShippingNS.Api.DataAccess
 {
         [Table("AirTransport", Schema="dbo")]
-        public partial class AirTransport: AbstractEntity
+        public partial class AirTransport : AbstractEntity
         {
                 public AirTransport()
                 {
@@ -31,25 +31,25 @@ namespace PetShippingNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("airlineId", TypeName="int")]
+                [Column("airlineId")]
                 public int AirlineId { get; private set; }
 
-                [Column("flightNumber", TypeName="varchar(12)")]
+                [Column("flightNumber")]
                 public string FlightNumber { get; private set; }
 
-                [Column("handlerId", TypeName="int")]
+                [Column("handlerId")]
                 public int HandlerId { get; private set; }
 
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("landDate", TypeName="datetime")]
+                [Column("landDate")]
                 public DateTime LandDate { get; private set; }
 
-                [Column("pipelineStepId", TypeName="int")]
+                [Column("pipelineStepId")]
                 public int PipelineStepId { get; private set; }
 
-                [Column("takeoffDate", TypeName="datetime")]
+                [Column("takeoffDate")]
                 public DateTime TakeoffDate { get; private set; }
 
                 [ForeignKey("HandlerId")]
@@ -58,5 +58,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3bd9f38fa6582c2fdea39ff19d40e466</Hash>
+    <Hash>38bbb07baf019de106d90ff7e4235fc4</Hash>
 </Codenesium>*/

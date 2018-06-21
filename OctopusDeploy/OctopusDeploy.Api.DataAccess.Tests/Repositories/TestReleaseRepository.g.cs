@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ReleaseRepository(loggerMoc.Object, context);
 
                         Release entity = new Release();
-
                         context.Set<Release>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ReleaseRepository(loggerMoc.Object, context);
 
                         Release entity = new Release();
-
                         context.Set<Release>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ReleaseRepository(loggerMoc.Object, context);
 
                         var entity = new Release();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Release>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ReleaseRepository>> loggerMoc = ReleaseRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ReleaseRepositoryMoc.GetContext();
                         var repository = new ReleaseRepository(loggerMoc.Object, context);
-
                         Release entity = new Release();
-
                         context.Set<Release>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ReleaseRepository>> loggerMoc = ReleaseRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ReleaseRepositoryMoc.GetContext();
                         var repository = new ReleaseRepository(loggerMoc.Object, context);
-
                         Release entity = new Release();
-
                         context.Set<Release>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ReleaseRepository>> loggerMoc = ReleaseRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ReleaseRepositoryMoc.GetContext();
                         var repository = new ReleaseRepository(loggerMoc.Object, context);
-
                         Release entity = new Release();
-
                         context.Set<Release>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Release modifiedRecord = await context.Set<Release>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>18493c6799e2288b463156294e15e8af</Hash>
+    <Hash>c32c8bb41b7dc30616f49eb29cb58f66</Hash>
 </Codenesium>*/

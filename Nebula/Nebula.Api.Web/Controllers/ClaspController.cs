@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
         [Route("api/clasps")]
         [ApiVersion("1.0")]
-        public class ClaspController: AbstractClaspController
+        public class ClaspController : AbstractClaspController
         {
                 public ClaspController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1dc2e3dff7e202a0f8d4c457019ee6c7</Hash>
+    <Hash>0acd42cc296ac839de1eb268c2e9e42c</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiScrapReasonResponseModel: AbstractApiScrapReasonResponseModel
+        public partial class ApiScrapReasonResponseModel : AbstractApiScrapReasonResponseModel
         {
                 public ApiScrapReasonResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0a213ffa5f13c572034e5cae78a6ce13</Hash>
+    <Hash>38110ad931873064d176c3480850fcc8</Hash>
 </Codenesium>*/

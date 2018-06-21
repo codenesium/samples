@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOLibraryVariableSet boLibraryVariableSet = new BOLibraryVariableSet();
-
                         boLibraryVariableSet.SetProperties(
                                 id,
                                 model.ContentType,
@@ -49,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ec05985d119d1061cd5cc71a3135cb8</Hash>
+    <Hash>c2a195bb689856a2dd76410bff48ced9</Hash>
 </Codenesium>*/

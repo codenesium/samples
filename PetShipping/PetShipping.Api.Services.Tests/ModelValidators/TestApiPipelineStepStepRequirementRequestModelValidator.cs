@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.Services.Tests
                         pipelineStepStepRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 
                         var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPipelineStepStepRequirementRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
@@ -44,8 +43,7 @@ namespace PetShippingNS.Api.Services.Tests
                         pipelineStepStepRequirementRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
 
                         var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPipelineStepStepRequirementRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepStepRequirementRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Details, null as string);
                 }
@@ -57,7 +55,6 @@ namespace PetShippingNS.Api.Services.Tests
                         pipelineStepStepRequirementRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
                         var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPipelineStepStepRequirementRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
@@ -83,8 +80,7 @@ namespace PetShippingNS.Api.Services.Tests
                         pipelineStepStepRequirementRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
                         var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPipelineStepStepRequirementRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepStepRequirementRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
                 }
@@ -97,7 +93,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiPipelineStepStepRequirementRequestModelValidator(pipelineStepStepRequirementRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiPipelineStepStepRequirementRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepStepRequirementRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PipelineStepId, 1);
                 }
@@ -105,5 +101,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>567efd01ec71c44b9503963d108bfa2b</Hash>
+    <Hash>b5811ec142c1092d4b4271424a630372</Hash>
 </Codenesium>*/

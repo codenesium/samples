@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BODeploymentRelatedMachine boDeploymentRelatedMachine = new BODeploymentRelatedMachine();
-
                         boDeploymentRelatedMachine.SetProperties(
                                 id,
                                 model.DeploymentId,
@@ -47,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b347431f078d2eb0ab70d8e28777729b</Hash>
+    <Hash>adb1ce3cb3efc7be4a4f3d45062212db</Hash>
 </Codenesium>*/

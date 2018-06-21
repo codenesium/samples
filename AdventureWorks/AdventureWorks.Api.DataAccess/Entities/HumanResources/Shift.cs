@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("Shift", Schema="HumanResources")]
-        public partial class Shift:AbstractEntity
+        public partial class Shift : AbstractEntity
         {
                 public Shift()
                 {
@@ -26,24 +26,24 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.StartTime = startTime;
                 }
 
-                [Column("EndTime", TypeName="time")]
+                [Column("EndTime")]
                 public TimeSpan EndTime { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
                 [Key]
-                [Column("ShiftID", TypeName="tinyint")]
+                [Column("ShiftID")]
                 public int ShiftID { get; private set; }
 
-                [Column("StartTime", TypeName="time")]
+                [Column("StartTime")]
                 public TimeSpan StartTime { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d9d7d92001377548c8884cbec7ecadca</Hash>
+    <Hash>e7e22335675db0ac1acb8f90cc6b26f6</Hash>
 </Codenesium>*/

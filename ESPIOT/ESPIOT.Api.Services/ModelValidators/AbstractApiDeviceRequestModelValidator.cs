@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class AbstractApiDeviceRequestModelValidator: AbstractValidator<ApiDeviceRequestModel>
+        public abstract class AbstractApiDeviceRequestModelValidator : AbstractValidator<ApiDeviceRequestModel>
         {
                 private int existingRecordId;
 
-                IDeviceRepository deviceRepository;
+                private IDeviceRepository deviceRepository;
 
                 public AbstractApiDeviceRequestModelValidator(IDeviceRepository deviceRepository)
                 {
@@ -34,14 +34,14 @@ namespace ESPIOTNS.Api.Services
 
                 public virtual void PublicIdRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => x ?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceRequestModel.PublicId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByPublicId).When(x => x?.PublicId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDeviceRequestModel.PublicId));
                 }
 
                 private async Task<bool> BeUniqueByPublicId(ApiDeviceRequestModel model,  CancellationToken cancellationToken)
                 {
                         Device record = await this.deviceRepository.ByPublicId(model.PublicId);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -54,5 +54,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5723a232004e1e9bdcc8071856fb2ea5</Hash>
+    <Hash>32f747900a066ec6dfa40fbf14d13eda</Hash>
 </Codenesium>*/

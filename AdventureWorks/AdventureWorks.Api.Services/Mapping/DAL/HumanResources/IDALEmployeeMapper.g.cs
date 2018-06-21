@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4b8d52ad0b9ac8805a3c1c4e5625f5cb</Hash>
+    <Hash>a60f4523935fde7b7454fae470b7a5c3</Hash>
 </Codenesium>*/

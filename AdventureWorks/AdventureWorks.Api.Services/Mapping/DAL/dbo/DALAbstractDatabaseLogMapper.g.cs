@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BODatabaseLog bo)
                 {
                         DatabaseLog efDatabaseLog = new DatabaseLog();
-
                         efDatabaseLog.SetProperties(
                                 bo.DatabaseLogID,
                                 bo.DatabaseUser,
@@ -58,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dcfcd7a1ddbd7a9c67ec0c37438c02ae</Hash>
+    <Hash>e3c5da8e6f45715c8eb360dfca2ad592</Hash>
 </Codenesium>*/

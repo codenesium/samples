@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractConfigurationService: AbstractService
+        public abstract class AbstractConfigurationService : AbstractService
         {
                 private IConfigurationRepository configurationRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IConfigurationRepository configurationRepository,
                         IApiConfigurationRequestModelValidator configurationModelValidator,
                         IBOLConfigurationMapper bolConfigurationMapper,
-                        IDALConfigurationMapper dalConfigurationMapper
-
-                        )
+                        IDALConfigurationMapper dalConfigurationMapper)
                         : base()
-
                 {
                         this.configurationRepository = configurationRepository;
                         this.configurationModelValidator = configurationModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiConfigurationResponseModel> response = new CreateResponse<ApiConfigurationResponseModel>(await this.configurationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolConfigurationMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolConfigurationMapper.MapModelToBO(default(string), model);
                                 var record = await this.configurationRepository.Create(this.dalConfigurationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiConfigurationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.configurationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolConfigurationMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.configurationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.configurationRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a80b337436fab8d8bba0a5ca67267c3c</Hash>
+    <Hash>8f184288711a657635b8e80838d73f2c</Hash>
 </Codenesium>*/

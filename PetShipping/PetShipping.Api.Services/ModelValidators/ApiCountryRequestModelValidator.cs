@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public class ApiCountryRequestModelValidator: AbstractApiCountryRequestModelValidator, IApiCountryRequestModelValidator
+        public class ApiCountryRequestModelValidator : AbstractApiCountryRequestModelValidator, IApiCountryRequestModelValidator
         {
                 public ApiCountryRequestModelValidator(ICountryRepository countryRepository)
                         : base(countryRepository)
@@ -27,11 +27,11 @@ namespace PetShippingNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>58e0f408568b28e9f00f6919cbe60b52</Hash>
+    <Hash>3e225454ca4b51cf2647b9e1deeca74f</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiProductModelRequestModelValidator: AbstractValidator<ApiProductModelRequestModel>
+        public abstract class AbstractApiProductModelRequestModelValidator : AbstractValidator<ApiProductModelRequestModel>
         {
                 private int existingRecordId;
 
-                IProductModelRepository productModelRepository;
+                private IProductModelRepository productModelRepository;
 
                 public AbstractApiProductModelRequestModelValidator(IProductModelRepository productModelRepository)
                 {
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductModelRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductModelRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ProductModel record = await this.productModelRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.ProductModelID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.ProductModelID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eca8d5d6ae0589d7d05c97a2c6993aa2</Hash>
+    <Hash>283430d78598ae7254d80625180ee7e6</Hash>
 </Codenesium>*/

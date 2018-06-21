@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Web
 {
-        public abstract class AbstractAirlineController: AbstractApiController
+        public abstract class AbstractAirlineController : AbstractApiController
         {
                 protected IAirlineService AirlineService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace PetShippingNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiAirlineResponseModel> response = await this.AirlineService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAirlineResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiAirlineResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiAirlineRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace PetShippingNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Airlines/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Airlines/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -164,5 +161,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8f04540708cad6d451e1415770d902ab</Hash>
+    <Hash>684376fc24241434ea45fa472d640037</Hash>
 </Codenesium>*/

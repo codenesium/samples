@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOEventRelatedDocument boEventRelatedDocument = new BOEventRelatedDocument();
-
                         boEventRelatedDocument.SetProperties(
                                 id,
                                 model.EventId,
@@ -47,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db6585811ab6cfe2f48b2e3413b73546</Hash>
+    <Hash>cc19ee37f44af2dda73f9935c8c7e67d</Hash>
 </Codenesium>*/

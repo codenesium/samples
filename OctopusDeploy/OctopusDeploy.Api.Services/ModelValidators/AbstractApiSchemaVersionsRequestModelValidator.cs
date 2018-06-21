@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiSchemaVersionsRequestModelValidator: AbstractValidator<ApiSchemaVersionsRequestModel>
+        public abstract class AbstractApiSchemaVersionsRequestModelValidator : AbstractValidator<ApiSchemaVersionsRequestModel>
         {
                 private int existingRecordId;
 
-                ISchemaVersionsRepository schemaVersionsRepository;
+                private ISchemaVersionsRepository schemaVersionsRepository;
 
                 public AbstractApiSchemaVersionsRequestModelValidator(ISchemaVersionsRepository schemaVersionsRepository)
                 {
@@ -39,5 +39,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>893f0c6362177ea1f22eb297329a12fc</Hash>
+    <Hash>7c40d59684bda365e15d67160986ba41</Hash>
 </Codenesium>*/

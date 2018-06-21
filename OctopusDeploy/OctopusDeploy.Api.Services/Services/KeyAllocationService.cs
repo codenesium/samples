@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class KeyAllocationService: AbstractKeyAllocationService, IKeyAllocationService
+        public class KeyAllocationService : AbstractKeyAllocationService, IKeyAllocationService
         {
                 public KeyAllocationService(
                         ILogger<IKeyAllocationRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiKeyAllocationRequestModelValidator keyAllocationModelValidator,
                         IBOLKeyAllocationMapper bolkeyAllocationMapper,
                         IDALKeyAllocationMapper dalkeyAllocationMapper
-
                         )
                         : base(logger,
                                keyAllocationRepository,
                                keyAllocationModelValidator,
                                bolkeyAllocationMapper,
-                               dalkeyAllocationMapper
-                               )
+                               dalkeyAllocationMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a6042270bd687dcfd5ad254a04aaf5af</Hash>
+    <Hash>41bb46b103ed8ef44f937ee0c38321df</Hash>
 </Codenesium>*/

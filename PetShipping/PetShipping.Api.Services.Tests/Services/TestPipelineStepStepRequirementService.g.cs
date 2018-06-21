@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
                         var record = new PipelineStepStepRequirement();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
                                                                              mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                                              mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
                                                                              mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-                        ApiPipelineStepStepRequirementResponseModel response = await service.Get(default (int));
+                        ApiPipelineStepStepRequirementResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                                              mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
                                                                              mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-                        ApiPipelineStepStepRequirementResponseModel response = await service.Get(default (int));
+                        ApiPipelineStepStepRequirementResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
                         var model = new ApiPipelineStepStepRequirementRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepStepRequirement>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
                         var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
                                                                              mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
                         var model = new ApiPipelineStepStepRequirementRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PipelineStepStepRequirement>())).Returns(Task.FromResult(new PipelineStepStepRequirement()));
                         var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
                                                                              mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                                              mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
                                                                              mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PipelineStepStepRequirementModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPipelineStepStepRequirementRequestModel>()));
@@ -118,7 +115,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPipelineStepStepRequirementRepository>();
                         var model = new ApiPipelineStepStepRequirementRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new PipelineStepStepRequirementService(mock.LoggerMock.Object,
                                                                              mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                                              mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
                                                                              mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>03e8e68fd5f2cb1623fe64480844f9a1</Hash>
+    <Hash>8a6b0d3d29b9ded9ed097ec93af4cca0</Hash>
 </Codenesium>*/

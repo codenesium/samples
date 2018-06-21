@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Illustration")]
         [Trait("Area", "DALMapper")]
-        public class TestDALIllustrationActionMapper
+        public class TestDALIllustrationMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALIllustrationMapper();
-
                         var bo = new BOIllustration();
-
                         bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         Illustration response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALIllustrationMapper();
-
                         Illustration entity = new Illustration();
-
                         entity.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOIllustration  response = mapper.MapEFToBO(entity);
+                        BOIllustration response = mapper.MapEFToBO(entity);
 
                         response.Diagram.Should().Be("A");
                         response.IllustrationID.Should().Be(1);
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALIllustrationMapper();
-
                         Illustration entity = new Illustration();
-
                         entity.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOIllustration> response = mapper.MapEFToBO(new List<Illustration>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>31da704788bfd7fe92b7f0b85a36d6f9</Hash>
+    <Hash>a31425eb2d96f2e82d774137bf94f2f3</Hash>
 </Codenesium>*/

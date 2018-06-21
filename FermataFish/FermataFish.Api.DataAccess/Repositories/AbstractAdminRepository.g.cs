@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractAdminRepository: AbstractRepository
+        public abstract class AbstractAdminRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Studio> GetStudio(int studioId)
+                {
+                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
+                }
+
                 protected async Task<List<Admin>> Where(
                         Expression<Func<Admin, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Studio> GetStudio(int studioId)
-                {
-                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0b8e09c85b0bace54d32d6f5c1d3103f</Hash>
+    <Hash>a01ec218f911e964928a7d9f7beca785</Hash>
 </Codenesium>*/

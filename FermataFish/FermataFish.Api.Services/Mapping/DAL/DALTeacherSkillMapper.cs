@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALTeacherSkillMapper: DALAbstractTeacherSkillMapper, IDALTeacherSkillMapper
+        public class DALTeacherSkillMapper : DALAbstractTeacherSkillMapper, IDALTeacherSkillMapper
         {
                 public DALTeacherSkillMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01c563c308c8bc52bfe4e5b8e342bed3</Hash>
+    <Hash>65284a78adb37dd8d761a73ef05b29d3</Hash>
 </Codenesium>*/

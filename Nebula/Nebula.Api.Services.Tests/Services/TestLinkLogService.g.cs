@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILinkLogRepository>();
                         var record = new LinkLog();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new LinkLogService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
                                                          mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
-                        ApiLinkLogResponseModel response = await service.Get(default (int));
+                        ApiLinkLogResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
                                                          mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
-                        ApiLinkLogResponseModel response = await service.Get(default (int));
+                        ApiLinkLogResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILinkLogRepository>();
                         var model = new ApiLinkLogRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LinkLog>())).Returns(Task.FromResult(new LinkLog()));
                         var service = new LinkLogService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILinkLogRepository>();
                         var model = new ApiLinkLogRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LinkLog>())).Returns(Task.FromResult(new LinkLog()));
                         var service = new LinkLogService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
                                                          mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LinkLogModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>()));
@@ -118,7 +115,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILinkLogRepository>();
                         var model = new ApiLinkLogRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new LinkLogService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
                                                          mock.DALMapperMockFactory.DALLinkLogMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c66efe71dc92421d55fc4db593a8d3c0</Hash>
+    <Hash>ca209b7dba5383859cb09e3cf99b686c</Hash>
 </Codenesium>*/

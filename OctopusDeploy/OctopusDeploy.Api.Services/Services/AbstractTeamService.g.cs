@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractTeamService: AbstractService
+        public abstract class AbstractTeamService : AbstractService
         {
                 private ITeamRepository teamRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolTeamMapper,
-                        IDALTeamMapper dalTeamMapper
-
-                        )
+                        IDALTeamMapper dalTeamMapper)
                         : base()
-
                 {
                         this.teamRepository = teamRepository;
                         this.teamModelValidator = teamModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.teamModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTeamMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolTeamMapper.MapModelToBO(default(string), model);
                                 var record = await this.teamRepository.Create(this.dalTeamMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiTeamRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTeamMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.teamRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eebddcaec680d2f01dba5646c85aed82</Hash>
+    <Hash>96792724fb2d9fe19e227dfa4c36b10c</Hash>
 </Codenesium>*/

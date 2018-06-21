@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLPhoneNumberTypeMapper: BOLAbstractPhoneNumberTypeMapper, IBOLPhoneNumberTypeMapper
+        public class BOLPhoneNumberTypeMapper : BOLAbstractPhoneNumberTypeMapper, IBOLPhoneNumberTypeMapper
         {
                 public BOLPhoneNumberTypeMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2599643f2871d3afb1a4f94a8ff22e7f</Hash>
+    <Hash>eb0064844bd854d9aa49f59f1985af53</Hash>
 </Codenesium>*/

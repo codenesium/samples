@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
@@ -20,6 +20,7 @@ namespace TicketingCRMNS.Api.DataAccess
                 Task<List<Province>> GetCountryId(int countryId);
 
                 Task<List<City>> Cities(int provinceId, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<Venue>> Venues(int provinceId, int limit = int.MaxValue, int offset = 0);
 
                 Task<Country> GetCountry(int countryId);
@@ -27,5 +28,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4f2bfa075d6142db1677e5f3a2ab5cc6</Hash>
+    <Hash>91eaae1b01f8e2c47ed28d3597248761</Hash>
 </Codenesium>*/

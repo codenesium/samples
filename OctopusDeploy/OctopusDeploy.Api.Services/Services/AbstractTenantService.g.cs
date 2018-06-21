@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractTenantService: AbstractService
+        public abstract class AbstractTenantService : AbstractService
         {
                 private ITenantRepository tenantRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ITenantRepository tenantRepository,
                         IApiTenantRequestModelValidator tenantModelValidator,
                         IBOLTenantMapper bolTenantMapper,
-                        IDALTenantMapper dalTenantMapper
-
-                        )
+                        IDALTenantMapper dalTenantMapper)
                         : base()
-
                 {
                         this.tenantRepository = tenantRepository;
                         this.tenantModelValidator = tenantModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiTenantResponseModel> response = new CreateResponse<ApiTenantResponseModel>(await this.tenantModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTenantMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolTenantMapper.MapModelToBO(default(string), model);
                                 var record = await this.tenantRepository.Create(this.dalTenantMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiTenantRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.tenantModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTenantMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.tenantModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.tenantRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolTenantMapper.MapBOToModel(this.dalTenantMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiTenantResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<Tenant> records = await this.tenantRepository.GetDataVersion(dataVersion);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88274b0a92dbf84308bf280912f6902d</Hash>
+    <Hash>bba20021b0c69a49dc6464fc450c93f3</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSalesTerritory boSalesTerritory = new BOSalesTerritory();
-
                         boSalesTerritory.SetProperties(
                                 territoryID,
                                 model.CostLastYear,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73985ce6915ffab9ce5027c3206948a6</Hash>
+    <Hash>9eeeff7b53c61979db21455a3d437289</Hash>
 </Codenesium>*/

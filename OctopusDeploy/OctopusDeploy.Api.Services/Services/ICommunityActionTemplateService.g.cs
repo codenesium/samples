@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace OctopusDeployNS.Api.Services
                 Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiCommunityActionTemplateResponseModel> GetExternalId(Guid externalId);
+
                 Task<ApiCommunityActionTemplateResponseModel> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>05d22b15be49a8b5504247bcbe593df0</Hash>
+    <Hash>43b9edd2898288d32ee56fd358d62ad8</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiMachineRequestModelValidator: AbstractValidator<ApiMachineRequestModel>
+        public abstract class AbstractApiMachineRequestModelValidator : AbstractValidator<ApiMachineRequestModel>
         {
                 private string existingRecordId;
 
-                IMachineRepository machineRepository;
+                private IMachineRepository machineRepository;
 
                 public AbstractApiMachineRequestModelValidator(IMachineRepository machineRepository)
                 {
@@ -59,7 +59,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -89,7 +89,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Machine record = await this.machineRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -102,5 +102,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17e47a9d416555241c14000f2b4c3f38</Hash>
+    <Hash>edf3b01790a2ed680b3bde859d5b5769</Hash>
 </Codenesium>*/

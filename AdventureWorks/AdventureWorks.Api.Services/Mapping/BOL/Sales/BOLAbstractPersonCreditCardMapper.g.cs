@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOPersonCreditCard boPersonCreditCard = new BOPersonCreditCard();
-
                         boPersonCreditCard.SetProperties(
                                 businessEntityID,
                                 model.CreditCardID,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6896d5b9d5d17b44a2033115cb802069</Hash>
+    <Hash>5a98d22a3759fca66dc047e67ec0a243</Hash>
 </Codenesium>*/

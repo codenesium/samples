@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOAdmin bo)
                 {
                         Admin efAdmin = new Admin();
-
                         efAdmin.SetProperties(
                                 bo.Birthday,
                                 bo.Email,
@@ -56,5 +55,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2a6e04ab017dfc76805d5ae2a923c6b0</Hash>
+    <Hash>7a683c6e00fa412e0c1601f513bf8666</Hash>
 </Codenesium>*/

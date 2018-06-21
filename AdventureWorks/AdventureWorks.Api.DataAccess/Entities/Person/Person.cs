@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("Person", Schema="Person")]
-        public partial class Person:AbstractEntity
+        public partial class Person : AbstractEntity
         {
                 public Person()
                 {
@@ -42,48 +42,48 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Title = title;
                 }
 
-                [Column("AdditionalContactInfo", TypeName="xml(-1)")]
+                [Column("AdditionalContactInfo")]
                 public string AdditionalContactInfo { get; private set; }
 
                 [Key]
-                [Column("BusinessEntityID", TypeName="int")]
+                [Column("BusinessEntityID")]
                 public int BusinessEntityID { get; private set; }
 
-                [Column("Demographics", TypeName="xml(-1)")]
+                [Column("Demographics")]
                 public string Demographics { get; private set; }
 
-                [Column("EmailPromotion", TypeName="int")]
+                [Column("EmailPromotion")]
                 public int EmailPromotion { get; private set; }
 
-                [Column("FirstName", TypeName="nvarchar(50)")]
+                [Column("FirstName")]
                 public string FirstName { get; private set; }
 
-                [Column("LastName", TypeName="nvarchar(50)")]
+                [Column("LastName")]
                 public string LastName { get; private set; }
 
-                [Column("MiddleName", TypeName="nvarchar(50)")]
+                [Column("MiddleName")]
                 public string MiddleName { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("NameStyle", TypeName="bit")]
+                [Column("NameStyle")]
                 public bool NameStyle { get; private set; }
 
-                [Column("PersonType", TypeName="nchar(2)")]
+                [Column("PersonType")]
                 public string PersonType { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("Suffix", TypeName="nvarchar(10)")]
+                [Column("Suffix")]
                 public string Suffix { get; private set; }
 
-                [Column("Title", TypeName="nvarchar(8)")]
+                [Column("Title")]
                 public string Title { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>021249528cc4e56fbe5b1bbbbd7449be</Hash>
+    <Hash>292aee743f1f28a3f7eab58a34f51ed0</Hash>
 </Codenesium>*/

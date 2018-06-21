@@ -1,15 +1,15 @@
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IFileRepository>();
                         var record = new File();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new FileService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace FileServiceNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                       mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ApiFileResponseModel response = await service.Get(default (int));
+                        ApiFileResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace FileServiceNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                       mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ApiFileResponseModel response = await service.Get(default (int));
+                        ApiFileResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IFileRepository>();
                         var model = new ApiFileRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<File>())).Returns(Task.FromResult(new File()));
                         var service = new FileService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IFileRepository>();
                         var model = new ApiFileRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<File>())).Returns(Task.FromResult(new File()));
                         var service = new FileService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace FileServiceNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                       mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.FileModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()));
@@ -118,7 +115,6 @@ namespace FileServiceNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IFileRepository>();
                         var model = new ApiFileRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new FileService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace FileServiceNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLFileMapperMock,
                                                       mock.DALMapperMockFactory.DALFileMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bd58e73864d06d6cec724b1593a2e9cc</Hash>
+    <Hash>f0e599f4c4916a28a83d9894d50589eb</Hash>
 </Codenesium>*/

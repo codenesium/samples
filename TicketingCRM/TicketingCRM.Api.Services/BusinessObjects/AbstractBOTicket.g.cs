@@ -3,9 +3,10 @@ using System;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractBOTicket: AbstractBusinessObject
+        public abstract class AbstractBOTicket : AbstractBusinessObject
         {
-                public AbstractBOTicket() : base()
+                public AbstractBOTicket()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cf376e3f9d2053d4c2a00af528ccc715</Hash>
+    <Hash>8599378b0c29d3ee7bdb92dc3c935c46</Hash>
 </Codenesium>*/

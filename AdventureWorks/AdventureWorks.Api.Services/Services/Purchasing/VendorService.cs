@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,44 +7,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class VendorService: AbstractVendorService, IVendorService
+        public class VendorService : AbstractVendorService, IVendorService
         {
                 public VendorService(
                         ILogger<IVendorRepository> logger,
                         IVendorRepository vendorRepository,
                         IApiVendorRequestModelValidator vendorModelValidator,
                         IBOLVendorMapper bolvendorMapper,
-                        IDALVendorMapper dalvendorMapper
-                        ,
+                        IDALVendorMapper dalvendorMapper,
                         IBOLProductVendorMapper bolProductVendorMapper,
-                        IDALProductVendorMapper dalProductVendorMapper
-                        ,
+                        IDALProductVendorMapper dalProductVendorMapper,
                         IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
                         IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
-
                         )
                         : base(logger,
                                vendorRepository,
                                vendorModelValidator,
                                bolvendorMapper,
-                               dalvendorMapper
-                               ,
+                               dalvendorMapper,
                                bolProductVendorMapper,
-                               dalProductVendorMapper
-                               ,
+                               dalProductVendorMapper,
                                bolPurchaseOrderHeaderMapper,
-                               dalPurchaseOrderHeaderMapper
-                               )
+                               dalPurchaseOrderHeaderMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a0d6467787f659185932c641b7c03853</Hash>
+    <Hash>babf815f310444e8e36f3c3324b0caa7</Hash>
 </Codenesium>*/

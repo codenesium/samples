@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOPassword bo)
                 {
                         Password efPassword = new Password();
-
                         efPassword.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.ModifiedDate,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>999ec5dae4aafb2410fafb394826d88f</Hash>
+    <Hash>871e6058390251f2894139e1055d6980</Hash>
 </Codenesium>*/

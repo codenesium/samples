@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiLinkRequestModelValidator: AbstractValidator<ApiLinkRequestModel>
+        public abstract class AbstractApiLinkRequestModelValidator : AbstractValidator<ApiLinkRequestModel>
         {
                 private int existingRecordId;
 
-                ILinkRepository linkRepository;
+                private ILinkRepository linkRepository;
 
                 public AbstractApiLinkRequestModelValidator(ILinkRepository linkRepository)
                 {
@@ -28,12 +28,12 @@ namespace NebulaNS.Api.Services
 
                 public virtual void AssignedMachineIdRules()
                 {
-                        this.RuleFor(x => x.AssignedMachineId).MustAsync(this.BeValidMachine).When(x => x ?.AssignedMachineId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.AssignedMachineId).MustAsync(this.BeValidMachine).When(x => x?.AssignedMachineId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ChainIdRules()
                 {
-                        this.RuleFor(x => x.ChainId).MustAsync(this.BeValidChain).When(x => x ?.ChainId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ChainId).MustAsync(this.BeValidChain).When(x => x?.ChainId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void DateCompletedRules()
@@ -55,7 +55,7 @@ namespace NebulaNS.Api.Services
 
                 public virtual void LinkStatusIdRules()
                 {
-                        this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatus).When(x => x ?.LinkStatusId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatus).When(x => x?.LinkStatusId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NameRules()
@@ -106,5 +106,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb34bd3f88fa37c8479f5125139ea088</Hash>
+    <Hash>a621fd545399651baff096acf88fc266</Hash>
 </Codenesium>*/

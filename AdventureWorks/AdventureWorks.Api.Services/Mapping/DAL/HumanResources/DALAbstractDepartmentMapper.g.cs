@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BODepartment bo)
                 {
                         Department efDepartment = new Department();
-
                         efDepartment.SetProperties(
                                 bo.DepartmentID,
                                 bo.GroupName,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b87d926bc80041d24b54c19524ac95c</Hash>
+    <Hash>c56f8fa0a40397d1718813b72d6f2651</Hash>
 </Codenesium>*/

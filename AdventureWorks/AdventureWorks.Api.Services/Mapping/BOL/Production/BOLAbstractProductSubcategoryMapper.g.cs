@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductSubcategory boProductSubcategory = new BOProductSubcategory();
-
                         boProductSubcategory.SetProperties(
                                 productSubcategoryID,
                                 model.ModifiedDate,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6f7ec5984dc19a9d2c451cbab6c2ccc</Hash>
+    <Hash>7522906e7c8eaec87302b3c7ea93a417</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Release", Schema="dbo")]
-        public partial class Release: AbstractEntity
+        public partial class Release : AbstractEntity
         {
                 public Release()
                 {
@@ -32,33 +32,33 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Version = version;
                 }
 
-                [Column("Assembled", TypeName="datetimeoffset")]
+                [Column("Assembled")]
                 public DateTimeOffset Assembled { get; private set; }
 
-                [Column("ChannelId", TypeName="nvarchar(50)")]
+                [Column("ChannelId")]
                 public string ChannelId { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(150)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("ProjectDeploymentProcessSnapshotId", TypeName="nvarchar(150)")]
+                [Column("ProjectDeploymentProcessSnapshotId")]
                 public string ProjectDeploymentProcessSnapshotId { get; private set; }
 
-                [Column("ProjectId", TypeName="nvarchar(150)")]
+                [Column("ProjectId")]
                 public string ProjectId { get; private set; }
 
-                [Column("ProjectVariableSetSnapshotId", TypeName="nvarchar(150)")]
+                [Column("ProjectVariableSetSnapshotId")]
                 public string ProjectVariableSetSnapshotId { get; private set; }
 
-                [Column("Version", TypeName="nvarchar(100)")]
+                [Column("Version")]
                 public string Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a8c1b60ba9a84686ed794794860704cc</Hash>
+    <Hash>c9685f4986d976841406fcf26180ad62</Hash>
 </Codenesium>*/

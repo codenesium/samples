@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.Services;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
         [Route("api/states")]
         [ApiVersion("1.0")]
-        public class StateController: AbstractStateController
+        public class StateController : AbstractStateController
         {
                 public StateController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>40a31661b4e8f9f8ba65d3720aabe827</Hash>
+    <Hash>ed3275f161229f48a0436a7339c8cc18</Hash>
 </Codenesium>*/

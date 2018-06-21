@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/products")]
         [ApiVersion("1.0")]
-        public class ProductController: AbstractProductController
+        public class ProductController : AbstractProductController
         {
                 public ProductController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bff63ae051338807e69d13610a55d9c1</Hash>
+    <Hash>c5e3248219c863662d493fb2e6021e6f</Hash>
 </Codenesium>*/

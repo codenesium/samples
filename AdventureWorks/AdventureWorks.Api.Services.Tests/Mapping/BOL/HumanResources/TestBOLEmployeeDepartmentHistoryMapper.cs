@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "EmployeeDepartmentHistory")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLEmployeeDepartmentHistoryActionMapper
+        public class TestBOLEmployeeDepartmentHistoryMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLEmployeeDepartmentHistoryMapper();
-
                         ApiEmployeeDepartmentHistoryRequestModel model = new ApiEmployeeDepartmentHistoryRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOEmployeeDepartmentHistory response = mapper.MapModelToBO(1, model);
 
@@ -34,9 +32,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLEmployeeDepartmentHistoryMapper();
-
                         BOEmployeeDepartmentHistory bo = new BOEmployeeDepartmentHistory();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiEmployeeDepartmentHistoryResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLEmployeeDepartmentHistoryMapper();
-
                         BOEmployeeDepartmentHistory bo = new BOEmployeeDepartmentHistory();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiEmployeeDepartmentHistoryResponseModel> response = mapper.MapBOToModel(new List<BOEmployeeDepartmentHistory>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e68495dfe3b30849fe3ab239698e83ee</Hash>
+    <Hash>9be730fa6b9a47a0ea87a0e2a978e121</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "UserRole")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLUserRoleActionMapper
+        public class TestBOLUserRoleMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLUserRoleMapper();
-
                         ApiUserRoleRequestModel model = new ApiUserRoleRequestModel();
-
                         model.SetProperties("A", "A");
                         BOUserRole response = mapper.MapModelToBO("A", model);
 
@@ -31,9 +29,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLUserRoleMapper();
-
                         BOUserRole bo = new BOUserRole();
-
                         bo.SetProperties("A", "A", "A");
                         ApiUserRoleResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLUserRoleMapper();
-
                         BOUserRole bo = new BOUserRole();
-
                         bo.SetProperties("A", "A", "A");
                         List<ApiUserRoleResponseModel> response = mapper.MapBOToModel(new List<BOUserRole>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>04dc506549cefb8661ab88641a516f1a</Hash>
+    <Hash>22f43c7006e412139c709443ce7dd57b</Hash>
 </Codenesium>*/

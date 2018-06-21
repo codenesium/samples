@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BODestination bo)
                 {
                         Destination efDestination = new Destination();
-
                         efDestination.SetProperties(
                                 bo.CountryId,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1a730583ea4750916b9e789fab8bbc4</Hash>
+    <Hash>7d7b528619ea7226ecae278bf85dceaf</Hash>
 </Codenesium>*/

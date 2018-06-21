@@ -1,25 +1,10 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public class ReferenceEntity<T>
-        {
-                [JsonProperty(PropertyName = "Value")]
-                public T Value { get; private set; }
-
-                [JsonProperty(PropertyName = "Object")]
-                public string ReferenceObjectName { get; set; }
-
-                public ReferenceEntity(T value, string referenceObjectName)
-                {
-                        this.Value = value;
-                        this.ReferenceObjectName = referenceObjectName;
-                }
-        }
-
         public partial class ApiResponse
         {
                 public ApiResponse()
@@ -180,5 +165,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ae6bfb03717ade58f83c18310cdb39d0</Hash>
+    <Hash>25e11b7b274d7eca08f4f54cff9e4a31</Hash>
 </Codenesium>*/

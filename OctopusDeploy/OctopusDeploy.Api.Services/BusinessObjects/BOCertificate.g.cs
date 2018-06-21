@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOCertificate: AbstractBOCertificate
+        public partial class BOCertificate : AbstractBOCertificate
         {
-                public BOCertificate() : base()
+                public BOCertificate()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cba6aa39a9fbfab3c013e717e9a76743</Hash>
+    <Hash>8e0bfe02ffa7cd53619ed9a1c11d7481</Hash>
 </Codenesium>*/

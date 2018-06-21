@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("Department", Schema="HumanResources")]
-        public partial class Department: AbstractEntity
+        public partial class Department : AbstractEntity
         {
                 public Department()
                 {
@@ -25,20 +25,20 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("DepartmentID", TypeName="smallint")]
+                [Column("DepartmentID")]
                 public short DepartmentID { get; private set; }
 
-                [Column("GroupName", TypeName="nvarchar(50)")]
+                [Column("GroupName")]
                 public string GroupName { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>e9bf7bb41df9b59091364cf02c594b94</Hash>
+    <Hash>53eb7438edddf06b878e6d5193f0b830</Hash>
 </Codenesium>*/

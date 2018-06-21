@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractClientCommunicationService: AbstractService
+        public abstract class AbstractClientCommunicationService : AbstractService
         {
                 private IClientCommunicationRepository clientCommunicationRepository;
 
@@ -29,11 +29,8 @@ namespace PetShippingNS.Api.Services
                         IClientCommunicationRepository clientCommunicationRepository,
                         IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
                         IBOLClientCommunicationMapper bolClientCommunicationMapper,
-                        IDALClientCommunicationMapper dalClientCommunicationMapper
-
-                        )
+                        IDALClientCommunicationMapper dalClientCommunicationMapper)
                         : base()
-
                 {
                         this.clientCommunicationRepository = clientCommunicationRepository;
                         this.clientCommunicationModelValidator = clientCommunicationModelValidator;
@@ -69,7 +66,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiClientCommunicationResponseModel> response = new CreateResponse<ApiClientCommunicationResponseModel>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolClientCommunicationMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolClientCommunicationMapper.MapModelToBO(default(int), model);
                                 var record = await this.clientCommunicationRepository.Create(this.dalClientCommunicationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace PetShippingNS.Api.Services
                         ApiClientCommunicationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.clientCommunicationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolClientCommunicationMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.clientCommunicationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.clientCommunicationRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16dadf55f973fac8c0ae903d96abb8b4</Hash>
+    <Hash>a51b0f11a8201c9800b94408e5f0e3d1</Hash>
 </Codenesium>*/

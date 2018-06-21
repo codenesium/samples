@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new VariableSetRepository(loggerMoc.Object, context);
 
                         VariableSet entity = new VariableSet();
-
                         context.Set<VariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new VariableSetRepository(loggerMoc.Object, context);
 
                         VariableSet entity = new VariableSet();
-
                         context.Set<VariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new VariableSetRepository(loggerMoc.Object, context);
 
                         var entity = new VariableSet();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<VariableSet>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
                         var repository = new VariableSetRepository(loggerMoc.Object, context);
-
                         VariableSet entity = new VariableSet();
-
                         context.Set<VariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
                         var repository = new VariableSetRepository(loggerMoc.Object, context);
-
                         VariableSet entity = new VariableSet();
-
                         context.Set<VariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<VariableSetRepository>> loggerMoc = VariableSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VariableSetRepositoryMoc.GetContext();
                         var repository = new VariableSetRepository(loggerMoc.Object, context);
-
                         VariableSet entity = new VariableSet();
-
                         context.Set<VariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         VariableSet modifiedRecord = await context.Set<VariableSet>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1c58d405bd9b2d945507841b757a6033</Hash>
+    <Hash>6b25c5ce01820ba1857bed201cf43a59</Hash>
 </Codenesium>*/

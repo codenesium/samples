@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiProductInventoryRequestModelValidator: AbstractValidator<ApiProductInventoryRequestModel>
+        public abstract class AbstractApiProductInventoryRequestModelValidator : AbstractValidator<ApiProductInventoryRequestModel>
         {
                 private int existingRecordId;
 
-                IProductInventoryRepository productInventoryRepository;
+                private IProductInventoryRepository productInventoryRepository;
 
                 public AbstractApiProductInventoryRequestModelValidator(IProductInventoryRepository productInventoryRepository)
                 {
@@ -55,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a49becce6aaef7d6d5342ced66acee93</Hash>
+    <Hash>e477b415a4047b6c3391a7b95f720443</Hash>
 </Codenesium>*/

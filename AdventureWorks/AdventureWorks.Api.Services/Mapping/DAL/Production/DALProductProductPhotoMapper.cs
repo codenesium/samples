@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALProductProductPhotoMapper: DALAbstractProductProductPhotoMapper, IDALProductProductPhotoMapper
+        public class DALProductProductPhotoMapper : DALAbstractProductProductPhotoMapper, IDALProductProductPhotoMapper
         {
                 public DALProductProductPhotoMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd9790a1ef618d2679d84dbd5038a6db</Hash>
+    <Hash>d97971d76a594b86074a9a6ebdff3269</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
 
                         StudentXFamily entity = new StudentXFamily();
-
                         context.Set<StudentXFamily>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
 
                         StudentXFamily entity = new StudentXFamily();
-
                         context.Set<StudentXFamily>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
 
                         var entity = new StudentXFamily();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<StudentXFamily>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
                         var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
-
                         StudentXFamily entity = new StudentXFamily();
-
                         context.Set<StudentXFamily>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
                         var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
-
                         StudentXFamily entity = new StudentXFamily();
-
                         context.Set<StudentXFamily>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<StudentXFamilyRepository>> loggerMoc = StudentXFamilyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StudentXFamilyRepositoryMoc.GetContext();
                         var repository = new StudentXFamilyRepository(loggerMoc.Object, context);
-
                         StudentXFamily entity = new StudentXFamily();
-
                         context.Set<StudentXFamily>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         StudentXFamily modifiedRecord = await context.Set<StudentXFamily>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>acc4a3b43975670066308ac06a6ac6a2</Hash>
+    <Hash>1f578ac34829db2060d50ae91d7f960b</Hash>
 </Codenesium>*/

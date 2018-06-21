@@ -3,14 +3,15 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOVersionInfo: AbstractBOVersionInfo
+        public partial class BOVersionInfo : AbstractBOVersionInfo
         {
-                public BOVersionInfo() : base()
+                public BOVersionInfo()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f4b22a84a66adc22957e20f5faa8b765</Hash>
+    <Hash>535b145ce498b0c095033ccb0e9a1c4f</Hash>
 </Codenesium>*/

@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/passwords")]
         [ApiVersion("1.0")]
-        public class PasswordController: AbstractPasswordController
+        public class PasswordController : AbstractPasswordController
         {
                 public PasswordController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>608699bd7069a5070fc6f49f4f12912d</Hash>
+    <Hash>be41c5a223fd824cd1b594e2f381acb4</Hash>
 </Codenesium>*/

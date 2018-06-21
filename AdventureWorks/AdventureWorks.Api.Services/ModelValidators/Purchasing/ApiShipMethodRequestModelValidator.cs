@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiShipMethodRequestModelValidator: AbstractApiShipMethodRequestModelValidator, IApiShipMethodRequestModelValidator
+        public class ApiShipMethodRequestModelValidator : AbstractApiShipMethodRequestModelValidator, IApiShipMethodRequestModelValidator
         {
                 public ApiShipMethodRequestModelValidator(IShipMethodRepository shipMethodRepository)
                         : base(shipMethodRepository)
@@ -35,11 +35,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>95a96b15c05674fa46ae5f6ba7433a2d</Hash>
+    <Hash>3bc3b840b2cbfad1d76cddef5ac33062</Hash>
 </Codenesium>*/

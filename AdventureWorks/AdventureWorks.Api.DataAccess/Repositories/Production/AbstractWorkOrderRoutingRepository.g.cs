@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractWorkOrderRoutingRepository: AbstractRepository
+        public abstract class AbstractWorkOrderRoutingRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa2250b3d2d687e0023e8726c45cac5f</Hash>
+    <Hash>b3a08b62c3b9faa764d23416cc39759c</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiMachineRequestModelValidator: AbstractValidator<ApiMachineRequestModel>
+        public abstract class AbstractApiMachineRequestModelValidator : AbstractValidator<ApiMachineRequestModel>
         {
                 private int existingRecordId;
 
-                IMachineRepository machineRepository;
+                private IMachineRepository machineRepository;
 
                 public AbstractApiMachineRequestModelValidator(IMachineRepository machineRepository)
                 {
@@ -57,5 +57,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e975dabb3db5e4d44da63e9372e883a</Hash>
+    <Hash>8d0e06bcb5255021a89d4821c893b11f</Hash>
 </Codenesium>*/

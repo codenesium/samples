@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiMutexRequestModelValidator: AbstractApiMutexRequestModelValidator, IApiMutexRequestModelValidator
+        public class ApiMutexRequestModelValidator : AbstractApiMutexRequestModelValidator, IApiMutexRequestModelValidator
         {
                 public ApiMutexRequestModelValidator(IMutexRepository mutexRepository)
                         : base(mutexRepository)
@@ -27,11 +27,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7ce9bd53c8eb79e0ec125992708db821</Hash>
+    <Hash>b419ece71b15f3e1623137880cb0d2c7</Hash>
 </Codenesium>*/

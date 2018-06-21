@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOMachine bo)
                 {
                         Machine efMachine = new Machine();
-
                         efMachine.SetProperties(
                                 bo.Description,
                                 bo.Id,
@@ -54,5 +53,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>196f7f60d0bd7334216b645823e5545b</Hash>
+    <Hash>1541f3a5417b42e4e346195893ef96e0</Hash>
 </Codenesium>*/

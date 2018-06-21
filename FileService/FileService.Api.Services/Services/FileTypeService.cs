@@ -1,42 +1,38 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public class FileTypeService: AbstractFileTypeService, IFileTypeService
+        public class FileTypeService : AbstractFileTypeService, IFileTypeService
         {
                 public FileTypeService(
                         ILogger<IFileTypeRepository> logger,
                         IFileTypeRepository fileTypeRepository,
                         IApiFileTypeRequestModelValidator fileTypeModelValidator,
                         IBOLFileTypeMapper bolfileTypeMapper,
-                        IDALFileTypeMapper dalfileTypeMapper
-                        ,
+                        IDALFileTypeMapper dalfileTypeMapper,
                         IBOLFileMapper bolFileMapper,
                         IDALFileMapper dalFileMapper
-
                         )
                         : base(logger,
                                fileTypeRepository,
                                fileTypeModelValidator,
                                bolfileTypeMapper,
-                               dalfileTypeMapper
-                               ,
+                               dalfileTypeMapper,
                                bolFileMapper,
-                               dalFileMapper
-                               )
+                               dalFileMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f7ef59a558136940bbcce44325e98748</Hash>
+    <Hash>55adb4a5bf489c500bcfe3e0ec40f821</Hash>
 </Codenesium>*/

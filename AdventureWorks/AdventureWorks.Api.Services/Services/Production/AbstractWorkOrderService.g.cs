@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractWorkOrderService: AbstractService
+        public abstract class AbstractWorkOrderService : AbstractService
         {
                 private IWorkOrderRepository workOrderRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IWorkOrderRepository workOrderRepository,
                         IApiWorkOrderRequestModelValidator workOrderModelValidator,
                         IBOLWorkOrderMapper bolWorkOrderMapper,
-                        IDALWorkOrderMapper dalWorkOrderMapper
-
-                        ,
+                        IDALWorkOrderMapper dalWorkOrderMapper,
                         IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
-                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
-
-                        )
+                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
                         : base()
-
                 {
                         this.workOrderRepository = workOrderRepository;
                         this.workOrderModelValidator = workOrderModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiWorkOrderResponseModel> response = new CreateResponse<ApiWorkOrderResponseModel>(await this.workOrderModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolWorkOrderMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolWorkOrderMapper.MapModelToBO(default(int), model);
                                 var record = await this.workOrderRepository.Create(this.dalWorkOrderMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiWorkOrderRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.workOrderModelValidator.ValidateUpdateAsync(workOrderID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolWorkOrderMapper.MapModelToBO(workOrderID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int workOrderID)
                 {
                         ActionResponse response = new ActionResponse(await this.workOrderModelValidator.ValidateDeleteAsync(workOrderID));
-
                         if (response.Success)
                         {
                                 await this.workOrderRepository.Delete(workOrderID);
@@ -122,6 +115,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(Nullable<short> scrapReasonID)
                 {
                         List<WorkOrder> records = await this.workOrderRepository.ByScrapReasonID(scrapReasonID);
@@ -139,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ffe7a699d1502b677aeb9db9a3110bc</Hash>
+    <Hash>513083736776feeb2604a049537b9722</Hash>
 </Codenesium>*/

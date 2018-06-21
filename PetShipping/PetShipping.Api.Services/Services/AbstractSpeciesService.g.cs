@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractSpeciesService: AbstractService
+        public abstract class AbstractSpeciesService : AbstractService
         {
                 private ISpeciesRepository speciesRepository;
 
@@ -33,15 +33,10 @@ namespace PetShippingNS.Api.Services
                         ISpeciesRepository speciesRepository,
                         IApiSpeciesRequestModelValidator speciesModelValidator,
                         IBOLSpeciesMapper bolSpeciesMapper,
-                        IDALSpeciesMapper dalSpeciesMapper
-
-                        ,
+                        IDALSpeciesMapper dalSpeciesMapper,
                         IBOLBreedMapper bolBreedMapper,
-                        IDALBreedMapper dalBreedMapper
-
-                        )
+                        IDALBreedMapper dalBreedMapper)
                         : base()
-
                 {
                         this.speciesRepository = speciesRepository;
                         this.speciesModelValidator = speciesModelValidator;
@@ -79,7 +74,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiSpeciesResponseModel> response = new CreateResponse<ApiSpeciesResponseModel>(await this.speciesModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSpeciesMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSpeciesMapper.MapModelToBO(default(int), model);
                                 var record = await this.speciesRepository.Create(this.dalSpeciesMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace PetShippingNS.Api.Services
                         ApiSpeciesRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.speciesModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSpeciesMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.speciesModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.speciesRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a191514b79d022d755178600a3378ca</Hash>
+    <Hash>3131fc0286b29e8fc5dec6d777296fb7</Hash>
 </Codenesium>*/

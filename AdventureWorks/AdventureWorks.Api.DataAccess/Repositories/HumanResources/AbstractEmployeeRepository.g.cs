@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractEmployeeRepository: AbstractRepository
+        public abstract class AbstractEmployeeRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,27 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<Employee> ByNationalIDNumber(string nationalIDNumber)
                 {
                         var records = await this.Where(x => x.NationalIDNumber == nationalIDNumber);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
+                }
+
+                public async virtual Task<List<EmployeePayHistory>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<EmployeePayHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
+                }
+
+                public async virtual Task<List<JobCandidate>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<JobCandidate>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<JobCandidate>();
                 }
 
                 protected async Task<List<Employee>> Where(
@@ -117,22 +133,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
-                }
-                public async virtual Task<List<EmployeePayHistory>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<EmployeePayHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeePayHistory>();
-                }
-                public async virtual Task<List<JobCandidate>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<JobCandidate>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<JobCandidate>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>26fc65938ea12b146b6aa01c575c31ed</Hash>
+    <Hash>ece220793159da283848187dab23d028</Hash>
 </Codenesium>*/

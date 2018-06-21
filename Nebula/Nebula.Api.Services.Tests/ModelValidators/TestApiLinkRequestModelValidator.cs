@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.AssignedMachineId, 1);
@@ -57,8 +56,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.AssignedMachineId, 1);
                 }
@@ -71,7 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AssignedMachineId, 1);
                 }
@@ -83,7 +81,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ChainId, 1);
@@ -109,8 +106,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ChainId, 1);
                 }
@@ -123,7 +119,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChainId, 1);
                 }
@@ -135,7 +131,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.GetLinkStatus(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(new LinkStatus()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LinkStatusId, 1);
@@ -161,8 +156,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.GetLinkStatus(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(new LinkStatus()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LinkStatusId, 1);
                 }
@@ -175,7 +169,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LinkStatusId, 1);
                 }
@@ -187,7 +181,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -200,8 +193,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -213,7 +205,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -226,8 +217,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -239,8 +229,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
 
                         var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -248,5 +237,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1e213ae028e2fd989247237d13842303</Hash>
+    <Hash>970662c432960c1d781ff6191b015985</Hash>
 </Codenesium>*/

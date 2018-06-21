@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALUserRoleMapper: DALAbstractUserRoleMapper, IDALUserRoleMapper
+        public class DALUserRoleMapper : DALAbstractUserRoleMapper, IDALUserRoleMapper
         {
                 public DALUserRoleMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f2373a607e5d0527d972df8d8a75c402</Hash>
+    <Hash>1f10478397029249bdf0d02be64efcd0</Hash>
 </Codenesium>*/

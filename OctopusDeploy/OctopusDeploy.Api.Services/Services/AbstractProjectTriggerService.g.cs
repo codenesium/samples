@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractProjectTriggerService: AbstractService
+        public abstract class AbstractProjectTriggerService : AbstractService
         {
                 private IProjectTriggerRepository projectTriggerRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IProjectTriggerRepository projectTriggerRepository,
                         IApiProjectTriggerRequestModelValidator projectTriggerModelValidator,
                         IBOLProjectTriggerMapper bolProjectTriggerMapper,
-                        IDALProjectTriggerMapper dalProjectTriggerMapper
-
-                        )
+                        IDALProjectTriggerMapper dalProjectTriggerMapper)
                         : base()
-
                 {
                         this.projectTriggerRepository = projectTriggerRepository;
                         this.projectTriggerModelValidator = projectTriggerModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiProjectTriggerResponseModel> response = new CreateResponse<ApiProjectTriggerResponseModel>(await this.projectTriggerModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProjectTriggerMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolProjectTriggerMapper.MapModelToBO(default(string), model);
                                 var record = await this.projectTriggerRepository.Create(this.dalProjectTriggerMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiProjectTriggerRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.projectTriggerModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProjectTriggerMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.projectTriggerModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.projectTriggerRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiProjectTriggerResponseModel>> GetProjectId(string projectId)
                 {
                         List<ProjectTrigger> records = await this.projectTriggerRepository.GetProjectId(projectId);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe053dfac3309e966e68dd0ee85386cc</Hash>
+    <Hash>f0d8f211336a512036cd2bd80dbb0ae9</Hash>
 </Codenesium>*/

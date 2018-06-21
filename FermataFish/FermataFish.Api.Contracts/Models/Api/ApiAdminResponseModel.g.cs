@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiAdminResponseModel: AbstractApiAdminResponseModel
+        public partial class ApiAdminResponseModel : AbstractApiAdminResponseModel
         {
                 public ApiAdminResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c42f6ca90dc20e166c32649ab7a9384b</Hash>
+    <Hash>188ed19128e68620b7e41da7576efcff</Hash>
 </Codenesium>*/

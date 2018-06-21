@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiAirTransportRequestModelValidator: AbstractValidator<ApiAirTransportRequestModel>
+        public abstract class AbstractApiAirTransportRequestModelValidator : AbstractValidator<ApiAirTransportRequestModel>
         {
                 private int existingRecordId;
 
-                IAirTransportRepository airTransportRepository;
+                private IAirTransportRepository airTransportRepository;
 
                 public AbstractApiAirTransportRequestModelValidator(IAirTransportRepository airTransportRepository)
                 {
@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void HandlerIdRules()
                 {
-                        this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x ?.HandlerId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x?.HandlerId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void IdRules()
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7035234c55e235e106ed45dc9d41ff43</Hash>
+    <Hash>b1660135a2471bc3ffdbd0ee3a9dae48</Hash>
 </Codenesium>*/

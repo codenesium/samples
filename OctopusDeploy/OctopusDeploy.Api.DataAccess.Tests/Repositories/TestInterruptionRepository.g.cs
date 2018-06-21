@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new InterruptionRepository(loggerMoc.Object, context);
 
                         Interruption entity = new Interruption();
-
                         context.Set<Interruption>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new InterruptionRepository(loggerMoc.Object, context);
 
                         Interruption entity = new Interruption();
-
                         context.Set<Interruption>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new InterruptionRepository(loggerMoc.Object, context);
 
                         var entity = new Interruption();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Interruption>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<InterruptionRepository>> loggerMoc = InterruptionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = InterruptionRepositoryMoc.GetContext();
                         var repository = new InterruptionRepository(loggerMoc.Object, context);
-
                         Interruption entity = new Interruption();
-
                         context.Set<Interruption>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<InterruptionRepository>> loggerMoc = InterruptionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = InterruptionRepositoryMoc.GetContext();
                         var repository = new InterruptionRepository(loggerMoc.Object, context);
-
                         Interruption entity = new Interruption();
-
                         context.Set<Interruption>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<InterruptionRepository>> loggerMoc = InterruptionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = InterruptionRepositoryMoc.GetContext();
                         var repository = new InterruptionRepository(loggerMoc.Object, context);
-
                         Interruption entity = new Interruption();
-
                         context.Set<Interruption>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Interruption modifiedRecord = await context.Set<Interruption>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e6084157ff135f258520d2c03bf291f9</Hash>
+    <Hash>2253c6a11a79568697e2a5cf79b31da5</Hash>
 </Codenesium>*/

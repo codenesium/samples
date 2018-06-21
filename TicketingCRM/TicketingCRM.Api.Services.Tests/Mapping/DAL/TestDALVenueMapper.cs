@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Venue")]
         [Trait("Area", "DALMapper")]
-        public class TestDALVenueActionMapper
+        public class TestDALVenueMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALVenueMapper();
-
                         var bo = new BOVenue();
-
                         bo.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
 
                         Venue response = mapper.MapBOToEF(bo);
@@ -39,12 +37,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALVenueMapper();
-
                         Venue entity = new Venue();
-
                         entity.SetProperties("A", "A", 1, "A", "A", 1, "A", "A", 1, "A");
 
-                        BOVenue  response = mapper.MapEFToBO(entity);
+                        BOVenue response = mapper.MapEFToBO(entity);
 
                         response.Address1.Should().Be("A");
                         response.Address2.Should().Be("A");
@@ -62,9 +58,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALVenueMapper();
-
                         Venue entity = new Venue();
-
                         entity.SetProperties("A", "A", 1, "A", "A", 1, "A", "A", 1, "A");
 
                         List<BOVenue> response = mapper.MapEFToBO(new List<Venue>() { entity });
@@ -75,5 +69,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b24cbc0b6c6b3229992802341f57826a</Hash>
+    <Hash>bfd996805057aecc7633d8688c331db9</Hash>
 </Codenesium>*/

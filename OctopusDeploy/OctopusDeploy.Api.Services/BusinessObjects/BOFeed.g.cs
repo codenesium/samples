@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOFeed:AbstractBOFeed
+        public partial class BOFeed : AbstractBOFeed
         {
-                public BOFeed() : base()
+                public BOFeed()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cb3df227bf6a34806114bee70bdde262</Hash>
+    <Hash>b24523f9f8be7ad33f3e40efa33c808d</Hash>
 </Codenesium>*/

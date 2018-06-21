@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractShipMethodService: AbstractService
+        public abstract class AbstractShipMethodService : AbstractService
         {
                 private IShipMethodRepository shipMethodRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IShipMethodRepository shipMethodRepository,
                         IApiShipMethodRequestModelValidator shipMethodModelValidator,
                         IBOLShipMethodMapper bolShipMethodMapper,
-                        IDALShipMethodMapper dalShipMethodMapper
-
-                        ,
+                        IDALShipMethodMapper dalShipMethodMapper,
                         IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
-                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
-
-                        )
+                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
                         : base()
-
                 {
                         this.shipMethodRepository = shipMethodRepository;
                         this.shipMethodModelValidator = shipMethodModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiShipMethodResponseModel> response = new CreateResponse<ApiShipMethodResponseModel>(await this.shipMethodModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolShipMethodMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolShipMethodMapper.MapModelToBO(default(int), model);
                                 var record = await this.shipMethodRepository.Create(this.dalShipMethodMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiShipMethodRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.shipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolShipMethodMapper.MapModelToBO(shipMethodID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int shipMethodID)
                 {
                         ActionResponse response = new ActionResponse(await this.shipMethodModelValidator.ValidateDeleteAsync(shipMethodID));
-
                         if (response.Success)
                         {
                                 await this.shipMethodRepository.Delete(shipMethodID);
@@ -140,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c414effd478d8311e6f56e620d5476b4</Hash>
+    <Hash>c95a82cbab91a64b458bec863569e423</Hash>
 </Codenesium>*/

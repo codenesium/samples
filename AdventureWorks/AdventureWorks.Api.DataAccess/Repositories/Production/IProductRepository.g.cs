@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -18,19 +18,27 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<List<Product>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Product> ByName(string name);
+
                 Task<Product> ByProductNumber(string productNumber);
 
                 Task<List<BillOfMaterials>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ProductInventory>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ProductListPriceHistory>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ProductProductPhoto>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ProductReview>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<TransactionHistory>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<WorkOrder>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>e3fc3041c32a140d8b3512cab6658cda</Hash>
+    <Hash>0de705e0269b327524018b69a891725c</Hash>
 </Codenesium>*/

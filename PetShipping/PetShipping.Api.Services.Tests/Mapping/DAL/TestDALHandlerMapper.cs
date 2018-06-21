@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Handler")]
         [Trait("Area", "DALMapper")]
-        public class TestDALHandlerActionMapper
+        public class TestDALHandlerMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALHandlerMapper();
-
                         var bo = new BOHandler();
-
                         bo.SetProperties(1, 1, "A", "A", "A", "A");
 
                         Handler response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALHandlerMapper();
-
                         Handler entity = new Handler();
-
                         entity.SetProperties(1, "A", "A", 1, "A", "A");
 
-                        BOHandler  response = mapper.MapEFToBO(entity);
+                        BOHandler response = mapper.MapEFToBO(entity);
 
                         response.CountryId.Should().Be(1);
                         response.Email.Should().Be("A");
@@ -54,9 +50,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALHandlerMapper();
-
                         Handler entity = new Handler();
-
                         entity.SetProperties(1, "A", "A", 1, "A", "A");
 
                         List<BOHandler> response = mapper.MapEFToBO(new List<Handler>() { entity });
@@ -67,5 +61,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b2bae51a5406d069dfa94263c1cb0260</Hash>
+    <Hash>5d8d1dd5471e2335fb6beae1ea91f03f</Hash>
 </Codenesium>*/

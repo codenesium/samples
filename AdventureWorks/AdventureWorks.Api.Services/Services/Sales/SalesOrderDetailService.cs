@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class SalesOrderDetailService: AbstractSalesOrderDetailService, ISalesOrderDetailService
+        public class SalesOrderDetailService : AbstractSalesOrderDetailService, ISalesOrderDetailService
         {
                 public SalesOrderDetailService(
                         ILogger<ISalesOrderDetailRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
                         IBOLSalesOrderDetailMapper bolsalesOrderDetailMapper,
                         IDALSalesOrderDetailMapper dalsalesOrderDetailMapper
-
                         )
                         : base(logger,
                                salesOrderDetailRepository,
                                salesOrderDetailModelValidator,
                                bolsalesOrderDetailMapper,
-                               dalsalesOrderDetailMapper
-                               )
+                               dalsalesOrderDetailMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>11d68fa0f010e8af1d21a1b8fcad0a5e</Hash>
+    <Hash>8c96b9defba05645782642318f9de934</Hash>
 </Codenesium>*/

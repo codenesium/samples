@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSalesOrderDetailService: AbstractService
+        public abstract class AbstractSalesOrderDetailService : AbstractService
         {
                 private ISalesOrderDetailRepository salesOrderDetailRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         ISalesOrderDetailRepository salesOrderDetailRepository,
                         IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator,
                         IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-                        IDALSalesOrderDetailMapper dalSalesOrderDetailMapper
-
-                        )
+                        IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
                         : base()
-
                 {
                         this.salesOrderDetailRepository = salesOrderDetailRepository;
                         this.salesOrderDetailModelValidator = salesOrderDetailModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiSalesOrderDetailResponseModel> response = new CreateResponse<ApiSalesOrderDetailResponseModel>(await this.salesOrderDetailModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSalesOrderDetailMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSalesOrderDetailMapper.MapModelToBO(default(int), model);
                                 var record = await this.salesOrderDetailRepository.Create(this.dalSalesOrderDetailMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiSalesOrderDetailRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.salesOrderDetailModelValidator.ValidateUpdateAsync(salesOrderID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSalesOrderDetailMapper.MapModelToBO(salesOrderID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int salesOrderID)
                 {
                         ActionResponse response = new ActionResponse(await this.salesOrderDetailModelValidator.ValidateDeleteAsync(salesOrderID));
-
                         if (response.Success)
                         {
                                 await this.salesOrderDetailRepository.Delete(salesOrderID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f381669e5ebe6a5ce1093a1285613fa5</Hash>
+    <Hash>6418bc4ea6a3502d65a1441d2eb8952a</Hash>
 </Codenesium>*/

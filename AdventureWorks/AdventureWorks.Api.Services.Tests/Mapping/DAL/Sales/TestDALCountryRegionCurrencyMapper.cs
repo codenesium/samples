@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CountryRegionCurrency")]
         [Trait("Area", "DALMapper")]
-        public class TestDALCountryRegionCurrencyActionMapper
+        public class TestDALCountryRegionCurrencyMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALCountryRegionCurrencyMapper();
-
                         var bo = new BOCountryRegionCurrency();
-
                         bo.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         CountryRegionCurrency response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALCountryRegionCurrencyMapper();
-
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         entity.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOCountryRegionCurrency  response = mapper.MapEFToBO(entity);
+                        BOCountryRegionCurrency response = mapper.MapEFToBO(entity);
 
                         response.CountryRegionCode.Should().Be("A");
                         response.CurrencyCode.Should().Be("A");
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALCountryRegionCurrencyMapper();
-
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         entity.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOCountryRegionCurrency> response = mapper.MapEFToBO(new List<CountryRegionCurrency>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>62ae0ab6054efa6af625a29b60cdfe3a</Hash>
+    <Hash>91a80912a5e427702cd173e8b1d1fbd5</Hash>
 </Codenesium>*/

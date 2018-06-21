@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOProxy boProxy = new BOProxy();
-
                         boProxy.SetProperties(
                                 id,
                                 model.JSON,
@@ -47,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66eb1445eed88beb4ed6cde2c2d0a818</Hash>
+    <Hash>ab90139a570b31911d31a5fa722d67f5</Hash>
 </Codenesium>*/

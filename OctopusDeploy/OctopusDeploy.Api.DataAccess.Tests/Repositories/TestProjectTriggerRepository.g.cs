@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProjectTriggerRepository(loggerMoc.Object, context);
 
                         ProjectTrigger entity = new ProjectTrigger();
-
                         context.Set<ProjectTrigger>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProjectTriggerRepository(loggerMoc.Object, context);
 
                         ProjectTrigger entity = new ProjectTrigger();
-
                         context.Set<ProjectTrigger>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProjectTriggerRepository(loggerMoc.Object, context);
 
                         var entity = new ProjectTrigger();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProjectTrigger>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProjectTriggerRepository>> loggerMoc = ProjectTriggerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProjectTriggerRepositoryMoc.GetContext();
                         var repository = new ProjectTriggerRepository(loggerMoc.Object, context);
-
                         ProjectTrigger entity = new ProjectTrigger();
-
                         context.Set<ProjectTrigger>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProjectTriggerRepository>> loggerMoc = ProjectTriggerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProjectTriggerRepositoryMoc.GetContext();
                         var repository = new ProjectTriggerRepository(loggerMoc.Object, context);
-
                         ProjectTrigger entity = new ProjectTrigger();
-
                         context.Set<ProjectTrigger>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProjectTriggerRepository>> loggerMoc = ProjectTriggerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProjectTriggerRepositoryMoc.GetContext();
                         var repository = new ProjectTriggerRepository(loggerMoc.Object, context);
-
                         ProjectTrigger entity = new ProjectTrigger();
-
                         context.Set<ProjectTrigger>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ProjectTrigger modifiedRecord = await context.Set<ProjectTrigger>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>66c03229b23cff6dc99952d85831b6a0</Hash>
+    <Hash>7fa9e8452d0c4f0b07a104feec8d68db</Hash>
 </Codenesium>*/

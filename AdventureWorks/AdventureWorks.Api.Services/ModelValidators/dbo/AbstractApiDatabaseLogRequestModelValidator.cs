@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiDatabaseLogRequestModelValidator: AbstractValidator<ApiDatabaseLogRequestModel>
+        public abstract class AbstractApiDatabaseLogRequestModelValidator : AbstractValidator<ApiDatabaseLogRequestModel>
         {
                 private int existingRecordId;
 
-                IDatabaseLogRepository databaseLogRepository;
+                private IDatabaseLogRepository databaseLogRepository;
 
                 public AbstractApiDatabaseLogRequestModelValidator(IDatabaseLogRepository databaseLogRepository)
                 {
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a8d498af93919e5f96656139f8ab970</Hash>
+    <Hash>7d1a1b3539ef002e2187299b27de9731</Hash>
 </Codenesium>*/

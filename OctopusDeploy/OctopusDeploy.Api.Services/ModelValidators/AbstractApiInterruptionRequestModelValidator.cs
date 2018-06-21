@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiInterruptionRequestModelValidator: AbstractValidator<ApiInterruptionRequestModel>
+        public abstract class AbstractApiInterruptionRequestModelValidator : AbstractValidator<ApiInterruptionRequestModel>
         {
                 private string existingRecordId;
 
-                IInterruptionRepository interruptionRepository;
+                private IInterruptionRepository interruptionRepository;
 
                 public AbstractApiInterruptionRequestModelValidator(IInterruptionRepository interruptionRepository)
                 {
@@ -83,5 +83,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>68b72111065bb34b215f3cde094b93c2</Hash>
+    <Hash>699960c6940c2f8b34fb6b7019bfb792</Hash>
 </Codenesium>*/

@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiVersionInfoRequestModel: AbstractApiRequestModel
+        public partial class ApiVersionInfoRequestModel : AbstractApiRequestModel
         {
-                public ApiVersionInfoRequestModel() : base()
+                public ApiVersionInfoRequestModel()
+                        : base()
                 {
                 }
 
@@ -53,5 +54,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>97d989221ac1a96211d3a6ed651ca04b</Hash>
+    <Hash>2020ce5a18286931fd60f14160ed571f</Hash>
 </Codenesium>*/

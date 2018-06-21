@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractApiPetRequestModelValidator: AbstractValidator<ApiPetRequestModel>
+        public abstract class AbstractApiPetRequestModelValidator : AbstractValidator<ApiPetRequestModel>
         {
                 private int existingRecordId;
 
-                IPetRepository petRepository;
+                private IPetRepository petRepository;
 
                 public AbstractApiPetRequestModelValidator(IPetRepository petRepository)
                 {
@@ -32,7 +32,7 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void BreedIdRules()
                 {
-                        this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x ?.BreedId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x?.BreedId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void DescriptionRules()
@@ -43,7 +43,7 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void PenIdRules()
                 {
-                        this.RuleFor(x => x.PenId).MustAsync(this.BeValidPen).When(x => x ?.PenId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PenId).MustAsync(this.BeValidPen).When(x => x?.PenId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PriceRules()
@@ -52,7 +52,7 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void SpeciesIdRules()
                 {
-                        this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpecies).When(x => x ?.SpeciesId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpecies).When(x => x?.SpeciesId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidBreed(int id,  CancellationToken cancellationToken)
@@ -79,5 +79,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15dbaccba46f050fa6effa0e47d68d79</Hash>
+    <Hash>de1e7cd22446487472a5a8152d89f8cd</Hash>
 </Codenesium>*/

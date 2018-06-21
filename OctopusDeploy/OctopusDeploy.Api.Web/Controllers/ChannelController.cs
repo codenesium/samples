@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/channels")]
         [ApiVersion("1.0")]
-        public class ChannelController: AbstractChannelController
+        public class ChannelController : AbstractChannelController
         {
                 public ChannelController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d67e8a9479f6682b5def9cd6b144a524</Hash>
+    <Hash>f3dc2ee5a7d6eca27fc8691cf3ea6261</Hash>
 </Codenesium>*/

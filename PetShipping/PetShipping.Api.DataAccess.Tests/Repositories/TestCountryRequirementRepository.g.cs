@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new CountryRequirementRepository(loggerMoc.Object, context);
 
                         CountryRequirement entity = new CountryRequirement();
-
                         context.Set<CountryRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new CountryRequirementRepository(loggerMoc.Object, context);
 
                         CountryRequirement entity = new CountryRequirement();
-
                         context.Set<CountryRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new CountryRequirementRepository(loggerMoc.Object, context);
 
                         var entity = new CountryRequirement();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<CountryRequirement>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<CountryRequirementRepository>> loggerMoc = CountryRequirementRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRequirementRepositoryMoc.GetContext();
                         var repository = new CountryRequirementRepository(loggerMoc.Object, context);
-
                         CountryRequirement entity = new CountryRequirement();
-
                         context.Set<CountryRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<CountryRequirementRepository>> loggerMoc = CountryRequirementRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRequirementRepositoryMoc.GetContext();
                         var repository = new CountryRequirementRepository(loggerMoc.Object, context);
-
                         CountryRequirement entity = new CountryRequirement();
-
                         context.Set<CountryRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<CountryRequirementRepository>> loggerMoc = CountryRequirementRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRequirementRepositoryMoc.GetContext();
                         var repository = new CountryRequirementRepository(loggerMoc.Object, context);
-
                         CountryRequirement entity = new CountryRequirement();
-
                         context.Set<CountryRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         CountryRequirement modifiedRecord = await context.Set<CountryRequirement>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b77fb66297e852ebf2e0d960bcb02af3</Hash>
+    <Hash>e4c9b021f7ecd4d10ce3da446c368524</Hash>
 </Codenesium>*/

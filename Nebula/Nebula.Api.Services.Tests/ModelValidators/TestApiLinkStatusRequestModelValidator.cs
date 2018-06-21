@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
                         var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
                         var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkStatusRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
                         var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -70,8 +67,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
                         var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkStatusRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkStatus()));
 
                         var validator = new ApiLinkStatusRequestModelValidator(linkStatusRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>100690ba7cb0ae8a1793a7700a94896e</Hash>
+    <Hash>2d2543214672f6d15d43ac2f644ac606</Hash>
 </Codenesium>*/

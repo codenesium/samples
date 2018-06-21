@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(new Sale()));
 
                         var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SaleId, 1);
@@ -57,8 +56,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         saleTicketsRepository.Setup(x => x.GetSale(It.IsAny<int>())).Returns(Task.FromResult<Sale>(new Sale()));
 
                         var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleTicketsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SaleId, 1);
                 }
@@ -71,7 +69,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleTicketsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SaleId, 1);
                 }
@@ -83,7 +81,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(new Ticket()));
 
                         var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleTicketsRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TicketId, 1);
@@ -109,8 +106,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         saleTicketsRepository.Setup(x => x.GetTicket(It.IsAny<int>())).Returns(Task.FromResult<Ticket>(new Ticket()));
 
                         var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleTicketsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TicketId, 1);
                 }
@@ -123,7 +119,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiSaleTicketsRequestModelValidator(saleTicketsRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleTicketsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleTicketsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TicketId, 1);
                 }
@@ -131,5 +127,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8aece7635b9540dd85c29752d2d2e66f</Hash>
+    <Hash>5a921a42a780bb446538d07c0b43674c</Hash>
 </Codenesium>*/

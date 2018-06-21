@@ -1,7 +1,7 @@
+using AdventureWorksNS.Api.Contracts;
+using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
-using FluentValidation.Results;
-using AdventureWorksNS.Api.Contracts;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bf342c0893bc9b1c27cfa986d1ec34f</Hash>
+    <Hash>1c20a397b96fc9467dcb151d16d9df64</Hash>
 </Codenesium>*/

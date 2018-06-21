@@ -1,20 +1,20 @@
-using System;
-using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
+using Codenesium.Foundation.CommonMVC;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractAddressTypeController: AbstractApiController
+        public abstract class AbstractAddressTypeController : AbstractApiController
         {
                 protected IAddressTypeService AddressTypeService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiAddressTypeResponseModel> response = await this.AddressTypeService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiAddressTypeResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiAddressTypeResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiAddressTypeRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.AddressTypeID.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/AddressTypes/{result.Record.AddressTypeID.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/AddressTypes/{result.Record.AddressTypeID}", result.Record);
                         }
                         else
                         {
@@ -197,5 +194,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>49fb30a40717a93fcf9c52618536aabf</Hash>
+    <Hash>7ed8acfa0fda15f61c786cba358b7950</Hash>
 </Codenesium>*/

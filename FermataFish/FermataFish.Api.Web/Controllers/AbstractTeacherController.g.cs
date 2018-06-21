@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Web
 {
-        public abstract class AbstractTeacherController: AbstractApiController
+        public abstract class AbstractTeacherController : AbstractApiController
         {
                 protected ITeacherService TeacherService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace FermataFishNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiTeacherResponseModel> response = await this.TeacherService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace FermataFishNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeacherResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiTeacherResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiTeacherRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace FermataFishNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Teachers/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Teachers/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -174,6 +171,7 @@ namespace FermataFishNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{teacherId}/TeacherXTeacherSkills")]
                 [ReadOnly]
@@ -191,5 +189,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a1aeaea9850805621e1b2b9b17a506df</Hash>
+    <Hash>dd3aa82e4f9a95887966b5203a87b547</Hash>
 </Codenesium>*/

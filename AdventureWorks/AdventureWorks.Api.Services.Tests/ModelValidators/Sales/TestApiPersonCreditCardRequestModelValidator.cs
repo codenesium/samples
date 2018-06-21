@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
                         var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonCreditCardRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
@@ -57,8 +56,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personCreditCardRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
                         var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonCreditCardRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonCreditCardRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
                 }
@@ -71,7 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiPersonCreditCardRequestModelValidator(personCreditCardRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonCreditCardRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonCreditCardRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
                 }
@@ -79,5 +77,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>03c5fa226d863a9457c986bba879af5a</Hash>
+    <Hash>9fc228a2a246bcf28f8c47433109893b</Hash>
 </Codenesium>*/

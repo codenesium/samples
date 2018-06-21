@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace AdventureWorksNS.Api.Services
                 Task<List<ApiBusinessEntityAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressID(int addressID);
+
                 Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressTypeID(int addressTypeID);
         }
 }
 
 /*<Codenesium>
-    <Hash>7d278ae140679ecb7da7a991424143d4</Hash>
+    <Hash>523e7c5d8fecdb92393105fe90b25b67</Hash>
 </Codenesium>*/

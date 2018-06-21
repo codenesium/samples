@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractNuGetPackageService: AbstractService
+        public abstract class AbstractNuGetPackageService : AbstractService
         {
                 private INuGetPackageRepository nuGetPackageRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         INuGetPackageRepository nuGetPackageRepository,
                         IApiNuGetPackageRequestModelValidator nuGetPackageModelValidator,
                         IBOLNuGetPackageMapper bolNuGetPackageMapper,
-                        IDALNuGetPackageMapper dalNuGetPackageMapper
-
-                        )
+                        IDALNuGetPackageMapper dalNuGetPackageMapper)
                         : base()
-
                 {
                         this.nuGetPackageRepository = nuGetPackageRepository;
                         this.nuGetPackageModelValidator = nuGetPackageModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiNuGetPackageResponseModel> response = new CreateResponse<ApiNuGetPackageResponseModel>(await this.nuGetPackageModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolNuGetPackageMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolNuGetPackageMapper.MapModelToBO(default(string), model);
                                 var record = await this.nuGetPackageRepository.Create(this.dalNuGetPackageMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolNuGetPackageMapper.MapBOToModel(this.dalNuGetPackageMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiNuGetPackageRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.nuGetPackageModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolNuGetPackageMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.nuGetPackageModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.nuGetPackageRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c728ff87b7f8bcb9b79be3677c990ebb</Hash>
+    <Hash>05597f6807325807f9cfd93042e2d870</Hash>
 </Codenesium>*/

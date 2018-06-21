@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALActionTemplateMapper: DALAbstractActionTemplateMapper, IDALActionTemplateMapper
+        public class DALActionTemplateMapper : DALAbstractActionTemplateMapper, IDALActionTemplateMapper
         {
                 public DALActionTemplateMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2294e814bbbe4e57ea404917b57b867f</Hash>
+    <Hash>517675aef3feff9361ced2c34d48efce</Hash>
 </Codenesium>*/

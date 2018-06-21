@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new UserRepository(loggerMoc.Object, context);
 
                         User entity = new User();
-
                         context.Set<User>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new UserRepository(loggerMoc.Object, context);
 
                         User entity = new User();
-
                         context.Set<User>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new UserRepository(loggerMoc.Object, context);
 
                         var entity = new User();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<User>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UserRepositoryMoc.GetContext();
                         var repository = new UserRepository(loggerMoc.Object, context);
-
                         User entity = new User();
-
                         context.Set<User>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UserRepositoryMoc.GetContext();
                         var repository = new UserRepository(loggerMoc.Object, context);
-
                         User entity = new User();
-
                         context.Set<User>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<UserRepository>> loggerMoc = UserRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UserRepositoryMoc.GetContext();
                         var repository = new UserRepository(loggerMoc.Object, context);
-
                         User entity = new User();
-
                         context.Set<User>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         User modifiedRecord = await context.Set<User>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>51e1d4a91cc2014fa8e06cb5b232304a</Hash>
+    <Hash>3c573d69c4094e4d0567b7cd21aaf944</Hash>
 </Codenesium>*/

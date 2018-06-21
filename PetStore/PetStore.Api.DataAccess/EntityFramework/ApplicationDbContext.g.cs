@@ -1,12 +1,13 @@
-using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public partial class ApplicationDbContext: DbContext
+        public partial class ApplicationDbContext : DbContext
         {
                 public Guid UserId { get; private set; }
 
@@ -17,17 +18,13 @@ namespace PetStoreNS.Api.DataAccess
                 {
                 }
 
-                protected override void OnConfiguring(DbContextOptionsBuilder options)
-                {
-                        base.OnConfiguring(options);
-                }
-
                 public void SetUserId(Guid userId)
                 {
-                        if (userId == default (Guid))
+                        if (userId == default(Guid))
                         {
                                 throw new ArgumentException("UserId cannot be a default value");
                         }
+
                         this.UserId = userId;
                 }
 
@@ -37,6 +34,7 @@ namespace PetStoreNS.Api.DataAccess
                         {
                                 throw new ArgumentException("TenantId must be greater than 0");
                         }
+
                         this.TenantId = tenantId;
                 }
 
@@ -51,9 +49,14 @@ namespace PetStoreNS.Api.DataAccess
                 public virtual DbSet<Sale> Sales { get; set; }
 
                 public virtual DbSet<Species> Species { get; set; }
+
+                protected override void OnConfiguring(DbContextOptionsBuilder options)
+                {
+                        base.OnConfiguring(options);
+                }
         }
 
-        public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+        public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
                 public ApplicationDbContext CreateDbContext(string[] args)
                 {
@@ -78,5 +81,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a935b11c6d78d34c77b9b405522dca28</Hash>
+    <Hash>b14dfbbc0522844fec5e773902494c09</Hash>
 </Codenesium>*/

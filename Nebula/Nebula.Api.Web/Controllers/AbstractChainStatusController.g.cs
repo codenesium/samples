@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Web
 {
-        public abstract class AbstractChainStatusController: AbstractApiController
+        public abstract class AbstractChainStatusController : AbstractApiController
         {
                 protected IChainStatusService ChainStatusService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace NebulaNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiChainStatusResponseModel> response = await this.ChainStatusService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiChainStatusResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiChainStatusResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiChainStatusRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace NebulaNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/ChainStatus/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/ChainStatus/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -178,5 +175,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6abf57dcdfc7ccdc35b7df02d3beaf71</Hash>
+    <Hash>5a53502d7e75d5c13f7c5e6bb9e232f4</Hash>
 </Codenesium>*/

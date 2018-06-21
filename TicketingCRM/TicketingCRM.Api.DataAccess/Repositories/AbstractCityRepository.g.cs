@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractCityRepository: AbstractRepository
+        public abstract class AbstractCityRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace TicketingCRMNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<List<Event>> Events(int cityId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Event>().Where(x => x.CityId == cityId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
+                }
+
+                public async virtual Task<Province> GetProvince(int provinceId)
+                {
+                        return await this.Context.Set<Province>().SingleOrDefaultAsync(x => x.Id == provinceId);
+                }
+
                 protected async Task<List<City>> Where(
                         Expression<Func<City, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,19 +121,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Event>> Events(int cityId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Event>().Where(x => x.CityId == cityId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
-                }
-
-                public async virtual Task<Province> GetProvince(int provinceId)
-                {
-                        return await this.Context.Set<Province>().SingleOrDefaultAsync(x => x.Id == provinceId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6e062df9395b87c670dc58b611516642</Hash>
+    <Hash>b2f201090d0a08ea0fd3f7f725705cda</Hash>
 </Codenesium>*/

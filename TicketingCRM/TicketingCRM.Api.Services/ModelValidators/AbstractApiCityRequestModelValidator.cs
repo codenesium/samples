@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiCityRequestModelValidator: AbstractValidator<ApiCityRequestModel>
+        public abstract class AbstractApiCityRequestModelValidator : AbstractValidator<ApiCityRequestModel>
         {
                 private int existingRecordId;
 
-                ICityRepository cityRepository;
+                private ICityRepository cityRepository;
 
                 public AbstractApiCityRequestModelValidator(ICityRepository cityRepository)
                 {
@@ -34,7 +34,7 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void ProvinceIdRules()
                 {
-                        this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvince).When(x => x ?.ProvinceId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvince).When(x => x?.ProvinceId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidProvince(int id,  CancellationToken cancellationToken)
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a00b4295c74c4682a51e7197d8a36d46</Hash>
+    <Hash>916729bb289ac4869cbadc9442c0818d</Hash>
 </Codenesium>*/

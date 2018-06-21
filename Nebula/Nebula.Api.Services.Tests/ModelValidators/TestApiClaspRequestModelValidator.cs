@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
                         var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiClaspRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.NextChainId, 1);
@@ -57,8 +56,7 @@ namespace NebulaNS.Api.Services.Tests
                         claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
                         var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiClaspRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.NextChainId, 1);
                 }
@@ -71,7 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiClaspRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.NextChainId, 1);
                 }
@@ -83,7 +81,6 @@ namespace NebulaNS.Api.Services.Tests
                         claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
                         var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiClaspRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PreviousChainId, 1);
@@ -109,8 +106,7 @@ namespace NebulaNS.Api.Services.Tests
                         claspRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
                         var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiClaspRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PreviousChainId, 1);
                 }
@@ -123,7 +119,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiClaspRequestModelValidator(claspRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiClaspRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClaspRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PreviousChainId, 1);
                 }
@@ -131,5 +127,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fb701c9c797cbc71a1353ac5d06a9ce2</Hash>
+    <Hash>ed7f97c3ca9ef8e433b1bc10bfaa6d02</Hash>
 </Codenesium>*/

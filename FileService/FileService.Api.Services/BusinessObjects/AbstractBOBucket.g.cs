@@ -3,9 +3,10 @@ using System;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class AbstractBOBucket: AbstractBusinessObject
+        public abstract class AbstractBOBucket : AbstractBusinessObject
         {
-                public AbstractBOBucket() : base()
+                public AbstractBOBucket()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7ce675dce4e26a16d9557fca63e16cae</Hash>
+    <Hash>a41e4ebbba6c46135c8de06290f90124</Hash>
 </Codenesium>*/

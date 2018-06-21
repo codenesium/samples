@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "EventRelatedDocument")]
         [Trait("Area", "DALMapper")]
-        public class TestDALEventRelatedDocumentActionMapper
+        public class TestDALEventRelatedDocumentMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALEventRelatedDocumentMapper();
-
                         var bo = new BOEventRelatedDocument();
-
                         bo.SetProperties(1, "A", "A");
 
                         EventRelatedDocument response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALEventRelatedDocumentMapper();
-
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         entity.SetProperties("A", 1, "A");
 
-                        BOEventRelatedDocument  response = mapper.MapEFToBO(entity);
+                        BOEventRelatedDocument response = mapper.MapEFToBO(entity);
 
                         response.EventId.Should().Be("A");
                         response.Id.Should().Be(1);
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALEventRelatedDocumentMapper();
-
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         entity.SetProperties("A", 1, "A");
 
                         List<BOEventRelatedDocument> response = mapper.MapEFToBO(new List<EventRelatedDocument>() { entity });
@@ -61,5 +55,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f3b793d09cbbbf317599dda81b0fab56</Hash>
+    <Hash>2c35a188d5930e2f375db99667a8c9bf</Hash>
 </Codenesium>*/

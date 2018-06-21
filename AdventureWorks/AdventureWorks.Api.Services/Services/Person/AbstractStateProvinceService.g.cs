@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractStateProvinceService: AbstractService
+        public abstract class AbstractStateProvinceService : AbstractService
         {
                 private IStateProvinceRepository stateProvinceRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IStateProvinceRepository stateProvinceRepository,
                         IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
                         IBOLStateProvinceMapper bolStateProvinceMapper,
-                        IDALStateProvinceMapper dalStateProvinceMapper
-
-                        ,
+                        IDALStateProvinceMapper dalStateProvinceMapper,
                         IBOLAddressMapper bolAddressMapper,
-                        IDALAddressMapper dalAddressMapper
-
-                        )
+                        IDALAddressMapper dalAddressMapper)
                         : base()
-
                 {
                         this.stateProvinceRepository = stateProvinceRepository;
                         this.stateProvinceModelValidator = stateProvinceModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiStateProvinceResponseModel> response = new CreateResponse<ApiStateProvinceResponseModel>(await this.stateProvinceModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolStateProvinceMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolStateProvinceMapper.MapModelToBO(default(int), model);
                                 var record = await this.stateProvinceRepository.Create(this.dalStateProvinceMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiStateProvinceRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.stateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolStateProvinceMapper.MapModelToBO(stateProvinceID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int stateProvinceID)
                 {
                         ActionResponse response = new ActionResponse(await this.stateProvinceModelValidator.ValidateDeleteAsync(stateProvinceID));
-
                         if (response.Success)
                         {
                                 await this.stateProvinceRepository.Delete(stateProvinceID);
@@ -129,6 +122,7 @@ namespace AdventureWorksNS.Api.Services
                                 return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<ApiStateProvinceResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
                 {
                         StateProvince record = await this.stateProvinceRepository.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
@@ -153,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4686d760cf3a164a68457d11cd707419</Hash>
+    <Hash>671e213f29e469c1872485c385e3ea2b</Hash>
 </Codenesium>*/

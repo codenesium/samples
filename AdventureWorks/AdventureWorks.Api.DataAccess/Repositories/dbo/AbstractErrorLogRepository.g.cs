@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractErrorLogRepository: AbstractRepository
+        public abstract class AbstractErrorLogRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -108,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>707787311fc8dc3365612bfa7ac21f92</Hash>
+    <Hash>259889adfc51051affdf19421efe8cff</Hash>
 </Codenesium>*/

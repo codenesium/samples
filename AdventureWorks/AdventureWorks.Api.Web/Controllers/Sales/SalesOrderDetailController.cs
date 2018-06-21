@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/salesOrderDetails")]
         [ApiVersion("1.0")]
-        public class SalesOrderDetailController: AbstractSalesOrderDetailController
+        public class SalesOrderDetailController : AbstractSalesOrderDetailController
         {
                 public SalesOrderDetailController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b7e89bd8cc5830231d10c0b42ed7b415</Hash>
+    <Hash>a206e056be8e0c441066890903783277</Hash>
 </Codenesium>*/

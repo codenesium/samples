@@ -3,9 +3,10 @@ using System;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class AbstractBODevice: AbstractBusinessObject
+        public abstract class AbstractBODevice : AbstractBusinessObject
         {
-                public AbstractBODevice() : base()
+                public AbstractBODevice()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8520e8a1ec52903bf84b4d233f53b589</Hash>
+    <Hash>72ae241a17eeef7a089600774d48744f</Hash>
 </Codenesium>*/

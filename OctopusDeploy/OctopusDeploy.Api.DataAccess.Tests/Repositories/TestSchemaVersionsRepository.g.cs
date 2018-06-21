@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new SchemaVersionsRepository(loggerMoc.Object, context);
 
                         SchemaVersions entity = new SchemaVersions();
-
                         context.Set<SchemaVersions>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new SchemaVersionsRepository(loggerMoc.Object, context);
 
                         SchemaVersions entity = new SchemaVersions();
-
                         context.Set<SchemaVersions>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new SchemaVersionsRepository(loggerMoc.Object, context);
 
                         var entity = new SchemaVersions();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SchemaVersions>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<SchemaVersionsRepository>> loggerMoc = SchemaVersionsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SchemaVersionsRepositoryMoc.GetContext();
                         var repository = new SchemaVersionsRepository(loggerMoc.Object, context);
-
                         SchemaVersions entity = new SchemaVersions();
-
                         context.Set<SchemaVersions>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<SchemaVersionsRepository>> loggerMoc = SchemaVersionsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SchemaVersionsRepositoryMoc.GetContext();
                         var repository = new SchemaVersionsRepository(loggerMoc.Object, context);
-
                         SchemaVersions entity = new SchemaVersions();
-
                         context.Set<SchemaVersions>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<SchemaVersionsRepository>> loggerMoc = SchemaVersionsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SchemaVersionsRepositoryMoc.GetContext();
                         var repository = new SchemaVersionsRepository(loggerMoc.Object, context);
-
                         SchemaVersions entity = new SchemaVersions();
-
                         context.Set<SchemaVersions>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         SchemaVersions modifiedRecord = await context.Set<SchemaVersions>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d7a46caf39cf43c3f7e017b76a1dd189</Hash>
+    <Hash>8a56c404bd93cbe2903b3a27824bfe44</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.Services;
 
 namespace FileServiceNS.Api.Services.Tests
 {
@@ -39,5 +39,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d945f08ffc664380df0264a909921226</Hash>
+    <Hash>46477ac307ee9bbd8853961a2f34ad6a</Hash>
 </Codenesium>*/

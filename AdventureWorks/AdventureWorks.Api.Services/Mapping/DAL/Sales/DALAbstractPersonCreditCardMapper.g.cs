@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOPersonCreditCard bo)
                 {
                         PersonCreditCard efPersonCreditCard = new PersonCreditCard();
-
                         efPersonCreditCard.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.CreditCardID,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bd5ab7cdfcbde921134ad26c3a66524</Hash>
+    <Hash>4d622ea643a82fabd784da97ad2c0325</Hash>
 </Codenesium>*/

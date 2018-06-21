@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSalesPersonQuotaHistory boSalesPersonQuotaHistory = new BOSalesPersonQuotaHistory();
-
                         boSalesPersonQuotaHistory.SetProperties(
                                 businessEntityID,
                                 model.ModifiedDate,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d28463659cfcb10ea500b418195bdbc</Hash>
+    <Hash>729b620589451f4651a867e7f6cc22f2</Hash>
 </Codenesium>*/

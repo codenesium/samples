@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiProvinceRequestModelValidator: AbstractValidator<ApiProvinceRequestModel>
+        public abstract class AbstractApiProvinceRequestModelValidator : AbstractValidator<ApiProvinceRequestModel>
         {
                 private int existingRecordId;
 
-                IProvinceRepository provinceRepository;
+                private IProvinceRepository provinceRepository;
 
                 public AbstractApiProvinceRequestModelValidator(IProvinceRepository provinceRepository)
                 {
@@ -28,7 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void CountryIdRules()
                 {
-                        this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x ?.CountryId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x?.CountryId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NameRules()
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39592990c8ed14213a4a3145392b00cf</Hash>
+    <Hash>0797461cba48870bf2f4e5114cc3b382</Hash>
 </Codenesium>*/

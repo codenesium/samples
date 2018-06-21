@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractPersonCreditCardService: AbstractService
+        public abstract class AbstractPersonCreditCardService : AbstractService
         {
                 private IPersonCreditCardRepository personCreditCardRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IPersonCreditCardRepository personCreditCardRepository,
                         IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator,
                         IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
-                        IDALPersonCreditCardMapper dalPersonCreditCardMapper
-
-                        )
+                        IDALPersonCreditCardMapper dalPersonCreditCardMapper)
                         : base()
-
                 {
                         this.personCreditCardRepository = personCreditCardRepository;
                         this.personCreditCardModelValidator = personCreditCardModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiPersonCreditCardResponseModel> response = new CreateResponse<ApiPersonCreditCardResponseModel>(await this.personCreditCardModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPersonCreditCardMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPersonCreditCardMapper.MapModelToBO(default(int), model);
                                 var record = await this.personCreditCardRepository.Create(this.dalPersonCreditCardMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiPersonCreditCardRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPersonCreditCardMapper.MapModelToBO(businessEntityID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.personCreditCardRepository.Delete(businessEntityID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8988763f7e9d5175d6286b1e34ec9039</Hash>
+    <Hash>f03f834f64acdd081286d2259a944cbf</Hash>
 </Codenesium>*/

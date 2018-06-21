@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Ticket")]
         [Trait("Area", "DALMapper")]
-        public class TestDALTicketActionMapper
+        public class TestDALTicketMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALTicketMapper();
-
                         var bo = new BOTicket();
-
                         bo.SetProperties(1, "A", 1);
 
                         Ticket response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALTicketMapper();
-
                         Ticket entity = new Ticket();
-
                         entity.SetProperties(1, "A", 1);
 
-                        BOTicket  response = mapper.MapEFToBO(entity);
+                        BOTicket response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.PublicId.Should().Be("A");
@@ -48,9 +44,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALTicketMapper();
-
                         Ticket entity = new Ticket();
-
                         entity.SetProperties(1, "A", 1);
 
                         List<BOTicket> response = mapper.MapEFToBO(new List<Ticket>() { entity });
@@ -61,5 +55,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7d4b52c301b41fa61911d023b958f0cf</Hash>
+    <Hash>fc19bbf69e57940e60e573a0c3a43050</Hash>
 </Codenesium>*/

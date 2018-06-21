@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLLinkStatusMapper: BOLAbstractLinkStatusMapper, IBOLLinkStatusMapper
+        public class BOLLinkStatusMapper : BOLAbstractLinkStatusMapper, IBOLLinkStatusMapper
         {
                 public BOLLinkStatusMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5eec62cda11e3daf6006c4b783781a71</Hash>
+    <Hash>aef95a83ade565cbfc49a1b811dab3e2</Hash>
 </Codenesium>*/

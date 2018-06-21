@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BODeploymentEnvironment bo)
                 {
                         DeploymentEnvironment efDeploymentEnvironment = new DeploymentEnvironment();
-
                         efDeploymentEnvironment.SetProperties(
                                 bo.DataVersion,
                                 bo.Id,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0f26c315544d75251adb4255133ad38</Hash>
+    <Hash>658d668edcce47ab42a984798851501d</Hash>
 </Codenesium>*/

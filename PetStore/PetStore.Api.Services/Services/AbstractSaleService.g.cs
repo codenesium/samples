@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractSaleService: AbstractService
+        public abstract class AbstractSaleService : AbstractService
         {
                 private ISaleRepository saleRepository;
 
@@ -29,11 +29,8 @@ namespace PetStoreNS.Api.Services
                         ISaleRepository saleRepository,
                         IApiSaleRequestModelValidator saleModelValidator,
                         IBOLSaleMapper bolSaleMapper,
-                        IDALSaleMapper dalSaleMapper
-
-                        )
+                        IDALSaleMapper dalSaleMapper)
                         : base()
-
                 {
                         this.saleRepository = saleRepository;
                         this.saleModelValidator = saleModelValidator;
@@ -69,7 +66,7 @@ namespace PetStoreNS.Api.Services
                         CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSaleMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSaleMapper.MapModelToBO(default(int), model);
                                 var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace PetStoreNS.Api.Services
                         ApiSaleRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSaleMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace PetStoreNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.saleRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5083d3013681ed2933f73836b6a22d4c</Hash>
+    <Hash>a249f5b591b50ce0eaf53dc810068820</Hash>
 </Codenesium>*/

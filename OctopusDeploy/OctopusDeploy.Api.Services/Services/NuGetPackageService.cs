@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class NuGetPackageService: AbstractNuGetPackageService, INuGetPackageService
+        public class NuGetPackageService : AbstractNuGetPackageService, INuGetPackageService
         {
                 public NuGetPackageService(
                         ILogger<INuGetPackageRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiNuGetPackageRequestModelValidator nuGetPackageModelValidator,
                         IBOLNuGetPackageMapper bolnuGetPackageMapper,
                         IDALNuGetPackageMapper dalnuGetPackageMapper
-
                         )
                         : base(logger,
                                nuGetPackageRepository,
                                nuGetPackageModelValidator,
                                bolnuGetPackageMapper,
-                               dalnuGetPackageMapper
-                               )
+                               dalnuGetPackageMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1f424d899c03c6ccd6c74306813fc59</Hash>
+    <Hash>b833696375bf0393e21a219c11cfd546</Hash>
 </Codenesium>*/

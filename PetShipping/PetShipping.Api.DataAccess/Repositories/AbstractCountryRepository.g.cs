@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractCountryRepository: AbstractRepository
+        public abstract class AbstractCountryRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<CountryRequirement>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<CountryRequirement>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
+                }
+
+                public async virtual Task<List<Destination>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Destination>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Destination>();
+                }
+
                 protected async Task<List<Country>> Where(
                         Expression<Func<Country, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<CountryRequirement>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<CountryRequirement>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
-                }
-                public async virtual Task<List<Destination>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Destination>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Destination>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d2d9aaace635e1edc122678dd3e89bc5</Hash>
+    <Hash>f18ab9b85d24132f89188384bcd89f2b</Hash>
 </Codenesium>*/

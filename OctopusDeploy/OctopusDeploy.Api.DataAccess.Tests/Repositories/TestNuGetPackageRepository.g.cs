@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new NuGetPackageRepository(loggerMoc.Object, context);
 
                         NuGetPackage entity = new NuGetPackage();
-
                         context.Set<NuGetPackage>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new NuGetPackageRepository(loggerMoc.Object, context);
 
                         NuGetPackage entity = new NuGetPackage();
-
                         context.Set<NuGetPackage>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new NuGetPackageRepository(loggerMoc.Object, context);
 
                         var entity = new NuGetPackage();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<NuGetPackage>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
                         var repository = new NuGetPackageRepository(loggerMoc.Object, context);
-
                         NuGetPackage entity = new NuGetPackage();
-
                         context.Set<NuGetPackage>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
                         var repository = new NuGetPackageRepository(loggerMoc.Object, context);
-
                         NuGetPackage entity = new NuGetPackage();
-
                         context.Set<NuGetPackage>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<NuGetPackageRepository>> loggerMoc = NuGetPackageRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = NuGetPackageRepositoryMoc.GetContext();
                         var repository = new NuGetPackageRepository(loggerMoc.Object, context);
-
                         NuGetPackage entity = new NuGetPackage();
-
                         context.Set<NuGetPackage>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         NuGetPackage modifiedRecord = await context.Set<NuGetPackage>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cba61057a4f275dedaa7c4e3a5ed832f</Hash>
+    <Hash>07b346b9d54c7c8791fb048ca92e1683</Hash>
 </Codenesium>*/

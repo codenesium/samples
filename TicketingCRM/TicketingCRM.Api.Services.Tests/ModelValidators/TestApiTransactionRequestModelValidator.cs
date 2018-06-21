@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, null as string);
@@ -44,8 +43,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTransactionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, null as string);
                 }
@@ -57,7 +55,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, new string('A', 2));
@@ -70,8 +67,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTransactionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, new string('A', 2));
                 }
@@ -83,8 +79,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.GetTransactionStatus(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatus>(new TransactionStatus()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TransactionStatusId, 1);
@@ -122,8 +116,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         transactionRepository.Setup(x => x.GetTransactionStatus(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatus>(new TransactionStatus()));
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTransactionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TransactionStatusId, 1);
                 }
@@ -136,7 +129,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiTransactionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TransactionStatusId, 1);
                 }
@@ -144,5 +137,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>76d3b8655df1048c6fb400b48fda7d73</Hash>
+    <Hash>a64dd0fa2ea1e95ce521d585ad2fccf2</Hash>
 </Codenesium>*/

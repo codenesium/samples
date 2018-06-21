@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/deploymentHistories")]
         [ApiVersion("1.0")]
-        public class DeploymentHistoryController: AbstractDeploymentHistoryController
+        public class DeploymentHistoryController : AbstractDeploymentHistoryController
         {
                 public DeploymentHistoryController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9911a1dfb59ef43028763bb481f62973</Hash>
+    <Hash>4e85ec3eeb7e89737ec8ec0ade162dc3</Hash>
 </Codenesium>*/

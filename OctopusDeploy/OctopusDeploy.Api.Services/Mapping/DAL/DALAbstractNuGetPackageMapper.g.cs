@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BONuGetPackage bo)
                 {
                         NuGetPackage efNuGetPackage = new NuGetPackage();
-
                         efNuGetPackage.SetProperties(
                                 bo.Id,
                                 bo.JSON,
@@ -60,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84aa33f3a210a94808a08adc4ab264cc</Hash>
+    <Hash>d87a48bbcb0de9d584385aa161774161</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
-        public class ApiDeviceActionRequestModelValidator: AbstractApiDeviceActionRequestModelValidator, IApiDeviceActionRequestModelValidator
+        public class ApiDeviceActionRequestModelValidator : AbstractApiDeviceActionRequestModelValidator, IApiDeviceActionRequestModelValidator
         {
                 public ApiDeviceActionRequestModelValidator(IDeviceActionRepository deviceActionRepository)
                         : base(deviceActionRepository)
@@ -31,11 +31,11 @@ namespace ESPIOTNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1de1a9bd098f52c8712adcf770194ed6</Hash>
+    <Hash>5dbaaba399e073367e50e0042a7f7e95</Hash>
 </Codenesium>*/

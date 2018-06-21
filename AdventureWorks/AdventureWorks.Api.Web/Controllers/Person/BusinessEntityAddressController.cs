@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/businessEntityAddresses")]
         [ApiVersion("1.0")]
-        public class BusinessEntityAddressController: AbstractBusinessEntityAddressController
+        public class BusinessEntityAddressController : AbstractBusinessEntityAddressController
         {
                 public BusinessEntityAddressController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d0d789d35bbfd6061dd585feec80b017</Hash>
+    <Hash>e1d4f75bcd54f6a7da9bb22a85e650f7</Hash>
 </Codenesium>*/

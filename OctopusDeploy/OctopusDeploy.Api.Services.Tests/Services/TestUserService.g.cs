@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var record = new User();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ApiUserResponseModel response = await service.Get(default (string));
+                        ApiUserResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ApiUserResponseModel response = await service.Get(default (string));
+                        ApiUserResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var model = new ApiUserRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var model = new ApiUserRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<User>())).Returns(Task.FromResult(new User()));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.UserModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUserRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var model = new ApiUserRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IUserRepository>();
                         var record = new User();
-
                         mock.RepositoryMock.Setup(x => x.GetUsername(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new UserService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ApiUserResponseModel response = await service.GetUsername(default (string));
+                        ApiUserResponseModel response = await service.GetUsername(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetUsername(It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        ApiUserResponseModel response = await service.GetUsername(default (string));
+                        ApiUserResponseModel response = await service.GetUsername(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetUsername(It.IsAny<string>()));
@@ -182,7 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetDisplayName(default (string));
+                        List<ApiUserResponseModel> response = await service.GetDisplayName(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDisplayName(It.IsAny<string>()));
@@ -199,7 +194,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetDisplayName(default (string));
+                        List<ApiUserResponseModel> response = await service.GetDisplayName(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDisplayName(It.IsAny<string>()));
@@ -218,7 +213,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetEmailAddress(default (string));
+                        List<ApiUserResponseModel> response = await service.GetEmailAddress(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetEmailAddress(It.IsAny<string>()));
@@ -235,7 +230,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetEmailAddress(default (string));
+                        List<ApiUserResponseModel> response = await service.GetEmailAddress(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetEmailAddress(It.IsAny<string>()));
@@ -254,7 +249,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetExternalId(default (string));
+                        List<ApiUserResponseModel> response = await service.GetExternalId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<string>()));
@@ -271,7 +266,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLUserMapperMock,
                                                       mock.DALMapperMockFactory.DALUserMapperMock);
 
-                        List<ApiUserResponseModel> response = await service.GetExternalId(default (string));
+                        List<ApiUserResponseModel> response = await service.GetExternalId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<string>()));
@@ -280,5 +275,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1595da73ac9443681050bd2702c71393</Hash>
+    <Hash>e024c571f0987dc49a72ccb3881e1cad</Hash>
 </Codenesium>*/

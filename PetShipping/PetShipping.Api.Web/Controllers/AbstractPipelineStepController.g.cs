@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Web
 {
-        public abstract class AbstractPipelineStepController: AbstractApiController
+        public abstract class AbstractPipelineStepController : AbstractApiController
         {
                 protected IPipelineStepService PipelineStepService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace PetShippingNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiPipelineStepResponseModel> response = await this.PipelineStepService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace PetShippingNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiPipelineStepResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPipelineStepRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace PetShippingNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/PipelineSteps/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/PipelineSteps/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -174,6 +171,7 @@ namespace PetShippingNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{pipelineStepId}/OtherTransports")]
                 [ReadOnly]
@@ -187,6 +185,7 @@ namespace PetShippingNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{pipelineStepId}/PipelineStepDestinations")]
                 [ReadOnly]
@@ -200,6 +199,7 @@ namespace PetShippingNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{pipelineStepId}/PipelineStepNotes")]
                 [ReadOnly]
@@ -213,6 +213,7 @@ namespace PetShippingNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{pipelineStepId}/PipelineStepStepRequirements")]
                 [ReadOnly]
@@ -230,5 +231,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>621e33a8a034876cc365bbecb0b0f6a6</Hash>
+    <Hash>f55169116bfdd5751c6e83c981d623f4</Hash>
 </Codenesium>*/

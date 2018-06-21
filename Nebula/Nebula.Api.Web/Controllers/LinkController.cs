@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
         [Route("api/links")]
         [ApiVersion("1.0")]
-        public class LinkController: AbstractLinkController
+        public class LinkController : AbstractLinkController
         {
                 public LinkController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a884c411563391ed43674843292ff04d</Hash>
+    <Hash>47b59bff319ce0ac6f42fc16a07ad47f</Hash>
 </Codenesium>*/

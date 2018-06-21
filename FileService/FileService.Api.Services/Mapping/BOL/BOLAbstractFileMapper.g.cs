@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FileServiceNS.Api.Services
                         )
                 {
                         BOFile boFile = new BOFile();
-
                         boFile.SetProperties(
                                 id,
                                 model.BucketId,
@@ -56,5 +55,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0a931853a0e595cd6b5d0cc9910bdf7a</Hash>
+    <Hash>bb41e89bf29fc5262f9c50b3b98d922a</Hash>
 </Codenesium>*/

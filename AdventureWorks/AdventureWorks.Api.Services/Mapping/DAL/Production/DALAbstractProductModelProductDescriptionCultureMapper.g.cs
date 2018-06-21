@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductModelProductDescriptionCulture bo)
                 {
                         ProductModelProductDescriptionCulture efProductModelProductDescriptionCulture = new ProductModelProductDescriptionCulture();
-
                         efProductModelProductDescriptionCulture.SetProperties(
                                 bo.CultureID,
                                 bo.ModifiedDate,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e4629173d8f70be623cc3dcaf2d119f</Hash>
+    <Hash>564e91b3430148124e41b8b1cab41cbb</Hash>
 </Codenesium>*/

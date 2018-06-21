@@ -1,9 +1,9 @@
+using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.Services;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
@@ -27,5 +27,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9025ebc2939e31f90aadce3e8b20f6a2</Hash>
+    <Hash>b115494e6fe899524052f36556f7ae28</Hash>
 </Codenesium>*/

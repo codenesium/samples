@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractOrganizationService: AbstractService
+        public abstract class AbstractOrganizationService : AbstractService
         {
                 private IOrganizationRepository organizationRepository;
 
@@ -33,15 +33,10 @@ namespace NebulaNS.Api.Services
                         IOrganizationRepository organizationRepository,
                         IApiOrganizationRequestModelValidator organizationModelValidator,
                         IBOLOrganizationMapper bolOrganizationMapper,
-                        IDALOrganizationMapper dalOrganizationMapper
-
-                        ,
+                        IDALOrganizationMapper dalOrganizationMapper,
                         IBOLTeamMapper bolTeamMapper,
-                        IDALTeamMapper dalTeamMapper
-
-                        )
+                        IDALTeamMapper dalTeamMapper)
                         : base()
-
                 {
                         this.organizationRepository = organizationRepository;
                         this.organizationModelValidator = organizationModelValidator;
@@ -79,7 +74,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.organizationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolOrganizationMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolOrganizationMapper.MapModelToBO(default(int), model);
                                 var record = await this.organizationRepository.Create(this.dalOrganizationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace NebulaNS.Api.Services
                         ApiOrganizationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolOrganizationMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.organizationRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8d653bcffab878c54a5b8bbff85604e</Hash>
+    <Hash>7576365a6ad14303a3656eec343ac60e</Hash>
 </Codenesium>*/

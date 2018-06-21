@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesTerritoryRequestModelValidator: AbstractValidator<ApiSalesTerritoryRequestModel>
+        public abstract class AbstractApiSalesTerritoryRequestModelValidator : AbstractValidator<ApiSalesTerritoryRequestModel>
         {
                 private int existingRecordId;
 
-                ISalesTerritoryRepository salesTerritoryRepository;
+                private ISalesTerritoryRepository salesTerritoryRepository;
 
                 public AbstractApiSalesTerritoryRequestModelValidator(ISalesTerritoryRepository salesTerritoryRepository)
                 {
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSalesTerritoryRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         SalesTerritory record = await this.salesTerritoryRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.TerritoryID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.TerritoryID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cafaf827c4bfa98a436eaeb24e80f7e4</Hash>
+    <Hash>813c72b6238737b8810c07c9fddad0fb</Hash>
 </Codenesium>*/

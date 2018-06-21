@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Web
 {
-        public abstract class AbstractVersionInfoController: AbstractApiController
+        public abstract class AbstractVersionInfoController : AbstractApiController
         {
                 protected IVersionInfoService VersionInfoService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace NebulaNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiVersionInfoResponseModel> response = await this.VersionInfoService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<long>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace NebulaNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Version.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result.Record);
                         }
                         else
                         {
@@ -183,5 +180,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>37f20eb53cdbfe63534d67df7e0e6072</Hash>
+    <Hash>5b5501264c93a39caabce27f9823db54</Hash>
 </Codenesium>*/

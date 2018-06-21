@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiTeacherXTeacherSkillRequestModelValidator: AbstractValidator<ApiTeacherXTeacherSkillRequestModel>
+        public abstract class AbstractApiTeacherXTeacherSkillRequestModelValidator : AbstractValidator<ApiTeacherXTeacherSkillRequestModel>
         {
                 private int existingRecordId;
 
-                ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
+                private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
 
                 public AbstractApiTeacherXTeacherSkillRequestModelValidator(ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository)
                 {
@@ -28,12 +28,12 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void TeacherIdRules()
                 {
-                        this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacher).When(x => x ?.TeacherId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacher).When(x => x?.TeacherId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TeacherSkillIdRules()
                 {
-                        this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x ?.TeacherSkillId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x?.TeacherSkillId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidTeacher(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfa34bf613772449bbdb4d362319e996</Hash>
+    <Hash>e95d20f5fa88842bb3e1802418677a94</Hash>
 </Codenesium>*/

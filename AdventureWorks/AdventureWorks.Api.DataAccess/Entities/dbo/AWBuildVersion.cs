@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("AWBuildVersion", Schema="dbo")]
-        public partial class AWBuildVersion: AbstractEntity
+        public partial class AWBuildVersion : AbstractEntity
         {
                 public AWBuildVersion()
                 {
@@ -24,21 +24,21 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.VersionDate = versionDate;
                 }
 
-                [Column("Database Version", TypeName="nvarchar(25)")]
+                [Column("Database Version")]
                 public string Database_Version { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
                 [Key]
-                [Column("SystemInformationID", TypeName="tinyint")]
+                [Column("SystemInformationID")]
                 public int SystemInformationID { get; private set; }
 
-                [Column("VersionDate", TypeName="datetime")]
+                [Column("VersionDate")]
                 public DateTime VersionDate { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>876cf10a4035e7e772b550b8893d2cd9</Hash>
+    <Hash>8aa825ef9036dc3ce30cfab770100818</Hash>
 </Codenesium>*/

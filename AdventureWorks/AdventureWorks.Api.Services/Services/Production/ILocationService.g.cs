@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -24,10 +24,11 @@ namespace AdventureWorksNS.Api.Services
                 Task<ApiLocationResponseModel> ByName(string name);
 
                 Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>72d1b49f26a89149ffe8351b225d9c8a</Hash>
+    <Hash>4b2f3ae7d05d329cb34161d7beb5b693</Hash>
 </Codenesium>*/

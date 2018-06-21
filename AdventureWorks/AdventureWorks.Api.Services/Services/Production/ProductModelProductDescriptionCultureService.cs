@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ProductModelProductDescriptionCultureService: AbstractProductModelProductDescriptionCultureService, IProductModelProductDescriptionCultureService
+        public class ProductModelProductDescriptionCultureService : AbstractProductModelProductDescriptionCultureService, IProductModelProductDescriptionCultureService
         {
                 public ProductModelProductDescriptionCultureService(
                         ILogger<IProductModelProductDescriptionCultureRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
                         IBOLProductModelProductDescriptionCultureMapper bolproductModelProductDescriptionCultureMapper,
                         IDALProductModelProductDescriptionCultureMapper dalproductModelProductDescriptionCultureMapper
-
                         )
                         : base(logger,
                                productModelProductDescriptionCultureRepository,
                                productModelProductDescriptionCultureModelValidator,
                                bolproductModelProductDescriptionCultureMapper,
-                               dalproductModelProductDescriptionCultureMapper
-                               )
+                               dalproductModelProductDescriptionCultureMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>63eba0302f4cb7b7765cf213625bf2d0</Hash>
+    <Hash>6c1eb34309e13af4d5f66fd6baa7e23d</Hash>
 </Codenesium>*/

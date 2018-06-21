@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var record = new Certificate();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        ApiCertificateResponseModel response = await service.Get(default (string));
+                        ApiCertificateResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        ApiCertificateResponseModel response = await service.Get(default (string));
+                        ApiCertificateResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var model = new ApiCertificateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Certificate>())).Returns(Task.FromResult(new Certificate()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var model = new ApiCertificateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Certificate>())).Returns(Task.FromResult(new Certificate()));
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCertificateRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICertificateRepository>();
                         var model = new ApiCertificateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new CertificateService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -146,7 +142,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetCreated(default (DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.GetCreated(default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
@@ -163,7 +159,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetCreated(default (DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.GetCreated(default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
@@ -182,7 +178,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiCertificateResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -199,7 +195,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiCertificateResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -218,7 +214,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetNotAfter(default (DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.GetNotAfter(default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetNotAfter(It.IsAny<DateTimeOffset>()));
@@ -235,7 +231,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetNotAfter(default (DateTimeOffset));
+                        List<ApiCertificateResponseModel> response = await service.GetNotAfter(default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetNotAfter(It.IsAny<DateTimeOffset>()));
@@ -254,7 +250,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetThumbprint(default (string));
+                        List<ApiCertificateResponseModel> response = await service.GetThumbprint(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetThumbprint(It.IsAny<string>()));
@@ -271,7 +267,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLCertificateMapperMock,
                                                              mock.DALMapperMockFactory.DALCertificateMapperMock);
 
-                        List<ApiCertificateResponseModel> response = await service.GetThumbprint(default (string));
+                        List<ApiCertificateResponseModel> response = await service.GetThumbprint(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetThumbprint(It.IsAny<string>()));
@@ -280,5 +276,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>99bd4e8c8a836e08127f3433945df3f3</Hash>
+    <Hash>575cadde11bb22fa12862b8ecd10dda0</Hash>
 </Codenesium>*/

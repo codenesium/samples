@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PurchaseOrderDetail")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLPurchaseOrderDetailActionMapper
+        public class TestBOLPurchaseOrderDetailMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLPurchaseOrderDetailMapper();
-
                         ApiPurchaseOrderDetailRequestModel model = new ApiPurchaseOrderDetailRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
                         BOPurchaseOrderDetail response = mapper.MapModelToBO(1, model);
 
@@ -39,9 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLPurchaseOrderDetailMapper();
-
                         BOPurchaseOrderDetail bo = new BOPurchaseOrderDetail();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
                         ApiPurchaseOrderDetailResponseModel response = mapper.MapBOToModel(bo);
 
@@ -62,9 +58,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLPurchaseOrderDetailMapper();
-
                         BOPurchaseOrderDetail bo = new BOPurchaseOrderDetail();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
                         List<ApiPurchaseOrderDetailResponseModel> response = mapper.MapBOToModel(new List<BOPurchaseOrderDetail>() { { bo } });
 
@@ -74,5 +68,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ce8b279c394450759eb7c933fe534297</Hash>
+    <Hash>8f3a1ea36c3a6ed72edc14aba959cf71</Hash>
 </Codenesium>*/

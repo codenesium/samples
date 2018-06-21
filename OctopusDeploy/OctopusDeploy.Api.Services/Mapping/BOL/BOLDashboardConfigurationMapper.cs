@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLDashboardConfigurationMapper: BOLAbstractDashboardConfigurationMapper, IBOLDashboardConfigurationMapper
+        public class BOLDashboardConfigurationMapper : BOLAbstractDashboardConfigurationMapper, IBOLDashboardConfigurationMapper
         {
                 public BOLDashboardConfigurationMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a894f85dc440258f15ddda18f39cd8ac</Hash>
+    <Hash>d86639d06c3e0d9b6581e7b331d52427</Hash>
 </Codenesium>*/

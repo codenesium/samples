@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLWorkerPoolMapper: BOLAbstractWorkerPoolMapper, IBOLWorkerPoolMapper
+        public class BOLWorkerPoolMapper : BOLAbstractWorkerPoolMapper, IBOLWorkerPoolMapper
         {
                 public BOLWorkerPoolMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de373b06b7beb632323461b381b9083f</Hash>
+    <Hash>9aa5748c6ffdfc50ee6e87793278d797</Hash>
 </Codenesium>*/

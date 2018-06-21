@@ -1,25 +1,10 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public class ReferenceEntity<T>
-        {
-                [JsonProperty(PropertyName = "Value")]
-                public T Value { get; private set; }
-
-                [JsonProperty(PropertyName = "Object")]
-                public string ReferenceObjectName { get; set; }
-
-                public ReferenceEntity(T value, string referenceObjectName)
-                {
-                        this.Value = value;
-                        this.ReferenceObjectName = referenceObjectName;
-                }
-        }
-
         public partial class ApiResponse
         {
                 public ApiResponse()
@@ -348,5 +333,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cffdca25b6db81259c1badfef1005e03</Hash>
+    <Hash>040a4d185b6a33adbbe44aaa4d2f8d5d</Hash>
 </Codenesium>*/

@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class VariableSetService: AbstractVariableSetService, IVariableSetService
+        public class VariableSetService : AbstractVariableSetService, IVariableSetService
         {
                 public VariableSetService(
                         ILogger<IVariableSetRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiVariableSetRequestModelValidator variableSetModelValidator,
                         IBOLVariableSetMapper bolvariableSetMapper,
                         IDALVariableSetMapper dalvariableSetMapper
-
                         )
                         : base(logger,
                                variableSetRepository,
                                variableSetModelValidator,
                                bolvariableSetMapper,
-                               dalvariableSetMapper
-                               )
+                               dalvariableSetMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e15cb51e244ecd9714722217d75cb261</Hash>
+    <Hash>97fed245149bb65fc45b7764e1c77df2</Hash>
 </Codenesium>*/

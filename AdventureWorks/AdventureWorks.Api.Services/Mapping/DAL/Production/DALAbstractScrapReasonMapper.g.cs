@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOScrapReason bo)
                 {
                         ScrapReason efScrapReason = new ScrapReason();
-
                         efScrapReason.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1902179640b4ddeb2338a0be6e1d0ade</Hash>
+    <Hash>4849e365bdf8d6491816d7539508be16</Hash>
 </Codenesium>*/

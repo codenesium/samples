@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new AdminRepository(loggerMoc.Object, context);
 
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new AdminRepository(loggerMoc.Object, context);
 
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new AdminRepository(loggerMoc.Object, context);
 
                         var entity = new Admin();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Admin>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AdminRepositoryMoc.GetContext();
                         var repository = new AdminRepository(loggerMoc.Object, context);
-
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AdminRepositoryMoc.GetContext();
                         var repository = new AdminRepository(loggerMoc.Object, context);
-
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AdminRepositoryMoc.GetContext();
                         var repository = new AdminRepository(loggerMoc.Object, context);
-
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Admin modifiedRecord = await context.Set<Admin>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e8e4ac53dd806862100e5e3b5acf1058</Hash>
+    <Hash>1eed3aaa7ec2b6c0b801b5596c04949c</Hash>
 </Codenesium>*/

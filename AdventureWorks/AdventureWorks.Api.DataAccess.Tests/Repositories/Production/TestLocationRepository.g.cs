@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new LocationRepository(loggerMoc.Object, context);
 
                         Location entity = new Location();
-
                         context.Set<Location>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new LocationRepository(loggerMoc.Object, context);
 
                         Location entity = new Location();
-
                         context.Set<Location>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new LocationRepository(loggerMoc.Object, context);
 
                         var entity = new Location();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Location>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LocationRepositoryMoc.GetContext();
                         var repository = new LocationRepository(loggerMoc.Object, context);
-
                         Location entity = new Location();
-
                         context.Set<Location>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LocationRepositoryMoc.GetContext();
                         var repository = new LocationRepository(loggerMoc.Object, context);
-
                         Location entity = new Location();
-
                         context.Set<Location>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<LocationRepository>> loggerMoc = LocationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LocationRepositoryMoc.GetContext();
                         var repository = new LocationRepository(loggerMoc.Object, context);
-
                         Location entity = new Location();
-
                         context.Set<Location>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.LocationID);
 
                         Location modifiedRecord = await context.Set<Location>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>35a0886d1ba33ff991804638dbe1aa7b</Hash>
+    <Hash>086df680fe31286b6d33ac24549127b8</Hash>
 </Codenesium>*/

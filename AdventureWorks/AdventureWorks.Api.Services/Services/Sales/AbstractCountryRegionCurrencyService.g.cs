@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCountryRegionCurrencyService: AbstractService
+        public abstract class AbstractCountryRegionCurrencyService : AbstractService
         {
                 private ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         ICountryRegionCurrencyRepository countryRegionCurrencyRepository,
                         IApiCountryRegionCurrencyRequestModelValidator countryRegionCurrencyModelValidator,
                         IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper,
-                        IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper
-
-                        )
+                        IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper)
                         : base()
-
                 {
                         this.countryRegionCurrencyRepository = countryRegionCurrencyRepository;
                         this.countryRegionCurrencyModelValidator = countryRegionCurrencyModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiCountryRegionCurrencyResponseModel> response = new CreateResponse<ApiCountryRegionCurrencyResponseModel>(await this.countryRegionCurrencyModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCountryRegionCurrencyMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolCountryRegionCurrencyMapper.MapModelToBO(default(string), model);
                                 var record = await this.countryRegionCurrencyRepository.Create(this.dalCountryRegionCurrencyMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiCountryRegionCurrencyRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.countryRegionCurrencyModelValidator.ValidateUpdateAsync(countryRegionCode, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCountryRegionCurrencyMapper.MapModelToBO(countryRegionCode, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         string countryRegionCode)
                 {
                         ActionResponse response = new ActionResponse(await this.countryRegionCurrencyModelValidator.ValidateDeleteAsync(countryRegionCode));
-
                         if (response.Success)
                         {
                                 await this.countryRegionCurrencyRepository.Delete(countryRegionCode);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c925f710bd7ed14784c72807ef303a1e</Hash>
+    <Hash>2ae19a4f69e5c66c1adb76a227a75ddf</Hash>
 </Codenesium>*/

@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOSalesOrderHeader: AbstractBOSalesOrderHeader
+        public partial class BOSalesOrderHeader : AbstractBOSalesOrderHeader
         {
-                public BOSalesOrderHeader() : base()
+                public BOSalesOrderHeader()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>71041b253cb1685f6a3305e7eae95b06</Hash>
+    <Hash>84b227ccb7d80ba3de823cf9565ebca4</Hash>
 </Codenesium>*/

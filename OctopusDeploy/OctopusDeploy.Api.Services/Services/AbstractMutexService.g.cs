@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractMutexService: AbstractService
+        public abstract class AbstractMutexService : AbstractService
         {
                 private IMutexRepository mutexRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IMutexRepository mutexRepository,
                         IApiMutexRequestModelValidator mutexModelValidator,
                         IBOLMutexMapper bolMutexMapper,
-                        IDALMutexMapper dalMutexMapper
-
-                        )
+                        IDALMutexMapper dalMutexMapper)
                         : base()
-
                 {
                         this.mutexRepository = mutexRepository;
                         this.mutexModelValidator = mutexModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiMutexResponseModel> response = new CreateResponse<ApiMutexResponseModel>(await this.mutexModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolMutexMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolMutexMapper.MapModelToBO(default(string), model);
                                 var record = await this.mutexRepository.Create(this.dalMutexMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiMutexRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.mutexModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolMutexMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.mutexModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.mutexRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd87b4e7917e52a53fe0a02772fc23a2</Hash>
+    <Hash>3ff98a7a6d8756fe0cabc8f847a96382</Hash>
 </Codenesium>*/

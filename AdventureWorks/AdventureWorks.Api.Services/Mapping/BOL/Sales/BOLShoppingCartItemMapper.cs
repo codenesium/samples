@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLShoppingCartItemMapper: BOLAbstractShoppingCartItemMapper, IBOLShoppingCartItemMapper
+        public class BOLShoppingCartItemMapper : BOLAbstractShoppingCartItemMapper, IBOLShoppingCartItemMapper
         {
                 public BOLShoppingCartItemMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17eddd9ab09b91753e07c29d1cf4a762</Hash>
+    <Hash>78e2d3d20cc78ccfcc727b96c529378b</Hash>
 </Codenesium>*/

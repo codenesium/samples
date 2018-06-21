@@ -3,14 +3,15 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOSpaceXSpaceFeature: AbstractBOSpaceXSpaceFeature
+        public partial class BOSpaceXSpaceFeature : AbstractBOSpaceXSpaceFeature
         {
-                public BOSpaceXSpaceFeature() : base()
+                public BOSpaceXSpaceFeature()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>55a7e5c21068ea7d99a4c32443382d47</Hash>
+    <Hash>08593015d52b9acba95399bf957653a5</Hash>
 </Codenesium>*/

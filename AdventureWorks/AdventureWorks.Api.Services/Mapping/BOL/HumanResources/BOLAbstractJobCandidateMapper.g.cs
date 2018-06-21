@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOJobCandidate boJobCandidate = new BOJobCandidate();
-
                         boJobCandidate.SetProperties(
                                 jobCandidateID,
                                 model.BusinessEntityID,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a74767992c40b612ea438e765bff764d</Hash>
+    <Hash>7b201ba9108a3ed9ebc2f6b11f7bc6d8</Hash>
 </Codenesium>*/

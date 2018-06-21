@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetStoreNS.Api.DataAccess;
 using PetStoreNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PaymentType")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPaymentTypeActionMapper
+        public class TestDALPaymentTypeMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPaymentTypeMapper();
-
                         var bo = new BOPaymentType();
-
                         bo.SetProperties(1, "A");
 
                         PaymentType response = mapper.MapBOToEF(bo);
@@ -31,12 +29,10 @@ namespace PetStoreNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPaymentTypeMapper();
-
                         PaymentType entity = new PaymentType();
-
                         entity.SetProperties(1, "A");
 
-                        BOPaymentType  response = mapper.MapEFToBO(entity);
+                        BOPaymentType response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -46,9 +42,7 @@ namespace PetStoreNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPaymentTypeMapper();
-
                         PaymentType entity = new PaymentType();
-
                         entity.SetProperties(1, "A");
 
                         List<BOPaymentType> response = mapper.MapEFToBO(new List<PaymentType>() { entity });
@@ -59,5 +53,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3ad302b2732aae80bf2b126a6299cab6</Hash>
+    <Hash>2195b8226b6c444ab6fbe91081b5050f</Hash>
 </Codenesium>*/

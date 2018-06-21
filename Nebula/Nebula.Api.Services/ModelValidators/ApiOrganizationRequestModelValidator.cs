@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public class ApiOrganizationRequestModelValidator: AbstractApiOrganizationRequestModelValidator, IApiOrganizationRequestModelValidator
+        public class ApiOrganizationRequestModelValidator : AbstractApiOrganizationRequestModelValidator, IApiOrganizationRequestModelValidator
         {
                 public ApiOrganizationRequestModelValidator(IOrganizationRepository organizationRepository)
                         : base(organizationRepository)
@@ -27,11 +27,11 @@ namespace NebulaNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d791eecf45f15e79db1ace32d2379027</Hash>
+    <Hash>19add123ae228bf29fb4d4e0f738cdce</Hash>
 </Codenesium>*/

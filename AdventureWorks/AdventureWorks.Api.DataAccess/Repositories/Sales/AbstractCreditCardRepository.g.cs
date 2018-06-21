@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractCreditCardRepository: AbstractRepository
+        public abstract class AbstractCreditCardRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<PersonCreditCard>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PersonCreditCard>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonCreditCard>();
+                }
+
+                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                }
+
                 protected async Task<List<CreditCard>> Where(
                         Expression<Func<CreditCard, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,18 +121,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<PersonCreditCard>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PersonCreditCard>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonCreditCard>();
-                }
-                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>34e8433a7ab94e7f7685bbe5af589727</Hash>
+    <Hash>b6764b3484cf8e478f43d15e9135d9bb</Hash>
 </Codenesium>*/

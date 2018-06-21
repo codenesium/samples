@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ContactType")]
         [Trait("Area", "DALMapper")]
-        public class TestDALContactTypeActionMapper
+        public class TestDALContactTypeMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALContactTypeMapper();
-
                         var bo = new BOContactType();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         ContactType response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALContactTypeMapper();
-
                         ContactType entity = new ContactType();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        BOContactType  response = mapper.MapEFToBO(entity);
+                        BOContactType response = mapper.MapEFToBO(entity);
 
                         response.ContactTypeID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALContactTypeMapper();
-
                         ContactType entity = new ContactType();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOContactType> response = mapper.MapEFToBO(new List<ContactType>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>75a51d46e6b8fea5fa19eea224ba594a</Hash>
+    <Hash>6a617878c62e8fdf036bdf6bf16b6bc5</Hash>
 </Codenesium>*/

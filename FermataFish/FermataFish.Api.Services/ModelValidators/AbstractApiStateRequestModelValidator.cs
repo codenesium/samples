@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiStateRequestModelValidator: AbstractValidator<ApiStateRequestModel>
+        public abstract class AbstractApiStateRequestModelValidator : AbstractValidator<ApiStateRequestModel>
         {
                 private int existingRecordId;
 
-                IStateRepository stateRepository;
+                private IStateRepository stateRepository;
 
                 public AbstractApiStateRequestModelValidator(IStateRepository stateRepository)
                 {
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b155d299d2db067b8f76d3798b6a47a3</Hash>
+    <Hash>348e1a7c64c53cd7edb240a63be09214</Hash>
 </Codenesium>*/

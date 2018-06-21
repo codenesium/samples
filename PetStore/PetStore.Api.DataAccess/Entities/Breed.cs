@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetStoreNS.Api.DataAccess
 {
         [Table("Breed", Schema="dbo")]
-        public partial class Breed:AbstractEntity
+        public partial class Breed : AbstractEntity
         {
                 public Breed()
                 {
@@ -21,14 +21,14 @@ namespace PetStoreNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0bed2ffdd369f645ac6c15b8f4693b0f</Hash>
+    <Hash>7b8452430632adcd806acd62d256a514</Hash>
 </Codenesium>*/

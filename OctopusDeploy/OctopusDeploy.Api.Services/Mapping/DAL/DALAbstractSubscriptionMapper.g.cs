@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOSubscription bo)
                 {
                         Subscription efSubscription = new Subscription();
-
                         efSubscription.SetProperties(
                                 bo.Id,
                                 bo.IsDisabled,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce1c754ba46da744af116f98d1072ea3</Hash>
+    <Hash>15466ee1f8e7738f5fa27c318ea38b74</Hash>
 </Codenesium>*/

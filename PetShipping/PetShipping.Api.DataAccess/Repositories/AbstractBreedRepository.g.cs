@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractBreedRepository: AbstractRepository
+        public abstract class AbstractBreedRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Pet>> Pets(int breedId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Pet>().Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
+                }
+
+                public async virtual Task<Species> GetSpecies(int speciesId)
+                {
+                        return await this.Context.Set<Species>().SingleOrDefaultAsync(x => x.Id == speciesId);
+                }
+
                 protected async Task<List<Breed>> Where(
                         Expression<Func<Breed, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,19 +114,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Pet>> Pets(int breedId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Pet>().Where(x => x.BreedId == breedId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
-                }
-
-                public async virtual Task<Species> GetSpecies(int speciesId)
-                {
-                        return await this.Context.Set<Species>().SingleOrDefaultAsync(x => x.Id == speciesId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>52f372a824d3d2d3ab8ebd223b2012bf</Hash>
+    <Hash>f949fc2a0b9c6841eb009dfaec26780b</Hash>
 </Codenesium>*/

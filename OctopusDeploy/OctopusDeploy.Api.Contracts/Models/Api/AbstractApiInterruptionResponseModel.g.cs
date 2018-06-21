@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public abstract class AbstractApiInterruptionResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiInterruptionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTimeOffset created,
@@ -163,5 +163,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cfd9aa7b650b9d6b1693d400ac0155c4</Hash>
+    <Hash>36bcf610157ae953473eee86dee389c5</Hash>
 </Codenesium>*/

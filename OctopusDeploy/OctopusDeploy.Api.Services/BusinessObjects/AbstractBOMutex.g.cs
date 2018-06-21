@@ -3,9 +3,10 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractBOMutex: AbstractBusinessObject
+        public abstract class AbstractBOMutex : AbstractBusinessObject
         {
-                public AbstractBOMutex() : base()
+                public AbstractBOMutex()
+                        : base()
                 {
                 }
 
@@ -23,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c00293c2a8d8d75d72615371666b5245</Hash>
+    <Hash>5f91a1bd0d435539baa0f201b28f298e</Hash>
 </Codenesium>*/

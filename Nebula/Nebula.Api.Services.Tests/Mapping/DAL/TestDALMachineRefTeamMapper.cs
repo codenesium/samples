@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "MachineRefTeam")]
         [Trait("Area", "DALMapper")]
-        public class TestDALMachineRefTeamActionMapper
+        public class TestDALMachineRefTeamMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALMachineRefTeamMapper();
-
                         var bo = new BOMachineRefTeam();
-
                         bo.SetProperties(1, 1, 1);
 
                         MachineRefTeam response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALMachineRefTeamMapper();
-
                         MachineRefTeam entity = new MachineRefTeam();
-
                         entity.SetProperties(1, 1, 1);
 
-                        BOMachineRefTeam  response = mapper.MapEFToBO(entity);
+                        BOMachineRefTeam response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.MachineId.Should().Be(1);
@@ -48,9 +44,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALMachineRefTeamMapper();
-
                         MachineRefTeam entity = new MachineRefTeam();
-
                         entity.SetProperties(1, 1, 1);
 
                         List<BOMachineRefTeam> response = mapper.MapEFToBO(new List<MachineRefTeam>() { entity });
@@ -61,5 +55,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>04729e8db128967c1a3ee9aa4cdb3458</Hash>
+    <Hash>353260c598652f249d4d08286b2b3705</Hash>
 </Codenesium>*/

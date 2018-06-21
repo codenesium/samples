@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOAccount bo)
                 {
                         Account efAccount = new Account();
-
                         efAccount.SetProperties(
                                 bo.AccountType,
                                 bo.EnvironmentIds,
@@ -56,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15d185ec6a0af5743c9c4eb2d5102b7f</Hash>
+    <Hash>9d75471602c8acfa6a4a7eab855e994a</Hash>
 </Codenesium>*/

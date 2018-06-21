@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractDeploymentService: AbstractService
+        public abstract class AbstractDeploymentService : AbstractService
         {
                 private IDeploymentRepository deploymentRepository;
 
@@ -33,15 +33,10 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentRepository deploymentRepository,
                         IApiDeploymentRequestModelValidator deploymentModelValidator,
                         IBOLDeploymentMapper bolDeploymentMapper,
-                        IDALDeploymentMapper dalDeploymentMapper
-
-                        ,
+                        IDALDeploymentMapper dalDeploymentMapper,
                         IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper,
-                        IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper
-
-                        )
+                        IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper)
                         : base()
-
                 {
                         this.deploymentRepository = deploymentRepository;
                         this.deploymentModelValidator = deploymentModelValidator;
@@ -79,7 +74,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiDeploymentResponseModel> response = new CreateResponse<ApiDeploymentResponseModel>(await this.deploymentModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDeploymentMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolDeploymentMapper.MapModelToBO(default(string), model);
                                 var record = await this.deploymentRepository.Create(this.dalDeploymentMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiDeploymentRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDeploymentMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.deploymentRepository.Delete(id);
@@ -122,12 +115,14 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiDeploymentResponseModel>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
                         List<Deployment> records = await this.deploymentRepository.GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
 
                         return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiDeploymentResponseModel>> GetTenantId(string tenantId)
                 {
                         List<Deployment> records = await this.deploymentRepository.GetTenantId(tenantId);
@@ -145,5 +140,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66973c695cd229c581bde041a607329e</Hash>
+    <Hash>55dd7ab10a3a64d5a03cba5982766982</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FileServiceNS.Api.DataAccess;
 using FileServiceNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "File")]
         [Trait("Area", "DALMapper")]
-        public class TestDALFileActionMapper
+        public class TestDALFileMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALFileMapper();
-
                         var bo = new BOFile();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
 
                         File response = mapper.MapBOToEF(bo);
@@ -41,12 +39,10 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALFileMapper();
-
                         File entity = new File();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, "A", "A", "A");
 
-                        BOFile  response = mapper.MapEFToBO(entity);
+                        BOFile response = mapper.MapEFToBO(entity);
 
                         response.BucketId.Should().Be(1);
                         response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -66,9 +62,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALFileMapper();
-
                         File entity = new File();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, "A", "A", "A");
 
                         List<BOFile> response = mapper.MapEFToBO(new List<File>() { entity });
@@ -79,5 +73,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>551637ab9188ee08a2a911062d2520ba</Hash>
+    <Hash>8d71333325eb3a5dcd31261b3e90ee2b</Hash>
 </Codenesium>*/

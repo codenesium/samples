@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public abstract class AbstractApiTeacherResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiTeacherResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime birthday,
@@ -115,5 +115,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ace31abdcaecd19647ef0f127c0b28cb</Hash>
+    <Hash>432bd2a8ec4fbd3f7aed660c3f9fda60</Hash>
 </Codenesium>*/

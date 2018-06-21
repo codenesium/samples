@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiPetRequestModelValidator: AbstractValidator<ApiPetRequestModel>
+        public abstract class AbstractApiPetRequestModelValidator : AbstractValidator<ApiPetRequestModel>
         {
                 private int existingRecordId;
 
-                IPetRepository petRepository;
+                private IPetRepository petRepository;
 
                 public AbstractApiPetRequestModelValidator(IPetRepository petRepository)
                 {
@@ -28,12 +28,12 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void BreedIdRules()
                 {
-                        this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x ?.BreedId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x?.BreedId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ClientIdRules()
                 {
-                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x ?.ClientId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NameRules()
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>77154ba5c36df307193402ba3257ff1f</Hash>
+    <Hash>3325d1e6ec6735dd4051553d4016fa07</Hash>
 </Codenesium>*/

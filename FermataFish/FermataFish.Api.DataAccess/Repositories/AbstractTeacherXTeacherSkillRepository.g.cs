@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractTeacherXTeacherSkillRepository: AbstractRepository
+        public abstract class AbstractTeacherXTeacherSkillRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Teacher> GetTeacher(int teacherId)
+                {
+                        return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
+                }
+
+                public async virtual Task<TeacherSkill> GetTeacherSkill(int teacherSkillId)
+                {
+                        return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
+                }
+
                 protected async Task<List<TeacherXTeacherSkill>> Where(
                         Expression<Func<TeacherXTeacherSkill, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Teacher> GetTeacher(int teacherId)
-                {
-                        return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
-                }
-                public async virtual Task<TeacherSkill> GetTeacherSkill(int teacherSkillId)
-                {
-                        return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>34c7e0d2386e65951be17c87e01edd46</Hash>
+    <Hash>b016a368d787a04d9809d68f402413b3</Hash>
 </Codenesium>*/

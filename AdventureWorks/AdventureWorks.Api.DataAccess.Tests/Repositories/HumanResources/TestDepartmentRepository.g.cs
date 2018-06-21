@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new DepartmentRepository(loggerMoc.Object, context);
 
                         Department entity = new Department();
-
                         context.Set<Department>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new DepartmentRepository(loggerMoc.Object, context);
 
                         Department entity = new Department();
-
                         context.Set<Department>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new DepartmentRepository(loggerMoc.Object, context);
 
                         var entity = new Department();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Department>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
                         var repository = new DepartmentRepository(loggerMoc.Object, context);
-
                         Department entity = new Department();
-
                         context.Set<Department>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
                         var repository = new DepartmentRepository(loggerMoc.Object, context);
-
                         Department entity = new Department();
-
                         context.Set<Department>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<DepartmentRepository>> loggerMoc = DepartmentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DepartmentRepositoryMoc.GetContext();
                         var repository = new DepartmentRepository(loggerMoc.Object, context);
-
                         Department entity = new Department();
-
                         context.Set<Department>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.DepartmentID);
 
                         Department modifiedRecord = await context.Set<Department>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b3684aaab27df31a6bbb89be448d9e41</Hash>
+    <Hash>627d4d463161a98841db2495c6e31190</Hash>
 </Codenesium>*/

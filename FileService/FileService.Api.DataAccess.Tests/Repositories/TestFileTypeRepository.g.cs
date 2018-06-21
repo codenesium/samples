@@ -38,7 +38,6 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new FileTypeRepository(loggerMoc.Object, context);
 
                         FileType entity = new FileType();
-
                         context.Set<FileType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new FileTypeRepository(loggerMoc.Object, context);
 
                         FileType entity = new FileType();
-
                         context.Set<FileType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new FileTypeRepository(loggerMoc.Object, context);
 
                         var entity = new FileType();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<FileType>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<FileTypeRepository>> loggerMoc = FileTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FileTypeRepositoryMoc.GetContext();
                         var repository = new FileTypeRepository(loggerMoc.Object, context);
-
                         FileType entity = new FileType();
-
                         context.Set<FileType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<FileTypeRepository>> loggerMoc = FileTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FileTypeRepositoryMoc.GetContext();
                         var repository = new FileTypeRepository(loggerMoc.Object, context);
-
                         FileType entity = new FileType();
-
                         context.Set<FileType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<FileTypeRepository>> loggerMoc = FileTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FileTypeRepositoryMoc.GetContext();
                         var repository = new FileTypeRepository(loggerMoc.Object, context);
-
                         FileType entity = new FileType();
-
                         context.Set<FileType>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         FileType modifiedRecord = await context.Set<FileType>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>50a5b2140c900fb2a82c950704ebfccc</Hash>
+    <Hash>364d1f4244fdae0d1a433763ba03a541</Hash>
 </Codenesium>*/

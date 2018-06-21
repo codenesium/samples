@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductCategoryRepository(loggerMoc.Object, context);
 
                         ProductCategory entity = new ProductCategory();
-
                         context.Set<ProductCategory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductCategoryRepository(loggerMoc.Object, context);
 
                         ProductCategory entity = new ProductCategory();
-
                         context.Set<ProductCategory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductCategoryRepository(loggerMoc.Object, context);
 
                         var entity = new ProductCategory();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProductCategory>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductCategoryRepository>> loggerMoc = ProductCategoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductCategoryRepositoryMoc.GetContext();
                         var repository = new ProductCategoryRepository(loggerMoc.Object, context);
-
                         ProductCategory entity = new ProductCategory();
-
                         context.Set<ProductCategory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductCategoryRepository>> loggerMoc = ProductCategoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductCategoryRepositoryMoc.GetContext();
                         var repository = new ProductCategoryRepository(loggerMoc.Object, context);
-
                         ProductCategory entity = new ProductCategory();
-
                         context.Set<ProductCategory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductCategoryRepository>> loggerMoc = ProductCategoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductCategoryRepositoryMoc.GetContext();
                         var repository = new ProductCategoryRepository(loggerMoc.Object, context);
-
                         ProductCategory entity = new ProductCategory();
-
                         context.Set<ProductCategory>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ProductCategoryID);
 
                         ProductCategory modifiedRecord = await context.Set<ProductCategory>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5bcb66edc7e7c47b3ac0b8e141dfd169</Hash>
+    <Hash>268f5ad37911ba216b71fdd1671cd094</Hash>
 </Codenesium>*/

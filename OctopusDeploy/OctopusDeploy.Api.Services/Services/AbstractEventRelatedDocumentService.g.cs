@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractEventRelatedDocumentService: AbstractService
+        public abstract class AbstractEventRelatedDocumentService : AbstractService
         {
                 private IEventRelatedDocumentRepository eventRelatedDocumentRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IEventRelatedDocumentRepository eventRelatedDocumentRepository,
                         IApiEventRelatedDocumentRequestModelValidator eventRelatedDocumentModelValidator,
                         IBOLEventRelatedDocumentMapper bolEventRelatedDocumentMapper,
-                        IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper
-
-                        )
+                        IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper)
                         : base()
-
                 {
                         this.eventRelatedDocumentRepository = eventRelatedDocumentRepository;
                         this.eventRelatedDocumentModelValidator = eventRelatedDocumentModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiEventRelatedDocumentResponseModel> response = new CreateResponse<ApiEventRelatedDocumentResponseModel>(await this.eventRelatedDocumentModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolEventRelatedDocumentMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolEventRelatedDocumentMapper.MapModelToBO(default(int), model);
                                 var record = await this.eventRelatedDocumentRepository.Create(this.dalEventRelatedDocumentMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiEventRelatedDocumentRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.eventRelatedDocumentModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolEventRelatedDocumentMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.eventRelatedDocumentModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.eventRelatedDocumentRepository.Delete(id);
@@ -112,6 +107,7 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiEventRelatedDocumentResponseModel>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
                         List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.GetEventIdRelatedDocumentId(eventId, relatedDocumentId);
@@ -122,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>609bc33adb43515566a6a89e0c39853b</Hash>
+    <Hash>2dade41c6f8faf62632c6f517e6f88f0</Hash>
 </Codenesium>*/

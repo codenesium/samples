@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOFamily bo)
                 {
                         Family efFamily = new Family();
-
                         efFamily.SetProperties(
                                 bo.Id,
                                 bo.Notes,
@@ -56,5 +55,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47284745b8c878fa724016a2de8d81f1</Hash>
+    <Hash>5aa987a9f3e873cc4f5d2b5c84ca27c4</Hash>
 </Codenesium>*/

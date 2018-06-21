@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductModelProductDescriptionCulture")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProductModelProductDescriptionCultureActionMapper
+        public class TestDALProductModelProductDescriptionCultureMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProductModelProductDescriptionCultureMapper();
-
                         var bo = new BOProductModelProductDescriptionCulture();
-
                         bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         ProductModelProductDescriptionCulture response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProductModelProductDescriptionCultureMapper();
-
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 
-                        BOProductModelProductDescriptionCulture  response = mapper.MapEFToBO(entity);
+                        BOProductModelProductDescriptionCulture response = mapper.MapEFToBO(entity);
 
                         response.CultureID.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProductModelProductDescriptionCultureMapper();
-
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 
                         List<BOProductModelProductDescriptionCulture> response = mapper.MapEFToBO(new List<ProductModelProductDescriptionCulture>() { entity });
@@ -63,5 +57,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8cad1d0a4950f28034a0a5e0842cce6a</Hash>
+    <Hash>55e49ab036fe24dfe7242eb243a644cb</Hash>
 </Codenesium>*/

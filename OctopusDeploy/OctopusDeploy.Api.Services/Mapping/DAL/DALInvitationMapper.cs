@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALInvitationMapper: DALAbstractInvitationMapper, IDALInvitationMapper
+        public class DALInvitationMapper : DALAbstractInvitationMapper, IDALInvitationMapper
         {
                 public DALInvitationMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e55fa82673e2233f355e428aaa35d795</Hash>
+    <Hash>25afd3aadfa65c85188fb5328772faeb</Hash>
 </Codenesium>*/

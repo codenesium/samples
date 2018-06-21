@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOPhoneNumberType boPhoneNumberType = new BOPhoneNumberType();
-
                         boPhoneNumberType.SetProperties(
                                 phoneNumberTypeID,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b157175e09184204239445040ee59259</Hash>
+    <Hash>36beb4bbb28fe019d57e28e9bae2cfc9</Hash>
 </Codenesium>*/

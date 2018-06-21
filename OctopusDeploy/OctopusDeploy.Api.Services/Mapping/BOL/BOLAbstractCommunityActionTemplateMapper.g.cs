@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOCommunityActionTemplate boCommunityActionTemplate = new BOCommunityActionTemplate();
-
                         boCommunityActionTemplate.SetProperties(
                                 id,
                                 model.ExternalId,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7ef9ca3bb8b55271c60a0421656de1a</Hash>
+    <Hash>5ac86d3225c723340fb31915dbb51b44</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiJobCandidateRequestModelValidator: AbstractValidator<ApiJobCandidateRequestModel>
+        public abstract class AbstractApiJobCandidateRequestModelValidator : AbstractValidator<ApiJobCandidateRequestModel>
         {
                 private int existingRecordId;
 
-                IJobCandidateRepository jobCandidateRepository;
+                private IJobCandidateRepository jobCandidateRepository;
 
                 public AbstractApiJobCandidateRequestModelValidator(IJobCandidateRepository jobCandidateRepository)
                 {
@@ -41,5 +41,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65463bd26d93bd79c167d3f176cd5a77</Hash>
+    <Hash>acbdf71f8208e204a227e5bd544959ce</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractDepartmentService: AbstractService
+        public abstract class AbstractDepartmentService : AbstractService
         {
                 private IDepartmentRepository departmentRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IDepartmentRepository departmentRepository,
                         IApiDepartmentRequestModelValidator departmentModelValidator,
                         IBOLDepartmentMapper bolDepartmentMapper,
-                        IDALDepartmentMapper dalDepartmentMapper
-
-                        ,
+                        IDALDepartmentMapper dalDepartmentMapper,
                         IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-
-                        )
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
                         : base()
-
                 {
                         this.departmentRepository = departmentRepository;
                         this.departmentModelValidator = departmentModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiDepartmentResponseModel> response = new CreateResponse<ApiDepartmentResponseModel>(await this.departmentModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDepartmentMapper.MapModelToBO(default (short), model);
+                                var bo = this.bolDepartmentMapper.MapModelToBO(default(short), model);
                                 var record = await this.departmentRepository.Create(this.dalDepartmentMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiDepartmentRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.departmentModelValidator.ValidateUpdateAsync(departmentID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDepartmentMapper.MapModelToBO(departmentID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         short departmentID)
                 {
                         ActionResponse response = new ActionResponse(await this.departmentModelValidator.ValidateDeleteAsync(departmentID));
-
                         if (response.Success)
                         {
                                 await this.departmentRepository.Delete(departmentID);
@@ -140,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>297465b709514ce6ed5980742136375c</Hash>
+    <Hash>1c3f1d601d6390b8499581288f64abf8</Hash>
 </Codenesium>*/

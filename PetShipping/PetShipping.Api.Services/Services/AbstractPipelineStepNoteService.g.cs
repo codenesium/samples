@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractPipelineStepNoteService: AbstractService
+        public abstract class AbstractPipelineStepNoteService : AbstractService
         {
                 private IPipelineStepNoteRepository pipelineStepNoteRepository;
 
@@ -29,11 +29,8 @@ namespace PetShippingNS.Api.Services
                         IPipelineStepNoteRepository pipelineStepNoteRepository,
                         IApiPipelineStepNoteRequestModelValidator pipelineStepNoteModelValidator,
                         IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
-
-                        )
+                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
                         : base()
-
                 {
                         this.pipelineStepNoteRepository = pipelineStepNoteRepository;
                         this.pipelineStepNoteModelValidator = pipelineStepNoteModelValidator;
@@ -69,7 +66,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiPipelineStepNoteResponseModel> response = new CreateResponse<ApiPipelineStepNoteResponseModel>(await this.pipelineStepNoteModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPipelineStepNoteMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPipelineStepNoteMapper.MapModelToBO(default(int), model);
                                 var record = await this.pipelineStepNoteRepository.Create(this.dalPipelineStepNoteMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPipelineStepNoteMapper.MapBOToModel(this.dalPipelineStepNoteMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace PetShippingNS.Api.Services
                         ApiPipelineStepNoteRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.pipelineStepNoteModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPipelineStepNoteMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.pipelineStepNoteModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.pipelineStepNoteRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4268a4d93c162e8fe3093e7f6d1a24de</Hash>
+    <Hash>e0d560081f7871230c823bf0a1ca95aa</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractTransactionHistoryArchiveService: AbstractService
+        public abstract class AbstractTransactionHistoryArchiveService : AbstractService
         {
                 private ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository,
                         IApiTransactionHistoryArchiveRequestModelValidator transactionHistoryArchiveModelValidator,
                         IBOLTransactionHistoryArchiveMapper bolTransactionHistoryArchiveMapper,
-                        IDALTransactionHistoryArchiveMapper dalTransactionHistoryArchiveMapper
-
-                        )
+                        IDALTransactionHistoryArchiveMapper dalTransactionHistoryArchiveMapper)
                         : base()
-
                 {
                         this.transactionHistoryArchiveRepository = transactionHistoryArchiveRepository;
                         this.transactionHistoryArchiveModelValidator = transactionHistoryArchiveModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiTransactionHistoryArchiveResponseModel> response = new CreateResponse<ApiTransactionHistoryArchiveResponseModel>(await this.transactionHistoryArchiveModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTransactionHistoryArchiveMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTransactionHistoryArchiveMapper.MapModelToBO(default(int), model);
                                 var record = await this.transactionHistoryArchiveRepository.Create(this.dalTransactionHistoryArchiveMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTransactionHistoryArchiveMapper.MapBOToModel(this.dalTransactionHistoryArchiveMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiTransactionHistoryArchiveRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.transactionHistoryArchiveModelValidator.ValidateUpdateAsync(transactionID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTransactionHistoryArchiveMapper.MapModelToBO(transactionID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int transactionID)
                 {
                         ActionResponse response = new ActionResponse(await this.transactionHistoryArchiveModelValidator.ValidateDeleteAsync(transactionID));
-
                         if (response.Success)
                         {
                                 await this.transactionHistoryArchiveRepository.Delete(transactionID);
@@ -112,6 +107,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolTransactionHistoryArchiveMapper.MapBOToModel(this.dalTransactionHistoryArchiveMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiTransactionHistoryArchiveResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
                         List<TransactionHistoryArchive> records = await this.transactionHistoryArchiveRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4bcfb9378bca4d61efc9bb6d85cd86a</Hash>
+    <Hash>57242f635f670047a065f667786790e4</Hash>
 </Codenesium>*/

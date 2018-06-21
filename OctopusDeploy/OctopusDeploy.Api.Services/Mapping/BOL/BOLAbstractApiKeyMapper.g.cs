@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOApiKey boApiKey = new BOApiKey();
-
                         boApiKey.SetProperties(
                                 id,
                                 model.ApiKeyHashed,
@@ -49,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc62852c5ce1bfc68bd7741c12a75cca</Hash>
+    <Hash>a47de0ed3941e2e532b9d1ca0809cbda</Hash>
 </Codenesium>*/

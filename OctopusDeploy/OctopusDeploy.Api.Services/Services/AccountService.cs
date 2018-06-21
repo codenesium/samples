@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class AccountService: AbstractAccountService, IAccountService
+        public class AccountService : AbstractAccountService, IAccountService
         {
                 public AccountService(
                         ILogger<IAccountRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiAccountRequestModelValidator accountModelValidator,
                         IBOLAccountMapper bolaccountMapper,
                         IDALAccountMapper dalaccountMapper
-
                         )
                         : base(logger,
                                accountRepository,
                                accountModelValidator,
                                bolaccountMapper,
-                               dalaccountMapper
-                               )
+                               dalaccountMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1c0b143b8991a2de70f84e220cf9739b</Hash>
+    <Hash>2fa149e2a6f725e595d52d7a16b13207</Hash>
 </Codenesium>*/

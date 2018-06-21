@@ -11,3 +11,34 @@ script:
    -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
    -  dotnet build TicketingCRM/TicketingCRM.Api.Web/TicketingCRM.Api.Web.csproj
    -  dotnet build OctopusDeploy/OctopusDeploy.Api.Web/OctopusDeploy.Api.Web.csproj
+
+   -  dotnet test ESPIOT/ESPIOT.Api.DataAccess.Tests/ESPIOT.Api.DataAccess.Tests.csproj
+   -  dotnet test FileService/FileService.Api.DataAccess.Tests/FileService.Api.DataAccess.Tests.csproj
+   -  dotnet test Nebula/Nebula.Api.DataAccess.Tests/Nebula.Api.DataAccess.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.DataAccess.Tests/AdventureWorks.Api.DataAccess.Tests.csproj
+   -  dotnet test FermataFish/FermataFish.Api.DataAccess.Tests/FermataFish.Api.DataAccess.Tests.csproj
+   -  dotnet test PetShipping/PetShipping.Api.DataAccess.Tests/PetShipping.Api.DataAccess.Tests.csproj
+   -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.DataAccess.Tests/TicketingCRM.Api.DataAccess.Tests.csproj
+   -  dotnet test OctopusDeploy/OctopusDeploy.Api.DataAccess.Tests/OctopusDeploy.Api.DataAccess.Tests.csproj
+   
+   -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
+   -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
+   -  dotnet test Nebula/Nebula.Api.Services.Tests/Nebula.Api.Services.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.Services.Tests/AdventureWorks.Api.Services.Tests.csproj
+   -  dotnet test FermataFish/FermataFish.Api.Services.Tests/FermataFish.Api.Services.Tests.csproj
+   -  dotnet test PetShipping/PetShipping.Api.Services.Tests/PetShipping.Api.Services.Tests.csproj
+   -  dotnet test PetStore/PetStore.Api.Services.Tests/PetStore.Api.Services.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.Services.Tests/TicketingCRM.Api.Services.Tests.csproj
+   -  dotnet test OctopusDeploy/OctopusDeploy.Api.Services.Tests/OctopusDeploy.Api.Services.Tests.csproj
+   
+   
+   -  dotnet test ESPIOT/ESPIOT.Api.Web.Tests/ESPIOT.Api.Web.Tests.csproj
+   -  dotnet test FileService/FileService.Api.Web.Tests/FileService.Api.Web.Tests.csproj
+   -  dotnet test Nebula/Nebula.Api.Web.Tests/Nebula.Api.Web.Tests.csproj
+   -  dotnet test AdventureWorks/AdventureWorks.Api.Web.Tests/AdventureWorks.Api.Web.Tests.csproj
+   -  dotnet test FermataFish/FermataFish.Api.Web.Tests/FermataFish.Api.Web.Tests.csproj
+   -  dotnet test PetShipping/PetShipping.Api.Web.Tests/PetShipping.Api.Web.Tests.csproj
+   -  dotnet test PetStore/PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj
+   -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Tests/TicketingCRM.Api.Web.Tests.csproj
+   -  dotnet test OctopusDeploy/OctopusDeploy.Api.Web.Tests/OctopusDeploy.Api.Web.Tests.csproj

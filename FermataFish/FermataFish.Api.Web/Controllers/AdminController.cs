@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.Services;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
         [Route("api/admins")]
         [ApiVersion("1.0")]
-        public class AdminController: AbstractAdminController
+        public class AdminController : AbstractAdminController
         {
                 public AdminController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c8efe45e0e5dfa0f11698861a5808552</Hash>
+    <Hash>5af6097a6dfffac27767d2aef11c5cb3</Hash>
 </Codenesium>*/

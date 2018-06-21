@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiSalesPersonResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiSalesPersonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal bonus,
@@ -141,5 +141,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1d6d89ba35736afccb0ea391888edee8</Hash>
+    <Hash>1206eb9309d15ac4a3e5d14a4f953fa1</Hash>
 </Codenesium>*/

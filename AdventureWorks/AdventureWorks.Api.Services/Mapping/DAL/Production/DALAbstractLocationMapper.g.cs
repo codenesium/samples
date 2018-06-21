@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOLocation bo)
                 {
                         Location efLocation = new Location();
-
                         efLocation.SetProperties(
                                 bo.Availability,
                                 bo.CostRate,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd8a3a18c69103d4a3a24e81aa04cf42</Hash>
+    <Hash>d66edbee37d3a484ec9d17836a5bdd3e</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address1, null as string);
@@ -44,8 +43,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address1, null as string);
                 }
@@ -57,7 +55,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
@@ -70,8 +67,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address1, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address2, null as string);
@@ -109,8 +103,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address2, null as string);
                 }
@@ -122,7 +115,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
@@ -135,8 +127,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
                 }
@@ -148,8 +139,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CityId, 1);
@@ -187,8 +176,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CityId, 1);
                 }
@@ -201,7 +189,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CityId, 1);
                 }
@@ -213,7 +201,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
@@ -226,8 +213,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
                 }
@@ -239,7 +225,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Facebook, null as string);
@@ -252,8 +237,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Facebook, null as string);
                 }
@@ -265,7 +249,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
@@ -278,8 +261,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Facebook, new string('A', 129));
                 }
@@ -291,8 +273,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -304,7 +285,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -317,8 +297,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -330,7 +309,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -343,8 +321,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -356,8 +333,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -369,7 +345,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Website, null as string);
@@ -382,8 +357,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Website, null as string);
                 }
@@ -395,7 +369,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
@@ -408,8 +381,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Website, new string('A', 129));
                 }
@@ -421,8 +393,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         eventRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Event()));
 
                         var validator = new ApiEventRequestModelValidator(eventRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -430,5 +401,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>16b43ff97d4ba12e6d429ec1ba5fc823</Hash>
+    <Hash>7e3c1d6edb5ebbf38d9ff9dccfd5f9a2</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSpecialOffer bo)
                 {
                         SpecialOffer efSpecialOffer = new SpecialOffer();
-
                         efSpecialOffer.SetProperties(
                                 bo.Category,
                                 bo.Description,
@@ -64,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5bf7dae13b54a093a2bdf639299dafcb</Hash>
+    <Hash>b0e2ac84db99915d4e4489566d6a1aa0</Hash>
 </Codenesium>*/

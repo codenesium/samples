@@ -1,12 +1,12 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
+using PetShippingNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
 
 namespace PetShippingNS.Api.Client
 {
@@ -29,10 +29,12 @@ namespace PetShippingNS.Api.Client
                         {
                                 throw new ArgumentException("apiUrl is not set");
                         }
+
                         if (apiUri[apiUri.Length - 1] != '/')
                         {
                                 throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
+
                         if (string.IsNullOrWhiteSpace(apiVersion))
                         {
                                 throw new ArgumentException("apiVersion is not set");
@@ -41,9 +43,7 @@ namespace PetShippingNS.Api.Client
                         this.ApiUrl = apiUri;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-
                         this.client.BaseAddress = new Uri(apiUri);
-
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -190,6 +190,14 @@ namespace PetShippingNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiPetResponseModel>> Pets(int breedId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds/Pets/{breedId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiClientResponseModel> ClientCreateAsync(ApiClientRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clients", item);
@@ -235,6 +243,22 @@ namespace PetShippingNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiClientResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int clientId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clients/ClientCommunications/{clientId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiClientCommunicationResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiSaleResponseModel>> Sales(int clientId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clients/Sales/{clientId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiClientCommunicationResponseModel> ClientCommunicationCreateAsync(ApiClientCommunicationRequestModel item)
@@ -331,6 +355,22 @@ namespace PetShippingNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiCountryResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiCountryRequirementResponseModel>> CountryRequirements(int countryId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Countries/CountryRequirements/{countryId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiCountryRequirementResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiDestinationResponseModel>> Destinations(int countryId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Countries/Destinations/{countryId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiDestinationResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiCountryRequirementResponseModel> CountryRequirementCreateAsync(ApiCountryRequirementRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CountryRequirements", item);
@@ -425,6 +465,14 @@ namespace PetShippingNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDestinationResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinations(int destinationId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Destinations/PipelineStepDestinations/{destinationId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPipelineStepDestinationResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiEmployeeResponseModel> EmployeeCreateAsync(ApiEmployeeRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Employees", item);
@@ -472,6 +520,22 @@ namespace PetShippingNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiPipelineStepResponseModel>> PipelineSteps(int shipperId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/PipelineSteps/{shipperId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotes(int employeeId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/PipelineStepNotes/{employeeId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiHandlerResponseModel> HandlerCreateAsync(ApiHandlerRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Handlers", item);
@@ -517,6 +581,30 @@ namespace PetShippingNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiHandlerResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiAirTransportResponseModel>> AirTransports(int handlerId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Handlers/AirTransports/{handlerId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiAirTransportResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiHandlerPipelineStepResponseModel>> HandlerPipelineSteps(int handlerId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Handlers/HandlerPipelineSteps/{handlerId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiHandlerPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiOtherTransportResponseModel>> OtherTransports(int handlerId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Handlers/OtherTransports/{handlerId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiOtherTransportResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiHandlerPipelineStepResponseModel> HandlerPipelineStepCreateAsync(ApiHandlerPipelineStepRequestModel item)
@@ -754,6 +842,14 @@ namespace PetShippingNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiPipelineStatusResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiPipelineResponseModel>> Pipelines(int pipelineStatusId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStatus/Pipelines/{pipelineStatusId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPipelineResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiPipelineStepResponseModel> PipelineStepCreateAsync(ApiPipelineStepRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineSteps", item);
@@ -799,6 +895,14 @@ namespace PetShippingNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirements(int pipelineStepId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineSteps/PipelineStepStepRequirements/{pipelineStepId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPipelineStepStepRequirementResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiPipelineStepDestinationResponseModel> PipelineStepDestinationCreateAsync(ApiPipelineStepDestinationRequestModel item)
@@ -1082,9 +1186,17 @@ namespace PetShippingNS.Api.Client
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiSpeciesResponseModel>>(httpResponse.Content.ContentToString());
                 }
+
+                public virtual async Task<List<ApiBreedResponseModel>> Breeds(int speciesId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species/Breeds/{speciesId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
+                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d29e9c4c8858d2c471ebef277486a873</Hash>
+    <Hash>032ebd10769fde896d734c77d0c76fc6</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FileServiceNS.Api.Services
                         BOFileType bo)
                 {
                         FileType efFileType = new FileType();
-
                         efFileType.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8cee9624f505f41f6e625e5bd3b13dc8</Hash>
+    <Hash>ca50e1512d56ae4eeaee491c0f2a8fe5</Hash>
 </Codenesium>*/

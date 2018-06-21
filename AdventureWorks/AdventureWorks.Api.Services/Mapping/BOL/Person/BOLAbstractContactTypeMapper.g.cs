@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOContactType boContactType = new BOContactType();
-
                         boContactType.SetProperties(
                                 contactTypeID,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>658a568e332615e92cad7e02f3e9add3</Hash>
+    <Hash>0bd67acee35a7c3b6b019a7ad6572c87</Hash>
 </Codenesium>*/

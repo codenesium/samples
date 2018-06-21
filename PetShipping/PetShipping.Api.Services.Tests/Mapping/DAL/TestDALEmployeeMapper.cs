@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Employee")]
         [Trait("Area", "DALMapper")]
-        public class TestDALEmployeeActionMapper
+        public class TestDALEmployeeMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALEmployeeMapper();
-
                         var bo = new BOEmployee();
-
                         bo.SetProperties(1, "A", true, true, "A");
 
                         Employee response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALEmployeeMapper();
-
                         Employee entity = new Employee();
-
                         entity.SetProperties("A", 1, true, true, "A");
 
-                        BOEmployee  response = mapper.MapEFToBO(entity);
+                        BOEmployee response = mapper.MapEFToBO(entity);
 
                         response.FirstName.Should().Be("A");
                         response.Id.Should().Be(1);
@@ -52,9 +48,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALEmployeeMapper();
-
                         Employee entity = new Employee();
-
                         entity.SetProperties("A", 1, true, true, "A");
 
                         List<BOEmployee> response = mapper.MapEFToBO(new List<Employee>() { entity });
@@ -65,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>44e33605df6391e68a469147503e3770</Hash>
+    <Hash>df1514db9202b691dd8868b44ff54ac6</Hash>
 </Codenesium>*/

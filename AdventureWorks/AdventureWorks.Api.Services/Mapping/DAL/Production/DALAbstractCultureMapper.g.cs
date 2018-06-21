@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOCulture bo)
                 {
                         Culture efCulture = new Culture();
-
                         efCulture.SetProperties(
                                 bo.CultureID,
                                 bo.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3da664c48dade28da78322a7ef755ed</Hash>
+    <Hash>35b5e7942017b438eda06480b7eea85d</Hash>
 </Codenesium>*/

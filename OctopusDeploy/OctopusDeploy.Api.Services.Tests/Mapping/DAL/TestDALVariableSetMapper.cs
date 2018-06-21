@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "VariableSet")]
         [Trait("Area", "DALMapper")]
-        public class TestDALVariableSetActionMapper
+        public class TestDALVariableSetMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALVariableSetMapper();
-
                         var bo = new BOVariableSet();
-
                         bo.SetProperties("A", true, "A", "A", "A", 1);
 
                         VariableSet response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALVariableSetMapper();
-
                         VariableSet entity = new VariableSet();
-
                         entity.SetProperties("A", true, "A", "A", "A", 1);
 
-                        BOVariableSet  response = mapper.MapEFToBO(entity);
+                        BOVariableSet response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.IsFrozen.Should().Be(true);
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALVariableSetMapper();
-
                         VariableSet entity = new VariableSet();
-
                         entity.SetProperties("A", true, "A", "A", "A", 1);
 
                         List<BOVariableSet> response = mapper.MapEFToBO(new List<VariableSet>() { entity });
@@ -67,5 +61,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b9887ba0e820ae6bffcbedb7adec9f40</Hash>
+    <Hash>8658a8879728541550189ba4c5fdaae1</Hash>
 </Codenesium>*/

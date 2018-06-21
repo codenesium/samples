@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ArtifactService: AbstractArtifactService, IArtifactService
+        public class ArtifactService : AbstractArtifactService, IArtifactService
         {
                 public ArtifactService(
                         ILogger<IArtifactRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiArtifactRequestModelValidator artifactModelValidator,
                         IBOLArtifactMapper bolartifactMapper,
                         IDALArtifactMapper dalartifactMapper
-
                         )
                         : base(logger,
                                artifactRepository,
                                artifactModelValidator,
                                bolartifactMapper,
-                               dalartifactMapper
-                               )
+                               dalartifactMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>682c7b1d50372081635113b364c22bec</Hash>
+    <Hash>0af3f539d79c46b0d04ee5f36484d10d</Hash>
 </Codenesium>*/

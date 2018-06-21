@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductProductPhotoService: AbstractService
+        public abstract class AbstractProductProductPhotoService : AbstractService
         {
                 private IProductProductPhotoRepository productProductPhotoRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductProductPhotoRepository productProductPhotoRepository,
                         IApiProductProductPhotoRequestModelValidator productProductPhotoModelValidator,
                         IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
-                        IDALProductProductPhotoMapper dalProductProductPhotoMapper
-
-                        )
+                        IDALProductProductPhotoMapper dalProductProductPhotoMapper)
                         : base()
-
                 {
                         this.productProductPhotoRepository = productProductPhotoRepository;
                         this.productProductPhotoModelValidator = productProductPhotoModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductProductPhotoResponseModel> response = new CreateResponse<ApiProductProductPhotoResponseModel>(await this.productProductPhotoModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductProductPhotoMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductProductPhotoMapper.MapModelToBO(default(int), model);
                                 var record = await this.productProductPhotoRepository.Create(this.dalProductProductPhotoMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductProductPhotoRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productProductPhotoModelValidator.ValidateUpdateAsync(productID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductProductPhotoMapper.MapModelToBO(productID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productID)
                 {
                         ActionResponse response = new ActionResponse(await this.productProductPhotoModelValidator.ValidateDeleteAsync(productID));
-
                         if (response.Success)
                         {
                                 await this.productProductPhotoRepository.Delete(productID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f229592e49f169ab96c1057549e44e2f</Hash>
+    <Hash>fd1bf1c38148c6ed6f344979644abef7</Hash>
 </Codenesium>*/

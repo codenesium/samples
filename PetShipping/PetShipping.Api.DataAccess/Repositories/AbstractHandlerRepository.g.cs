@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractHandlerRepository: AbstractRepository
+        public abstract class AbstractHandlerRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,21 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<AirTransport>> AirTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<AirTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
+                }
+
+                public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int handlerId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<HandlerPipelineStep>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
+                }
+
+                public async virtual Task<List<OtherTransport>> OtherTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<OtherTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
+                }
+
                 protected async Task<List<Handler>> Where(
                         Expression<Func<Handler, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,22 +119,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<AirTransport>> AirTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<AirTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
-                }
-                public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int handlerId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<HandlerPipelineStep>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
-                }
-                public async virtual Task<List<OtherTransport>> OtherTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<OtherTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>01c5b2c1a6ee76f765c8d06013d427f7</Hash>
+    <Hash>1eb4f54af3155b0d0f7eb695587d71e0</Hash>
 </Codenesium>*/

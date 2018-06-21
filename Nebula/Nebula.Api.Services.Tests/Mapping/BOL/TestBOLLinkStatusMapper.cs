@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "LinkStatus")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLLinkStatusActionMapper
+        public class TestBOLLinkStatusMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLLinkStatusMapper();
-
                         ApiLinkStatusRequestModel model = new ApiLinkStatusRequestModel();
-
                         model.SetProperties("A");
                         BOLinkStatus response = mapper.MapModelToBO(1, model);
 
@@ -30,9 +28,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLLinkStatusMapper();
-
                         BOLinkStatus bo = new BOLinkStatus();
-
                         bo.SetProperties(1, "A");
                         ApiLinkStatusResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLLinkStatusMapper();
-
                         BOLinkStatus bo = new BOLinkStatus();
-
                         bo.SetProperties(1, "A");
                         List<ApiLinkStatusResponseModel> response = mapper.MapBOToModel(new List<BOLinkStatus>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dd780956a65922609ef99b021abb60fc</Hash>
+    <Hash>ac5a6b602ce743e6c3c13e01a2f61183</Hash>
 </Codenesium>*/

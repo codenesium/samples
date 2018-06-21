@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("SchemaVersions", Schema="dbo")]
-        public partial class SchemaVersions: AbstractEntity
+        public partial class SchemaVersions : AbstractEntity
         {
                 public SchemaVersions()
                 {
@@ -22,18 +22,18 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.ScriptName = scriptName;
                 }
 
-                [Column("Applied", TypeName="datetime")]
+                [Column("Applied")]
                 public DateTime Applied { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="int")]
+                [Column("Id")]
                 public int Id { get; private set; }
 
-                [Column("ScriptName", TypeName="nvarchar(255)")]
+                [Column("ScriptName")]
                 public string ScriptName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9f98c22c2f849ffc4897311a184495ce</Hash>
+    <Hash>79980947b56854328ecff610cb7d31f4</Hash>
 </Codenesium>*/

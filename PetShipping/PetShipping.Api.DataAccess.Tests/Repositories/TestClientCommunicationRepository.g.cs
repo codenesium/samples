@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new ClientCommunicationRepository(loggerMoc.Object, context);
 
                         ClientCommunication entity = new ClientCommunication();
-
                         context.Set<ClientCommunication>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new ClientCommunicationRepository(loggerMoc.Object, context);
 
                         ClientCommunication entity = new ClientCommunication();
-
                         context.Set<ClientCommunication>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new ClientCommunicationRepository(loggerMoc.Object, context);
 
                         var entity = new ClientCommunication();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ClientCommunication>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<ClientCommunicationRepository>> loggerMoc = ClientCommunicationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClientCommunicationRepositoryMoc.GetContext();
                         var repository = new ClientCommunicationRepository(loggerMoc.Object, context);
-
                         ClientCommunication entity = new ClientCommunication();
-
                         context.Set<ClientCommunication>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<ClientCommunicationRepository>> loggerMoc = ClientCommunicationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClientCommunicationRepositoryMoc.GetContext();
                         var repository = new ClientCommunicationRepository(loggerMoc.Object, context);
-
                         ClientCommunication entity = new ClientCommunication();
-
                         context.Set<ClientCommunication>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<ClientCommunicationRepository>> loggerMoc = ClientCommunicationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClientCommunicationRepositoryMoc.GetContext();
                         var repository = new ClientCommunicationRepository(loggerMoc.Object, context);
-
                         ClientCommunication entity = new ClientCommunication();
-
                         context.Set<ClientCommunication>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ClientCommunication modifiedRecord = await context.Set<ClientCommunication>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2390447b70bf6322a07a0d036ab7d3f1</Hash>
+    <Hash>ebe101331f854aca73310e57adf801b8</Hash>
 </Codenesium>*/

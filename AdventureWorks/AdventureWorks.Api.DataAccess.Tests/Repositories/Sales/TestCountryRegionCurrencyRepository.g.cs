@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
 
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         context.Set<CountryRegionCurrency>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
 
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         context.Set<CountryRegionCurrency>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
 
                         var entity = new CountryRegionCurrency();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
                         var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
-
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         context.Set<CountryRegionCurrency>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
                         var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
-
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         context.Set<CountryRegionCurrency>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CountryRegionCurrencyRepository>> loggerMoc = CountryRegionCurrencyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRegionCurrencyRepositoryMoc.GetContext();
                         var repository = new CountryRegionCurrencyRepository(loggerMoc.Object, context);
-
                         CountryRegionCurrency entity = new CountryRegionCurrency();
-
                         context.Set<CountryRegionCurrency>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.CountryRegionCode);
 
                         CountryRegionCurrency modifiedRecord = await context.Set<CountryRegionCurrency>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d3b338924e042d017a3237a052adbaed</Hash>
+    <Hash>7c20323152e8f03d62b94dbc22742814</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOChainStatus boChainStatus = new BOChainStatus();
-
                         boChainStatus.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa23563832aff2f7910d5322a8d960dd</Hash>
+    <Hash>3c95cd6d316c1a8445f10ec276eb459d</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractMachineRefTeamService: AbstractService
+        public abstract class AbstractMachineRefTeamService : AbstractService
         {
                 private IMachineRefTeamRepository machineRefTeamRepository;
 
@@ -29,11 +29,8 @@ namespace NebulaNS.Api.Services
                         IMachineRefTeamRepository machineRefTeamRepository,
                         IApiMachineRefTeamRequestModelValidator machineRefTeamModelValidator,
                         IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
-
-                        )
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper)
                         : base()
-
                 {
                         this.machineRefTeamRepository = machineRefTeamRepository;
                         this.machineRefTeamModelValidator = machineRefTeamModelValidator;
@@ -69,7 +66,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiMachineRefTeamResponseModel> response = new CreateResponse<ApiMachineRefTeamResponseModel>(await this.machineRefTeamModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolMachineRefTeamMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolMachineRefTeamMapper.MapModelToBO(default(int), model);
                                 var record = await this.machineRefTeamRepository.Create(this.dalMachineRefTeamMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace NebulaNS.Api.Services
                         ApiMachineRefTeamRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolMachineRefTeamMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.machineRefTeamModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.machineRefTeamRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a891c995ac9c1b352c88db39e15658ee</Hash>
+    <Hash>585a6ad4afbd6cb184ea1b7264113496</Hash>
 </Codenesium>*/

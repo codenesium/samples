@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCreditCardRequestModelValidator: AbstractValidator<ApiCreditCardRequestModel>
+        public abstract class AbstractApiCreditCardRequestModelValidator : AbstractValidator<ApiCreditCardRequestModel>
         {
                 private int existingRecordId;
 
-                ICreditCardRepository creditCardRepository;
+                private ICreditCardRepository creditCardRepository;
 
                 public AbstractApiCreditCardRequestModelValidator(ICreditCardRepository creditCardRepository)
                 {
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void CardNumberRules()
                 {
                         this.RuleFor(x => x.CardNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCardNumber).When(x => x ?.CardNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardRequestModel.CardNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCardNumber).When(x => x?.CardNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCreditCardRequestModel.CardNumber));
                         this.RuleFor(x => x.CardNumber).Length(0, 25);
                 }
 
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         CreditCard record = await this.creditCardRepository.ByCardNumber(model.CardNumber);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.CreditCardID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.CreditCardID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>90da73cc86597896eba9ddef38294e49</Hash>
+    <Hash>e3c22a89d2f166946ff1c8aa14335638</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TagSet")]
         [Trait("Area", "DALMapper")]
-        public class TestDALTagSetActionMapper
+        public class TestDALTagSetMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALTagSetMapper();
-
                         var bo = new BOTagSet();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
 
                         TagSet response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALTagSetMapper();
-
                         TagSet entity = new TagSet();
-
                         entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
 
-                        BOTagSet  response = mapper.MapEFToBO(entity);
+                        BOTagSet response = mapper.MapEFToBO(entity);
 
                         response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
                         response.Id.Should().Be("A");
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALTagSetMapper();
-
                         TagSet entity = new TagSet();
-
                         entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
 
                         List<BOTagSet> response = mapper.MapEFToBO(new List<TagSet>() { entity });
@@ -65,5 +59,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>63d1690cc48e879ed5d791894f809dc1</Hash>
+    <Hash>dac3627e01c09ce5f6ecb0302844221d</Hash>
 </Codenesium>*/

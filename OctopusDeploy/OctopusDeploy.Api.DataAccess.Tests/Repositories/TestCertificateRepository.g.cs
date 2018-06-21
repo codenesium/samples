@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new CertificateRepository(loggerMoc.Object, context);
 
                         Certificate entity = new Certificate();
-
                         context.Set<Certificate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new CertificateRepository(loggerMoc.Object, context);
 
                         Certificate entity = new Certificate();
-
                         context.Set<Certificate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new CertificateRepository(loggerMoc.Object, context);
 
                         var entity = new Certificate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Certificate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<CertificateRepository>> loggerMoc = CertificateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CertificateRepositoryMoc.GetContext();
                         var repository = new CertificateRepository(loggerMoc.Object, context);
-
                         Certificate entity = new Certificate();
-
                         context.Set<Certificate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<CertificateRepository>> loggerMoc = CertificateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CertificateRepositoryMoc.GetContext();
                         var repository = new CertificateRepository(loggerMoc.Object, context);
-
                         Certificate entity = new Certificate();
-
                         context.Set<Certificate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<CertificateRepository>> loggerMoc = CertificateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CertificateRepositoryMoc.GetContext();
                         var repository = new CertificateRepository(loggerMoc.Object, context);
-
                         Certificate entity = new Certificate();
-
                         context.Set<Certificate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Certificate modifiedRecord = await context.Set<Certificate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4e593bc157cdb648c0b56cb4ecb454ea</Hash>
+    <Hash>948b4ab80aea4cfc8853765df5e5e9f7</Hash>
 </Codenesium>*/

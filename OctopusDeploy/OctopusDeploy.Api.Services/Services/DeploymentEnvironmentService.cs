@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DeploymentEnvironmentService: AbstractDeploymentEnvironmentService, IDeploymentEnvironmentService
+        public class DeploymentEnvironmentService : AbstractDeploymentEnvironmentService, IDeploymentEnvironmentService
         {
                 public DeploymentEnvironmentService(
                         ILogger<IDeploymentEnvironmentRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiDeploymentEnvironmentRequestModelValidator deploymentEnvironmentModelValidator,
                         IBOLDeploymentEnvironmentMapper boldeploymentEnvironmentMapper,
                         IDALDeploymentEnvironmentMapper daldeploymentEnvironmentMapper
-
                         )
                         : base(logger,
                                deploymentEnvironmentRepository,
                                deploymentEnvironmentModelValidator,
                                boldeploymentEnvironmentMapper,
-                               daldeploymentEnvironmentMapper
-                               )
+                               daldeploymentEnvironmentMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>aa100f6208c7fcb27d6d89f00b81a171</Hash>
+    <Hash>8b2a01eca2883e71fed19f797d1c40a1</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOLinkStatus bo)
                 {
                         LinkStatus efLinkStatus = new LinkStatus();
-
                         efLinkStatus.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea961c0881e65a558d6ee9fbb2a7211a</Hash>
+    <Hash>3052f554e0025c30ac58473656754a2e</Hash>
 </Codenesium>*/

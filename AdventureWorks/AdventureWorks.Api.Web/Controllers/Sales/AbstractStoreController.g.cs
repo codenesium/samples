@@ -1,20 +1,20 @@
-using System;
-using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
+using Codenesium.Foundation.CommonMVC;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractStoreController: AbstractApiController
+        public abstract class AbstractStoreController : AbstractApiController
         {
                 protected IStoreService StoreService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiStoreResponseModel> response = await this.StoreService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStoreResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiStoreResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiStoreRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.BusinessEntityID.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Stores/{result.Record.BusinessEntityID.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Stores/{result.Record.BusinessEntityID}", result.Record);
                         }
                         else
                         {
@@ -200,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cee13dfcc0bbe9d0ee24ff4841226dcb</Hash>
+    <Hash>2c89576a7769ad71d124cc67a22a372e</Hash>
 </Codenesium>*/

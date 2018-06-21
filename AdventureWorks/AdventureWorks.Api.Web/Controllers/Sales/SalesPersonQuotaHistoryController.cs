@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/salesPersonQuotaHistories")]
         [ApiVersion("1.0")]
-        public class SalesPersonQuotaHistoryController: AbstractSalesPersonQuotaHistoryController
+        public class SalesPersonQuotaHistoryController : AbstractSalesPersonQuotaHistoryController
         {
                 public SalesPersonQuotaHistoryController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d25172e4543360114aafea05850e7f6f</Hash>
+    <Hash>f26682182be43b05961383e342c66176</Hash>
 </Codenesium>*/

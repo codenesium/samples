@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Password")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPasswordActionMapper
+        public class TestDALPasswordMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPasswordMapper();
-
                         var bo = new BOPassword();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         Password response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPasswordMapper();
-
                         Password entity = new Password();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
-                        BOPassword  response = mapper.MapEFToBO(entity);
+                        BOPassword response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPasswordMapper();
-
                         Password entity = new Password();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         List<BOPassword> response = mapper.MapEFToBO(new List<Password>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>935ff910275a656b8255bcd2b355e406</Hash>
+    <Hash>ec5ecbbe856a8348a3942e561cf170b3</Hash>
 </Codenesium>*/

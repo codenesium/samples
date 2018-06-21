@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new LinkStatusRepository(loggerMoc.Object, context);
 
                         LinkStatus entity = new LinkStatus();
-
                         context.Set<LinkStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new LinkStatusRepository(loggerMoc.Object, context);
 
                         LinkStatus entity = new LinkStatus();
-
                         context.Set<LinkStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new LinkStatusRepository(loggerMoc.Object, context);
 
                         var entity = new LinkStatus();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<LinkStatus>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<LinkStatusRepository>> loggerMoc = LinkStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LinkStatusRepositoryMoc.GetContext();
                         var repository = new LinkStatusRepository(loggerMoc.Object, context);
-
                         LinkStatus entity = new LinkStatus();
-
                         context.Set<LinkStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<LinkStatusRepository>> loggerMoc = LinkStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LinkStatusRepositoryMoc.GetContext();
                         var repository = new LinkStatusRepository(loggerMoc.Object, context);
-
                         LinkStatus entity = new LinkStatus();
-
                         context.Set<LinkStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<LinkStatusRepository>> loggerMoc = LinkStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LinkStatusRepositoryMoc.GetContext();
                         var repository = new LinkStatusRepository(loggerMoc.Object, context);
-
                         LinkStatus entity = new LinkStatus();
-
                         context.Set<LinkStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         LinkStatus modifiedRecord = await context.Set<LinkStatus>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2703b632889cd979b1014b380b8b1702</Hash>
+    <Hash>e61dc87af7b9aa0b3581fb3f3def3a4f</Hash>
 </Codenesium>*/

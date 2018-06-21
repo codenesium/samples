@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class DeploymentHistoryRepository: AbstractDeploymentHistoryRepository, IDeploymentHistoryRepository
+        public class DeploymentHistoryRepository : AbstractDeploymentHistoryRepository, IDeploymentHistoryRepository
         {
                 public DeploymentHistoryRepository(
                         ILogger<DeploymentHistoryRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>28cdec5c73667ce30de820595114443a</Hash>
+    <Hash>dc2d152a5bd7caf2903ac3e0a822d361</Hash>
 </Codenesium>*/

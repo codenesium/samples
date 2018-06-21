@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 
                         ScrapReason entity = new ScrapReason();
-
                         context.Set<ScrapReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 
                         ScrapReason entity = new ScrapReason();
-
                         context.Set<ScrapReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ScrapReasonRepository(loggerMoc.Object, context);
 
                         var entity = new ScrapReason();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ScrapReason>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ScrapReasonRepository>> loggerMoc = ScrapReasonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
                         var repository = new ScrapReasonRepository(loggerMoc.Object, context);
-
                         ScrapReason entity = new ScrapReason();
-
                         context.Set<ScrapReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ScrapReasonRepository>> loggerMoc = ScrapReasonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
                         var repository = new ScrapReasonRepository(loggerMoc.Object, context);
-
                         ScrapReason entity = new ScrapReason();
-
                         context.Set<ScrapReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ScrapReasonRepository>> loggerMoc = ScrapReasonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ScrapReasonRepositoryMoc.GetContext();
                         var repository = new ScrapReasonRepository(loggerMoc.Object, context);
-
                         ScrapReason entity = new ScrapReason();
-
                         context.Set<ScrapReason>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ScrapReasonID);
 
                         ScrapReason modifiedRecord = await context.Set<ScrapReason>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9b5623cdab3ce35759e572944c96e840</Hash>
+    <Hash>09b745071d21352d2241c46d0a3eef05</Hash>
 </Codenesium>*/

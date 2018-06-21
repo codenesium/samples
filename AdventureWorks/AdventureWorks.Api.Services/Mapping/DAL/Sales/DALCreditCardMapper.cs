@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALCreditCardMapper: DALAbstractCreditCardMapper, IDALCreditCardMapper
+        public class DALCreditCardMapper : DALAbstractCreditCardMapper, IDALCreditCardMapper
         {
                 public DALCreditCardMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d677fa23bda61d22022892b7928d2042</Hash>
+    <Hash>a224bf06ca28bc7363f034a4cad755fe</Hash>
 </Codenesium>*/

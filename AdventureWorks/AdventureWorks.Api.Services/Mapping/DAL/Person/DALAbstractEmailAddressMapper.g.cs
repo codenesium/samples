@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOEmailAddress bo)
                 {
                         EmailAddress efEmailAddress = new EmailAddress();
-
                         efEmailAddress.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.EmailAddress1,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>60f9579f320cf74514e79206ad115935</Hash>
+    <Hash>004cf990100c3517337420f96fc10a9b</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiSpaceXSpaceFeatureRequestModelValidator: AbstractValidator<ApiSpaceXSpaceFeatureRequestModel>
+        public abstract class AbstractApiSpaceXSpaceFeatureRequestModelValidator : AbstractValidator<ApiSpaceXSpaceFeatureRequestModel>
         {
                 private int existingRecordId;
 
-                ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
+                private ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
 
                 public AbstractApiSpaceXSpaceFeatureRequestModelValidator(ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository)
                 {
@@ -28,12 +28,12 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void SpaceFeatureIdRules()
                 {
-                        this.RuleFor(x => x.SpaceFeatureId).MustAsync(this.BeValidSpaceFeature).When(x => x ?.SpaceFeatureId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.SpaceFeatureId).MustAsync(this.BeValidSpaceFeature).When(x => x?.SpaceFeatureId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void SpaceIdRules()
                 {
-                        this.RuleFor(x => x.SpaceId).MustAsync(this.BeValidSpace).When(x => x ?.SpaceId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.SpaceId).MustAsync(this.BeValidSpace).When(x => x?.SpaceId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidSpaceFeature(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a812c7abf5b39320191d8393418763a</Hash>
+    <Hash>44455f7e3dd21726cc4414764721d515</Hash>
 </Codenesium>*/

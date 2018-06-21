@@ -4,7 +4,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class DALChainStatusMapper: DALAbstractChainStatusMapper, IDALChainStatusMapper
+        public class DALChainStatusMapper : DALAbstractChainStatusMapper, IDALChainStatusMapper
         {
                 public DALChainStatusMapper()
                 {
@@ -13,5 +13,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f5d3d702f8cecda6669ec267b78274e</Hash>
+    <Hash>ec02dc3742a0df6e0425e7c08e2247c4</Hash>
 </Codenesium>*/

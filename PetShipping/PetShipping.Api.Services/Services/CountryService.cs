@@ -1,48 +1,42 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class CountryService: AbstractCountryService, ICountryService
+        public class CountryService : AbstractCountryService, ICountryService
         {
                 public CountryService(
                         ILogger<ICountryRepository> logger,
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
                         IBOLCountryMapper bolcountryMapper,
-                        IDALCountryMapper dalcountryMapper
-                        ,
+                        IDALCountryMapper dalcountryMapper,
                         IBOLCountryRequirementMapper bolCountryRequirementMapper,
-                        IDALCountryRequirementMapper dalCountryRequirementMapper
-                        ,
+                        IDALCountryRequirementMapper dalCountryRequirementMapper,
                         IBOLDestinationMapper bolDestinationMapper,
                         IDALDestinationMapper dalDestinationMapper
-
                         )
                         : base(logger,
                                countryRepository,
                                countryModelValidator,
                                bolcountryMapper,
-                               dalcountryMapper
-                               ,
+                               dalcountryMapper,
                                bolCountryRequirementMapper,
-                               dalCountryRequirementMapper
-                               ,
+                               dalCountryRequirementMapper,
                                bolDestinationMapper,
-                               dalDestinationMapper
-                               )
+                               dalDestinationMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>de134983b2cda462ee9ddde8d2f8991b</Hash>
+    <Hash>d6fab18dfebb41600c308e1e07b0efc9</Hash>
 </Codenesium>*/

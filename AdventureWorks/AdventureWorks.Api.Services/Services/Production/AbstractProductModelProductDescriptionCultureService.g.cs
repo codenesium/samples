@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductModelProductDescriptionCultureService: AbstractService
+        public abstract class AbstractProductModelProductDescriptionCultureService : AbstractService
         {
                 private IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository,
                         IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator,
                         IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-
-                        )
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
                         : base()
-
                 {
                         this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
                         this.productModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> response = new CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>(await this.productModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(default(int), model);
                                 var record = await this.productModelProductDescriptionCultureRepository.Create(this.dalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductModelProductDescriptionCultureRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productModelProductDescriptionCultureModelValidator.ValidateUpdateAsync(productModelID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(productModelID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productModelID)
                 {
                         ActionResponse response = new ActionResponse(await this.productModelProductDescriptionCultureModelValidator.ValidateDeleteAsync(productModelID));
-
                         if (response.Success)
                         {
                                 await this.productModelProductDescriptionCultureRepository.Delete(productModelID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd5e9e715d5db8903b64502fae25e32f</Hash>
+    <Hash>f9fc7df4ab3457509cdbb95d563e06d9</Hash>
 </Codenesium>*/

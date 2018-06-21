@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLSalesReasonMapper: BOLAbstractSalesReasonMapper, IBOLSalesReasonMapper
+        public class BOLSalesReasonMapper : BOLAbstractSalesReasonMapper, IBOLSalesReasonMapper
         {
                 public BOLSalesReasonMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59cff87999c8c7dd841396c365c7d4cb</Hash>
+    <Hash>7aedc1be44714c0ce4a5fb1efa3c0962</Hash>
 </Codenesium>*/

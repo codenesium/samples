@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiTransactionHistoryRequestModelValidator: AbstractValidator<ApiTransactionHistoryRequestModel>
+        public abstract class AbstractApiTransactionHistoryRequestModelValidator : AbstractValidator<ApiTransactionHistoryRequestModel>
         {
                 private int existingRecordId;
 
-                ITransactionHistoryRepository transactionHistoryRepository;
+                private ITransactionHistoryRepository transactionHistoryRepository;
 
                 public AbstractApiTransactionHistoryRequestModelValidator(ITransactionHistoryRepository transactionHistoryRepository)
                 {
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0853ce7acbb3537332177722969239ae</Hash>
+    <Hash>65a667d1144d810850aeb8afd2db2c37</Hash>
 </Codenesium>*/

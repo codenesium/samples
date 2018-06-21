@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractKeyAllocationService: AbstractService
+        public abstract class AbstractKeyAllocationService : AbstractService
         {
                 private IKeyAllocationRepository keyAllocationRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IKeyAllocationRepository keyAllocationRepository,
                         IApiKeyAllocationRequestModelValidator keyAllocationModelValidator,
                         IBOLKeyAllocationMapper bolKeyAllocationMapper,
-                        IDALKeyAllocationMapper dalKeyAllocationMapper
-
-                        )
+                        IDALKeyAllocationMapper dalKeyAllocationMapper)
                         : base()
-
                 {
                         this.keyAllocationRepository = keyAllocationRepository;
                         this.keyAllocationModelValidator = keyAllocationModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiKeyAllocationResponseModel> response = new CreateResponse<ApiKeyAllocationResponseModel>(await this.keyAllocationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolKeyAllocationMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolKeyAllocationMapper.MapModelToBO(default(string), model);
                                 var record = await this.keyAllocationRepository.Create(this.dalKeyAllocationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiKeyAllocationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.keyAllocationModelValidator.ValidateUpdateAsync(collectionName, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolKeyAllocationMapper.MapModelToBO(collectionName, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string collectionName)
                 {
                         ActionResponse response = new ActionResponse(await this.keyAllocationModelValidator.ValidateDeleteAsync(collectionName));
-
                         if (response.Success)
                         {
                                 await this.keyAllocationRepository.Delete(collectionName);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c20e43fa42f24c54ad5400db45f7262</Hash>
+    <Hash>f9253484bc0765186e4bee9c9e31fee9</Hash>
 </Codenesium>*/

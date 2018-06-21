@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiPipelineStepStepRequirementRequestModelValidator: AbstractValidator<ApiPipelineStepStepRequirementRequestModel>
+        public abstract class AbstractApiPipelineStepStepRequirementRequestModelValidator : AbstractValidator<ApiPipelineStepStepRequirementRequestModel>
         {
                 private int existingRecordId;
 
-                IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository;
+                private IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository;
 
                 public AbstractApiPipelineStepStepRequirementRequestModelValidator(IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository)
                 {
@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x ?.PipelineStepId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void RequirementMetRules()
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9bc4464776923721b527ebe87e2cb6d4</Hash>
+    <Hash>5abac82b7c6ebcdb5fe9a710e6e28d4d</Hash>
 </Codenesium>*/

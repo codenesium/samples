@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOKeyAllocation boKeyAllocation = new BOKeyAllocation();
-
                         boKeyAllocation.SetProperties(
                                 collectionName,
                                 model.Allocated);
@@ -46,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>401051acccb6d4d6804ad763b87ef1e4</Hash>
+    <Hash>1205cb4c4a675d9eed44c8645eae97b3</Hash>
 </Codenesium>*/

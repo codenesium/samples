@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiSalesOrderDetailResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiSalesOrderDetailResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string carrierTrackingNumber,
@@ -173,5 +173,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f20ec1401c6b6c79269311855d1b68ab</Hash>
+    <Hash>41f7a715bfe67370571828568e3b834a</Hash>
 </Codenesium>*/

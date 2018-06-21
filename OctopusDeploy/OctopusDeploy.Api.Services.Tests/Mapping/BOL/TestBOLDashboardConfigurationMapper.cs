@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DashboardConfiguration")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDashboardConfigurationActionMapper
+        public class TestBOLDashboardConfigurationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDashboardConfigurationMapper();
-
                         ApiDashboardConfigurationRequestModel model = new ApiDashboardConfigurationRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", "A");
                         BODashboardConfiguration response = mapper.MapModelToBO("A", model);
 
@@ -34,9 +32,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDashboardConfigurationMapper();
-
                         BODashboardConfiguration bo = new BODashboardConfiguration();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A");
                         ApiDashboardConfigurationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDashboardConfigurationMapper();
-
                         BODashboardConfiguration bo = new BODashboardConfiguration();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A");
                         List<ApiDashboardConfigurationResponseModel> response = mapper.MapBOToModel(new List<BODashboardConfiguration>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5e4ecf7d9116e5d1c0f852a507c7ca06</Hash>
+    <Hash>4a2b2c07c52bebcc8efac787adfda65e</Hash>
 </Codenesium>*/

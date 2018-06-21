@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class PipelineStepDestinationService: AbstractPipelineStepDestinationService, IPipelineStepDestinationService
+        public class PipelineStepDestinationService : AbstractPipelineStepDestinationService, IPipelineStepDestinationService
         {
                 public PipelineStepDestinationService(
                         ILogger<IPipelineStepDestinationRepository> logger,
@@ -18,19 +18,17 @@ namespace PetShippingNS.Api.Services
                         IApiPipelineStepDestinationRequestModelValidator pipelineStepDestinationModelValidator,
                         IBOLPipelineStepDestinationMapper bolpipelineStepDestinationMapper,
                         IDALPipelineStepDestinationMapper dalpipelineStepDestinationMapper
-
                         )
                         : base(logger,
                                pipelineStepDestinationRepository,
                                pipelineStepDestinationModelValidator,
                                bolpipelineStepDestinationMapper,
-                               dalpipelineStepDestinationMapper
-                               )
+                               dalpipelineStepDestinationMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4b06efe506d2dc347db728e250bbccdc</Hash>
+    <Hash>b5e5b3977077fbe6450f5d37423e9cc9</Hash>
 </Codenesium>*/

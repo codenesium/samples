@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOCurrency boCurrency = new BOCurrency();
-
                         boCurrency.SetProperties(
                                 currencyCode,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc6b2d70665733ac54c19fc8db2aa957</Hash>
+    <Hash>5b5f507001d02b531b598ec22eccf51d</Hash>
 </Codenesium>*/

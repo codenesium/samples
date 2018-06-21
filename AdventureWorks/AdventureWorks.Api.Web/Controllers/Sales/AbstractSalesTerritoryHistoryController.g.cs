@@ -1,20 +1,20 @@
-using System;
-using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
+using Codenesium.Foundation.CommonMVC;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
-        public abstract class AbstractSalesTerritoryHistoryController: AbstractApiController
+        public abstract class AbstractSalesTerritoryHistoryController : AbstractApiController
         {
                 protected ISalesTerritoryHistoryService SalesTerritoryHistoryService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiSalesTerritoryHistoryResponseModel> response = await this.SalesTerritoryHistoryService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace AdventureWorksNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiSalesTerritoryHistoryResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiSalesTerritoryHistoryRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace AdventureWorksNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.BusinessEntityID.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/SalesTerritoryHistories/{result.Record.BusinessEntityID.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/SalesTerritoryHistories/{result.Record.BusinessEntityID}", result.Record);
                         }
                         else
                         {
@@ -164,5 +161,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>38edc68b55a0ce53c182e02923371438</Hash>
+    <Hash>2178dac9d8830e1e84943a15527b6fe8</Hash>
 </Codenesium>*/

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLAddressTypeMapper: BOLAbstractAddressTypeMapper, IBOLAddressTypeMapper
+        public class BOLAddressTypeMapper : BOLAbstractAddressTypeMapper, IBOLAddressTypeMapper
         {
                 public BOLAddressTypeMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45ef6046ed5ce8e7f477424139d0885e</Hash>
+    <Hash>a4fa0f85d9bda936a805c1d719f53db1</Hash>
 </Codenesium>*/

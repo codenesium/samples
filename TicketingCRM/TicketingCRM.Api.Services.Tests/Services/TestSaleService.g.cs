@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISaleRepository>();
                         var record = new Sale();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        ApiSaleResponseModel response = await service.Get(default (int));
+                        ApiSaleResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        ApiSaleResponseModel response = await service.Get(default (int));
+                        ApiSaleResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISaleRepository>();
                         var model = new ApiSaleRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Sale>())).Returns(Task.FromResult(new Sale()));
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISaleRepository>();
                         var model = new ApiSaleRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Sale>())).Returns(Task.FromResult(new Sale()));
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SaleModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>()));
@@ -128,7 +125,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISaleRepository>();
                         var model = new ApiSaleRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -160,7 +156,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        List<ApiSaleResponseModel> response = await service.GetTransactionId(default (int));
+                        List<ApiSaleResponseModel> response = await service.GetTransactionId(default(int));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTransactionId(It.IsAny<int>()));
@@ -179,7 +175,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        List<ApiSaleResponseModel> response = await service.GetTransactionId(default (int));
+                        List<ApiSaleResponseModel> response = await service.GetTransactionId(default(int));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTransactionId(It.IsAny<int>()));
@@ -191,7 +187,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISaleRepository>();
                         var records = new List<SaleTickets>();
                         records.Add(new SaleTickets());
-                        mock.RepositoryMock.Setup(x => x.SaleTickets(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.SaleModelValidatorMock.Object,
@@ -200,17 +196,17 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        List<ApiSaleTicketsResponseModel> response = await service.SaleTickets(default (int));
+                        List<ApiSaleTicketsResponseModel> response = await service.SaleTickets(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SaleTickets(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void SaleTickets_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISaleRepository>();
-                        mock.RepositoryMock.Setup(x => x.SaleTickets(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SaleTickets>>(new List<SaleTickets>()));
+                        mock.RepositoryMock.Setup(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SaleTickets>>(new List<SaleTickets>()));
                         var service = new SaleService(mock.LoggerMock.Object,
                                                       mock.RepositoryMock.Object,
                                                       mock.ModelValidatorMockFactory.SaleModelValidatorMock.Object,
@@ -219,14 +215,14 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                       mock.BOLMapperMockFactory.BOLSaleTicketsMapperMock,
                                                       mock.DALMapperMockFactory.DALSaleTicketsMapperMock);
 
-                        List<ApiSaleTicketsResponseModel> response = await service.SaleTickets(default (int));
+                        List<ApiSaleTicketsResponseModel> response = await service.SaleTickets(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SaleTickets(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7b7afc954f35756b3bf62bf75bf47605</Hash>
+    <Hash>c2107af243ec078be3d4c24c1c9b6565</Hash>
 </Codenesium>*/

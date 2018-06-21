@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/artifacts")]
         [ApiVersion("1.0")]
-        public class ArtifactController: AbstractArtifactController
+        public class ArtifactController : AbstractArtifactController
         {
                 public ArtifactController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>53a73ace1b87a96dbd6130e50e74180c</Hash>
+    <Hash>a7a3e90b02ae31e5ab2f4da7527c571f</Hash>
 </Codenesium>*/

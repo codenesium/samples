@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
 
 namespace FileServiceNS.Api.Client
 {
@@ -29,10 +29,12 @@ namespace FileServiceNS.Api.Client
                         {
                                 throw new ArgumentException("apiUrl is not set");
                         }
+
                         if (apiUri[apiUri.Length - 1] != '/')
                         {
                                 throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
+
                         if (string.IsNullOrWhiteSpace(apiVersion))
                         {
                                 throw new ArgumentException("apiVersion is not set");
@@ -41,9 +43,7 @@ namespace FileServiceNS.Api.Client
                         this.ApiUrl = apiUri;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-
                         this.client.BaseAddress = new Uri(apiUri);
-
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -110,6 +110,14 @@ namespace FileServiceNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiFileResponseModel>> Files(int bucketId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/Files/{bucketId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiFileResponseModel> FileCreateAsync(ApiFileRequestModel item)
@@ -264,5 +272,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>1527a694cf913b2ce16ce1ac1cd81811</Hash>
+    <Hash>db990597269efb518e7e45f937cf1d4d</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "UnitMeasure")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLUnitMeasureActionMapper
+        public class TestBOLUnitMeasureMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLUnitMeasureMapper();
-
                         ApiUnitMeasureRequestModel model = new ApiUnitMeasureRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOUnitMeasure response = mapper.MapModelToBO("A", model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLUnitMeasureMapper();
-
                         BOUnitMeasure bo = new BOUnitMeasure();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiUnitMeasureResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLUnitMeasureMapper();
-
                         BOUnitMeasure bo = new BOUnitMeasure();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiUnitMeasureResponseModel> response = mapper.MapBOToModel(new List<BOUnitMeasure>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>56a1bbce10d27805aeff122d8d83df81</Hash>
+    <Hash>ffb9f3fbbd5a7dee6b5830a42a519391</Hash>
 </Codenesium>*/

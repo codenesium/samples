@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
 using ESPIOTNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeviceAction")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDeviceActionActionMapper
+        public class TestBOLDeviceActionMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDeviceActionMapper();
-
                         ApiDeviceActionRequestModel model = new ApiDeviceActionRequestModel();
-
                         model.SetProperties(1, "A", "A");
                         BODeviceAction response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace ESPIOTNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDeviceActionMapper();
-
                         BODeviceAction bo = new BODeviceAction();
-
                         bo.SetProperties(1, 1, "A", "A");
                         ApiDeviceActionResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace ESPIOTNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDeviceActionMapper();
-
                         BODeviceAction bo = new BODeviceAction();
-
                         bo.SetProperties(1, 1, "A", "A");
                         List<ApiDeviceActionResponseModel> response = mapper.MapBOToModel(new List<BODeviceAction>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b85812343cb140c0bcb222d7c83fe882</Hash>
+    <Hash>1f2d6850088c3d3caf6b7a39056327b2</Hash>
 </Codenesium>*/

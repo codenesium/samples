@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOPassword boPassword = new BOPassword();
-
                         boPassword.SetProperties(
                                 businessEntityID,
                                 model.ModifiedDate,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d1ffd81e573a97bc3e9c2a717a6dd903</Hash>
+    <Hash>8ce2dbdf13e8fadf5456220abfb76dd0</Hash>
 </Codenesium>*/

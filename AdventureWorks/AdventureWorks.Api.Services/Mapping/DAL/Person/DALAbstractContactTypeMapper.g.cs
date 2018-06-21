@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOContactType bo)
                 {
                         ContactType efContactType = new ContactType();
-
                         efContactType.SetProperties(
                                 bo.ContactTypeID,
                                 bo.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>391c9bfedd14fe5d4437849614118ca7</Hash>
+    <Hash>91dbcaf49b64f3206155c314bf0375f6</Hash>
 </Codenesium>*/

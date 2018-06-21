@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOErrorLog bo)
                 {
                         ErrorLog efErrorLog = new ErrorLog();
-
                         efErrorLog.SetProperties(
                                 bo.ErrorLine,
                                 bo.ErrorLogID,
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af6cf6721d8a6ad276201c998be5bd0c</Hash>
+    <Hash>a8af8aeccb664e3b7a200bcddaa28d1d</Hash>
 </Codenesium>*/

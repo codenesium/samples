@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOWorkOrder bo)
                 {
                         WorkOrder efWorkOrder = new WorkOrder();
-
                         efWorkOrder.SetProperties(
                                 bo.DueDate,
                                 bo.EndDate,
@@ -62,5 +61,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29d51b90e22e9dddf574e8baa3adcdc3</Hash>
+    <Hash>347a16a29666c8efccf1730209436409</Hash>
 </Codenesium>*/

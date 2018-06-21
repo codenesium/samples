@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/workerPools")]
         [ApiVersion("1.0")]
-        public class WorkerPoolController: AbstractWorkerPoolController
+        public class WorkerPoolController : AbstractWorkerPoolController
         {
                 public WorkerPoolController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3dd6221e83d32f2cfa29a44e1c41e43b</Hash>
+    <Hash>48475c0f99dcf94a9fda4917f8a6e7b8</Hash>
 </Codenesium>*/

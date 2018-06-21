@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
@@ -18,6 +18,7 @@ namespace FileServiceNS.Api.DataAccess
                 Task<List<Bucket>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Bucket> GetExternalId(Guid externalId);
+
                 Task<Bucket> GetName(string name);
 
                 Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0);
@@ -25,5 +26,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9a2b0e673736906ebf8baf5775230244</Hash>
+    <Hash>d1b812f6b1d73e616da3f5f3423908b5</Hash>
 </Codenesium>*/

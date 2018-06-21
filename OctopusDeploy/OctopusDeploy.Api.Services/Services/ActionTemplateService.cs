@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ActionTemplateService: AbstractActionTemplateService, IActionTemplateService
+        public class ActionTemplateService : AbstractActionTemplateService, IActionTemplateService
         {
                 public ActionTemplateService(
                         ILogger<IActionTemplateRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiActionTemplateRequestModelValidator actionTemplateModelValidator,
                         IBOLActionTemplateMapper bolactionTemplateMapper,
                         IDALActionTemplateMapper dalactionTemplateMapper
-
                         )
                         : base(logger,
                                actionTemplateRepository,
                                actionTemplateModelValidator,
                                bolactionTemplateMapper,
-                               dalactionTemplateMapper
-                               )
+                               dalactionTemplateMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c43ac4b632149899c7ef6eab497a2c5d</Hash>
+    <Hash>cde657bd9b370905487e614c3c95028a</Hash>
 </Codenesium>*/

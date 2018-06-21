@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractReleaseService: AbstractService
+        public abstract class AbstractReleaseService : AbstractService
         {
                 private IReleaseRepository releaseRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IReleaseRepository releaseRepository,
                         IApiReleaseRequestModelValidator releaseModelValidator,
                         IBOLReleaseMapper bolReleaseMapper,
-                        IDALReleaseMapper dalReleaseMapper
-
-                        )
+                        IDALReleaseMapper dalReleaseMapper)
                         : base()
-
                 {
                         this.releaseRepository = releaseRepository;
                         this.releaseModelValidator = releaseModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiReleaseResponseModel> response = new CreateResponse<ApiReleaseResponseModel>(await this.releaseModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolReleaseMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolReleaseMapper.MapModelToBO(default(string), model);
                                 var record = await this.releaseRepository.Create(this.dalReleaseMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiReleaseRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.releaseModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolReleaseMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.releaseModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.releaseRepository.Delete(id);
@@ -119,24 +114,28 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiReleaseResponseModel>> GetIdAssembled(string id, DateTimeOffset assembled)
                 {
                         List<Release> records = await this.releaseRepository.GetIdAssembled(id, assembled);
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiReleaseResponseModel>> GetProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
                 {
                         List<Release> records = await this.releaseRepository.GetProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiReleaseResponseModel>> GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
                 {
                         List<Release> records = await this.releaseRepository.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
 
                         return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiReleaseResponseModel>> GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
                 {
                         List<Release> records = await this.releaseRepository.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
@@ -147,5 +146,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b17a6ee52e4680a17cd5afb2faf3600</Hash>
+    <Hash>b2d39a7719eeb6b569a117c8035d2343</Hash>
 </Codenesium>*/

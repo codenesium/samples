@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractFeedService: AbstractService
+        public abstract class AbstractFeedService : AbstractService
         {
                 private IFeedRepository feedRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IFeedRepository feedRepository,
                         IApiFeedRequestModelValidator feedModelValidator,
                         IBOLFeedMapper bolFeedMapper,
-                        IDALFeedMapper dalFeedMapper
-
-                        )
+                        IDALFeedMapper dalFeedMapper)
                         : base()
-
                 {
                         this.feedRepository = feedRepository;
                         this.feedModelValidator = feedModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiFeedResponseModel> response = new CreateResponse<ApiFeedResponseModel>(await this.feedModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolFeedMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolFeedMapper.MapModelToBO(default(string), model);
                                 var record = await this.feedRepository.Create(this.dalFeedMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiFeedRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.feedModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolFeedMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.feedModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.feedRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7fe6152885a5d1e51550a008266be6e3</Hash>
+    <Hash>241fce30f2fea319902a01a2d395aa22</Hash>
 </Codenesium>*/

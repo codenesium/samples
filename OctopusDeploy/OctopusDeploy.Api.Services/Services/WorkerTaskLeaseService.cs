@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class WorkerTaskLeaseService: AbstractWorkerTaskLeaseService, IWorkerTaskLeaseService
+        public class WorkerTaskLeaseService : AbstractWorkerTaskLeaseService, IWorkerTaskLeaseService
         {
                 public WorkerTaskLeaseService(
                         ILogger<IWorkerTaskLeaseRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiWorkerTaskLeaseRequestModelValidator workerTaskLeaseModelValidator,
                         IBOLWorkerTaskLeaseMapper bolworkerTaskLeaseMapper,
                         IDALWorkerTaskLeaseMapper dalworkerTaskLeaseMapper
-
                         )
                         : base(logger,
                                workerTaskLeaseRepository,
                                workerTaskLeaseModelValidator,
                                bolworkerTaskLeaseMapper,
-                               dalworkerTaskLeaseMapper
-                               )
+                               dalworkerTaskLeaseMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b592f429cf328db774de11c4829133aa</Hash>
+    <Hash>063ec9917567336c83d20edefb5d24de</Hash>
 </Codenesium>*/

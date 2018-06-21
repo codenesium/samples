@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var record = new StateProvince();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ApiStateProvinceResponseModel response = await service.Get(default (int));
+                        ApiStateProvinceResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ApiStateProvinceResponseModel response = await service.Get(default (int));
+                        ApiStateProvinceResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var model = new ApiStateProvinceRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<StateProvince>())).Returns(Task.FromResult(new StateProvince()));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var model = new ApiStateProvinceRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<StateProvince>())).Returns(Task.FromResult(new StateProvince()));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var model = new ApiStateProvinceRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -150,7 +146,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var record = new StateProvince();
-
                         mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -160,7 +155,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ApiStateProvinceResponseModel response = await service.ByName(default (string));
+                        ApiStateProvinceResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -179,7 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ApiStateProvinceResponseModel response = await service.ByName(default (string));
+                        ApiStateProvinceResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -190,7 +185,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var record = new StateProvince();
-
                         mock.RepositoryMock.Setup(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -200,7 +194,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ApiStateProvinceResponseModel response = await service.ByStateProvinceCodeCountryRegionCode(default (string), default (string));
+                        ApiStateProvinceResponseModel response = await service.ByStateProvinceCodeCountryRegionCode(default(string), default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>()));
@@ -219,7 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        ApiStateProvinceResponseModel response = await service.ByStateProvinceCodeCountryRegionCode(default (string), default (string));
+                        ApiStateProvinceResponseModel response = await service.ByStateProvinceCodeCountryRegionCode(default(string), default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByStateProvinceCodeCountryRegionCode(It.IsAny<string>(), It.IsAny<string>()));
@@ -231,7 +225,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
                         var records = new List<Address>();
                         records.Add(new Address());
-                        mock.RepositoryMock.Setup(x => x.Addresses(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
@@ -240,17 +234,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        List<ApiAddressResponseModel> response = await service.Addresses(default (int));
+                        List<ApiAddressResponseModel> response = await service.Addresses(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Addresses(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Addresses_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IStateProvinceRepository>();
-                        mock.RepositoryMock.Setup(x => x.Addresses(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Address>>(new List<Address>()));
+                        mock.RepositoryMock.Setup(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Address>>(new List<Address>()));
                         var service = new StateProvinceService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
                                                                mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
@@ -259,14 +253,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLAddressMapperMock,
                                                                mock.DALMapperMockFactory.DALAddressMapperMock);
 
-                        List<ApiAddressResponseModel> response = await service.Addresses(default (int));
+                        List<ApiAddressResponseModel> response = await service.Addresses(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Addresses(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>740b8cbffde24b7a8903134070a5d9dc</Hash>
+    <Hash>403a8c18e3f19f5de3649f416427652b</Hash>
 </Codenesium>*/

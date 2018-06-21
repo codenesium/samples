@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractSchemaVersionsService: AbstractService
+        public abstract class AbstractSchemaVersionsService : AbstractService
         {
                 private ISchemaVersionsRepository schemaVersionsRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ISchemaVersionsRepository schemaVersionsRepository,
                         IApiSchemaVersionsRequestModelValidator schemaVersionsModelValidator,
                         IBOLSchemaVersionsMapper bolSchemaVersionsMapper,
-                        IDALSchemaVersionsMapper dalSchemaVersionsMapper
-
-                        )
+                        IDALSchemaVersionsMapper dalSchemaVersionsMapper)
                         : base()
-
                 {
                         this.schemaVersionsRepository = schemaVersionsRepository;
                         this.schemaVersionsModelValidator = schemaVersionsModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiSchemaVersionsResponseModel> response = new CreateResponse<ApiSchemaVersionsResponseModel>(await this.schemaVersionsModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSchemaVersionsMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSchemaVersionsMapper.MapModelToBO(default(int), model);
                                 var record = await this.schemaVersionsRepository.Create(this.dalSchemaVersionsMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiSchemaVersionsRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.schemaVersionsModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSchemaVersionsMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.schemaVersionsModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.schemaVersionsRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b5f1f240ccc30022851fc6aa9cab606</Hash>
+    <Hash>549de4d06064f56245d49f4de5063e83</Hash>
 </Codenesium>*/

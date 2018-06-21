@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
                         var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductPhotoRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LargePhotoFileName, new string('A', 51));
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
                         var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductPhotoRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductPhotoRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LargePhotoFileName, new string('A', 51));
                 }
@@ -57,8 +55,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
                         var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
                         var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductPhotoRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
                         var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductPhotoRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductPhotoRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ThumbnailPhotoFileName, new string('A', 51));
                 }
@@ -96,8 +91,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productPhotoRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductPhoto()));
 
                         var validator = new ApiProductPhotoRequestModelValidator(productPhotoRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -105,5 +99,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>91c392ef188e07970eac3914df80168b</Hash>
+    <Hash>3e2b38bdaf8dd5ee67cfdec6bca95b45</Hash>
 </Codenesium>*/

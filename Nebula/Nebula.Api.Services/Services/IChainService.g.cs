@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace NebulaNS.Api.Services
                 Task<List<ApiChainResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiClaspResponseModel>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ApiLinkResponseModel>> Links(int chainId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>6daccffc38d656d820ea064b50de637b</Hash>
+    <Hash>b9ccb3b52f6501079d77af20b8d609d5</Hash>
 </Codenesium>*/

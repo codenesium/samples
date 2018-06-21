@@ -14,14 +14,14 @@ using ESPIOTNS.Api.Contracts;
 
 namespace Codenesium.Foundation.CommonMVC
 {
-
     /// <summary>
     /// Simple controller that tests that you're able to connect to the database.
     /// </summary>
     [Route("api/apihealth")]
     public class ApiHealthController: AbstractApiController
     {
-        DbContext context;
+        private DbContext context;
+
         public ApiHealthController(
                        ApiSettings settings,
                        ILogger<ApiHealthController> logger,
@@ -30,7 +30,6 @@ namespace Codenesium.Foundation.CommonMVC
                        )
                        : base(settings, logger, transactionCoordinator)
         {
-
             this.context = context;
         }
 
@@ -110,45 +109,16 @@ namespace Codenesium.Foundation.CommonMVC
     }
 
     /// <summary>
-    /// InMemoryTransactionCoordinator is the transaction coordinator when using
-	//  the in memory database. This is used when running integration tests
-    /// </summary>
-	public class InMemoryTransactionCoordinator : ITransactionCoordinator
-    {
-        public void BeginTransaction()
-        {
-        }
-
-        public void CommitTransaction()
-        {
-        }
-
-        public void DisableChangeTracking()
-        {
-        }
-
-        public void EnableChangeTracking()
-        {
-        }
-
-        public void RollbackTransaction()
-        {
-        }
-    }
-
-    /// <summary>
     /// This is the base controller for any controller that needs transaction support.
     /// We use an action filter to start and commit transactions using the TransactionCooordinator.
     /// </summary>
     public abstract class AbstractApiController : Controller
     {
-
         public ITransactionCoordinator TransactionCooordinator { get; private set; }
 
         protected ILogger Logger { get; private set;  }
 
 		protected ApiSettings Settings { get; private set;  }
-
 
         public AbstractApiController(
 	        ApiSettings settings,
@@ -210,7 +180,7 @@ namespace Codenesium.Foundation.CommonMVC
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-			if(!(actionContext.Controller is AbstractApiController))
+			if (!(actionContext.Controller is AbstractApiController))
 			{
 				throw new Exception("ReadOnlyFilter can only be applied to controllers that inherit from AbstractApiController");
 			}
@@ -218,7 +188,6 @@ namespace Codenesium.Foundation.CommonMVC
             AbstractApiController controller = (AbstractApiController)actionContext.Controller;
 
             controller.TransactionCooordinator.DisableChangeTracking();
-
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
@@ -241,7 +210,6 @@ namespace Codenesium.Foundation.CommonMVC
 				throw new Exception("UnitOfWorkActionFilter can only be applied to controllers that inherit from AbstractApiController");
 			}
 
-
 			AbstractApiController controller = (AbstractApiController)actionContext.Controller;
 
 			controller.TransactionCooordinator.BeginTransaction();
@@ -249,7 +217,6 @@ namespace Codenesium.Foundation.CommonMVC
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
         {
-
             AbstractApiController controller = (AbstractApiController)actionExecutedContext.Controller;
 
             if (actionExecutedContext.Exception == null)
@@ -313,6 +280,7 @@ namespace Codenesium.Foundation.CommonMVC
                     context.Result = new OkObjectResult(response);
                 }
             }
+
             base.OnActionExecuted(context);
         }
     }
@@ -359,7 +327,6 @@ namespace Codenesium.Foundation.CommonMVC
 
 	public class ApiSettings
     {
-
         public virtual string ExternalBaseUrl { get; set; }
 
         public virtual bool MigrateDatabase { get; set; }
@@ -372,7 +339,9 @@ namespace Codenesium.Foundation.CommonMVC
     public class JwtSettings
     {
         public virtual string SigningKey { get; set; }
+
         public virtual string Issuer { get; set; }
+
         public virtual string Audience { get; set; }
     }
 
@@ -426,11 +395,11 @@ namespace Codenesium.Foundation.CommonMVC
                     this.WhereClause += $"{parameter.Key}.Equals(\"{parameter.Value}\")";
                 }
             }
+			
             if (string.IsNullOrWhiteSpace(this.WhereClause))
             {
                 this.WhereClause = "1=1";
             }
         }
-
     }
 }

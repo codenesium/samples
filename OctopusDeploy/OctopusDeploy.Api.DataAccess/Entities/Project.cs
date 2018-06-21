@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Project", Schema="dbo")]
-        public partial class Project: AbstractEntity
+        public partial class Project : AbstractEntity
         {
                 public Project()
                 {
@@ -42,48 +42,48 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.VariableSetId = variableSetId;
                 }
 
-                [Column("AutoCreateRelease", TypeName="bit")]
+                [Column("AutoCreateRelease")]
                 public bool AutoCreateRelease { get; private set; }
 
-                [Column("DataVersion", TypeName="timestamp")]
+                [Column("DataVersion")]
                 public byte[] DataVersion { get; private set; }
 
-                [Column("DeploymentProcessId", TypeName="nvarchar(50)")]
+                [Column("DeploymentProcessId")]
                 public string DeploymentProcessId { get; private set; }
 
-                [Column("DiscreteChannelRelease", TypeName="bit")]
+                [Column("DiscreteChannelRelease")]
                 public bool DiscreteChannelRelease { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IncludedLibraryVariableSetIds", TypeName="nvarchar(-1)")]
+                [Column("IncludedLibraryVariableSetIds")]
                 public string IncludedLibraryVariableSetIds { get; private set; }
 
-                [Column("IsDisabled", TypeName="bit")]
+                [Column("IsDisabled")]
                 public bool IsDisabled { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("LifecycleId", TypeName="nvarchar(50)")]
+                [Column("LifecycleId")]
                 public string LifecycleId { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("ProjectGroupId", TypeName="nvarchar(50)")]
+                [Column("ProjectGroupId")]
                 public string ProjectGroupId { get; private set; }
 
-                [Column("Slug", TypeName="nvarchar(210)")]
+                [Column("Slug")]
                 public string Slug { get; private set; }
 
-                [Column("VariableSetId", TypeName="nvarchar(150)")]
+                [Column("VariableSetId")]
                 public string VariableSetId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>3d16df896c5908e1a424b7fec9a5f760</Hash>
+    <Hash>abb480d0ec65fd187d9f8d11eb9e62e6</Hash>
 </Codenesium>*/

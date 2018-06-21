@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOStateProvince: AbstractBOStateProvince
+        public partial class BOStateProvince : AbstractBOStateProvince
         {
-                public BOStateProvince() : base()
+                public BOStateProvince()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3cbcad6ce011e6df2d7008b3384b7211</Hash>
+    <Hash>8687d2f4b1988c5b3abf53793db8ebe8</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("PurchaseOrderHeader", Schema="Purchasing")]
-        public partial class PurchaseOrderHeader: AbstractEntity
+        public partial class PurchaseOrderHeader : AbstractEntity
         {
                 public PurchaseOrderHeader()
                 {
@@ -42,49 +42,49 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.VendorID = vendorID;
                 }
 
-                [Column("EmployeeID", TypeName="int")]
+                [Column("EmployeeID")]
                 public int EmployeeID { get; private set; }
 
-                [Column("Freight", TypeName="money")]
+                [Column("Freight")]
                 public decimal Freight { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("OrderDate", TypeName="datetime")]
+                [Column("OrderDate")]
                 public DateTime OrderDate { get; private set; }
 
                 [Key]
-                [Column("PurchaseOrderID", TypeName="int")]
+                [Column("PurchaseOrderID")]
                 public int PurchaseOrderID { get; private set; }
 
-                [Column("RevisionNumber", TypeName="tinyint")]
+                [Column("RevisionNumber")]
                 public int RevisionNumber { get; private set; }
 
-                [Column("ShipDate", TypeName="datetime")]
+                [Column("ShipDate")]
                 public Nullable<DateTime> ShipDate { get; private set; }
 
-                [Column("ShipMethodID", TypeName="int")]
+                [Column("ShipMethodID")]
                 public int ShipMethodID { get; private set; }
 
-                [Column("Status", TypeName="tinyint")]
+                [Column("Status")]
                 public int Status { get; private set; }
 
-                [Column("SubTotal", TypeName="money")]
+                [Column("SubTotal")]
                 public decimal SubTotal { get; private set; }
 
-                [Column("TaxAmt", TypeName="money")]
+                [Column("TaxAmt")]
                 public decimal TaxAmt { get; private set; }
 
                 [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-                [Column("TotalDue", TypeName="money")]
+                [Column("TotalDue")]
                 public decimal TotalDue { get; private set; }
 
-                [Column("VendorID", TypeName="int")]
+                [Column("VendorID")]
                 public int VendorID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>bf6231a961ed7bf87907661984af2de1</Hash>
+    <Hash>4bb0256492bf73c9cc6859590aa7c18f</Hash>
 </Codenesium>*/

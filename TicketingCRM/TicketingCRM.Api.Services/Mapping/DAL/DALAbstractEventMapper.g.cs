@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOEvent bo)
                 {
                         Event efEvent = new Event();
-
                         efEvent.SetProperties(
                                 bo.Address1,
                                 bo.Address2,
@@ -64,5 +63,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9e78418579eb19f2242b7ad1a4d088c</Hash>
+    <Hash>59a5cba1911b27f206f18409158acf98</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractExtensionConfigurationService: AbstractService
+        public abstract class AbstractExtensionConfigurationService : AbstractService
         {
                 private IExtensionConfigurationRepository extensionConfigurationRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IExtensionConfigurationRepository extensionConfigurationRepository,
                         IApiExtensionConfigurationRequestModelValidator extensionConfigurationModelValidator,
                         IBOLExtensionConfigurationMapper bolExtensionConfigurationMapper,
-                        IDALExtensionConfigurationMapper dalExtensionConfigurationMapper
-
-                        )
+                        IDALExtensionConfigurationMapper dalExtensionConfigurationMapper)
                         : base()
-
                 {
                         this.extensionConfigurationRepository = extensionConfigurationRepository;
                         this.extensionConfigurationModelValidator = extensionConfigurationModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiExtensionConfigurationResponseModel> response = new CreateResponse<ApiExtensionConfigurationResponseModel>(await this.extensionConfigurationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolExtensionConfigurationMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolExtensionConfigurationMapper.MapModelToBO(default(string), model);
                                 var record = await this.extensionConfigurationRepository.Create(this.dalExtensionConfigurationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolExtensionConfigurationMapper.MapBOToModel(this.dalExtensionConfigurationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiExtensionConfigurationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.extensionConfigurationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolExtensionConfigurationMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.extensionConfigurationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.extensionConfigurationRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc369e21732c3fe88d3093821ceb1b29</Hash>
+    <Hash>40593294ce5446444215d36fbd1c6802</Hash>
 </Codenesium>*/

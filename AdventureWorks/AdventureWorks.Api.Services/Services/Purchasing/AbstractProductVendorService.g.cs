@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductVendorService: AbstractService
+        public abstract class AbstractProductVendorService : AbstractService
         {
                 private IProductVendorRepository productVendorRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductVendorRepository productVendorRepository,
                         IApiProductVendorRequestModelValidator productVendorModelValidator,
                         IBOLProductVendorMapper bolProductVendorMapper,
-                        IDALProductVendorMapper dalProductVendorMapper
-
-                        )
+                        IDALProductVendorMapper dalProductVendorMapper)
                         : base()
-
                 {
                         this.productVendorRepository = productVendorRepository;
                         this.productVendorModelValidator = productVendorModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductVendorResponseModel> response = new CreateResponse<ApiProductVendorResponseModel>(await this.productVendorModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductVendorMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductVendorMapper.MapModelToBO(default(int), model);
                                 var record = await this.productVendorRepository.Create(this.dalProductVendorMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductVendorRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productVendorModelValidator.ValidateUpdateAsync(productID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductVendorMapper.MapModelToBO(productID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productID)
                 {
                         ActionResponse response = new ActionResponse(await this.productVendorModelValidator.ValidateDeleteAsync(productID));
-
                         if (response.Success)
                         {
                                 await this.productVendorRepository.Delete(productID);
@@ -112,6 +107,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiProductVendorResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
                 {
                         List<ProductVendor> records = await this.productVendorRepository.ByUnitMeasureCode(unitMeasureCode);
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>950af9be2e1d00f9b78f44cf54047c31</Hash>
+    <Hash>69a28982e3c4e70eae218356adb38443</Hash>
 </Codenesium>*/

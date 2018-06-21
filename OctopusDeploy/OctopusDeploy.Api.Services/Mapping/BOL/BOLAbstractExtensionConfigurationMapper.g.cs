@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOExtensionConfiguration boExtensionConfiguration = new BOExtensionConfiguration();
-
                         boExtensionConfiguration.SetProperties(
                                 id,
                                 model.ExtensionAuthor,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a34def4d196c246cf26b666e1e232879</Hash>
+    <Hash>e8852e195a466aeb3eeb09bcb1ce097e</Hash>
 </Codenesium>*/

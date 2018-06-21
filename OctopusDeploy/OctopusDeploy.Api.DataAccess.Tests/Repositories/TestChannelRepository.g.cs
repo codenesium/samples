@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ChannelRepository(loggerMoc.Object, context);
 
                         Channel entity = new Channel();
-
                         context.Set<Channel>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ChannelRepository(loggerMoc.Object, context);
 
                         Channel entity = new Channel();
-
                         context.Set<Channel>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ChannelRepository(loggerMoc.Object, context);
 
                         var entity = new Channel();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Channel>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ChannelRepository>> loggerMoc = ChannelRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ChannelRepositoryMoc.GetContext();
                         var repository = new ChannelRepository(loggerMoc.Object, context);
-
                         Channel entity = new Channel();
-
                         context.Set<Channel>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ChannelRepository>> loggerMoc = ChannelRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ChannelRepositoryMoc.GetContext();
                         var repository = new ChannelRepository(loggerMoc.Object, context);
-
                         Channel entity = new Channel();
-
                         context.Set<Channel>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ChannelRepository>> loggerMoc = ChannelRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ChannelRepositoryMoc.GetContext();
                         var repository = new ChannelRepository(loggerMoc.Object, context);
-
                         Channel entity = new Channel();
-
                         context.Set<Channel>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Channel modifiedRecord = await context.Set<Channel>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b35a8fdaea2c5a97c5d4b9e8a2e46c9d</Hash>
+    <Hash>9d315395c71caaa2047baa432a592697</Hash>
 </Codenesium>*/

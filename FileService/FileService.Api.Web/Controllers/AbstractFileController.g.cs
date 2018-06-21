@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Web
 {
-        public abstract class AbstractFileController: AbstractApiController
+        public abstract class AbstractFileController : AbstractApiController
         {
                 protected IFileService FileService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace FileServiceNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiFileResponseModel> response = await this.FileService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace FileServiceNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFileResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiFileResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiFileRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace FileServiceNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Files/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Files/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -164,5 +161,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b63cd608710c535401b447d7918127af</Hash>
+    <Hash>4271d5dc4a9199c07dd1880f5e1e530d</Hash>
 </Codenesium>*/

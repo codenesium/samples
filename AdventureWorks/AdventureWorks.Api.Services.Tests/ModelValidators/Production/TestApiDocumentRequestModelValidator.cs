@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileExtension, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileExtension, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileExtension, new string('A', 9));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileExtension, new string('A', 9));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (Guid));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(Guid));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileName, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileName, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileName, new string('A', 401));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileName, new string('A', 401));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (Guid));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(Guid));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Revision, null as string);
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Revision, null as string);
                 }
@@ -187,7 +175,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Revision, new string('A', 6));
@@ -200,8 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Revision, new string('A', 6));
                 }
@@ -213,8 +199,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (Guid));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(Guid));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, null as string);
@@ -239,8 +223,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, null as string);
                 }
@@ -252,7 +235,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 51));
@@ -265,8 +247,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (Guid), new ApiDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(Guid), new ApiDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 51));
                 }
@@ -278,8 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         documentRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(new Document()));
 
                         var validator = new ApiDocumentRequestModelValidator(documentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (Guid));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(Guid));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -287,5 +267,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ae616e0df71c561322b44927f4eb217c</Hash>
+    <Hash>8232ab05e3445357e4b9cacc59bae8a1</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkerTaskLease")]
         [Trait("Area", "DALMapper")]
-        public class TestDALWorkerTaskLeaseActionMapper
+        public class TestDALWorkerTaskLeaseMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALWorkerTaskLeaseMapper();
-
                         var bo = new BOWorkerTaskLease();
-
                         bo.SetProperties("A", true, "A", "A", "A", "A");
 
                         WorkerTaskLease response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALWorkerTaskLeaseMapper();
-
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         entity.SetProperties(true, "A", "A", "A", "A", "A");
 
-                        BOWorkerTaskLease  response = mapper.MapEFToBO(entity);
+                        BOWorkerTaskLease response = mapper.MapEFToBO(entity);
 
                         response.Exclusive.Should().Be(true);
                         response.Id.Should().Be("A");
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALWorkerTaskLeaseMapper();
-
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         entity.SetProperties(true, "A", "A", "A", "A", "A");
 
                         List<BOWorkerTaskLease> response = mapper.MapEFToBO(new List<WorkerTaskLease>() { entity });
@@ -67,5 +61,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7e8468bd28bd66bf12232cb842184aac</Hash>
+    <Hash>00356b37513c0fd91c5522ed4ee1090b</Hash>
 </Codenesium>*/

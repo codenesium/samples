@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOTenant boTenant = new BOTenant();
-
                         boTenant.SetProperties(
                                 id,
                                 model.DataVersion,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7030f9b3c7706e645e1cfdd6bd8744a</Hash>
+    <Hash>c2ddc1be2ffe818dab1f6f9e7e7245e1</Hash>
 </Codenesium>*/

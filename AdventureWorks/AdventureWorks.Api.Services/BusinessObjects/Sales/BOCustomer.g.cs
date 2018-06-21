@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOCustomer: AbstractBOCustomer
+        public partial class BOCustomer : AbstractBOCustomer
         {
-                public BOCustomer() : base()
+                public BOCustomer()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c266c7dce25ebe292a1312c5f72f0022</Hash>
+    <Hash>06144f59dddf3d0467159f45b9c993ee</Hash>
 </Codenesium>*/

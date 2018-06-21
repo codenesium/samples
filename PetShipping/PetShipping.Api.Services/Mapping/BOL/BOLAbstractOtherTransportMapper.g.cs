@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOOtherTransport boOtherTransport = new BOOtherTransport();
-
                         boOtherTransport.SetProperties(
                                 id,
                                 model.HandlerId,
@@ -47,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1bea27f25e1c466f12fc003a524479a9</Hash>
+    <Hash>8cea6fbfde509c0f22546d4d1a1dfbe5</Hash>
 </Codenesium>*/

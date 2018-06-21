@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractLessonStatusRepository: AbstractRepository
+        public abstract class AbstractLessonStatusRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Lesson>> Lessons(int lessonStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Lesson>().Where(x => x.LessonStatusId == lessonStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Lesson>();
+                }
+
+                public async virtual Task<Studio> GetStudio(int id)
+                {
+                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == id);
+                }
+
                 protected async Task<List<LessonStatus>> Where(
                         Expression<Func<LessonStatus, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,19 +114,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Lesson>> Lessons(int lessonStatusId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Lesson>().Where(x => x.LessonStatusId == lessonStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Lesson>();
-                }
-
-                public async virtual Task<Studio> GetStudio(int id)
-                {
-                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == id);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0f66881c470eedbdfa2a827df324167b</Hash>
+    <Hash>9175ee4c30acbdae6d8e9f0b49a6c37f</Hash>
 </Codenesium>*/

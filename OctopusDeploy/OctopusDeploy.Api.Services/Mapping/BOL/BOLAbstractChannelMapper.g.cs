@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOChannel boChannel = new BOChannel();
-
                         boChannel.SetProperties(
                                 id,
                                 model.DataVersion,
@@ -51,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>641d677fa2522326a2d2e6cba1643eb2</Hash>
+    <Hash>1baa35b8b02e818cd66732e5dbe7fb51</Hash>
 </Codenesium>*/

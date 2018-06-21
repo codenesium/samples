@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiNuGetPackageRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PackageId, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiNuGetPackageRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PackageId, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PackageId, new string('A', 101));
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiNuGetPackageRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PackageId, new string('A', 101));
                 }
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiNuGetPackageRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 350));
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiNuGetPackageRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 350));
                 }
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VersionSpecial, new string('A', 251));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiNuGetPackageRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiNuGetPackageRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VersionSpecial, new string('A', 251));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         nuGetPackageRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new NuGetPackage()));
 
                         var validator = new ApiNuGetPackageRequestModelValidator(nuGetPackageRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -222,5 +207,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9068c29e223e50ef62b234e1631c2b1c</Hash>
+    <Hash>830a487343cb40aa6b98b740af6176ea</Hash>
 </Codenesium>*/

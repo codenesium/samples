@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Rate")]
         [Trait("Area", "DALMapper")]
-        public class TestDALRateActionMapper
+        public class TestDALRateMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALRateMapper();
-
                         var bo = new BORate();
-
                         bo.SetProperties(1, 1, 1, 1);
 
                         Rate response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALRateMapper();
-
                         Rate entity = new Rate();
-
                         entity.SetProperties(1, 1, 1, 1);
 
-                        BORate  response = mapper.MapEFToBO(entity);
+                        BORate response = mapper.MapEFToBO(entity);
 
                         response.AmountPerMinute.Should().Be(1);
                         response.Id.Should().Be(1);
@@ -50,9 +46,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALRateMapper();
-
                         Rate entity = new Rate();
-
                         entity.SetProperties(1, 1, 1, 1);
 
                         List<BORate> response = mapper.MapEFToBO(new List<Rate>() { entity });
@@ -63,5 +57,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>481a9f0ce7db2dd05b41fb92ab3b51ed</Hash>
+    <Hash>606c1f368a96dc2ec3ff6c5fbf4d428b</Hash>
 </Codenesium>*/

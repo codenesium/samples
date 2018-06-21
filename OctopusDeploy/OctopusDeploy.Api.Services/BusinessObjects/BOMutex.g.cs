@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOMutex: AbstractBOMutex
+        public partial class BOMutex : AbstractBOMutex
         {
-                public BOMutex() : base()
+                public BOMutex()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c732b40e11cb5b731e5d709dc831ad56</Hash>
+    <Hash>d34da96b01e06e8d01506ed4068562b5</Hash>
 </Codenesium>*/

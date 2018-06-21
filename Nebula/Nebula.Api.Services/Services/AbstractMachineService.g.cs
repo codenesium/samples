@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractMachineService: AbstractService
+        public abstract class AbstractMachineService : AbstractService
         {
                 private IMachineRepository machineRepository;
 
@@ -36,18 +36,12 @@ namespace NebulaNS.Api.Services
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
                         IBOLMachineMapper bolMachineMapper,
-                        IDALMachineMapper dalMachineMapper
-
-                        ,
+                        IDALMachineMapper dalMachineMapper,
                         IBOLLinkMapper bolLinkMapper,
-                        IDALLinkMapper dalLinkMapper
-                        ,
+                        IDALLinkMapper dalLinkMapper,
                         IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
-
-                        )
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper)
                         : base()
-
                 {
                         this.machineRepository = machineRepository;
                         this.machineModelValidator = machineModelValidator;
@@ -87,7 +81,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.machineModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolMachineMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolMachineMapper.MapModelToBO(default(int), model);
                                 var record = await this.machineRepository.Create(this.dalMachineMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace NebulaNS.Api.Services
                         ApiMachineRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolMachineMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.machineRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace NebulaNS.Api.Services
 
                         return this.bolLinkMapper.MapBOToModel(this.dalLinkMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<MachineRefTeam> records = await this.machineRepository.MachineRefTeams(machineId, limit, offset);
@@ -140,5 +133,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a74e61eaf597b7d217818eb4e984c6bc</Hash>
+    <Hash>d0c8b20a538fe5ab8988fb6b2ab27fc9</Hash>
 </Codenesium>*/

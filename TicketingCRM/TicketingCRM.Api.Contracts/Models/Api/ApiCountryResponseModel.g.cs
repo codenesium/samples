@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiCountryResponseModel: AbstractApiCountryResponseModel
+        public partial class ApiCountryResponseModel : AbstractApiCountryResponseModel
         {
                 public ApiCountryResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fc3b12b1dd39f8a1b70d1db68a0ff27b</Hash>
+    <Hash>39797417d9eb0bc61ec1ef7d278d8ba8</Hash>
 </Codenesium>*/

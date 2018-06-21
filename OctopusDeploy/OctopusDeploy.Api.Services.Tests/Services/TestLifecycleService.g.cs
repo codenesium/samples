@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var record = new Lifecycle();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ApiLifecycleResponseModel response = await service.Get(default (string));
+                        ApiLifecycleResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ApiLifecycleResponseModel response = await service.Get(default (string));
+                        ApiLifecycleResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var model = new ApiLifecycleRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Lifecycle>())).Returns(Task.FromResult(new Lifecycle()));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var model = new ApiLifecycleRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Lifecycle>())).Returns(Task.FromResult(new Lifecycle()));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiLifecycleRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var model = new ApiLifecycleRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILifecycleRepository>();
                         var record = new Lifecycle();
-
                         mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new LifecycleService(mock.LoggerMock.Object,
                                                            mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ApiLifecycleResponseModel response = await service.GetName(default (string));
+                        ApiLifecycleResponseModel response = await service.GetName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        ApiLifecycleResponseModel response = await service.GetName(default (string));
+                        ApiLifecycleResponseModel response = await service.GetName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -182,7 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        List<ApiLifecycleResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiLifecycleResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -199,7 +194,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                            mock.BOLMapperMockFactory.BOLLifecycleMapperMock,
                                                            mock.DALMapperMockFactory.DALLifecycleMapperMock);
 
-                        List<ApiLifecycleResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiLifecycleResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -208,5 +203,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c5148b72b3193dfd48284539d52b092a</Hash>
+    <Hash>adbd62444ef98a32b91a5b5509d0aa83</Hash>
 </Codenesium>*/

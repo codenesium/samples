@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiCustomerRequestModelValidator: AbstractValidator<ApiCustomerRequestModel>
+        public abstract class AbstractApiCustomerRequestModelValidator : AbstractValidator<ApiCustomerRequestModel>
         {
                 private int existingRecordId;
 
-                ICustomerRepository customerRepository;
+                private ICustomerRepository customerRepository;
 
                 public AbstractApiCustomerRequestModelValidator(ICustomerRepository customerRepository)
                 {
@@ -53,5 +53,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2948d69082ef3b5567fc82e93bb49988</Hash>
+    <Hash>434744a627e7e5bea5f986c4f6656538</Hash>
 </Codenesium>*/

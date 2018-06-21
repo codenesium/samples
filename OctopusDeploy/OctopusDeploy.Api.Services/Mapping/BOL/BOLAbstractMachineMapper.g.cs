@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOMachine boMachine = new BOMachine();
-
                         boMachine.SetProperties(
                                 id,
                                 model.CommunicationStyle,
@@ -57,5 +56,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2f001c729199557c8f73bd48170623b</Hash>
+    <Hash>bd6b07ef2f9af77c8c4eefbba37acd5f</Hash>
 </Codenesium>*/

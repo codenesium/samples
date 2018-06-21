@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public abstract class AbstractSaleRepository: AbstractRepository
+        public abstract class AbstractSaleRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace PetStoreNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<PaymentType> GetPaymentType(int paymentTypeId)
+                {
+                        return await this.Context.Set<PaymentType>().SingleOrDefaultAsync(x => x.Id == paymentTypeId);
+                }
+
+                public async virtual Task<Pet> GetPet(int petId)
+                {
+                        return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
+                }
+
                 protected async Task<List<Sale>> Where(
                         Expression<Func<Sale, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace PetStoreNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<PaymentType> GetPaymentType(int paymentTypeId)
-                {
-                        return await this.Context.Set<PaymentType>().SingleOrDefaultAsync(x => x.Id == paymentTypeId);
-                }
-                public async virtual Task<Pet> GetPet(int petId)
-                {
-                        return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>069773dd6f1a92f652a19ff2672dce2a</Hash>
+    <Hash>6a993c1e7b5b2bf6c3cfc9e385406bf2</Hash>
 </Codenesium>*/

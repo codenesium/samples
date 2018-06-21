@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DashboardConfigurationRepository(loggerMoc.Object, context);
 
                         DashboardConfiguration entity = new DashboardConfiguration();
-
                         context.Set<DashboardConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DashboardConfigurationRepository(loggerMoc.Object, context);
 
                         DashboardConfiguration entity = new DashboardConfiguration();
-
                         context.Set<DashboardConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DashboardConfigurationRepository(loggerMoc.Object, context);
 
                         var entity = new DashboardConfiguration();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<DashboardConfiguration>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DashboardConfigurationRepository>> loggerMoc = DashboardConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DashboardConfigurationRepositoryMoc.GetContext();
                         var repository = new DashboardConfigurationRepository(loggerMoc.Object, context);
-
                         DashboardConfiguration entity = new DashboardConfiguration();
-
                         context.Set<DashboardConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DashboardConfigurationRepository>> loggerMoc = DashboardConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DashboardConfigurationRepositoryMoc.GetContext();
                         var repository = new DashboardConfigurationRepository(loggerMoc.Object, context);
-
                         DashboardConfiguration entity = new DashboardConfiguration();
-
                         context.Set<DashboardConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DashboardConfigurationRepository>> loggerMoc = DashboardConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DashboardConfigurationRepositoryMoc.GetContext();
                         var repository = new DashboardConfigurationRepository(loggerMoc.Object, context);
-
                         DashboardConfiguration entity = new DashboardConfiguration();
-
                         context.Set<DashboardConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         DashboardConfiguration modifiedRecord = await context.Set<DashboardConfiguration>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f4d6422027ae8d5aaedab414c55a8c67</Hash>
+    <Hash>b5543d7723166c82214b46e1ae7729bd</Hash>
 </Codenesium>*/

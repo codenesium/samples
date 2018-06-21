@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ProductCostHistoryService: AbstractProductCostHistoryService, IProductCostHistoryService
+        public class ProductCostHistoryService : AbstractProductCostHistoryService, IProductCostHistoryService
         {
                 public ProductCostHistoryService(
                         ILogger<IProductCostHistoryRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator,
                         IBOLProductCostHistoryMapper bolproductCostHistoryMapper,
                         IDALProductCostHistoryMapper dalproductCostHistoryMapper
-
                         )
                         : base(logger,
                                productCostHistoryRepository,
                                productCostHistoryModelValidator,
                                bolproductCostHistoryMapper,
-                               dalproductCostHistoryMapper
-                               )
+                               dalproductCostHistoryMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>802f022416578581861a6daac659488b</Hash>
+    <Hash>5177bfee4e9bfe4541a2dddd1fd5e6a8</Hash>
 </Codenesium>*/

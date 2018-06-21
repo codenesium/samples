@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOUser bo)
                 {
                         User efUser = new User();
-
                         efUser.SetProperties(
                                 bo.DisplayName,
                                 bo.EmailAddress,
@@ -62,5 +61,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2dfc1901d6805e5450a05193f8a1e87</Hash>
+    <Hash>9ee430e361b926b47b6c4ae419130ecc</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,6 +18,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<EventRelatedDocument>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<EventRelatedDocument>> GetEventId(string eventId);
+
                 Task<List<EventRelatedDocument>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId);
 
                 Task<Event> GetEvent(string eventId);
@@ -25,5 +26,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4bc8544a69e2503d8d2bad0fb077c65a</Hash>
+    <Hash>7dd618ed62e48cb188aac84baf10a81f</Hash>
 </Codenesium>*/

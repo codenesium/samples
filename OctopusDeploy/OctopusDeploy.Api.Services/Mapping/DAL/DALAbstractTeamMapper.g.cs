@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOTeam bo)
                 {
                         Team efTeam = new Team();
-
                         efTeam.SetProperties(
                                 bo.EnvironmentIds,
                                 bo.Id,
@@ -60,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2e02f136ab93402a3080de8a61ac8cce</Hash>
+    <Hash>4097321391d9cdff752dcfe4a9dec3cd</Hash>
 </Codenesium>*/

@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
                         var record = new DeploymentHistory();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        ApiDeploymentHistoryResponseModel response = await service.Get(default (string));
+                        ApiDeploymentHistoryResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        ApiDeploymentHistoryResponseModel response = await service.Get(default (string));
+                        ApiDeploymentHistoryResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
                         var model = new ApiDeploymentHistoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeploymentHistory>())).Returns(Task.FromResult(new DeploymentHistory()));
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
                         var model = new ApiDeploymentHistoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeploymentHistory>())).Returns(Task.FromResult(new DeploymentHistory()));
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiDeploymentHistoryRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
                         var model = new ApiDeploymentHistoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new DeploymentHistoryService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -146,7 +142,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        List<ApiDeploymentHistoryResponseModel> response = await service.GetCreated(default (DateTimeOffset));
+                        List<ApiDeploymentHistoryResponseModel> response = await service.GetCreated(default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
@@ -163,7 +159,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLDeploymentHistoryMapperMock,
                                                                    mock.DALMapperMockFactory.DALDeploymentHistoryMapperMock);
 
-                        List<ApiDeploymentHistoryResponseModel> response = await service.GetCreated(default (DateTimeOffset));
+                        List<ApiDeploymentHistoryResponseModel> response = await service.GetCreated(default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetCreated(It.IsAny<DateTimeOffset>()));
@@ -172,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4b5337a202581bdf264e07194788217b</Hash>
+    <Hash>c826c7b2ab91ad38fa8586b68df2fee6</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public abstract class AbstractApiClientResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiClientResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string email,
@@ -98,5 +98,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>38a33deec39932333e1c6e526acc1a6c</Hash>
+    <Hash>3963a810c8017be4e3aff24976089336</Hash>
 </Codenesium>*/

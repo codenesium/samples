@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 16));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 16));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PurchasingWebServiceURL, new string('A', 1025));
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PurchasingWebServiceURL, new string('A', 1025));
                 }
@@ -187,8 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Vendor()));
 
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -224,7 +211,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Vendor>(new Vendor()));
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, "A");
                 }
@@ -236,7 +223,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         vendorRepository.Setup(x => x.ByAccountNumber(It.IsAny<string>())).Returns(Task.FromResult<Vendor>(null));
                         var validator = new ApiVendorRequestModelValidator(vendorRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiVendorRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiVendorRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.AccountNumber, "A");
                 }
@@ -244,5 +231,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2196156aedf84a6d8c0a59872e46e971</Hash>
+    <Hash>0b518d338f01d08b0bd7f859f6f13015</Hash>
 </Codenesium>*/

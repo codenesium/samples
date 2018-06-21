@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class FeedService: AbstractFeedService, IFeedService
+        public class FeedService : AbstractFeedService, IFeedService
         {
                 public FeedService(
                         ILogger<IFeedRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiFeedRequestModelValidator feedModelValidator,
                         IBOLFeedMapper bolfeedMapper,
                         IDALFeedMapper dalfeedMapper
-
                         )
                         : base(logger,
                                feedRepository,
                                feedModelValidator,
                                bolfeedMapper,
-                               dalfeedMapper
-                               )
+                               dalfeedMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f2b861b6a48eb1881b68d581c4633bfb</Hash>
+    <Hash>774033263f5b19620df40b422b9e6f6c</Hash>
 </Codenesium>*/

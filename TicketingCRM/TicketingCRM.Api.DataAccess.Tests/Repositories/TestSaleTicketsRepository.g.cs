@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new SaleTicketsRepository(loggerMoc.Object, context);
 
                         SaleTickets entity = new SaleTickets();
-
                         context.Set<SaleTickets>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new SaleTicketsRepository(loggerMoc.Object, context);
 
                         SaleTickets entity = new SaleTickets();
-
                         context.Set<SaleTickets>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new SaleTicketsRepository(loggerMoc.Object, context);
 
                         var entity = new SaleTickets();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SaleTickets>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<SaleTicketsRepository>> loggerMoc = SaleTicketsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SaleTicketsRepositoryMoc.GetContext();
                         var repository = new SaleTicketsRepository(loggerMoc.Object, context);
-
                         SaleTickets entity = new SaleTickets();
-
                         context.Set<SaleTickets>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<SaleTicketsRepository>> loggerMoc = SaleTicketsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SaleTicketsRepositoryMoc.GetContext();
                         var repository = new SaleTicketsRepository(loggerMoc.Object, context);
-
                         SaleTickets entity = new SaleTickets();
-
                         context.Set<SaleTickets>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<SaleTicketsRepository>> loggerMoc = SaleTicketsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SaleTicketsRepositoryMoc.GetContext();
                         var repository = new SaleTicketsRepository(loggerMoc.Object, context);
-
                         SaleTickets entity = new SaleTickets();
-
                         context.Set<SaleTickets>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         SaleTickets modifiedRecord = await context.Set<SaleTickets>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>337ba9528aab010ea1e7a9726f5a2e21</Hash>
+    <Hash>489e66db947455a3b821bf5753248c20</Hash>
 </Codenesium>*/

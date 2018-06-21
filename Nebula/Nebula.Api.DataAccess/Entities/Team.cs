@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("Team", Schema="dbo")]
-        public partial class Team:AbstractEntity
+        public partial class Team : AbstractEntity
         {
                 public Team()
                 {
@@ -23,13 +23,13 @@ namespace NebulaNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("organizationId", TypeName="int")]
+                [Column("organizationId")]
                 public int OrganizationId { get; private set; }
 
                 [ForeignKey("OrganizationId")]
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e16e8417620007b3ef794adad57415d</Hash>
+    <Hash>510963441b02207084c89e67097f89cb</Hash>
 </Codenesium>*/

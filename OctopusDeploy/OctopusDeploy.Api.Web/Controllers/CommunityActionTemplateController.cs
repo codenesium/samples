@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/communityActionTemplates")]
         [ApiVersion("1.0")]
-        public class CommunityActionTemplateController: AbstractCommunityActionTemplateController
+        public class CommunityActionTemplateController : AbstractCommunityActionTemplateController
         {
                 public CommunityActionTemplateController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0862717bf6b439d369350e5378352fa7</Hash>
+    <Hash>10735c4898f1bf0e868b261d70547c17</Hash>
 </Codenesium>*/

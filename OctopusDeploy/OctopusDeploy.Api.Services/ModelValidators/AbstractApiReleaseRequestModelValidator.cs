@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiReleaseRequestModelValidator: AbstractValidator<ApiReleaseRequestModel>
+        public abstract class AbstractApiReleaseRequestModelValidator : AbstractValidator<ApiReleaseRequestModel>
         {
                 private string existingRecordId;
 
-                IReleaseRepository releaseRepository;
+                private IReleaseRepository releaseRepository;
 
                 public AbstractApiReleaseRequestModelValidator(IReleaseRepository releaseRepository)
                 {
@@ -50,7 +50,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void ProjectIdRules()
                 {
                         this.RuleFor(x => x.ProjectId).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetVersionProjectId).When(x => x ?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.ProjectId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetVersionProjectId).When(x => x?.ProjectId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.ProjectId));
                         this.RuleFor(x => x.ProjectId).Length(0, 150);
                 }
 
@@ -63,7 +63,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void VersionRules()
                 {
                         this.RuleFor(x => x.Version).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetVersionProjectId).When(x => x ?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.Version));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetVersionProjectId).When(x => x?.Version != null).WithMessage("Violates unique constraint").WithName(nameof(ApiReleaseRequestModel.Version));
                         this.RuleFor(x => x.Version).Length(0, 100);
                 }
 
@@ -71,7 +71,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Release record = await this.releaseRepository.GetVersionProjectId(model.Version, model.ProjectId);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -84,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>46dad78bfd9a880be88de7a672d20210</Hash>
+    <Hash>88b4aefc8602431c813ea257382c7027</Hash>
 </Codenesium>*/

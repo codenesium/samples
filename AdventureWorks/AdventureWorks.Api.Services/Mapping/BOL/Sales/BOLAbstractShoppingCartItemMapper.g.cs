@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOShoppingCartItem boShoppingCartItem = new BOShoppingCartItem();
-
                         boShoppingCartItem.SetProperties(
                                 shoppingCartItemID,
                                 model.DateCreated,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5a98a83e7c6e2bcfcb0b4f8f123a5d4a</Hash>
+    <Hash>e96c69e25fd448bffeacf23fc2662460</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTicketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicId, null as string);
@@ -44,8 +43,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTicketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTicketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicId, null as string);
                 }
@@ -57,7 +55,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTicketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicId, new string('A', 9));
@@ -70,8 +67,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTicketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTicketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicId, new string('A', 9));
                 }
@@ -83,8 +79,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Ticket()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.GetTicketStatus(It.IsAny<int>())).Returns(Task.FromResult<TicketStatus>(new TicketStatus()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTicketRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TicketStatusId, 1);
@@ -122,8 +116,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         ticketRepository.Setup(x => x.GetTicketStatus(It.IsAny<int>())).Returns(Task.FromResult<TicketStatus>(new TicketStatus()));
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTicketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTicketRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TicketStatusId, 1);
                 }
@@ -136,7 +129,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiTicketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTicketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TicketStatusId, 1);
                 }
@@ -144,5 +137,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e916873c1fdcee11322ca6784f9f2d13</Hash>
+    <Hash>00c0c57c104c851b2e90ea00aa47c8ee</Hash>
 </Codenesium>*/

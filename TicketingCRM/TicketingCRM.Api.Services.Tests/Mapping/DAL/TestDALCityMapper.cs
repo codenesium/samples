@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "City")]
         [Trait("Area", "DALMapper")]
-        public class TestDALCityActionMapper
+        public class TestDALCityMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALCityMapper();
-
                         var bo = new BOCity();
-
                         bo.SetProperties(1, "A", 1);
 
                         City response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALCityMapper();
-
                         City entity = new City();
-
                         entity.SetProperties(1, "A", 1);
 
-                        BOCity  response = mapper.MapEFToBO(entity);
+                        BOCity response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -48,9 +44,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALCityMapper();
-
                         City entity = new City();
-
                         entity.SetProperties(1, "A", 1);
 
                         List<BOCity> response = mapper.MapEFToBO(new List<City>() { entity });
@@ -61,5 +55,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fa881a9c78e40964cbc2d7147639ebee</Hash>
+    <Hash>bb3b4537203cbff9fbe27764c3807817</Hash>
 </Codenesium>*/

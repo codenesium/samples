@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CountryRegion")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCountryRegionActionMapper
+        public class TestBOLCountryRegionMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCountryRegionMapper();
-
                         ApiCountryRegionRequestModel model = new ApiCountryRegionRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOCountryRegion response = mapper.MapModelToBO("A", model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCountryRegionMapper();
-
                         BOCountryRegion bo = new BOCountryRegion();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiCountryRegionResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCountryRegionMapper();
-
                         BOCountryRegion bo = new BOCountryRegion();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiCountryRegionResponseModel> response = mapper.MapBOToModel(new List<BOCountryRegion>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1bbbb954257dffb36cabb8ad1f14e7ea</Hash>
+    <Hash>419e3b5bb31fc5a629a46465e8adb307</Hash>
 </Codenesium>*/

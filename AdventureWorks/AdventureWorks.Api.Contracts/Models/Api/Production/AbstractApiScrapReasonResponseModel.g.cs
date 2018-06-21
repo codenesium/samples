@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiScrapReasonResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiScrapReasonResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime modifiedDate,
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>da1b7659b7ac86646e52102beb70d074</Hash>
+    <Hash>733d4d14f9c3cac9b2975c2bd07ed054</Hash>
 </Codenesium>*/

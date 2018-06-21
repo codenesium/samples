@@ -3,9 +3,10 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractBOTeacher: AbstractBusinessObject
+        public abstract class AbstractBOTeacher : AbstractBusinessObject
         {
-                public AbstractBOTeacher() : base()
+                public AbstractBOTeacher()
+                        : base()
                 {
                 }
 
@@ -43,5 +44,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>211bbf3accde1ec9101f29a5db4d5910</Hash>
+    <Hash>5f419d46db2162abd82044a8e99ca5b6</Hash>
 </Codenesium>*/

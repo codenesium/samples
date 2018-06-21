@@ -1,12 +1,13 @@
-using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public partial class ApplicationDbContext: DbContext
+        public partial class ApplicationDbContext : DbContext
         {
                 public Guid UserId { get; private set; }
 
@@ -17,17 +18,13 @@ namespace FileServiceNS.Api.DataAccess
                 {
                 }
 
-                protected override void OnConfiguring(DbContextOptionsBuilder options)
-                {
-                        base.OnConfiguring(options);
-                }
-
                 public void SetUserId(Guid userId)
                 {
-                        if (userId == default (Guid))
+                        if (userId == default(Guid))
                         {
                                 throw new ArgumentException("UserId cannot be a default value");
                         }
+
                         this.UserId = userId;
                 }
 
@@ -37,6 +34,7 @@ namespace FileServiceNS.Api.DataAccess
                         {
                                 throw new ArgumentException("TenantId must be greater than 0");
                         }
+
                         this.TenantId = tenantId;
                 }
 
@@ -47,9 +45,14 @@ namespace FileServiceNS.Api.DataAccess
                 public virtual DbSet<FileType> FileTypes { get; set; }
 
                 public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
+
+                protected override void OnConfiguring(DbContextOptionsBuilder options)
+                {
+                        base.OnConfiguring(options);
+                }
         }
 
-        public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+        public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
                 public ApplicationDbContext CreateDbContext(string[] args)
                 {
@@ -74,5 +77,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4dd4bc3daa0e7c9b09cd322e3b463c99</Hash>
+    <Hash>3a985e639912a925695156352fb05681</Hash>
 </Codenesium>*/

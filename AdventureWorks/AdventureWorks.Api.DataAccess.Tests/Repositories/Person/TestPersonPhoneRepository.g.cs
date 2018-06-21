@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PersonPhoneRepository(loggerMoc.Object, context);
 
                         PersonPhone entity = new PersonPhone();
-
                         context.Set<PersonPhone>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PersonPhoneRepository(loggerMoc.Object, context);
 
                         PersonPhone entity = new PersonPhone();
-
                         context.Set<PersonPhone>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PersonPhoneRepository(loggerMoc.Object, context);
 
                         var entity = new PersonPhone();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<PersonPhone>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PersonPhoneRepository>> loggerMoc = PersonPhoneRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PersonPhoneRepositoryMoc.GetContext();
                         var repository = new PersonPhoneRepository(loggerMoc.Object, context);
-
                         PersonPhone entity = new PersonPhone();
-
                         context.Set<PersonPhone>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PersonPhoneRepository>> loggerMoc = PersonPhoneRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PersonPhoneRepositoryMoc.GetContext();
                         var repository = new PersonPhoneRepository(loggerMoc.Object, context);
-
                         PersonPhone entity = new PersonPhone();
-
                         context.Set<PersonPhone>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PersonPhoneRepository>> loggerMoc = PersonPhoneRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PersonPhoneRepositoryMoc.GetContext();
                         var repository = new PersonPhoneRepository(loggerMoc.Object, context);
-
                         PersonPhone entity = new PersonPhone();
-
                         context.Set<PersonPhone>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         PersonPhone modifiedRecord = await context.Set<PersonPhone>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7b371aafb7da25adbcd073f745bb68e0</Hash>
+    <Hash>ffbb9df03abbc5c49e54e9316bbc5c69</Hash>
 </Codenesium>*/

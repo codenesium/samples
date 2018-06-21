@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("UnitMeasure", Schema="Production")]
-        public partial class UnitMeasure: AbstractEntity
+        public partial class UnitMeasure : AbstractEntity
         {
                 public UnitMeasure()
                 {
@@ -22,18 +22,18 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.UnitMeasureCode = unitMeasureCode;
                 }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
                 [Key]
-                [Column("UnitMeasureCode", TypeName="nchar(3)")]
+                [Column("UnitMeasureCode")]
                 public string UnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>033bf7d57784a5b913e5c90131ceda31</Hash>
+    <Hash>b1fbf060d512c84730070f852a19515c</Hash>
 </Codenesium>*/

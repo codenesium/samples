@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BODocument boDocument = new BODocument();
-
                         boDocument.SetProperties(
                                 rowguid,
                                 model.ChangeNumber,
@@ -57,5 +56,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4a1905a6adad041b16f5fa61df5dd74</Hash>
+    <Hash>1c0a5741e59f673f846e099c5aa5e512</Hash>
 </Codenesium>*/

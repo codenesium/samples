@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOAWBuildVersion: AbstractBOAWBuildVersion
+        public partial class BOAWBuildVersion : AbstractBOAWBuildVersion
         {
-                public BOAWBuildVersion() : base()
+                public BOAWBuildVersion()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>606a7e7de771b3deb3daca75bd8a4140</Hash>
+    <Hash>d34f85fcb27d1ceebf7c81932db0af67</Hash>
 </Codenesium>*/

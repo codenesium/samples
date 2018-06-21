@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesPersonRepository: AbstractRepository
+        public abstract class AbstractSalesPersonRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,31 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                }
+
+                public async virtual Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesPersonQuotaHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPersonQuotaHistory>();
+                }
+
+                public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
+                }
+
+                public async virtual Task<List<Store>> Stores(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Store>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Store>();
+                }
+
+                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
+                {
+                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
+                }
+
                 protected async Task<List<SalesPerson>> Where(
                         Expression<Func<SalesPerson, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,31 +129,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int salesPersonID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
-                }
-                public async virtual Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesPersonQuotaHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPersonQuotaHistory>();
-                }
-                public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
-                }
-                public async virtual Task<List<Store>> Stores(int salesPersonID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Store>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Store>();
-                }
-
-                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
-                {
-                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2502f57da599898779b3da21342b892e</Hash>
+    <Hash>c9dc18da535d94b93e502db52e656c76</Hash>
 </Codenesium>*/

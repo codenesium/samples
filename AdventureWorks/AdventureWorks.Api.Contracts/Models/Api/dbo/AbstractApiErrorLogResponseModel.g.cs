@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiErrorLogResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiErrorLogResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         Nullable<int> errorLine,
@@ -137,5 +137,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2b5dde346b5c040a317bc3ba4d933de6</Hash>
+    <Hash>cddb4cba044bac3cf6440f0d6742c683</Hash>
 </Codenesium>*/

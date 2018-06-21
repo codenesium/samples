@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("Address", Schema="Person")]
-        public partial class Address: AbstractEntity
+        public partial class Address : AbstractEntity
         {
                 public Address()
                 {
@@ -33,32 +33,32 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("AddressID", TypeName="int")]
+                [Column("AddressID")]
                 public int AddressID { get; private set; }
 
-                [Column("AddressLine1", TypeName="nvarchar(60)")]
+                [Column("AddressLine1")]
                 public string AddressLine1 { get; private set; }
 
-                [Column("AddressLine2", TypeName="nvarchar(60)")]
+                [Column("AddressLine2")]
                 public string AddressLine2 { get; private set; }
 
-                [Column("City", TypeName="nvarchar(30)")]
+                [Column("City")]
                 public string City { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("PostalCode", TypeName="nvarchar(15)")]
+                [Column("PostalCode")]
                 public string PostalCode { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("StateProvinceID", TypeName="int")]
+                [Column("StateProvinceID")]
                 public int StateProvinceID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>22e2edc17639e814e0f02b6b84d97c93</Hash>
+    <Hash>575d7070c027acb8d3b2090d104b378c</Hash>
 </Codenesium>*/

@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOCity boCity = new BOCity();
-
                         boCity.SetProperties(
                                 id,
                                 model.Name,
@@ -47,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acca2cbdddb5bb9fa1e83172ff3c16b8</Hash>
+    <Hash>85d38d36f54bc44b9315c94be9fe30a7</Hash>
 </Codenesium>*/

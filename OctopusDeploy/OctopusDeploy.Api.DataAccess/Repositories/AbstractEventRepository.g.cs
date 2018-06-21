@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractEventRepository: AbstractRepository
+        public abstract class AbstractEventRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,23 +82,31 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<Event>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
                         var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.Occurred == occurred && x.Category == category && x.AutoId == autoId);
 
                         return records;
                 }
+
                 public async Task<List<Event>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
                         var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.Category == category && x.UserId == userId && x.Occurred == occurred && x.TenantId == tenantId);
 
                         return records;
                 }
+
                 public async Task<List<Event>> GetIdOccurred(string id, DateTimeOffset occurred)
                 {
                         var records = await this.Where(x => x.Id == id && x.Occurred == occurred);
 
                         return records;
+                }
+
+                public async virtual Task<List<EventRelatedDocument>> EventRelatedDocuments(string eventId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<EventRelatedDocument>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
                 }
 
                 protected async Task<List<Event>> Where(
@@ -129,14 +137,9 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<EventRelatedDocument>> EventRelatedDocuments(string eventId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<EventRelatedDocument>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventRelatedDocument>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8b8a5df562477c4a4b23b018de95e754</Hash>
+    <Hash>05da7ae188b81d8a7226ac18db3f984a</Hash>
 </Codenesium>*/

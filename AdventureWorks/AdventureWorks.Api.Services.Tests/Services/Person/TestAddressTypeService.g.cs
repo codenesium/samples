@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
                         var record = new AddressType();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ApiAddressTypeResponseModel response = await service.Get(default (int));
+                        ApiAddressTypeResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ApiAddressTypeResponseModel response = await service.Get(default (int));
+                        ApiAddressTypeResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
                         var model = new ApiAddressTypeRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AddressType>())).Returns(Task.FromResult(new AddressType()));
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
                         var model = new ApiAddressTypeRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<AddressType>())).Returns(Task.FromResult(new AddressType()));
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.AddressTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiAddressTypeRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
                         var model = new ApiAddressTypeRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -150,7 +146,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
                         var record = new AddressType();
-
                         mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -160,7 +155,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ApiAddressTypeResponseModel response = await service.ByName(default (string));
+                        ApiAddressTypeResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -179,7 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        ApiAddressTypeResponseModel response = await service.ByName(default (string));
+                        ApiAddressTypeResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -191,7 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
                         var records = new List<BusinessEntityAddress>();
                         records.Add(new BusinessEntityAddress());
-                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.AddressTypeModelValidatorMock.Object,
@@ -200,17 +195,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default (int));
+                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void BusinessEntityAddresses_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IAddressTypeRepository>();
-                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
+                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
                         var service = new AddressTypeService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.AddressTypeModelValidatorMock.Object,
@@ -219,14 +214,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLBusinessEntityAddressMapperMock,
                                                              mock.DALMapperMockFactory.DALBusinessEntityAddressMapperMock);
 
-                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default (int));
+                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>eb55e99073aa4a24d09742389d1764ff</Hash>
+    <Hash>6c2859379d98043287586c125195836f</Hash>
 </Codenesium>*/

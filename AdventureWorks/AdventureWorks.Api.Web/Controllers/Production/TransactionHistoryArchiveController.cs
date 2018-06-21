@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/transactionHistoryArchives")]
         [ApiVersion("1.0")]
-        public class TransactionHistoryArchiveController: AbstractTransactionHistoryArchiveController
+        public class TransactionHistoryArchiveController : AbstractTransactionHistoryArchiveController
         {
                 public TransactionHistoryArchiveController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>19458b45600248a1a76015b5a3bc1367</Hash>
+    <Hash>396c868d154d270e900ca26fedfa6608</Hash>
 </Codenesium>*/

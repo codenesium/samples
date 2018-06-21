@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOLibraryVariableSet bo)
                 {
                         LibraryVariableSet efLibraryVariableSet = new LibraryVariableSet();
-
                         efLibraryVariableSet.SetProperties(
                                 bo.ContentType,
                                 bo.Id,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>730b19ba1f6e036f9429f72ca14aff0b</Hash>
+    <Hash>1dd5245e930b59a266e27d77fe7d30d6</Hash>
 </Codenesium>*/

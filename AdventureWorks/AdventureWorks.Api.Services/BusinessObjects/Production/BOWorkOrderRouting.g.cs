@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOWorkOrderRouting: AbstractBOWorkOrderRouting
+        public partial class BOWorkOrderRouting : AbstractBOWorkOrderRouting
         {
-                public BOWorkOrderRouting() : base()
+                public BOWorkOrderRouting()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9ea9f99d373450a0749298c4e57ef152</Hash>
+    <Hash>4aa4e7eacda38111c958218ef415f835</Hash>
 </Codenesium>*/

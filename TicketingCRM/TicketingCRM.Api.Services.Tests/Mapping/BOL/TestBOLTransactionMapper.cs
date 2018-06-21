@@ -1,25 +1,23 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Transaction")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTransactionActionMapper
+        public class TestBOLTransactionMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTransactionMapper();
-
                         ApiTransactionRequestModel model = new ApiTransactionRequestModel();
-
                         model.SetProperties(1, "A", 1);
                         BOTransaction response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTransactionMapper();
-
                         BOTransaction bo = new BOTransaction();
-
                         bo.SetProperties(1, 1, "A", 1);
                         ApiTransactionResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTransactionMapper();
-
                         BOTransaction bo = new BOTransaction();
-
                         bo.SetProperties(1, 1, "A", 1);
                         List<ApiTransactionResponseModel> response = mapper.MapBOToModel(new List<BOTransaction>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d6206de0c330f8a574820642a3ae059c</Hash>
+    <Hash>e93dea2120d37243aadcb6997f02e0f7</Hash>
 </Codenesium>*/

@@ -3,14 +3,15 @@ using System;
 
 namespace FileServiceNS.Api.Services
 {
-        public partial class BOFile:AbstractBOFile
+        public partial class BOFile : AbstractBOFile
         {
-                public BOFile() : base()
+                public BOFile()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c9ab7ecab7fea9d7dee61f5e260f71a1</Hash>
+    <Hash>b088255ad83d9e0aa6c12e35bf59c8dc</Hash>
 </Codenesium>*/

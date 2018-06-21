@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "MachinePolicy")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLMachinePolicyActionMapper
+        public class TestBOLMachinePolicyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLMachinePolicyMapper();
-
                         ApiMachinePolicyRequestModel model = new ApiMachinePolicyRequestModel();
-
                         model.SetProperties(true, "A", "A");
                         BOMachinePolicy response = mapper.MapModelToBO("A", model);
 
@@ -32,9 +30,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLMachinePolicyMapper();
-
                         BOMachinePolicy bo = new BOMachinePolicy();
-
                         bo.SetProperties("A", true, "A", "A");
                         ApiMachinePolicyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLMachinePolicyMapper();
-
                         BOMachinePolicy bo = new BOMachinePolicy();
-
                         bo.SetProperties("A", true, "A", "A");
                         List<ApiMachinePolicyResponseModel> response = mapper.MapBOToModel(new List<BOMachinePolicy>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0e5f40b6e9a8913c6828531c622f9fa1</Hash>
+    <Hash>eb3e39468de9a82e70931f15052b6594</Hash>
 </Codenesium>*/

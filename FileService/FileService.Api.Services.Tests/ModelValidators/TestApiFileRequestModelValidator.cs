@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.GetBucket(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(new Bucket()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.BucketId, 1);
@@ -57,8 +56,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.GetBucket(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(new Bucket()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.BucketId, 1);
                 }
@@ -71,7 +69,7 @@ namespace FileServiceNS.Api.Services.Tests
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.BucketId, 1);
                 }
@@ -83,7 +81,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
@@ -96,8 +93,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 256));
                 }
@@ -109,8 +105,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -122,7 +117,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Extension, null as string);
@@ -135,8 +129,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Extension, null as string);
                 }
@@ -148,7 +141,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Extension, new string('A', 33));
@@ -161,8 +153,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Extension, new string('A', 33));
                 }
@@ -174,8 +165,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +177,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.GetFileType(It.IsAny<int>())).Returns(Task.FromResult<FileType>(new FileType()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.FileTypeId, 1);
@@ -213,8 +202,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.GetFileType(It.IsAny<int>())).Returns(Task.FromResult<FileType>(new FileType()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.FileTypeId, 1);
                 }
@@ -227,7 +215,7 @@ namespace FileServiceNS.Api.Services.Tests
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FileTypeId, 1);
                 }
@@ -239,7 +227,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Location, null as string);
@@ -252,8 +239,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Location, null as string);
                 }
@@ -265,7 +251,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Location, new string('A', 256));
@@ -278,8 +263,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Location, new string('A', 256));
                 }
@@ -291,8 +275,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -304,7 +287,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, null as string);
@@ -317,8 +299,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, null as string);
                 }
@@ -330,7 +311,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, new string('A', 65));
@@ -343,8 +323,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, new string('A', 65));
                 }
@@ -356,8 +335,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -369,7 +347,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicKey, null as string);
@@ -382,8 +359,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicKey, null as string);
                 }
@@ -395,7 +371,6 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicKey, new string('A', 65));
@@ -408,8 +383,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiFileRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PublicKey, new string('A', 65));
                 }
@@ -421,8 +395,7 @@ namespace FileServiceNS.Api.Services.Tests
                         fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
 
                         var validator = new ApiFileRequestModelValidator(fileRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -430,5 +403,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>024904c9457941d6c6bb5baadae7e176</Hash>
+    <Hash>f591add009d754cf903ac611f83fe7ee</Hash>
 </Codenesium>*/

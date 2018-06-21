@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 51));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MiddleName, new string('A', 51));
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MiddleName, new string('A', 51));
                 }
@@ -187,8 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -200,7 +187,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PersonType, null as string);
@@ -213,8 +199,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PersonType, null as string);
                 }
@@ -226,7 +211,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PersonType, new string('A', 3));
@@ -239,8 +223,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PersonType, new string('A', 3));
                 }
@@ -252,8 +235,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -265,7 +247,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Suffix, new string('A', 11));
@@ -278,8 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Suffix, new string('A', 11));
                 }
@@ -291,8 +271,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -304,7 +283,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 9));
@@ -317,8 +295,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPersonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPersonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 9));
                 }
@@ -330,8 +307,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         personRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Person()));
 
                         var validator = new ApiPersonRequestModelValidator(personRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -339,5 +315,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c2740546e8406f87d8d9962e2d4c621d</Hash>
+    <Hash>5180dcd911dd596d38ce8b769a5a36ff</Hash>
 </Codenesium>*/

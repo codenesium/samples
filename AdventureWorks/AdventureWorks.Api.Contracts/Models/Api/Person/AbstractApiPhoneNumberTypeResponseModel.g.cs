@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiPhoneNumberTypeResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiPhoneNumberTypeResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime modifiedDate,
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>df6ba966d41f9e955e7cb4ef7f187174</Hash>
+    <Hash>9342e9d55329165a1b35488a0d744602</Hash>
 </Codenesium>*/

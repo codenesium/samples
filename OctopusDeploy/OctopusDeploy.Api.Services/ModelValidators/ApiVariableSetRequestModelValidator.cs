@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiVariableSetRequestModelValidator: AbstractApiVariableSetRequestModelValidator, IApiVariableSetRequestModelValidator
+        public class ApiVariableSetRequestModelValidator : AbstractApiVariableSetRequestModelValidator, IApiVariableSetRequestModelValidator
         {
                 public ApiVariableSetRequestModelValidator(IVariableSetRepository variableSetRepository)
                         : base(variableSetRepository)
@@ -35,11 +35,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>51a31696c289e1d639c0c059e7ad60c8</Hash>
+    <Hash>83e124025a0842e6218e209befd376b5</Hash>
 </Codenesium>*/

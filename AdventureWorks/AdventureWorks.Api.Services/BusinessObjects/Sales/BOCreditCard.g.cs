@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOCreditCard: AbstractBOCreditCard
+        public partial class BOCreditCard : AbstractBOCreditCard
         {
-                public BOCreditCard() : base()
+                public BOCreditCard()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0702910d457d64fa69c3fdcd1a698c27</Hash>
+    <Hash>a02b37c251b5dea8806987653557e0b2</Hash>
 </Codenesium>*/

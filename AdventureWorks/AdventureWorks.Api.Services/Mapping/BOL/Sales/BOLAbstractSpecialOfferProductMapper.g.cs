@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSpecialOfferProduct boSpecialOfferProduct = new BOSpecialOfferProduct();
-
                         boSpecialOfferProduct.SetProperties(
                                 specialOfferID,
                                 model.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6fdc87f06e639cb14baf6b8dbd2778a1</Hash>
+    <Hash>c471b2a3c67907eea4988b8bd79e74de</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
         [Table("Country", Schema="dbo")]
-        public partial class Country: AbstractEntity
+        public partial class Country : AbstractEntity
         {
                 public Country()
                 {
@@ -21,14 +21,14 @@ namespace TicketingCRMNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a3f7c8bd5f6bb011ccf110c8efd8642f</Hash>
+    <Hash>4c047caec8fd7779d6a397057854abb9</Hash>
 </Codenesium>*/

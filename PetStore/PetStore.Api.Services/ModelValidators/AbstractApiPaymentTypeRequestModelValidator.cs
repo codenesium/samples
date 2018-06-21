@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractApiPaymentTypeRequestModelValidator: AbstractValidator<ApiPaymentTypeRequestModel>
+        public abstract class AbstractApiPaymentTypeRequestModelValidator : AbstractValidator<ApiPaymentTypeRequestModel>
         {
                 private int existingRecordId;
 
-                IPaymentTypeRepository paymentTypeRepository;
+                private IPaymentTypeRepository paymentTypeRepository;
 
                 public AbstractApiPaymentTypeRequestModelValidator(IPaymentTypeRepository paymentTypeRepository)
                 {
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c68b34500c749c75ff9e47d9e8dc4e7c</Hash>
+    <Hash>2239bb23d4a6dff6831e3770ff942ee2</Hash>
 </Codenesium>*/

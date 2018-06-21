@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOWorkerTaskLease bo)
                 {
                         WorkerTaskLease efWorkerTaskLease = new WorkerTaskLease();
-
                         efWorkerTaskLease.SetProperties(
                                 bo.Exclusive,
                                 bo.Id,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d205c2bb8913b70425ec82cde86597ae</Hash>
+    <Hash>96f822146f1d33a08a3e36ad90185ab3</Hash>
 </Codenesium>*/

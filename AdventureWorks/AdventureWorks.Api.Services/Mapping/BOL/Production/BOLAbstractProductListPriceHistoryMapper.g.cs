@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductListPriceHistory boProductListPriceHistory = new BOProductListPriceHistory();
-
                         boProductListPriceHistory.SetProperties(
                                 productID,
                                 model.EndDate,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6a4ddbcafed3637564fa81ce06aa6544</Hash>
+    <Hash>8ed2579260aaea9bdb05d0b2f04a41b3</Hash>
 </Codenesium>*/

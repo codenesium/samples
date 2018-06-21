@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractLessonStatusService: AbstractService
+        public abstract class AbstractLessonStatusService : AbstractService
         {
                 private ILessonStatusRepository lessonStatusRepository;
 
@@ -33,15 +33,10 @@ namespace FermataFishNS.Api.Services
                         ILessonStatusRepository lessonStatusRepository,
                         IApiLessonStatusRequestModelValidator lessonStatusModelValidator,
                         IBOLLessonStatusMapper bolLessonStatusMapper,
-                        IDALLessonStatusMapper dalLessonStatusMapper
-
-                        ,
+                        IDALLessonStatusMapper dalLessonStatusMapper,
                         IBOLLessonMapper bolLessonMapper,
-                        IDALLessonMapper dalLessonMapper
-
-                        )
+                        IDALLessonMapper dalLessonMapper)
                         : base()
-
                 {
                         this.lessonStatusRepository = lessonStatusRepository;
                         this.lessonStatusModelValidator = lessonStatusModelValidator;
@@ -79,7 +74,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiLessonStatusResponseModel> response = new CreateResponse<ApiLessonStatusResponseModel>(await this.lessonStatusModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolLessonStatusMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolLessonStatusMapper.MapModelToBO(default(int), model);
                                 var record = await this.lessonStatusRepository.Create(this.dalLessonStatusMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace FermataFishNS.Api.Services
                         ApiLessonStatusRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.lessonStatusModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolLessonStatusMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.lessonStatusModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.lessonStatusRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9fd7f31867cc3497d572465db0d57b8</Hash>
+    <Hash>515fe3041213aed102ad0ab3a6d9f138</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractMachineService: AbstractService
+        public abstract class AbstractMachineService : AbstractService
         {
                 private IMachineRepository machineRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IMachineRepository machineRepository,
                         IApiMachineRequestModelValidator machineModelValidator,
                         IBOLMachineMapper bolMachineMapper,
-                        IDALMachineMapper dalMachineMapper
-
-                        )
+                        IDALMachineMapper dalMachineMapper)
                         : base()
-
                 {
                         this.machineRepository = machineRepository;
                         this.machineModelValidator = machineModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.machineModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolMachineMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolMachineMapper.MapModelToBO(default(string), model);
                                 var record = await this.machineRepository.Create(this.dalMachineMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiMachineRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolMachineMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.machineRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiMachineResponseModel>> GetMachinePolicyId(string machinePolicyId)
                 {
                         List<Machine> records = await this.machineRepository.GetMachinePolicyId(machinePolicyId);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>24fe13b58d1bd8320b323ca31dc9d20c</Hash>
+    <Hash>58f00e22564430e734006969280bded3</Hash>
 </Codenesium>*/

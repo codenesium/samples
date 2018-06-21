@@ -1,12 +1,13 @@
-using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public partial class ApplicationDbContext: DbContext
+        public partial class ApplicationDbContext : DbContext
         {
                 public Guid UserId { get; private set; }
 
@@ -17,17 +18,13 @@ namespace PetShippingNS.Api.DataAccess
                 {
                 }
 
-                protected override void OnConfiguring(DbContextOptionsBuilder options)
-                {
-                        base.OnConfiguring(options);
-                }
-
                 public void SetUserId(Guid userId)
                 {
-                        if (userId == default (Guid))
+                        if (userId == default(Guid))
                         {
                                 throw new ArgumentException("UserId cannot be a default value");
                         }
+
                         this.UserId = userId;
                 }
 
@@ -37,6 +34,7 @@ namespace PetShippingNS.Api.DataAccess
                         {
                                 throw new ArgumentException("TenantId must be greater than 0");
                         }
+
                         this.TenantId = tenantId;
                 }
 
@@ -83,9 +81,14 @@ namespace PetShippingNS.Api.DataAccess
                 public virtual DbSet<Sale> Sales { get; set; }
 
                 public virtual DbSet<Species> Species { get; set; }
+
+                protected override void OnConfiguring(DbContextOptionsBuilder options)
+                {
+                        base.OnConfiguring(options);
+                }
         }
 
-        public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+        public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
                 public ApplicationDbContext CreateDbContext(string[] args)
                 {
@@ -110,5 +113,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da1a8b85be9bf51b92f827ccbba1f04a</Hash>
+    <Hash>f67f0928e932961d6a84d335982140f4</Hash>
 </Codenesium>*/

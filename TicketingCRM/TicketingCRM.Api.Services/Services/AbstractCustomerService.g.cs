@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractCustomerService: AbstractService
+        public abstract class AbstractCustomerService : AbstractService
         {
                 private ICustomerRepository customerRepository;
 
@@ -29,11 +29,8 @@ namespace TicketingCRMNS.Api.Services
                         ICustomerRepository customerRepository,
                         IApiCustomerRequestModelValidator customerModelValidator,
                         IBOLCustomerMapper bolCustomerMapper,
-                        IDALCustomerMapper dalCustomerMapper
-
-                        )
+                        IDALCustomerMapper dalCustomerMapper)
                         : base()
-
                 {
                         this.customerRepository = customerRepository;
                         this.customerModelValidator = customerModelValidator;
@@ -69,7 +66,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.customerModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCustomerMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCustomerMapper.MapModelToBO(default(int), model);
                                 var record = await this.customerRepository.Create(this.dalCustomerMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiCustomerRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCustomerMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.customerRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>602e24461e0c072c1ce153fe49c3145f</Hash>
+    <Hash>e2dff934d6493dc48ee66d9f302d3145</Hash>
 </Codenesium>*/

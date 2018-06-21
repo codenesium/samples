@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractLessonService: AbstractService
+        public abstract class AbstractLessonService : AbstractService
         {
                 private ILessonRepository lessonRepository;
 
@@ -36,18 +36,12 @@ namespace FermataFishNS.Api.Services
                         ILessonRepository lessonRepository,
                         IApiLessonRequestModelValidator lessonModelValidator,
                         IBOLLessonMapper bolLessonMapper,
-                        IDALLessonMapper dalLessonMapper
-
-                        ,
+                        IDALLessonMapper dalLessonMapper,
                         IBOLLessonXStudentMapper bolLessonXStudentMapper,
-                        IDALLessonXStudentMapper dalLessonXStudentMapper
-                        ,
+                        IDALLessonXStudentMapper dalLessonXStudentMapper,
                         IBOLLessonXTeacherMapper bolLessonXTeacherMapper,
-                        IDALLessonXTeacherMapper dalLessonXTeacherMapper
-
-                        )
+                        IDALLessonXTeacherMapper dalLessonXTeacherMapper)
                         : base()
-
                 {
                         this.lessonRepository = lessonRepository;
                         this.lessonModelValidator = lessonModelValidator;
@@ -87,7 +81,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiLessonResponseModel> response = new CreateResponse<ApiLessonResponseModel>(await this.lessonModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolLessonMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolLessonMapper.MapModelToBO(default(int), model);
                                 var record = await this.lessonRepository.Create(this.dalLessonMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace FermataFishNS.Api.Services
                         ApiLessonRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.lessonModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolLessonMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.lessonModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.lessonRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace FermataFishNS.Api.Services
 
                         return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiLessonXTeacherResponseModel>> LessonXTeachers(int lessonId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<LessonXTeacher> records = await this.lessonRepository.LessonXTeachers(lessonId, limit, offset);
@@ -140,5 +133,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4c7d532da620f1b2957f6ad60222c6b</Hash>
+    <Hash>37f740a187cd9d37330f2f7080f9a073</Hash>
 </Codenesium>*/

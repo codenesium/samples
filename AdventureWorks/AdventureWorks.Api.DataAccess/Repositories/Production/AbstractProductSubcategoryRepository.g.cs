@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractProductSubcategoryRepository: AbstractRepository
+        public abstract class AbstractProductSubcategoryRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<Product>> Products(int productSubcategoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Product>().Where(x => x.ProductSubcategoryID == productSubcategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+                }
+
                 protected async Task<List<ProductSubcategory>> Where(
                         Expression<Func<ProductSubcategory, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Product>> Products(int productSubcategoryID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Product>().Where(x => x.ProductSubcategoryID == productSubcategoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>dbcb02ba5f54e8bb6a0a010c23254d08</Hash>
+    <Hash>f56709bbf5c80e94721ecefe95b94e37</Hash>
 </Codenesium>*/

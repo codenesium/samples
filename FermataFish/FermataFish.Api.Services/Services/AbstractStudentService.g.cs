@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractStudentService: AbstractService
+        public abstract class AbstractStudentService : AbstractService
         {
                 private IStudentRepository studentRepository;
 
@@ -39,21 +39,14 @@ namespace FermataFishNS.Api.Services
                         IStudentRepository studentRepository,
                         IApiStudentRequestModelValidator studentModelValidator,
                         IBOLStudentMapper bolStudentMapper,
-                        IDALStudentMapper dalStudentMapper
-
-                        ,
+                        IDALStudentMapper dalStudentMapper,
                         IBOLLessonXStudentMapper bolLessonXStudentMapper,
-                        IDALLessonXStudentMapper dalLessonXStudentMapper
-                        ,
+                        IDALLessonXStudentMapper dalLessonXStudentMapper,
                         IBOLLessonXTeacherMapper bolLessonXTeacherMapper,
-                        IDALLessonXTeacherMapper dalLessonXTeacherMapper
-                        ,
+                        IDALLessonXTeacherMapper dalLessonXTeacherMapper,
                         IBOLStudentXFamilyMapper bolStudentXFamilyMapper,
-                        IDALStudentXFamilyMapper dalStudentXFamilyMapper
-
-                        )
+                        IDALStudentXFamilyMapper dalStudentXFamilyMapper)
                         : base()
-
                 {
                         this.studentRepository = studentRepository;
                         this.studentModelValidator = studentModelValidator;
@@ -95,7 +88,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiStudentResponseModel> response = new CreateResponse<ApiStudentResponseModel>(await this.studentModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolStudentMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolStudentMapper.MapModelToBO(default(int), model);
                                 var record = await this.studentRepository.Create(this.dalStudentMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record)));
@@ -109,7 +102,6 @@ namespace FermataFishNS.Api.Services
                         ApiStudentRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolStudentMapper.MapModelToBO(id, model);
@@ -123,7 +115,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.studentRepository.Delete(id);
@@ -138,12 +129,14 @@ namespace FermataFishNS.Api.Services
 
                         return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiLessonXTeacherResponseModel>> LessonXTeachers(int studentId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<LessonXTeacher> records = await this.studentRepository.LessonXTeachers(studentId, limit, offset);
 
                         return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilies(int studentId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<StudentXFamily> records = await this.studentRepository.StudentXFamilies(studentId, limit, offset);
@@ -154,5 +147,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06abe481586ec5cc275cac84d5a19c97</Hash>
+    <Hash>edffd1b2cdfb2e30dd7a3aac919ca7f5</Hash>
 </Codenesium>*/

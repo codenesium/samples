@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractWorkerTaskLeaseService: AbstractService
+        public abstract class AbstractWorkerTaskLeaseService : AbstractService
         {
                 private IWorkerTaskLeaseRepository workerTaskLeaseRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IWorkerTaskLeaseRepository workerTaskLeaseRepository,
                         IApiWorkerTaskLeaseRequestModelValidator workerTaskLeaseModelValidator,
                         IBOLWorkerTaskLeaseMapper bolWorkerTaskLeaseMapper,
-                        IDALWorkerTaskLeaseMapper dalWorkerTaskLeaseMapper
-
-                        )
+                        IDALWorkerTaskLeaseMapper dalWorkerTaskLeaseMapper)
                         : base()
-
                 {
                         this.workerTaskLeaseRepository = workerTaskLeaseRepository;
                         this.workerTaskLeaseModelValidator = workerTaskLeaseModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiWorkerTaskLeaseResponseModel> response = new CreateResponse<ApiWorkerTaskLeaseResponseModel>(await this.workerTaskLeaseModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolWorkerTaskLeaseMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolWorkerTaskLeaseMapper.MapModelToBO(default(string), model);
                                 var record = await this.workerTaskLeaseRepository.Create(this.dalWorkerTaskLeaseMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolWorkerTaskLeaseMapper.MapBOToModel(this.dalWorkerTaskLeaseMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiWorkerTaskLeaseRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.workerTaskLeaseModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolWorkerTaskLeaseMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.workerTaskLeaseModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.workerTaskLeaseRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0a65e9451229f3e011fa1c86dce892e</Hash>
+    <Hash>b1feaab3e125b76109e252cca4ed514f</Hash>
 </Codenesium>*/

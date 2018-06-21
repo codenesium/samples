@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("ActionTemplateVersion", Schema="dbo")]
-        public partial class ActionTemplateVersion: AbstractEntity
+        public partial class ActionTemplateVersion : AbstractEntity
         {
                 public ActionTemplateVersion()
                 {
@@ -28,27 +28,27 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Version = version;
                 }
 
-                [Column("ActionType", TypeName="nvarchar(50)")]
+                [Column("ActionType")]
                 public string ActionType { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("LatestActionTemplateId", TypeName="nvarchar(50)")]
+                [Column("LatestActionTemplateId")]
                 public string LatestActionTemplateId { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("Version", TypeName="int")]
+                [Column("Version")]
                 public int Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2faffb7b1941e8fc48a70be69f47689f</Hash>
+    <Hash>ece44ec841ee058433b83d11f04e3610</Hash>
 </Codenesium>*/

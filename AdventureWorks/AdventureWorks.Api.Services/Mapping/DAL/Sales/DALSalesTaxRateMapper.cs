@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALSalesTaxRateMapper: DALAbstractSalesTaxRateMapper, IDALSalesTaxRateMapper
+        public class DALSalesTaxRateMapper : DALAbstractSalesTaxRateMapper, IDALSalesTaxRateMapper
         {
                 public DALSalesTaxRateMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2fac6a143e5de4f99d0dabc27f64fb8c</Hash>
+    <Hash>ab57df0631fcec6e5415e622f96389eb</Hash>
 </Codenesium>*/

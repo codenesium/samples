@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "User")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLUserActionMapper
+        public class TestBOLUserMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLUserMapper();
-
                         ApiUserRequestModel model = new ApiUserRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
                         BOUser response = mapper.MapModelToBO("A", model);
 
@@ -38,9 +36,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLUserMapper();
-
                         BOUser bo = new BOUser();
-
                         bo.SetProperties("A", "A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
                         ApiUserResponseModel response = mapper.MapBOToModel(bo);
 
@@ -60,9 +56,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLUserMapper();
-
                         BOUser bo = new BOUser();
-
                         bo.SetProperties("A", "A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
                         List<ApiUserResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
 
@@ -72,5 +66,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f57d2de3c29eb5fc3fcf863d3ccc613</Hash>
+    <Hash>7ef8a182930601befab4ccdd27c6305c</Hash>
 </Codenesium>*/

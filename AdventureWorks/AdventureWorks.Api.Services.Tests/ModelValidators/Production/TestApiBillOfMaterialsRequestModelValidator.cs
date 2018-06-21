@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterials()));
 
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiBillOfMaterialsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterials()));
 
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiBillOfMaterialsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterials()));
 
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiBillOfMaterialsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterials()));
 
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiBillOfMaterialsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UnitMeasureCode, new string('A', 4));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new BillOfMaterials()));
 
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -120,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(new BillOfMaterials()));
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiBillOfMaterialsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialsRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ComponentID, 1);
                 }
@@ -132,7 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         billOfMaterialsRepository.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<Nullable<int>>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterials>(null));
                         var validator = new ApiBillOfMaterialsRequestModelValidator(billOfMaterialsRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiBillOfMaterialsRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBillOfMaterialsRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ComponentID, 1);
                 }
@@ -140,5 +135,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>64f4ede080852862317b63eb16c73b7a</Hash>
+    <Hash>a8d1e2afad98fb5ad81823b5e97f255e</Hash>
 </Codenesium>*/

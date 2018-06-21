@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiLinkStatusResponseModel: AbstractApiLinkStatusResponseModel
+        public partial class ApiLinkStatusResponseModel : AbstractApiLinkStatusResponseModel
         {
                 public ApiLinkStatusResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e782d8a9febb1e45ffa81c1d3e45892e</Hash>
+    <Hash>013b4d614b73f98bfa5c9d7fe2f3d232</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SpecialOffer")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSpecialOfferActionMapper
+        public class TestBOLSpecialOfferMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSpecialOfferMapper();
-
                         ApiSpecialOfferRequestModel model = new ApiSpecialOfferRequestModel();
-
                         model.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOSpecialOffer response = mapper.MapModelToBO(1, model);
 
@@ -39,9 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSpecialOfferMapper();
-
                         BOSpecialOffer bo = new BOSpecialOffer();
-
                         bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiSpecialOfferResponseModel response = mapper.MapBOToModel(bo);
 
@@ -62,9 +58,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSpecialOfferMapper();
-
                         BOSpecialOffer bo = new BOSpecialOffer();
-
                         bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiSpecialOfferResponseModel> response = mapper.MapBOToModel(new List<BOSpecialOffer>() { { bo } });
 
@@ -74,5 +68,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e726a124309195d280eff5730a59cdf3</Hash>
+    <Hash>6c481f603dacf28dca863956e177fadd</Hash>
 </Codenesium>*/

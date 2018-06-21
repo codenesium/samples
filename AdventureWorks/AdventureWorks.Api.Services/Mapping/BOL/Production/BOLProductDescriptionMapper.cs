@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLProductDescriptionMapper: BOLAbstractProductDescriptionMapper, IBOLProductDescriptionMapper
+        public class BOLProductDescriptionMapper : BOLAbstractProductDescriptionMapper, IBOLProductDescriptionMapper
         {
                 public BOLProductDescriptionMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fb54ed4ee4a0097adcf31b5e26aceccb</Hash>
+    <Hash>217ff6c853e7da96cdd5637e0a59bedd</Hash>
 </Codenesium>*/

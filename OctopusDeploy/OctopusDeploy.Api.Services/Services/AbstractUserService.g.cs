@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractUserService: AbstractService
+        public abstract class AbstractUserService : AbstractService
         {
                 private IUserRepository userRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IUserRepository userRepository,
                         IApiUserRequestModelValidator userModelValidator,
                         IBOLUserMapper bolUserMapper,
-                        IDALUserMapper dalUserMapper
-
-                        )
+                        IDALUserMapper dalUserMapper)
                         : base()
-
                 {
                         this.userRepository = userRepository;
                         this.userModelValidator = userModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiUserResponseModel> response = new CreateResponse<ApiUserResponseModel>(await this.userModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolUserMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolUserMapper.MapModelToBO(default(string), model);
                                 var record = await this.userRepository.Create(this.dalUserMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiUserRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.userModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolUserMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.userModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.userRepository.Delete(id);
@@ -119,18 +114,21 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiUserResponseModel>> GetDisplayName(string displayName)
                 {
                         List<User> records = await this.userRepository.GetDisplayName(displayName);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiUserResponseModel>> GetEmailAddress(string emailAddress)
                 {
                         List<User> records = await this.userRepository.GetEmailAddress(emailAddress);
 
                         return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiUserResponseModel>> GetExternalId(string externalId)
                 {
                         List<User> records = await this.userRepository.GetExternalId(externalId);
@@ -141,5 +139,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c680877a5429aa11cb7ce3c29a585468</Hash>
+    <Hash>0d2b6cc4b1da1fac9b3525f9c3bdbc35</Hash>
 </Codenesium>*/

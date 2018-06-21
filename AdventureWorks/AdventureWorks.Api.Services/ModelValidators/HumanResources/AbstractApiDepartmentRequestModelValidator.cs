@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiDepartmentRequestModelValidator: AbstractValidator<ApiDepartmentRequestModel>
+        public abstract class AbstractApiDepartmentRequestModelValidator : AbstractValidator<ApiDepartmentRequestModel>
         {
                 private short existingRecordId;
 
-                IDepartmentRepository departmentRepository;
+                private IDepartmentRepository departmentRepository;
 
                 public AbstractApiDepartmentRequestModelValidator(IDepartmentRepository departmentRepository)
                 {
@@ -39,7 +39,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiDepartmentRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -47,7 +47,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Department record = await this.departmentRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (short) && record.DepartmentID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(short) && record.DepartmentID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -60,5 +60,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c279afdf51f5f557b281bde3292714b9</Hash>
+    <Hash>aa070c800b8fda9ccf2e236289673348</Hash>
 </Codenesium>*/

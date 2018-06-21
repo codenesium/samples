@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new ChainStatusRepository(loggerMoc.Object, context);
 
                         ChainStatus entity = new ChainStatus();
-
                         context.Set<ChainStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new ChainStatusRepository(loggerMoc.Object, context);
 
                         ChainStatus entity = new ChainStatus();
-
                         context.Set<ChainStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new ChainStatusRepository(loggerMoc.Object, context);
 
                         var entity = new ChainStatus();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ChainStatus>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<ChainStatusRepository>> loggerMoc = ChainStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ChainStatusRepositoryMoc.GetContext();
                         var repository = new ChainStatusRepository(loggerMoc.Object, context);
-
                         ChainStatus entity = new ChainStatus();
-
                         context.Set<ChainStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<ChainStatusRepository>> loggerMoc = ChainStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ChainStatusRepositoryMoc.GetContext();
                         var repository = new ChainStatusRepository(loggerMoc.Object, context);
-
                         ChainStatus entity = new ChainStatus();
-
                         context.Set<ChainStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<ChainStatusRepository>> loggerMoc = ChainStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ChainStatusRepositoryMoc.GetContext();
                         var repository = new ChainStatusRepository(loggerMoc.Object, context);
-
                         ChainStatus entity = new ChainStatus();
-
                         context.Set<ChainStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ChainStatus modifiedRecord = await context.Set<ChainStatus>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9987452172f9a9e066cdf1dce4b49b55</Hash>
+    <Hash>30233cfa3a32c0c998191e9538ff4930</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("StateProvince", Schema="Person")]
-        public partial class StateProvince: AbstractEntity
+        public partial class StateProvince : AbstractEntity
         {
                 public StateProvince()
                 {
@@ -32,33 +32,33 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.TerritoryID = territoryID;
                 }
 
-                [Column("CountryRegionCode", TypeName="nvarchar(3)")]
+                [Column("CountryRegionCode")]
                 public string CountryRegionCode { get; private set; }
 
-                [Column("IsOnlyStateProvinceFlag", TypeName="bit")]
+                [Column("IsOnlyStateProvinceFlag")]
                 public bool IsOnlyStateProvinceFlag { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("StateProvinceCode", TypeName="nchar(3)")]
+                [Column("StateProvinceCode")]
                 public string StateProvinceCode { get; private set; }
 
                 [Key]
-                [Column("StateProvinceID", TypeName="int")]
+                [Column("StateProvinceID")]
                 public int StateProvinceID { get; private set; }
 
-                [Column("TerritoryID", TypeName="int")]
+                [Column("TerritoryID")]
                 public int TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b596a39ec81d0e8ae74aae85742e171f</Hash>
+    <Hash>35fcca30f3bf7c52b687e093e740fad9</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("ProductModelProductDescriptionCulture", Schema="Production")]
-        public partial class ProductModelProductDescriptionCulture: AbstractEntity
+        public partial class ProductModelProductDescriptionCulture : AbstractEntity
         {
                 public ProductModelProductDescriptionCulture()
                 {
@@ -24,21 +24,21 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ProductModelID = productModelID;
                 }
 
-                [Column("CultureID", TypeName="nchar(6)")]
+                [Column("CultureID")]
                 public string CultureID { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("ProductDescriptionID", TypeName="int")]
+                [Column("ProductDescriptionID")]
                 public int ProductDescriptionID { get; private set; }
 
                 [Key]
-                [Column("ProductModelID", TypeName="int")]
+                [Column("ProductModelID")]
                 public int ProductModelID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d9b733a869c4adbcbea701b6a8e25c8a</Hash>
+    <Hash>0c0c53c52f1c5fa2412565e1bc1fcbb1</Hash>
 </Codenesium>*/

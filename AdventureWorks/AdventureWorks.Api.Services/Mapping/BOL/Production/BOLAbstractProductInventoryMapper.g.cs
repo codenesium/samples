@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductInventory boProductInventory = new BOProductInventory();
-
                         boProductInventory.SetProperties(
                                 productID,
                                 model.Bin,
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>446a6f3c6584c2c746c09f749d4dd805</Hash>
+    <Hash>c01d203885f445d329d4ce29d4ef6453</Hash>
 </Codenesium>*/

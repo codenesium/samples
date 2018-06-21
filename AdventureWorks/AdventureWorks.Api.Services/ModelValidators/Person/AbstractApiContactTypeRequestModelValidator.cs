@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiContactTypeRequestModelValidator: AbstractValidator<ApiContactTypeRequestModel>
+        public abstract class AbstractApiContactTypeRequestModelValidator : AbstractValidator<ApiContactTypeRequestModel>
         {
                 private int existingRecordId;
 
-                IContactTypeRepository contactTypeRepository;
+                private IContactTypeRepository contactTypeRepository;
 
                 public AbstractApiContactTypeRequestModelValidator(IContactTypeRepository contactTypeRepository)
                 {
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiContactTypeRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiContactTypeRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ContactType record = await this.contactTypeRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.ContactTypeID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.ContactTypeID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f53a15490bdcd3ad394bf38209d2c10</Hash>
+    <Hash>5fd7a24c44afdbdf9cc85dd6565db772</Hash>
 </Codenesium>*/

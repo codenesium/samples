@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 16));
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 16));
                 }
@@ -57,8 +55,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 129));
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Comment, new string('A', 129));
                 }
@@ -96,8 +91,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -109,7 +103,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CreditCardApprovalCode, new string('A', 16));
@@ -122,8 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CreditCardApprovalCode, new string('A', 16));
                 }
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -148,7 +139,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
@@ -174,8 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CreditCardID, 1);
                 }
@@ -188,7 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
                 }
@@ -200,7 +189,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetCurrencyRate(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CurrencyRateID, 1);
@@ -226,8 +214,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetCurrencyRate(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CurrencyRateID, 1);
                 }
@@ -240,7 +227,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyRateID, 1);
                 }
@@ -252,7 +239,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetCustomer(It.IsAny<int>())).Returns(Task.FromResult<Customer>(new Customer()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CustomerID, 1);
@@ -278,8 +264,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetCustomer(It.IsAny<int>())).Returns(Task.FromResult<Customer>(new Customer()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CustomerID, 1);
                 }
@@ -292,7 +277,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CustomerID, 1);
                 }
@@ -304,7 +289,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PurchaseOrderNumber, new string('A', 26));
@@ -317,8 +301,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PurchaseOrderNumber, new string('A', 26));
                 }
@@ -330,8 +313,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -343,7 +325,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, null as string);
@@ -356,8 +337,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, null as string);
                 }
@@ -369,7 +349,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, new string('A', 26));
@@ -382,8 +361,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, new string('A', 26));
                 }
@@ -395,8 +373,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesOrderHeader()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -408,7 +385,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SalesPersonID, 1);
@@ -434,8 +410,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SalesPersonID, 1);
                 }
@@ -448,7 +423,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesPersonID, 1);
                 }
@@ -460,7 +435,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
@@ -486,8 +460,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
                 }
@@ -500,7 +473,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
                 }
@@ -536,7 +509,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.BySalesOrderNumber(It.IsAny<string>())).Returns(Task.FromResult<SalesOrderHeader>(new SalesOrderHeader()));
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, "A");
                 }
@@ -548,7 +521,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesOrderHeaderRepository.Setup(x => x.BySalesOrderNumber(It.IsAny<string>())).Returns(Task.FromResult<SalesOrderHeader>(null));
                         var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesOrderHeaderRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SalesOrderNumber, "A");
                 }
@@ -556,5 +529,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>815d904c779db4d53201daa2bef92791</Hash>
+    <Hash>8976e5db459465d62bca2b74e09799fc</Hash>
 </Codenesium>*/

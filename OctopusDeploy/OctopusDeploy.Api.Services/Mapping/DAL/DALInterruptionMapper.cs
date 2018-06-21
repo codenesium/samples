@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALInterruptionMapper: DALAbstractInterruptionMapper, IDALInterruptionMapper
+        public class DALInterruptionMapper : DALAbstractInterruptionMapper, IDALInterruptionMapper
         {
                 public DALInterruptionMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ba7b6cad18db30186c16cff6d26042b8</Hash>
+    <Hash>489cfd170239ef0f046757fda13758c3</Hash>
 </Codenesium>*/

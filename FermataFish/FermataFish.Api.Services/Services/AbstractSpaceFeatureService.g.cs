@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractSpaceFeatureService: AbstractService
+        public abstract class AbstractSpaceFeatureService : AbstractService
         {
                 private ISpaceFeatureRepository spaceFeatureRepository;
 
@@ -33,15 +33,10 @@ namespace FermataFishNS.Api.Services
                         ISpaceFeatureRepository spaceFeatureRepository,
                         IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
                         IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
-                        IDALSpaceFeatureMapper dalSpaceFeatureMapper
-
-                        ,
+                        IDALSpaceFeatureMapper dalSpaceFeatureMapper,
                         IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper,
-                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper
-
-                        )
+                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper)
                         : base()
-
                 {
                         this.spaceFeatureRepository = spaceFeatureRepository;
                         this.spaceFeatureModelValidator = spaceFeatureModelValidator;
@@ -79,7 +74,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiSpaceFeatureResponseModel> response = new CreateResponse<ApiSpaceFeatureResponseModel>(await this.spaceFeatureModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSpaceFeatureMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSpaceFeatureMapper.MapModelToBO(default(int), model);
                                 var record = await this.spaceFeatureRepository.Create(this.dalSpaceFeatureMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace FermataFishNS.Api.Services
                         ApiSpaceFeatureRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.spaceFeatureModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSpaceFeatureMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.spaceFeatureModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.spaceFeatureRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1d08676fe657632f0eafaa171eeb20e</Hash>
+    <Hash>7c71e422dab64f8e496eb2afda544976</Hash>
 </Codenesium>*/

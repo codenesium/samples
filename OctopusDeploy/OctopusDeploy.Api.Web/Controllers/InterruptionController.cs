@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/interruptions")]
         [ApiVersion("1.0")]
-        public class InterruptionController: AbstractInterruptionController
+        public class InterruptionController : AbstractInterruptionController
         {
                 public InterruptionController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2e3514be363bbfdc784ca6679c1c0f88</Hash>
+    <Hash>1ab5837c256b7fed94f4a55783485d46</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public abstract class AbstractApiOrganizationResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiOrganizationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int id,
@@ -46,5 +46,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8ccd96e25b4eba0c54417e3b1bf6671c</Hash>
+    <Hash>fe53ddd886bd59b379e4ea97bda3419c</Hash>
 </Codenesium>*/

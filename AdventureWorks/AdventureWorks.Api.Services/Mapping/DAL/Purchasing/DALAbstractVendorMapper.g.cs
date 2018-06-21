@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOVendor bo)
                 {
                         Vendor efVendor = new Vendor();
-
                         efVendor.SetProperties(
                                 bo.AccountNumber,
                                 bo.ActiveFlag,
@@ -58,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>58dcad8753442c4c1c59596475e2ae7b</Hash>
+    <Hash>881b8d593ff3fa81e0804c53e63e18b9</Hash>
 </Codenesium>*/

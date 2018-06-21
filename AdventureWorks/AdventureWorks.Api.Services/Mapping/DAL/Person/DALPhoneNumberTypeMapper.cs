@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALPhoneNumberTypeMapper: DALAbstractPhoneNumberTypeMapper, IDALPhoneNumberTypeMapper
+        public class DALPhoneNumberTypeMapper : DALAbstractPhoneNumberTypeMapper, IDALPhoneNumberTypeMapper
         {
                 public DALPhoneNumberTypeMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53ccb17c56172fed3a8370bca82a56b6</Hash>
+    <Hash>8e58759161d9a3cb361f8978ebfe87b8</Hash>
 </Codenesium>*/

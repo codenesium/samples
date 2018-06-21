@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiDeploymentHistoryRequestModelValidator: AbstractValidator<ApiDeploymentHistoryRequestModel>
+        public abstract class AbstractApiDeploymentHistoryRequestModelValidator : AbstractValidator<ApiDeploymentHistoryRequestModel>
         {
                 private string existingRecordId;
 
-                IDeploymentHistoryRepository deploymentHistoryRepository;
+                private IDeploymentHistoryRepository deploymentHistoryRepository;
 
                 public AbstractApiDeploymentHistoryRequestModelValidator(IDeploymentHistoryRepository deploymentHistoryRepository)
                 {
@@ -134,5 +134,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9ccbcf36ba2335cc25e1f4c0b2f3490</Hash>
+    <Hash>31ae101b34e39f7c29c4cec83284c36d</Hash>
 </Codenesium>*/

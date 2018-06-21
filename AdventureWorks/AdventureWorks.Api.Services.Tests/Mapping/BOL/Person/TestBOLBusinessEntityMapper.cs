@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "BusinessEntity")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLBusinessEntityActionMapper
+        public class TestBOLBusinessEntityMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLBusinessEntityMapper();
-
                         ApiBusinessEntityRequestModel model = new ApiBusinessEntityRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         BOBusinessEntity response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLBusinessEntityMapper();
-
                         BOBusinessEntity bo = new BOBusinessEntity();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         ApiBusinessEntityResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLBusinessEntityMapper();
-
                         BOBusinessEntity bo = new BOBusinessEntity();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         List<ApiBusinessEntityResponseModel> response = mapper.MapBOToModel(new List<BOBusinessEntity>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7311f603991b556de327fa54a10546db</Hash>
+    <Hash>eee9404fd71c37029c8413056b1b92e1</Hash>
 </Codenesium>*/

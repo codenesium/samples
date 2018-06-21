@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class CommunityActionTemplateRepository: AbstractCommunityActionTemplateRepository, ICommunityActionTemplateRepository
+        public class CommunityActionTemplateRepository : AbstractCommunityActionTemplateRepository, ICommunityActionTemplateRepository
         {
                 public CommunityActionTemplateRepository(
                         ILogger<CommunityActionTemplateRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8c90b698ccf6ebe5f80fb4901e31929d</Hash>
+    <Hash>c62df237ef32a2890a7274ba3beef8ec</Hash>
 </Codenesium>*/

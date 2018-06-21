@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLWorkerTaskLeaseMapper: BOLAbstractWorkerTaskLeaseMapper, IBOLWorkerTaskLeaseMapper
+        public class BOLWorkerTaskLeaseMapper : BOLAbstractWorkerTaskLeaseMapper, IBOLWorkerTaskLeaseMapper
         {
                 public BOLWorkerTaskLeaseMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66e9359a24f79cf7eb119d09485414c1</Hash>
+    <Hash>3c2c707189d9348348ca4a6cd149c1a0</Hash>
 </Codenesium>*/

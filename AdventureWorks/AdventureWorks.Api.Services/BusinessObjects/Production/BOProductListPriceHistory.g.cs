@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOProductListPriceHistory: AbstractBOProductListPriceHistory
+        public partial class BOProductListPriceHistory : AbstractBOProductListPriceHistory
         {
-                public BOProductListPriceHistory() : base()
+                public BOProductListPriceHistory()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>242f2d929e7a10f7dfdc139c000bdfa3</Hash>
+    <Hash>7d78a6b9ad73aed565556b6d50b2315a</Hash>
 </Codenesium>*/

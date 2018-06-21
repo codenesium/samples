@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TransactionHistoryArchive")]
         [Trait("Area", "DALMapper")]
-        public class TestDALTransactionHistoryArchiveActionMapper
+        public class TestDALTransactionHistoryArchiveMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALTransactionHistoryArchiveMapper();
-
                         var bo = new BOTransactionHistoryArchive();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         TransactionHistoryArchive response = mapper.MapBOToEF(bo);
@@ -38,12 +36,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALTransactionHistoryArchiveMapper();
-
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 
-                        BOTransactionHistoryArchive  response = mapper.MapEFToBO(entity);
+                        BOTransactionHistoryArchive response = mapper.MapEFToBO(entity);
 
                         response.ActualCost.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -60,9 +56,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALTransactionHistoryArchiveMapper();
-
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 
                         List<BOTransactionHistoryArchive> response = mapper.MapEFToBO(new List<TransactionHistoryArchive>() { entity });
@@ -73,5 +67,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fba83c1b15e2dec67f41a5e7874de2be</Hash>
+    <Hash>04b369875870c4c6d23fb567ca2b6d4f</Hash>
 </Codenesium>*/

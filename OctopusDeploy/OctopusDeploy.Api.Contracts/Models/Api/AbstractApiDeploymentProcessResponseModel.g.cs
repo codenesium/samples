@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public abstract class AbstractApiDeploymentProcessResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiDeploymentProcessResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string id,
@@ -98,5 +98,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e00e6ebe6a40f709c3610a70ed82603f</Hash>
+    <Hash>8fa0ab934f1cb1f35dba839c447411b9</Hash>
 </Codenesium>*/

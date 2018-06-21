@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiFileRequestModel: AbstractApiRequestModel
+        public partial class ApiFileRequestModel : AbstractApiRequestModel
         {
-                public ApiFileRequestModel() : base()
+                public ApiFileRequestModel()
+                        : base()
                 {
                 }
 
@@ -215,5 +216,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>41d33a338b9f320dee30ef4be697d6b7</Hash>
+    <Hash>31bd908159fbd88f2909109b094f9d46</Hash>
 </Codenesium>*/

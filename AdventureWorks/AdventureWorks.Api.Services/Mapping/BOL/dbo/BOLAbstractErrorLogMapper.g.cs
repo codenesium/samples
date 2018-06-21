@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOErrorLog boErrorLog = new BOErrorLog();
-
                         boErrorLog.SetProperties(
                                 errorLogID,
                                 model.ErrorLine,
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f91c02327b23d869b783ddef65aef67f</Hash>
+    <Hash>f3610cab5e6a93a2c6841af4d8f64b7e</Hash>
 </Codenesium>*/

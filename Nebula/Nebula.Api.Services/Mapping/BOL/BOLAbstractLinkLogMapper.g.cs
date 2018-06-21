@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOLinkLog boLinkLog = new BOLinkLog();
-
                         boLinkLog.SetProperties(
                                 id,
                                 model.DateEntered,
@@ -48,5 +47,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f34ea589bec8fa5d2c52e133c7632341</Hash>
+    <Hash>e627e6972a53df1bcaca8696b214855b</Hash>
 </Codenesium>*/

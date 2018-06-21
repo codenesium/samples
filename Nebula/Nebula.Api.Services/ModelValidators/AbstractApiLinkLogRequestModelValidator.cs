@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiLinkLogRequestModelValidator: AbstractValidator<ApiLinkLogRequestModel>
+        public abstract class AbstractApiLinkLogRequestModelValidator : AbstractValidator<ApiLinkLogRequestModel>
         {
                 private int existingRecordId;
 
-                ILinkLogRepository linkLogRepository;
+                private ILinkLogRepository linkLogRepository;
 
                 public AbstractApiLinkLogRequestModelValidator(ILinkLogRepository linkLogRepository)
                 {
@@ -32,7 +32,7 @@ namespace NebulaNS.Api.Services
 
                 public virtual void LinkIdRules()
                 {
-                        this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLink).When(x => x ?.LinkId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLink).When(x => x?.LinkId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void LogRules()
@@ -51,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>97c73827aff0631ceb8c133b3b43955d</Hash>
+    <Hash>099ab7870215ac590d313d2b6ddc4b0b</Hash>
 </Codenesium>*/

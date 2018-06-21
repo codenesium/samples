@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractStoreService: AbstractService
+        public abstract class AbstractStoreService : AbstractService
         {
                 private IStoreRepository storeRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IStoreRepository storeRepository,
                         IApiStoreRequestModelValidator storeModelValidator,
                         IBOLStoreMapper bolStoreMapper,
-                        IDALStoreMapper dalStoreMapper
-
-                        ,
+                        IDALStoreMapper dalStoreMapper,
                         IBOLCustomerMapper bolCustomerMapper,
-                        IDALCustomerMapper dalCustomerMapper
-
-                        )
+                        IDALCustomerMapper dalCustomerMapper)
                         : base()
-
                 {
                         this.storeRepository = storeRepository;
                         this.storeModelValidator = storeModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiStoreResponseModel> response = new CreateResponse<ApiStoreResponseModel>(await this.storeModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolStoreMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolStoreMapper.MapModelToBO(default(int), model);
                                 var record = await this.storeRepository.Create(this.dalStoreMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiStoreRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.storeModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolStoreMapper.MapModelToBO(businessEntityID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.storeModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.storeRepository.Delete(businessEntityID);
@@ -122,6 +115,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolStoreMapper.MapBOToModel(this.dalStoreMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiStoreResponseModel>> ByDemographics(string demographics)
                 {
                         List<Store> records = await this.storeRepository.ByDemographics(demographics);
@@ -139,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd608d6d8233f3e512ff9b51c1ea9403</Hash>
+    <Hash>8f4b3ba2ef17055bd878779cee35bda6</Hash>
 </Codenesium>*/

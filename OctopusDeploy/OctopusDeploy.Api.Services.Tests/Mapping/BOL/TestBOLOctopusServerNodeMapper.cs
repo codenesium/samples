@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "OctopusServerNode")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLOctopusServerNodeActionMapper
+        public class TestBOLOctopusServerNodeMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLOctopusServerNodeMapper();
-
                         ApiOctopusServerNodeRequestModel model = new ApiOctopusServerNodeRequestModel();
-
                         model.SetProperties(true, "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, "A", "A");
                         BOOctopusServerNode response = mapper.MapModelToBO("A", model);
 
@@ -35,9 +33,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLOctopusServerNodeMapper();
-
                         BOOctopusServerNode bo = new BOOctopusServerNode();
-
                         bo.SetProperties("A", true, "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, "A", "A");
                         ApiOctopusServerNodeResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLOctopusServerNodeMapper();
-
                         BOOctopusServerNode bo = new BOOctopusServerNode();
-
                         bo.SetProperties("A", true, "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), 1, "A", "A");
                         List<ApiOctopusServerNodeResponseModel> response = mapper.MapBOToModel(new List<BOOctopusServerNode>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8153e1d6f297fe4b2dd799b41f303c91</Hash>
+    <Hash>340e1cd57ea63da5521a3db6246731ae</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public abstract class AbstractApiRateResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiRateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal amountPerMinute,
@@ -79,5 +79,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0c4cd7b8b3f86d0f7740d834566eea2a</Hash>
+    <Hash>65c2b9d20d85a547403544348f1bd6b9</Hash>
 </Codenesium>*/

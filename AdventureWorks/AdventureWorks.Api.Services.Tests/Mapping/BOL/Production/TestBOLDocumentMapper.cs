@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Document")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDocumentActionMapper
+        public class TestBOLDocumentMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDocumentMapper();
-
                         ApiDocumentRequestModel model = new ApiDocumentRequestModel();
-
                         model.SetProperties(1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
                         BODocument response = mapper.MapModelToBO(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), model);
 
@@ -41,9 +39,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDocumentMapper();
-
                         BODocument bo = new BODocument();
-
                         bo.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
                         ApiDocumentResponseModel response = mapper.MapBOToModel(bo);
 
@@ -66,9 +62,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDocumentMapper();
-
                         BODocument bo = new BODocument();
-
                         bo.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
                         List<ApiDocumentResponseModel> response = mapper.MapBOToModel(new List<BODocument>() { { bo } });
 
@@ -78,5 +72,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>909ea0e58126af6930538d496d2e0d49</Hash>
+    <Hash>1a15b67527b65c1b7629bf0e8c05ba39</Hash>
 </Codenesium>*/

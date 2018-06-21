@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class MachineService: AbstractMachineService, IMachineService
+        public class MachineService : AbstractMachineService, IMachineService
         {
                 public MachineService(
                         ILogger<IMachineRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiMachineRequestModelValidator machineModelValidator,
                         IBOLMachineMapper bolmachineMapper,
                         IDALMachineMapper dalmachineMapper
-
                         )
                         : base(logger,
                                machineRepository,
                                machineModelValidator,
                                bolmachineMapper,
-                               dalmachineMapper
-                               )
+                               dalmachineMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>69745c9f025c52b892ed7c6873e12885</Hash>
+    <Hash>bdff9c826770e228d0377bc4d7739646</Hash>
 </Codenesium>*/

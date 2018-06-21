@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractPurchaseOrderHeaderService: AbstractService
+        public abstract class AbstractPurchaseOrderHeaderService : AbstractService
         {
                 private IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository,
                         IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator,
                         IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
-                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
-
-                        ,
+                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper,
                         IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
-                        IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper
-
-                        )
+                        IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper)
                         : base()
-
                 {
                         this.purchaseOrderHeaderRepository = purchaseOrderHeaderRepository;
                         this.purchaseOrderHeaderModelValidator = purchaseOrderHeaderModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiPurchaseOrderHeaderResponseModel> response = new CreateResponse<ApiPurchaseOrderHeaderResponseModel>(await this.purchaseOrderHeaderModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPurchaseOrderHeaderMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPurchaseOrderHeaderMapper.MapModelToBO(default(int), model);
                                 var record = await this.purchaseOrderHeaderRepository.Create(this.dalPurchaseOrderHeaderMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiPurchaseOrderHeaderRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.purchaseOrderHeaderModelValidator.ValidateUpdateAsync(purchaseOrderID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPurchaseOrderHeaderMapper.MapModelToBO(purchaseOrderID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int purchaseOrderID)
                 {
                         ActionResponse response = new ActionResponse(await this.purchaseOrderHeaderModelValidator.ValidateDeleteAsync(purchaseOrderID));
-
                         if (response.Success)
                         {
                                 await this.purchaseOrderHeaderRepository.Delete(purchaseOrderID);
@@ -122,6 +115,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID)
                 {
                         List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.ByVendorID(vendorID);
@@ -139,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>21721fd7ef5189dc6b8b1c6a8d45262a</Hash>
+    <Hash>f54992a4087bc5fcc9bed0031891b19b</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DatabaseLog")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDatabaseLogActionMapper
+        public class TestDALDatabaseLogMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDatabaseLogMapper();
-
                         var bo = new BODatabaseLog();
-
                         bo.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
                         DatabaseLog response = mapper.MapBOToEF(bo);
@@ -37,12 +35,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDatabaseLogMapper();
-
                         DatabaseLog entity = new DatabaseLog();
-
                         entity.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
-                        BODatabaseLog  response = mapper.MapEFToBO(entity);
+                        BODatabaseLog response = mapper.MapEFToBO(entity);
 
                         response.DatabaseLogID.Should().Be(1);
                         response.DatabaseUser.Should().Be("A");
@@ -58,9 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDatabaseLogMapper();
-
                         DatabaseLog entity = new DatabaseLog();
-
                         entity.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
                         List<BODatabaseLog> response = mapper.MapEFToBO(new List<DatabaseLog>() { entity });
@@ -71,5 +65,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1a4334bb5a45a43380048bd8955d66f6</Hash>
+    <Hash>7e917b7da903bb160e1fdcfcb337fb95</Hash>
 </Codenesium>*/

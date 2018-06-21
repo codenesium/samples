@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLTransactionHistoryMapper: BOLAbstractTransactionHistoryMapper, IBOLTransactionHistoryMapper
+        public class BOLTransactionHistoryMapper : BOLAbstractTransactionHistoryMapper, IBOLTransactionHistoryMapper
         {
                 public BOLTransactionHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3dc96d987888c13bfa45f8788b572950</Hash>
+    <Hash>4012555a3c62d738aa2e6a5615c43082</Hash>
 </Codenesium>*/

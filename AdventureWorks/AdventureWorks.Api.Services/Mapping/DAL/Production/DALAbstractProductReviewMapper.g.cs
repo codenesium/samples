@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductReview bo)
                 {
                         ProductReview efProductReview = new ProductReview();
-
                         efProductReview.SetProperties(
                                 bo.Comments,
                                 bo.EmailAddress,
@@ -58,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29606a0c2a2c817cd78e40cdc81e2ebe</Hash>
+    <Hash>def5c2e2a0bb9052b5c92079e7d6b2b2</Hash>
 </Codenesium>*/

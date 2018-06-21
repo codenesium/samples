@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOPipelineStepNote boPipelineStepNote = new BOPipelineStepNote();
-
                         boPipelineStepNote.SetProperties(
                                 id,
                                 model.EmployeeId,
@@ -48,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9bccfe550dc6a0e3058add005618f486</Hash>
+    <Hash>cbf55b517069076d0031bafd8aaa1278</Hash>
 </Codenesium>*/

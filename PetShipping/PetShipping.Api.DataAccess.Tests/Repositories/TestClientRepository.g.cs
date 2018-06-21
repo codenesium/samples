@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new ClientRepository(loggerMoc.Object, context);
 
                         Client entity = new Client();
-
                         context.Set<Client>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new ClientRepository(loggerMoc.Object, context);
 
                         Client entity = new Client();
-
                         context.Set<Client>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new ClientRepository(loggerMoc.Object, context);
 
                         var entity = new Client();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Client>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<ClientRepository>> loggerMoc = ClientRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClientRepositoryMoc.GetContext();
                         var repository = new ClientRepository(loggerMoc.Object, context);
-
                         Client entity = new Client();
-
                         context.Set<Client>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<ClientRepository>> loggerMoc = ClientRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClientRepositoryMoc.GetContext();
                         var repository = new ClientRepository(loggerMoc.Object, context);
-
                         Client entity = new Client();
-
                         context.Set<Client>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<ClientRepository>> loggerMoc = ClientRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ClientRepositoryMoc.GetContext();
                         var repository = new ClientRepository(loggerMoc.Object, context);
-
                         Client entity = new Client();
-
                         context.Set<Client>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Client modifiedRecord = await context.Set<Client>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>09f8880f7832d15dca230e23d74c36fd</Hash>
+    <Hash>6f32f995317cb30c84a1c70a8cfbf3cb</Hash>
 </Codenesium>*/

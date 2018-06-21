@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSalesOrderHeaderSalesReasonService: AbstractService
+        public abstract class AbstractSalesOrderHeaderSalesReasonService : AbstractService
         {
                 private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository,
                         IApiSalesOrderHeaderSalesReasonRequestModelValidator salesOrderHeaderSalesReasonModelValidator,
                         IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
-                        IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper
-
-                        )
+                        IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper)
                         : base()
-
                 {
                         this.salesOrderHeaderSalesReasonRepository = salesOrderHeaderSalesReasonRepository;
                         this.salesOrderHeaderSalesReasonModelValidator = salesOrderHeaderSalesReasonModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel> response = new CreateResponse<ApiSalesOrderHeaderSalesReasonResponseModel>(await this.salesOrderHeaderSalesReasonModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSalesOrderHeaderSalesReasonMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSalesOrderHeaderSalesReasonMapper.MapModelToBO(default(int), model);
                                 var record = await this.salesOrderHeaderSalesReasonRepository.Create(this.dalSalesOrderHeaderSalesReasonMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiSalesOrderHeaderSalesReasonRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.salesOrderHeaderSalesReasonModelValidator.ValidateUpdateAsync(salesOrderID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSalesOrderHeaderSalesReasonMapper.MapModelToBO(salesOrderID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int salesOrderID)
                 {
                         ActionResponse response = new ActionResponse(await this.salesOrderHeaderSalesReasonModelValidator.ValidateDeleteAsync(salesOrderID));
-
                         if (response.Success)
                         {
                                 await this.salesOrderHeaderSalesReasonRepository.Delete(salesOrderID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f67398bee9485f5e2cb9f0120bbfe00</Hash>
+    <Hash>9a14df3cfad0afc77608d9a92b491041</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new SpaceRepository(loggerMoc.Object, context);
 
                         Space entity = new Space();
-
                         context.Set<Space>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new SpaceRepository(loggerMoc.Object, context);
 
                         Space entity = new Space();
-
                         context.Set<Space>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new SpaceRepository(loggerMoc.Object, context);
 
                         var entity = new Space();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Space>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
                         var repository = new SpaceRepository(loggerMoc.Object, context);
-
                         Space entity = new Space();
-
                         context.Set<Space>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
                         var repository = new SpaceRepository(loggerMoc.Object, context);
-
                         Space entity = new Space();
-
                         context.Set<Space>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<SpaceRepository>> loggerMoc = SpaceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SpaceRepositoryMoc.GetContext();
                         var repository = new SpaceRepository(loggerMoc.Object, context);
-
                         Space entity = new Space();
-
                         context.Set<Space>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Space modifiedRecord = await context.Set<Space>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e9798db993dff94a8c6537a6d08e57c4</Hash>
+    <Hash>56885b4e0f2639fecb093887e8cc9c9d</Hash>
 </Codenesium>*/

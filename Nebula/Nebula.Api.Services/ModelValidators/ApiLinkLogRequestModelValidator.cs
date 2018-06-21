@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public class ApiLinkLogRequestModelValidator: AbstractApiLinkLogRequestModelValidator, IApiLinkLogRequestModelValidator
+        public class ApiLinkLogRequestModelValidator : AbstractApiLinkLogRequestModelValidator, IApiLinkLogRequestModelValidator
         {
                 public ApiLinkLogRequestModelValidator(ILinkLogRepository linkLogRepository)
                         : base(linkLogRepository)
@@ -31,11 +31,11 @@ namespace NebulaNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2b62ea17b46b0aeb63c424957e6e8256</Hash>
+    <Hash>059ddfb71c8a659f1c23e14b90c3367c</Hash>
 </Codenesium>*/

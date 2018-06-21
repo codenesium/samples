@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/currencyRates")]
         [ApiVersion("1.0")]
-        public class CurrencyRateController: AbstractCurrencyRateController
+        public class CurrencyRateController : AbstractCurrencyRateController
         {
                 public CurrencyRateController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>80e68c160b0d90a1d340718e083afcb0</Hash>
+    <Hash>bea45bcbb30af3dd1ebde7937832e68c</Hash>
 </Codenesium>*/

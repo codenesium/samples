@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOInvitation boInvitation = new BOInvitation();
-
                         boInvitation.SetProperties(
                                 id,
                                 model.InvitationCode,
@@ -47,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4a9289d2915f3d0213ee6ca53c0f4c0</Hash>
+    <Hash>b1dd72ae33690bb58303829470c0ea7c</Hash>
 </Codenesium>*/

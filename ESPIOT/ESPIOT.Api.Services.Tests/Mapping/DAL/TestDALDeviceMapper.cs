@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using ESPIOTNS.Api.DataAccess;
 using ESPIOTNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Device")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDeviceActionMapper
+        public class TestDALDeviceMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDeviceMapper();
-
                         var bo = new BODevice();
-
                         bo.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         Device response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace ESPIOTNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDeviceMapper();
-
                         Device entity = new Device();
-
                         entity.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
-                        BODevice  response = mapper.MapEFToBO(entity);
+                        BODevice response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -48,9 +44,7 @@ namespace ESPIOTNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDeviceMapper();
-
                         Device entity = new Device();
-
                         entity.SetProperties(1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         List<BODevice> response = mapper.MapEFToBO(new List<Device>() { entity });
@@ -61,5 +55,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c36098d8b97b74063248f4f4419a3012</Hash>
+    <Hash>200da4b3ca3e1dc025f3a5bcedcb1d4e</Hash>
 </Codenesium>*/

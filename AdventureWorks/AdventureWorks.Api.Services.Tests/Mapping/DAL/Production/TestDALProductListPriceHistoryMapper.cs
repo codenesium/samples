@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductListPriceHistory")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProductListPriceHistoryActionMapper
+        public class TestDALProductListPriceHistoryMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProductListPriceHistoryMapper();
-
                         var bo = new BOProductListPriceHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         ProductListPriceHistory response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProductListPriceHistoryMapper();
-
                         ProductListPriceHistory entity = new ProductListPriceHistory();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOProductListPriceHistory  response = mapper.MapEFToBO(entity);
+                        BOProductListPriceHistory response = mapper.MapEFToBO(entity);
 
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ListPrice.Should().Be(1);
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProductListPriceHistoryMapper();
-
                         ProductListPriceHistory entity = new ProductListPriceHistory();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOProductListPriceHistory> response = mapper.MapEFToBO(new List<ProductListPriceHistory>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ab5b325f64cdb3a48afcaea198bd32ac</Hash>
+    <Hash>dcf9bfd779d612d497b147461915f5f5</Hash>
 </Codenesium>*/

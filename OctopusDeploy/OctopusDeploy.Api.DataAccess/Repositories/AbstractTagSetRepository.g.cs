@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractTagSetRepository: AbstractRepository
+        public abstract class AbstractTagSetRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,6 +82,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<TagSet>> GetDataVersion(byte[] dataVersion)
                 {
                         var records = await this.Where(x => x.DataVersion == dataVersion);
@@ -121,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3afcab813d1672edd8bc4962688e7d8</Hash>
+    <Hash>648f2230f715fe9c81e8034f77d33a96</Hash>
 </Codenesium>*/

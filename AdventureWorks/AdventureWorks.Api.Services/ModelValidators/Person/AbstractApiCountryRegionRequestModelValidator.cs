@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCountryRegionRequestModelValidator: AbstractValidator<ApiCountryRegionRequestModel>
+        public abstract class AbstractApiCountryRegionRequestModelValidator : AbstractValidator<ApiCountryRegionRequestModel>
         {
                 private string existingRecordId;
 
-                ICountryRegionRepository countryRegionRepository;
+                private ICountryRegionRepository countryRegionRepository;
 
                 public AbstractApiCountryRegionRequestModelValidator(ICountryRegionRepository countryRegionRepository)
                 {
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCountryRegionRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCountryRegionRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         CountryRegion record = await this.countryRegionRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.CountryRegionCode == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.CountryRegionCode == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab631f9187cdcba9cd27dc86329fa515</Hash>
+    <Hash>c4eaa67d665c5815e92ab5219fea607a</Hash>
 </Codenesium>*/

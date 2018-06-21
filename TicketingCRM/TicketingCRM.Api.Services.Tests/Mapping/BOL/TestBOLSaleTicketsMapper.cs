@@ -1,25 +1,23 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SaleTickets")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSaleTicketsActionMapper
+        public class TestBOLSaleTicketsMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSaleTicketsMapper();
-
                         ApiSaleTicketsRequestModel model = new ApiSaleTicketsRequestModel();
-
                         model.SetProperties(1, 1);
                         BOSaleTickets response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSaleTicketsMapper();
-
                         BOSaleTickets bo = new BOSaleTickets();
-
                         bo.SetProperties(1, 1, 1);
                         ApiSaleTicketsResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSaleTicketsMapper();
-
                         BOSaleTickets bo = new BOSaleTickets();
-
                         bo.SetProperties(1, 1, 1);
                         List<ApiSaleTicketsResponseModel> response = mapper.MapBOToModel(new List<BOSaleTickets>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4e6da58fb0704593460247fe9d352b87</Hash>
+    <Hash>ebbd9b20d76a16023e2db43c6b432cd7</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiProductPhotoResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiProductPhotoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         byte[] largePhoto,
@@ -98,5 +98,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e033d87f1502122faaadbb7383d0d5bb</Hash>
+    <Hash>8a34c97b5ccbf53f211f4cd26cab6625</Hash>
 </Codenesium>*/

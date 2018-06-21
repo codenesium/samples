@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractMachineRefTeamRepository: AbstractRepository
+        public abstract class AbstractMachineRefTeamRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Machine> GetMachine(int machineId)
+                {
+                        return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == machineId);
+                }
+
+                public async virtual Task<Team> GetTeam(int teamId)
+                {
+                        return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
+                }
+
                 protected async Task<List<MachineRefTeam>> Where(
                         Expression<Func<MachineRefTeam, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Machine> GetMachine(int machineId)
-                {
-                        return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == machineId);
-                }
-                public async virtual Task<Team> GetTeam(int teamId)
-                {
-                        return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9f093698952c7e268561521d42aa5270</Hash>
+    <Hash>f88589a23deb80fad448ed142901c266</Hash>
 </Codenesium>*/

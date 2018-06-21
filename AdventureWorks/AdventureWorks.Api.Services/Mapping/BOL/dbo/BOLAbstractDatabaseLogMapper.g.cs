@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BODatabaseLog boDatabaseLog = new BODatabaseLog();
-
                         boDatabaseLog.SetProperties(
                                 databaseLogID,
                                 model.DatabaseUser,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4b7668a0cfe6cb4d66d3e8fc3a23a68b</Hash>
+    <Hash>e0832868a6800be930a9692858581941</Hash>
 </Codenesium>*/

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLProductListPriceHistoryMapper: BOLAbstractProductListPriceHistoryMapper, IBOLProductListPriceHistoryMapper
+        public class BOLProductListPriceHistoryMapper : BOLAbstractProductListPriceHistoryMapper, IBOLProductListPriceHistoryMapper
         {
                 public BOLProductListPriceHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ec656faf2492f9e3d55569039c378dd</Hash>
+    <Hash>fa266d95cbbd1d6f021e45729059fc4f</Hash>
 </Codenesium>*/

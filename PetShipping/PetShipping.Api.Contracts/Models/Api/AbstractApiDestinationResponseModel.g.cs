@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public abstract class AbstractApiDestinationResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiDestinationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int countryId,
@@ -76,5 +76,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ab2fea901b16c1969e7b3d211969b525</Hash>
+    <Hash>84e9da93812c4307c7fbea561dd0c66e</Hash>
 </Codenesium>*/

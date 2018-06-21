@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -46,7 +46,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMachineRepository>();
                         var record = new Machine();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -58,7 +57,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        ApiMachineResponseModel response = await service.Get(default (int));
+                        ApiMachineResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -79,7 +78,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        ApiMachineResponseModel response = await service.Get(default (int));
+                        ApiMachineResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -90,7 +89,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMachineRepository>();
                         var model = new ApiMachineRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Machine>())).Returns(Task.FromResult(new Machine()));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -114,7 +112,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMachineRepository>();
                         var model = new ApiMachineRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Machine>())).Returns(Task.FromResult(new Machine()));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -126,7 +123,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.MachineModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>()));
@@ -138,7 +135,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMachineRepository>();
                         var model = new ApiMachineRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -150,7 +146,7 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -163,7 +159,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IMachineRepository>();
                         var records = new List<Link>();
                         records.Add(new Link());
-                        mock.RepositoryMock.Setup(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
@@ -174,17 +170,17 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        List<ApiLinkResponseModel> response = await service.Links(default (int));
+                        List<ApiLinkResponseModel> response = await service.Links(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Links_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IMachineRepository>();
-                        mock.RepositoryMock.Setup(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
+                        mock.RepositoryMock.Setup(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
@@ -195,10 +191,10 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        List<ApiLinkResponseModel> response = await service.Links(default (int));
+                        List<ApiLinkResponseModel> response = await service.Links(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -207,7 +203,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IMachineRepository>();
                         var records = new List<MachineRefTeam>();
                         records.Add(new MachineRefTeam());
-                        mock.RepositoryMock.Setup(x => x.MachineRefTeams(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
@@ -218,17 +214,17 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        List<ApiMachineRefTeamResponseModel> response = await service.MachineRefTeams(default (int));
+                        List<ApiMachineRefTeamResponseModel> response = await service.MachineRefTeams(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.MachineRefTeams(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void MachineRefTeams_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IMachineRepository>();
-                        mock.RepositoryMock.Setup(x => x.MachineRefTeams(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<MachineRefTeam>>(new List<MachineRefTeam>()));
+                        mock.RepositoryMock.Setup(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<MachineRefTeam>>(new List<MachineRefTeam>()));
                         var service = new MachineService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
@@ -239,14 +235,14 @@ namespace NebulaNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
                                                          mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
 
-                        List<ApiMachineRefTeamResponseModel> response = await service.MachineRefTeams(default (int));
+                        List<ApiMachineRefTeamResponseModel> response = await service.MachineRefTeams(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.MachineRefTeams(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>910c09fe44bfe8222a0f7bd58dc37563</Hash>
+    <Hash>4baca6761fbcd534308901d6ef55f832</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOWorkOrderRouting boWorkOrderRouting = new BOWorkOrderRouting();
-
                         boWorkOrderRouting.SetProperties(
                                 workOrderID,
                                 model.ActualCost,
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95f524a425d5c85949e3fbc1736f23bf</Hash>
+    <Hash>db3d62ba11d33b294c8d38b0a46531a6</Hash>
 </Codenesium>*/

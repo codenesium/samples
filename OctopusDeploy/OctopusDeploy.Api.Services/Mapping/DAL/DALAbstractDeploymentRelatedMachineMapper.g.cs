@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BODeploymentRelatedMachine bo)
                 {
                         DeploymentRelatedMachine efDeploymentRelatedMachine = new DeploymentRelatedMachine();
-
                         efDeploymentRelatedMachine.SetProperties(
                                 bo.DeploymentId,
                                 bo.Id,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>081b4d6ef82d250525499beef3f16623</Hash>
+    <Hash>be9d19d8629c946927b354f4323058b3</Hash>
 </Codenesium>*/

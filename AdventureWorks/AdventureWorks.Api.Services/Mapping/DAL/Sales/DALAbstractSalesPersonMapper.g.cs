@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSalesPerson bo)
                 {
                         SalesPerson efSalesPerson = new SalesPerson();
-
                         efSalesPerson.SetProperties(
                                 bo.Bonus,
                                 bo.BusinessEntityID,
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee3a82a97421c9e226f708c14fcf4f6b</Hash>
+    <Hash>18f96fed6075265a1d02b0bb7a990d91</Hash>
 </Codenesium>*/

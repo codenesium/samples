@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLChainMapper: BOLAbstractChainMapper, IBOLChainMapper
+        public class BOLChainMapper : BOLAbstractChainMapper, IBOLChainMapper
         {
                 public BOLChainMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>60a02a551b36b65b53f2ddafa06911f8</Hash>
+    <Hash>714ebe7ca3b5e7a397c7b831816afdcb</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractPipelineStatusService: AbstractService
+        public abstract class AbstractPipelineStatusService : AbstractService
         {
                 private IPipelineStatusRepository pipelineStatusRepository;
 
@@ -33,15 +33,10 @@ namespace PetShippingNS.Api.Services
                         IPipelineStatusRepository pipelineStatusRepository,
                         IApiPipelineStatusRequestModelValidator pipelineStatusModelValidator,
                         IBOLPipelineStatusMapper bolPipelineStatusMapper,
-                        IDALPipelineStatusMapper dalPipelineStatusMapper
-
-                        ,
+                        IDALPipelineStatusMapper dalPipelineStatusMapper,
                         IBOLPipelineMapper bolPipelineMapper,
-                        IDALPipelineMapper dalPipelineMapper
-
-                        )
+                        IDALPipelineMapper dalPipelineMapper)
                         : base()
-
                 {
                         this.pipelineStatusRepository = pipelineStatusRepository;
                         this.pipelineStatusModelValidator = pipelineStatusModelValidator;
@@ -79,7 +74,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiPipelineStatusResponseModel> response = new CreateResponse<ApiPipelineStatusResponseModel>(await this.pipelineStatusModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPipelineStatusMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPipelineStatusMapper.MapModelToBO(default(int), model);
                                 var record = await this.pipelineStatusRepository.Create(this.dalPipelineStatusMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPipelineStatusMapper.MapBOToModel(this.dalPipelineStatusMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace PetShippingNS.Api.Services
                         ApiPipelineStatusRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.pipelineStatusModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPipelineStatusMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.pipelineStatusModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.pipelineStatusRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41c4538132f6f2f09916480782e570f0</Hash>
+    <Hash>f73ac76fc76d843609c52190861d7f4b</Hash>
 </Codenesium>*/

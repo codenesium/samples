@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOExtensionConfiguration bo)
                 {
                         ExtensionConfiguration efExtensionConfiguration = new ExtensionConfiguration();
-
                         efExtensionConfiguration.SetProperties(
                                 bo.ExtensionAuthor,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ca932743a0a5d9c7c507ec0091171f8f</Hash>
+    <Hash>eb3e0aefc5b23e5a14df63da26add1a2</Hash>
 </Codenesium>*/

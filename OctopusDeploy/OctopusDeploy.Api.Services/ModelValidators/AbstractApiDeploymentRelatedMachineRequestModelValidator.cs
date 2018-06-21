@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiDeploymentRelatedMachineRequestModelValidator: AbstractValidator<ApiDeploymentRelatedMachineRequestModel>
+        public abstract class AbstractApiDeploymentRelatedMachineRequestModelValidator : AbstractValidator<ApiDeploymentRelatedMachineRequestModel>
         {
                 private int existingRecordId;
 
-                IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository;
+                private IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository;
 
                 public AbstractApiDeploymentRelatedMachineRequestModelValidator(IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository)
                 {
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void DeploymentIdRules()
                 {
                         this.RuleFor(x => x.DeploymentId).NotNull();
-                        this.RuleFor(x => x.DeploymentId).MustAsync(this.BeValidDeployment).When(x => x ?.DeploymentId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.DeploymentId).MustAsync(this.BeValidDeployment).When(x => x?.DeploymentId != null).WithMessage("Invalid reference");
                         this.RuleFor(x => x.DeploymentId).Length(0, 50);
                 }
 
@@ -49,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b48a98cf3ba282d962afe7333febb43d</Hash>
+    <Hash>98426d273450ac1a808c8e747a36610c</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FermataFishNS.Api.DataAccess
 {
         [Table("Teacher", Schema="dbo")]
-        public partial class Teacher: AbstractEntity
+        public partial class Teacher : AbstractEntity
         {
                 public Teacher()
                 {
@@ -30,26 +30,26 @@ namespace FermataFishNS.Api.DataAccess
                         this.StudioId = studioId;
                 }
 
-                [Column("birthday", TypeName="date")]
+                [Column("birthday")]
                 public DateTime Birthday { get; private set; }
 
-                [Column("email", TypeName="varchar(128)")]
+                [Column("email")]
                 public string Email { get; private set; }
 
-                [Column("firstName", TypeName="varchar(128)")]
+                [Column("firstName")]
                 public string FirstName { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("lastName", TypeName="varchar(128)")]
+                [Column("lastName")]
                 public string LastName { get; private set; }
 
-                [Column("phone", TypeName="varchar(128)")]
+                [Column("phone")]
                 public string Phone { get; private set; }
 
-                [Column("studioId", TypeName="int")]
+                [Column("studioId")]
                 public int StudioId { get; private set; }
 
                 [ForeignKey("StudioId")]
@@ -58,5 +58,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d06b7d18cf694119fea2548e1852493</Hash>
+    <Hash>d2084e55741ff9477f9dfb0f33baeb92</Hash>
 </Codenesium>*/

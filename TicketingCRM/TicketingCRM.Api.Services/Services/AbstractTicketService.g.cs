@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractTicketService: AbstractService
+        public abstract class AbstractTicketService : AbstractService
         {
                 private ITicketRepository ticketRepository;
 
@@ -33,15 +33,10 @@ namespace TicketingCRMNS.Api.Services
                         ITicketRepository ticketRepository,
                         IApiTicketRequestModelValidator ticketModelValidator,
                         IBOLTicketMapper bolTicketMapper,
-                        IDALTicketMapper dalTicketMapper
-
-                        ,
+                        IDALTicketMapper dalTicketMapper,
                         IBOLSaleTicketsMapper bolSaleTicketsMapper,
-                        IDALSaleTicketsMapper dalSaleTicketsMapper
-
-                        )
+                        IDALSaleTicketsMapper dalSaleTicketsMapper)
                         : base()
-
                 {
                         this.ticketRepository = ticketRepository;
                         this.ticketModelValidator = ticketModelValidator;
@@ -79,7 +74,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiTicketResponseModel> response = new CreateResponse<ApiTicketResponseModel>(await this.ticketModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTicketMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTicketMapper.MapModelToBO(default(int), model);
                                 var record = await this.ticketRepository.Create(this.dalTicketMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTicketMapper.MapBOToModel(this.dalTicketMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiTicketRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.ticketModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTicketMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.ticketModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.ticketRepository.Delete(id);
@@ -133,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>709b302e5f055acbe6b2e73bfbfe77d8</Hash>
+    <Hash>40aab80d7d0cd26584a763709823cf76</Hash>
 </Codenesium>*/

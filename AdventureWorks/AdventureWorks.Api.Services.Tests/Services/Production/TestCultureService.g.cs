@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICultureRepository>();
                         var record = new Culture();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ApiCultureResponseModel response = await service.Get(default (string));
+                        ApiCultureResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ApiCultureResponseModel response = await service.Get(default (string));
+                        ApiCultureResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICultureRepository>();
                         var model = new ApiCultureRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Culture>())).Returns(Task.FromResult(new Culture()));
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICultureRepository>();
                         var model = new ApiCultureRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Culture>())).Returns(Task.FromResult(new Culture()));
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CultureModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCultureRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICultureRepository>();
                         var model = new ApiCultureRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -150,7 +146,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICultureRepository>();
                         var record = new Culture();
-
                         mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -160,7 +155,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ApiCultureResponseModel response = await service.ByName(default (string));
+                        ApiCultureResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -179,7 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        ApiCultureResponseModel response = await service.ByName(default (string));
+                        ApiCultureResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -191,7 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ICultureRepository>();
                         var records = new List<ProductModelProductDescriptionCulture>();
                         records.Add(new ProductModelProductDescriptionCulture());
-                        mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default (string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
@@ -200,17 +195,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default (string));
+                        List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default(string));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default (string), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void ProductModelProductDescriptionCultures_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ICultureRepository>();
-                        mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default (string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelProductDescriptionCulture>>(new List<ProductModelProductDescriptionCulture>()));
+                        mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelProductDescriptionCulture>>(new List<ProductModelProductDescriptionCulture>()));
                         var service = new CultureService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
@@ -219,14 +214,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
                                                          mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-                        List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default (string));
+                        List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default(string));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default (string), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>497be0f15793c3898942071a8eb6e93a</Hash>
+    <Hash>c25d9b497784d006ae926366bfd19e60</Hash>
 </Codenesium>*/

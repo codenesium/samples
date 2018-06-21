@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLScrapReasonMapper: BOLAbstractScrapReasonMapper, IBOLScrapReasonMapper
+        public class BOLScrapReasonMapper : BOLAbstractScrapReasonMapper, IBOLScrapReasonMapper
         {
                 public BOLScrapReasonMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec6a086ade82d42b1190ecc9de5747fb</Hash>
+    <Hash>09f892e121b2bce634bf7eefa6754626</Hash>
 </Codenesium>*/

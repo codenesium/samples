@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesTerritory")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSalesTerritoryActionMapper
+        public class TestDALSalesTerritoryMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSalesTerritoryMapper();
-
                         var bo = new BOSalesTerritory();
-
                         bo.SetProperties(1, 1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
 
                         SalesTerritory response = mapper.MapBOToEF(bo);
@@ -39,12 +37,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSalesTerritoryMapper();
-
                         SalesTerritory entity = new SalesTerritory();
-
                         entity.SetProperties(1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
 
-                        BOSalesTerritory  response = mapper.MapEFToBO(entity);
+                        BOSalesTerritory response = mapper.MapEFToBO(entity);
 
                         response.CostLastYear.Should().Be(1);
                         response.CostYTD.Should().Be(1);
@@ -62,9 +58,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSalesTerritoryMapper();
-
                         SalesTerritory entity = new SalesTerritory();
-
                         entity.SetProperties(1, 1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
 
                         List<BOSalesTerritory> response = mapper.MapEFToBO(new List<SalesTerritory>() { entity });
@@ -75,5 +69,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7e0e354a732989ceec3e089f16646da7</Hash>
+    <Hash>fe0dce42d1cf767ca7037d08a8232048</Hash>
 </Codenesium>*/

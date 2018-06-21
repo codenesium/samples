@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
 
                         EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-
                         context.Set<EmployeeDepartmentHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
 
                         EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-
                         context.Set<EmployeeDepartmentHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
 
                         var entity = new EmployeeDepartmentHistory();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
                         var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
-
                         EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-
                         context.Set<EmployeeDepartmentHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
                         var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
-
                         EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-
                         context.Set<EmployeeDepartmentHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmployeeDepartmentHistoryRepository>> loggerMoc = EmployeeDepartmentHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeeDepartmentHistoryRepositoryMoc.GetContext();
                         var repository = new EmployeeDepartmentHistoryRepository(loggerMoc.Object, context);
-
                         EmployeeDepartmentHistory entity = new EmployeeDepartmentHistory();
-
                         context.Set<EmployeeDepartmentHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         EmployeeDepartmentHistory modifiedRecord = await context.Set<EmployeeDepartmentHistory>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ef20b4fa46dbcbdc9f6de5457a4fb98d</Hash>
+    <Hash>2520139a99112932e98368b08729a18c</Hash>
 </Codenesium>*/

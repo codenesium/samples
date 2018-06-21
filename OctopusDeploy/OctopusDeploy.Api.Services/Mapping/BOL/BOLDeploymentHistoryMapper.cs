@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLDeploymentHistoryMapper: BOLAbstractDeploymentHistoryMapper, IBOLDeploymentHistoryMapper
+        public class BOLDeploymentHistoryMapper : BOLAbstractDeploymentHistoryMapper, IBOLDeploymentHistoryMapper
         {
                 public BOLDeploymentHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>872ba8bf496ea7330e19ea7bd351a275</Hash>
+    <Hash>b8a830a406bb0ed91fa58fa3d92fb4a1</Hash>
 </Codenesium>*/

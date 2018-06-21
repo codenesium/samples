@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IReleaseRepository>();
                         var record = new Release();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ReleaseService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ApiReleaseResponseModel response = await service.Get(default (string));
+                        ApiReleaseResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ApiReleaseResponseModel response = await service.Get(default (string));
+                        ApiReleaseResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IReleaseRepository>();
                         var model = new ApiReleaseRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Release>())).Returns(Task.FromResult(new Release()));
                         var service = new ReleaseService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IReleaseRepository>();
                         var model = new ApiReleaseRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Release>())).Returns(Task.FromResult(new Release()));
                         var service = new ReleaseService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiReleaseRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IReleaseRepository>();
                         var model = new ApiReleaseRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ReleaseService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IReleaseRepository>();
                         var record = new Release();
-
                         mock.RepositoryMock.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ReleaseService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ApiReleaseResponseModel response = await service.GetVersionProjectId(default (string), default (string));
+                        ApiReleaseResponseModel response = await service.GetVersionProjectId(default(string), default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        ApiReleaseResponseModel response = await service.GetVersionProjectId(default (string), default (string));
+                        ApiReleaseResponseModel response = await service.GetVersionProjectId(default(string), default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>()));
@@ -182,7 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetIdAssembled(default (string), default (DateTimeOffset));
+                        List<ApiReleaseResponseModel> response = await service.GetIdAssembled(default(string), default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -199,7 +194,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetIdAssembled(default (string), default (DateTimeOffset));
+                        List<ApiReleaseResponseModel> response = await service.GetIdAssembled(default(string), default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -218,7 +213,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetProjectDeploymentProcessSnapshotId(default (string));
+                        List<ApiReleaseResponseModel> response = await service.GetProjectDeploymentProcessSnapshotId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetProjectDeploymentProcessSnapshotId(It.IsAny<string>()));
@@ -235,7 +230,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetProjectDeploymentProcessSnapshotId(default (string));
+                        List<ApiReleaseResponseModel> response = await service.GetProjectDeploymentProcessSnapshotId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetProjectDeploymentProcessSnapshotId(It.IsAny<string>()));
@@ -254,7 +249,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(default (string), default (string), default (string), default (string), default (string), default (string), default (string), default (DateTimeOffset));
+                        List<ApiReleaseResponseModel> response = await service.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -271,7 +266,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(default (string), default (string), default (string), default (string), default (string), default (string), default (string), default (DateTimeOffset));
+                        List<ApiReleaseResponseModel> response = await service.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -290,7 +285,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(default (string), default (string), default (string), default (string), default (string), default (string), default (string), default (DateTimeOffset));
+                        List<ApiReleaseResponseModel> response = await service.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -307,7 +302,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLReleaseMapperMock,
                                                          mock.DALMapperMockFactory.DALReleaseMapperMock);
 
-                        List<ApiReleaseResponseModel> response = await service.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(default (string), default (string), default (string), default (string), default (string), default (string), default (string), default (DateTimeOffset));
+                        List<ApiReleaseResponseModel> response = await service.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
@@ -316,5 +311,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>169b044e7a059e0342e1a7023a694647</Hash>
+    <Hash>04dd330dc73fc094b53f30669599ca95</Hash>
 </Codenesium>*/

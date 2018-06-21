@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Web.Tests
 {
@@ -19,32 +20,253 @@ namespace OctopusDeployNS.Api.Web.Tests
         public partial class KeyAllocationControllerTests
         {
                 [Fact]
-                public async void All()
+                public async void All_Exists()
                 {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var record = new ApiKeyAllocationResponseModel();
+                        var records = new List<ApiKeyAllocationResponseModel>();
+                        records.Add(record);
+                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.All(1000, 0);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var items = (response as OkObjectResult).Value as List<ApiKeyAllocationResponseModel>;
+                        items.Count.Should().Be(1);
+                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void Get()
+                public async void All_Not_Exists()
                 {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiKeyAllocationResponseModel>>(new List<ApiKeyAllocationResponseModel>()));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.All(1000, 0);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var items = (response as OkObjectResult).Value as List<ApiKeyAllocationResponseModel>;
+                        items.Should().BeEmpty();
+                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void Create()
+                public async void Get_Exists()
                 {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKeyAllocationResponseModel()));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Get(default(string));
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var record = (response as OkObjectResult).Value as ApiKeyAllocationResponseModel;
+                        record.Should().NotBeNull();
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void Update()
+                public async void Get_Not_Exists()
                 {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiKeyAllocationResponseModel>(null));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Get(default(string));
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
                 }
 
                 [Fact]
-                public async void Delete()
+                public async void BulkInsert_No_Errors()
                 {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+
+                        var mockResponse = new CreateResponse<ApiKeyAllocationResponseModel>(new FluentValidation.Results.ValidationResult());
+                        mockResponse.SetRecord(new ApiKeyAllocationResponseModel());
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiKeyAllocationResponseModel>>(mockResponse));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var records = new List<ApiKeyAllocationRequestModel>();
+                        records.Add(new ApiKeyAllocationRequestModel());
+                        IActionResult response = await controller.BulkInsert(records);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var result = (response as OkObjectResult).Value as List<ApiKeyAllocationResponseModel>;
+                        result.Should().NotBeEmpty();
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>()));
                 }
+
+                [Fact]
+                public async void BulkInsert_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+
+                        var mockResponse = new Mock<CreateResponse<ApiKeyAllocationResponseModel>>(new FluentValidation.Results.ValidationResult());
+                        mockResponse.SetupGet(x => x.Success).Returns(false);
+
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiKeyAllocationResponseModel>>(mockResponse.Object));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var records = new List<ApiKeyAllocationRequestModel>();
+                        records.Add(new ApiKeyAllocationRequestModel());
+                        IActionResult response = await controller.BulkInsert(records);
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Create_No_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+
+                        var mockResponse = new CreateResponse<ApiKeyAllocationResponseModel>(new FluentValidation.Results.ValidationResult());
+                        mockResponse.SetRecord(new ApiKeyAllocationResponseModel());
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiKeyAllocationResponseModel>>(mockResponse));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Create(new ApiKeyAllocationRequestModel());
+
+                        response.Should().BeOfType<CreatedResult>();
+                        (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
+                        var record = (response as CreatedResult).Value as ApiKeyAllocationResponseModel;
+                        record.Should().NotBeNull();
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Create_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+
+                        var mockResponse = new Mock<CreateResponse<ApiKeyAllocationResponseModel>>(new FluentValidation.Results.ValidationResult());
+                        var mockRecord = new ApiKeyAllocationResponseModel();
+
+                        mockResponse.SetupGet(x => x.Success).Returns(false);
+
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiKeyAllocationResponseModel>>(mockResponse.Object));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Create(new ApiKeyAllocationRequestModel());
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiKeyAllocationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Update_No_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(string), new ApiKeyAllocationRequestModel());
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Update_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(string), new ApiKeyAllocationRequestModel());
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Delete_No_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Delete(default(string));
+
+                        response.Should().BeOfType<NoContentResult>();
+                        (response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
+                }
+
+                [Fact]
+                public async void Delete_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Delete(default(string));
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
+                }
+        }
+
+        public class KeyAllocationControllerMockFacade
+        {
+                public Mock<ApiSettings> ApiSettingsMoc { get; set; } = new Mock<ApiSettings>();
+
+                public Mock<ILogger<KeyAllocationController>> LoggerMock { get; set; } = new Mock<ILogger<KeyAllocationController>>();
+
+                public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
+
+                public Mock<IKeyAllocationService> ServiceMock { get; set; } = new Mock<IKeyAllocationService>();
         }
 }
 
 /*<Codenesium>
-    <Hash>76de13ceeaaa6c8e8d49ce18c574fc92</Hash>
+    <Hash>21b7f0ec3dbadbdc63d34f088317a7e4</Hash>
 </Codenesium>*/

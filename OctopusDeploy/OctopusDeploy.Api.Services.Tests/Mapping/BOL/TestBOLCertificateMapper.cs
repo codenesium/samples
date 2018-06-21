@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Certificate")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCertificateActionMapper
+        public class TestBOLCertificateMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCertificateMapper();
-
                         ApiCertificateRequestModel model = new ApiCertificateRequestModel();
-
                         model.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
                         BOCertificate response = mapper.MapModelToBO("A", model);
 
@@ -40,9 +38,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCertificateMapper();
-
                         BOCertificate bo = new BOCertificate();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
                         ApiCertificateResponseModel response = mapper.MapBOToModel(bo);
 
@@ -64,9 +60,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCertificateMapper();
-
                         BOCertificate bo = new BOCertificate();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
                         List<ApiCertificateResponseModel> response = mapper.MapBOToModel(new List<BOCertificate>() { { bo } });
 
@@ -76,5 +70,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2498e3c1ce82ac1267c0be4b991e8dd0</Hash>
+    <Hash>48ac9d740c4c33fc5760b34ddbd9f507</Hash>
 </Codenesium>*/

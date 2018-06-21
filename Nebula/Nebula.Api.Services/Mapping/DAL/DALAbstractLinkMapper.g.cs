@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOLink bo)
                 {
                         Link efLink = new Link();
-
                         efLink.SetProperties(
                                 bo.AssignedMachineId,
                                 bo.ChainId,
@@ -68,5 +67,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7be18be6cced790ef7e1357e9ca1b9c1</Hash>
+    <Hash>1934297bb47ed2da7840007ff465c00d</Hash>
 </Codenesium>*/

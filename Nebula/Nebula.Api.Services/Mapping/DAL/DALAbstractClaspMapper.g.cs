@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOClasp bo)
                 {
                         Clasp efClasp = new Clasp();
-
                         efClasp.SetProperties(
                                 bo.Id,
                                 bo.NextChainId,
@@ -48,5 +47,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2df86b92c1dfc953d6aa2380a1bc6d72</Hash>
+    <Hash>e8bfa75ad39203dc01796a0113bf053e</Hash>
 </Codenesium>*/

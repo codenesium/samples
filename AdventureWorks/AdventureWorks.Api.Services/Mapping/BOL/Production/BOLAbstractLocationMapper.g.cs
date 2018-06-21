@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOLocation boLocation = new BOLocation();
-
                         boLocation.SetProperties(
                                 locationID,
                                 model.Availability,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>895eaf63ae0433588524ec4088d4b1a7</Hash>
+    <Hash>0e660443410511cb1e7c7463a81f73df</Hash>
 </Codenesium>*/

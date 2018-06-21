@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiSpaceResponseModel: AbstractApiSpaceResponseModel
+        public partial class ApiSpaceResponseModel : AbstractApiSpaceResponseModel
         {
                 public ApiSpaceResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>27f961dbb2978465c92ba5b4f88edb5b</Hash>
+    <Hash>97e7dae2bbc349bc0f9952ef8e8eff79</Hash>
 </Codenesium>*/

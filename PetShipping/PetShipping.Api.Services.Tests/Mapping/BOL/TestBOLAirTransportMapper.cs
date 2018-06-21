@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "AirTransport")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLAirTransportActionMapper
+        public class TestBOLAirTransportMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLAirTransportMapper();
-
                         ApiAirTransportRequestModel model = new ApiAirTransportRequestModel();
-
                         model.SetProperties("A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOAirTransport response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLAirTransportMapper();
-
                         BOAirTransport bo = new BOAirTransport();
-
                         bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiAirTransportResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLAirTransportMapper();
-
                         BOAirTransport bo = new BOAirTransport();
-
                         bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiAirTransportResponseModel> response = mapper.MapBOToModel(new List<BOAirTransport>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5fdb6de6939313010ea261bd69497a2d</Hash>
+    <Hash>a015ccaa8a59cc650ff9ab506da431de</Hash>
 </Codenesium>*/

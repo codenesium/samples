@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("CountryRegion", Schema="Person")]
-        public partial class CountryRegion: AbstractEntity
+        public partial class CountryRegion : AbstractEntity
         {
                 public CountryRegion()
                 {
@@ -23,17 +23,17 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("CountryRegionCode", TypeName="nvarchar(3)")]
+                [Column("CountryRegionCode")]
                 public string CountryRegionCode { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2084c45717d371b78547403f151c09a8</Hash>
+    <Hash>7b8a9f519a9deaefaaba402494713e27</Hash>
 </Codenesium>*/

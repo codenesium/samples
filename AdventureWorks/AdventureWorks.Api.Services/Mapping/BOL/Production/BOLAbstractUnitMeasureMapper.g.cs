@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOUnitMeasure boUnitMeasure = new BOUnitMeasure();
-
                         boUnitMeasure.SetProperties(
                                 unitMeasureCode,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>418d9d3cccadf5d66c2148cf67428858</Hash>
+    <Hash>bd62471ea5d17f9f2cd81a62b92d85ca</Hash>
 </Codenesium>*/

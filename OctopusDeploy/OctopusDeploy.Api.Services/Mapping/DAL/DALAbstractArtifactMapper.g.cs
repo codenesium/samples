@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOArtifact bo)
                 {
                         Artifact efArtifact = new Artifact();
-
                         efArtifact.SetProperties(
                                 bo.Created,
                                 bo.EnvironmentId,
@@ -58,5 +57,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fdc2ab568d62f890c74f1037e9e9f3d8</Hash>
+    <Hash>3bfa78cbfb68be34ce72b2f39e546dff</Hash>
 </Codenesium>*/

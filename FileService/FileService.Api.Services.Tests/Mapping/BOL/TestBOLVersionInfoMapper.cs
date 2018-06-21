@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FileServiceNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "VersionInfo")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLVersionInfoActionMapper
+        public class TestBOLVersionInfoMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLVersionInfoMapper();
-
                         ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOVersionInfo response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLVersionInfoMapper();
-
                         BOVersionInfo bo = new BOVersionInfo();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiVersionInfoResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLVersionInfoMapper();
-
                         BOVersionInfo bo = new BOVersionInfo();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiVersionInfoResponseModel> response = mapper.MapBOToModel(new List<BOVersionInfo>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6e562cb8a0a73c9eb91011e0237e39a3</Hash>
+    <Hash>1ce3e25a68d939697ffc2257a2a94834</Hash>
 </Codenesium>*/

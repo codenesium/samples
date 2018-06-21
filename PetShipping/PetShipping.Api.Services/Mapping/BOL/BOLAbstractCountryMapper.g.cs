@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOCountry boCountry = new BOCountry();
-
                         boCountry.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b9cca62a272ea654714b33d7be81da8c</Hash>
+    <Hash>75d4412c0f56ddd76eb51b73e3b3bf31</Hash>
 </Codenesium>*/

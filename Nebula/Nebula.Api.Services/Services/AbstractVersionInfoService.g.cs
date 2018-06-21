@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractVersionInfoService: AbstractService
+        public abstract class AbstractVersionInfoService : AbstractService
         {
                 private IVersionInfoRepository versionInfoRepository;
 
@@ -29,11 +29,8 @@ namespace NebulaNS.Api.Services
                         IVersionInfoRepository versionInfoRepository,
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
                         IBOLVersionInfoMapper bolVersionInfoMapper,
-                        IDALVersionInfoMapper dalVersionInfoMapper
-
-                        )
+                        IDALVersionInfoMapper dalVersionInfoMapper)
                         : base()
-
                 {
                         this.versionInfoRepository = versionInfoRepository;
                         this.versionInfoModelValidator = versionInfoModelValidator;
@@ -69,7 +66,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolVersionInfoMapper.MapModelToBO(default (long), model);
+                                var bo = this.bolVersionInfoMapper.MapModelToBO(default(long), model);
                                 var record = await this.versionInfoRepository.Create(this.dalVersionInfoMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace NebulaNS.Api.Services
                         ApiVersionInfoRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
@@ -97,7 +93,6 @@ namespace NebulaNS.Api.Services
                         long version)
                 {
                         ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateDeleteAsync(version));
-
                         if (response.Success)
                         {
                                 await this.versionInfoRepository.Delete(version);
@@ -123,5 +118,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33be53fae755b63824dbc9119057e64c</Hash>
+    <Hash>78c845d7ac08088d44ad1c6fa4da2b85</Hash>
 </Codenesium>*/

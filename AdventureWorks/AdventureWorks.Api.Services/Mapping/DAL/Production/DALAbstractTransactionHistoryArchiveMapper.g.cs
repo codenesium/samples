@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOTransactionHistoryArchive bo)
                 {
                         TransactionHistoryArchive efTransactionHistoryArchive = new TransactionHistoryArchive();
-
                         efTransactionHistoryArchive.SetProperties(
                                 bo.ActualCost,
                                 bo.ModifiedDate,
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86a75044277bf406b6abecd2b1964054</Hash>
+    <Hash>a7ef520f054fbe522573a2796b15d866</Hash>
 </Codenesium>*/

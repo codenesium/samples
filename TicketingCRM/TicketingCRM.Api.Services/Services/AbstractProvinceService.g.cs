@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractProvinceService: AbstractService
+        public abstract class AbstractProvinceService : AbstractService
         {
                 private IProvinceRepository provinceRepository;
 
@@ -36,18 +36,12 @@ namespace TicketingCRMNS.Api.Services
                         IProvinceRepository provinceRepository,
                         IApiProvinceRequestModelValidator provinceModelValidator,
                         IBOLProvinceMapper bolProvinceMapper,
-                        IDALProvinceMapper dalProvinceMapper
-
-                        ,
+                        IDALProvinceMapper dalProvinceMapper,
                         IBOLCityMapper bolCityMapper,
-                        IDALCityMapper dalCityMapper
-                        ,
+                        IDALCityMapper dalCityMapper,
                         IBOLVenueMapper bolVenueMapper,
-                        IDALVenueMapper dalVenueMapper
-
-                        )
+                        IDALVenueMapper dalVenueMapper)
                         : base()
-
                 {
                         this.provinceRepository = provinceRepository;
                         this.provinceModelValidator = provinceModelValidator;
@@ -87,7 +81,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiProvinceResponseModel> response = new CreateResponse<ApiProvinceResponseModel>(await this.provinceModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProvinceMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProvinceMapper.MapModelToBO(default(int), model);
                                 var record = await this.provinceRepository.Create(this.dalProvinceMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiProvinceRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.provinceModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProvinceMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.provinceModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.provinceRepository.Delete(id);
@@ -137,6 +129,7 @@ namespace TicketingCRMNS.Api.Services
 
                         return this.bolCityMapper.MapBOToModel(this.dalCityMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiVenueResponseModel>> Venues(int provinceId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Venue> records = await this.provinceRepository.Venues(provinceId, limit, offset);
@@ -147,5 +140,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7d93286cd267c67c356bfc30c2445c4</Hash>
+    <Hash>82a8d12b1a760f313246a0c29624c3b5</Hash>
 </Codenesium>*/

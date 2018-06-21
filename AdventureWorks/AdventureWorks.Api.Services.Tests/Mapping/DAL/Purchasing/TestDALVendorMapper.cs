@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Vendor")]
         [Trait("Area", "DALMapper")]
-        public class TestDALVendorActionMapper
+        public class TestDALVendorMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALVendorMapper();
-
                         var bo = new BOVendor();
-
                         bo.SetProperties(1, "A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
 
                         Vendor response = mapper.MapBOToEF(bo);
@@ -37,12 +35,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALVendorMapper();
-
                         Vendor entity = new Vendor();
-
                         entity.SetProperties("A", true, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
 
-                        BOVendor  response = mapper.MapEFToBO(entity);
+                        BOVendor response = mapper.MapEFToBO(entity);
 
                         response.AccountNumber.Should().Be("A");
                         response.ActiveFlag.Should().Be(true);
@@ -58,9 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALVendorMapper();
-
                         Vendor entity = new Vendor();
-
                         entity.SetProperties("A", true, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
 
                         List<BOVendor> response = mapper.MapEFToBO(new List<Vendor>() { entity });
@@ -71,5 +65,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>955e2dca8c77dec6307bb0d784bb7e65</Hash>
+    <Hash>b0c5bcceefabe07d75c42a6d09d0350d</Hash>
 </Codenesium>*/

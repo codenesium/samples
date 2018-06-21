@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
         [Table("Event", Schema="dbo")]
-        public partial class Event:AbstractEntity
+        public partial class Event : AbstractEntity
         {
                 public Event()
                 {
@@ -38,38 +38,38 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.Website = website;
                 }
 
-                [Column("address1", TypeName="varchar(128)")]
+                [Column("address1")]
                 public string Address1 { get; private set; }
 
-                [Column("address2", TypeName="varchar(128)")]
+                [Column("address2")]
                 public string Address2 { get; private set; }
 
-                [Column("cityId", TypeName="int")]
+                [Column("cityId")]
                 public int CityId { get; private set; }
 
-                [Column("date", TypeName="datetime")]
+                [Column("date")]
                 public DateTime Date { get; private set; }
 
-                [Column("description", TypeName="text(2147483647)")]
+                [Column("description")]
                 public string Description { get; private set; }
 
-                [Column("endDate", TypeName="datetime")]
+                [Column("endDate")]
                 public DateTime EndDate { get; private set; }
 
-                [Column("facebook", TypeName="varchar(128)")]
+                [Column("facebook")]
                 public string Facebook { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("startDate", TypeName="datetime")]
+                [Column("startDate")]
                 public DateTime StartDate { get; private set; }
 
-                [Column("website", TypeName="varchar(128)")]
+                [Column("website")]
                 public string Website { get; private set; }
 
                 [ForeignKey("CityId")]
@@ -78,5 +78,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>36a2016e5459ee6c23420895fd680677</Hash>
+    <Hash>257f1f6b85cb0319784250885d3f67ab</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new JobCandidateRepository(loggerMoc.Object, context);
 
                         JobCandidate entity = new JobCandidate();
-
                         context.Set<JobCandidate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new JobCandidateRepository(loggerMoc.Object, context);
 
                         JobCandidate entity = new JobCandidate();
-
                         context.Set<JobCandidate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new JobCandidateRepository(loggerMoc.Object, context);
 
                         var entity = new JobCandidate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<JobCandidate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<JobCandidateRepository>> loggerMoc = JobCandidateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = JobCandidateRepositoryMoc.GetContext();
                         var repository = new JobCandidateRepository(loggerMoc.Object, context);
-
                         JobCandidate entity = new JobCandidate();
-
                         context.Set<JobCandidate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<JobCandidateRepository>> loggerMoc = JobCandidateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = JobCandidateRepositoryMoc.GetContext();
                         var repository = new JobCandidateRepository(loggerMoc.Object, context);
-
                         JobCandidate entity = new JobCandidate();
-
                         context.Set<JobCandidate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<JobCandidateRepository>> loggerMoc = JobCandidateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = JobCandidateRepositoryMoc.GetContext();
                         var repository = new JobCandidateRepository(loggerMoc.Object, context);
-
                         JobCandidate entity = new JobCandidate();
-
                         context.Set<JobCandidate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.JobCandidateID);
 
                         JobCandidate modifiedRecord = await context.Set<JobCandidate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>de8126cb242753a3d2600055deb55ad7</Hash>
+    <Hash>d3eb4b9b89135d8f83b19b2f4f351382</Hash>
 </Codenesium>*/

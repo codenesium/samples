@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOChain bo)
                 {
                         Chain efChain = new Chain();
-
                         efChain.SetProperties(
                                 bo.ChainStatusId,
                                 bo.ExternalId,
@@ -52,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02933f6a86d535b5b5e01336f2566847</Hash>
+    <Hash>8a487285dea17f744a8ecad717ca87a7</Hash>
 </Codenesium>*/

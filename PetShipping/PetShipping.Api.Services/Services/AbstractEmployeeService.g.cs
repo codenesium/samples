@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractEmployeeService: AbstractService
+        public abstract class AbstractEmployeeService : AbstractService
         {
                 private IEmployeeRepository employeeRepository;
 
@@ -39,21 +39,14 @@ namespace PetShippingNS.Api.Services
                         IEmployeeRepository employeeRepository,
                         IApiEmployeeRequestModelValidator employeeModelValidator,
                         IBOLEmployeeMapper bolEmployeeMapper,
-                        IDALEmployeeMapper dalEmployeeMapper
-
-                        ,
+                        IDALEmployeeMapper dalEmployeeMapper,
                         IBOLClientCommunicationMapper bolClientCommunicationMapper,
-                        IDALClientCommunicationMapper dalClientCommunicationMapper
-                        ,
+                        IDALClientCommunicationMapper dalClientCommunicationMapper,
                         IBOLPipelineStepMapper bolPipelineStepMapper,
-                        IDALPipelineStepMapper dalPipelineStepMapper
-                        ,
+                        IDALPipelineStepMapper dalPipelineStepMapper,
                         IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
-
-                        )
+                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
                         : base()
-
                 {
                         this.employeeRepository = employeeRepository;
                         this.employeeModelValidator = employeeModelValidator;
@@ -95,7 +88,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolEmployeeMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolEmployeeMapper.MapModelToBO(default(int), model);
                                 var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
@@ -109,7 +102,6 @@ namespace PetShippingNS.Api.Services
                         ApiEmployeeRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolEmployeeMapper.MapModelToBO(id, model);
@@ -123,7 +115,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.employeeRepository.Delete(id);
@@ -138,12 +129,14 @@ namespace PetShippingNS.Api.Services
 
                         return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineSteps(int shipperId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<PipelineStep> records = await this.employeeRepository.PipelineSteps(shipperId, limit, offset);
 
                         return this.bolPipelineStepMapper.MapBOToModel(this.dalPipelineStepMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotes(int employeeId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<PipelineStepNote> records = await this.employeeRepository.PipelineStepNotes(employeeId, limit, offset);
@@ -154,5 +147,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ca4f932d0e04322225ed5c065ec7dfb2</Hash>
+    <Hash>f2535b1cd605fbcb122248440f5c0124</Hash>
 </Codenesium>*/

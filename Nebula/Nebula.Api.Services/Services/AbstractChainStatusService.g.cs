@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractChainStatusService: AbstractService
+        public abstract class AbstractChainStatusService : AbstractService
         {
                 private IChainStatusRepository chainStatusRepository;
 
@@ -33,15 +33,10 @@ namespace NebulaNS.Api.Services
                         IChainStatusRepository chainStatusRepository,
                         IApiChainStatusRequestModelValidator chainStatusModelValidator,
                         IBOLChainStatusMapper bolChainStatusMapper,
-                        IDALChainStatusMapper dalChainStatusMapper
-
-                        ,
+                        IDALChainStatusMapper dalChainStatusMapper,
                         IBOLChainMapper bolChainMapper,
-                        IDALChainMapper dalChainMapper
-
-                        )
+                        IDALChainMapper dalChainMapper)
                         : base()
-
                 {
                         this.chainStatusRepository = chainStatusRepository;
                         this.chainStatusModelValidator = chainStatusModelValidator;
@@ -79,7 +74,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiChainStatusResponseModel> response = new CreateResponse<ApiChainStatusResponseModel>(await this.chainStatusModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolChainStatusMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolChainStatusMapper.MapModelToBO(default(int), model);
                                 var record = await this.chainStatusRepository.Create(this.dalChainStatusMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolChainStatusMapper.MapBOToModel(this.dalChainStatusMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace NebulaNS.Api.Services
                         ApiChainStatusRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.chainStatusModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolChainStatusMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.chainStatusModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.chainStatusRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70f09b084f7e201e30e5fc99876ec2b5</Hash>
+    <Hash>bb3703bcdce7cadf21506dd5fbb71ff0</Hash>
 </Codenesium>*/

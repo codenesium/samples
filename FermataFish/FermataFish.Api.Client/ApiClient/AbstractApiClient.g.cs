@@ -1,4 +1,5 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
 
 namespace FermataFishNS.Api.Client
 {
@@ -29,10 +29,12 @@ namespace FermataFishNS.Api.Client
                         {
                                 throw new ArgumentException("apiUrl is not set");
                         }
+
                         if (apiUri[apiUri.Length - 1] != '/')
                         {
                                 throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
+
                         if (string.IsNullOrWhiteSpace(apiVersion))
                         {
                                 throw new ArgumentException("apiVersion is not set");
@@ -41,9 +43,7 @@ namespace FermataFishNS.Api.Client
                         this.ApiUrl = apiUri;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-
                         this.client.BaseAddress = new Uri(apiUri);
-
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -143,6 +143,22 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiFamilyResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiStudentResponseModel>> Students(int familyId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families/Students/{familyId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiStudentResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilies(int familyId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families/StudentXFamilies/{familyId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiStudentXFamilyResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiLessonResponseModel> LessonCreateAsync(ApiLessonRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Lessons", item);
@@ -190,6 +206,22 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiLessonResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiLessonXStudentResponseModel>> LessonXStudents(int lessonId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons/LessonXStudents/{lessonId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiLessonXStudentResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiLessonXTeacherResponseModel>> LessonXTeachers(int lessonId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Lessons/LessonXTeachers/{lessonId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiLessonXTeacherResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiLessonStatusResponseModel> LessonStatusCreateAsync(ApiLessonStatusRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LessonStatus", item);
@@ -235,6 +267,14 @@ namespace FermataFishNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiLessonStatusResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiLessonResponseModel>> Lessons(int lessonStatusId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LessonStatus/Lessons/{lessonStatusId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiLessonResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiLessonXStudentResponseModel> LessonXStudentCreateAsync(ApiLessonXStudentRequestModel item)
@@ -425,6 +465,14 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiSpaceResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiSpaceXSpaceFeatureResponseModel>> SpaceXSpaceFeatures(int spaceId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces/SpaceXSpaceFeatures/{spaceId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiSpaceXSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiSpaceFeatureResponseModel> SpaceFeatureCreateAsync(ApiSpaceFeatureRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SpaceFeatures", item);
@@ -564,6 +612,14 @@ namespace FermataFishNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiStateResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiStudioResponseModel>> Studios(int stateId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/States/Studios/{stateId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiStudioResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiStudentResponseModel> StudentCreateAsync(ApiStudentRequestModel item)
@@ -707,6 +763,62 @@ namespace FermataFishNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiStudioResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiAdminResponseModel>> Admins(int studioId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/Admins/{studioId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiAdminResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiFamilyResponseModel>> Families(int id)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/Families/{id}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiFamilyResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiLessonStatusResponseModel>> LessonStatus(int id)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/LessonStatus/{id}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiLessonStatusResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiSpaceResponseModel>> Spaces(int studioId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/Spaces/{studioId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiSpaceResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatures(int studioId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/SpaceFeatures/{studioId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiTeacherResponseModel>> Teachers(int studioId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/Teachers/{studioId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiTeacherResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int studioId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Studios/TeacherSkills/{studioId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiTeacherResponseModel> TeacherCreateAsync(ApiTeacherRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teachers", item);
@@ -752,6 +864,22 @@ namespace FermataFishNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiTeacherResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiRateResponseModel>> Rates(int teacherId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/Rates/{teacherId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiRateResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkills(int teacherId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/TeacherXTeacherSkills/{teacherId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiTeacherXTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiTeacherSkillResponseModel> TeacherSkillCreateAsync(ApiTeacherSkillRequestModel item)
@@ -851,5 +979,5 @@ namespace FermataFishNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>aca0c5b61364a072b7ad53b1ffbe8481</Hash>
+    <Hash>59bcbe320bbd915880bef51557344286</Hash>
 </Codenesium>*/

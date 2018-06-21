@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new StateProvinceRepository(loggerMoc.Object, context);
 
                         StateProvince entity = new StateProvince();
-
                         context.Set<StateProvince>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new StateProvinceRepository(loggerMoc.Object, context);
 
                         StateProvince entity = new StateProvince();
-
                         context.Set<StateProvince>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new StateProvinceRepository(loggerMoc.Object, context);
 
                         var entity = new StateProvince();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<StateProvince>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<StateProvinceRepository>> loggerMoc = StateProvinceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StateProvinceRepositoryMoc.GetContext();
                         var repository = new StateProvinceRepository(loggerMoc.Object, context);
-
                         StateProvince entity = new StateProvince();
-
                         context.Set<StateProvince>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<StateProvinceRepository>> loggerMoc = StateProvinceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StateProvinceRepositoryMoc.GetContext();
                         var repository = new StateProvinceRepository(loggerMoc.Object, context);
-
                         StateProvince entity = new StateProvince();
-
                         context.Set<StateProvince>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<StateProvinceRepository>> loggerMoc = StateProvinceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = StateProvinceRepositoryMoc.GetContext();
                         var repository = new StateProvinceRepository(loggerMoc.Object, context);
-
                         StateProvince entity = new StateProvince();
-
                         context.Set<StateProvince>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.StateProvinceID);
 
                         StateProvince modifiedRecord = await context.Set<StateProvince>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>be664fc09bc6ca875a0f549a41bdd35f</Hash>
+    <Hash>2282472e10fbeded183bb4fdd560a25e</Hash>
 </Codenesium>*/

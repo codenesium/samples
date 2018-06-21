@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractVenueService: AbstractService
+        public abstract class AbstractVenueService : AbstractService
         {
                 private IVenueRepository venueRepository;
 
@@ -29,11 +29,8 @@ namespace TicketingCRMNS.Api.Services
                         IVenueRepository venueRepository,
                         IApiVenueRequestModelValidator venueModelValidator,
                         IBOLVenueMapper bolVenueMapper,
-                        IDALVenueMapper dalVenueMapper
-
-                        )
+                        IDALVenueMapper dalVenueMapper)
                         : base()
-
                 {
                         this.venueRepository = venueRepository;
                         this.venueModelValidator = venueModelValidator;
@@ -69,7 +66,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiVenueResponseModel> response = new CreateResponse<ApiVenueResponseModel>(await this.venueModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolVenueMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolVenueMapper.MapModelToBO(default(int), model);
                                 var record = await this.venueRepository.Create(this.dalVenueMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiVenueRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.venueModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolVenueMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.venueModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.venueRepository.Delete(id);
@@ -112,6 +107,7 @@ namespace TicketingCRMNS.Api.Services
 
                         return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiVenueResponseModel>> GetProvinceId(int provinceId)
                 {
                         List<Venue> records = await this.venueRepository.GetProvinceId(provinceId);
@@ -122,5 +118,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13b3eb85c4bfd293f32ec28c94619287</Hash>
+    <Hash>73697fbe21c23922b42f31b09261fffb</Hash>
 </Codenesium>*/

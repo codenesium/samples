@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractAWBuildVersionService: AbstractService
+        public abstract class AbstractAWBuildVersionService : AbstractService
         {
                 private IAWBuildVersionRepository aWBuildVersionRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IAWBuildVersionRepository aWBuildVersionRepository,
                         IApiAWBuildVersionRequestModelValidator aWBuildVersionModelValidator,
                         IBOLAWBuildVersionMapper bolAWBuildVersionMapper,
-                        IDALAWBuildVersionMapper dalAWBuildVersionMapper
-
-                        )
+                        IDALAWBuildVersionMapper dalAWBuildVersionMapper)
                         : base()
-
                 {
                         this.aWBuildVersionRepository = aWBuildVersionRepository;
                         this.aWBuildVersionModelValidator = aWBuildVersionModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiAWBuildVersionResponseModel> response = new CreateResponse<ApiAWBuildVersionResponseModel>(await this.aWBuildVersionModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolAWBuildVersionMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolAWBuildVersionMapper.MapModelToBO(default(int), model);
                                 var record = await this.aWBuildVersionRepository.Create(this.dalAWBuildVersionMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolAWBuildVersionMapper.MapBOToModel(this.dalAWBuildVersionMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiAWBuildVersionRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.aWBuildVersionModelValidator.ValidateUpdateAsync(systemInformationID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolAWBuildVersionMapper.MapModelToBO(systemInformationID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int systemInformationID)
                 {
                         ActionResponse response = new ActionResponse(await this.aWBuildVersionModelValidator.ValidateDeleteAsync(systemInformationID));
-
                         if (response.Success)
                         {
                                 await this.aWBuildVersionRepository.Delete(systemInformationID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>237d376670175555f226f8b6a9735a59</Hash>
+    <Hash>cbc1004b18f13b559778d714189e62bc</Hash>
 </Codenesium>*/

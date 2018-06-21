@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractPersonPhoneService: AbstractService
+        public abstract class AbstractPersonPhoneService : AbstractService
         {
                 private IPersonPhoneRepository personPhoneRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IPersonPhoneRepository personPhoneRepository,
                         IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
                         IBOLPersonPhoneMapper bolPersonPhoneMapper,
-                        IDALPersonPhoneMapper dalPersonPhoneMapper
-
-                        )
+                        IDALPersonPhoneMapper dalPersonPhoneMapper)
                         : base()
-
                 {
                         this.personPhoneRepository = personPhoneRepository;
                         this.personPhoneModelValidator = personPhoneModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiPersonPhoneResponseModel> response = new CreateResponse<ApiPersonPhoneResponseModel>(await this.personPhoneModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPersonPhoneMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPersonPhoneMapper.MapModelToBO(default(int), model);
                                 var record = await this.personPhoneRepository.Create(this.dalPersonPhoneMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiPersonPhoneRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPersonPhoneMapper.MapModelToBO(businessEntityID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.personPhoneRepository.Delete(businessEntityID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebd68ea3fea2641c617085e968c7fce7</Hash>
+    <Hash>9b1c45c30acc1e2ad87e5274f313d16a</Hash>
 </Codenesium>*/

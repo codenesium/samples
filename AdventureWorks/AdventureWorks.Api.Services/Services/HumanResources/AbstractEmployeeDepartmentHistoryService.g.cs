@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractEmployeeDepartmentHistoryService: AbstractService
+        public abstract class AbstractEmployeeDepartmentHistoryService : AbstractService
         {
                 private IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository,
                         IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
                         IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-
-                        )
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
                         : base()
-
                 {
                         this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
                         this.employeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> response = new CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>(await this.employeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(default(int), model);
                                 var record = await this.employeeDepartmentHistoryRepository.Create(this.dalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiEmployeeDepartmentHistoryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.employeeDepartmentHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(businessEntityID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.employeeDepartmentHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.employeeDepartmentHistoryRepository.Delete(businessEntityID);
@@ -112,6 +107,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByShiftID(int shiftID)
                 {
                         List<EmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.ByShiftID(shiftID);
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>471bbec2cd3c623294eec9fe4a48299b</Hash>
+    <Hash>b297634d5b71968960683f725b52fe28</Hash>
 </Codenesium>*/

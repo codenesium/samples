@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
         [Table("Ticket", Schema="dbo")]
-        public partial class Ticket:AbstractEntity
+        public partial class Ticket : AbstractEntity
         {
                 public Ticket()
                 {
@@ -23,13 +23,13 @@ namespace TicketingCRMNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("publicId", TypeName="varchar(8)")]
+                [Column("publicId")]
                 public string PublicId { get; private set; }
 
-                [Column("ticketStatusId", TypeName="int")]
+                [Column("ticketStatusId")]
                 public int TicketStatusId { get; private set; }
 
                 [ForeignKey("TicketStatusId")]
@@ -38,5 +38,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>995d0fbdee0db0da64f96ad8d8749b82</Hash>
+    <Hash>a7eee8a4946a055689b9ff4895d15d61</Hash>
 </Codenesium>*/

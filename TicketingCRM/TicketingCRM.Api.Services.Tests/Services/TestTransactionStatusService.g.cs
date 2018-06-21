@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
                         var record = new TransactionStatus();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        ApiTransactionStatusResponseModel response = await service.Get(default (int));
+                        ApiTransactionStatusResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        ApiTransactionStatusResponseModel response = await service.Get(default (int));
+                        ApiTransactionStatusResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
                         var model = new ApiTransactionStatusRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionStatus>())).Returns(Task.FromResult(new TransactionStatus()));
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
                         var model = new ApiTransactionStatusRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TransactionStatus>())).Returns(Task.FromResult(new TransactionStatus()));
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TransactionStatusModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTransactionStatusRequestModel>()));
@@ -128,7 +125,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
                         var model = new ApiTransactionStatusRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -151,7 +147,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
                         var records = new List<Transaction>();
                         records.Add(new Transaction());
-                        mock.RepositoryMock.Setup(x => x.Transactions(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Transactions(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
                                                                    mock.ModelValidatorMockFactory.TransactionStatusModelValidatorMock.Object,
@@ -160,17 +156,17 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        List<ApiTransactionResponseModel> response = await service.Transactions(default (int));
+                        List<ApiTransactionResponseModel> response = await service.Transactions(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Transactions(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Transactions(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Transactions_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITransactionStatusRepository>();
-                        mock.RepositoryMock.Setup(x => x.Transactions(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Transaction>>(new List<Transaction>()));
+                        mock.RepositoryMock.Setup(x => x.Transactions(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Transaction>>(new List<Transaction>()));
                         var service = new TransactionStatusService(mock.LoggerMock.Object,
                                                                    mock.RepositoryMock.Object,
                                                                    mock.ModelValidatorMockFactory.TransactionStatusModelValidatorMock.Object,
@@ -179,14 +175,14 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                                    mock.BOLMapperMockFactory.BOLTransactionMapperMock,
                                                                    mock.DALMapperMockFactory.DALTransactionMapperMock);
 
-                        List<ApiTransactionResponseModel> response = await service.Transactions(default (int));
+                        List<ApiTransactionResponseModel> response = await service.Transactions(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Transactions(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Transactions(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>56410554f2987dfdaa7913b48887a031</Hash>
+    <Hash>1f4ea3415d5e1c4ffb24d6ec83d29baa</Hash>
 </Codenesium>*/

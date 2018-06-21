@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class PersonCreditCardService: AbstractPersonCreditCardService, IPersonCreditCardService
+        public class PersonCreditCardService : AbstractPersonCreditCardService, IPersonCreditCardService
         {
                 public PersonCreditCardService(
                         ILogger<IPersonCreditCardRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator,
                         IBOLPersonCreditCardMapper bolpersonCreditCardMapper,
                         IDALPersonCreditCardMapper dalpersonCreditCardMapper
-
                         )
                         : base(logger,
                                personCreditCardRepository,
                                personCreditCardModelValidator,
                                bolpersonCreditCardMapper,
-                               dalpersonCreditCardMapper
-                               )
+                               dalpersonCreditCardMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>45d842f78d255458ba60648c82fae748</Hash>
+    <Hash>ff7ce2a35ac19edf6908a48d97eaa5d1</Hash>
 </Codenesium>*/

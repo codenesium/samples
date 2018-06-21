@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
 
                         LibraryVariableSet entity = new LibraryVariableSet();
-
                         context.Set<LibraryVariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
 
                         LibraryVariableSet entity = new LibraryVariableSet();
-
                         context.Set<LibraryVariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
 
                         var entity = new LibraryVariableSet();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
                         var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
-
                         LibraryVariableSet entity = new LibraryVariableSet();
-
                         context.Set<LibraryVariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
                         var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
-
                         LibraryVariableSet entity = new LibraryVariableSet();
-
                         context.Set<LibraryVariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<LibraryVariableSetRepository>> loggerMoc = LibraryVariableSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LibraryVariableSetRepositoryMoc.GetContext();
                         var repository = new LibraryVariableSetRepository(loggerMoc.Object, context);
-
                         LibraryVariableSet entity = new LibraryVariableSet();
-
                         context.Set<LibraryVariableSet>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         LibraryVariableSet modifiedRecord = await context.Set<LibraryVariableSet>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>10e076299d837a67782333f1e1477cac</Hash>
+    <Hash>3614c90a5e103036eb7f7bef29a3db21</Hash>
 </Codenesium>*/

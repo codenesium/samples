@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCurrencyRateService: AbstractService
+        public abstract class AbstractCurrencyRateService : AbstractService
         {
                 private ICurrencyRateRepository currencyRateRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         ICurrencyRateRepository currencyRateRepository,
                         IApiCurrencyRateRequestModelValidator currencyRateModelValidator,
                         IBOLCurrencyRateMapper bolCurrencyRateMapper,
-                        IDALCurrencyRateMapper dalCurrencyRateMapper
-
-                        ,
+                        IDALCurrencyRateMapper dalCurrencyRateMapper,
                         IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-
-                        )
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
                         : base()
-
                 {
                         this.currencyRateRepository = currencyRateRepository;
                         this.currencyRateModelValidator = currencyRateModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiCurrencyRateResponseModel> response = new CreateResponse<ApiCurrencyRateResponseModel>(await this.currencyRateModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCurrencyRateMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCurrencyRateMapper.MapModelToBO(default(int), model);
                                 var record = await this.currencyRateRepository.Create(this.dalCurrencyRateMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCurrencyRateMapper.MapBOToModel(this.dalCurrencyRateMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiCurrencyRateRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateUpdateAsync(currencyRateID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCurrencyRateMapper.MapModelToBO(currencyRateID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int currencyRateID)
                 {
                         ActionResponse response = new ActionResponse(await this.currencyRateModelValidator.ValidateDeleteAsync(currencyRateID));
-
                         if (response.Success)
                         {
                                 await this.currencyRateRepository.Delete(currencyRateID);
@@ -140,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b7651df20d65f7168b3ee4ebcd09918</Hash>
+    <Hash>7a1472d7bfb76a81b2abfe59af14a4e2</Hash>
 </Codenesium>*/

@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class MutexService: AbstractMutexService, IMutexService
+        public class MutexService : AbstractMutexService, IMutexService
         {
                 public MutexService(
                         ILogger<IMutexRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiMutexRequestModelValidator mutexModelValidator,
                         IBOLMutexMapper bolmutexMapper,
                         IDALMutexMapper dalmutexMapper
-
                         )
                         : base(logger,
                                mutexRepository,
                                mutexModelValidator,
                                bolmutexMapper,
-                               dalmutexMapper
-                               )
+                               dalmutexMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e5e0dd7a1d209d60d72544ca448f7efc</Hash>
+    <Hash>920f0136742220cceeac737ae16a8ad3</Hash>
 </Codenesium>*/

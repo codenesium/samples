@@ -3,14 +3,15 @@ using System;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public partial class BOTransaction: AbstractBOTransaction
+        public partial class BOTransaction : AbstractBOTransaction
         {
-                public BOTransaction() : base()
+                public BOTransaction()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>02c500120de3e416ee2ffbd7f04f975c</Hash>
+    <Hash>16aa444f1bc7b8e3beea19c628d8c573</Hash>
 </Codenesium>*/

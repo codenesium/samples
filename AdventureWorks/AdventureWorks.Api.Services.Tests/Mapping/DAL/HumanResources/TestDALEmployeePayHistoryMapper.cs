@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "EmployeePayHistory")]
         [Trait("Area", "DALMapper")]
-        public class TestDALEmployeePayHistoryActionMapper
+        public class TestDALEmployeePayHistoryMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALEmployeePayHistoryMapper();
-
                         var bo = new BOEmployeePayHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         EmployeePayHistory response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALEmployeePayHistoryMapper();
-
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOEmployeePayHistory  response = mapper.MapEFToBO(entity);
+                        BOEmployeePayHistory response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALEmployeePayHistoryMapper();
-
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOEmployeePayHistory> response = mapper.MapEFToBO(new List<EmployeePayHistory>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bad0349e049cd1a395f8b5ccad809746</Hash>
+    <Hash>9b30b74c7a96e311c55230dd3938e1a5</Hash>
 </Codenesium>*/

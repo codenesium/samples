@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new EventRepository(loggerMoc.Object, context);
 
                         Event entity = new Event();
-
                         context.Set<Event>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new EventRepository(loggerMoc.Object, context);
 
                         Event entity = new Event();
-
                         context.Set<Event>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new EventRepository(loggerMoc.Object, context);
 
                         var entity = new Event();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Event>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EventRepositoryMoc.GetContext();
                         var repository = new EventRepository(loggerMoc.Object, context);
-
                         Event entity = new Event();
-
                         context.Set<Event>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EventRepositoryMoc.GetContext();
                         var repository = new EventRepository(loggerMoc.Object, context);
-
                         Event entity = new Event();
-
                         context.Set<Event>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<EventRepository>> loggerMoc = EventRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EventRepositoryMoc.GetContext();
                         var repository = new EventRepository(loggerMoc.Object, context);
-
                         Event entity = new Event();
-
                         context.Set<Event>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Event modifiedRecord = await context.Set<Event>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e6bf47a41fcc7241e59f447ed3067412</Hash>
+    <Hash>320f45951b27bbd342cf3eb3ce86b6a7</Hash>
 </Codenesium>*/

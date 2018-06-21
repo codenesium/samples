@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public abstract class AbstractPaymentTypeRepository: AbstractRepository
+        public abstract class AbstractPaymentTypeRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace PetStoreNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Sale>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+                }
+
                 protected async Task<List<PaymentType>> Where(
                         Expression<Func<PaymentType, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace PetStoreNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Sale>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>aadd0862a7ecf53d462d5273c2527a7d</Hash>
+    <Hash>b71bfa53c70ccd544420f29e9de4bd2e</Hash>
 </Codenesium>*/

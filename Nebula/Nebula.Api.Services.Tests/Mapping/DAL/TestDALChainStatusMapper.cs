@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ChainStatus")]
         [Trait("Area", "DALMapper")]
-        public class TestDALChainStatusActionMapper
+        public class TestDALChainStatusMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALChainStatusMapper();
-
                         var bo = new BOChainStatus();
-
                         bo.SetProperties(1, "A");
 
                         ChainStatus response = mapper.MapBOToEF(bo);
@@ -31,12 +29,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALChainStatusMapper();
-
                         ChainStatus entity = new ChainStatus();
-
                         entity.SetProperties(1, "A");
 
-                        BOChainStatus  response = mapper.MapEFToBO(entity);
+                        BOChainStatus response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -46,9 +42,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALChainStatusMapper();
-
                         ChainStatus entity = new ChainStatus();
-
                         entity.SetProperties(1, "A");
 
                         List<BOChainStatus> response = mapper.MapEFToBO(new List<ChainStatus>() { entity });
@@ -59,5 +53,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>747c9eff300e7264af7cffe86a7b0610</Hash>
+    <Hash>b10a38fa34e7cd167e569e66b1fbe601</Hash>
 </Codenesium>*/

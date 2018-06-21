@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiShiftRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiShiftRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiShiftRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiShiftRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Shift()));
 
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -120,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(new Shift()));
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiShiftRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
                 }
@@ -132,7 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shiftRepository.Setup(x => x.ByStartTimeEndTime(It.IsAny<TimeSpan>(), It.IsAny<TimeSpan>())).Returns(Task.FromResult<Shift>(null));
                         var validator = new ApiShiftRequestModelValidator(shiftRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiShiftRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiShiftRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.EndTime, TimeSpan.Parse("0"));
                 }
@@ -140,5 +135,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b995b835dab73e236432e58bde02c708</Hash>
+    <Hash>fcc53d524f5643aee5075b6962b06150</Hash>
 </Codenesium>*/

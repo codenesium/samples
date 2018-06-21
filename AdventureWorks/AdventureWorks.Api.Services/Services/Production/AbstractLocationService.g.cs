@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractLocationService: AbstractService
+        public abstract class AbstractLocationService : AbstractService
         {
                 private ILocationRepository locationRepository;
 
@@ -36,18 +36,12 @@ namespace AdventureWorksNS.Api.Services
                         ILocationRepository locationRepository,
                         IApiLocationRequestModelValidator locationModelValidator,
                         IBOLLocationMapper bolLocationMapper,
-                        IDALLocationMapper dalLocationMapper
-
-                        ,
+                        IDALLocationMapper dalLocationMapper,
                         IBOLProductInventoryMapper bolProductInventoryMapper,
-                        IDALProductInventoryMapper dalProductInventoryMapper
-                        ,
+                        IDALProductInventoryMapper dalProductInventoryMapper,
                         IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
-                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
-
-                        )
+                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
                         : base()
-
                 {
                         this.locationRepository = locationRepository;
                         this.locationModelValidator = locationModelValidator;
@@ -87,7 +81,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.locationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolLocationMapper.MapModelToBO(default (short), model);
+                                var bo = this.bolLocationMapper.MapModelToBO(default(short), model);
                                 var record = await this.locationRepository.Create(this.dalLocationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiLocationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateUpdateAsync(locationID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolLocationMapper.MapModelToBO(locationID, model);
@@ -115,7 +108,6 @@ namespace AdventureWorksNS.Api.Services
                         short locationID)
                 {
                         ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateDeleteAsync(locationID));
-
                         if (response.Success)
                         {
                                 await this.locationRepository.Delete(locationID);
@@ -144,6 +136,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<WorkOrderRouting> records = await this.locationRepository.WorkOrderRoutings(locationID, limit, offset);
@@ -154,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>139969f52aac11c4b0f72d1300754fe0</Hash>
+    <Hash>d3e43767734b68895f66b1753e62bf2c</Hash>
 </Codenesium>*/

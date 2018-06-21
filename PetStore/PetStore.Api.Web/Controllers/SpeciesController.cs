@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PetStoreNS.Api.Web
 {
         [Route("api/species")]
         [ApiVersion("1.0")]
-        public class SpeciesController: AbstractSpeciesController
+        public class SpeciesController : AbstractSpeciesController
         {
                 public SpeciesController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>aedadef8f4aaf6ca20e7f156ff91330a</Hash>
+    <Hash>69337ac0d1336aef2f70fa44440349aa</Hash>
 </Codenesium>*/

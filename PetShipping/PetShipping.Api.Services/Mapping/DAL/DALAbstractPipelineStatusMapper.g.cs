@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOPipelineStatus bo)
                 {
                         PipelineStatus efPipelineStatus = new PipelineStatus();
-
                         efPipelineStatus.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f85400f682d41a4ea3c7b69e8aa8092c</Hash>
+    <Hash>729f063a1339e2e1c6c4b49c6c97a6aa</Hash>
 </Codenesium>*/

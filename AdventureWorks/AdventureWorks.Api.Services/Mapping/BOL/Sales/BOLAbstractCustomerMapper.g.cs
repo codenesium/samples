@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOCustomer boCustomer = new BOCustomer();
-
                         boCustomer.SetProperties(
                                 customerID,
                                 model.AccountNumber,
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>125397937ec86bbdc6297bd31d4289f3</Hash>
+    <Hash>95147c55fa3af9037411ed99fd16cb16</Hash>
 </Codenesium>*/

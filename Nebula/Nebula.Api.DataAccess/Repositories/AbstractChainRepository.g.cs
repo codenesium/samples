@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractChainRepository: AbstractRepository
+        public abstract class AbstractChainRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,26 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Clasp>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Clasp>().Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
+                }
+
+                public async virtual Task<List<Link>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
+                }
+
+                public async virtual Task<ChainStatus> GetChainStatus(int chainStatusId)
+                {
+                        return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
+                }
+
+                public async virtual Task<Team> GetTeam(int teamId)
+                {
+                        return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
+                }
+
                 protected async Task<List<Chain>> Where(
                         Expression<Func<Chain, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,27 +124,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Clasp>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Clasp>().Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
-                }
-                public async virtual Task<List<Link>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
-                }
-
-                public async virtual Task<ChainStatus> GetChainStatus(int chainStatusId)
-                {
-                        return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
-                }
-                public async virtual Task<Team> GetTeam(int teamId)
-                {
-                        return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>3d8b814c13db98d133c4c27fe3607263</Hash>
+    <Hash>b6d2fc962ef8845cc3667a9b8e1f99a8</Hash>
 </Codenesium>*/

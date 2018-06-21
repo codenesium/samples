@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractOctopusServerNodeService: AbstractService
+        public abstract class AbstractOctopusServerNodeService : AbstractService
         {
                 private IOctopusServerNodeRepository octopusServerNodeRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IOctopusServerNodeRepository octopusServerNodeRepository,
                         IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator,
                         IBOLOctopusServerNodeMapper bolOctopusServerNodeMapper,
-                        IDALOctopusServerNodeMapper dalOctopusServerNodeMapper
-
-                        )
+                        IDALOctopusServerNodeMapper dalOctopusServerNodeMapper)
                         : base()
-
                 {
                         this.octopusServerNodeRepository = octopusServerNodeRepository;
                         this.octopusServerNodeModelValidator = octopusServerNodeModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiOctopusServerNodeResponseModel> response = new CreateResponse<ApiOctopusServerNodeResponseModel>(await this.octopusServerNodeModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolOctopusServerNodeMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolOctopusServerNodeMapper.MapModelToBO(default(string), model);
                                 var record = await this.octopusServerNodeRepository.Create(this.dalOctopusServerNodeMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiOctopusServerNodeRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.octopusServerNodeModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolOctopusServerNodeMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.octopusServerNodeModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.octopusServerNodeRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4d43ef3b109e60a8c193d6264cb7902</Hash>
+    <Hash>35600a7f31e39ed445ea68efc53df6ff</Hash>
 </Codenesium>*/

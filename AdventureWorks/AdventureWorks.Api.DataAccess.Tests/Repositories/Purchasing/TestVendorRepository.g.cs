@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new VendorRepository(loggerMoc.Object, context);
 
                         Vendor entity = new Vendor();
-
                         context.Set<Vendor>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new VendorRepository(loggerMoc.Object, context);
 
                         Vendor entity = new Vendor();
-
                         context.Set<Vendor>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new VendorRepository(loggerMoc.Object, context);
 
                         var entity = new Vendor();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Vendor>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<VendorRepository>> loggerMoc = VendorRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VendorRepositoryMoc.GetContext();
                         var repository = new VendorRepository(loggerMoc.Object, context);
-
                         Vendor entity = new Vendor();
-
                         context.Set<Vendor>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<VendorRepository>> loggerMoc = VendorRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VendorRepositoryMoc.GetContext();
                         var repository = new VendorRepository(loggerMoc.Object, context);
-
                         Vendor entity = new Vendor();
-
                         context.Set<Vendor>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<VendorRepository>> loggerMoc = VendorRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VendorRepositoryMoc.GetContext();
                         var repository = new VendorRepository(loggerMoc.Object, context);
-
                         Vendor entity = new Vendor();
-
                         context.Set<Vendor>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         Vendor modifiedRecord = await context.Set<Vendor>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e4ea1d65eb53fb84014d6acf19e52e67</Hash>
+    <Hash>dc71dd5dbc49d0efc4981fe318f0fd6d</Hash>
 </Codenesium>*/

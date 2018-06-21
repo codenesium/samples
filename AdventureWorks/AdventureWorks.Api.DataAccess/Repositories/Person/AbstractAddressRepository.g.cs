@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractAddressRepository: AbstractRepository
+        public abstract class AbstractAddressRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<Address>> ByStateProvinceID(int stateProvinceID)
                 {
                         var records = await this.Where(x => x.StateProvinceID == stateProvinceID);
 
                         return records;
+                }
+
+                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressID == addressID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
                 }
 
                 protected async Task<List<Address>> Where(
@@ -117,14 +123,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressID == addressID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f17e320993befa1f464e13aa91daefa3</Hash>
+    <Hash>a256c07636f779b20661513385831bf9</Hash>
 </Codenesium>*/

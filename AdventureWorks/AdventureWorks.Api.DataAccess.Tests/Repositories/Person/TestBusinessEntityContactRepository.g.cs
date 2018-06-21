@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new BusinessEntityContactRepository(loggerMoc.Object, context);
 
                         BusinessEntityContact entity = new BusinessEntityContact();
-
                         context.Set<BusinessEntityContact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new BusinessEntityContactRepository(loggerMoc.Object, context);
 
                         BusinessEntityContact entity = new BusinessEntityContact();
-
                         context.Set<BusinessEntityContact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new BusinessEntityContactRepository(loggerMoc.Object, context);
 
                         var entity = new BusinessEntityContact();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<BusinessEntityContact>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<BusinessEntityContactRepository>> loggerMoc = BusinessEntityContactRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BusinessEntityContactRepositoryMoc.GetContext();
                         var repository = new BusinessEntityContactRepository(loggerMoc.Object, context);
-
                         BusinessEntityContact entity = new BusinessEntityContact();
-
                         context.Set<BusinessEntityContact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<BusinessEntityContactRepository>> loggerMoc = BusinessEntityContactRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BusinessEntityContactRepositoryMoc.GetContext();
                         var repository = new BusinessEntityContactRepository(loggerMoc.Object, context);
-
                         BusinessEntityContact entity = new BusinessEntityContact();
-
                         context.Set<BusinessEntityContact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<BusinessEntityContactRepository>> loggerMoc = BusinessEntityContactRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BusinessEntityContactRepositoryMoc.GetContext();
                         var repository = new BusinessEntityContactRepository(loggerMoc.Object, context);
-
                         BusinessEntityContact entity = new BusinessEntityContact();
-
                         context.Set<BusinessEntityContact>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         BusinessEntityContact modifiedRecord = await context.Set<BusinessEntityContact>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f633be5ec6561bcf8e8fea9a71b95930</Hash>
+    <Hash>f45b37950ccde4402d7fc0abc92d089f</Hash>
 </Codenesium>*/

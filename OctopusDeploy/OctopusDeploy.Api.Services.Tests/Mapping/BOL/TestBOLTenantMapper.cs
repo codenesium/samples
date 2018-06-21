@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Tenant")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTenantActionMapper
+        public class TestBOLTenantMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTenantMapper();
-
                         ApiTenantRequestModel model = new ApiTenantRequestModel();
-
                         model.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", "A");
                         BOTenant response = mapper.MapModelToBO("A", model);
 
@@ -34,9 +32,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTenantMapper();
-
                         BOTenant bo = new BOTenant();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", "A", "A");
                         ApiTenantResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTenantMapper();
-
                         BOTenant bo = new BOTenant();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", "A", "A");
                         List<ApiTenantResponseModel> response = mapper.MapBOToModel(new List<BOTenant>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fc43120e48a1e3f9864cebd317374425</Hash>
+    <Hash>b054f410bd67aa94f1fe5c63b1ea8822</Hash>
 </Codenesium>*/

@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiSaleTicketsRequestModelValidator: AbstractValidator<ApiSaleTicketsRequestModel>
+        public abstract class AbstractApiSaleTicketsRequestModelValidator : AbstractValidator<ApiSaleTicketsRequestModel>
         {
                 private int existingRecordId;
 
-                ISaleTicketsRepository saleTicketsRepository;
+                private ISaleTicketsRepository saleTicketsRepository;
 
                 public AbstractApiSaleTicketsRequestModelValidator(ISaleTicketsRepository saleTicketsRepository)
                 {
@@ -28,12 +28,12 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void SaleIdRules()
                 {
-                        this.RuleFor(x => x.SaleId).MustAsync(this.BeValidSale).When(x => x ?.SaleId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.SaleId).MustAsync(this.BeValidSale).When(x => x?.SaleId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TicketIdRules()
                 {
-                        this.RuleFor(x => x.TicketId).MustAsync(this.BeValidTicket).When(x => x ?.TicketId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TicketId).MustAsync(this.BeValidTicket).When(x => x?.TicketId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidSale(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>190485a80e9db0fec3a73a2a1bc8ef69</Hash>
+    <Hash>8ad6a2f7be0ae499f23e1441f6a1ebc1</Hash>
 </Codenesium>*/

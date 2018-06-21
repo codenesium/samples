@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 
                         PhoneNumberType entity = new PhoneNumberType();
-
                         context.Set<PhoneNumberType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 
                         PhoneNumberType entity = new PhoneNumberType();
-
                         context.Set<PhoneNumberType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
 
                         var entity = new PhoneNumberType();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<PhoneNumberType>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PhoneNumberTypeRepository>> loggerMoc = PhoneNumberTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
                         var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
-
                         PhoneNumberType entity = new PhoneNumberType();
-
                         context.Set<PhoneNumberType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PhoneNumberTypeRepository>> loggerMoc = PhoneNumberTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
                         var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
-
                         PhoneNumberType entity = new PhoneNumberType();
-
                         context.Set<PhoneNumberType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PhoneNumberTypeRepository>> loggerMoc = PhoneNumberTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PhoneNumberTypeRepositoryMoc.GetContext();
                         var repository = new PhoneNumberTypeRepository(loggerMoc.Object, context);
-
                         PhoneNumberType entity = new PhoneNumberType();
-
                         context.Set<PhoneNumberType>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.PhoneNumberTypeID);
 
                         PhoneNumberType modifiedRecord = await context.Set<PhoneNumberType>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9abf0f806b172686253f6659f576ed71</Hash>
+    <Hash>1ea75af32f3f24ba0cb46c6b2cfa741e</Hash>
 </Codenesium>*/

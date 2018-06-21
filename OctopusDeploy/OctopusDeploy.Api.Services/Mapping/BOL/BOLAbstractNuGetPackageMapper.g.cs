@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BONuGetPackage boNuGetPackage = new BONuGetPackage();
-
                         boNuGetPackage.SetProperties(
                                 id,
                                 model.JSON,
@@ -53,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4e8a710b320ddee36b056876011ebab</Hash>
+    <Hash>ec530d007f8bcb2ae7d147a3e8900647</Hash>
 </Codenesium>*/

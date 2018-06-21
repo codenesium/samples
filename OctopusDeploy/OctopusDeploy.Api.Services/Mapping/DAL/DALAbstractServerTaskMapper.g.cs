@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOServerTask bo)
                 {
                         ServerTask efServerTask = new ServerTask();
-
                         efServerTask.SetProperties(
                                 bo.CompletedTime,
                                 bo.ConcurrencyTag,
@@ -76,5 +75,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8212623c3207998042dff7b5e1e8fd57</Hash>
+    <Hash>980e6d8afb6edc282c8d97a212fbfba3</Hash>
 </Codenesium>*/

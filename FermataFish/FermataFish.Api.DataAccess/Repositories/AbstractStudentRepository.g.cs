@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractStudentRepository: AbstractRepository
+        public abstract class AbstractStudentRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,31 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<LessonXStudent>> LessonXStudents(int studentId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<LessonXStudent>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXStudent>();
+                }
+
+                public async virtual Task<List<LessonXTeacher>> LessonXTeachers(int studentId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<LessonXTeacher>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
+                }
+
+                public async virtual Task<List<StudentXFamily>> StudentXFamilies(int studentId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<StudentXFamily>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<StudentXFamily>();
+                }
+
+                public async virtual Task<Family> GetFamily(int familyId)
+                {
+                        return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
+                }
+
+                public async virtual Task<Studio> GetStudio(int studioId)
+                {
+                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
+                }
+
                 protected async Task<List<Student>> Where(
                         Expression<Func<Student, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,31 +129,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<LessonXStudent>> LessonXStudents(int studentId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<LessonXStudent>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXStudent>();
-                }
-                public async virtual Task<List<LessonXTeacher>> LessonXTeachers(int studentId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<LessonXTeacher>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
-                }
-                public async virtual Task<List<StudentXFamily>> StudentXFamilies(int studentId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<StudentXFamily>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<StudentXFamily>();
-                }
-
-                public async virtual Task<Family> GetFamily(int familyId)
-                {
-                        return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
-                }
-                public async virtual Task<Studio> GetStudio(int studioId)
-                {
-                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>84b4bf1d0dc5c3ac39121ba84613ae11</Hash>
+    <Hash>da9522805478c8c4d1f08a9c91df08c9</Hash>
 </Codenesium>*/

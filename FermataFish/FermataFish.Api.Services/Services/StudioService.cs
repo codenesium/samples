@@ -1,90 +1,70 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public class StudioService: AbstractStudioService, IStudioService
+        public class StudioService : AbstractStudioService, IStudioService
         {
                 public StudioService(
                         ILogger<IStudioRepository> logger,
                         IStudioRepository studioRepository,
                         IApiStudioRequestModelValidator studioModelValidator,
                         IBOLStudioMapper bolstudioMapper,
-                        IDALStudioMapper dalstudioMapper
-                        ,
+                        IDALStudioMapper dalstudioMapper,
                         IBOLAdminMapper bolAdminMapper,
-                        IDALAdminMapper dalAdminMapper
-                        ,
+                        IDALAdminMapper dalAdminMapper,
                         IBOLFamilyMapper bolFamilyMapper,
-                        IDALFamilyMapper dalFamilyMapper
-                        ,
+                        IDALFamilyMapper dalFamilyMapper,
                         IBOLLessonMapper bolLessonMapper,
-                        IDALLessonMapper dalLessonMapper
-                        ,
+                        IDALLessonMapper dalLessonMapper,
                         IBOLLessonStatusMapper bolLessonStatusMapper,
-                        IDALLessonStatusMapper dalLessonStatusMapper
-                        ,
+                        IDALLessonStatusMapper dalLessonStatusMapper,
                         IBOLSpaceMapper bolSpaceMapper,
-                        IDALSpaceMapper dalSpaceMapper
-                        ,
+                        IDALSpaceMapper dalSpaceMapper,
                         IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
-                        IDALSpaceFeatureMapper dalSpaceFeatureMapper
-                        ,
+                        IDALSpaceFeatureMapper dalSpaceFeatureMapper,
                         IBOLStudentMapper bolStudentMapper,
-                        IDALStudentMapper dalStudentMapper
-                        ,
+                        IDALStudentMapper dalStudentMapper,
                         IBOLTeacherMapper bolTeacherMapper,
-                        IDALTeacherMapper dalTeacherMapper
-                        ,
+                        IDALTeacherMapper dalTeacherMapper,
                         IBOLTeacherSkillMapper bolTeacherSkillMapper,
                         IDALTeacherSkillMapper dalTeacherSkillMapper
-
                         )
                         : base(logger,
                                studioRepository,
                                studioModelValidator,
                                bolstudioMapper,
-                               dalstudioMapper
-                               ,
+                               dalstudioMapper,
                                bolAdminMapper,
-                               dalAdminMapper
-                               ,
+                               dalAdminMapper,
                                bolFamilyMapper,
-                               dalFamilyMapper
-                               ,
+                               dalFamilyMapper,
                                bolLessonMapper,
-                               dalLessonMapper
-                               ,
+                               dalLessonMapper,
                                bolLessonStatusMapper,
-                               dalLessonStatusMapper
-                               ,
+                               dalLessonStatusMapper,
                                bolSpaceMapper,
-                               dalSpaceMapper
-                               ,
+                               dalSpaceMapper,
                                bolSpaceFeatureMapper,
-                               dalSpaceFeatureMapper
-                               ,
+                               dalSpaceFeatureMapper,
                                bolStudentMapper,
-                               dalStudentMapper
-                               ,
+                               dalStudentMapper,
                                bolTeacherMapper,
-                               dalTeacherMapper
-                               ,
+                               dalTeacherMapper,
                                bolTeacherSkillMapper,
-                               dalTeacherSkillMapper
-                               )
+                               dalTeacherSkillMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d88e003d908a77157e02d7fabcfa5be2</Hash>
+    <Hash>276b945ea171767c815584fb73d62ecb</Hash>
 </Codenesium>*/

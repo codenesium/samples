@@ -1,12 +1,13 @@
-using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public partial class ApplicationDbContext: DbContext
+        public partial class ApplicationDbContext : DbContext
         {
                 public Guid UserId { get; private set; }
 
@@ -17,17 +18,13 @@ namespace OctopusDeployNS.Api.DataAccess
                 {
                 }
 
-                protected override void OnConfiguring(DbContextOptionsBuilder options)
-                {
-                        base.OnConfiguring(options);
-                }
-
                 public void SetUserId(Guid userId)
                 {
-                        if (userId == default (Guid))
+                        if (userId == default(Guid))
                         {
                                 throw new ArgumentException("UserId cannot be a default value");
                         }
+
                         this.UserId = userId;
                 }
 
@@ -37,6 +34,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         {
                                 throw new ArgumentException("TenantId must be greater than 0");
                         }
+
                         this.TenantId = tenantId;
                 }
 
@@ -133,9 +131,14 @@ namespace OctopusDeployNS.Api.DataAccess
                 public virtual DbSet<WorkerPool> WorkerPools { get; set; }
 
                 public virtual DbSet<WorkerTaskLease> WorkerTaskLeases { get; set; }
+
+                protected override void OnConfiguring(DbContextOptionsBuilder options)
+                {
+                        base.OnConfiguring(options);
+                }
         }
 
-        public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+        public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
                 public ApplicationDbContext CreateDbContext(string[] args)
                 {
@@ -160,5 +163,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e69bce084d1884ef04f808b2f3b792ba</Hash>
+    <Hash>5579731558be69862616020230639f91</Hash>
 </Codenesium>*/

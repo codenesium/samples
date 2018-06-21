@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Location")]
         [Trait("Area", "DALMapper")]
-        public class TestDALLocationActionMapper
+        public class TestDALLocationMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALLocationMapper();
-
                         var bo = new BOLocation();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         Location response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALLocationMapper();
-
                         Location entity = new Location();
-
                         entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        BOLocation  response = mapper.MapEFToBO(entity);
+                        BOLocation response = mapper.MapEFToBO(entity);
 
                         response.Availability.Should().Be(1);
                         response.CostRate.Should().Be(1);
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALLocationMapper();
-
                         Location entity = new Location();
-
                         entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOLocation> response = mapper.MapEFToBO(new List<Location>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9457cc1efb5494e7094d4cd6a4ed2933</Hash>
+    <Hash>3bb307f9dafeabab10548e9d545adcce</Hash>
 </Codenesium>*/

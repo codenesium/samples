@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractMachinePolicyService: AbstractService
+        public abstract class AbstractMachinePolicyService : AbstractService
         {
                 private IMachinePolicyRepository machinePolicyRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IMachinePolicyRepository machinePolicyRepository,
                         IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
                         IBOLMachinePolicyMapper bolMachinePolicyMapper,
-                        IDALMachinePolicyMapper dalMachinePolicyMapper
-
-                        )
+                        IDALMachinePolicyMapper dalMachinePolicyMapper)
                         : base()
-
                 {
                         this.machinePolicyRepository = machinePolicyRepository;
                         this.machinePolicyModelValidator = machinePolicyModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiMachinePolicyResponseModel> response = new CreateResponse<ApiMachinePolicyResponseModel>(await this.machinePolicyModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolMachinePolicyMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolMachinePolicyMapper.MapModelToBO(default(string), model);
                                 var record = await this.machinePolicyRepository.Create(this.dalMachinePolicyMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiMachinePolicyRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.machinePolicyModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolMachinePolicyMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.machinePolicyModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.machinePolicyRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3229cff603d827a53acb850d2f7fde14</Hash>
+    <Hash>c12c0f99cb2a4cf4f437e0d805756328</Hash>
 </Codenesium>*/

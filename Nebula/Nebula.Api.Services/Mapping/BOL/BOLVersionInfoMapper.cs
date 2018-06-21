@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLVersionInfoMapper: BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
+        public class BOLVersionInfoMapper : BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
         {
                 public BOLVersionInfoMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c1786c9b86f07a68fd12ddd3842f3b68</Hash>
+    <Hash>4d57340ffd17713a77879a37650699e8</Hash>
 </Codenesium>*/

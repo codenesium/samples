@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("ProductVendor", Schema="Purchasing")]
-        public partial class ProductVendor: AbstractEntity
+        public partial class ProductVendor : AbstractEntity
         {
                 public ProductVendor()
                 {
@@ -38,42 +38,42 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.UnitMeasureCode = unitMeasureCode;
                 }
 
-                [Column("AverageLeadTime", TypeName="int")]
+                [Column("AverageLeadTime")]
                 public int AverageLeadTime { get; private set; }
 
-                [Column("BusinessEntityID", TypeName="int")]
+                [Column("BusinessEntityID")]
                 public int BusinessEntityID { get; private set; }
 
-                [Column("LastReceiptCost", TypeName="money")]
+                [Column("LastReceiptCost")]
                 public Nullable<decimal> LastReceiptCost { get; private set; }
 
-                [Column("LastReceiptDate", TypeName="datetime")]
+                [Column("LastReceiptDate")]
                 public Nullable<DateTime> LastReceiptDate { get; private set; }
 
-                [Column("MaxOrderQty", TypeName="int")]
+                [Column("MaxOrderQty")]
                 public int MaxOrderQty { get; private set; }
 
-                [Column("MinOrderQty", TypeName="int")]
+                [Column("MinOrderQty")]
                 public int MinOrderQty { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("OnOrderQty", TypeName="int")]
+                [Column("OnOrderQty")]
                 public Nullable<int> OnOrderQty { get; private set; }
 
                 [Key]
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
-                [Column("StandardPrice", TypeName="money")]
+                [Column("StandardPrice")]
                 public decimal StandardPrice { get; private set; }
 
-                [Column("UnitMeasureCode", TypeName="nchar(3)")]
+                [Column("UnitMeasureCode")]
                 public string UnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9d72816a97391cc6b149fc7fceb39409</Hash>
+    <Hash>42f94b207bb951d4685c37dcaecbdba0</Hash>
 </Codenesium>*/

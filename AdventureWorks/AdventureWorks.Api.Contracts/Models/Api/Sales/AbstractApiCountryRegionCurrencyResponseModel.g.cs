@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiCountryRegionCurrencyResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiCountryRegionCurrencyResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string countryRegionCode,
@@ -63,5 +63,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>517b021a3736d5f0593f628573cc18b2</Hash>
+    <Hash>7ec8f493525bd06aab3eece944ef959b</Hash>
 </Codenesium>*/

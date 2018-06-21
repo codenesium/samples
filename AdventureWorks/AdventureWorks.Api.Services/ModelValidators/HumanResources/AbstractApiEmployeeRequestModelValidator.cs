@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiEmployeeRequestModelValidator: AbstractValidator<ApiEmployeeRequestModel>
+        public abstract class AbstractApiEmployeeRequestModelValidator : AbstractValidator<ApiEmployeeRequestModel>
         {
                 private int existingRecordId;
 
-                IEmployeeRepository employeeRepository;
+                private IEmployeeRepository employeeRepository;
 
                 public AbstractApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
                 {
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void LoginIDRules()
                 {
                         this.RuleFor(x => x.LoginID).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByLoginID).When(x => x ?.LoginID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.LoginID));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByLoginID).When(x => x?.LoginID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.LoginID));
                         this.RuleFor(x => x.LoginID).Length(0, 256);
                 }
 
@@ -70,7 +70,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NationalIDNumberRules()
                 {
                         this.RuleFor(x => x.NationalIDNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByNationalIDNumber).When(x => x ?.NationalIDNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.NationalIDNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByNationalIDNumber).When(x => x?.NationalIDNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiEmployeeRequestModel.NationalIDNumber));
                         this.RuleFor(x => x.NationalIDNumber).Length(0, 15);
                 }
 
@@ -98,7 +98,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Employee record = await this.employeeRepository.ByLoginID(model.LoginID);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -107,11 +107,12 @@ namespace AdventureWorksNS.Api.Services
                                 return false;
                         }
                 }
+
                 private async Task<bool> BeUniqueByNationalIDNumber(ApiEmployeeRequestModel model,  CancellationToken cancellationToken)
                 {
                         Employee record = await this.employeeRepository.ByNationalIDNumber(model.NationalIDNumber);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.BusinessEntityID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.BusinessEntityID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -124,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>038fe8cb90dc854dfe1770f877761652</Hash>
+    <Hash>d99ed8ae45200525072d129a7f80c14a</Hash>
 </Codenesium>*/

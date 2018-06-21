@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.DeviceId, 1);
@@ -57,8 +56,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeviceActionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.DeviceId, 1);
                 }
@@ -71,7 +69,7 @@ namespace ESPIOTNS.Api.Services.Tests
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeviceActionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeviceId, 1);
                 }
@@ -83,7 +81,6 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -96,8 +93,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeviceActionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -109,7 +105,6 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
@@ -122,8 +117,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeviceActionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
                 }
@@ -135,8 +129,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -148,7 +141,6 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Value, null as string);
@@ -161,8 +153,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeviceActionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Value, null as string);
                 }
@@ -174,7 +165,6 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
@@ -187,8 +177,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeviceActionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Value, new string('A', 4001));
                 }
@@ -200,8 +189,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
 
                         var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -209,5 +197,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c2b469911cc926e51c8634b6d427e59a</Hash>
+    <Hash>38388d0c53d647348372ac1bbcfa6d83</Hash>
 </Codenesium>*/

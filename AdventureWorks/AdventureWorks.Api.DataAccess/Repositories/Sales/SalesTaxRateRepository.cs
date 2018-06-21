@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class SalesTaxRateRepository: AbstractSalesTaxRateRepository, ISalesTaxRateRepository
+        public class SalesTaxRateRepository : AbstractSalesTaxRateRepository, ISalesTaxRateRepository
         {
                 public SalesTaxRateRepository(
                         ILogger<SalesTaxRateRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72ac96027e3d97abe32aa436fc555174</Hash>
+    <Hash>5cb0b3850292f997546ba0f05eb259dd</Hash>
 </Codenesium>*/

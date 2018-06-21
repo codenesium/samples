@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("KeyAllocation", Schema="dbo")]
-        public partial class KeyAllocation: AbstractEntity
+        public partial class KeyAllocation : AbstractEntity
         {
                 public KeyAllocation()
                 {
@@ -20,15 +20,15 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.CollectionName = collectionName;
                 }
 
-                [Column("Allocated", TypeName="int")]
+                [Column("Allocated")]
                 public int Allocated { get; private set; }
 
                 [Key]
-                [Column("CollectionName", TypeName="nvarchar(50)")]
+                [Column("CollectionName")]
                 public string CollectionName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>97bc995d89d277f522d35733dca224e2</Hash>
+    <Hash>01e8a35db0174cb763d9bd14933aa669</Hash>
 </Codenesium>*/

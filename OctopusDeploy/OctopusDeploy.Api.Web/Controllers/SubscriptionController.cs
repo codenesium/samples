@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/subscriptions")]
         [ApiVersion("1.0")]
-        public class SubscriptionController: AbstractSubscriptionController
+        public class SubscriptionController : AbstractSubscriptionController
         {
                 public SubscriptionController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dad9b591c080f71947d815e77c01efa6</Hash>
+    <Hash>2cf7a8733242f790fd60bb30e1a60d83</Hash>
 </Codenesium>*/

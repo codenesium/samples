@@ -4,7 +4,7 @@ using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class DALPipelineStepStatusMapper: DALAbstractPipelineStepStatusMapper, IDALPipelineStepStatusMapper
+        public class DALPipelineStepStatusMapper : DALAbstractPipelineStepStatusMapper, IDALPipelineStepStatusMapper
         {
                 public DALPipelineStepStatusMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f25362dde69cf7c81cba03748a364d8</Hash>
+    <Hash>25964da974605728419db06e022f74ca</Hash>
 </Codenesium>*/

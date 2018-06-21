@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new EmployeeRepository(loggerMoc.Object, context);
 
                         Employee entity = new Employee();
-
                         context.Set<Employee>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new EmployeeRepository(loggerMoc.Object, context);
 
                         Employee entity = new Employee();
-
                         context.Set<Employee>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new EmployeeRepository(loggerMoc.Object, context);
 
                         var entity = new Employee();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Employee>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<EmployeeRepository>> loggerMoc = EmployeeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeeRepositoryMoc.GetContext();
                         var repository = new EmployeeRepository(loggerMoc.Object, context);
-
                         Employee entity = new Employee();
-
                         context.Set<Employee>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<EmployeeRepository>> loggerMoc = EmployeeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeeRepositoryMoc.GetContext();
                         var repository = new EmployeeRepository(loggerMoc.Object, context);
-
                         Employee entity = new Employee();
-
                         context.Set<Employee>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<EmployeeRepository>> loggerMoc = EmployeeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeeRepositoryMoc.GetContext();
                         var repository = new EmployeeRepository(loggerMoc.Object, context);
-
                         Employee entity = new Employee();
-
                         context.Set<Employee>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Employee modifiedRecord = await context.Set<Employee>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cc40f9ccd1a62c883a176bb0cc64b68c</Hash>
+    <Hash>99c434a8ece00fff9347801964e142b7</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("ServerTask", Schema="dbo")]
-        public partial class ServerTask: AbstractEntity
+        public partial class ServerTask : AbstractEntity
         {
                 public ServerTask()
                 {
@@ -50,60 +50,60 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.TenantId = tenantId;
                 }
 
-                [Column("CompletedTime", TypeName="datetimeoffset")]
+                [Column("CompletedTime")]
                 public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
-                [Column("ConcurrencyTag", TypeName="nvarchar(100)")]
+                [Column("ConcurrencyTag")]
                 public string ConcurrencyTag { get; private set; }
 
-                [Column("Description", TypeName="nvarchar(-1)")]
+                [Column("Description")]
                 public string Description { get; private set; }
 
-                [Column("DurationSeconds", TypeName="int")]
+                [Column("DurationSeconds")]
                 public int DurationSeconds { get; private set; }
 
-                [Column("EnvironmentId", TypeName="nvarchar(50)")]
+                [Column("EnvironmentId")]
                 public string EnvironmentId { get; private set; }
 
-                [Column("ErrorMessage", TypeName="nvarchar(-1)")]
+                [Column("ErrorMessage")]
                 public string ErrorMessage { get; private set; }
 
-                [Column("HasPendingInterruptions", TypeName="bit")]
+                [Column("HasPendingInterruptions")]
                 public bool HasPendingInterruptions { get; private set; }
 
-                [Column("HasWarningsOrErrors", TypeName="bit")]
+                [Column("HasWarningsOrErrors")]
                 public bool HasWarningsOrErrors { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("ProjectId", TypeName="nvarchar(50)")]
+                [Column("ProjectId")]
                 public string ProjectId { get; private set; }
 
-                [Column("QueueTime", TypeName="datetimeoffset")]
+                [Column("QueueTime")]
                 public DateTimeOffset QueueTime { get; private set; }
 
-                [Column("ServerNodeId", TypeName="nvarchar(250)")]
+                [Column("ServerNodeId")]
                 public string ServerNodeId { get; private set; }
 
-                [Column("StartTime", TypeName="datetimeoffset")]
+                [Column("StartTime")]
                 public Nullable<DateTimeOffset> StartTime { get; private set; }
 
-                [Column("State", TypeName="nvarchar(50)")]
+                [Column("State")]
                 public string State { get; private set; }
 
-                [Column("TenantId", TypeName="nvarchar(50)")]
+                [Column("TenantId")]
                 public string TenantId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e94e272554822f7f979c431eea259fc</Hash>
+    <Hash>0fc86304b5ef89564680637c3797b29d</Hash>
 </Codenesium>*/

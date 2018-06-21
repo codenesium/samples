@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("Product", Schema="Production")]
-        public partial class Product: AbstractEntity
+        public partial class Product : AbstractEntity
         {
                 public Product()
                 {
@@ -66,84 +66,84 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.WeightUnitMeasureCode = weightUnitMeasureCode;
                 }
 
-                [Column("Class", TypeName="nchar(2)")]
+                [Column("Class")]
                 public string @Class { get; private set; }
 
-                [Column("Color", TypeName="nvarchar(15)")]
+                [Column("Color")]
                 public string Color { get; private set; }
 
-                [Column("DaysToManufacture", TypeName="int")]
+                [Column("DaysToManufacture")]
                 public int DaysToManufacture { get; private set; }
 
-                [Column("DiscontinuedDate", TypeName="datetime")]
+                [Column("DiscontinuedDate")]
                 public Nullable<DateTime> DiscontinuedDate { get; private set; }
 
-                [Column("FinishedGoodsFlag", TypeName="bit")]
+                [Column("FinishedGoodsFlag")]
                 public bool FinishedGoodsFlag { get; private set; }
 
-                [Column("ListPrice", TypeName="money")]
+                [Column("ListPrice")]
                 public decimal ListPrice { get; private set; }
 
-                [Column("MakeFlag", TypeName="bit")]
+                [Column("MakeFlag")]
                 public bool MakeFlag { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
                 [Key]
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
-                [Column("ProductLine", TypeName="nchar(2)")]
+                [Column("ProductLine")]
                 public string ProductLine { get; private set; }
 
-                [Column("ProductModelID", TypeName="int")]
+                [Column("ProductModelID")]
                 public Nullable<int> ProductModelID { get; private set; }
 
-                [Column("ProductNumber", TypeName="nvarchar(25)")]
+                [Column("ProductNumber")]
                 public string ProductNumber { get; private set; }
 
-                [Column("ProductSubcategoryID", TypeName="int")]
+                [Column("ProductSubcategoryID")]
                 public Nullable<int> ProductSubcategoryID { get; private set; }
 
-                [Column("ReorderPoint", TypeName="smallint")]
+                [Column("ReorderPoint")]
                 public short ReorderPoint { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("SafetyStockLevel", TypeName="smallint")]
+                [Column("SafetyStockLevel")]
                 public short SafetyStockLevel { get; private set; }
 
-                [Column("SellEndDate", TypeName="datetime")]
+                [Column("SellEndDate")]
                 public Nullable<DateTime> SellEndDate { get; private set; }
 
-                [Column("SellStartDate", TypeName="datetime")]
+                [Column("SellStartDate")]
                 public DateTime SellStartDate { get; private set; }
 
-                [Column("Size", TypeName="nvarchar(5)")]
+                [Column("Size")]
                 public string Size { get; private set; }
 
-                [Column("SizeUnitMeasureCode", TypeName="nchar(3)")]
+                [Column("SizeUnitMeasureCode")]
                 public string SizeUnitMeasureCode { get; private set; }
 
-                [Column("StandardCost", TypeName="money")]
+                [Column("StandardCost")]
                 public decimal StandardCost { get; private set; }
 
-                [Column("Style", TypeName="nchar(2)")]
+                [Column("Style")]
                 public string Style { get; private set; }
 
-                [Column("Weight", TypeName="decimal")]
+                [Column("Weight")]
                 public Nullable<decimal> Weight { get; private set; }
 
-                [Column("WeightUnitMeasureCode", TypeName="nchar(3)")]
+                [Column("WeightUnitMeasureCode")]
                 public string WeightUnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>123b7b7ef7f65a272142ed492f4f17b0</Hash>
+    <Hash>d643703252312a59230af462936735d7</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BODeploymentProcess boDeploymentProcess = new BODeploymentProcess();
-
                         boDeploymentProcess.SetProperties(
                                 id,
                                 model.IsFrozen,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e646118dbef15cc35526d1e11b25651</Hash>
+    <Hash>fdf8f81b54af2bc6446e1c9f98f0c855</Hash>
 </Codenesium>*/

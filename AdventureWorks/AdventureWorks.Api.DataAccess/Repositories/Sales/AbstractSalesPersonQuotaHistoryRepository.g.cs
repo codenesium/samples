@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesPersonQuotaHistoryRepository: AbstractRepository
+        public abstract class AbstractSalesPersonQuotaHistoryRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<SalesPerson> GetSalesPerson(int businessEntityID)
+                {
+                        return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
+                }
+
                 protected async Task<List<SalesPersonQuotaHistory>> Where(
                         Expression<Func<SalesPersonQuotaHistory, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<SalesPerson> GetSalesPerson(int businessEntityID)
-                {
-                        return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>029adce9bc5a28a2c33a26227fa6e40b</Hash>
+    <Hash>6ddd03656fe6834791ed44174b78574e</Hash>
 </Codenesium>*/

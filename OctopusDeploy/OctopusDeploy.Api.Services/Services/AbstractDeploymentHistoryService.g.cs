@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractDeploymentHistoryService: AbstractService
+        public abstract class AbstractDeploymentHistoryService : AbstractService
         {
                 private IDeploymentHistoryRepository deploymentHistoryRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentHistoryRepository deploymentHistoryRepository,
                         IApiDeploymentHistoryRequestModelValidator deploymentHistoryModelValidator,
                         IBOLDeploymentHistoryMapper bolDeploymentHistoryMapper,
-                        IDALDeploymentHistoryMapper dalDeploymentHistoryMapper
-
-                        )
+                        IDALDeploymentHistoryMapper dalDeploymentHistoryMapper)
                         : base()
-
                 {
                         this.deploymentHistoryRepository = deploymentHistoryRepository;
                         this.deploymentHistoryModelValidator = deploymentHistoryModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiDeploymentHistoryResponseModel> response = new CreateResponse<ApiDeploymentHistoryResponseModel>(await this.deploymentHistoryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDeploymentHistoryMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolDeploymentHistoryMapper.MapModelToBO(default(string), model);
                                 var record = await this.deploymentHistoryRepository.Create(this.dalDeploymentHistoryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiDeploymentHistoryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentHistoryModelValidator.ValidateUpdateAsync(deploymentId, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDeploymentHistoryMapper.MapModelToBO(deploymentId, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string deploymentId)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentHistoryModelValidator.ValidateDeleteAsync(deploymentId));
-
                         if (response.Success)
                         {
                                 await this.deploymentHistoryRepository.Delete(deploymentId);
@@ -116,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>92dce8bcd8aecaef5bcc4ca68701028c</Hash>
+    <Hash>da2e20235d61b1649e4d357031c78e36</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Country")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCountryActionMapper
+        public class TestBOLCountryMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCountryMapper();
-
                         ApiCountryRequestModel model = new ApiCountryRequestModel();
-
                         model.SetProperties("A");
                         BOCountry response = mapper.MapModelToBO(1, model);
 
@@ -30,9 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCountryMapper();
-
                         BOCountry bo = new BOCountry();
-
                         bo.SetProperties(1, "A");
                         ApiCountryResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCountryMapper();
-
                         BOCountry bo = new BOCountry();
-
                         bo.SetProperties(1, "A");
                         List<ApiCountryResponseModel> response = mapper.MapBOToModel(new List<BOCountry>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>46ef73bc53abc17fc1b640d971f23186</Hash>
+    <Hash>8b199df74f5dea40057fba8bd3899907</Hash>
 </Codenesium>*/

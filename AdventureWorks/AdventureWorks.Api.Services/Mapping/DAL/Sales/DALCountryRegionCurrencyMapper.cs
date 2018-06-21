@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALCountryRegionCurrencyMapper: DALAbstractCountryRegionCurrencyMapper, IDALCountryRegionCurrencyMapper
+        public class DALCountryRegionCurrencyMapper : DALAbstractCountryRegionCurrencyMapper, IDALCountryRegionCurrencyMapper
         {
                 public DALCountryRegionCurrencyMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6533da85b6593c06b5329d6c4774ecd</Hash>
+    <Hash>db1d628b309ab73fb89444508e76cdea</Hash>
 </Codenesium>*/

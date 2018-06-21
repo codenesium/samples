@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-        public abstract class AbstractDeviceRepository: AbstractRepository
+        public abstract class AbstractDeviceRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace ESPIOTNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<DeviceAction>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<DeviceAction>().Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
+                }
+
                 protected async Task<List<Device>> Where(
                         Expression<Func<Device, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace ESPIOTNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<DeviceAction>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<DeviceAction>().Where(x => x.DeviceId == deviceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeviceAction>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>2b3ae02fc58e25e57f6df0c3249680c9</Hash>
+    <Hash>fc635af9186d396311ad4ff2fce2ec07</Hash>
 </Codenesium>*/

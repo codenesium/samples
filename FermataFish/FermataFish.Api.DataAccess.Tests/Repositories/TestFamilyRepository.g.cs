@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new FamilyRepository(loggerMoc.Object, context);
 
                         Family entity = new Family();
-
                         context.Set<Family>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new FamilyRepository(loggerMoc.Object, context);
 
                         Family entity = new Family();
-
                         context.Set<Family>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new FamilyRepository(loggerMoc.Object, context);
 
                         var entity = new Family();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Family>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
                         var repository = new FamilyRepository(loggerMoc.Object, context);
-
                         Family entity = new Family();
-
                         context.Set<Family>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
                         var repository = new FamilyRepository(loggerMoc.Object, context);
-
                         Family entity = new Family();
-
                         context.Set<Family>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<FamilyRepository>> loggerMoc = FamilyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FamilyRepositoryMoc.GetContext();
                         var repository = new FamilyRepository(loggerMoc.Object, context);
-
                         Family entity = new Family();
-
                         context.Set<Family>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Family modifiedRecord = await context.Set<Family>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>eff7f25a5a9a96b7aa4102526c5ba0eb</Hash>
+    <Hash>bf194b2c61d2c7ac241946f10f0a37fe</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiPersonRequestModelValidator: AbstractValidator<ApiPersonRequestModel>
+        public abstract class AbstractApiPersonRequestModelValidator : AbstractValidator<ApiPersonRequestModel>
         {
                 private int existingRecordId;
 
-                IPersonRepository personRepository;
+                private IPersonRepository personRepository;
 
                 public AbstractApiPersonRequestModelValidator(IPersonRepository personRepository)
                 {
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>050c8bc6fd7b80dd1faa2965198b2597</Hash>
+    <Hash>7280df2b57e227211bec92b4601fcfda</Hash>
 </Codenesium>*/

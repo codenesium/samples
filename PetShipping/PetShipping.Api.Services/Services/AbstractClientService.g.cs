@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractClientService: AbstractService
+        public abstract class AbstractClientService : AbstractService
         {
                 private IClientRepository clientRepository;
 
@@ -39,21 +39,14 @@ namespace PetShippingNS.Api.Services
                         IClientRepository clientRepository,
                         IApiClientRequestModelValidator clientModelValidator,
                         IBOLClientMapper bolClientMapper,
-                        IDALClientMapper dalClientMapper
-
-                        ,
+                        IDALClientMapper dalClientMapper,
                         IBOLClientCommunicationMapper bolClientCommunicationMapper,
-                        IDALClientCommunicationMapper dalClientCommunicationMapper
-                        ,
+                        IDALClientCommunicationMapper dalClientCommunicationMapper,
                         IBOLPetMapper bolPetMapper,
-                        IDALPetMapper dalPetMapper
-                        ,
+                        IDALPetMapper dalPetMapper,
                         IBOLSaleMapper bolSaleMapper,
-                        IDALSaleMapper dalSaleMapper
-
-                        )
+                        IDALSaleMapper dalSaleMapper)
                         : base()
-
                 {
                         this.clientRepository = clientRepository;
                         this.clientModelValidator = clientModelValidator;
@@ -95,7 +88,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiClientResponseModel> response = new CreateResponse<ApiClientResponseModel>(await this.clientModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolClientMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolClientMapper.MapModelToBO(default(int), model);
                                 var record = await this.clientRepository.Create(this.dalClientMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolClientMapper.MapBOToModel(this.dalClientMapper.MapEFToBO(record)));
@@ -109,7 +102,6 @@ namespace PetShippingNS.Api.Services
                         ApiClientRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolClientMapper.MapModelToBO(id, model);
@@ -123,7 +115,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.clientModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.clientRepository.Delete(id);
@@ -138,12 +129,14 @@ namespace PetShippingNS.Api.Services
 
                         return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiPetResponseModel>> Pets(int clientId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Pet> records = await this.clientRepository.Pets(clientId, limit, offset);
 
                         return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiSaleResponseModel>> Sales(int clientId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Sale> records = await this.clientRepository.Sales(clientId, limit, offset);
@@ -154,5 +147,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c19bb8acd7066057cbb78f4db3bffc40</Hash>
+    <Hash>ec9642bbc21fe43818565fa62da990dc</Hash>
 </Codenesium>*/

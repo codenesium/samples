@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new HandlerRepository(loggerMoc.Object, context);
 
                         Handler entity = new Handler();
-
                         context.Set<Handler>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new HandlerRepository(loggerMoc.Object, context);
 
                         Handler entity = new Handler();
-
                         context.Set<Handler>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new HandlerRepository(loggerMoc.Object, context);
 
                         var entity = new Handler();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Handler>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<HandlerRepository>> loggerMoc = HandlerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
                         var repository = new HandlerRepository(loggerMoc.Object, context);
-
                         Handler entity = new Handler();
-
                         context.Set<Handler>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<HandlerRepository>> loggerMoc = HandlerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
                         var repository = new HandlerRepository(loggerMoc.Object, context);
-
                         Handler entity = new Handler();
-
                         context.Set<Handler>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<HandlerRepository>> loggerMoc = HandlerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = HandlerRepositoryMoc.GetContext();
                         var repository = new HandlerRepository(loggerMoc.Object, context);
-
                         Handler entity = new Handler();
-
                         context.Set<Handler>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Handler modifiedRecord = await context.Set<Handler>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>81626d5c2fa5c06104235c24106c16b3</Hash>
+    <Hash>b81170a4d361c162a5ec423bbd1ccf2d</Hash>
 </Codenesium>*/

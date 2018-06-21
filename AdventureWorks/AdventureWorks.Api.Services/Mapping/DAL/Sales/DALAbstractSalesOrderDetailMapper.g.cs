@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSalesOrderDetail bo)
                 {
                         SalesOrderDetail efSalesOrderDetail = new SalesOrderDetail();
-
                         efSalesOrderDetail.SetProperties(
                                 bo.CarrierTrackingNumber,
                                 bo.LineTotal,
@@ -64,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>07af696c9eedee4bb63f347b0aa522b6</Hash>
+    <Hash>2e97cdac062eed84dcade6bf6046fdc2</Hash>
 </Codenesium>*/

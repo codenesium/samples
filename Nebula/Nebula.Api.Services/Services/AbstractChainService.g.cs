@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractChainService: AbstractService
+        public abstract class AbstractChainService : AbstractService
         {
                 private IChainRepository chainRepository;
 
@@ -36,18 +36,12 @@ namespace NebulaNS.Api.Services
                         IChainRepository chainRepository,
                         IApiChainRequestModelValidator chainModelValidator,
                         IBOLChainMapper bolChainMapper,
-                        IDALChainMapper dalChainMapper
-
-                        ,
+                        IDALChainMapper dalChainMapper,
                         IBOLClaspMapper bolClaspMapper,
-                        IDALClaspMapper dalClaspMapper
-                        ,
+                        IDALClaspMapper dalClaspMapper,
                         IBOLLinkMapper bolLinkMapper,
-                        IDALLinkMapper dalLinkMapper
-
-                        )
+                        IDALLinkMapper dalLinkMapper)
                         : base()
-
                 {
                         this.chainRepository = chainRepository;
                         this.chainModelValidator = chainModelValidator;
@@ -87,7 +81,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiChainResponseModel> response = new CreateResponse<ApiChainResponseModel>(await this.chainModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolChainMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolChainMapper.MapModelToBO(default(int), model);
                                 var record = await this.chainRepository.Create(this.dalChainMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace NebulaNS.Api.Services
                         ApiChainRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.chainModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolChainMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.chainModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.chainRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace NebulaNS.Api.Services
 
                         return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiLinkResponseModel>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Link> records = await this.chainRepository.Links(chainId, limit, offset);
@@ -140,5 +133,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9e966e0ea4775ec308a6262905bb418</Hash>
+    <Hash>a5d39643e43df54b4353d6c63ca42e0b</Hash>
 </Codenesium>*/

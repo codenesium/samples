@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOKeyAllocation bo)
                 {
                         KeyAllocation efKeyAllocation = new KeyAllocation();
-
                         efKeyAllocation.SetProperties(
                                 bo.Allocated,
                                 bo.CollectionName);
@@ -46,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5e77e368fb5ef07e3575c75a6501da4</Hash>
+    <Hash>42131740322c513309433ca625154919</Hash>
 </Codenesium>*/

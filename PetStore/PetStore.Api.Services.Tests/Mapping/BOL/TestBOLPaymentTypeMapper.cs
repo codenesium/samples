@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
 using PetStoreNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PaymentType")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLPaymentTypeActionMapper
+        public class TestBOLPaymentTypeMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLPaymentTypeMapper();
-
                         ApiPaymentTypeRequestModel model = new ApiPaymentTypeRequestModel();
-
                         model.SetProperties("A");
                         BOPaymentType response = mapper.MapModelToBO(1, model);
 
@@ -30,9 +28,7 @@ namespace PetStoreNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLPaymentTypeMapper();
-
                         BOPaymentType bo = new BOPaymentType();
-
                         bo.SetProperties(1, "A");
                         ApiPaymentTypeResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace PetStoreNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLPaymentTypeMapper();
-
                         BOPaymentType bo = new BOPaymentType();
-
                         bo.SetProperties(1, "A");
                         List<ApiPaymentTypeResponseModel> response = mapper.MapBOToModel(new List<BOPaymentType>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>94a4366f0f3d724dda9f3cb677efe5f5</Hash>
+    <Hash>2b1320d6c41b0433f3e89678b390ae21</Hash>
 </Codenesium>*/

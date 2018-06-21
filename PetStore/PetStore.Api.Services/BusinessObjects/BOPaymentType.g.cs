@@ -3,14 +3,15 @@ using System;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class BOPaymentType: AbstractBOPaymentType
+        public partial class BOPaymentType : AbstractBOPaymentType
         {
-                public BOPaymentType() : base()
+                public BOPaymentType()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3ae5ad3e0b5e01401f927bd2a414dbff</Hash>
+    <Hash>9fba356cc80c5c6ae29b7fe7dc89c63d</Hash>
 </Codenesium>*/

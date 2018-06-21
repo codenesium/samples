@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractUserRoleService: AbstractService
+        public abstract class AbstractUserRoleService : AbstractService
         {
                 private IUserRoleRepository userRoleRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IUserRoleRepository userRoleRepository,
                         IApiUserRoleRequestModelValidator userRoleModelValidator,
                         IBOLUserRoleMapper bolUserRoleMapper,
-                        IDALUserRoleMapper dalUserRoleMapper
-
-                        )
+                        IDALUserRoleMapper dalUserRoleMapper)
                         : base()
-
                 {
                         this.userRoleRepository = userRoleRepository;
                         this.userRoleModelValidator = userRoleModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiUserRoleResponseModel> response = new CreateResponse<ApiUserRoleResponseModel>(await this.userRoleModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolUserRoleMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolUserRoleMapper.MapModelToBO(default(string), model);
                                 var record = await this.userRoleRepository.Create(this.dalUserRoleMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiUserRoleRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.userRoleModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolUserRoleMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.userRoleModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.userRoleRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e1f58913e3b257a3ed1fc003e29c94b7</Hash>
+    <Hash>4af438ec5c22f3a5f0143c8c4b006469</Hash>
 </Codenesium>*/

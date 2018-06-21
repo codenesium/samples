@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiClientCommunicationRequestModelValidator: AbstractValidator<ApiClientCommunicationRequestModel>
+        public abstract class AbstractApiClientCommunicationRequestModelValidator : AbstractValidator<ApiClientCommunicationRequestModel>
         {
                 private int existingRecordId;
 
-                IClientCommunicationRepository clientCommunicationRepository;
+                private IClientCommunicationRepository clientCommunicationRepository;
 
                 public AbstractApiClientCommunicationRequestModelValidator(IClientCommunicationRepository clientCommunicationRepository)
                 {
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void ClientIdRules()
                 {
-                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x ?.ClientId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void DateCreatedRules()
@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void EmployeeIdRules()
                 {
-                        this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x ?.EmployeeId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NotesRules()
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>609662e4986dcda13ad0067c48e395e4</Hash>
+    <Hash>97b8d9c38f44f7cda4690c753c61d78f</Hash>
 </Codenesium>*/

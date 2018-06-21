@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
@@ -20,11 +20,13 @@ namespace NebulaNS.Api.DataAccess
                 Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
 
                 Task<Machine> GetMachine(int assignedMachineId);
+
                 Task<Chain> GetChain(int chainId);
+
                 Task<LinkStatus> GetLinkStatus(int linkStatusId);
         }
 }
 
 /*<Codenesium>
-    <Hash>94f73b8380492bdbfe13a8db7dd1fc6f</Hash>
+    <Hash>f968219af615a43c50aa4384df9d7922</Hash>
 </Codenesium>*/

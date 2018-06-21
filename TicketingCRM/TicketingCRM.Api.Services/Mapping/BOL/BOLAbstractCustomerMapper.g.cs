@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOCustomer boCustomer = new BOCustomer();
-
                         boCustomer.SetProperties(
                                 id,
                                 model.Email,
@@ -49,5 +48,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0dac8cbb7b71cdbeecc2d634e8ce9e0</Hash>
+    <Hash>9d5ceac7876c8d38969f1b12802b701d</Hash>
 </Codenesium>*/

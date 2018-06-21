@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLAccountMapper: BOLAbstractAccountMapper, IBOLAccountMapper
+        public class BOLAccountMapper : BOLAbstractAccountMapper, IBOLAccountMapper
         {
                 public BOLAccountMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a66f1ae76d103b8bc0ed7ce1b7c7cd43</Hash>
+    <Hash>905627ba4aadb74dcddd53a1dd5f9baf</Hash>
 </Codenesium>*/

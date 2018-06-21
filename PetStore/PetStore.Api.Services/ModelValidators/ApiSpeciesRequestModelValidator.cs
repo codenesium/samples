@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-        public class ApiSpeciesRequestModelValidator: AbstractApiSpeciesRequestModelValidator, IApiSpeciesRequestModelValidator
+        public class ApiSpeciesRequestModelValidator : AbstractApiSpeciesRequestModelValidator, IApiSpeciesRequestModelValidator
         {
                 public ApiSpeciesRequestModelValidator(ISpeciesRepository speciesRepository)
                         : base(speciesRepository)
@@ -27,11 +27,11 @@ namespace PetStoreNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>da5fac0bee3a464fb87601589d4b8c95</Hash>
+    <Hash>c38d6d4e0a5730034b54bb15cc464697</Hash>
 </Codenesium>*/

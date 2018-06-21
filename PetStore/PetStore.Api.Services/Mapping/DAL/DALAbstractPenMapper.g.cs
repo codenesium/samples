@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetStoreNS.Api.Services
                         BOPen bo)
                 {
                         Pen efPen = new Pen();
-
                         efPen.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6019fb4b531401a0c74e0e3a601e8fbe</Hash>
+    <Hash>1e15b0cf54194dd1de804afaa92f700a</Hash>
 </Codenesium>*/

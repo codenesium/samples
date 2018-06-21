@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("BillOfMaterials", Schema="Production")]
-        public partial class BillOfMaterials: AbstractEntity
+        public partial class BillOfMaterials : AbstractEntity
         {
                 public BillOfMaterials()
                 {
@@ -35,35 +35,35 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("BillOfMaterialsID", TypeName="int")]
+                [Column("BillOfMaterialsID")]
                 public int BillOfMaterialsID { get; private set; }
 
-                [Column("BOMLevel", TypeName="smallint")]
+                [Column("BOMLevel")]
                 public short BOMLevel { get; private set; }
 
-                [Column("ComponentID", TypeName="int")]
+                [Column("ComponentID")]
                 public int ComponentID { get; private set; }
 
-                [Column("EndDate", TypeName="datetime")]
+                [Column("EndDate")]
                 public Nullable<DateTime> EndDate { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("PerAssemblyQty", TypeName="decimal")]
+                [Column("PerAssemblyQty")]
                 public decimal PerAssemblyQty { get; private set; }
 
-                [Column("ProductAssemblyID", TypeName="int")]
+                [Column("ProductAssemblyID")]
                 public Nullable<int> ProductAssemblyID { get; private set; }
 
-                [Column("StartDate", TypeName="datetime")]
+                [Column("StartDate")]
                 public DateTime StartDate { get; private set; }
 
-                [Column("UnitMeasureCode", TypeName="nchar(3)")]
+                [Column("UnitMeasureCode")]
                 public string UnitMeasureCode { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2a31ecfc1d7717e198b8408cfbe9bd97</Hash>
+    <Hash>afc6b202c9c66fe0290e717cbec8557f</Hash>
 </Codenesium>*/

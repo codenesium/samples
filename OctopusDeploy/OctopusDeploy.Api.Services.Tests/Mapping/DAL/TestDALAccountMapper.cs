@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Account")]
         [Trait("Area", "DALMapper")]
-        public class TestDALAccountActionMapper
+        public class TestDALAccountMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALAccountMapper();
-
                         var bo = new BOAccount();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
                         Account response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALAccountMapper();
-
                         Account entity = new Account();
-
                         entity.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
-                        BOAccount  response = mapper.MapEFToBO(entity);
+                        BOAccount response = mapper.MapEFToBO(entity);
 
                         response.AccountType.Should().Be("A");
                         response.EnvironmentIds.Should().Be("A");
@@ -56,9 +52,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALAccountMapper();
-
                         Account entity = new Account();
-
                         entity.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
                         List<BOAccount> response = mapper.MapEFToBO(new List<Account>() { entity });
@@ -69,5 +63,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>96f5fc5c0d69b7a8d6b68496fee8cdee</Hash>
+    <Hash>fa83702574abfb3b77b907de9e66d8ed</Hash>
 </Codenesium>*/

@@ -10,18 +10,20 @@ using TicketingCRMNS.Api.Contracts;
 
 namespace TicketingCRMNS.Api.Client
 {
-        public class ApiClient: AbstractApiClient
+        public class ApiClient : AbstractApiClient
         {
-                public ApiClient(string apiUrl) : base(apiUrl, "1.0")
+                public ApiClient(string apiUrl)
+                        : base(apiUrl, "1.0")
                 {
                 }
 
-                public ApiClient(HttpClient client) : base(client)
+                public ApiClient(HttpClient client)
+                        : base(client)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b249b01aefe5b7f9ff9b499c6bfdc3a7</Hash>
+    <Hash>7d61f469fa730e2010a89b45ad06bc87</Hash>
 </Codenesium>*/

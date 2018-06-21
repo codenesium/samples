@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractPhoneNumberTypeRepository: AbstractRepository
+        public abstract class AbstractPhoneNumberTypeRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<PersonPhone>> PersonPhones(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PersonPhone>().Where(x => x.PhoneNumberTypeID == phoneNumberTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
+                }
+
                 protected async Task<List<PhoneNumberType>> Where(
                         Expression<Func<PhoneNumberType, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<PersonPhone>> PersonPhones(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PersonPhone>().Where(x => x.PhoneNumberTypeID == phoneNumberTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>46c2f86cc6c5f472275a836217b8b588</Hash>
+    <Hash>423c0285b4aaf3e3ec3af0150e5cd336</Hash>
 </Codenesium>*/

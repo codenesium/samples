@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FileServiceNS.Api.Services
                         )
                 {
                         BOVersionInfo boVersionInfo = new BOVersionInfo();
-
                         boVersionInfo.SetProperties(
                                 version,
                                 model.AppliedOn,
@@ -47,5 +46,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6353bd61a745b5da69f80d200ccd8f6</Hash>
+    <Hash>6aed615e28f93cdf4fe759b0f31dd20d</Hash>
 </Codenesium>*/

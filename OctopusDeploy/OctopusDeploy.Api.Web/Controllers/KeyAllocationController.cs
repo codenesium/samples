@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/keyAllocations")]
         [ApiVersion("1.0")]
-        public class KeyAllocationController: AbstractKeyAllocationController
+        public class KeyAllocationController : AbstractKeyAllocationController
         {
                 public KeyAllocationController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7da4d5397f9f2bcbad2aedac90a006c9</Hash>
+    <Hash>6fa0ae5c001113ea3f767b2fbef2c3c5</Hash>
 </Codenesium>*/

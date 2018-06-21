@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GroupName, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (short), new ApiDepartmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GroupName, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GroupName, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (short), new ApiDepartmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.GroupName, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (short));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (short), new ApiDepartmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (short), new ApiDepartmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new Department()));
 
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (short));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -185,7 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Department>(new Department()));
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (short), new ApiDepartmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -197,7 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         departmentRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Department>(null));
                         var validator = new ApiDepartmentRequestModelValidator(departmentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (short), new ApiDepartmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiDepartmentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -205,5 +195,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c14b6561aca10d53e3cae5f249ff8ac9</Hash>
+    <Hash>d7c3e52820dc6de4b01cf75d1c447713</Hash>
 </Codenesium>*/

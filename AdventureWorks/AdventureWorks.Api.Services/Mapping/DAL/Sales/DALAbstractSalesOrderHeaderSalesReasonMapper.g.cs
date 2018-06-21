@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSalesOrderHeaderSalesReason bo)
                 {
                         SalesOrderHeaderSalesReason efSalesOrderHeaderSalesReason = new SalesOrderHeaderSalesReason();
-
                         efSalesOrderHeaderSalesReason.SetProperties(
                                 bo.ModifiedDate,
                                 bo.SalesOrderID,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27b0567e764a4531d997216482c42fb5</Hash>
+    <Hash>73254090345eec8947a64bd0c0de0d9d</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiPersonCreditCardRequestModelValidator: AbstractValidator<ApiPersonCreditCardRequestModel>
+        public abstract class AbstractApiPersonCreditCardRequestModelValidator : AbstractValidator<ApiPersonCreditCardRequestModel>
         {
                 private int existingRecordId;
 
-                IPersonCreditCardRepository personCreditCardRepository;
+                private IPersonCreditCardRepository personCreditCardRepository;
 
                 public AbstractApiPersonCreditCardRequestModelValidator(IPersonCreditCardRepository personCreditCardRepository)
                 {
@@ -28,7 +28,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void CreditCardIDRules()
                 {
-                        this.RuleFor(x => x.CreditCardID).MustAsync(this.BeValidCreditCard).When(x => x ?.CreditCardID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.CreditCardID).MustAsync(this.BeValidCreditCard).When(x => x?.CreditCardID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ModifiedDateRules()
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb4067fa82c9e3ecf57ba48a6dbe38b4</Hash>
+    <Hash>170e6c903b11403a64247d17e0f49989</Hash>
 </Codenesium>*/

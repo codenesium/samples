@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Channel")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLChannelActionMapper
+        public class TestBOLChannelMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLChannelMapper();
-
                         ApiChannelRequestModel model = new ApiChannelRequestModel();
-
                         model.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
                         BOChannel response = mapper.MapModelToBO("A", model);
 
@@ -35,9 +33,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLChannelMapper();
-
                         BOChannel bo = new BOChannel();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
                         ApiChannelResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLChannelMapper();
-
                         BOChannel bo = new BOChannel();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", "A", "A", "A");
                         List<ApiChannelResponseModel> response = mapper.MapBOToModel(new List<BOChannel>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f7c68a1807103409dda7493981339aa3</Hash>
+    <Hash>96eef6365feca7f9e45332a4569f76fb</Hash>
 </Codenesium>*/

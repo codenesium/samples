@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductModelProductDescriptionCultureRepository(loggerMoc.Object, context);
 
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         context.Set<ProductModelProductDescriptionCulture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductModelProductDescriptionCultureRepository(loggerMoc.Object, context);
 
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         context.Set<ProductModelProductDescriptionCulture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductModelProductDescriptionCultureRepository(loggerMoc.Object, context);
 
                         var entity = new ProductModelProductDescriptionCulture();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProductModelProductDescriptionCulture>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductModelProductDescriptionCultureRepository>> loggerMoc = ProductModelProductDescriptionCultureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductModelProductDescriptionCultureRepositoryMoc.GetContext();
                         var repository = new ProductModelProductDescriptionCultureRepository(loggerMoc.Object, context);
-
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         context.Set<ProductModelProductDescriptionCulture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductModelProductDescriptionCultureRepository>> loggerMoc = ProductModelProductDescriptionCultureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductModelProductDescriptionCultureRepositoryMoc.GetContext();
                         var repository = new ProductModelProductDescriptionCultureRepository(loggerMoc.Object, context);
-
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         context.Set<ProductModelProductDescriptionCulture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductModelProductDescriptionCultureRepository>> loggerMoc = ProductModelProductDescriptionCultureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductModelProductDescriptionCultureRepositoryMoc.GetContext();
                         var repository = new ProductModelProductDescriptionCultureRepository(loggerMoc.Object, context);
-
                         ProductModelProductDescriptionCulture entity = new ProductModelProductDescriptionCulture();
-
                         context.Set<ProductModelProductDescriptionCulture>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ProductModelID);
 
                         ProductModelProductDescriptionCulture modifiedRecord = await context.Set<ProductModelProductDescriptionCulture>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d91fa3b18189ba9fab03d0100171c0b7</Hash>
+    <Hash>fb7bcb3831763e9eee4aff7c8b9e1389</Hash>
 </Codenesium>*/

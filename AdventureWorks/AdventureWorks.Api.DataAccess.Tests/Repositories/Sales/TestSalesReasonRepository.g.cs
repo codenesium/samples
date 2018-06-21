@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesReasonRepository(loggerMoc.Object, context);
 
                         SalesReason entity = new SalesReason();
-
                         context.Set<SalesReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesReasonRepository(loggerMoc.Object, context);
 
                         SalesReason entity = new SalesReason();
-
                         context.Set<SalesReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesReasonRepository(loggerMoc.Object, context);
 
                         var entity = new SalesReason();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SalesReason>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesReasonRepository>> loggerMoc = SalesReasonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
                         var repository = new SalesReasonRepository(loggerMoc.Object, context);
-
                         SalesReason entity = new SalesReason();
-
                         context.Set<SalesReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesReasonRepository>> loggerMoc = SalesReasonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
                         var repository = new SalesReasonRepository(loggerMoc.Object, context);
-
                         SalesReason entity = new SalesReason();
-
                         context.Set<SalesReason>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesReasonRepository>> loggerMoc = SalesReasonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesReasonRepositoryMoc.GetContext();
                         var repository = new SalesReasonRepository(loggerMoc.Object, context);
-
                         SalesReason entity = new SalesReason();
-
                         context.Set<SalesReason>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.SalesReasonID);
 
                         SalesReason modifiedRecord = await context.Set<SalesReason>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ddc3a954b0a667f2abe222d7c5201a48</Hash>
+    <Hash>8f0e8cf2468e38c6efe18f16f9f2f583</Hash>
 </Codenesium>*/

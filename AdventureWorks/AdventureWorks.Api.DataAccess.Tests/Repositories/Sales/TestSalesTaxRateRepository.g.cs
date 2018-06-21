@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 
                         SalesTaxRate entity = new SalesTaxRate();
-
                         context.Set<SalesTaxRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 
                         SalesTaxRate entity = new SalesTaxRate();
-
                         context.Set<SalesTaxRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
 
                         var entity = new SalesTaxRate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SalesTaxRate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesTaxRateRepository>> loggerMoc = SalesTaxRateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
                         var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
-
                         SalesTaxRate entity = new SalesTaxRate();
-
                         context.Set<SalesTaxRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesTaxRateRepository>> loggerMoc = SalesTaxRateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
                         var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
-
                         SalesTaxRate entity = new SalesTaxRate();
-
                         context.Set<SalesTaxRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesTaxRateRepository>> loggerMoc = SalesTaxRateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesTaxRateRepositoryMoc.GetContext();
                         var repository = new SalesTaxRateRepository(loggerMoc.Object, context);
-
                         SalesTaxRate entity = new SalesTaxRate();
-
                         context.Set<SalesTaxRate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.SalesTaxRateID);
 
                         SalesTaxRate modifiedRecord = await context.Set<SalesTaxRate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>17f4d515c6f0d9a5667e3d6e2981e8ff</Hash>
+    <Hash>863206272529177d7f70ed774d5890a0</Hash>
 </Codenesium>*/

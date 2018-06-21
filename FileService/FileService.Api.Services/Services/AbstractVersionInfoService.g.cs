@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class AbstractVersionInfoService: AbstractService
+        public abstract class AbstractVersionInfoService : AbstractService
         {
                 private IVersionInfoRepository versionInfoRepository;
 
@@ -29,11 +29,8 @@ namespace FileServiceNS.Api.Services
                         IVersionInfoRepository versionInfoRepository,
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
                         IBOLVersionInfoMapper bolVersionInfoMapper,
-                        IDALVersionInfoMapper dalVersionInfoMapper
-
-                        )
+                        IDALVersionInfoMapper dalVersionInfoMapper)
                         : base()
-
                 {
                         this.versionInfoRepository = versionInfoRepository;
                         this.versionInfoModelValidator = versionInfoModelValidator;
@@ -69,7 +66,7 @@ namespace FileServiceNS.Api.Services
                         CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolVersionInfoMapper.MapModelToBO(default (long), model);
+                                var bo = this.bolVersionInfoMapper.MapModelToBO(default(long), model);
                                 var record = await this.versionInfoRepository.Create(this.dalVersionInfoMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace FileServiceNS.Api.Services
                         ApiVersionInfoRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateUpdateAsync(version, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
@@ -97,7 +93,6 @@ namespace FileServiceNS.Api.Services
                         long version)
                 {
                         ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateDeleteAsync(version));
-
                         if (response.Success)
                         {
                                 await this.versionInfoRepository.Delete(version);
@@ -123,5 +118,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e1474dc89f09a46711bbf907f6f7df1</Hash>
+    <Hash>cf7ec5b5f49fd847a0a85a0adef552eb</Hash>
 </Codenesium>*/

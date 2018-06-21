@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public class PipelineStatusRepository: AbstractPipelineStatusRepository, IPipelineStatusRepository
+        public class PipelineStatusRepository : AbstractPipelineStatusRepository, IPipelineStatusRepository
         {
                 public PipelineStatusRepository(
                         ILogger<PipelineStatusRepository> logger,
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c6923565e4b4f63791cf71e7c1036e70</Hash>
+    <Hash>0df0203206cf7d80ebcafd0fba38408c</Hash>
 </Codenesium>*/

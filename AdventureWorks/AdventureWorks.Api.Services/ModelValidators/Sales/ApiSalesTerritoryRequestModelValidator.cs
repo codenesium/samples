@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiSalesTerritoryRequestModelValidator: AbstractApiSalesTerritoryRequestModelValidator, IApiSalesTerritoryRequestModelValidator
+        public class ApiSalesTerritoryRequestModelValidator : AbstractApiSalesTerritoryRequestModelValidator, IApiSalesTerritoryRequestModelValidator
         {
                 public ApiSalesTerritoryRequestModelValidator(ISalesTerritoryRepository salesTerritoryRepository)
                         : base(salesTerritoryRepository)
@@ -43,11 +43,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d720440a0aec9786627bb0f20ac5b74c</Hash>
+    <Hash>bd62d2bba1e1432c9601bc920597855d</Hash>
 </Codenesium>*/

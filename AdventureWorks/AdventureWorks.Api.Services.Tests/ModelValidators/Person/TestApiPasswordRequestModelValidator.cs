@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPasswordRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, new string('A', 129));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPasswordRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordHash, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPasswordRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPasswordRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPasswordRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PasswordSalt, new string('A', 11));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         passwordRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Password()));
 
                         var validator = new ApiPasswordRequestModelValidator(passwordRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -157,5 +147,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>49312444b9592a5db49bc2ad770be6a9</Hash>
+    <Hash>5cfcb21b8b5303470baf0eb91d6f8a89</Hash>
 </Codenesium>*/

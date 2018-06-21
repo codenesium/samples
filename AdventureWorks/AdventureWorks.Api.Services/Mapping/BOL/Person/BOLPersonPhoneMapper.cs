@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLPersonPhoneMapper: BOLAbstractPersonPhoneMapper, IBOLPersonPhoneMapper
+        public class BOLPersonPhoneMapper : BOLAbstractPersonPhoneMapper, IBOLPersonPhoneMapper
         {
                 public BOLPersonPhoneMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7648796db2157c7374f40e7d86e6e47</Hash>
+    <Hash>c6ec725492cd280d61b82f19caf34d0e</Hash>
 </Codenesium>*/

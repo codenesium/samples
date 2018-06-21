@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Link")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLLinkActionMapper
+        public class TestBOLLinkMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLLinkMapper();
-
                         ApiLinkRequestModel model = new ApiLinkRequestModel();
-
                         model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
                         BOLink response = mapper.MapModelToBO(1, model);
 
@@ -41,9 +39,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLLinkMapper();
-
                         BOLink bo = new BOLink();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
                         ApiLinkResponseModel response = mapper.MapBOToModel(bo);
 
@@ -66,9 +62,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLLinkMapper();
-
                         BOLink bo = new BOLink();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
                         List<ApiLinkResponseModel> response = mapper.MapBOToModel(new List<BOLink>() { { bo } });
 
@@ -78,5 +72,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>27d95f800969fa4985e85bd7a5ebf9f3</Hash>
+    <Hash>2b5e6a8eef9ece1db92d004ac1fc9e99</Hash>
 </Codenesium>*/

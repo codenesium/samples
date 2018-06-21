@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractUserRoleRepository: AbstractRepository
+        public abstract class AbstractUserRoleRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0323a70ee620e1b721d60b0562a65ac7</Hash>
+    <Hash>ed895ab6c160ba95e4e93ccbcbdc8df1</Hash>
 </Codenesium>*/

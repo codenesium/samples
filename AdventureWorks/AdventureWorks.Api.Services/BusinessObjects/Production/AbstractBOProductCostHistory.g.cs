@@ -3,9 +3,10 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOProductCostHistory: AbstractBusinessObject
+        public abstract class AbstractBOProductCostHistory : AbstractBusinessObject
         {
-                public AbstractBOProductCostHistory() : base()
+                public AbstractBOProductCostHistory()
+                        : base()
                 {
                 }
 
@@ -35,5 +36,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f27a87c12bd49c0fd20ccf35ce5a3eb4</Hash>
+    <Hash>3ff4b5148004f4fd2424ec0bc3f65c5a</Hash>
 </Codenesium>*/

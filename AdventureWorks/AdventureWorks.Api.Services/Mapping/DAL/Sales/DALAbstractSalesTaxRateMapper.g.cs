@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSalesTaxRate bo)
                 {
                         SalesTaxRate efSalesTaxRate = new SalesTaxRate();
-
                         efSalesTaxRate.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3840134e0c8284046b29b544230b3b27</Hash>
+    <Hash>92653afd4a88b00c913fb9b0d3b7f946</Hash>
 </Codenesium>*/

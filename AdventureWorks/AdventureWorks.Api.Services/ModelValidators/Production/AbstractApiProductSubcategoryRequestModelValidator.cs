@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiProductSubcategoryRequestModelValidator: AbstractValidator<ApiProductSubcategoryRequestModel>
+        public abstract class AbstractApiProductSubcategoryRequestModelValidator : AbstractValidator<ApiProductSubcategoryRequestModel>
         {
                 private int existingRecordId;
 
-                IProductSubcategoryRepository productSubcategoryRepository;
+                private IProductSubcategoryRepository productSubcategoryRepository;
 
                 public AbstractApiProductSubcategoryRequestModelValidator(IProductSubcategoryRepository productSubcategoryRepository)
                 {
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProductSubcategoryRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ProductSubcategory record = await this.productSubcategoryRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.ProductSubcategoryID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.ProductSubcategoryID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>207a8de516780ba0898b9f5c267cc3e2</Hash>
+    <Hash>35f9a323f6f47399a3ef105bb5d4c09e</Hash>
 </Codenesium>*/

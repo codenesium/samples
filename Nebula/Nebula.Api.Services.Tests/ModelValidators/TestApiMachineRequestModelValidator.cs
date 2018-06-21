@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
@@ -44,8 +43,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
                 }
@@ -57,7 +55,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JwtKey, null as string);
@@ -70,8 +67,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JwtKey, null as string);
                 }
@@ -83,7 +79,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JwtKey, new string('A', 129));
@@ -96,8 +91,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JwtKey, new string('A', 129));
                 }
@@ -109,8 +103,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -122,7 +115,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, null as string);
@@ -135,8 +127,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, null as string);
                 }
@@ -148,7 +139,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, new string('A', 129));
@@ -161,8 +151,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastIpAddress, new string('A', 129));
                 }
@@ -174,8 +163,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +175,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -200,8 +187,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -213,7 +199,6 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -226,8 +211,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -239,8 +223,7 @@ namespace NebulaNS.Api.Services.Tests
                         machineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Machine()));
 
                         var validator = new ApiMachineRequestModelValidator(machineRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -248,5 +231,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>124d835f75d04818290ff58d3653856e</Hash>
+    <Hash>fd056d4783994b156b1f64d66a58ebac</Hash>
 </Codenesium>*/

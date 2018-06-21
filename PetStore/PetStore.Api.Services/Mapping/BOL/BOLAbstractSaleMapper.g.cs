@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetStoreNS.Api.Services
                         )
                 {
                         BOSale boSale = new BOSale();
-
                         boSale.SetProperties(
                                 id,
                                 model.Amount,
@@ -51,5 +50,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e5970130964dd2131310853d92b5d7a8</Hash>
+    <Hash>a66318e81943c3108ed10cf053d81050</Hash>
 </Codenesium>*/

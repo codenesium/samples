@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiAdminResponseModel: AbstractApiAdminResponseModel
+        public partial class ApiAdminResponseModel : AbstractApiAdminResponseModel
         {
                 public ApiAdminResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c242bbb70b962d1bec8cd254b02e78d2</Hash>
+    <Hash>f3133f28fb8c69949583e73a2e7485ef</Hash>
 </Codenesium>*/

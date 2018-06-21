@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BODashboardConfiguration bo)
                 {
                         DashboardConfiguration efDashboardConfiguration = new DashboardConfiguration();
-
                         efDashboardConfiguration.SetProperties(
                                 bo.Id,
                                 bo.IncludedEnvironmentIds,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1cb13d6185c92237b052276b6553aa70</Hash>
+    <Hash>255d43581a2383a3f340ee259f342de9</Hash>
 </Codenesium>*/

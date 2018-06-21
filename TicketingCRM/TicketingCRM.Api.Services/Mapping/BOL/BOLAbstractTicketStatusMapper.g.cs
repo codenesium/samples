@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOTicketStatus boTicketStatus = new BOTicketStatus();
-
                         boTicketStatus.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8e58c9fe4ca4812aa0ed550215fac4e</Hash>
+    <Hash>05afed99eefdc6fcaaac5ff41c1c018f</Hash>
 </Codenesium>*/

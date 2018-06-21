@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "AWBuildVersion")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLAWBuildVersionActionMapper
+        public class TestBOLAWBuildVersionMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLAWBuildVersionMapper();
-
                         ApiAWBuildVersionRequestModel model = new ApiAWBuildVersionRequestModel();
-
                         model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOAWBuildVersion response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLAWBuildVersionMapper();
-
                         BOAWBuildVersion bo = new BOAWBuildVersion();
-
                         bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiAWBuildVersionResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLAWBuildVersionMapper();
-
                         BOAWBuildVersion bo = new BOAWBuildVersion();
-
                         bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiAWBuildVersionResponseModel> response = mapper.MapBOToModel(new List<BOAWBuildVersion>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6d5eaa9f50593b876277ca9e64a584a6</Hash>
+    <Hash>c884a7f43b2fa8606813757b97a50546</Hash>
 </Codenesium>*/

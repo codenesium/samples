@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "LinkLog")]
         [Trait("Area", "DALMapper")]
-        public class TestDALLinkLogActionMapper
+        public class TestDALLinkLogMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALLinkLogMapper();
-
                         var bo = new BOLinkLog();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 
                         LinkLog response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALLinkLogMapper();
-
                         LinkLog entity = new LinkLog();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 
-                        BOLinkLog  response = mapper.MapEFToBO(entity);
+                        BOLinkLog response = mapper.MapEFToBO(entity);
 
                         response.DateEntered.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Id.Should().Be(1);
@@ -50,9 +46,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALLinkLogMapper();
-
                         LinkLog entity = new LinkLog();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 
                         List<BOLinkLog> response = mapper.MapEFToBO(new List<LinkLog>() { entity });
@@ -63,5 +57,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>71ad019827a815ff1246ebb213cacc74</Hash>
+    <Hash>fd7e77a310087fa5346e394ebda88764</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiLocationResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiLocationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal availability,
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>448a076ed693571b0f4f93eccf7fdcde</Hash>
+    <Hash>dabf58bc30d21fe34b6c5dcc1a1b0760</Hash>
 </Codenesium>*/

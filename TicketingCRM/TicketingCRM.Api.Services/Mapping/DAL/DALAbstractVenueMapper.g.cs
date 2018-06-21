@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOVenue bo)
                 {
                         Venue efVenue = new Venue();
-
                         efVenue.SetProperties(
                                 bo.Address1,
                                 bo.Address2,
@@ -62,5 +61,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98153cc65c3209c63a705ca98713fde4</Hash>
+    <Hash>39279b448b821e253f3baf21e7db926f</Hash>
 </Codenesium>*/

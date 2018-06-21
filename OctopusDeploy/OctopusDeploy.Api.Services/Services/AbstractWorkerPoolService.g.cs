@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractWorkerPoolService: AbstractService
+        public abstract class AbstractWorkerPoolService : AbstractService
         {
                 private IWorkerPoolRepository workerPoolRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IWorkerPoolRepository workerPoolRepository,
                         IApiWorkerPoolRequestModelValidator workerPoolModelValidator,
                         IBOLWorkerPoolMapper bolWorkerPoolMapper,
-                        IDALWorkerPoolMapper dalWorkerPoolMapper
-
-                        )
+                        IDALWorkerPoolMapper dalWorkerPoolMapper)
                         : base()
-
                 {
                         this.workerPoolRepository = workerPoolRepository;
                         this.workerPoolModelValidator = workerPoolModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiWorkerPoolResponseModel> response = new CreateResponse<ApiWorkerPoolResponseModel>(await this.workerPoolModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolWorkerPoolMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolWorkerPoolMapper.MapModelToBO(default(string), model);
                                 var record = await this.workerPoolRepository.Create(this.dalWorkerPoolMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiWorkerPoolRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.workerPoolModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolWorkerPoolMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.workerPoolModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.workerPoolRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aeb9958e51f4bc170a5bb53488e24c0f</Hash>
+    <Hash>dfb659e6a3be248e650804130e8a007e</Hash>
 </Codenesium>*/

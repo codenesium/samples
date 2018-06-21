@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiNuGetPackageRequestModelValidator: AbstractApiNuGetPackageRequestModelValidator, IApiNuGetPackageRequestModelValidator
+        public class ApiNuGetPackageRequestModelValidator : AbstractApiNuGetPackageRequestModelValidator, IApiNuGetPackageRequestModelValidator
         {
                 public ApiNuGetPackageRequestModelValidator(INuGetPackageRepository nuGetPackageRepository)
                         : base(nuGetPackageRepository)
@@ -41,11 +41,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b59412e2ed9bb0fa6054e56f06a51b82</Hash>
+    <Hash>8ac75bc2738d7944f5ecc8860b994c0f</Hash>
 </Codenesium>*/

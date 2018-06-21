@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Family")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLFamilyActionMapper
+        public class TestBOLFamilyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLFamilyMapper();
-
                         ApiFamilyRequestModel model = new ApiFamilyRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", "A", 1);
                         BOFamily response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLFamilyMapper();
-
                         BOFamily bo = new BOFamily();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A", 1);
                         ApiFamilyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLFamilyMapper();
-
                         BOFamily bo = new BOFamily();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A", 1);
                         List<ApiFamilyResponseModel> response = mapper.MapBOToModel(new List<BOFamily>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9a504fc69775873cc75c105cc0ad3549</Hash>
+    <Hash>ef53d0c8290d12850d356b00b5306c6e</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOWorkerPool bo)
                 {
                         WorkerPool efWorkerPool = new WorkerPool();
-
                         efWorkerPool.SetProperties(
                                 bo.Id,
                                 bo.IsDefault,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a14d1fc4eab424cbe91dc9966f599122</Hash>
+    <Hash>6796fb3bc96a93898741e54fb37caa31</Hash>
 </Codenesium>*/

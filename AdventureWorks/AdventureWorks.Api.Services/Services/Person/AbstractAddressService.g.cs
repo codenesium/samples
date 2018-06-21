@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractAddressService: AbstractService
+        public abstract class AbstractAddressService : AbstractService
         {
                 private IAddressRepository addressRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IAddressRepository addressRepository,
                         IApiAddressRequestModelValidator addressModelValidator,
                         IBOLAddressMapper bolAddressMapper,
-                        IDALAddressMapper dalAddressMapper
-
-                        ,
+                        IDALAddressMapper dalAddressMapper,
                         IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
-                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
-
-                        )
+                        IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper)
                         : base()
-
                 {
                         this.addressRepository = addressRepository;
                         this.addressModelValidator = addressModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiAddressResponseModel> response = new CreateResponse<ApiAddressResponseModel>(await this.addressModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolAddressMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolAddressMapper.MapModelToBO(default(int), model);
                                 var record = await this.addressRepository.Create(this.dalAddressMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiAddressRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateUpdateAsync(addressID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolAddressMapper.MapModelToBO(addressID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int addressID)
                 {
                         ActionResponse response = new ActionResponse(await this.addressModelValidator.ValidateDeleteAsync(addressID));
-
                         if (response.Success)
                         {
                                 await this.addressRepository.Delete(addressID);
@@ -129,6 +122,7 @@ namespace AdventureWorksNS.Api.Services
                                 return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiAddressResponseModel>> ByStateProvinceID(int stateProvinceID)
                 {
                         List<Address> records = await this.addressRepository.ByStateProvinceID(stateProvinceID);
@@ -146,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea4601f35c17f46b6b82965b3309d3b3</Hash>
+    <Hash>88f916ddb354f26f823918c535ab63e9</Hash>
 </Codenesium>*/

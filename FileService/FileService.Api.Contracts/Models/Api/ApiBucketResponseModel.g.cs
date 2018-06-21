@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiBucketResponseModel: AbstractApiBucketResponseModel
+        public partial class ApiBucketResponseModel : AbstractApiBucketResponseModel
         {
                 public ApiBucketResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ee1bb80f755a84a618206a399e6b3791</Hash>
+    <Hash>7303b8d4145e21d9377e2211726becf6</Hash>
 </Codenesium>*/

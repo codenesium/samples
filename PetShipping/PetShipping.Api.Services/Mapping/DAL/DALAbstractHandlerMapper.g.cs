@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOHandler bo)
                 {
                         Handler efHandler = new Handler();
-
                         efHandler.SetProperties(
                                 bo.CountryId,
                                 bo.Email,
@@ -54,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab800af4e360533c7679fe20a6854996</Hash>
+    <Hash>fe4679e25c9cad9c5a5a0e369cff0dff</Hash>
 </Codenesium>*/

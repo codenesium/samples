@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("ChainStatus", Schema="dbo")]
-        public partial class ChainStatus: AbstractEntity
+        public partial class ChainStatus : AbstractEntity
         {
                 public ChainStatus()
                 {
@@ -21,14 +21,14 @@ namespace NebulaNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d3b35655f552d6cd1b39993a16a20e11</Hash>
+    <Hash>ad8130724486816787b04b4ae3aa1e33</Hash>
 </Codenesium>*/

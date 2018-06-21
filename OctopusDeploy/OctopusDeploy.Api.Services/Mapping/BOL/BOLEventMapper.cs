@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLEventMapper: BOLAbstractEventMapper, IBOLEventMapper
+        public class BOLEventMapper : BOLAbstractEventMapper, IBOLEventMapper
         {
                 public BOLEventMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db38b0af3e1906993dcc6fcb89d98069</Hash>
+    <Hash>b19996b80a4a617797f3859cfff48443</Hash>
 </Codenesium>*/

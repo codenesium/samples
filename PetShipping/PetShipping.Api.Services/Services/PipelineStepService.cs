@@ -1,66 +1,54 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class PipelineStepService: AbstractPipelineStepService, IPipelineStepService
+        public class PipelineStepService : AbstractPipelineStepService, IPipelineStepService
         {
                 public PipelineStepService(
                         ILogger<IPipelineStepRepository> logger,
                         IPipelineStepRepository pipelineStepRepository,
                         IApiPipelineStepRequestModelValidator pipelineStepModelValidator,
                         IBOLPipelineStepMapper bolpipelineStepMapper,
-                        IDALPipelineStepMapper dalpipelineStepMapper
-                        ,
+                        IDALPipelineStepMapper dalpipelineStepMapper,
                         IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
-                        IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper
-                        ,
+                        IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
                         IBOLOtherTransportMapper bolOtherTransportMapper,
-                        IDALOtherTransportMapper dalOtherTransportMapper
-                        ,
+                        IDALOtherTransportMapper dalOtherTransportMapper,
                         IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
-                        IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper
-                        ,
+                        IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper,
                         IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
-                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
-                        ,
+                        IDALPipelineStepNoteMapper dalPipelineStepNoteMapper,
                         IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper,
                         IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper
-
                         )
                         : base(logger,
                                pipelineStepRepository,
                                pipelineStepModelValidator,
                                bolpipelineStepMapper,
-                               dalpipelineStepMapper
-                               ,
+                               dalpipelineStepMapper,
                                bolHandlerPipelineStepMapper,
-                               dalHandlerPipelineStepMapper
-                               ,
+                               dalHandlerPipelineStepMapper,
                                bolOtherTransportMapper,
-                               dalOtherTransportMapper
-                               ,
+                               dalOtherTransportMapper,
                                bolPipelineStepDestinationMapper,
-                               dalPipelineStepDestinationMapper
-                               ,
+                               dalPipelineStepDestinationMapper,
                                bolPipelineStepNoteMapper,
-                               dalPipelineStepNoteMapper
-                               ,
+                               dalPipelineStepNoteMapper,
                                bolPipelineStepStepRequirementMapper,
-                               dalPipelineStepStepRequirementMapper
-                               )
+                               dalPipelineStepStepRequirementMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0a5a13dad8b122e2b9471e5ab130469c</Hash>
+    <Hash>0abe6ea4bc26bbc980dce279129543df</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DeploymentRelatedMachineRepository(loggerMoc.Object, context);
 
                         DeploymentRelatedMachine entity = new DeploymentRelatedMachine();
-
                         context.Set<DeploymentRelatedMachine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DeploymentRelatedMachineRepository(loggerMoc.Object, context);
 
                         DeploymentRelatedMachine entity = new DeploymentRelatedMachine();
-
                         context.Set<DeploymentRelatedMachine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DeploymentRelatedMachineRepository(loggerMoc.Object, context);
 
                         var entity = new DeploymentRelatedMachine();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<DeploymentRelatedMachine>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DeploymentRelatedMachineRepository>> loggerMoc = DeploymentRelatedMachineRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeploymentRelatedMachineRepositoryMoc.GetContext();
                         var repository = new DeploymentRelatedMachineRepository(loggerMoc.Object, context);
-
                         DeploymentRelatedMachine entity = new DeploymentRelatedMachine();
-
                         context.Set<DeploymentRelatedMachine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DeploymentRelatedMachineRepository>> loggerMoc = DeploymentRelatedMachineRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeploymentRelatedMachineRepositoryMoc.GetContext();
                         var repository = new DeploymentRelatedMachineRepository(loggerMoc.Object, context);
-
                         DeploymentRelatedMachine entity = new DeploymentRelatedMachine();
-
                         context.Set<DeploymentRelatedMachine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DeploymentRelatedMachineRepository>> loggerMoc = DeploymentRelatedMachineRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeploymentRelatedMachineRepositoryMoc.GetContext();
                         var repository = new DeploymentRelatedMachineRepository(loggerMoc.Object, context);
-
                         DeploymentRelatedMachine entity = new DeploymentRelatedMachine();
-
                         context.Set<DeploymentRelatedMachine>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         DeploymentRelatedMachine modifiedRecord = await context.Set<DeploymentRelatedMachine>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>29463c3c045d37c39e5289f03ae98dd7</Hash>
+    <Hash>c7c3bc5fbf7660706f94b055b240540a</Hash>
 </Codenesium>*/

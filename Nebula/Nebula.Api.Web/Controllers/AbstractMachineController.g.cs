@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Web
 {
-        public abstract class AbstractMachineController: AbstractApiController
+        public abstract class AbstractMachineController : AbstractApiController
         {
                 protected IMachineService MachineService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace NebulaNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiMachineResponseModel> response = await this.MachineService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace NebulaNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiMachineResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace NebulaNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -174,6 +171,7 @@ namespace NebulaNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{machineId}/MachineRefTeams")]
                 [ReadOnly]
@@ -191,5 +189,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f83b29865d2ec4cfd371e82a38432712</Hash>
+    <Hash>36b19ac9c7afa04c9284e2ee8c3a9506</Hash>
 </Codenesium>*/

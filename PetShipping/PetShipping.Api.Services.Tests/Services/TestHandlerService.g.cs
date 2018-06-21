@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -48,7 +48,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var record = new Handler();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -62,7 +61,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ApiHandlerResponseModel response = await service.Get(default (int));
+                        ApiHandlerResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -85,7 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ApiHandlerResponseModel response = await service.Get(default (int));
+                        ApiHandlerResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -96,7 +95,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var model = new ApiHandlerRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Handler>())).Returns(Task.FromResult(new Handler()));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -122,7 +120,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var model = new ApiHandlerRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Handler>())).Returns(Task.FromResult(new Handler()));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -136,7 +133,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiHandlerRequestModel>()));
@@ -148,7 +145,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var model = new ApiHandlerRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -162,7 +158,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -175,7 +171,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var records = new List<AirTransport>();
                         records.Add(new AirTransport());
-                        mock.RepositoryMock.Setup(x => x.AirTransports(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -188,17 +184,17 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiAirTransportResponseModel> response = await service.AirTransports(default (int));
+                        List<ApiAirTransportResponseModel> response = await service.AirTransports(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.AirTransports(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void AirTransports_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
-                        mock.RepositoryMock.Setup(x => x.AirTransports(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<AirTransport>>(new List<AirTransport>()));
+                        mock.RepositoryMock.Setup(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<AirTransport>>(new List<AirTransport>()));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -211,10 +207,10 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiAirTransportResponseModel> response = await service.AirTransports(default (int));
+                        List<ApiAirTransportResponseModel> response = await service.AirTransports(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.AirTransports(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -223,7 +219,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var records = new List<HandlerPipelineStep>();
                         records.Add(new HandlerPipelineStep());
-                        mock.RepositoryMock.Setup(x => x.HandlerPipelineSteps(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -236,17 +232,17 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiHandlerPipelineStepResponseModel> response = await service.HandlerPipelineSteps(default (int));
+                        List<ApiHandlerPipelineStepResponseModel> response = await service.HandlerPipelineSteps(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.HandlerPipelineSteps(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void HandlerPipelineSteps_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
-                        mock.RepositoryMock.Setup(x => x.HandlerPipelineSteps(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<HandlerPipelineStep>>(new List<HandlerPipelineStep>()));
+                        mock.RepositoryMock.Setup(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<HandlerPipelineStep>>(new List<HandlerPipelineStep>()));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -259,10 +255,10 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiHandlerPipelineStepResponseModel> response = await service.HandlerPipelineSteps(default (int));
+                        List<ApiHandlerPipelineStepResponseModel> response = await service.HandlerPipelineSteps(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.HandlerPipelineSteps(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -271,7 +267,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IHandlerRepository>();
                         var records = new List<OtherTransport>();
                         records.Add(new OtherTransport());
-                        mock.RepositoryMock.Setup(x => x.OtherTransports(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -284,17 +280,17 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiOtherTransportResponseModel> response = await service.OtherTransports(default (int));
+                        List<ApiOtherTransportResponseModel> response = await service.OtherTransports(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.OtherTransports(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void OtherTransports_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IHandlerRepository>();
-                        mock.RepositoryMock.Setup(x => x.OtherTransports(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<OtherTransport>>(new List<OtherTransport>()));
+                        mock.RepositoryMock.Setup(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<OtherTransport>>(new List<OtherTransport>()));
                         var service = new HandlerService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
                                                          mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -307,14 +303,14 @@ namespace PetShippingNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
                                                          mock.DALMapperMockFactory.DALOtherTransportMapperMock);
 
-                        List<ApiOtherTransportResponseModel> response = await service.OtherTransports(default (int));
+                        List<ApiOtherTransportResponseModel> response = await service.OtherTransports(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.OtherTransports(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2eb0c08bc0227ceecb594cf0486a8a61</Hash>
+    <Hash>fda34aff06bf5acae9f442688992d38c</Hash>
 </Codenesium>*/

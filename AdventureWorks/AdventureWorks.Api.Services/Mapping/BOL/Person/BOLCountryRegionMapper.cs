@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLCountryRegionMapper: BOLAbstractCountryRegionMapper, IBOLCountryRegionMapper
+        public class BOLCountryRegionMapper : BOLAbstractCountryRegionMapper, IBOLCountryRegionMapper
         {
                 public BOLCountryRegionMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6fbd90ca63a0230cc61de231ca9af769</Hash>
+    <Hash>86b1ce33dfff7c0526f9ac77abcc489e</Hash>
 </Codenesium>*/

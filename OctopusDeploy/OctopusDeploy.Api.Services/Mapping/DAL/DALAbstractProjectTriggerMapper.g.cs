@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOProjectTrigger bo)
                 {
                         ProjectTrigger efProjectTrigger = new ProjectTrigger();
-
                         efProjectTrigger.SetProperties(
                                 bo.Id,
                                 bo.IsDisabled,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5cb484f1a8acc3f6a7daf240e9d447e3</Hash>
+    <Hash>2f4abf658dfe4376d572a37d67cded5d</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractFamilyService: AbstractService
+        public abstract class AbstractFamilyService : AbstractService
         {
                 private IFamilyRepository familyRepository;
 
@@ -36,18 +36,12 @@ namespace FermataFishNS.Api.Services
                         IFamilyRepository familyRepository,
                         IApiFamilyRequestModelValidator familyModelValidator,
                         IBOLFamilyMapper bolFamilyMapper,
-                        IDALFamilyMapper dalFamilyMapper
-
-                        ,
+                        IDALFamilyMapper dalFamilyMapper,
                         IBOLStudentMapper bolStudentMapper,
-                        IDALStudentMapper dalStudentMapper
-                        ,
+                        IDALStudentMapper dalStudentMapper,
                         IBOLStudentXFamilyMapper bolStudentXFamilyMapper,
-                        IDALStudentXFamilyMapper dalStudentXFamilyMapper
-
-                        )
+                        IDALStudentXFamilyMapper dalStudentXFamilyMapper)
                         : base()
-
                 {
                         this.familyRepository = familyRepository;
                         this.familyModelValidator = familyModelValidator;
@@ -87,7 +81,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiFamilyResponseModel> response = new CreateResponse<ApiFamilyResponseModel>(await this.familyModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolFamilyMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolFamilyMapper.MapModelToBO(default(int), model);
                                 var record = await this.familyRepository.Create(this.dalFamilyMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace FermataFishNS.Api.Services
                         ApiFamilyRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.familyModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolFamilyMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.familyModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.familyRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace FermataFishNS.Api.Services
 
                         return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilies(int familyId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<StudentXFamily> records = await this.familyRepository.StudentXFamilies(familyId, limit, offset);
@@ -140,5 +133,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>54b402c5e23cace8228927cac1325187</Hash>
+    <Hash>a8eecede423f1ab1be11c2b353dbeaed</Hash>
 </Codenesium>*/

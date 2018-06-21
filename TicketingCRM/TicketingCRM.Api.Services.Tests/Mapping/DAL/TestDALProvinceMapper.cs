@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Province")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProvinceActionMapper
+        public class TestDALProvinceMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProvinceMapper();
-
                         var bo = new BOProvince();
-
                         bo.SetProperties(1, 1, "A");
 
                         Province response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProvinceMapper();
-
                         Province entity = new Province();
-
                         entity.SetProperties(1, 1, "A");
 
-                        BOProvince  response = mapper.MapEFToBO(entity);
+                        BOProvince response = mapper.MapEFToBO(entity);
 
                         response.CountryId.Should().Be(1);
                         response.Id.Should().Be(1);
@@ -48,9 +44,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProvinceMapper();
-
                         Province entity = new Province();
-
                         entity.SetProperties(1, 1, "A");
 
                         List<BOProvince> response = mapper.MapEFToBO(new List<Province>() { entity });
@@ -61,5 +55,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b8559c1fd42b239d29a83521c6674900</Hash>
+    <Hash>11a14bcc7a340d1c2cbd620288c27cea</Hash>
 </Codenesium>*/

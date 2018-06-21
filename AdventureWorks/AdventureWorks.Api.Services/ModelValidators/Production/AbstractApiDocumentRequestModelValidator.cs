@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiDocumentRequestModelValidator: AbstractValidator<ApiDocumentRequestModel>
+        public abstract class AbstractApiDocumentRequestModelValidator : AbstractValidator<ApiDocumentRequestModel>
         {
                 private Guid existingRecordId;
 
-                IDocumentRepository documentRepository;
+                private IDocumentRepository documentRepository;
 
                 public AbstractApiDocumentRequestModelValidator(IDocumentRepository documentRepository)
                 {
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7533e4a3375fac117b9405ba4eb7e633</Hash>
+    <Hash>fe8017ab73d6c1d5b145a2dbf30c026e</Hash>
 </Codenesium>*/

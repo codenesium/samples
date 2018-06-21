@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiChainStatusRequestModelValidator: AbstractValidator<ApiChainStatusRequestModel>
+        public abstract class AbstractApiChainStatusRequestModelValidator : AbstractValidator<ApiChainStatusRequestModel>
         {
                 private int existingRecordId;
 
-                IChainStatusRepository chainStatusRepository;
+                private IChainStatusRepository chainStatusRepository;
 
                 public AbstractApiChainStatusRequestModelValidator(IChainStatusRepository chainStatusRepository)
                 {
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82427b32cc7f9d056fc83d42e010f76a</Hash>
+    <Hash>d00a7df3626e162502742556370fb1f0</Hash>
 </Codenesium>*/

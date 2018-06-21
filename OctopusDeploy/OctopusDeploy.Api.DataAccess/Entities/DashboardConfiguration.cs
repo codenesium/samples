@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("DashboardConfiguration", Schema="dbo")]
-        public partial class DashboardConfiguration: AbstractEntity
+        public partial class DashboardConfiguration : AbstractEntity
         {
                 public DashboardConfiguration()
                 {
@@ -29,26 +29,26 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IncludedEnvironmentIds", TypeName="nvarchar(-1)")]
+                [Column("IncludedEnvironmentIds")]
                 public string IncludedEnvironmentIds { get; private set; }
 
-                [Column("IncludedProjectIds", TypeName="nvarchar(-1)")]
+                [Column("IncludedProjectIds")]
                 public string IncludedProjectIds { get; private set; }
 
-                [Column("IncludedTenantIds", TypeName="nvarchar(-1)")]
+                [Column("IncludedTenantIds")]
                 public string IncludedTenantIds { get; private set; }
 
-                [Column("IncludedTenantTags", TypeName="nvarchar(-1)")]
+                [Column("IncludedTenantTags")]
                 public string IncludedTenantTags { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8ad7be6b744cd63d2ef2671a6dd3c1fd</Hash>
+    <Hash>b782f7fcdf44be6ff644cde95bcffd42</Hash>
 </Codenesium>*/

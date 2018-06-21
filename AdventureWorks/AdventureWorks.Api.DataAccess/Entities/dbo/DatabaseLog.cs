@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("DatabaseLog", Schema="dbo")]
-        public partial class DatabaseLog: AbstractEntity
+        public partial class DatabaseLog : AbstractEntity
         {
                 public DatabaseLog()
                 {
@@ -33,32 +33,32 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("DatabaseLogID", TypeName="int")]
+                [Column("DatabaseLogID")]
                 public int DatabaseLogID { get; private set; }
 
-                [Column("DatabaseUser", TypeName="nvarchar(128)")]
+                [Column("DatabaseUser")]
                 public string DatabaseUser { get; private set; }
 
-                [Column("Event", TypeName="nvarchar(128)")]
+                [Column("Event")]
                 public string @Event { get; private set; }
 
-                [Column("Object", TypeName="nvarchar(128)")]
+                [Column("Object")]
                 public string @Object { get; private set; }
 
-                [Column("PostTime", TypeName="datetime")]
+                [Column("PostTime")]
                 public DateTime PostTime { get; private set; }
 
-                [Column("Schema", TypeName="nvarchar(128)")]
+                [Column("Schema")]
                 public string Schema { get; private set; }
 
-                [Column("TSQL", TypeName="nvarchar(-1)")]
+                [Column("TSQL")]
                 public string TSQL { get; private set; }
 
-                [Column("XmlEvent", TypeName="xml(-1)")]
+                [Column("XmlEvent")]
                 public string XmlEvent { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>9cea7f72ec767a602d47930d75169af9</Hash>
+    <Hash>c77552ae531fe09132084368ee356368</Hash>
 </Codenesium>*/

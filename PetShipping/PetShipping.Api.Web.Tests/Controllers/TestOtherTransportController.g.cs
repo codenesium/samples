@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Web.Tests
 {
@@ -19,32 +20,253 @@ namespace PetShippingNS.Api.Web.Tests
         public partial class OtherTransportControllerTests
         {
                 [Fact]
-                public async void All()
+                public async void All_Exists()
                 {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        var record = new ApiOtherTransportResponseModel();
+                        var records = new List<ApiOtherTransportResponseModel>();
+                        records.Add(record);
+                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.All(1000, 0);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var items = (response as OkObjectResult).Value as List<ApiOtherTransportResponseModel>;
+                        items.Count.Should().Be(1);
+                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void Get()
+                public async void All_Not_Exists()
                 {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        mock.ServiceMock.Setup(x => x.All(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ApiOtherTransportResponseModel>>(new List<ApiOtherTransportResponseModel>()));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.All(1000, 0);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var items = (response as OkObjectResult).Value as List<ApiOtherTransportResponseModel>;
+                        items.Should().BeEmpty();
+                        mock.ServiceMock.Verify(x => x.All(It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void Create()
+                public async void Get_Exists()
                 {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ApiOtherTransportResponseModel()));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Get(default(int));
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var record = (response as OkObjectResult).Value as ApiOtherTransportResponseModel;
+                        record.Should().NotBeNull();
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void Update()
+                public async void Get_Not_Exists()
                 {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiOtherTransportResponseModel>(null));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Get(default(int));
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
                 }
 
                 [Fact]
-                public async void Delete()
+                public async void BulkInsert_No_Errors()
                 {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+
+                        var mockResponse = new CreateResponse<ApiOtherTransportResponseModel>(new FluentValidation.Results.ValidationResult());
+                        mockResponse.SetRecord(new ApiOtherTransportResponseModel());
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOtherTransportResponseModel>>(mockResponse));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var records = new List<ApiOtherTransportRequestModel>();
+                        records.Add(new ApiOtherTransportRequestModel());
+                        IActionResult response = await controller.BulkInsert(records);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        var result = (response as OkObjectResult).Value as List<ApiOtherTransportResponseModel>;
+                        result.Should().NotBeEmpty();
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>()));
                 }
+
+                [Fact]
+                public async void BulkInsert_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+
+                        var mockResponse = new Mock<CreateResponse<ApiOtherTransportResponseModel>>(new FluentValidation.Results.ValidationResult());
+                        mockResponse.SetupGet(x => x.Success).Returns(false);
+
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOtherTransportResponseModel>>(mockResponse.Object));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var records = new List<ApiOtherTransportRequestModel>();
+                        records.Add(new ApiOtherTransportRequestModel());
+                        IActionResult response = await controller.BulkInsert(records);
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>()));
+                }
+
+                [Fact]
+                public async void Create_No_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+
+                        var mockResponse = new CreateResponse<ApiOtherTransportResponseModel>(new FluentValidation.Results.ValidationResult());
+                        mockResponse.SetRecord(new ApiOtherTransportResponseModel());
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOtherTransportResponseModel>>(mockResponse));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Create(new ApiOtherTransportRequestModel());
+
+                        response.Should().BeOfType<CreatedResult>();
+                        (response as CreatedResult).StatusCode.Should().Be((int)HttpStatusCode.Created);
+                        var record = (response as CreatedResult).Value as ApiOtherTransportResponseModel;
+                        record.Should().NotBeNull();
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>()));
+                }
+
+                [Fact]
+                public async void Create_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+
+                        var mockResponse = new Mock<CreateResponse<ApiOtherTransportResponseModel>>(new FluentValidation.Results.ValidationResult());
+                        var mockRecord = new ApiOtherTransportResponseModel();
+
+                        mockResponse.SetupGet(x => x.Success).Returns(false);
+
+                        mock.ServiceMock.Setup(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>())).Returns(Task.FromResult<CreateResponse<ApiOtherTransportResponseModel>>(mockResponse.Object));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Create(new ApiOtherTransportRequestModel());
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Create(It.IsAny<ApiOtherTransportRequestModel>()));
+                }
+
+                [Fact]
+                public async void Update_No_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOtherTransportRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(int), new ApiOtherTransportRequestModel());
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOtherTransportRequestModel>()));
+                }
+
+                [Fact]
+                public async void Update_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOtherTransportRequestModel>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Update(default(int), new ApiOtherTransportRequestModel());
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiOtherTransportRequestModel>()));
+                }
+
+                [Fact]
+                public async void Delete_No_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Delete(default(int));
+
+                        response.Should().BeOfType<NoContentResult>();
+                        (response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
+                }
+
+                [Fact]
+                public async void Delete_Errors()
+                {
+                        OtherTransportControllerMockFacade mock = new OtherTransportControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(false);
+                        mock.ServiceMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+                        OtherTransportController controller = new OtherTransportController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        IActionResult response = await controller.Delete(default(int));
+
+                        response.Should().BeOfType<ObjectResult>();
+                        (response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.UnprocessableEntity);
+                        mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
+                }
+        }
+
+        public class OtherTransportControllerMockFacade
+        {
+                public Mock<ApiSettings> ApiSettingsMoc { get; set; } = new Mock<ApiSettings>();
+
+                public Mock<ILogger<OtherTransportController>> LoggerMock { get; set; } = new Mock<ILogger<OtherTransportController>>();
+
+                public Mock<ITransactionCoordinator> TransactionCoordinatorMock { get; set; } = new Mock<ITransactionCoordinator>();
+
+                public Mock<IOtherTransportService> ServiceMock { get; set; } = new Mock<IOtherTransportService>();
         }
 }
 
 /*<Codenesium>
-    <Hash>34fa36a71d2adbeaeb705d01c0aa5a5b</Hash>
+    <Hash>545185be8722477cc78f13f0bf3c8b92</Hash>
 </Codenesium>*/

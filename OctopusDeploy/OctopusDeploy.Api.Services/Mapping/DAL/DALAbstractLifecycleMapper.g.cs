@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOLifecycle bo)
                 {
                         Lifecycle efLifecycle = new Lifecycle();
-
                         efLifecycle.SetProperties(
                                 bo.DataVersion,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1cc9b379599c23e190b5af36104626a</Hash>
+    <Hash>de8ab1cccce909f267d53c31e1cdf090</Hash>
 </Codenesium>*/

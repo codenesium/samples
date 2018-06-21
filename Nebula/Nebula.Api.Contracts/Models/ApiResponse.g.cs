@@ -1,25 +1,10 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace NebulaNS.Api.Contracts
 {
-        public class ReferenceEntity<T>
-        {
-                [JsonProperty(PropertyName = "Value")]
-                public T Value { get; private set; }
-
-                [JsonProperty(PropertyName = "Object")]
-                public string ReferenceObjectName { get; set; }
-
-                public ReferenceEntity(T value, string referenceObjectName)
-                {
-                        this.Value = value;
-                        this.ReferenceObjectName = referenceObjectName;
-                }
-        }
-
         public partial class ApiResponse
         {
                 public ApiResponse()
@@ -300,5 +285,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0f145de69dfad290ae6073ea7762b14d</Hash>
+    <Hash>a44c893964a7fa9b600890948e4b44b9</Hash>
 </Codenesium>*/

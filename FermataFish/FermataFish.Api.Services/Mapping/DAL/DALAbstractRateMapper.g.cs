@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BORate bo)
                 {
                         Rate efRate = new Rate();
-
                         efRate.SetProperties(
                                 bo.AmountPerMinute,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec9c39ec5abfa7bc2286906efb28a561</Hash>
+    <Hash>743e3af92838d92f18ebc091c1f76e48</Hash>
 </Codenesium>*/

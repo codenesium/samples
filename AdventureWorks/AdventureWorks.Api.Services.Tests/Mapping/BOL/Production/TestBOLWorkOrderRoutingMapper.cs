@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkOrderRouting")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLWorkOrderRoutingActionMapper
+        public class TestBOLWorkOrderRoutingMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLWorkOrderRoutingMapper();
-
                         ApiWorkOrderRoutingRequestModel model = new ApiWorkOrderRoutingRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOWorkOrderRouting response = mapper.MapModelToBO(1, model);
 
@@ -40,9 +38,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLWorkOrderRoutingMapper();
-
                         BOWorkOrderRouting bo = new BOWorkOrderRouting();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiWorkOrderRoutingResponseModel response = mapper.MapBOToModel(bo);
 
@@ -64,9 +60,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLWorkOrderRoutingMapper();
-
                         BOWorkOrderRouting bo = new BOWorkOrderRouting();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiWorkOrderRoutingResponseModel> response = mapper.MapBOToModel(new List<BOWorkOrderRouting>() { { bo } });
 
@@ -76,5 +70,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2236a7ad4a8448e540423c5837b07653</Hash>
+    <Hash>b756b4c1cd81b06d761c1a1c096985e1</Hash>
 </Codenesium>*/

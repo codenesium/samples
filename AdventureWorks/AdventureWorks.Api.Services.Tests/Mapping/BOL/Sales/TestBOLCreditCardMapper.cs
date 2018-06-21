@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CreditCard")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCreditCardActionMapper
+        public class TestBOLCreditCardMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCreditCardMapper();
-
                         ApiCreditCardRequestModel model = new ApiCreditCardRequestModel();
-
                         model.SetProperties("A", "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOCreditCard response = mapper.MapModelToBO(1, model);
 
@@ -34,9 +32,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCreditCardMapper();
-
                         BOCreditCard bo = new BOCreditCard();
-
                         bo.SetProperties(1, "A", "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiCreditCardResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCreditCardMapper();
-
                         BOCreditCard bo = new BOCreditCard();
-
                         bo.SetProperties(1, "A", "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiCreditCardResponseModel> response = mapper.MapBOToModel(new List<BOCreditCard>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f4c6bd67619c47bec6e480616caf8ef</Hash>
+    <Hash>7853d6fb294cc9974c086cf4c6b2b062</Hash>
 </Codenesium>*/

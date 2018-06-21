@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiScrapReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (short), new ApiScrapReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiScrapReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiScrapReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (short), new ApiScrapReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiScrapReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(new ScrapReason()));
 
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (short));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(short));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -120,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ScrapReason>(new ScrapReason()));
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (short), new ApiScrapReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiScrapReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -132,7 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         scrapReasonRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<ScrapReason>(null));
                         var validator = new ApiScrapReasonRequestModelValidator(scrapReasonRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (short), new ApiScrapReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(short), new ApiScrapReasonRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -140,5 +135,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0e00319d52964921c8e09a2fcb31ec7c</Hash>
+    <Hash>980feeb3f95739f8e7cce7fbf40acc7f</Hash>
 </Codenesium>*/

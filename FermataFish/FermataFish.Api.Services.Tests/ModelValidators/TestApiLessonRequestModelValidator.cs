@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonRepository.Setup(x => x.GetLessonStatus(It.IsAny<int>())).Returns(Task.FromResult<LessonStatus>(new LessonStatus()));
 
                         var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLessonRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LessonStatusId, 1);
@@ -57,8 +56,7 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonRepository.Setup(x => x.GetLessonStatus(It.IsAny<int>())).Returns(Task.FromResult<LessonStatus>(new LessonStatus()));
 
                         var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LessonStatusId, 1);
                 }
@@ -71,7 +69,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LessonStatusId, 1);
                 }
@@ -83,7 +81,6 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
                         var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLessonRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
@@ -109,8 +106,7 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
 
                         var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
                 }
@@ -123,7 +119,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
                 }
@@ -131,5 +127,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2aec91e81adba6ce7bf9a353e926bc3c</Hash>
+    <Hash>0c1147150b73f4023954356bb5a2b489</Hash>
 </Codenesium>*/

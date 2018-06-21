@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLDeploymentRelatedMachineMapper: BOLAbstractDeploymentRelatedMachineMapper, IBOLDeploymentRelatedMachineMapper
+        public class BOLDeploymentRelatedMachineMapper : BOLAbstractDeploymentRelatedMachineMapper, IBOLDeploymentRelatedMachineMapper
         {
                 public BOLDeploymentRelatedMachineMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d397d5bcc31cfb04c913132c2d963c8</Hash>
+    <Hash>4963461cc0ffa470dadf5195cf6989f7</Hash>
 </Codenesium>*/

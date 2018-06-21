@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiAWBuildVersionResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiAWBuildVersionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string database_Version,
@@ -72,5 +72,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ae37d3e639a15f714f34f60f960c0ee7</Hash>
+    <Hash>67b9e76303770362a46daddb88923771</Hash>
 </Codenesium>*/

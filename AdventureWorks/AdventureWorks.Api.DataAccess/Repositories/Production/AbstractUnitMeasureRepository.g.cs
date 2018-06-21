@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractUnitMeasureRepository: AbstractRepository
+        public abstract class AbstractUnitMeasureRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<BillOfMaterials>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BillOfMaterials>().Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
+                }
+
+                public async virtual Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Product>().Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+                }
+
                 protected async Task<List<UnitMeasure>> Where(
                         Expression<Func<UnitMeasure, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,18 +121,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<BillOfMaterials>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<BillOfMaterials>().Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterials>();
-                }
-                public async virtual Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Product>().Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>15d80f4946198b47abebe52ad90a0b0b</Hash>
+    <Hash>d74d070176bfba71c4033f36ea6545d3</Hash>
 </Codenesium>*/

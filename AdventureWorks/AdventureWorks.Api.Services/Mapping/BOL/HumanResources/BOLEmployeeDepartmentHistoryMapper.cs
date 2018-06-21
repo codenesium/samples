@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLEmployeeDepartmentHistoryMapper: BOLAbstractEmployeeDepartmentHistoryMapper, IBOLEmployeeDepartmentHistoryMapper
+        public class BOLEmployeeDepartmentHistoryMapper : BOLAbstractEmployeeDepartmentHistoryMapper, IBOLEmployeeDepartmentHistoryMapper
         {
                 public BOLEmployeeDepartmentHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7a6662c0c768cfc4e32e1e63c01e653</Hash>
+    <Hash>96c2598378e4c8b6bbb4134c52893b26</Hash>
 </Codenesium>*/

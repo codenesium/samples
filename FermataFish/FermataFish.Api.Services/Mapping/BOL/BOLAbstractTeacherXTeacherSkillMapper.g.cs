@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FermataFishNS.Api.Services
                         )
                 {
                         BOTeacherXTeacherSkill boTeacherXTeacherSkill = new BOTeacherXTeacherSkill();
-
                         boTeacherXTeacherSkill.SetProperties(
                                 id,
                                 model.TeacherId,
@@ -47,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5ed238e1c07bac5b9820b0b04f5ffcd</Hash>
+    <Hash>93549d788694f85e6ccdd61e2bc16bf3</Hash>
 </Codenesium>*/

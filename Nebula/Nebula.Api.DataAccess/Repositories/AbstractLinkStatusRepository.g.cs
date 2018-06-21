@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractLinkStatusRepository: AbstractRepository
+        public abstract class AbstractLinkStatusRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Link>> Links(int linkStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Link>().Where(x => x.LinkStatusId == linkStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
+                }
+
                 protected async Task<List<LinkStatus>> Where(
                         Expression<Func<LinkStatus, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Link>> Links(int linkStatusId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Link>().Where(x => x.LinkStatusId == linkStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>537b301c7271125ecbbc08883437eccf</Hash>
+    <Hash>5f1f129c15d24139784875b88c4ee99a</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new CountryRepository(loggerMoc.Object, context);
 
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new CountryRepository(loggerMoc.Object, context);
 
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new CountryRepository(loggerMoc.Object, context);
 
                         var entity = new Country();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Country>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRepositoryMoc.GetContext();
                         var repository = new CountryRepository(loggerMoc.Object, context);
-
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRepositoryMoc.GetContext();
                         var repository = new CountryRepository(loggerMoc.Object, context);
-
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRepositoryMoc.GetContext();
                         var repository = new CountryRepository(loggerMoc.Object, context);
-
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Country modifiedRecord = await context.Set<Country>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>39d765d61a13046f55eee4e326fa377f</Hash>
+    <Hash>d36c5fae37174d5d5af6c8991d42ce83</Hash>
 </Codenesium>*/

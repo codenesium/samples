@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.Services;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
         [Route("api/teacherSkills")]
         [ApiVersion("1.0")]
-        public class TeacherSkillController: AbstractTeacherSkillController
+        public class TeacherSkillController : AbstractTeacherSkillController
         {
                 public TeacherSkillController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>77383a7fcb9471e756c44cd3534972e3</Hash>
+    <Hash>e9c69ec3701aba064809ec2c1af3ab28</Hash>
 </Codenesium>*/

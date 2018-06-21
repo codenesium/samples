@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLBusinessEntityAddressMapper: BOLAbstractBusinessEntityAddressMapper, IBOLBusinessEntityAddressMapper
+        public class BOLBusinessEntityAddressMapper : BOLAbstractBusinessEntityAddressMapper, IBOLBusinessEntityAddressMapper
         {
                 public BOLBusinessEntityAddressMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a32eb7d603d210be6ad8c5d1cc1139f</Hash>
+    <Hash>2424f8e8bbe456da0c91a19969cff5bf</Hash>
 </Codenesium>*/

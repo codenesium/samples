@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new AddressTypeRepository(loggerMoc.Object, context);
 
                         AddressType entity = new AddressType();
-
                         context.Set<AddressType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new AddressTypeRepository(loggerMoc.Object, context);
 
                         AddressType entity = new AddressType();
-
                         context.Set<AddressType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new AddressTypeRepository(loggerMoc.Object, context);
 
                         var entity = new AddressType();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<AddressType>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<AddressTypeRepository>> loggerMoc = AddressTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AddressTypeRepositoryMoc.GetContext();
                         var repository = new AddressTypeRepository(loggerMoc.Object, context);
-
                         AddressType entity = new AddressType();
-
                         context.Set<AddressType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<AddressTypeRepository>> loggerMoc = AddressTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AddressTypeRepositoryMoc.GetContext();
                         var repository = new AddressTypeRepository(loggerMoc.Object, context);
-
                         AddressType entity = new AddressType();
-
                         context.Set<AddressType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<AddressTypeRepository>> loggerMoc = AddressTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AddressTypeRepositoryMoc.GetContext();
                         var repository = new AddressTypeRepository(loggerMoc.Object, context);
-
                         AddressType entity = new AddressType();
-
                         context.Set<AddressType>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.AddressTypeID);
 
                         AddressType modifiedRecord = await context.Set<AddressType>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ed6d63c328cf687d1bd8f5970e49b137</Hash>
+    <Hash>a9672519d356a8be01603e29ba2af438</Hash>
 </Codenesium>*/

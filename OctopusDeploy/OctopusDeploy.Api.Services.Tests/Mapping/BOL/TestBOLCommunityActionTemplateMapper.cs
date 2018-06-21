@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CommunityActionTemplate")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCommunityActionTemplateActionMapper
+        public class TestBOLCommunityActionTemplateMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCommunityActionTemplateMapper();
-
                         ApiCommunityActionTemplateRequestModel model = new ApiCommunityActionTemplateRequestModel();
-
                         model.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
                         BOCommunityActionTemplate response = mapper.MapModelToBO("A", model);
 
@@ -32,9 +30,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCommunityActionTemplateMapper();
-
                         BOCommunityActionTemplate bo = new BOCommunityActionTemplate();
-
                         bo.SetProperties("A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
                         ApiCommunityActionTemplateResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCommunityActionTemplateMapper();
-
                         BOCommunityActionTemplate bo = new BOCommunityActionTemplate();
-
                         bo.SetProperties("A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
                         List<ApiCommunityActionTemplateResponseModel> response = mapper.MapBOToModel(new List<BOCommunityActionTemplate>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6efa66ff1f601d95907da5887ae4d3aa</Hash>
+    <Hash>7b5a90abb6162982ae76d00376b28834</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ActionTemplateVersion")]
         [Trait("Area", "DALMapper")]
-        public class TestDALActionTemplateVersionActionMapper
+        public class TestDALActionTemplateVersionMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALActionTemplateVersionMapper();
-
                         var bo = new BOActionTemplateVersion();
-
                         bo.SetProperties("A", "A", "A", "A", "A", 1);
 
                         ActionTemplateVersion response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALActionTemplateVersionMapper();
-
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         entity.SetProperties("A", "A", "A", "A", "A", 1);
 
-                        BOActionTemplateVersion  response = mapper.MapEFToBO(entity);
+                        BOActionTemplateVersion response = mapper.MapEFToBO(entity);
 
                         response.ActionType.Should().Be("A");
                         response.Id.Should().Be("A");
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALActionTemplateVersionMapper();
-
                         ActionTemplateVersion entity = new ActionTemplateVersion();
-
                         entity.SetProperties("A", "A", "A", "A", "A", 1);
 
                         List<BOActionTemplateVersion> response = mapper.MapEFToBO(new List<ActionTemplateVersion>() { entity });
@@ -67,5 +61,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ded2ba04d3be64fcfa3b184e9521204d</Hash>
+    <Hash>c8981c68a68a8a8fec9d5834dac1e416</Hash>
 </Codenesium>*/

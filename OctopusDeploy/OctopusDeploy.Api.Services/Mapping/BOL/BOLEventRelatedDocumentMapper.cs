@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLEventRelatedDocumentMapper: BOLAbstractEventRelatedDocumentMapper, IBOLEventRelatedDocumentMapper
+        public class BOLEventRelatedDocumentMapper : BOLAbstractEventRelatedDocumentMapper, IBOLEventRelatedDocumentMapper
         {
                 public BOLEventRelatedDocumentMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef3de056353c01fd511f6751572e81b3</Hash>
+    <Hash>620d5fca44724a6418820ab5fb58471f</Hash>
 </Codenesium>*/

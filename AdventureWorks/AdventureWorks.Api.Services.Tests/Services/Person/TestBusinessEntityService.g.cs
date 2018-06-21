@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -48,7 +48,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var record = new BusinessEntity();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -62,7 +61,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        ApiBusinessEntityResponseModel response = await service.Get(default (int));
+                        ApiBusinessEntityResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -85,7 +84,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        ApiBusinessEntityResponseModel response = await service.Get(default (int));
+                        ApiBusinessEntityResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -96,7 +95,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var model = new ApiBusinessEntityRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BusinessEntity>())).Returns(Task.FromResult(new BusinessEntity()));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -122,7 +120,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var model = new ApiBusinessEntityRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<BusinessEntity>())).Returns(Task.FromResult(new BusinessEntity()));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -136,7 +133,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBusinessEntityRequestModel>()));
@@ -148,7 +145,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var model = new ApiBusinessEntityRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -162,7 +158,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -175,7 +171,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var records = new List<BusinessEntityAddress>();
                         records.Add(new BusinessEntityAddress());
-                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -188,17 +184,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default (int));
+                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void BusinessEntityAddresses_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
-                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
+                        mock.RepositoryMock.Setup(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -211,10 +207,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default (int));
+                        List<ApiBusinessEntityAddressResponseModel> response = await service.BusinessEntityAddresses(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.BusinessEntityAddresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -223,7 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var records = new List<BusinessEntityContact>();
                         records.Add(new BusinessEntityContact());
-                        mock.RepositoryMock.Setup(x => x.BusinessEntityContacts(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.BusinessEntityContacts(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -236,17 +232,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContacts(default (int));
+                        List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContacts(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.BusinessEntityContacts(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.BusinessEntityContacts(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void BusinessEntityContacts_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
-                        mock.RepositoryMock.Setup(x => x.BusinessEntityContacts(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
+                        mock.RepositoryMock.Setup(x => x.BusinessEntityContacts(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -259,10 +255,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContacts(default (int));
+                        List<ApiBusinessEntityContactResponseModel> response = await service.BusinessEntityContacts(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.BusinessEntityContacts(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.BusinessEntityContacts(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -271,7 +267,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
                         var records = new List<Person>();
                         records.Add(new Person());
-                        mock.RepositoryMock.Setup(x => x.People(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.People(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -284,17 +280,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        List<ApiPersonResponseModel> response = await service.People(default (int));
+                        List<ApiPersonResponseModel> response = await service.People(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.People(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.People(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void People_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IBusinessEntityRepository>();
-                        mock.RepositoryMock.Setup(x => x.People(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
+                        mock.RepositoryMock.Setup(x => x.People(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
                         var service = new BusinessEntityService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.BusinessEntityModelValidatorMock.Object,
@@ -307,14 +303,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLPersonMapperMock,
                                                                 mock.DALMapperMockFactory.DALPersonMapperMock);
 
-                        List<ApiPersonResponseModel> response = await service.People(default (int));
+                        List<ApiPersonResponseModel> response = await service.People(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.People(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.People(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e50adb139872991f122a34ca409139e0</Hash>
+    <Hash>6a18d8b15df283c6c72de57afb839dab</Hash>
 </Codenesium>*/

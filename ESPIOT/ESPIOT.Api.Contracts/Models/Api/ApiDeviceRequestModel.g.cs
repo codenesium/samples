@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public partial class ApiDeviceRequestModel: AbstractApiRequestModel
+        public partial class ApiDeviceRequestModel : AbstractApiRequestModel
         {
-                public ApiDeviceRequestModel() : base()
+                public ApiDeviceRequestModel()
+                        : base()
                 {
                 }
 
@@ -55,5 +56,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b304ee6897c0a43dd76d335be854511a</Hash>
+    <Hash>60838fc60fcb0bbcbc21d1ce4d2a591d</Hash>
 </Codenesium>*/

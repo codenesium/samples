@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/productProductPhotoes")]
         [ApiVersion("1.0")]
-        public class ProductProductPhotoController: AbstractProductProductPhotoController
+        public class ProductProductPhotoController : AbstractProductProductPhotoController
         {
                 public ProductProductPhotoController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>564a92516fff7111f56d2c942fc0d81e</Hash>
+    <Hash>c67aaa67290d82e69a7b6dd8adf4dc4f</Hash>
 </Codenesium>*/

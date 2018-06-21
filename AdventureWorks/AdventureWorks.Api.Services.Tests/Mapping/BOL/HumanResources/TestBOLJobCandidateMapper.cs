@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "JobCandidate")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLJobCandidateActionMapper
+        public class TestBOLJobCandidateMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLJobCandidateMapper();
-
                         ApiJobCandidateRequestModel model = new ApiJobCandidateRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOJobCandidate response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLJobCandidateMapper();
-
                         BOJobCandidate bo = new BOJobCandidate();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiJobCandidateResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLJobCandidateMapper();
-
                         BOJobCandidate bo = new BOJobCandidate();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiJobCandidateResponseModel> response = mapper.MapBOToModel(new List<BOJobCandidate>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bb6fb82dee68d4ce45c89650a46ba37c</Hash>
+    <Hash>63b595181732cef55b7613b2f7d975e4</Hash>
 </Codenesium>*/

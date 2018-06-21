@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Sale")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSaleActionMapper
+        public class TestDALSaleMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSaleMapper();
-
                         var bo = new BOSale();
-
                         bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         Sale response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSaleMapper();
-
                         Sale entity = new Sale();
-
                         entity.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
-                        BOSale  response = mapper.MapEFToBO(entity);
+                        BOSale response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.IpAddress.Should().Be("A");
@@ -52,9 +48,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSaleMapper();
-
                         Sale entity = new Sale();
-
                         entity.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         List<BOSale> response = mapper.MapEFToBO(new List<Sale>() { entity });
@@ -65,5 +59,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>df447a680b47f21258cd6b810da04dd7</Hash>
+    <Hash>22d6f79f6ec7a1fc136f6ba2ed244b35</Hash>
 </Codenesium>*/

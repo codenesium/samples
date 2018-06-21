@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PipelineStepStepRequirement")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLPipelineStepStepRequirementActionMapper
+        public class TestBOLPipelineStepStepRequirementMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLPipelineStepStepRequirementMapper();
-
                         ApiPipelineStepStepRequirementRequestModel model = new ApiPipelineStepStepRequirementRequestModel();
-
                         model.SetProperties("A", 1, true);
                         BOPipelineStepStepRequirement response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLPipelineStepStepRequirementMapper();
-
                         BOPipelineStepStepRequirement bo = new BOPipelineStepStepRequirement();
-
                         bo.SetProperties(1, "A", 1, true);
                         ApiPipelineStepStepRequirementResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLPipelineStepStepRequirementMapper();
-
                         BOPipelineStepStepRequirement bo = new BOPipelineStepStepRequirement();
-
                         bo.SetProperties(1, "A", 1, true);
                         List<ApiPipelineStepStepRequirementResponseModel> response = mapper.MapBOToModel(new List<BOPipelineStepStepRequirement>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>922ba1071fed40c713952a2df981d09d</Hash>
+    <Hash>54d31a6b7afe29526567ba21a0b19f6b</Hash>
 </Codenesium>*/

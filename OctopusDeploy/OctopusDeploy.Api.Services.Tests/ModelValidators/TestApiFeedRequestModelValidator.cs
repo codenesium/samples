@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedType, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedType, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedType, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedType, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedUri, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedUri, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedUri, new string('A', 513));
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FeedUri, new string('A', 513));
                 }
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -213,7 +199,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -226,8 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Feed()));
 
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -276,7 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(new Feed()));
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -288,7 +271,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         feedRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<Feed>(null));
                         var validator = new ApiFeedRequestModelValidator(feedRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiFeedRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiFeedRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -296,5 +279,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3baaf9fbda6ec152abb14cd9575b93e3</Hash>
+    <Hash>29f4b30d75548d3fd8b08da6d844d999</Hash>
 </Codenesium>*/

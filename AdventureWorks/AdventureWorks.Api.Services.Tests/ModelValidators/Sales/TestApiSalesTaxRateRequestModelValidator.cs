@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTaxRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTaxRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTaxRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTaxRate()));
 
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -120,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(new SalesTaxRate()));
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTaxRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.StateProvinceID, 1);
                 }
@@ -132,7 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTaxRateRepository.Setup(x => x.ByStateProvinceIDTaxType(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<SalesTaxRate>(null));
                         var validator = new ApiSalesTaxRateRequestModelValidator(salesTaxRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTaxRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTaxRateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StateProvinceID, 1);
                 }
@@ -140,5 +135,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0a8ea62ee48faf7b7a028a09f6dd23c7</Hash>
+    <Hash>5bad6f665dedf26239a0766b074a9641</Hash>
 </Codenesium>*/

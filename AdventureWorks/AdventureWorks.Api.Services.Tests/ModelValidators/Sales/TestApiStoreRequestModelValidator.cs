@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStoreRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStoreRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStoreRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStoreRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStoreRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStoreRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Store()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStoreRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SalesPersonID, 1);
@@ -122,8 +116,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         storeRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStoreRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStoreRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SalesPersonID, 1);
                 }
@@ -136,7 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiStoreRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStoreRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SalesPersonID, 1);
                 }
@@ -144,5 +137,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3b09f1901a68b5ab4a879c13d1920d2e</Hash>
+    <Hash>8e84ca5d94fce198d4a790add31cc35e</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractEmployeeDepartmentHistoryRepository: AbstractRepository
+        public abstract class AbstractEmployeeDepartmentHistoryRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,6 +82,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID)
                 {
                         var records = await this.Where(x => x.ShiftID == shiftID);
@@ -121,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f48a3e63a22d594e48d8f93d8682ddae</Hash>
+    <Hash>a5e7c95b5e1c2471f97d2d9a4459fa69</Hash>
 </Codenesium>*/

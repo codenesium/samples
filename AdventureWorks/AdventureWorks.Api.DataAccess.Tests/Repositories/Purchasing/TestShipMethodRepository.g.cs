@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShipMethodRepository(loggerMoc.Object, context);
 
                         ShipMethod entity = new ShipMethod();
-
                         context.Set<ShipMethod>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShipMethodRepository(loggerMoc.Object, context);
 
                         ShipMethod entity = new ShipMethod();
-
                         context.Set<ShipMethod>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShipMethodRepository(loggerMoc.Object, context);
 
                         var entity = new ShipMethod();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ShipMethod>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShipMethodRepository>> loggerMoc = ShipMethodRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShipMethodRepositoryMoc.GetContext();
                         var repository = new ShipMethodRepository(loggerMoc.Object, context);
-
                         ShipMethod entity = new ShipMethod();
-
                         context.Set<ShipMethod>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShipMethodRepository>> loggerMoc = ShipMethodRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShipMethodRepositoryMoc.GetContext();
                         var repository = new ShipMethodRepository(loggerMoc.Object, context);
-
                         ShipMethod entity = new ShipMethod();
-
                         context.Set<ShipMethod>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShipMethodRepository>> loggerMoc = ShipMethodRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShipMethodRepositoryMoc.GetContext();
                         var repository = new ShipMethodRepository(loggerMoc.Object, context);
-
                         ShipMethod entity = new ShipMethod();
-
                         context.Set<ShipMethod>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ShipMethodID);
 
                         ShipMethod modifiedRecord = await context.Set<ShipMethod>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6535c2ed4ccc1f7ee24ac94dc16d22d2</Hash>
+    <Hash>d275eac36cd6e39cb358f8326b2e1eee</Hash>
 </Codenesium>*/

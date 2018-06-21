@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractSubscriptionService: AbstractService
+        public abstract class AbstractSubscriptionService : AbstractService
         {
                 private ISubscriptionRepository subscriptionRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ISubscriptionRepository subscriptionRepository,
                         IApiSubscriptionRequestModelValidator subscriptionModelValidator,
                         IBOLSubscriptionMapper bolSubscriptionMapper,
-                        IDALSubscriptionMapper dalSubscriptionMapper
-
-                        )
+                        IDALSubscriptionMapper dalSubscriptionMapper)
                         : base()
-
                 {
                         this.subscriptionRepository = subscriptionRepository;
                         this.subscriptionModelValidator = subscriptionModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiSubscriptionResponseModel> response = new CreateResponse<ApiSubscriptionResponseModel>(await this.subscriptionModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSubscriptionMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolSubscriptionMapper.MapModelToBO(default(string), model);
                                 var record = await this.subscriptionRepository.Create(this.dalSubscriptionMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiSubscriptionRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.subscriptionModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSubscriptionMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.subscriptionModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.subscriptionRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ed896b1f2823b27bafcb64cc5b27c28</Hash>
+    <Hash>4cc6cdbf40c18db920cfd429d4202ec4</Hash>
 </Codenesium>*/

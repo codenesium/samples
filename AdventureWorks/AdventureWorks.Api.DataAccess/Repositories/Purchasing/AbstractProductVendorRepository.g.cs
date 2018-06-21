@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractProductVendorRepository: AbstractRepository
+        public abstract class AbstractProductVendorRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,6 +82,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<ProductVendor>> ByUnitMeasureCode(string unitMeasureCode)
                 {
                         var records = await this.Where(x => x.UnitMeasureCode == unitMeasureCode);
@@ -121,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d4d1143ae127d1ff73dfa9d5d5110657</Hash>
+    <Hash>ae92644ee16af5afa37f8a4f5ba0e5db</Hash>
 </Codenesium>*/

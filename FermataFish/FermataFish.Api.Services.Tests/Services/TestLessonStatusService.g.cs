@@ -1,15 +1,15 @@
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILessonStatusRepository>();
                         var record = new LessonStatus();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new LessonStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLLessonMapperMock,
                                                               mock.DALMapperMockFactory.DALLessonMapperMock);
 
-                        ApiLessonStatusResponseModel response = await service.Get(default (int));
+                        ApiLessonStatusResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLLessonMapperMock,
                                                               mock.DALMapperMockFactory.DALLessonMapperMock);
 
-                        ApiLessonStatusResponseModel response = await service.Get(default (int));
+                        ApiLessonStatusResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILessonStatusRepository>();
                         var model = new ApiLessonStatusRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LessonStatus>())).Returns(Task.FromResult(new LessonStatus()));
                         var service = new LessonStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILessonStatusRepository>();
                         var model = new ApiLessonStatusRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<LessonStatus>())).Returns(Task.FromResult(new LessonStatus()));
                         var service = new LessonStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLLessonMapperMock,
                                                               mock.DALMapperMockFactory.DALLessonMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LessonStatusModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLessonStatusRequestModel>()));
@@ -128,7 +125,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILessonStatusRepository>();
                         var model = new ApiLessonStatusRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new LessonStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLLessonMapperMock,
                                                               mock.DALMapperMockFactory.DALLessonMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -151,7 +147,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILessonStatusRepository>();
                         var records = new List<Lesson>();
                         records.Add(new Lesson());
-                        mock.RepositoryMock.Setup(x => x.Lessons(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Lessons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new LessonStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.LessonStatusModelValidatorMock.Object,
@@ -160,17 +156,17 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLLessonMapperMock,
                                                               mock.DALMapperMockFactory.DALLessonMapperMock);
 
-                        List<ApiLessonResponseModel> response = await service.Lessons(default (int));
+                        List<ApiLessonResponseModel> response = await service.Lessons(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Lessons(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Lessons(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Lessons_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ILessonStatusRepository>();
-                        mock.RepositoryMock.Setup(x => x.Lessons(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Lesson>>(new List<Lesson>()));
+                        mock.RepositoryMock.Setup(x => x.Lessons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Lesson>>(new List<Lesson>()));
                         var service = new LessonStatusService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.LessonStatusModelValidatorMock.Object,
@@ -179,14 +175,14 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLLessonMapperMock,
                                                               mock.DALMapperMockFactory.DALLessonMapperMock);
 
-                        List<ApiLessonResponseModel> response = await service.Lessons(default (int));
+                        List<ApiLessonResponseModel> response = await service.Lessons(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Lessons(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Lessons(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>21403a4e90a6d4cb4a8612d7251f73ab</Hash>
+    <Hash>a5c09bb40660b2f4f4636aa6565abf04</Hash>
 </Codenesium>*/

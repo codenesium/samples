@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALJobCandidateMapper: DALAbstractJobCandidateMapper, IDALJobCandidateMapper
+        public class DALJobCandidateMapper : DALAbstractJobCandidateMapper, IDALJobCandidateMapper
         {
                 public DALJobCandidateMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7df7e667d4546b23aac4ff7dd6317065</Hash>
+    <Hash>8f5d9ffa44e04776368d02b704254bf1</Hash>
 </Codenesium>*/

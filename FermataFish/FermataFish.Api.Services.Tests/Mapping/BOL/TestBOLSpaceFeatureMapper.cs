@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SpaceFeature")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSpaceFeatureActionMapper
+        public class TestBOLSpaceFeatureMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSpaceFeatureMapper();
-
                         ApiSpaceFeatureRequestModel model = new ApiSpaceFeatureRequestModel();
-
                         model.SetProperties("A", 1);
                         BOSpaceFeature response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSpaceFeatureMapper();
-
                         BOSpaceFeature bo = new BOSpaceFeature();
-
                         bo.SetProperties(1, "A", 1);
                         ApiSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSpaceFeatureMapper();
-
                         BOSpaceFeature bo = new BOSpaceFeature();
-
                         bo.SetProperties(1, "A", 1);
                         List<ApiSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceFeature>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>850ccdcfad26572523009cb3cedadd3a</Hash>
+    <Hash>b2cc82854e84cfae99f8347bffde8a62</Hash>
 </Codenesium>*/

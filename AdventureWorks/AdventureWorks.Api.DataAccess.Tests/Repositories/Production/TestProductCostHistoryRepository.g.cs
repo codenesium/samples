@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
 
                         ProductCostHistory entity = new ProductCostHistory();
-
                         context.Set<ProductCostHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
 
                         ProductCostHistory entity = new ProductCostHistory();
-
                         context.Set<ProductCostHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
 
                         var entity = new ProductCostHistory();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProductCostHistory>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
                         var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
-
                         ProductCostHistory entity = new ProductCostHistory();
-
                         context.Set<ProductCostHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
                         var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
-
                         ProductCostHistory entity = new ProductCostHistory();
-
                         context.Set<ProductCostHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductCostHistoryRepository>> loggerMoc = ProductCostHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductCostHistoryRepositoryMoc.GetContext();
                         var repository = new ProductCostHistoryRepository(loggerMoc.Object, context);
-
                         ProductCostHistory entity = new ProductCostHistory();
-
                         context.Set<ProductCostHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ProductID);
 
                         ProductCostHistory modifiedRecord = await context.Set<ProductCostHistory>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>45938eb687ab6edc92be5126e731bcee</Hash>
+    <Hash>c4252b489c2e41448e772536450cde1a</Hash>
 </Codenesium>*/

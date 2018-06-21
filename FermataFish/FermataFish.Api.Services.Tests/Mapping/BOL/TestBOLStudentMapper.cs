@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Student")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLStudentActionMapper
+        public class TestBOLStudentMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLStudentMapper();
-
                         ApiStudentRequestModel model = new ApiStudentRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
                         BOStudent response = mapper.MapModelToBO(1, model);
 
@@ -39,9 +37,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLStudentMapper();
-
                         BOStudent bo = new BOStudent();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
                         ApiStudentResponseModel response = mapper.MapBOToModel(bo);
 
@@ -62,9 +58,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLStudentMapper();
-
                         BOStudent bo = new BOStudent();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
                         List<ApiStudentResponseModel> response = mapper.MapBOToModel(new List<BOStudent>() { { bo } });
 
@@ -74,5 +68,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f3fa3683448a4a790e6412ad0d9fc24e</Hash>
+    <Hash>5216183923069395429a6dec6bf7dd35</Hash>
 </Codenesium>*/

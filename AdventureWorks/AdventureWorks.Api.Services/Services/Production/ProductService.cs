@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,80 +7,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ProductService: AbstractProductService, IProductService
+        public class ProductService : AbstractProductService, IProductService
         {
                 public ProductService(
                         ILogger<IProductRepository> logger,
                         IProductRepository productRepository,
                         IApiProductRequestModelValidator productModelValidator,
                         IBOLProductMapper bolproductMapper,
-                        IDALProductMapper dalproductMapper
-                        ,
+                        IDALProductMapper dalproductMapper,
                         IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
-                        ,
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper,
                         IBOLProductCostHistoryMapper bolProductCostHistoryMapper,
-                        IDALProductCostHistoryMapper dalProductCostHistoryMapper
-                        ,
+                        IDALProductCostHistoryMapper dalProductCostHistoryMapper,
                         IBOLProductInventoryMapper bolProductInventoryMapper,
-                        IDALProductInventoryMapper dalProductInventoryMapper
-                        ,
+                        IDALProductInventoryMapper dalProductInventoryMapper,
                         IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper,
-                        IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper
-                        ,
+                        IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper,
                         IBOLProductProductPhotoMapper bolProductProductPhotoMapper,
-                        IDALProductProductPhotoMapper dalProductProductPhotoMapper
-                        ,
+                        IDALProductProductPhotoMapper dalProductProductPhotoMapper,
                         IBOLProductReviewMapper bolProductReviewMapper,
-                        IDALProductReviewMapper dalProductReviewMapper
-                        ,
+                        IDALProductReviewMapper dalProductReviewMapper,
                         IBOLTransactionHistoryMapper bolTransactionHistoryMapper,
-                        IDALTransactionHistoryMapper dalTransactionHistoryMapper
-                        ,
+                        IDALTransactionHistoryMapper dalTransactionHistoryMapper,
                         IBOLWorkOrderMapper bolWorkOrderMapper,
                         IDALWorkOrderMapper dalWorkOrderMapper
-
                         )
                         : base(logger,
                                productRepository,
                                productModelValidator,
                                bolproductMapper,
-                               dalproductMapper
-                               ,
+                               dalproductMapper,
                                bolBillOfMaterialsMapper,
-                               dalBillOfMaterialsMapper
-                               ,
+                               dalBillOfMaterialsMapper,
                                bolProductCostHistoryMapper,
-                               dalProductCostHistoryMapper
-                               ,
+                               dalProductCostHistoryMapper,
                                bolProductInventoryMapper,
-                               dalProductInventoryMapper
-                               ,
+                               dalProductInventoryMapper,
                                bolProductListPriceHistoryMapper,
-                               dalProductListPriceHistoryMapper
-                               ,
+                               dalProductListPriceHistoryMapper,
                                bolProductProductPhotoMapper,
-                               dalProductProductPhotoMapper
-                               ,
+                               dalProductProductPhotoMapper,
                                bolProductReviewMapper,
-                               dalProductReviewMapper
-                               ,
+                               dalProductReviewMapper,
                                bolTransactionHistoryMapper,
-                               dalTransactionHistoryMapper
-                               ,
+                               dalTransactionHistoryMapper,
                                bolWorkOrderMapper,
-                               dalWorkOrderMapper
-                               )
+                               dalWorkOrderMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c54523977c897b84c127c670930f0c05</Hash>
+    <Hash>7f5f43afef95cdea1cb79212cdcf5713</Hash>
 </Codenesium>*/

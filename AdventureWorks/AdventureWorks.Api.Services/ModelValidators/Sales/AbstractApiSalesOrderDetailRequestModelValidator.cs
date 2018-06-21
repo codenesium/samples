@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesOrderDetailRequestModelValidator: AbstractValidator<ApiSalesOrderDetailRequestModel>
+        public abstract class AbstractApiSalesOrderDetailRequestModelValidator : AbstractValidator<ApiSalesOrderDetailRequestModel>
         {
                 private int existingRecordId;
 
-                ISalesOrderDetailRepository salesOrderDetailRepository;
+                private ISalesOrderDetailRepository salesOrderDetailRepository;
 
                 public AbstractApiSalesOrderDetailRequestModelValidator(ISalesOrderDetailRepository salesOrderDetailRepository)
                 {
@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void ProductIDRules()
                 {
-                        this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x ?.ProductID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.ProductID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void RowguidRules()
@@ -58,7 +58,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SpecialOfferIDRules()
                 {
-                        this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x ?.SpecialOfferID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.SpecialOfferID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void UnitPriceRules()
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>21c29966a920d5b97d3fa2591ad16bfc</Hash>
+    <Hash>3940ec6fccf79ba417a40ef1f3d6627a</Hash>
 </Codenesium>*/

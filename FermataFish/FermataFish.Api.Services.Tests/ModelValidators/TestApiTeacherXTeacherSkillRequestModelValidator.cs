@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FermataFishNS.Api.Services.Tests
                         teacherXTeacherSkillRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
 
                         var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTeacherXTeacherSkillRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
@@ -57,8 +56,7 @@ namespace FermataFishNS.Api.Services.Tests
                         teacherXTeacherSkillRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
 
                         var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeacherXTeacherSkillRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherXTeacherSkillRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
                 }
@@ -71,7 +69,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeacherXTeacherSkillRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherXTeacherSkillRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
                 }
@@ -83,7 +81,6 @@ namespace FermataFishNS.Api.Services.Tests
                         teacherXTeacherSkillRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
 
                         var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTeacherXTeacherSkillRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TeacherSkillId, 1);
@@ -109,8 +106,7 @@ namespace FermataFishNS.Api.Services.Tests
                         teacherXTeacherSkillRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
 
                         var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeacherXTeacherSkillRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherXTeacherSkillRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TeacherSkillId, 1);
                 }
@@ -123,7 +119,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeacherXTeacherSkillRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeacherXTeacherSkillRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
                 }
@@ -131,5 +127,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bc447d7c9c62c80fa46a1f8c8e7d3495</Hash>
+    <Hash>1a59314471a1960b52d87eae3d0f84e5</Hash>
 </Codenesium>*/

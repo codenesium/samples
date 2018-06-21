@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("NuGetPackage", Schema="dbo")]
-        public partial class NuGetPackage: AbstractEntity
+        public partial class NuGetPackage : AbstractEntity
         {
                 public NuGetPackage()
                 {
@@ -35,35 +35,35 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(450)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("PackageId", TypeName="nvarchar(100)")]
+                [Column("PackageId")]
                 public string PackageId { get; private set; }
 
-                [Column("Version", TypeName="nvarchar(349)")]
+                [Column("Version")]
                 public string Version { get; private set; }
 
-                [Column("VersionBuild", TypeName="int")]
+                [Column("VersionBuild")]
                 public int VersionBuild { get; private set; }
 
-                [Column("VersionMajor", TypeName="int")]
+                [Column("VersionMajor")]
                 public int VersionMajor { get; private set; }
 
-                [Column("VersionMinor", TypeName="int")]
+                [Column("VersionMinor")]
                 public int VersionMinor { get; private set; }
 
-                [Column("VersionRevision", TypeName="int")]
+                [Column("VersionRevision")]
                 public int VersionRevision { get; private set; }
 
-                [Column("VersionSpecial", TypeName="nvarchar(250)")]
+                [Column("VersionSpecial")]
                 public string VersionSpecial { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>f42ee2681e8d0e0c4746fec635d04e26</Hash>
+    <Hash>c01339f3bfdcef205c8699e97d9827fa</Hash>
 </Codenesium>*/

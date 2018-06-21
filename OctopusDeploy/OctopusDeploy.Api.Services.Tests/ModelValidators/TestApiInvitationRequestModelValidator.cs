@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInvitationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInvitationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInvitationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInvitationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, new string('A', 201));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInvitationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInvitationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.InvitationCode, new string('A', 201));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInvitationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         invitationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Invitation()));
 
                         var validator = new ApiInvitationRequestModelValidator(invitationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInvitationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInvitationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -118,5 +111,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cf900162f6749a19055d9758cebc4a8e</Hash>
+    <Hash>c1231f15760e9a15497d5aabc51579e7</Hash>
 </Codenesium>*/

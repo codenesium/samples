@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new RateRepository(loggerMoc.Object, context);
 
                         Rate entity = new Rate();
-
                         context.Set<Rate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new RateRepository(loggerMoc.Object, context);
 
                         Rate entity = new Rate();
-
                         context.Set<Rate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new RateRepository(loggerMoc.Object, context);
 
                         var entity = new Rate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Rate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<RateRepository>> loggerMoc = RateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = RateRepositoryMoc.GetContext();
                         var repository = new RateRepository(loggerMoc.Object, context);
-
                         Rate entity = new Rate();
-
                         context.Set<Rate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<RateRepository>> loggerMoc = RateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = RateRepositoryMoc.GetContext();
                         var repository = new RateRepository(loggerMoc.Object, context);
-
                         Rate entity = new Rate();
-
                         context.Set<Rate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<RateRepository>> loggerMoc = RateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = RateRepositoryMoc.GetContext();
                         var repository = new RateRepository(loggerMoc.Object, context);
-
                         Rate entity = new Rate();
-
                         context.Set<Rate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Rate modifiedRecord = await context.Set<Rate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>49fc3538ac04476f991e798088abe79b</Hash>
+    <Hash>1a11572ea384c91f0dc6615f9f4ea1c9</Hash>
 </Codenesium>*/

@@ -1,42 +1,38 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DeploymentService: AbstractDeploymentService, IDeploymentService
+        public class DeploymentService : AbstractDeploymentService, IDeploymentService
         {
                 public DeploymentService(
                         ILogger<IDeploymentRepository> logger,
                         IDeploymentRepository deploymentRepository,
                         IApiDeploymentRequestModelValidator deploymentModelValidator,
                         IBOLDeploymentMapper boldeploymentMapper,
-                        IDALDeploymentMapper daldeploymentMapper
-                        ,
+                        IDALDeploymentMapper daldeploymentMapper,
                         IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper,
                         IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper
-
                         )
                         : base(logger,
                                deploymentRepository,
                                deploymentModelValidator,
                                boldeploymentMapper,
-                               daldeploymentMapper
-                               ,
+                               daldeploymentMapper,
                                bolDeploymentRelatedMachineMapper,
-                               dalDeploymentRelatedMachineMapper
-                               )
+                               dalDeploymentRelatedMachineMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4671e183cfba646a98f86eba94f5a4b5</Hash>
+    <Hash>d58150d74ce8bed38d2ef7bc22891ac6</Hash>
 </Codenesium>*/

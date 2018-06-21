@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Studio")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLStudioActionMapper
+        public class TestBOLStudioMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLStudioMapper();
-
                         ApiStudioRequestModel model = new ApiStudioRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", 1, "A", "A");
                         BOStudio response = mapper.MapModelToBO(1, model);
 
@@ -36,9 +34,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLStudioMapper();
-
                         BOStudio bo = new BOStudio();
-
                         bo.SetProperties(1, "A", "A", "A", "A", 1, "A", "A");
                         ApiStudioResponseModel response = mapper.MapBOToModel(bo);
 
@@ -56,9 +52,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLStudioMapper();
-
                         BOStudio bo = new BOStudio();
-
                         bo.SetProperties(1, "A", "A", "A", "A", 1, "A", "A");
                         List<ApiStudioResponseModel> response = mapper.MapBOToModel(new List<BOStudio>() { { bo } });
 
@@ -68,5 +62,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>604ffd1cf7669fc7b14702295c2580f1</Hash>
+    <Hash>302428995deb09dffd1b3c7b971cfb27</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOOtherTransport bo)
                 {
                         OtherTransport efOtherTransport = new OtherTransport();
-
                         efOtherTransport.SetProperties(
                                 bo.HandlerId,
                                 bo.Id,
@@ -48,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>226e77fddc952e2d3484d6e7a9e0f117</Hash>
+    <Hash>97c887564304d7c964d4dd865aa47477</Hash>
 </Codenesium>*/

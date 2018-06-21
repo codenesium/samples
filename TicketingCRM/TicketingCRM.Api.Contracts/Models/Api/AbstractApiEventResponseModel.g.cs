@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public abstract class AbstractApiEventResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiEventResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string address1,
@@ -167,5 +167,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>af45122296148a3f2e36d8a899307696</Hash>
+    <Hash>20e40973a28b1732256549052f3a91af</Hash>
 </Codenesium>*/

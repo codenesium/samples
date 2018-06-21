@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -20,10 +20,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<List<SalesOrderDetail>> ByProductID(int productID);
 
                 Task<SpecialOfferProduct> GetSpecialOfferProduct(int productID);
+
                 Task<SalesOrderHeader> GetSalesOrderHeader(int salesOrderID);
         }
 }
 
 /*<Codenesium>
-    <Hash>fe652601988f816e24ecd674b283cf28</Hash>
+    <Hash>74b7e35468dd8e85918739f0a2ee35f7</Hash>
 </Codenesium>*/

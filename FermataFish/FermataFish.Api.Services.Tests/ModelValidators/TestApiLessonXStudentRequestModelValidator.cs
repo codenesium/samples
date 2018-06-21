@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonXStudentRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(new Lesson()));
 
                         var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLessonXStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LessonId, 1);
@@ -57,8 +56,7 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonXStudentRepository.Setup(x => x.GetLesson(It.IsAny<int>())).Returns(Task.FromResult<Lesson>(new Lesson()));
 
                         var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonXStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LessonId, 1);
                 }
@@ -71,7 +69,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonXStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LessonId, 1);
                 }
@@ -83,7 +81,6 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonXStudentRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
 
                         var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLessonXStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
@@ -109,8 +106,7 @@ namespace FermataFishNS.Api.Services.Tests
                         lessonXStudentRepository.Setup(x => x.GetStudent(It.IsAny<int>())).Returns(Task.FromResult<Student>(new Student()));
 
                         var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonXStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXStudentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.StudentId, 1);
                 }
@@ -123,7 +119,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLessonXStudentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLessonXStudentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
                 }
@@ -131,5 +127,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0b57b2ac9c9ea2c8bdf7fd0060914a12</Hash>
+    <Hash>662a6125eb834c7d5225f2fc415b1bf7</Hash>
 </Codenesium>*/

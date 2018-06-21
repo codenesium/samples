@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiVenueRequestModelValidator: AbstractValidator<ApiVenueRequestModel>
+        public abstract class AbstractApiVenueRequestModelValidator : AbstractValidator<ApiVenueRequestModel>
         {
                 private int existingRecordId;
 
-                IVenueRepository venueRepository;
+                private IVenueRepository venueRepository;
 
                 public AbstractApiVenueRequestModelValidator(IVenueRepository venueRepository)
                 {
@@ -40,7 +40,7 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void AdminIdRules()
                 {
-                        this.RuleFor(x => x.AdminId).MustAsync(this.BeValidAdmin).When(x => x ?.AdminId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.AdminId).MustAsync(this.BeValidAdmin).When(x => x?.AdminId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void EmailRules()
@@ -69,7 +69,7 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void ProvinceIdRules()
                 {
-                        this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvince).When(x => x ?.ProvinceId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvince).When(x => x?.ProvinceId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void WebsiteRules()
@@ -95,5 +95,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e85f15e2624107689dec8fdcab4b2287</Hash>
+    <Hash>ee155cb5c1d700d3f7f6e607639d0519</Hash>
 </Codenesium>*/

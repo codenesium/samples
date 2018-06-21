@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using ESPIOTNS.Api.DataAccess;
 using ESPIOTNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeviceAction")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDeviceActionActionMapper
+        public class TestDALDeviceActionMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDeviceActionMapper();
-
                         var bo = new BODeviceAction();
-
                         bo.SetProperties(1, 1, "A", "A");
 
                         DeviceAction response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace ESPIOTNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDeviceActionMapper();
-
                         DeviceAction entity = new DeviceAction();
-
                         entity.SetProperties(1, 1, "A", "A");
 
-                        BODeviceAction  response = mapper.MapEFToBO(entity);
+                        BODeviceAction response = mapper.MapEFToBO(entity);
 
                         response.DeviceId.Should().Be(1);
                         response.Id.Should().Be(1);
@@ -50,9 +46,7 @@ namespace ESPIOTNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDeviceActionMapper();
-
                         DeviceAction entity = new DeviceAction();
-
                         entity.SetProperties(1, 1, "A", "A");
 
                         List<BODeviceAction> response = mapper.MapEFToBO(new List<DeviceAction>() { entity });
@@ -63,5 +57,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d261d5eabc2431930895f055ce3bb86e</Hash>
+    <Hash>d9d60a58833ed8fe770164c24014c08a</Hash>
 </Codenesium>*/

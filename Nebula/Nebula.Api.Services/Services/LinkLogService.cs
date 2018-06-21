@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class LinkLogService: AbstractLinkLogService, ILinkLogService
+        public class LinkLogService : AbstractLinkLogService, ILinkLogService
         {
                 public LinkLogService(
                         ILogger<ILinkLogRepository> logger,
@@ -18,19 +18,17 @@ namespace NebulaNS.Api.Services
                         IApiLinkLogRequestModelValidator linkLogModelValidator,
                         IBOLLinkLogMapper bollinkLogMapper,
                         IDALLinkLogMapper dallinkLogMapper
-
                         )
                         : base(logger,
                                linkLogRepository,
                                linkLogModelValidator,
                                bollinkLogMapper,
-                               dallinkLogMapper
-                               )
+                               dallinkLogMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e4fc87009f8e163868d4766e03ef837d</Hash>
+    <Hash>c23cd262769a9285b29b001c908141d4</Hash>
 </Codenesium>*/

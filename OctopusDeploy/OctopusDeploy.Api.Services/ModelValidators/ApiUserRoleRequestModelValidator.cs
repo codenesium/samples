@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiUserRoleRequestModelValidator: AbstractApiUserRoleRequestModelValidator, IApiUserRoleRequestModelValidator
+        public class ApiUserRoleRequestModelValidator : AbstractApiUserRoleRequestModelValidator, IApiUserRoleRequestModelValidator
         {
                 public ApiUserRoleRequestModelValidator(IUserRoleRepository userRoleRepository)
                         : base(userRoleRepository)
@@ -29,11 +29,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a0d2656ff0514d6714d91a1423100ff7</Hash>
+    <Hash>1d57080585a6e337d459ffc7676b9c4a</Hash>
 </Codenesium>*/

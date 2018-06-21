@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractActionTemplateVersionRepository: AbstractRepository
+        public abstract class AbstractActionTemplateVersionRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,6 +82,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<ActionTemplateVersion>> GetLatestActionTemplateId(string latestActionTemplateId)
                 {
                         var records = await this.Where(x => x.LatestActionTemplateId == latestActionTemplateId);
@@ -121,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7e28b71b03f18cef2dc234f0fe797002</Hash>
+    <Hash>bb0b096be9ee8a697090a17d81e466e9</Hash>
 </Codenesium>*/

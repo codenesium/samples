@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesOrderDetail")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSalesOrderDetailActionMapper
+        public class TestBOLSalesOrderDetailMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSalesOrderDetailMapper();
-
                         ApiSalesOrderDetailRequestModel model = new ApiSalesOrderDetailRequestModel();
-
                         model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
                         BOSalesOrderDetail response = mapper.MapModelToBO(1, model);
 
@@ -39,9 +37,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSalesOrderDetailMapper();
-
                         BOSalesOrderDetail bo = new BOSalesOrderDetail();
-
                         bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
                         ApiSalesOrderDetailResponseModel response = mapper.MapBOToModel(bo);
 
@@ -62,9 +58,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSalesOrderDetailMapper();
-
                         BOSalesOrderDetail bo = new BOSalesOrderDetail();
-
                         bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
                         List<ApiSalesOrderDetailResponseModel> response = mapper.MapBOToModel(new List<BOSalesOrderDetail>() { { bo } });
 
@@ -74,5 +68,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6a00a63ea646ef8a5c8aa26cc708ff39</Hash>
+    <Hash>e1481fb38423a37f265e82d19746d2b1</Hash>
 </Codenesium>*/

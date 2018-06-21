@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public class BOLFileMapper: BOLAbstractFileMapper, IBOLFileMapper
+        public class BOLFileMapper : BOLAbstractFileMapper, IBOLFileMapper
         {
                 public BOLFileMapper()
                 {
@@ -14,5 +14,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfe6c04024a6a0bcd263ac6a38b7f909</Hash>
+    <Hash>5d16c57351933433b5c6129b0f8fc94a</Hash>
 </Codenesium>*/

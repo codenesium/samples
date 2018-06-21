@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Class, new string('A', 3));
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Class, new string('A', 3));
                 }
@@ -57,8 +55,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Color, new string('A', 16));
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Color, new string('A', 16));
                 }
@@ -96,8 +91,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -109,7 +103,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -122,8 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -135,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -161,8 +151,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -174,7 +163,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductLine, new string('A', 3));
@@ -187,8 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductLine, new string('A', 3));
                 }
@@ -200,8 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -213,7 +199,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductNumber, null as string);
@@ -226,8 +211,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductNumber, null as string);
                 }
@@ -239,7 +223,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductNumber, new string('A', 26));
@@ -252,8 +235,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProductNumber, new string('A', 26));
                 }
@@ -265,8 +247,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -278,7 +259,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Size, new string('A', 6));
@@ -291,8 +271,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Size, new string('A', 6));
                 }
@@ -304,8 +283,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -317,7 +295,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SizeUnitMeasureCode, new string('A', 4));
@@ -330,8 +307,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SizeUnitMeasureCode, new string('A', 4));
                 }
@@ -343,8 +319,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -356,7 +331,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Style, new string('A', 3));
@@ -369,8 +343,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Style, new string('A', 3));
                 }
@@ -382,8 +355,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -395,7 +367,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WeightUnitMeasureCode, new string('A', 4));
@@ -408,8 +379,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.WeightUnitMeasureCode, new string('A', 4));
                 }
@@ -421,8 +391,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Product()));
 
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -458,7 +427,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Product>(new Product()));
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -470,7 +439,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Product>(null));
                         var validator = new ApiProductRequestModelValidator(productRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -478,5 +447,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b0ebe3dfaaadbc58247170cb51d1ed5c</Hash>
+    <Hash>cdcaa772af8a9d9d2b398f9dac74fdbc</Hash>
 </Codenesium>*/

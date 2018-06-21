@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TeacherSkill")]
         [Trait("Area", "DALMapper")]
-        public class TestDALTeacherSkillActionMapper
+        public class TestDALTeacherSkillMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALTeacherSkillMapper();
-
                         var bo = new BOTeacherSkill();
-
                         bo.SetProperties(1, "A", 1);
 
                         TeacherSkill response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALTeacherSkillMapper();
-
                         TeacherSkill entity = new TeacherSkill();
-
                         entity.SetProperties(1, "A", 1);
 
-                        BOTeacherSkill  response = mapper.MapEFToBO(entity);
+                        BOTeacherSkill response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -48,9 +44,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALTeacherSkillMapper();
-
                         TeacherSkill entity = new TeacherSkill();
-
                         entity.SetProperties(1, "A", 1);
 
                         List<BOTeacherSkill> response = mapper.MapEFToBO(new List<TeacherSkill>() { entity });
@@ -61,5 +55,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b08dcc19eb6de831cc1f5b502a51b8b8</Hash>
+    <Hash>38b68d6ea52552c1482f358bfd34581d</Hash>
 </Codenesium>*/

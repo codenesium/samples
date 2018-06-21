@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FromCurrencyCode, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FromCurrencyCode, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FromCurrencyCode, new string('A', 4));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FromCurrencyCode, new string('A', 4));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.FromCurrencyCode, "A");
@@ -122,8 +116,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.FromCurrencyCode, "A");
                 }
@@ -136,7 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FromCurrencyCode, "A");
                 }
@@ -148,7 +141,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, null as string);
@@ -161,8 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, null as string);
                 }
@@ -174,7 +165,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, new string('A', 4));
@@ -187,8 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, new string('A', 4));
                 }
@@ -200,8 +189,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new CurrencyRate()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -213,7 +201,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ToCurrencyCode, "A");
@@ -239,8 +226,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ToCurrencyCode, "A");
                 }
@@ -253,7 +239,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, "A");
                 }
@@ -289,7 +275,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyRateDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
@@ -301,7 +287,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         currencyRateRepository.Setup(x => x.ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<CurrencyRate>(null));
                         var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiCurrencyRateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CurrencyRateDate, DateTime.Parse("1/1/1987 12:00:00 AM"));
                 }
@@ -309,5 +295,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c20a854f82e229d6f9512140397794e2</Hash>
+    <Hash>01997848ed29bd2c14f1ee54894a74a1</Hash>
 </Codenesium>*/

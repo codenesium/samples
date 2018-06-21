@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiOtherTransportRequestModelValidator: AbstractValidator<ApiOtherTransportRequestModel>
+        public abstract class AbstractApiOtherTransportRequestModelValidator : AbstractValidator<ApiOtherTransportRequestModel>
         {
                 private int existingRecordId;
 
-                IOtherTransportRepository otherTransportRepository;
+                private IOtherTransportRepository otherTransportRepository;
 
                 public AbstractApiOtherTransportRequestModelValidator(IOtherTransportRepository otherTransportRepository)
                 {
@@ -28,12 +28,12 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void HandlerIdRules()
                 {
-                        this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x ?.HandlerId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x?.HandlerId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x ?.PipelineStepId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c81c29d8b30f5e525bdc1731a82e4fd</Hash>
+    <Hash>e1e41c752c13846011efcfd0274af213</Hash>
 </Codenesium>*/

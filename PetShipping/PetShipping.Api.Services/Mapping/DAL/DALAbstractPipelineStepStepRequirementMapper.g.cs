@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOPipelineStepStepRequirement bo)
                 {
                         PipelineStepStepRequirement efPipelineStepStepRequirement = new PipelineStepStepRequirement();
-
                         efPipelineStepStepRequirement.SetProperties(
                                 bo.Details,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5afb52157da437d26131c15920685aaa</Hash>
+    <Hash>cb740e4551f3d7ebf08fd22285cf569f</Hash>
 </Codenesium>*/

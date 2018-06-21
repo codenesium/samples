@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<List<TransactionHistory>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<TransactionHistory>> ByProductID(int productID);
+
                 Task<List<TransactionHistory>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
         }
 }
 
 /*<Codenesium>
-    <Hash>1e0700ff0a87b276d624dd46e793e7cf</Hash>
+    <Hash>a3d460e33d76c627dafba0912c9f812d</Hash>
 </Codenesium>*/

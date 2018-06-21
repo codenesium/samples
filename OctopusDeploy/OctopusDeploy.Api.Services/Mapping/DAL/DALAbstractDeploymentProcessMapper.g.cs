@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BODeploymentProcess bo)
                 {
                         DeploymentProcess efDeploymentProcess = new DeploymentProcess();
-
                         efDeploymentProcess.SetProperties(
                                 bo.Id,
                                 bo.IsFrozen,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c9cbec91b139665b7332387b256afc4</Hash>
+    <Hash>f81218f30d41c56b09b3cfe0574bda97</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new TenantRepository(loggerMoc.Object, context);
 
                         Tenant entity = new Tenant();
-
                         context.Set<Tenant>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new TenantRepository(loggerMoc.Object, context);
 
                         Tenant entity = new Tenant();
-
                         context.Set<Tenant>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new TenantRepository(loggerMoc.Object, context);
 
                         var entity = new Tenant();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Tenant>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<TenantRepository>> loggerMoc = TenantRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TenantRepositoryMoc.GetContext();
                         var repository = new TenantRepository(loggerMoc.Object, context);
-
                         Tenant entity = new Tenant();
-
                         context.Set<Tenant>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<TenantRepository>> loggerMoc = TenantRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TenantRepositoryMoc.GetContext();
                         var repository = new TenantRepository(loggerMoc.Object, context);
-
                         Tenant entity = new Tenant();
-
                         context.Set<Tenant>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<TenantRepository>> loggerMoc = TenantRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TenantRepositoryMoc.GetContext();
                         var repository = new TenantRepository(loggerMoc.Object, context);
-
                         Tenant entity = new Tenant();
-
                         context.Set<Tenant>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Tenant modifiedRecord = await context.Set<Tenant>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5aa4cc2aadfe47b7412238adf8a0e736</Hash>
+    <Hash>3812dd3878316bcb569b753ba8b54f54</Hash>
 </Codenesium>*/

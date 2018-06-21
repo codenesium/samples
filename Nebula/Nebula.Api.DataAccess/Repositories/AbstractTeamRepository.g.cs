@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractTeamRepository: AbstractRepository
+        public abstract class AbstractTeamRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,21 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Chain>> Chains(int teamId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Chain>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
+                }
+
+                public async virtual Task<List<MachineRefTeam>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<MachineRefTeam>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<MachineRefTeam>();
+                }
+
+                public async virtual Task<Organization> GetOrganization(int organizationId)
+                {
+                        return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
+                }
+
                 protected async Task<List<Team>> Where(
                         Expression<Func<Team, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,23 +119,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Chain>> Chains(int teamId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Chain>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
-                }
-                public async virtual Task<List<MachineRefTeam>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<MachineRefTeam>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<MachineRefTeam>();
-                }
-
-                public async virtual Task<Organization> GetOrganization(int organizationId)
-                {
-                        return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8cabb90f8b031b2060eae9f524f7ef08</Hash>
+    <Hash>3686b22bdb9d6da075b9a4aae1fd7389</Hash>
 </Codenesium>*/

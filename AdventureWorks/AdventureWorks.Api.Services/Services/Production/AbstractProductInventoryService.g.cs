@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductInventoryService: AbstractService
+        public abstract class AbstractProductInventoryService : AbstractService
         {
                 private IProductInventoryRepository productInventoryRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductInventoryRepository productInventoryRepository,
                         IApiProductInventoryRequestModelValidator productInventoryModelValidator,
                         IBOLProductInventoryMapper bolProductInventoryMapper,
-                        IDALProductInventoryMapper dalProductInventoryMapper
-
-                        )
+                        IDALProductInventoryMapper dalProductInventoryMapper)
                         : base()
-
                 {
                         this.productInventoryRepository = productInventoryRepository;
                         this.productInventoryModelValidator = productInventoryModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductInventoryResponseModel> response = new CreateResponse<ApiProductInventoryResponseModel>(await this.productInventoryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductInventoryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductInventoryMapper.MapModelToBO(default(int), model);
                                 var record = await this.productInventoryRepository.Create(this.dalProductInventoryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductInventoryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productInventoryModelValidator.ValidateUpdateAsync(productID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductInventoryMapper.MapModelToBO(productID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productID)
                 {
                         ActionResponse response = new ActionResponse(await this.productInventoryModelValidator.ValidateDeleteAsync(productID));
-
                         if (response.Success)
                         {
                                 await this.productInventoryRepository.Delete(productID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5cdcd860f983560b7bacc90aae310849</Hash>
+    <Hash>299b0675cdf85bd0380ed81fd439fe79</Hash>
 </Codenesium>*/

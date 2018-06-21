@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Release")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLReleaseActionMapper
+        public class TestBOLReleaseMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLReleaseMapper();
-
                         ApiReleaseRequestModel model = new ApiReleaseRequestModel();
-
                         model.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A");
                         BORelease response = mapper.MapModelToBO("A", model);
 
@@ -36,9 +34,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLReleaseMapper();
-
                         BORelease bo = new BORelease();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A");
                         ApiReleaseResponseModel response = mapper.MapBOToModel(bo);
 
@@ -56,9 +52,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLReleaseMapper();
-
                         BORelease bo = new BORelease();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A");
                         List<ApiReleaseResponseModel> response = mapper.MapBOToModel(new List<BORelease>() { { bo } });
 
@@ -68,5 +62,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ef12cc689990849fbd19de012269b37e</Hash>
+    <Hash>d775fb683ea7d2e27301a0bf57cf1a7a</Hash>
 </Codenesium>*/

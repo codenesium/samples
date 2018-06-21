@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DatabaseUser, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DatabaseUser, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DatabaseUser, new string('A', 129));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DatabaseUser, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Event, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Event, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Event, new string('A', 129));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Event, new string('A', 129));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Object, new string('A', 129));
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Object, new string('A', 129));
                 }
@@ -187,8 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -200,7 +187,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Schema, new string('A', 129));
@@ -213,8 +199,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Schema, new string('A', 129));
                 }
@@ -226,8 +211,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -239,7 +223,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TSQL, null as string);
@@ -252,8 +235,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TSQL, null as string);
                 }
@@ -265,7 +247,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.XmlEvent, null as string);
@@ -278,8 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         databaseLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DatabaseLog()));
 
                         var validator = new ApiDatabaseLogRequestModelValidator(databaseLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDatabaseLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDatabaseLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.XmlEvent, null as string);
                 }
@@ -287,5 +267,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>58c15369a665679b7162129a4af3c1d6</Hash>
+    <Hash>b916f97079703ccc7f38d67c36ba1f99</Hash>
 </Codenesium>*/

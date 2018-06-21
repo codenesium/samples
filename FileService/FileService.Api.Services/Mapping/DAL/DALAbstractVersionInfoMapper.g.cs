@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FileServiceNS.Api.Services
                         BOVersionInfo bo)
                 {
                         VersionInfo efVersionInfo = new VersionInfo();
-
                         efVersionInfo.SetProperties(
                                 bo.AppliedOn,
                                 bo.Description,
@@ -48,5 +47,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e664af4d8003b9637486453c756891b7</Hash>
+    <Hash>73cf47f148f44037efb9af272e2e04da</Hash>
 </Codenesium>*/

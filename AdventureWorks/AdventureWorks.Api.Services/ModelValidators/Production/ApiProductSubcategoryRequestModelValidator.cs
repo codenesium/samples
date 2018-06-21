@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiProductSubcategoryRequestModelValidator: AbstractApiProductSubcategoryRequestModelValidator, IApiProductSubcategoryRequestModelValidator
+        public class ApiProductSubcategoryRequestModelValidator : AbstractApiProductSubcategoryRequestModelValidator, IApiProductSubcategoryRequestModelValidator
         {
                 public ApiProductSubcategoryRequestModelValidator(IProductSubcategoryRepository productSubcategoryRepository)
                         : base(productSubcategoryRepository)
@@ -33,11 +33,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>19ca1f34fd1eaed7939639f29e6024b5</Hash>
+    <Hash>90b1edde8602da558f8bc4dc1cf812a4</Hash>
 </Codenesium>*/

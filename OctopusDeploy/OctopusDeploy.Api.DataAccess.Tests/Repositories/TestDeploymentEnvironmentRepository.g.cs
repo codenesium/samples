@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
 
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         context.Set<DeploymentEnvironment>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
 
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         context.Set<DeploymentEnvironment>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
 
                         var entity = new DeploymentEnvironment();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
                         var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
-
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         context.Set<DeploymentEnvironment>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
                         var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
-
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         context.Set<DeploymentEnvironment>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<DeploymentEnvironmentRepository>> loggerMoc = DeploymentEnvironmentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeploymentEnvironmentRepositoryMoc.GetContext();
                         var repository = new DeploymentEnvironmentRepository(loggerMoc.Object, context);
-
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         context.Set<DeploymentEnvironment>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         DeploymentEnvironment modifiedRecord = await context.Set<DeploymentEnvironment>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>001ef3e7ea21259117af7f407ebe9eaf</Hash>
+    <Hash>76cc397138e683245cc97e08b4b005b0</Hash>
 </Codenesium>*/

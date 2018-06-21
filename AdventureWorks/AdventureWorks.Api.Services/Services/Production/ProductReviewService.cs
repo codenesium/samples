@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ProductReviewService: AbstractProductReviewService, IProductReviewService
+        public class ProductReviewService : AbstractProductReviewService, IProductReviewService
         {
                 public ProductReviewService(
                         ILogger<IProductReviewRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiProductReviewRequestModelValidator productReviewModelValidator,
                         IBOLProductReviewMapper bolproductReviewMapper,
                         IDALProductReviewMapper dalproductReviewMapper
-
                         )
                         : base(logger,
                                productReviewRepository,
                                productReviewModelValidator,
                                bolproductReviewMapper,
-                               dalproductReviewMapper
-                               )
+                               dalproductReviewMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>eabf20d3980054fb5105955afa274714</Hash>
+    <Hash>5b82bf412d59de433cdea3c30b2e5ebb</Hash>
 </Codenesium>*/

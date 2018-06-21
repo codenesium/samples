@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiHandlerPipelineStepRequestModelValidator: AbstractValidator<ApiHandlerPipelineStepRequestModel>
+        public abstract class AbstractApiHandlerPipelineStepRequestModelValidator : AbstractValidator<ApiHandlerPipelineStepRequestModel>
         {
                 private int existingRecordId;
 
-                IHandlerPipelineStepRepository handlerPipelineStepRepository;
+                private IHandlerPipelineStepRepository handlerPipelineStepRepository;
 
                 public AbstractApiHandlerPipelineStepRequestModelValidator(IHandlerPipelineStepRepository handlerPipelineStepRepository)
                 {
@@ -28,12 +28,12 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void HandlerIdRules()
                 {
-                        this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x ?.HandlerId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x?.HandlerId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x ?.PipelineStepId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9c4e1cf83236cd4b82e33ee121706c5</Hash>
+    <Hash>85946dadd8526a4d22c9679644eae13e</Hash>
 </Codenesium>*/

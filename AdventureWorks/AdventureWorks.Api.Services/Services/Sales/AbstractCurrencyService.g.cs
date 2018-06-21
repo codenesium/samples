@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCurrencyService: AbstractService
+        public abstract class AbstractCurrencyService : AbstractService
         {
                 private ICurrencyRepository currencyRepository;
 
@@ -36,18 +36,12 @@ namespace AdventureWorksNS.Api.Services
                         ICurrencyRepository currencyRepository,
                         IApiCurrencyRequestModelValidator currencyModelValidator,
                         IBOLCurrencyMapper bolCurrencyMapper,
-                        IDALCurrencyMapper dalCurrencyMapper
-
-                        ,
+                        IDALCurrencyMapper dalCurrencyMapper,
                         IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper,
-                        IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper
-                        ,
+                        IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper,
                         IBOLCurrencyRateMapper bolCurrencyRateMapper,
-                        IDALCurrencyRateMapper dalCurrencyRateMapper
-
-                        )
+                        IDALCurrencyRateMapper dalCurrencyRateMapper)
                         : base()
-
                 {
                         this.currencyRepository = currencyRepository;
                         this.currencyModelValidator = currencyModelValidator;
@@ -87,7 +81,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiCurrencyResponseModel> response = new CreateResponse<ApiCurrencyResponseModel>(await this.currencyModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCurrencyMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolCurrencyMapper.MapModelToBO(default(string), model);
                                 var record = await this.currencyRepository.Create(this.dalCurrencyMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCurrencyMapper.MapBOToModel(this.dalCurrencyMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiCurrencyRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.currencyModelValidator.ValidateUpdateAsync(currencyCode, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCurrencyMapper.MapModelToBO(currencyCode, model);
@@ -115,7 +108,6 @@ namespace AdventureWorksNS.Api.Services
                         string currencyCode)
                 {
                         ActionResponse response = new ActionResponse(await this.currencyModelValidator.ValidateDeleteAsync(currencyCode));
-
                         if (response.Success)
                         {
                                 await this.currencyRepository.Delete(currencyCode);
@@ -144,6 +136,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolCountryRegionCurrencyMapper.MapBOToModel(this.dalCountryRegionCurrencyMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
                 {
                         List<CurrencyRate> records = await this.currencyRepository.CurrencyRates(fromCurrencyCode, limit, offset);
@@ -154,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>16ed112f48ad09eceba5dff77d9fde9e</Hash>
+    <Hash>b38218e088fc5446a77f546f71befa55</Hash>
 </Codenesium>*/

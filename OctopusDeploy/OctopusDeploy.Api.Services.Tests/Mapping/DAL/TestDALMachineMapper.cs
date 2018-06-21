@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Machine")]
         [Trait("Area", "DALMapper")]
-        public class TestDALMachineActionMapper
+        public class TestDALMachineMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALMachineMapper();
-
                         var bo = new BOMachine();
-
                         bo.SetProperties("A", "A", "A", "A", true, "A", "A", "A", "A", "A", "A", "A", "A");
 
                         Machine response = mapper.MapBOToEF(bo);
@@ -42,12 +40,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALMachineMapper();
-
                         Machine entity = new Machine();
-
                         entity.SetProperties("A", "A", "A", "A", true, "A", "A", "A", "A", "A", "A", "A", "A");
 
-                        BOMachine  response = mapper.MapEFToBO(entity);
+                        BOMachine response = mapper.MapEFToBO(entity);
 
                         response.CommunicationStyle.Should().Be("A");
                         response.EnvironmentIds.Should().Be("A");
@@ -68,9 +64,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALMachineMapper();
-
                         Machine entity = new Machine();
-
                         entity.SetProperties("A", "A", "A", "A", true, "A", "A", "A", "A", "A", "A", "A", "A");
 
                         List<BOMachine> response = mapper.MapEFToBO(new List<Machine>() { entity });
@@ -81,5 +75,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>872c54d90314716fe2f24831fa27626b</Hash>
+    <Hash>c2a2f986131a703507ba7cb6adc22a7d</Hash>
 </Codenesium>*/

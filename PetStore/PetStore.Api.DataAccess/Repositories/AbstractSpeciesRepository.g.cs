@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public abstract class AbstractSpeciesRepository: AbstractRepository
+        public abstract class AbstractSpeciesRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace PetStoreNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Pet>> Pets(int speciesId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Pet>().Where(x => x.SpeciesId == speciesId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
+                }
+
                 protected async Task<List<Species>> Where(
                         Expression<Func<Species, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace PetStoreNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Pet>> Pets(int speciesId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Pet>().Where(x => x.SpeciesId == speciesId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>8b67ebc577e2667192fdcf02ded85785</Hash>
+    <Hash>cec5e3c4e00e94fedd09823fbe1b8612</Hash>
 </Codenesium>*/

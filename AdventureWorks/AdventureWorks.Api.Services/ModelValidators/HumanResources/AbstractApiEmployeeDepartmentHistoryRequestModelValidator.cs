@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiEmployeeDepartmentHistoryRequestModelValidator: AbstractValidator<ApiEmployeeDepartmentHistoryRequestModel>
+        public abstract class AbstractApiEmployeeDepartmentHistoryRequestModelValidator : AbstractValidator<ApiEmployeeDepartmentHistoryRequestModel>
         {
                 private int existingRecordId;
 
-                IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
+                private IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
 
                 public AbstractApiEmployeeDepartmentHistoryRequestModelValidator(IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository)
                 {
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f34f4c02a47fd3a59d88a9b7eff9568c</Hash>
+    <Hash>9e96584b0eff878d0869d64dce134611</Hash>
 </Codenesium>*/

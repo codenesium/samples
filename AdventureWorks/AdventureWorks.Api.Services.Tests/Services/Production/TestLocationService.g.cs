@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -46,7 +46,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var record = new Location();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<short>())).Returns(Task.FromResult(record));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -58,7 +57,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ApiLocationResponseModel response = await service.Get(default (short));
+                        ApiLocationResponseModel response = await service.Get(default(short));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<short>()));
@@ -79,7 +78,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ApiLocationResponseModel response = await service.Get(default (short));
+                        ApiLocationResponseModel response = await service.Get(default(short));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<short>()));
@@ -90,7 +89,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var model = new ApiLocationRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -114,7 +112,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var model = new ApiLocationRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Location>())).Returns(Task.FromResult(new Location()));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -126,7 +123,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ActionResponse response = await service.Update(default (short), model);
+                        ActionResponse response = await service.Update(default(short), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.LocationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<short>(), It.IsAny<ApiLocationRequestModel>()));
@@ -138,7 +135,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var model = new ApiLocationRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<short>())).Returns(Task.CompletedTask);
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -150,7 +146,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ActionResponse response = await service.Delete(default (short));
+                        ActionResponse response = await service.Delete(default(short));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<short>()));
@@ -162,7 +158,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var record = new Location();
-
                         mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -174,7 +169,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ApiLocationResponseModel response = await service.ByName(default (string));
+                        ApiLocationResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -195,7 +190,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        ApiLocationResponseModel response = await service.ByName(default (string));
+                        ApiLocationResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -207,7 +202,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var records = new List<ProductInventory>();
                         records.Add(new ProductInventory());
-                        mock.RepositoryMock.Setup(x => x.ProductInventories(default (short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ProductInventories(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -218,17 +213,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        List<ApiProductInventoryResponseModel> response = await service.ProductInventories(default (short));
+                        List<ApiProductInventoryResponseModel> response = await service.ProductInventories(default(short));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ProductInventories(default (short), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ProductInventories(default(short), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void ProductInventories_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
-                        mock.RepositoryMock.Setup(x => x.ProductInventories(default (short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductInventory>>(new List<ProductInventory>()));
+                        mock.RepositoryMock.Setup(x => x.ProductInventories(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductInventory>>(new List<ProductInventory>()));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -239,10 +234,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        List<ApiProductInventoryResponseModel> response = await service.ProductInventories(default (short));
+                        List<ApiProductInventoryResponseModel> response = await service.ProductInventories(default(short));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ProductInventories(default (short), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ProductInventories(default(short), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -251,7 +246,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ILocationRepository>();
                         var records = new List<WorkOrderRouting>();
                         records.Add(new WorkOrderRouting());
-                        mock.RepositoryMock.Setup(x => x.WorkOrderRoutings(default (short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.WorkOrderRoutings(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -262,17 +257,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        List<ApiWorkOrderRoutingResponseModel> response = await service.WorkOrderRoutings(default (short));
+                        List<ApiWorkOrderRoutingResponseModel> response = await service.WorkOrderRoutings(default(short));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.WorkOrderRoutings(default (short), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.WorkOrderRoutings(default(short), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void WorkOrderRoutings_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ILocationRepository>();
-                        mock.RepositoryMock.Setup(x => x.WorkOrderRoutings(default (short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrderRouting>>(new List<WorkOrderRouting>()));
+                        mock.RepositoryMock.Setup(x => x.WorkOrderRoutings(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrderRouting>>(new List<WorkOrderRouting>()));
                         var service = new LocationService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
                                                           mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -283,14 +278,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLWorkOrderRoutingMapperMock,
                                                           mock.DALMapperMockFactory.DALWorkOrderRoutingMapperMock);
 
-                        List<ApiWorkOrderRoutingResponseModel> response = await service.WorkOrderRoutings(default (short));
+                        List<ApiWorkOrderRoutingResponseModel> response = await service.WorkOrderRoutings(default(short));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.WorkOrderRoutings(default (short), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.WorkOrderRoutings(default(short), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3ddc83d9ca0c50012a32ddc68027eab7</Hash>
+    <Hash>70481c18ad93d5926225eb4124035176</Hash>
 </Codenesium>*/

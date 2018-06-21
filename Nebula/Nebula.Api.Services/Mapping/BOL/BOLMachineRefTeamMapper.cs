@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-        public class BOLMachineRefTeamMapper: BOLAbstractMachineRefTeamMapper, IBOLMachineRefTeamMapper
+        public class BOLMachineRefTeamMapper : BOLAbstractMachineRefTeamMapper, IBOLMachineRefTeamMapper
         {
                 public BOLMachineRefTeamMapper()
                 {
@@ -14,5 +14,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c89401c26d8b0fcc6a3d1e83aa01a118</Hash>
+    <Hash>08572fe22b20b8aa953b03595f5527a2</Hash>
 </Codenesium>*/

@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class LifecycleService: AbstractLifecycleService, ILifecycleService
+        public class LifecycleService : AbstractLifecycleService, ILifecycleService
         {
                 public LifecycleService(
                         ILogger<ILifecycleRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiLifecycleRequestModelValidator lifecycleModelValidator,
                         IBOLLifecycleMapper bollifecycleMapper,
                         IDALLifecycleMapper dallifecycleMapper
-
                         )
                         : base(logger,
                                lifecycleRepository,
                                lifecycleModelValidator,
                                bollifecycleMapper,
-                               dallifecycleMapper
-                               )
+                               dallifecycleMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>894a1986507b3eb20787f718a5a67312</Hash>
+    <Hash>45cc86564e93b2bf47d3105ca651903c</Hash>
 </Codenesium>*/

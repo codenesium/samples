@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Mutex")]
         [Trait("Area", "DALMapper")]
-        public class TestDALMutexActionMapper
+        public class TestDALMutexMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALMutexMapper();
-
                         var bo = new BOMutex();
-
                         bo.SetProperties("A", "A");
 
                         Mutex response = mapper.MapBOToEF(bo);
@@ -31,12 +29,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALMutexMapper();
-
                         Mutex entity = new Mutex();
-
                         entity.SetProperties("A", "A");
 
-                        BOMutex  response = mapper.MapEFToBO(entity);
+                        BOMutex response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.JSON.Should().Be("A");
@@ -46,9 +42,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALMutexMapper();
-
                         Mutex entity = new Mutex();
-
                         entity.SetProperties("A", "A");
 
                         List<BOMutex> response = mapper.MapEFToBO(new List<Mutex>() { entity });
@@ -59,5 +53,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>777dd09debf45d9a86cf5ddeb87757ce</Hash>
+    <Hash>5acdfbc5e8c93cb0af2512bec23bbaf3</Hash>
 </Codenesium>*/

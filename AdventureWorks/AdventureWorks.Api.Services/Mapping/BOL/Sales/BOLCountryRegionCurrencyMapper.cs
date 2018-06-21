@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLCountryRegionCurrencyMapper: BOLAbstractCountryRegionCurrencyMapper, IBOLCountryRegionCurrencyMapper
+        public class BOLCountryRegionCurrencyMapper : BOLAbstractCountryRegionCurrencyMapper, IBOLCountryRegionCurrencyMapper
         {
                 public BOLCountryRegionCurrencyMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fb2d0dd42f234060e37ef1290ee38798</Hash>
+    <Hash>b7ce9c449b10470a06a07d91a922d8d8</Hash>
 </Codenesium>*/

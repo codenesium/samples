@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCustomerService: AbstractService
+        public abstract class AbstractCustomerService : AbstractService
         {
                 private ICustomerRepository customerRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         ICustomerRepository customerRepository,
                         IApiCustomerRequestModelValidator customerModelValidator,
                         IBOLCustomerMapper bolCustomerMapper,
-                        IDALCustomerMapper dalCustomerMapper
-
-                        ,
+                        IDALCustomerMapper dalCustomerMapper,
                         IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-
-                        )
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
                         : base()
-
                 {
                         this.customerRepository = customerRepository;
                         this.customerModelValidator = customerModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.customerModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCustomerMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCustomerMapper.MapModelToBO(default(int), model);
                                 var record = await this.customerRepository.Create(this.dalCustomerMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiCustomerRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateUpdateAsync(customerID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCustomerMapper.MapModelToBO(customerID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int customerID)
                 {
                         ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateDeleteAsync(customerID));
-
                         if (response.Success)
                         {
                                 await this.customerRepository.Delete(customerID);
@@ -129,6 +122,7 @@ namespace AdventureWorksNS.Api.Services
                                 return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiCustomerResponseModel>> ByTerritoryID(Nullable<int> territoryID)
                 {
                         List<Customer> records = await this.customerRepository.ByTerritoryID(territoryID);
@@ -146,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79675382edfd30a57815da5d74f5c358</Hash>
+    <Hash>168b6d6e8b962ab410ada964aa44b6be</Hash>
 </Codenesium>*/

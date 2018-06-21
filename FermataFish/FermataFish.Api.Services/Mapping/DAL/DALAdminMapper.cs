@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALAdminMapper: DALAbstractAdminMapper, IDALAdminMapper
+        public class DALAdminMapper : DALAbstractAdminMapper, IDALAdminMapper
         {
                 public DALAdminMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27e8398fe80e0ea4640c79b8663d7c38</Hash>
+    <Hash>ef9c01d1aa8b7ae236db41c48fd254e2</Hash>
 </Codenesium>*/

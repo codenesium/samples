@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new EventRelatedDocumentRepository(loggerMoc.Object, context);
 
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         context.Set<EventRelatedDocument>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new EventRelatedDocumentRepository(loggerMoc.Object, context);
 
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         context.Set<EventRelatedDocument>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new EventRelatedDocumentRepository(loggerMoc.Object, context);
 
                         var entity = new EventRelatedDocument();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<EventRelatedDocument>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<EventRelatedDocumentRepository>> loggerMoc = EventRelatedDocumentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EventRelatedDocumentRepositoryMoc.GetContext();
                         var repository = new EventRelatedDocumentRepository(loggerMoc.Object, context);
-
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         context.Set<EventRelatedDocument>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<EventRelatedDocumentRepository>> loggerMoc = EventRelatedDocumentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EventRelatedDocumentRepositoryMoc.GetContext();
                         var repository = new EventRelatedDocumentRepository(loggerMoc.Object, context);
-
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         context.Set<EventRelatedDocument>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<EventRelatedDocumentRepository>> loggerMoc = EventRelatedDocumentRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EventRelatedDocumentRepositoryMoc.GetContext();
                         var repository = new EventRelatedDocumentRepository(loggerMoc.Object, context);
-
                         EventRelatedDocument entity = new EventRelatedDocument();
-
                         context.Set<EventRelatedDocument>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         EventRelatedDocument modifiedRecord = await context.Set<EventRelatedDocument>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a94e4bcd8980f2eb7e7d8e2596b081e4</Hash>
+    <Hash>59d48543ac15bbb54c6932647185a979</Hash>
 </Codenesium>*/

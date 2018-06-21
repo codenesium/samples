@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ExtensionConfigurationRepository(loggerMoc.Object, context);
 
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         context.Set<ExtensionConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ExtensionConfigurationRepository(loggerMoc.Object, context);
 
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         context.Set<ExtensionConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ExtensionConfigurationRepository(loggerMoc.Object, context);
 
                         var entity = new ExtensionConfiguration();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ExtensionConfiguration>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ExtensionConfigurationRepository>> loggerMoc = ExtensionConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ExtensionConfigurationRepositoryMoc.GetContext();
                         var repository = new ExtensionConfigurationRepository(loggerMoc.Object, context);
-
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         context.Set<ExtensionConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ExtensionConfigurationRepository>> loggerMoc = ExtensionConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ExtensionConfigurationRepositoryMoc.GetContext();
                         var repository = new ExtensionConfigurationRepository(loggerMoc.Object, context);
-
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         context.Set<ExtensionConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ExtensionConfigurationRepository>> loggerMoc = ExtensionConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ExtensionConfigurationRepositoryMoc.GetContext();
                         var repository = new ExtensionConfigurationRepository(loggerMoc.Object, context);
-
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         context.Set<ExtensionConfiguration>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ExtensionConfiguration modifiedRecord = await context.Set<ExtensionConfiguration>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e5117f2d11f3db33bfa7c179219d907f</Hash>
+    <Hash>feeb9a3b694cc1558a018f4ec91c7e34</Hash>
 </Codenesium>*/

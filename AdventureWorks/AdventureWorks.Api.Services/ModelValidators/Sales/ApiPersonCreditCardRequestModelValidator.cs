@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiPersonCreditCardRequestModelValidator: AbstractApiPersonCreditCardRequestModelValidator, IApiPersonCreditCardRequestModelValidator
+        public class ApiPersonCreditCardRequestModelValidator : AbstractApiPersonCreditCardRequestModelValidator, IApiPersonCreditCardRequestModelValidator
         {
                 public ApiPersonCreditCardRequestModelValidator(IPersonCreditCardRepository personCreditCardRepository)
                         : base(personCreditCardRepository)
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>72b462b2e7f359c4a0ecd4bb3262b020</Hash>
+    <Hash>46be5328b6a9e9b524ddd74c5ce5548a</Hash>
 </Codenesium>*/

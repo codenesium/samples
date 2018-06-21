@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Mutex")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLMutexActionMapper
+        public class TestBOLMutexMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLMutexMapper();
-
                         ApiMutexRequestModel model = new ApiMutexRequestModel();
-
                         model.SetProperties("A");
                         BOMutex response = mapper.MapModelToBO("A", model);
 
@@ -30,9 +28,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLMutexMapper();
-
                         BOMutex bo = new BOMutex();
-
                         bo.SetProperties("A", "A");
                         ApiMutexResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLMutexMapper();
-
                         BOMutex bo = new BOMutex();
-
                         bo.SetProperties("A", "A");
                         List<ApiMutexResponseModel> response = mapper.MapBOToModel(new List<BOMutex>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2d6cf455fee915c2211ce8407b5a968b</Hash>
+    <Hash>2931051b6433f8842fd8d07a218037df</Hash>
 </Codenesium>*/

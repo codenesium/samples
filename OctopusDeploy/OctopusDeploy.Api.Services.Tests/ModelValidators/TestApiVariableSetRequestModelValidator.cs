@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 151));
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 151));
                 }
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         variableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new VariableSet()));
 
                         var validator = new ApiVariableSetRequestModelValidator(variableSetRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -118,5 +111,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f20f3dd4df3a36ab30536a6bd04690ff</Hash>
+    <Hash>d149b2e899d0f99a507180d07be55304</Hash>
 </Codenesium>*/

@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public class FileService: AbstractFileService, IFileService
+        public class FileService : AbstractFileService, IFileService
         {
                 public FileService(
                         ILogger<IFileRepository> logger,
@@ -18,19 +18,17 @@ namespace FileServiceNS.Api.Services
                         IApiFileRequestModelValidator fileModelValidator,
                         IBOLFileMapper bolfileMapper,
                         IDALFileMapper dalfileMapper
-
                         )
                         : base(logger,
                                fileRepository,
                                fileModelValidator,
                                bolfileMapper,
-                               dalfileMapper
-                               )
+                               dalfileMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1e2135cb5aadd53b11bdbad1f76000c4</Hash>
+    <Hash>5128c41f6cb382451b2d1b62114d14b3</Hash>
 </Codenesium>*/

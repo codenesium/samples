@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOWorkOrder boWorkOrder = new BOWorkOrder();
-
                         boWorkOrder.SetProperties(
                                 workOrderID,
                                 model.DueDate,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1303bf8f252f3d704279cd95bc363a7b</Hash>
+    <Hash>73bf12738b70c555cdb06b92e33db8bb</Hash>
 </Codenesium>*/

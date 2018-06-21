@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractScrapReasonService: AbstractService
+        public abstract class AbstractScrapReasonService : AbstractService
         {
                 private IScrapReasonRepository scrapReasonRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IScrapReasonRepository scrapReasonRepository,
                         IApiScrapReasonRequestModelValidator scrapReasonModelValidator,
                         IBOLScrapReasonMapper bolScrapReasonMapper,
-                        IDALScrapReasonMapper dalScrapReasonMapper
-
-                        ,
+                        IDALScrapReasonMapper dalScrapReasonMapper,
                         IBOLWorkOrderMapper bolWorkOrderMapper,
-                        IDALWorkOrderMapper dalWorkOrderMapper
-
-                        )
+                        IDALWorkOrderMapper dalWorkOrderMapper)
                         : base()
-
                 {
                         this.scrapReasonRepository = scrapReasonRepository;
                         this.scrapReasonModelValidator = scrapReasonModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiScrapReasonResponseModel> response = new CreateResponse<ApiScrapReasonResponseModel>(await this.scrapReasonModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolScrapReasonMapper.MapModelToBO(default (short), model);
+                                var bo = this.bolScrapReasonMapper.MapModelToBO(default(short), model);
                                 var record = await this.scrapReasonRepository.Create(this.dalScrapReasonMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolScrapReasonMapper.MapBOToModel(this.dalScrapReasonMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiScrapReasonRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.scrapReasonModelValidator.ValidateUpdateAsync(scrapReasonID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolScrapReasonMapper.MapModelToBO(scrapReasonID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         short scrapReasonID)
                 {
                         ActionResponse response = new ActionResponse(await this.scrapReasonModelValidator.ValidateDeleteAsync(scrapReasonID));
-
                         if (response.Success)
                         {
                                 await this.scrapReasonRepository.Delete(scrapReasonID);
@@ -140,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>358ea8af3433cb91a19732cb03e97bd1</Hash>
+    <Hash>2837be7c81efbaa14960d6f761a92ed2</Hash>
 </Codenesium>*/

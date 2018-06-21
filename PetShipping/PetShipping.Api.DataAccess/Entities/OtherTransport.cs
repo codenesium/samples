@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetShippingNS.Api.DataAccess
 {
         [Table("OtherTransport", Schema="dbo")]
-        public partial class OtherTransport: AbstractEntity
+        public partial class OtherTransport : AbstractEntity
         {
                 public OtherTransport()
                 {
@@ -22,14 +22,14 @@ namespace PetShippingNS.Api.DataAccess
                         this.PipelineStepId = pipelineStepId;
                 }
 
-                [Column("handlerId", TypeName="int")]
+                [Column("handlerId")]
                 public int HandlerId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("pipelineStepId", TypeName="int")]
+                [Column("pipelineStepId")]
                 public int PipelineStepId { get; private set; }
 
                 [ForeignKey("HandlerId")]
@@ -41,5 +41,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>626420d00f789fd338e11c474cf6e1a4</Hash>
+    <Hash>db68c40a3dfb61ff22e24e6e2d4e22a2</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "VariableSet")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLVariableSetActionMapper
+        public class TestBOLVariableSetMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLVariableSetMapper();
-
                         ApiVariableSetRequestModel model = new ApiVariableSetRequestModel();
-
                         model.SetProperties(true, "A", "A", "A", 1);
                         BOVariableSet response = mapper.MapModelToBO("A", model);
 
@@ -34,9 +32,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLVariableSetMapper();
-
                         BOVariableSet bo = new BOVariableSet();
-
                         bo.SetProperties("A", true, "A", "A", "A", 1);
                         ApiVariableSetResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLVariableSetMapper();
-
                         BOVariableSet bo = new BOVariableSet();
-
                         bo.SetProperties("A", true, "A", "A", "A", 1);
                         List<ApiVariableSetResponseModel> response = mapper.MapBOToModel(new List<BOVariableSet>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>566a39461961d80a6bceff70191252d3</Hash>
+    <Hash>950fe6b3453a2cb4040e1ef3b654b8ce</Hash>
 </Codenesium>*/

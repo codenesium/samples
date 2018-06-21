@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/tenantVariables")]
         [ApiVersion("1.0")]
-        public class TenantVariableController: AbstractTenantVariableController
+        public class TenantVariableController : AbstractTenantVariableController
         {
                 public TenantVariableController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b261e8afedc14fa4e6b3ab95fec1e1a3</Hash>
+    <Hash>fcef3becb054f9c22970ebb591cf01fd</Hash>
 </Codenesium>*/

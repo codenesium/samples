@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
         [Route("api/employees")]
         [ApiVersion("1.0")]
-        public class EmployeeController: AbstractEmployeeController
+        public class EmployeeController : AbstractEmployeeController
         {
                 public EmployeeController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2cd9541ced727201aa96d4140685c4f9</Hash>
+    <Hash>6c90a72eaa410dd42cd3f87410c2a9a4</Hash>
 </Codenesium>*/

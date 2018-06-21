@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOStore boStore = new BOStore();
-
                         boStore.SetProperties(
                                 businessEntityID,
                                 model.Demographics,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5eac7e7be784a21cc7eb176ff4db0f23</Hash>
+    <Hash>4d56a7ff6e8cf6ca83f4209b68d2e275</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Product")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProductActionMapper
+        public class TestDALProductMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProductMapper();
-
                         var bo = new BOProduct();
-
                         bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, "A");
 
                         Product response = mapper.MapBOToEF(bo);
@@ -54,12 +52,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProductMapper();
-
                         Product entity = new Product();
-
                         entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, "A");
 
-                        BOProduct  response = mapper.MapEFToBO(entity);
+                        BOProduct response = mapper.MapEFToBO(entity);
 
                         response.@Class.Should().Be("A");
                         response.Color.Should().Be("A");
@@ -92,9 +88,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProductMapper();
-
                         Product entity = new Product();
-
                         entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", 1, "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", 1, "A");
 
                         List<BOProduct> response = mapper.MapEFToBO(new List<Product>() { entity });
@@ -105,5 +99,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bc44a3ecc1958db433e7d5209d96b83c</Hash>
+    <Hash>ad310827ec3fcb4c4556c471be16b917</Hash>
 </Codenesium>*/

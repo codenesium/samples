@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class AbstractApiFileRequestModelValidator: AbstractValidator<ApiFileRequestModel>
+        public abstract class AbstractApiFileRequestModelValidator : AbstractValidator<ApiFileRequestModel>
         {
                 private int existingRecordId;
 
-                IFileRepository fileRepository;
+                private IFileRepository fileRepository;
 
                 public AbstractApiFileRequestModelValidator(IFileRepository fileRepository)
                 {
@@ -28,7 +28,7 @@ namespace FileServiceNS.Api.Services
 
                 public virtual void BucketIdRules()
                 {
-                        this.RuleFor(x => x.BucketId).MustAsync(this.BeValidBucket).When(x => x ?.BucketId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.BucketId).MustAsync(this.BeValidBucket).When(x => x?.BucketId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void DateCreatedRules()
@@ -60,7 +60,7 @@ namespace FileServiceNS.Api.Services
 
                 public virtual void FileTypeIdRules()
                 {
-                        this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileType).When(x => x ?.FileTypeId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileType).When(x => x?.FileTypeId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void LocationRules()
@@ -98,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>67ad38f6ae9da4e3aab9aa8f7fa67d7d</Hash>
+    <Hash>c1667fd1994ad62d61933410f93f0251</Hash>
 </Codenesium>*/

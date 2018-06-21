@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesTerritoryRequestModel: AbstractApiRequestModel
+        public partial class ApiSalesTerritoryRequestModel : AbstractApiRequestModel
         {
-                public ApiSalesTerritoryRequestModel() : base()
+                public ApiSalesTerritoryRequestModel()
+                        : base()
                 {
                 }
 
@@ -181,5 +182,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8da902708758443d706bd0c97a35a7fc</Hash>
+    <Hash>254ac25c739cdb2ed4ac66b1b4b0ed6b</Hash>
 </Codenesium>*/

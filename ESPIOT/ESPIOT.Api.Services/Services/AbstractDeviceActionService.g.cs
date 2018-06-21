@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class AbstractDeviceActionService: AbstractService
+        public abstract class AbstractDeviceActionService : AbstractService
         {
                 private IDeviceActionRepository deviceActionRepository;
 
@@ -29,11 +29,8 @@ namespace ESPIOTNS.Api.Services
                         IDeviceActionRepository deviceActionRepository,
                         IApiDeviceActionRequestModelValidator deviceActionModelValidator,
                         IBOLDeviceActionMapper bolDeviceActionMapper,
-                        IDALDeviceActionMapper dalDeviceActionMapper
-
-                        )
+                        IDALDeviceActionMapper dalDeviceActionMapper)
                         : base()
-
                 {
                         this.deviceActionRepository = deviceActionRepository;
                         this.deviceActionModelValidator = deviceActionModelValidator;
@@ -69,7 +66,7 @@ namespace ESPIOTNS.Api.Services
                         CreateResponse<ApiDeviceActionResponseModel> response = new CreateResponse<ApiDeviceActionResponseModel>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDeviceActionMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolDeviceActionMapper.MapModelToBO(default(int), model);
                                 var record = await this.deviceActionRepository.Create(this.dalDeviceActionMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace ESPIOTNS.Api.Services
                         ApiDeviceActionRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.deviceActionModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDeviceActionMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace ESPIOTNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.deviceActionModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.deviceActionRepository.Delete(id);
@@ -116,5 +111,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d1e41b48d6fa7d130155b2747d0fc8b0</Hash>
+    <Hash>c1b6ae5dba95cba45552c9077a834863</Hash>
 </Codenesium>*/

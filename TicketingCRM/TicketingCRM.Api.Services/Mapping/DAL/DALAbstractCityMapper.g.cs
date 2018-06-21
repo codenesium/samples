@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOCity bo)
                 {
                         City efCity = new City();
-
                         efCity.SetProperties(
                                 bo.Id,
                                 bo.Name,
@@ -48,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f3ce348f3b35e0eecf8ac9f447b7fb5</Hash>
+    <Hash>e4bd105096e383678cb0da03f0e27e6e</Hash>
 </Codenesium>*/

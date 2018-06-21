@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new TransactionHistoryArchiveRepository(loggerMoc.Object, context);
 
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         context.Set<TransactionHistoryArchive>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new TransactionHistoryArchiveRepository(loggerMoc.Object, context);
 
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         context.Set<TransactionHistoryArchive>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new TransactionHistoryArchiveRepository(loggerMoc.Object, context);
 
                         var entity = new TransactionHistoryArchive();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<TransactionHistoryArchive>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<TransactionHistoryArchiveRepository>> loggerMoc = TransactionHistoryArchiveRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TransactionHistoryArchiveRepositoryMoc.GetContext();
                         var repository = new TransactionHistoryArchiveRepository(loggerMoc.Object, context);
-
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         context.Set<TransactionHistoryArchive>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<TransactionHistoryArchiveRepository>> loggerMoc = TransactionHistoryArchiveRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TransactionHistoryArchiveRepositoryMoc.GetContext();
                         var repository = new TransactionHistoryArchiveRepository(loggerMoc.Object, context);
-
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         context.Set<TransactionHistoryArchive>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<TransactionHistoryArchiveRepository>> loggerMoc = TransactionHistoryArchiveRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TransactionHistoryArchiveRepositoryMoc.GetContext();
                         var repository = new TransactionHistoryArchiveRepository(loggerMoc.Object, context);
-
                         TransactionHistoryArchive entity = new TransactionHistoryArchive();
-
                         context.Set<TransactionHistoryArchive>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.TransactionID);
 
                         TransactionHistoryArchive modifiedRecord = await context.Set<TransactionHistoryArchive>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4028f689704b84cd4eaa635fb27e2563</Hash>
+    <Hash>e50919e9a0eb881687666b84a1d39187</Hash>
 </Codenesium>*/

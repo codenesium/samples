@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ActionTemplateVersion")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLActionTemplateVersionActionMapper
+        public class TestBOLActionTemplateVersionMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLActionTemplateVersionMapper();
-
                         ApiActionTemplateVersionRequestModel model = new ApiActionTemplateVersionRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", 1);
                         BOActionTemplateVersion response = mapper.MapModelToBO("A", model);
 
@@ -34,9 +32,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLActionTemplateVersionMapper();
-
                         BOActionTemplateVersion bo = new BOActionTemplateVersion();
-
                         bo.SetProperties("A", "A", "A", "A", "A", 1);
                         ApiActionTemplateVersionResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLActionTemplateVersionMapper();
-
                         BOActionTemplateVersion bo = new BOActionTemplateVersion();
-
                         bo.SetProperties("A", "A", "A", "A", "A", 1);
                         List<ApiActionTemplateVersionResponseModel> response = mapper.MapBOToModel(new List<BOActionTemplateVersion>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9570fe3ce7eede69ef2518f87c5a99c4</Hash>
+    <Hash>4b443ed5867a901b3c277bec5cfcdd46</Hash>
 </Codenesium>*/

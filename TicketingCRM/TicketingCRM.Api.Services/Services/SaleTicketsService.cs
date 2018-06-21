@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class SaleTicketsService: AbstractSaleTicketsService, ISaleTicketsService
+        public class SaleTicketsService : AbstractSaleTicketsService, ISaleTicketsService
         {
                 public SaleTicketsService(
                         ILogger<ISaleTicketsRepository> logger,
@@ -18,19 +18,17 @@ namespace TicketingCRMNS.Api.Services
                         IApiSaleTicketsRequestModelValidator saleTicketsModelValidator,
                         IBOLSaleTicketsMapper bolsaleTicketsMapper,
                         IDALSaleTicketsMapper dalsaleTicketsMapper
-
                         )
                         : base(logger,
                                saleTicketsRepository,
                                saleTicketsModelValidator,
                                bolsaleTicketsMapper,
-                               dalsaleTicketsMapper
-                               )
+                               dalsaleTicketsMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>461fde39e4903f48d7e1418dd99ca130</Hash>
+    <Hash>ba35575db7afee3450b3738f52e8442f</Hash>
 </Codenesium>*/

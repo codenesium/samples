@@ -1,15 +1,15 @@
+using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace ESPIOTNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeviceRepository>();
                         var record = new Device();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ApiDeviceResponseModel response = await service.Get(default (int));
+                        ApiDeviceResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ApiDeviceResponseModel response = await service.Get(default (int));
+                        ApiDeviceResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeviceRepository>();
                         var model = new ApiDeviceRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Device>())).Returns(Task.FromResult(new Device()));
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeviceRepository>();
                         var model = new ApiDeviceRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Device>())).Returns(Task.FromResult(new Device()));
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeviceRequestModel>()));
@@ -128,7 +125,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeviceRepository>();
                         var model = new ApiDeviceRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -150,7 +146,6 @@ namespace ESPIOTNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeviceRepository>();
                         var record = new Device();
-
                         mock.RepositoryMock.Setup(x => x.ByPublicId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -160,7 +155,7 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ApiDeviceResponseModel response = await service.ByPublicId(default (Guid));
+                        ApiDeviceResponseModel response = await service.ByPublicId(default(Guid));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByPublicId(It.IsAny<Guid>()));
@@ -179,7 +174,7 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        ApiDeviceResponseModel response = await service.ByPublicId(default (Guid));
+                        ApiDeviceResponseModel response = await service.ByPublicId(default(Guid));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByPublicId(It.IsAny<Guid>()));
@@ -191,7 +186,7 @@ namespace ESPIOTNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IDeviceRepository>();
                         var records = new List<DeviceAction>();
                         records.Add(new DeviceAction());
-                        mock.RepositoryMock.Setup(x => x.DeviceActions(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.DeviceActions(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
@@ -200,17 +195,17 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        List<ApiDeviceActionResponseModel> response = await service.DeviceActions(default (int));
+                        List<ApiDeviceActionResponseModel> response = await service.DeviceActions(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.DeviceActions(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.DeviceActions(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void DeviceActions_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IDeviceRepository>();
-                        mock.RepositoryMock.Setup(x => x.DeviceActions(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeviceAction>>(new List<DeviceAction>()));
+                        mock.RepositoryMock.Setup(x => x.DeviceActions(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeviceAction>>(new List<DeviceAction>()));
                         var service = new DeviceService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.DeviceModelValidatorMock.Object,
@@ -219,14 +214,14 @@ namespace ESPIOTNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLDeviceActionMapperMock,
                                                         mock.DALMapperMockFactory.DALDeviceActionMapperMock);
 
-                        List<ApiDeviceActionResponseModel> response = await service.DeviceActions(default (int));
+                        List<ApiDeviceActionResponseModel> response = await service.DeviceActions(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.DeviceActions(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.DeviceActions(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>61a96999f1544a7eca7651d7221ce02e</Hash>
+    <Hash>3685f18c2029d3e2e118d888c72cf1b2</Hash>
 </Codenesium>*/

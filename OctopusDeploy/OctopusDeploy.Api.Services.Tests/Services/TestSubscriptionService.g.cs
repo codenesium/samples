@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var record = new Subscription();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ApiSubscriptionResponseModel response = await service.Get(default (string));
+                        ApiSubscriptionResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ApiSubscriptionResponseModel response = await service.Get(default (string));
+                        ApiSubscriptionResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var model = new ApiSubscriptionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Subscription>())).Returns(Task.FromResult(new Subscription()));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var model = new ApiSubscriptionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Subscription>())).Returns(Task.FromResult(new Subscription()));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SubscriptionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiSubscriptionRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var model = new ApiSubscriptionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISubscriptionRepository>();
                         var record = new Subscription();
-
                         mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new SubscriptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ApiSubscriptionResponseModel response = await service.GetName(default (string));
+                        ApiSubscriptionResponseModel response = await service.GetName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLSubscriptionMapperMock,
                                                               mock.DALMapperMockFactory.DALSubscriptionMapperMock);
 
-                        ApiSubscriptionResponseModel response = await service.GetName(default (string));
+                        ApiSubscriptionResponseModel response = await service.GetName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -172,5 +167,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7e71d6fc5c4f3306a2269e8a235f7e6e</Hash>
+    <Hash>561a8ff3b0111f3f856f9682eaaafa7b</Hash>
 </Codenesium>*/

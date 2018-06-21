@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLEmployeeMapper: BOLAbstractEmployeeMapper, IBOLEmployeeMapper
+        public class BOLEmployeeMapper : BOLAbstractEmployeeMapper, IBOLEmployeeMapper
         {
                 public BOLEmployeeMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2778d5e698c1920bce9f85cb30db309b</Hash>
+    <Hash>00c86a91a8605a7291efae5d46514143</Hash>
 </Codenesium>*/

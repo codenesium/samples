@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new CustomerRepository(loggerMoc.Object, context);
 
                         Customer entity = new Customer();
-
                         context.Set<Customer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new CustomerRepository(loggerMoc.Object, context);
 
                         Customer entity = new Customer();
-
                         context.Set<Customer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new CustomerRepository(loggerMoc.Object, context);
 
                         var entity = new Customer();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Customer>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
                         var repository = new CustomerRepository(loggerMoc.Object, context);
-
                         Customer entity = new Customer();
-
                         context.Set<Customer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
                         var repository = new CustomerRepository(loggerMoc.Object, context);
-
                         Customer entity = new Customer();
-
                         context.Set<Customer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<CustomerRepository>> loggerMoc = CustomerRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CustomerRepositoryMoc.GetContext();
                         var repository = new CustomerRepository(loggerMoc.Object, context);
-
                         Customer entity = new Customer();
-
                         context.Set<Customer>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Customer modifiedRecord = await context.Set<Customer>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>80a0d99b683c4fc072cf7828d7f24cf7</Hash>
+    <Hash>bf753ad3e26a38d8cd2e460b26f0f552</Hash>
 </Codenesium>*/

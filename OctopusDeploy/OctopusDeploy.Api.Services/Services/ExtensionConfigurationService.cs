@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ExtensionConfigurationService: AbstractExtensionConfigurationService, IExtensionConfigurationService
+        public class ExtensionConfigurationService : AbstractExtensionConfigurationService, IExtensionConfigurationService
         {
                 public ExtensionConfigurationService(
                         ILogger<IExtensionConfigurationRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiExtensionConfigurationRequestModelValidator extensionConfigurationModelValidator,
                         IBOLExtensionConfigurationMapper bolextensionConfigurationMapper,
                         IDALExtensionConfigurationMapper dalextensionConfigurationMapper
-
                         )
                         : base(logger,
                                extensionConfigurationRepository,
                                extensionConfigurationModelValidator,
                                bolextensionConfigurationMapper,
-                               dalextensionConfigurationMapper
-                               )
+                               dalextensionConfigurationMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7bb79c381c66bbb02415f90dcccb8b1e</Hash>
+    <Hash>c358bfaa584790a748513817e8e4a9e7</Hash>
 </Codenesium>*/

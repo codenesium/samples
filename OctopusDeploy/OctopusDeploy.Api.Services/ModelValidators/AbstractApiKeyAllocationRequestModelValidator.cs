@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiKeyAllocationRequestModelValidator: AbstractValidator<ApiKeyAllocationRequestModel>
+        public abstract class AbstractApiKeyAllocationRequestModelValidator : AbstractValidator<ApiKeyAllocationRequestModel>
         {
                 private string existingRecordId;
 
-                IKeyAllocationRepository keyAllocationRepository;
+                private IKeyAllocationRepository keyAllocationRepository;
 
                 public AbstractApiKeyAllocationRequestModelValidator(IKeyAllocationRepository keyAllocationRepository)
                 {
@@ -33,5 +33,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>250b9502550b83fbfe8456c36073f682</Hash>
+    <Hash>85fd9c3cf0477b54baeae31e0c5f695f</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
                         var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChainStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace NebulaNS.Api.Services.Tests
                         chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
                         var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiChainStatusRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiChainStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace NebulaNS.Api.Services.Tests
                         chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
                         var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChainStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -70,8 +67,7 @@ namespace NebulaNS.Api.Services.Tests
                         chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
                         var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiChainStatusRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiChainStatusRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace NebulaNS.Api.Services.Tests
                         chainStatusRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ChainStatus()));
 
                         var validator = new ApiChainStatusRequestModelValidator(chainStatusRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4198aed8a16ff90de6be9541a4cca055</Hash>
+    <Hash>12a38c4c1cea7e961728186768bcb18b</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractCountryService: AbstractService
+        public abstract class AbstractCountryService : AbstractService
         {
                 private ICountryRepository countryRepository;
 
@@ -33,15 +33,10 @@ namespace TicketingCRMNS.Api.Services
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
                         IBOLCountryMapper bolCountryMapper,
-                        IDALCountryMapper dalCountryMapper
-
-                        ,
+                        IDALCountryMapper dalCountryMapper,
                         IBOLProvinceMapper bolProvinceMapper,
-                        IDALProvinceMapper dalProvinceMapper
-
-                        )
+                        IDALProvinceMapper dalProvinceMapper)
                         : base()
-
                 {
                         this.countryRepository = countryRepository;
                         this.countryModelValidator = countryModelValidator;
@@ -79,7 +74,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.countryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCountryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCountryMapper.MapModelToBO(default(int), model);
                                 var record = await this.countryRepository.Create(this.dalCountryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiCountryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCountryMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.countryRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c86066b2d0eb289975da508d7b4dad3b</Hash>
+    <Hash>29ee58ef1fb3b6ed61676f5f9092e954</Hash>
 </Codenesium>*/

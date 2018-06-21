@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("WorkOrderRouting", Schema="Production")]
-        public partial class WorkOrderRouting: AbstractEntity
+        public partial class WorkOrderRouting : AbstractEntity
         {
                 public WorkOrderRouting()
                 {
@@ -40,45 +40,45 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.WorkOrderID = workOrderID;
                 }
 
-                [Column("ActualCost", TypeName="money")]
+                [Column("ActualCost")]
                 public Nullable<decimal> ActualCost { get; private set; }
 
-                [Column("ActualEndDate", TypeName="datetime")]
+                [Column("ActualEndDate")]
                 public Nullable<DateTime> ActualEndDate { get; private set; }
 
-                [Column("ActualResourceHrs", TypeName="decimal")]
+                [Column("ActualResourceHrs")]
                 public Nullable<decimal> ActualResourceHrs { get; private set; }
 
-                [Column("ActualStartDate", TypeName="datetime")]
+                [Column("ActualStartDate")]
                 public Nullable<DateTime> ActualStartDate { get; private set; }
 
-                [Column("LocationID", TypeName="smallint")]
+                [Column("LocationID")]
                 public short LocationID { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("OperationSequence", TypeName="smallint")]
+                [Column("OperationSequence")]
                 public short OperationSequence { get; private set; }
 
-                [Column("PlannedCost", TypeName="money")]
+                [Column("PlannedCost")]
                 public decimal PlannedCost { get; private set; }
 
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
-                [Column("ScheduledEndDate", TypeName="datetime")]
+                [Column("ScheduledEndDate")]
                 public DateTime ScheduledEndDate { get; private set; }
 
-                [Column("ScheduledStartDate", TypeName="datetime")]
+                [Column("ScheduledStartDate")]
                 public DateTime ScheduledStartDate { get; private set; }
 
                 [Key]
-                [Column("WorkOrderID", TypeName="int")]
+                [Column("WorkOrderID")]
                 public int WorkOrderID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>79a2634038d339ac96e3d0184c78e9f4</Hash>
+    <Hash>93222385f97e96261867ca9763b22c47</Hash>
 </Codenesium>*/

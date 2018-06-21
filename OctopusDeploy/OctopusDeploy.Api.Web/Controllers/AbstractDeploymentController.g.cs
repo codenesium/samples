@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Web
 {
-        public abstract class AbstractDeploymentController: AbstractApiController
+        public abstract class AbstractDeploymentController : AbstractApiController
         {
                 protected IDeploymentService DeploymentService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiDeploymentResponseModel> response = await this.DeploymentService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiDeploymentResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<string>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace OctopusDeployNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Deployments/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Deployments/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -211,5 +208,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3246a1b31aa7a182814b27d42b7361ed</Hash>
+    <Hash>38948ae46746d365cac2042ab517ad77</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Machine", Schema="dbo")]
-        public partial class Machine: AbstractEntity
+        public partial class Machine : AbstractEntity
         {
                 public Machine()
                 {
@@ -42,48 +42,48 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Thumbprint = thumbprint;
                 }
 
-                [Column("CommunicationStyle", TypeName="nvarchar(50)")]
+                [Column("CommunicationStyle")]
                 public string CommunicationStyle { get; private set; }
 
-                [Column("EnvironmentIds", TypeName="nvarchar(-1)")]
+                [Column("EnvironmentIds")]
                 public string EnvironmentIds { get; private set; }
 
-                [Column("Fingerprint", TypeName="nvarchar(50)")]
+                [Column("Fingerprint")]
                 public string Fingerprint { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IsDisabled", TypeName="bit")]
+                [Column("IsDisabled")]
                 public bool IsDisabled { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("MachinePolicyId", TypeName="nvarchar(50)")]
+                [Column("MachinePolicyId")]
                 public string MachinePolicyId { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("RelatedDocumentIds", TypeName="nvarchar(-1)")]
+                [Column("RelatedDocumentIds")]
                 public string RelatedDocumentIds { get; private set; }
 
-                [Column("Roles", TypeName="nvarchar(-1)")]
+                [Column("Roles")]
                 public string Roles { get; private set; }
 
-                [Column("TenantIds", TypeName="nvarchar(-1)")]
+                [Column("TenantIds")]
                 public string TenantIds { get; private set; }
 
-                [Column("TenantTags", TypeName="nvarchar(-1)")]
+                [Column("TenantTags")]
                 public string TenantTags { get; private set; }
 
-                [Column("Thumbprint", TypeName="nvarchar(50)")]
+                [Column("Thumbprint")]
                 public string Thumbprint { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e4da1158f02deb6e16c6e41b0defa66</Hash>
+    <Hash>d422fdab2e95315e985112ce5593f0e4</Hash>
 </Codenesium>*/

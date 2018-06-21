@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOEvent bo)
                 {
                         Event efEvent = new Event();
-
                         efEvent.SetProperties(
                                 bo.AutoId,
                                 bo.Category,
@@ -66,5 +65,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db30181a07cf11d5221fb183890a1312</Hash>
+    <Hash>1eee1c9a11143187a3b004a3ed6be1d5</Hash>
 </Codenesium>*/

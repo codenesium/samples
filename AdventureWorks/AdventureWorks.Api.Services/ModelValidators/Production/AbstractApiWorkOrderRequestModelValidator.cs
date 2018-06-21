@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiWorkOrderRequestModelValidator: AbstractValidator<ApiWorkOrderRequestModel>
+        public abstract class AbstractApiWorkOrderRequestModelValidator : AbstractValidator<ApiWorkOrderRequestModel>
         {
                 private int existingRecordId;
 
-                IWorkOrderRepository workOrderRepository;
+                private IWorkOrderRepository workOrderRepository;
 
                 public AbstractApiWorkOrderRequestModelValidator(IWorkOrderRepository workOrderRepository)
                 {
@@ -65,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be71e71884bb042d91d0827ec8cc9d71</Hash>
+    <Hash>89b9b38871199723607ee99b7fa8dd57</Hash>
 </Codenesium>*/

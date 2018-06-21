@@ -1,25 +1,10 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public class ReferenceEntity<T>
-        {
-                [JsonProperty(PropertyName = "Value")]
-                public T Value { get; private set; }
-
-                [JsonProperty(PropertyName = "Object")]
-                public string ReferenceObjectName { get; set; }
-
-                public ReferenceEntity(T value, string referenceObjectName)
-                {
-                        this.Value = value;
-                        this.ReferenceObjectName = referenceObjectName;
-                }
-        }
-
         public partial class ApiResponse
         {
                 public ApiResponse()
@@ -132,5 +117,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f000a058d0999e46c15ba4587f78cbc1</Hash>
+    <Hash>c8ae21fa426cf5896e8b8e9c0493aa18</Hash>
 </Codenesium>*/

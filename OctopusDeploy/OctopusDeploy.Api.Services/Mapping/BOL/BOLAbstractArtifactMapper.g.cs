@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOArtifact boArtifact = new BOArtifact();
-
                         boArtifact.SetProperties(
                                 id,
                                 model.Created,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6084dad7ff16d8913d02ab4de12d56c</Hash>
+    <Hash>cbbf62ef2981e92fdf9bfdc73211dc7b</Hash>
 </Codenesium>*/

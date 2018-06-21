@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractCertificateService: AbstractService
+        public abstract class AbstractCertificateService : AbstractService
         {
                 private ICertificateRepository certificateRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ICertificateRepository certificateRepository,
                         IApiCertificateRequestModelValidator certificateModelValidator,
                         IBOLCertificateMapper bolCertificateMapper,
-                        IDALCertificateMapper dalCertificateMapper
-
-                        )
+                        IDALCertificateMapper dalCertificateMapper)
                         : base()
-
                 {
                         this.certificateRepository = certificateRepository;
                         this.certificateModelValidator = certificateModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiCertificateResponseModel> response = new CreateResponse<ApiCertificateResponseModel>(await this.certificateModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCertificateMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolCertificateMapper.MapModelToBO(default(string), model);
                                 var record = await this.certificateRepository.Create(this.dalCertificateMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiCertificateRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.certificateModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCertificateMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.certificateModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.certificateRepository.Delete(id);
@@ -112,18 +107,21 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiCertificateResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<Certificate> records = await this.certificateRepository.GetDataVersion(dataVersion);
 
                         return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiCertificateResponseModel>> GetNotAfter(DateTimeOffset notAfter)
                 {
                         List<Certificate> records = await this.certificateRepository.GetNotAfter(notAfter);
 
                         return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiCertificateResponseModel>> GetThumbprint(string thumbprint)
                 {
                         List<Certificate> records = await this.certificateRepository.GetThumbprint(thumbprint);
@@ -134,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d09564447518c8973254af6bd1d0238d</Hash>
+    <Hash>b20d6fcb571991ba4cc94e955be559fe</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOCountryRegion boCountryRegion = new BOCountryRegion();
-
                         boCountryRegion.SetProperties(
                                 countryRegionCode,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>229c55458bb51c515e336723a5d42aae</Hash>
+    <Hash>3befff8eda707f7770102d14dfd4283f</Hash>
 </Codenesium>*/

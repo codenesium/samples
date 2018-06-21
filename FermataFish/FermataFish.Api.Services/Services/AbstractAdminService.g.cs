@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractAdminService: AbstractService
+        public abstract class AbstractAdminService : AbstractService
         {
                 private IAdminRepository adminRepository;
 
@@ -29,11 +29,8 @@ namespace FermataFishNS.Api.Services
                         IAdminRepository adminRepository,
                         IApiAdminRequestModelValidator adminModelValidator,
                         IBOLAdminMapper bolAdminMapper,
-                        IDALAdminMapper dalAdminMapper
-
-                        )
+                        IDALAdminMapper dalAdminMapper)
                         : base()
-
                 {
                         this.adminRepository = adminRepository;
                         this.adminModelValidator = adminModelValidator;
@@ -69,7 +66,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolAdminMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolAdminMapper.MapModelToBO(default(int), model);
                                 var record = await this.adminRepository.Create(this.dalAdminMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace FermataFishNS.Api.Services
                         ApiAdminRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolAdminMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.adminRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d1522f8c93fc6942434f23f2c89a014</Hash>
+    <Hash>036a99b0db953ada056890f00bf8350b</Hash>
 </Codenesium>*/

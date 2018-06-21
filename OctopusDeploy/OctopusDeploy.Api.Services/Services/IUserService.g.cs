@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -22,12 +22,15 @@ namespace OctopusDeployNS.Api.Services
                 Task<List<ApiUserResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiUserResponseModel> GetUsername(string username);
+
                 Task<List<ApiUserResponseModel>> GetDisplayName(string displayName);
+
                 Task<List<ApiUserResponseModel>> GetEmailAddress(string emailAddress);
+
                 Task<List<ApiUserResponseModel>> GetExternalId(string externalId);
         }
 }
 
 /*<Codenesium>
-    <Hash>4f44535563af2f56ca618e1423382d45</Hash>
+    <Hash>4830f42010b0f4b3851307803a3c558c</Hash>
 </Codenesium>*/

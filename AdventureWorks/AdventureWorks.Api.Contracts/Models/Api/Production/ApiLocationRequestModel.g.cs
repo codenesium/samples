@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiLocationRequestModel: AbstractApiRequestModel
+        public partial class ApiLocationRequestModel : AbstractApiRequestModel
         {
-                public ApiLocationRequestModel() : base()
+                public ApiLocationRequestModel()
+                        : base()
                 {
                 }
 
@@ -91,5 +92,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>59332a0bd8e72189a43d165dd70403cf</Hash>
+    <Hash>497839aca72618253f0b4702aaf7fd51</Hash>
 </Codenesium>*/

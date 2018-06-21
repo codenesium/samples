@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public abstract class AbstractApiLinkLogResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiLinkLogResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime dateEntered,
@@ -76,5 +76,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9d6a53f98e4c5e042c56854c5b3d38f7</Hash>
+    <Hash>43caf51b1510c1b43e89caed70dcabc2</Hash>
 </Codenesium>*/

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLCommunityActionTemplateMapper: BOLAbstractCommunityActionTemplateMapper, IBOLCommunityActionTemplateMapper
+        public class BOLCommunityActionTemplateMapper : BOLAbstractCommunityActionTemplateMapper, IBOLCommunityActionTemplateMapper
         {
                 public BOLCommunityActionTemplateMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>077402c40e90896aa240875c1ad7cf7f</Hash>
+    <Hash>7aabc105e8a898e2469bf15d7458035f</Hash>
 </Codenesium>*/

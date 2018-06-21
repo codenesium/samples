@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractOtherTransportService: AbstractService
+        public abstract class AbstractOtherTransportService : AbstractService
         {
                 private IOtherTransportRepository otherTransportRepository;
 
@@ -29,11 +29,8 @@ namespace PetShippingNS.Api.Services
                         IOtherTransportRepository otherTransportRepository,
                         IApiOtherTransportRequestModelValidator otherTransportModelValidator,
                         IBOLOtherTransportMapper bolOtherTransportMapper,
-                        IDALOtherTransportMapper dalOtherTransportMapper
-
-                        )
+                        IDALOtherTransportMapper dalOtherTransportMapper)
                         : base()
-
                 {
                         this.otherTransportRepository = otherTransportRepository;
                         this.otherTransportModelValidator = otherTransportModelValidator;
@@ -69,7 +66,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiOtherTransportResponseModel> response = new CreateResponse<ApiOtherTransportResponseModel>(await this.otherTransportModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolOtherTransportMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolOtherTransportMapper.MapModelToBO(default(int), model);
                                 var record = await this.otherTransportRepository.Create(this.dalOtherTransportMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolOtherTransportMapper.MapBOToModel(this.dalOtherTransportMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace PetShippingNS.Api.Services
                         ApiOtherTransportRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolOtherTransportMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.otherTransportModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.otherTransportRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cdd3c004d23a94a26ad22138ba889ba3</Hash>
+    <Hash>d003f9d5159369e0acfc32b4789926ad</Hash>
 </Codenesium>*/

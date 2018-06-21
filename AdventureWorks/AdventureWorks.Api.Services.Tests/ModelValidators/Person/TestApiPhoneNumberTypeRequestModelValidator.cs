@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         phoneNumberTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
 
                         var validator = new ApiPhoneNumberTypeRequestModelValidator(phoneNumberTypeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPhoneNumberTypeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         phoneNumberTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
 
                         var validator = new ApiPhoneNumberTypeRequestModelValidator(phoneNumberTypeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPhoneNumberTypeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPhoneNumberTypeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         phoneNumberTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
 
                         var validator = new ApiPhoneNumberTypeRequestModelValidator(phoneNumberTypeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPhoneNumberTypeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         phoneNumberTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
 
                         var validator = new ApiPhoneNumberTypeRequestModelValidator(phoneNumberTypeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPhoneNumberTypeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPhoneNumberTypeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         phoneNumberTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PhoneNumberType()));
 
                         var validator = new ApiPhoneNumberTypeRequestModelValidator(phoneNumberTypeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b8803c39b1e075ca30b82eab28eb9697</Hash>
+    <Hash>28d32ff353476862d75a889f1f9ddb34</Hash>
 </Codenesium>*/

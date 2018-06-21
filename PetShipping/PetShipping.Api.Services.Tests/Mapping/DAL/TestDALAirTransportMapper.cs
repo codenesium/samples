@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "AirTransport")]
         [Trait("Area", "DALMapper")]
-        public class TestDALAirTransportActionMapper
+        public class TestDALAirTransportMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALAirTransportMapper();
-
                         var bo = new BOAirTransport();
-
                         bo.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         AirTransport response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALAirTransportMapper();
-
                         AirTransport entity = new AirTransport();
-
                         entity.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOAirTransport  response = mapper.MapEFToBO(entity);
+                        BOAirTransport response = mapper.MapEFToBO(entity);
 
                         response.AirlineId.Should().Be(1);
                         response.FlightNumber.Should().Be("A");
@@ -56,9 +52,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALAirTransportMapper();
-
                         AirTransport entity = new AirTransport();
-
                         entity.SetProperties(1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOAirTransport> response = mapper.MapEFToBO(new List<AirTransport>() { entity });
@@ -69,5 +63,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5ab3f9f71533eb2176884fa8a97e1a2b</Hash>
+    <Hash>043e849179ce1cc42fcaeb50bf2498aa</Hash>
 </Codenesium>*/

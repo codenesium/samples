@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-        public class ApiPaymentTypeRequestModelValidator: AbstractApiPaymentTypeRequestModelValidator, IApiPaymentTypeRequestModelValidator
+        public class ApiPaymentTypeRequestModelValidator : AbstractApiPaymentTypeRequestModelValidator, IApiPaymentTypeRequestModelValidator
         {
                 public ApiPaymentTypeRequestModelValidator(IPaymentTypeRepository paymentTypeRepository)
                         : base(paymentTypeRepository)
@@ -27,11 +27,11 @@ namespace PetStoreNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>224e0169bdcf1c2f4fd91166cdeadeeb</Hash>
+    <Hash>49c452e0641729de5ff730ce245c8400</Hash>
 </Codenesium>*/

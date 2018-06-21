@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractAirTransportService: AbstractService
+        public abstract class AbstractAirTransportService : AbstractService
         {
                 private IAirTransportRepository airTransportRepository;
 
@@ -29,11 +29,8 @@ namespace PetShippingNS.Api.Services
                         IAirTransportRepository airTransportRepository,
                         IApiAirTransportRequestModelValidator airTransportModelValidator,
                         IBOLAirTransportMapper bolAirTransportMapper,
-                        IDALAirTransportMapper dalAirTransportMapper
-
-                        )
+                        IDALAirTransportMapper dalAirTransportMapper)
                         : base()
-
                 {
                         this.airTransportRepository = airTransportRepository;
                         this.airTransportModelValidator = airTransportModelValidator;
@@ -69,7 +66,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiAirTransportResponseModel> response = new CreateResponse<ApiAirTransportResponseModel>(await this.airTransportModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolAirTransportMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolAirTransportMapper.MapModelToBO(default(int), model);
                                 var record = await this.airTransportRepository.Create(this.dalAirTransportMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolAirTransportMapper.MapBOToModel(this.dalAirTransportMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace PetShippingNS.Api.Services
                         ApiAirTransportRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateUpdateAsync(airlineId, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolAirTransportMapper.MapModelToBO(airlineId, model);
@@ -97,7 +93,6 @@ namespace PetShippingNS.Api.Services
                         int airlineId)
                 {
                         ActionResponse response = new ActionResponse(await this.airTransportModelValidator.ValidateDeleteAsync(airlineId));
-
                         if (response.Success)
                         {
                                 await this.airTransportRepository.Delete(airlineId);
@@ -109,5 +104,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfd4f18f8bcbd6d3c722d5022b8cf149</Hash>
+    <Hash>62ccbdcf93c409e9d37750db3dcf3b45</Hash>
 </Codenesium>*/

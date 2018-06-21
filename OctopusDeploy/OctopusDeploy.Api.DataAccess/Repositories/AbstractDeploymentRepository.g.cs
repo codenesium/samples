@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractDeploymentRepository: AbstractRepository
+        public abstract class AbstractDeploymentRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,17 +82,24 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<Deployment>> GetIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
                 {
                         var records = await this.Where(x => x.Id == id && x.ProjectId == projectId && x.ProjectGroupId == projectGroupId && x.Name == name && x.Created == created && x.ReleaseId == releaseId && x.TaskId == taskId && x.EnvironmentId == environmentId);
 
                         return records;
                 }
+
                 public async Task<List<Deployment>> GetTenantId(string tenantId)
                 {
                         var records = await this.Where(x => x.TenantId == tenantId);
 
                         return records;
+                }
+
+                public async virtual Task<List<DeploymentRelatedMachine>> DeploymentRelatedMachines(string deploymentId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<DeploymentRelatedMachine>().Where(x => x.DeploymentId == deploymentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeploymentRelatedMachine>();
                 }
 
                 protected async Task<List<Deployment>> Where(
@@ -123,14 +130,9 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<DeploymentRelatedMachine>> DeploymentRelatedMachines(string deploymentId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<DeploymentRelatedMachine>().Where(x => x.DeploymentId == deploymentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DeploymentRelatedMachine>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6711e97a873bf3bf2a02c9e433d04a25</Hash>
+    <Hash>a17f24e56b20a384784af4a4e22944bb</Hash>
 </Codenesium>*/

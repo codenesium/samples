@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Team")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTeamActionMapper
+        public class TestBOLTeamMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTeamMapper();
-
                         ApiTeamRequestModel model = new ApiTeamRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", "A", "A", "A", "A");
                         BOTeam response = mapper.MapModelToBO("A", model);
 
@@ -37,9 +35,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTeamMapper();
-
                         BOTeam bo = new BOTeam();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
                         ApiTeamResponseModel response = mapper.MapBOToModel(bo);
 
@@ -58,9 +54,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTeamMapper();
-
                         BOTeam bo = new BOTeam();
-
                         bo.SetProperties("A", "A", "A", "A", "A", "A", "A", "A", "A");
                         List<ApiTeamResponseModel> response = mapper.MapBOToModel(new List<BOTeam>() { { bo } });
 
@@ -70,5 +64,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b5ce62e7614eb866ccd44d948fc5391a</Hash>
+    <Hash>303e5347730406232171231dc42ae57e</Hash>
 </Codenesium>*/

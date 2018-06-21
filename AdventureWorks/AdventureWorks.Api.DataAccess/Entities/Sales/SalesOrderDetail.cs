@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("SalesOrderDetail", Schema="Sales")]
-        public partial class SalesOrderDetail: AbstractEntity
+        public partial class SalesOrderDetail : AbstractEntity
         {
                 public SalesOrderDetail()
                 {
@@ -38,39 +38,39 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.UnitPriceDiscount = unitPriceDiscount;
                 }
 
-                [Column("CarrierTrackingNumber", TypeName="nvarchar(25)")]
+                [Column("CarrierTrackingNumber")]
                 public string CarrierTrackingNumber { get; private set; }
 
                 [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-                [Column("LineTotal", TypeName="decimal")]
+                [Column("LineTotal")]
                 public decimal LineTotal { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("OrderQty", TypeName="smallint")]
+                [Column("OrderQty")]
                 public short OrderQty { get; private set; }
 
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("SalesOrderDetailID", TypeName="int")]
+                [Column("SalesOrderDetailID")]
                 public int SalesOrderDetailID { get; private set; }
 
                 [Key]
-                [Column("SalesOrderID", TypeName="int")]
+                [Column("SalesOrderID")]
                 public int SalesOrderID { get; private set; }
 
-                [Column("SpecialOfferID", TypeName="int")]
+                [Column("SpecialOfferID")]
                 public int SpecialOfferID { get; private set; }
 
-                [Column("UnitPrice", TypeName="money")]
+                [Column("UnitPrice")]
                 public decimal UnitPrice { get; private set; }
 
-                [Column("UnitPriceDiscount", TypeName="money")]
+                [Column("UnitPriceDiscount")]
                 public decimal UnitPriceDiscount { get; private set; }
 
                 [ForeignKey("ProductID")]
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d77a68f554511dfbe6e3f3ac75ed6d7</Hash>
+    <Hash>ecdb0eb8edae6825fe92081a3ab9b6c0</Hash>
 </Codenesium>*/

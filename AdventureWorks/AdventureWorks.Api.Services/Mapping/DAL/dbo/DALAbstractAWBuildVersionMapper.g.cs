@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOAWBuildVersion bo)
                 {
                         AWBuildVersion efAWBuildVersion = new AWBuildVersion();
-
                         efAWBuildVersion.SetProperties(
                                 bo.Database_Version,
                                 bo.ModifiedDate,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f1ad773f993361e4b6394d4d755904c</Hash>
+    <Hash>0339918de2cbf28ac2c8eb1a3b342789</Hash>
 </Codenesium>*/

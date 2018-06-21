@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Team", Schema="dbo")]
-        public partial class Team:AbstractEntity
+        public partial class Team : AbstractEntity
         {
                 public Team()
                 {
@@ -34,36 +34,36 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.TenantTags = tenantTags;
                 }
 
-                [Column("EnvironmentIds", TypeName="nvarchar(-1)")]
+                [Column("EnvironmentIds")]
                 public string EnvironmentIds { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("MemberUserIds", TypeName="nvarchar(-1)")]
+                [Column("MemberUserIds")]
                 public string MemberUserIds { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("ProjectGroupIds", TypeName="nvarchar(-1)")]
+                [Column("ProjectGroupIds")]
                 public string ProjectGroupIds { get; private set; }
 
-                [Column("ProjectIds", TypeName="nvarchar(-1)")]
+                [Column("ProjectIds")]
                 public string ProjectIds { get; private set; }
 
-                [Column("TenantIds", TypeName="nvarchar(-1)")]
+                [Column("TenantIds")]
                 public string TenantIds { get; private set; }
 
-                [Column("TenantTags", TypeName="nvarchar(-1)")]
+                [Column("TenantTags")]
                 public string TenantTags { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8f4fe3cb83b36c445edcda8c861e8718</Hash>
+    <Hash>443c01d2c702ac6bb8a13f3096d082c1</Hash>
 </Codenesium>*/

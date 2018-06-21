@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSalesReason bo)
                 {
                         SalesReason efSalesReason = new SalesReason();
-
                         efSalesReason.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f612c0b336b03feaddcb3d699841d66</Hash>
+    <Hash>1bd9f6eb92b1d343ff50d0964df538aa</Hash>
 </Codenesium>*/

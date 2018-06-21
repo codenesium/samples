@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOMutex bo)
                 {
                         Mutex efMutex = new Mutex();
-
                         efMutex.SetProperties(
                                 bo.Id,
                                 bo.JSON);
@@ -46,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6755074ee46c926bf4b74fd4690a805f</Hash>
+    <Hash>ec2e37fb73dbfdb543bed12e8675335a</Hash>
 </Codenesium>*/

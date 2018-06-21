@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new TeamRepository(loggerMoc.Object, context);
 
                         Team entity = new Team();
-
                         context.Set<Team>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new TeamRepository(loggerMoc.Object, context);
 
                         Team entity = new Team();
-
                         context.Set<Team>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new TeamRepository(loggerMoc.Object, context);
 
                         var entity = new Team();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Team>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TeamRepositoryMoc.GetContext();
                         var repository = new TeamRepository(loggerMoc.Object, context);
-
                         Team entity = new Team();
-
                         context.Set<Team>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TeamRepositoryMoc.GetContext();
                         var repository = new TeamRepository(loggerMoc.Object, context);
-
                         Team entity = new Team();
-
                         context.Set<Team>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<TeamRepository>> loggerMoc = TeamRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TeamRepositoryMoc.GetContext();
                         var repository = new TeamRepository(loggerMoc.Object, context);
-
                         Team entity = new Team();
-
                         context.Set<Team>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Team modifiedRecord = await context.Set<Team>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6c9941d249d94757ea27d791fc0deb97</Hash>
+    <Hash>872a996907afe0484fe0813a5544d5bf</Hash>
 </Codenesium>*/

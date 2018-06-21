@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Mutex", Schema="dbo")]
-        public partial class Mutex:AbstractEntity
+        public partial class Mutex : AbstractEntity
         {
                 public Mutex()
                 {
@@ -21,14 +21,14 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(450)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2e7d7d8947b9627b15f87dbc00dff3b6</Hash>
+    <Hash>6d2e93415be684b75c1d20bb09a9bd66</Hash>
 </Codenesium>*/

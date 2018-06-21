@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALShoppingCartItemMapper: DALAbstractShoppingCartItemMapper, IDALShoppingCartItemMapper
+        public class DALShoppingCartItemMapper : DALAbstractShoppingCartItemMapper, IDALShoppingCartItemMapper
         {
                 public DALShoppingCartItemMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f4909781872fea54e0e8e250212acca</Hash>
+    <Hash>3d0b870e1763202f4a15755928f50281</Hash>
 </Codenesium>*/

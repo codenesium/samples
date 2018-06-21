@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="coverlet.msbuild" Version="2.0.0" />
     <PackageReference Include="FluentAssertions" Version="5.2.0" />
-    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
 	<PackageReference Include="Moq" Version="4.8.3" />

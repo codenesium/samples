@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOPipelineStepNote bo)
                 {
                         PipelineStepNote efPipelineStepNote = new PipelineStepNote();
-
                         efPipelineStepNote.SetProperties(
                                 bo.EmployeeId,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d8b29ce2b9d01085fcd48a9ebf47491</Hash>
+    <Hash>a16411cdcefb0444ff3b7319946b6212</Hash>
 </Codenesium>*/

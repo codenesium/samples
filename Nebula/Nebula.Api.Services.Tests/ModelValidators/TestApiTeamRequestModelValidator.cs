@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -70,8 +67,7 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.GetOrganization(It.IsAny<int>())).Returns(Task.FromResult<Organization>(new Organization()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTeamRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.OrganizationId, 1);
@@ -122,8 +116,7 @@ namespace NebulaNS.Api.Services.Tests
                         teamRepository.Setup(x => x.GetOrganization(It.IsAny<int>())).Returns(Task.FromResult<Organization>(new Organization()));
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.OrganizationId, 1);
                 }
@@ -136,7 +129,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiTeamRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OrganizationId, 1);
                 }
@@ -144,5 +137,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7d166a171b17600e9195e06596a8bf5a</Hash>
+    <Hash>4201364e73b6281de92a0d526c764275</Hash>
 </Codenesium>*/

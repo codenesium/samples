@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractLocationRepository: AbstractRepository
+        public abstract class AbstractLocationRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<ProductInventory>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductInventory>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductInventory>();
+                }
+
+                public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<WorkOrderRouting>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
+                }
+
                 protected async Task<List<Location>> Where(
                         Expression<Func<Location, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,18 +121,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<ProductInventory>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ProductInventory>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductInventory>();
-                }
-                public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<WorkOrderRouting>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>931a641d5bd27c4da9c0e8c1421fbe98</Hash>
+    <Hash>b5b5a10c38ac4bdc4ec5cc5600c69d2c</Hash>
 </Codenesium>*/

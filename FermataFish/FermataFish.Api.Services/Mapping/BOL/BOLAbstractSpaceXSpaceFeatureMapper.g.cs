@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FermataFishNS.Api.Services
                         )
                 {
                         BOSpaceXSpaceFeature boSpaceXSpaceFeature = new BOSpaceXSpaceFeature();
-
                         boSpaceXSpaceFeature.SetProperties(
                                 id,
                                 model.SpaceFeatureId,
@@ -47,5 +46,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ed101ab8208b08cf409efb5e0b70dd2</Hash>
+    <Hash>9bb30df92a35f17eafe80618768d57de</Hash>
 </Codenesium>*/

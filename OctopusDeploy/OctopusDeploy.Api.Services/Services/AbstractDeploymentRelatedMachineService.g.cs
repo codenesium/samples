@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractDeploymentRelatedMachineService: AbstractService
+        public abstract class AbstractDeploymentRelatedMachineService : AbstractService
         {
                 private IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentRelatedMachineRepository deploymentRelatedMachineRepository,
                         IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
                         IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper,
-                        IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper
-
-                        )
+                        IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper)
                         : base()
-
                 {
                         this.deploymentRelatedMachineRepository = deploymentRelatedMachineRepository;
                         this.deploymentRelatedMachineModelValidator = deploymentRelatedMachineModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiDeploymentRelatedMachineResponseModel> response = new CreateResponse<ApiDeploymentRelatedMachineResponseModel>(await this.deploymentRelatedMachineModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDeploymentRelatedMachineMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolDeploymentRelatedMachineMapper.MapModelToBO(default(int), model);
                                 var record = await this.deploymentRelatedMachineRepository.Create(this.dalDeploymentRelatedMachineMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiDeploymentRelatedMachineRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentRelatedMachineModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDeploymentRelatedMachineMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentRelatedMachineModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.deploymentRelatedMachineRepository.Delete(id);
@@ -112,6 +107,7 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiDeploymentRelatedMachineResponseModel>> GetMachineId(string machineId)
                 {
                         List<DeploymentRelatedMachine> records = await this.deploymentRelatedMachineRepository.GetMachineId(machineId);
@@ -122,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ccf85872d73036cdd3b076fda938158</Hash>
+    <Hash>3ff3873483866ca7fcd6c81fa8b51127</Hash>
 </Codenesium>*/

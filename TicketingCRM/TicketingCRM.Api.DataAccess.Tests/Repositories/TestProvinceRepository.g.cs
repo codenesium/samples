@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new ProvinceRepository(loggerMoc.Object, context);
 
                         Province entity = new Province();
-
                         context.Set<Province>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new ProvinceRepository(loggerMoc.Object, context);
 
                         Province entity = new Province();
-
                         context.Set<Province>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new ProvinceRepository(loggerMoc.Object, context);
 
                         var entity = new Province();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Province>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<ProvinceRepository>> loggerMoc = ProvinceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProvinceRepositoryMoc.GetContext();
                         var repository = new ProvinceRepository(loggerMoc.Object, context);
-
                         Province entity = new Province();
-
                         context.Set<Province>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<ProvinceRepository>> loggerMoc = ProvinceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProvinceRepositoryMoc.GetContext();
                         var repository = new ProvinceRepository(loggerMoc.Object, context);
-
                         Province entity = new Province();
-
                         context.Set<Province>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<ProvinceRepository>> loggerMoc = ProvinceRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProvinceRepositoryMoc.GetContext();
                         var repository = new ProvinceRepository(loggerMoc.Object, context);
-
                         Province entity = new Province();
-
                         context.Set<Province>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Province modifiedRecord = await context.Set<Province>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1103cdf0efde9c2ff04a07c6a7304213</Hash>
+    <Hash>65ce6c77fd932aaa473b4ec7b3fc529c</Hash>
 </Codenesium>*/

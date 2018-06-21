@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -20,10 +20,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<Location> ByName(string name);
 
                 Task<List<ProductInventory>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<WorkOrderRouting>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>baa689a00f17bcd70120fc438677961b</Hash>
+    <Hash>676b137a428b833f4865ec86189f97bf</Hash>
 </Codenesium>*/

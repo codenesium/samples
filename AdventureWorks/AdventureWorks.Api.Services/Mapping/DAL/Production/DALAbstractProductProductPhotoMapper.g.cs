@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductProductPhoto bo)
                 {
                         ProductProductPhoto efProductProductPhoto = new ProductProductPhoto();
-
                         efProductProductPhoto.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Primary,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e5ea22d7a30eba6e1660fabd300764d</Hash>
+    <Hash>528b7a2216341d367944e9c2f1029fd3</Hash>
 </Codenesium>*/

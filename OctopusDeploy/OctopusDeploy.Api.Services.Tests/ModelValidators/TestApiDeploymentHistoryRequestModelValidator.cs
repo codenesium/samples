@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
                 }
@@ -57,8 +55,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelName, new string('A', 201));
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelName, new string('A', 201));
                 }
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -109,7 +103,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeployedBy, new string('A', 201));
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeployedBy, new string('A', 201));
                 }
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, null as string);
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, null as string);
                 }
@@ -174,7 +163,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, new string('A', 201));
@@ -187,8 +175,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentName, new string('A', 201));
                 }
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -213,7 +199,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, null as string);
@@ -226,8 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, null as string);
                 }
@@ -239,7 +223,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
@@ -252,8 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
                 }
@@ -265,8 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -278,7 +259,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, null as string);
@@ -291,8 +271,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, null as string);
                 }
@@ -304,7 +283,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, new string('A', 201));
@@ -317,8 +295,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentName, new string('A', 201));
                 }
@@ -330,8 +307,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -343,7 +319,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
@@ -356,8 +331,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
@@ -369,7 +343,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
@@ -382,8 +355,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
                 }
@@ -395,8 +367,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -408,7 +379,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectName, null as string);
@@ -421,8 +391,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectName, null as string);
                 }
@@ -434,7 +403,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectName, new string('A', 201));
@@ -447,8 +415,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectName, new string('A', 201));
                 }
@@ -460,8 +427,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -473,7 +439,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, null as string);
@@ -486,8 +451,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, null as string);
                 }
@@ -499,7 +463,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, new string('A', 211));
@@ -512,8 +475,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectSlug, new string('A', 211));
                 }
@@ -525,8 +487,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -538,7 +499,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, null as string);
@@ -551,8 +511,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, null as string);
                 }
@@ -564,7 +523,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, new string('A', 151));
@@ -577,8 +535,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseId, new string('A', 151));
                 }
@@ -590,8 +547,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -603,7 +559,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, null as string);
@@ -616,8 +571,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, null as string);
                 }
@@ -629,7 +583,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, new string('A', 101));
@@ -642,8 +595,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReleaseVersion, new string('A', 101));
                 }
@@ -655,8 +607,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -668,7 +619,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
@@ -681,8 +631,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
                 }
@@ -694,7 +643,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
@@ -707,8 +655,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
                 }
@@ -720,8 +667,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -733,7 +679,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskState, null as string);
@@ -746,8 +691,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskState, null as string);
                 }
@@ -759,7 +703,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskState, new string('A', 51));
@@ -772,8 +715,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskState, new string('A', 51));
                 }
@@ -785,8 +727,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -798,7 +739,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
@@ -811,8 +751,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
@@ -824,8 +763,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -837,7 +775,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantName, new string('A', 201));
@@ -850,8 +787,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantName, new string('A', 201));
                 }
@@ -863,8 +799,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentHistoryRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentHistory()));
 
                         var validator = new ApiDeploymentHistoryRequestModelValidator(deploymentHistoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -872,5 +807,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>01b96c764a1206b33aacf83ecfa3bb17</Hash>
+    <Hash>537760e5e117620b7cc2eef634e19dba</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractSaleRepository: AbstractRepository
+        public abstract class AbstractSaleRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace TicketingCRMNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<List<SaleTickets>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SaleTickets>().Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTickets>();
+                }
+
+                public async virtual Task<Transaction> GetTransaction(int transactionId)
+                {
+                        return await this.Context.Set<Transaction>().SingleOrDefaultAsync(x => x.Id == transactionId);
+                }
+
                 protected async Task<List<Sale>> Where(
                         Expression<Func<Sale, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,19 +121,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SaleTickets>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SaleTickets>().Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTickets>();
-                }
-
-                public async virtual Task<Transaction> GetTransaction(int transactionId)
-                {
-                        return await this.Context.Set<Transaction>().SingleOrDefaultAsync(x => x.Id == transactionId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ab48df4aabc4332d3377f04aa213d5c8</Hash>
+    <Hash>692cc27d85035a400dc0392eefadbc0f</Hash>
 </Codenesium>*/

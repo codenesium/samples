@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractStudentXFamilyRepository: AbstractRepository
+        public abstract class AbstractStudentXFamilyRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Family> GetFamily(int familyId)
+                {
+                        return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
+                }
+
+                public async virtual Task<Student> GetStudent(int studentId)
+                {
+                        return await this.Context.Set<Student>().SingleOrDefaultAsync(x => x.Id == studentId);
+                }
+
                 protected async Task<List<StudentXFamily>> Where(
                         Expression<Func<StudentXFamily, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Family> GetFamily(int familyId)
-                {
-                        return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
-                }
-                public async virtual Task<Student> GetStudent(int studentId)
-                {
-                        return await this.Context.Set<Student>().SingleOrDefaultAsync(x => x.Id == studentId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d6dbc4c3f5d6c7d442cb511f3d5c667b</Hash>
+    <Hash>8c21aac340749ecae96add59bb01e4ed</Hash>
 </Codenesium>*/

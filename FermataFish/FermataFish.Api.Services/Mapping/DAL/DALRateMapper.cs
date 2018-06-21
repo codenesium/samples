@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALRateMapper: DALAbstractRateMapper, IDALRateMapper
+        public class DALRateMapper : DALAbstractRateMapper, IDALRateMapper
         {
                 public DALRateMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>07849f0bdd3f706e0a3c5092e291b31b</Hash>
+    <Hash>2d03bdfaa87ac6343e82e1bba63b2fb6</Hash>
 </Codenesium>*/

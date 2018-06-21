@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetShippingNS.Api.DataAccess
 {
         [Table("Airline", Schema="dbo")]
-        public partial class Airline: AbstractEntity
+        public partial class Airline : AbstractEntity
         {
                 public Airline()
                 {
@@ -21,14 +21,14 @@ namespace PetShippingNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8e6612bf6bed035325ae8f6e592c2a1c</Hash>
+    <Hash>68d1249d0a67a6406daf785503d50074</Hash>
 </Codenesium>*/

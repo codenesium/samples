@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesOrderHeaderSalesReason")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSalesOrderHeaderSalesReasonActionMapper
+        public class TestDALSalesOrderHeaderSalesReasonMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSalesOrderHeaderSalesReasonMapper();
-
                         var bo = new BOSalesOrderHeaderSalesReason();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         SalesOrderHeaderSalesReason response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSalesOrderHeaderSalesReasonMapper();
-
                         SalesOrderHeaderSalesReason entity = new SalesOrderHeaderSalesReason();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 
-                        BOSalesOrderHeaderSalesReason  response = mapper.MapEFToBO(entity);
+                        BOSalesOrderHeaderSalesReason response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.SalesOrderID.Should().Be(1);
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSalesOrderHeaderSalesReasonMapper();
-
                         SalesOrderHeaderSalesReason entity = new SalesOrderHeaderSalesReason();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 
                         List<BOSalesOrderHeaderSalesReason> response = mapper.MapEFToBO(new List<SalesOrderHeaderSalesReason>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bb900047e45d63d7da1457cdc17f6ec3</Hash>
+    <Hash>f5f235daf717ca0ad8395e07f08fa3a8</Hash>
 </Codenesium>*/

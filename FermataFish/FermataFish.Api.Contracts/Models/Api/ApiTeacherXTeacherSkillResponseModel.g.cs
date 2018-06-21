@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiTeacherXTeacherSkillResponseModel: AbstractApiTeacherXTeacherSkillResponseModel
+        public partial class ApiTeacherXTeacherSkillResponseModel : AbstractApiTeacherXTeacherSkillResponseModel
         {
                 public ApiTeacherXTeacherSkillResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d21f17cf3753773b7963f26d0145ba26</Hash>
+    <Hash>9dc3c095f28f1246857ea6e87b9df5f0</Hash>
 </Codenesium>*/

@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiAdminRequestModel: AbstractApiRequestModel
+        public partial class ApiAdminRequestModel : AbstractApiRequestModel
         {
-                public ApiAdminRequestModel() : base()
+                public ApiAdminRequestModel()
+                        : base()
                 {
                 }
 
@@ -127,5 +128,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dab070f038a86a267726e93167fa535c</Hash>
+    <Hash>63458980bd50009a52dcd583f58c809d</Hash>
 </Codenesium>*/

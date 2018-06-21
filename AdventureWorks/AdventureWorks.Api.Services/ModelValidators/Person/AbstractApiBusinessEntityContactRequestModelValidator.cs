@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiBusinessEntityContactRequestModelValidator: AbstractValidator<ApiBusinessEntityContactRequestModel>
+        public abstract class AbstractApiBusinessEntityContactRequestModelValidator : AbstractValidator<ApiBusinessEntityContactRequestModel>
         {
                 private int existingRecordId;
 
-                IBusinessEntityContactRepository businessEntityContactRepository;
+                private IBusinessEntityContactRepository businessEntityContactRepository;
 
                 public AbstractApiBusinessEntityContactRequestModelValidator(IBusinessEntityContactRepository businessEntityContactRepository)
                 {
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c1dc4403465145a8792537ef3d6484bc</Hash>
+    <Hash>24611f0229ee8fb4851d962330656457</Hash>
 </Codenesium>*/

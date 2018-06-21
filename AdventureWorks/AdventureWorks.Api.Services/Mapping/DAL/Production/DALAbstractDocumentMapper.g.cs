@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BODocument bo)
                 {
                         Document efDocument = new Document();
-
                         efDocument.SetProperties(
                                 bo.ChangeNumber,
                                 bo.Document1,
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65928a85cc91324f99c11207442cc1dc</Hash>
+    <Hash>e0ce1299a278bc6d9a4c910fd987bc5e</Hash>
 </Codenesium>*/

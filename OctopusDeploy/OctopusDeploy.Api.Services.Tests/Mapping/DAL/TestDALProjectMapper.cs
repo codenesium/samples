@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Project")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProjectActionMapper
+        public class TestDALProjectMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProjectMapper();
-
                         var bo = new BOProject();
-
                         bo.SetProperties("A", true, BitConverter.GetBytes(1), "A", true, "A", true, "A", "A", "A", "A", "A", "A");
 
                         Project response = mapper.MapBOToEF(bo);
@@ -42,12 +40,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProjectMapper();
-
                         Project entity = new Project();
-
                         entity.SetProperties(true, BitConverter.GetBytes(1), "A", true, "A", "A", true, "A", "A", "A", "A", "A", "A");
 
-                        BOProject  response = mapper.MapEFToBO(entity);
+                        BOProject response = mapper.MapEFToBO(entity);
 
                         response.AutoCreateRelease.Should().Be(true);
                         response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
@@ -68,9 +64,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProjectMapper();
-
                         Project entity = new Project();
-
                         entity.SetProperties(true, BitConverter.GetBytes(1), "A", true, "A", "A", true, "A", "A", "A", "A", "A", "A");
 
                         List<BOProject> response = mapper.MapEFToBO(new List<Project>() { entity });
@@ -81,5 +75,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cd6e3a0a687bff40e8ec4fc2c2bfc914</Hash>
+    <Hash>a9254e50c2105940367bc8d0549eca86</Hash>
 </Codenesium>*/

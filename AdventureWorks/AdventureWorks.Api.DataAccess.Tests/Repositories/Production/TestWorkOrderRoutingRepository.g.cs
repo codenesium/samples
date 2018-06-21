@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new WorkOrderRoutingRepository(loggerMoc.Object, context);
 
                         WorkOrderRouting entity = new WorkOrderRouting();
-
                         context.Set<WorkOrderRouting>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new WorkOrderRoutingRepository(loggerMoc.Object, context);
 
                         WorkOrderRouting entity = new WorkOrderRouting();
-
                         context.Set<WorkOrderRouting>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new WorkOrderRoutingRepository(loggerMoc.Object, context);
 
                         var entity = new WorkOrderRouting();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<WorkOrderRouting>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<WorkOrderRoutingRepository>> loggerMoc = WorkOrderRoutingRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkOrderRoutingRepositoryMoc.GetContext();
                         var repository = new WorkOrderRoutingRepository(loggerMoc.Object, context);
-
                         WorkOrderRouting entity = new WorkOrderRouting();
-
                         context.Set<WorkOrderRouting>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<WorkOrderRoutingRepository>> loggerMoc = WorkOrderRoutingRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkOrderRoutingRepositoryMoc.GetContext();
                         var repository = new WorkOrderRoutingRepository(loggerMoc.Object, context);
-
                         WorkOrderRouting entity = new WorkOrderRouting();
-
                         context.Set<WorkOrderRouting>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<WorkOrderRoutingRepository>> loggerMoc = WorkOrderRoutingRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkOrderRoutingRepositoryMoc.GetContext();
                         var repository = new WorkOrderRoutingRepository(loggerMoc.Object, context);
-
                         WorkOrderRouting entity = new WorkOrderRouting();
-
                         context.Set<WorkOrderRouting>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.WorkOrderID);
 
                         WorkOrderRouting modifiedRecord = await context.Set<WorkOrderRouting>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>24764109cc167e66ec42e4884409805d</Hash>
+    <Hash>c338014e743d5b2fa1b3674141825fcc</Hash>
 </Codenesium>*/

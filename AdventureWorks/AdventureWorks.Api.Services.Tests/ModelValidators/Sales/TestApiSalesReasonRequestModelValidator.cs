@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReasonType, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReasonType, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReasonType, new string('A', 51));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesReasonRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesReasonRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ReasonType, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesReasonRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesReason()));
 
                         var validator = new ApiSalesReasonRequestModelValidator(salesReasonRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -157,5 +147,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d38c82f82f5ff4340d18e69506daa050</Hash>
+    <Hash>d3169cc1d12736a3ed21b2dfbbae8c63</Hash>
 </Codenesium>*/

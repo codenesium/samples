@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOWorkerPool boWorkerPool = new BOWorkerPool();
-
                         boWorkerPool.SetProperties(
                                 id,
                                 model.IsDefault,
@@ -49,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1633a7767dfc0e738639ce53554b0eb8</Hash>
+    <Hash>37776f41b338cf2b90eb2adbc4f6e740</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Chain")]
         [Trait("Area", "DALMapper")]
-        public class TestDALChainActionMapper
+        public class TestDALChainMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALChainMapper();
-
                         var bo = new BOChain();
-
                         bo.SetProperties(1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
 
                         Chain response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALChainMapper();
-
                         Chain entity = new Chain();
-
                         entity.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1);
 
-                        BOChain  response = mapper.MapEFToBO(entity);
+                        BOChain response = mapper.MapEFToBO(entity);
 
                         response.ChainStatusId.Should().Be(1);
                         response.ExternalId.Should().Be(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
@@ -52,9 +48,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALChainMapper();
-
                         Chain entity = new Chain();
-
                         entity.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1);
 
                         List<BOChain> response = mapper.MapEFToBO(new List<Chain>() { entity });
@@ -65,5 +59,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dee91b14916d015e55208fc330fb7228</Hash>
+    <Hash>ae4fdfd6e42c324dc8e7f3269964e2e4</Hash>
 </Codenesium>*/

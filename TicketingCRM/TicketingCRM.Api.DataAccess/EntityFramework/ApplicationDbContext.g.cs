@@ -1,12 +1,13 @@
-using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public partial class ApplicationDbContext: DbContext
+        public partial class ApplicationDbContext : DbContext
         {
                 public Guid UserId { get; private set; }
 
@@ -17,17 +18,13 @@ namespace TicketingCRMNS.Api.DataAccess
                 {
                 }
 
-                protected override void OnConfiguring(DbContextOptionsBuilder options)
-                {
-                        base.OnConfiguring(options);
-                }
-
                 public void SetUserId(Guid userId)
                 {
-                        if (userId == default (Guid))
+                        if (userId == default(Guid))
                         {
                                 throw new ArgumentException("UserId cannot be a default value");
                         }
+
                         this.UserId = userId;
                 }
 
@@ -37,6 +34,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         {
                                 throw new ArgumentException("TenantId must be greater than 0");
                         }
+
                         this.TenantId = tenantId;
                 }
 
@@ -65,9 +63,14 @@ namespace TicketingCRMNS.Api.DataAccess
                 public virtual DbSet<TransactionStatus> TransactionStatus { get; set; }
 
                 public virtual DbSet<Venue> Venues { get; set; }
+
+                protected override void OnConfiguring(DbContextOptionsBuilder options)
+                {
+                        base.OnConfiguring(options);
+                }
         }
 
-        public class ApplicationDbContextFactory: IDesignTimeDbContextFactory<ApplicationDbContext>
+        public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
                 public ApplicationDbContext CreateDbContext(string[] args)
                 {
@@ -92,5 +95,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d7e8c007a6048b0aecea99213fe9f35</Hash>
+    <Hash>81dcf3a9788d0d9a48c551b7f835dd57</Hash>
 </Codenesium>*/

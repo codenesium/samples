@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetStoreNS.Api.DataAccess
 {
         [Table("PaymentType", Schema="dbo")]
-        public partial class PaymentType: AbstractEntity
+        public partial class PaymentType : AbstractEntity
         {
                 public PaymentType()
                 {
@@ -21,14 +21,14 @@ namespace PetStoreNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4af89bed7a050846899077bf73d57f8f</Hash>
+    <Hash>7da407037bece3f325a91b34a501614b</Hash>
 </Codenesium>*/

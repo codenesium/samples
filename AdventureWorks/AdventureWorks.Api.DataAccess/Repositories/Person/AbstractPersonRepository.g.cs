@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractPersonRepository: AbstractRepository
+        public abstract class AbstractPersonRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,17 +82,39 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo)
                 {
                         var records = await this.Where(x => x.AdditionalContactInfo == additionalContactInfo);
 
                         return records;
                 }
+
                 public async Task<List<Person>> ByDemographics(string demographics)
                 {
                         var records = await this.Where(x => x.Demographics == demographics);
 
                         return records;
+                }
+
+                public async virtual Task<List<BusinessEntityContact>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BusinessEntityContact>().Where(x => x.PersonID == personID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
+                }
+
+                public async virtual Task<List<EmailAddress>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<EmailAddress>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmailAddress>();
+                }
+
+                public async virtual Task<List<Password>> Passwords(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Password>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Password>();
+                }
+
+                public async virtual Task<List<PersonPhone>> PersonPhones(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PersonPhone>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
                 }
 
                 protected async Task<List<Person>> Where(
@@ -123,26 +145,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<BusinessEntityContact>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<BusinessEntityContact>().Where(x => x.PersonID == personID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
-                }
-                public async virtual Task<List<EmailAddress>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<EmailAddress>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmailAddress>();
-                }
-                public async virtual Task<List<Password>> Passwords(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Password>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Password>();
-                }
-                public async virtual Task<List<PersonPhone>> PersonPhones(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PersonPhone>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1461da3287142bcf7ead0f879aae1cd1</Hash>
+    <Hash>688229fafcc5769b4c7ef7ef4932822f</Hash>
 </Codenesium>*/

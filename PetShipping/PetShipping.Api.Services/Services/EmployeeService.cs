@@ -1,54 +1,46 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class EmployeeService: AbstractEmployeeService, IEmployeeService
+        public class EmployeeService : AbstractEmployeeService, IEmployeeService
         {
                 public EmployeeService(
                         ILogger<IEmployeeRepository> logger,
                         IEmployeeRepository employeeRepository,
                         IApiEmployeeRequestModelValidator employeeModelValidator,
                         IBOLEmployeeMapper bolemployeeMapper,
-                        IDALEmployeeMapper dalemployeeMapper
-                        ,
+                        IDALEmployeeMapper dalemployeeMapper,
                         IBOLClientCommunicationMapper bolClientCommunicationMapper,
-                        IDALClientCommunicationMapper dalClientCommunicationMapper
-                        ,
+                        IDALClientCommunicationMapper dalClientCommunicationMapper,
                         IBOLPipelineStepMapper bolPipelineStepMapper,
-                        IDALPipelineStepMapper dalPipelineStepMapper
-                        ,
+                        IDALPipelineStepMapper dalPipelineStepMapper,
                         IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper,
                         IDALPipelineStepNoteMapper dalPipelineStepNoteMapper
-
                         )
                         : base(logger,
                                employeeRepository,
                                employeeModelValidator,
                                bolemployeeMapper,
-                               dalemployeeMapper
-                               ,
+                               dalemployeeMapper,
                                bolClientCommunicationMapper,
-                               dalClientCommunicationMapper
-                               ,
+                               dalClientCommunicationMapper,
                                bolPipelineStepMapper,
-                               dalPipelineStepMapper
-                               ,
+                               dalPipelineStepMapper,
                                bolPipelineStepNoteMapper,
-                               dalPipelineStepNoteMapper
-                               )
+                               dalPipelineStepNoteMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cb501e1d03f09b913da1dd7b87929f10</Hash>
+    <Hash>0fddddf7cf79e3819aadf93af31e3ba3</Hash>
 </Codenesium>*/

@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOSalesOrderHeaderSalesReason: AbstractBOSalesOrderHeaderSalesReason
+        public partial class BOSalesOrderHeaderSalesReason : AbstractBOSalesOrderHeaderSalesReason
         {
-                public BOSalesOrderHeaderSalesReason() : base()
+                public BOSalesOrderHeaderSalesReason()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>dbee364ab259ba8a8d92ac0a46ab7d6f</Hash>
+    <Hash>781fca2e2e5378688ce76944a42bb19f</Hash>
 </Codenesium>*/

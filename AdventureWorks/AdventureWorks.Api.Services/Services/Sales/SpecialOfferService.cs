@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,38 +7,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class SpecialOfferService: AbstractSpecialOfferService, ISpecialOfferService
+        public class SpecialOfferService : AbstractSpecialOfferService, ISpecialOfferService
         {
                 public SpecialOfferService(
                         ILogger<ISpecialOfferRepository> logger,
                         ISpecialOfferRepository specialOfferRepository,
                         IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
                         IBOLSpecialOfferMapper bolspecialOfferMapper,
-                        IDALSpecialOfferMapper dalspecialOfferMapper
-                        ,
+                        IDALSpecialOfferMapper dalspecialOfferMapper,
                         IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
                         IDALSpecialOfferProductMapper dalSpecialOfferProductMapper
-
                         )
                         : base(logger,
                                specialOfferRepository,
                                specialOfferModelValidator,
                                bolspecialOfferMapper,
-                               dalspecialOfferMapper
-                               ,
+                               dalspecialOfferMapper,
                                bolSpecialOfferProductMapper,
-                               dalSpecialOfferProductMapper
-                               )
+                               dalSpecialOfferProductMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3cc6a625d3bd641ccf448fc607bede52</Hash>
+    <Hash>bb0d2cd4319ce64d411c625c0a8d7ed0</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Customer")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCustomerActionMapper
+        public class TestBOLCustomerMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCustomerMapper();
-
                         ApiCustomerRequestModel model = new ApiCustomerRequestModel();
-
                         model.SetProperties("A", "A", "A", "A");
                         BOCustomer response = mapper.MapModelToBO(1, model);
 
@@ -33,9 +31,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCustomerMapper();
-
                         BOCustomer bo = new BOCustomer();
-
                         bo.SetProperties(1, "A", "A", "A", "A");
                         ApiCustomerResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCustomerMapper();
-
                         BOCustomer bo = new BOCustomer();
-
                         bo.SetProperties(1, "A", "A", "A", "A");
                         List<ApiCustomerResponseModel> response = mapper.MapBOToModel(new List<BOCustomer>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7ed80c79c3e3057efb8faf73d8de99af</Hash>
+    <Hash>f49ce7fe430263043b7d4838ce6fffee</Hash>
 </Codenesium>*/

@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -46,7 +46,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChainRepository>();
                         var record = new Chain();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -58,7 +57,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        ApiChainResponseModel response = await service.Get(default (int));
+                        ApiChainResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -79,7 +78,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        ApiChainResponseModel response = await service.Get(default (int));
+                        ApiChainResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -90,7 +89,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChainRepository>();
                         var model = new ApiChainRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Chain>())).Returns(Task.FromResult(new Chain()));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -114,7 +112,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChainRepository>();
                         var model = new ApiChainRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Chain>())).Returns(Task.FromResult(new Chain()));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -126,7 +123,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ChainModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiChainRequestModel>()));
@@ -138,7 +135,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IChainRepository>();
                         var model = new ApiChainRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -150,7 +146,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -163,7 +159,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IChainRepository>();
                         var records = new List<Clasp>();
                         records.Add(new Clasp());
-                        mock.RepositoryMock.Setup(x => x.Clasps(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
@@ -174,17 +170,17 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        List<ApiClaspResponseModel> response = await service.Clasps(default (int));
+                        List<ApiClaspResponseModel> response = await service.Clasps(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Clasps(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Clasps_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IChainRepository>();
-                        mock.RepositoryMock.Setup(x => x.Clasps(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Clasp>>(new List<Clasp>()));
+                        mock.RepositoryMock.Setup(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Clasp>>(new List<Clasp>()));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
@@ -195,10 +191,10 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        List<ApiClaspResponseModel> response = await service.Clasps(default (int));
+                        List<ApiClaspResponseModel> response = await service.Clasps(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Clasps(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -207,7 +203,7 @@ namespace NebulaNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IChainRepository>();
                         var records = new List<Link>();
                         records.Add(new Link());
-                        mock.RepositoryMock.Setup(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
@@ -218,17 +214,17 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        List<ApiLinkResponseModel> response = await service.Links(default (int));
+                        List<ApiLinkResponseModel> response = await service.Links(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Links_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IChainRepository>();
-                        mock.RepositoryMock.Setup(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
+                        mock.RepositoryMock.Setup(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
                         var service = new ChainService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
@@ -239,14 +235,14 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLLinkMapperMock,
                                                        mock.DALMapperMockFactory.DALLinkMapperMock);
 
-                        List<ApiLinkResponseModel> response = await service.Links(default (int));
+                        List<ApiLinkResponseModel> response = await service.Links(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Links(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8f8d4a889d44ba7f96f87a57231cf3c5</Hash>
+    <Hash>a02c7b00286b2ecf232e53a57aaa6b7a</Hash>
 </Codenesium>*/

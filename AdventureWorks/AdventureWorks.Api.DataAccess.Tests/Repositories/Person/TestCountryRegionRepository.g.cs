@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CountryRegionRepository(loggerMoc.Object, context);
 
                         CountryRegion entity = new CountryRegion();
-
                         context.Set<CountryRegion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CountryRegionRepository(loggerMoc.Object, context);
 
                         CountryRegion entity = new CountryRegion();
-
                         context.Set<CountryRegion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CountryRegionRepository(loggerMoc.Object, context);
 
                         var entity = new CountryRegion();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<CountryRegion>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CountryRegionRepository>> loggerMoc = CountryRegionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
                         var repository = new CountryRegionRepository(loggerMoc.Object, context);
-
                         CountryRegion entity = new CountryRegion();
-
                         context.Set<CountryRegion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CountryRegionRepository>> loggerMoc = CountryRegionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
                         var repository = new CountryRegionRepository(loggerMoc.Object, context);
-
                         CountryRegion entity = new CountryRegion();
-
                         context.Set<CountryRegion>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CountryRegionRepository>> loggerMoc = CountryRegionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRegionRepositoryMoc.GetContext();
                         var repository = new CountryRegionRepository(loggerMoc.Object, context);
-
                         CountryRegion entity = new CountryRegion();
-
                         context.Set<CountryRegion>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.CountryRegionCode);
 
                         CountryRegion modifiedRecord = await context.Set<CountryRegion>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7d4badd11d2e901e9cf644f7165d315b</Hash>
+    <Hash>138e8ef15298493d84529c5fa8f82b44</Hash>
 </Codenesium>*/

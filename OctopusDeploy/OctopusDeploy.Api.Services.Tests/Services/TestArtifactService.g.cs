@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IArtifactRepository>();
                         var record = new Artifact();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        ApiArtifactResponseModel response = await service.Get(default (string));
+                        ApiArtifactResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        ApiArtifactResponseModel response = await service.Get(default (string));
+                        ApiArtifactResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IArtifactRepository>();
                         var model = new ApiArtifactRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Artifact>())).Returns(Task.FromResult(new Artifact()));
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IArtifactRepository>();
                         var model = new ApiArtifactRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Artifact>())).Returns(Task.FromResult(new Artifact()));
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ArtifactModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiArtifactRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IArtifactRepository>();
                         var model = new ApiArtifactRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ArtifactService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -146,7 +142,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        List<ApiArtifactResponseModel> response = await service.GetTenantId(default (string));
+                        List<ApiArtifactResponseModel> response = await service.GetTenantId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
@@ -163,7 +159,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLArtifactMapperMock,
                                                           mock.DALMapperMockFactory.DALArtifactMapperMock);
 
-                        List<ApiArtifactResponseModel> response = await service.GetTenantId(default (string));
+                        List<ApiArtifactResponseModel> response = await service.GetTenantId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
@@ -172,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5e6b266377513911671e951ae4ff3a75</Hash>
+    <Hash>cebe193ed15d94c6757820768a330c90</Hash>
 </Codenesium>*/

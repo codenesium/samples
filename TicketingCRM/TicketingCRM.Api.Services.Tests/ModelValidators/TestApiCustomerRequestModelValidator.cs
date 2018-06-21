@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
@@ -44,8 +43,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
                 }
@@ -57,7 +55,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
@@ -70,8 +67,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
@@ -109,8 +103,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
@@ -122,7 +115,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
@@ -135,8 +127,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
                 }
@@ -148,8 +139,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
@@ -174,8 +163,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
                 }
@@ -187,7 +175,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
@@ -200,8 +187,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
                 }
@@ -213,8 +199,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
@@ -239,8 +223,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
                 }
@@ -252,7 +235,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
@@ -265,8 +247,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCustomerRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
                 }
@@ -278,8 +259,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         customerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Customer()));
 
                         var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -287,5 +267,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>969a79589ce77a5762a1bff27c19e31b</Hash>
+    <Hash>70b6116dfb8cdb24fc96864735927cbd</Hash>
 </Codenesium>*/

@@ -1,42 +1,38 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public class PetService: AbstractPetService, IPetService
+        public class PetService : AbstractPetService, IPetService
         {
                 public PetService(
                         ILogger<IPetRepository> logger,
                         IPetRepository petRepository,
                         IApiPetRequestModelValidator petModelValidator,
                         IBOLPetMapper bolpetMapper,
-                        IDALPetMapper dalpetMapper
-                        ,
+                        IDALPetMapper dalpetMapper,
                         IBOLSaleMapper bolSaleMapper,
                         IDALSaleMapper dalSaleMapper
-
                         )
                         : base(logger,
                                petRepository,
                                petModelValidator,
                                bolpetMapper,
-                               dalpetMapper
-                               ,
+                               dalpetMapper,
                                bolSaleMapper,
-                               dalSaleMapper
-                               )
+                               dalSaleMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1ab775403eec69b0a523ace26431818c</Hash>
+    <Hash>8606970d9be130bf17e10da660b0a64f</Hash>
 </Codenesium>*/

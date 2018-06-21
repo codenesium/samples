@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         dashboardConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
 
                         var validator = new ApiDashboardConfigurationRequestModelValidator(dashboardConfigurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDashboardConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.IncludedEnvironmentIds, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         dashboardConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
 
                         var validator = new ApiDashboardConfigurationRequestModelValidator(dashboardConfigurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDashboardConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDashboardConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.IncludedEnvironmentIds, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         dashboardConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
 
                         var validator = new ApiDashboardConfigurationRequestModelValidator(dashboardConfigurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDashboardConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.IncludedProjectIds, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         dashboardConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
 
                         var validator = new ApiDashboardConfigurationRequestModelValidator(dashboardConfigurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDashboardConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDashboardConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.IncludedProjectIds, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         dashboardConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
 
                         var validator = new ApiDashboardConfigurationRequestModelValidator(dashboardConfigurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDashboardConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         dashboardConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DashboardConfiguration()));
 
                         var validator = new ApiDashboardConfigurationRequestModelValidator(dashboardConfigurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDashboardConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDashboardConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -105,5 +99,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa814ed74de7d71fea6c5fd3180a21ee</Hash>
+    <Hash>09c3789039555a29169a0bbc23f942a6</Hash>
 </Codenesium>*/

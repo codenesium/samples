@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOInvitation bo)
                 {
                         Invitation efInvitation = new Invitation();
-
                         efInvitation.SetProperties(
                                 bo.Id,
                                 bo.InvitationCode,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa153272b1f72ba011e42438f22a9462</Hash>
+    <Hash>3f46bae204a07089c61784742d291840</Hash>
 </Codenesium>*/

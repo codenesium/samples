@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALTransactionHistoryMapper: DALAbstractTransactionHistoryMapper, IDALTransactionHistoryMapper
+        public class DALTransactionHistoryMapper : DALAbstractTransactionHistoryMapper, IDALTransactionHistoryMapper
         {
                 public DALTransactionHistoryMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8152467bc007b05e226ad9cc8986fbbe</Hash>
+    <Hash>f573d7ac62db82d1ae77b20c536aac0c</Hash>
 </Codenesium>*/

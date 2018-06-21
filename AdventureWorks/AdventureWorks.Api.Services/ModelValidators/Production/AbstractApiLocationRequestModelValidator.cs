@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiLocationRequestModelValidator: AbstractValidator<ApiLocationRequestModel>
+        public abstract class AbstractApiLocationRequestModelValidator : AbstractValidator<ApiLocationRequestModel>
         {
                 private short existingRecordId;
 
-                ILocationRepository locationRepository;
+                private ILocationRepository locationRepository;
 
                 public AbstractApiLocationRequestModelValidator(ILocationRepository locationRepository)
                 {
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLocationRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -49,7 +49,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Location record = await this.locationRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (short) && record.LocationID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(short) && record.LocationID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -62,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>43ba14ca6dcad79b0bd3fdb8d68ecc2b</Hash>
+    <Hash>d13ca208ddd9096cb3fde7920cd6c018</Hash>
 </Codenesium>*/

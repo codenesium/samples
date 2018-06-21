@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiAdminRequestModelValidator: AbstractValidator<ApiAdminRequestModel>
+        public abstract class AbstractApiAdminRequestModelValidator : AbstractValidator<ApiAdminRequestModel>
         {
                 private int existingRecordId;
 
-                IAdminRepository adminRepository;
+                private IAdminRepository adminRepository;
 
                 public AbstractApiAdminRequestModelValidator(IAdminRepository adminRepository)
                 {
@@ -56,7 +56,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
@@ -69,5 +69,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af90e99d1cdd7d620948a49a5a06033a</Hash>
+    <Hash>c0653e2f3762f179afda7b0100d4a051</Hash>
 </Codenesium>*/

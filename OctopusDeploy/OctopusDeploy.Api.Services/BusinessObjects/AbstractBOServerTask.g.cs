@@ -3,9 +3,10 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractBOServerTask: AbstractBusinessObject
+        public abstract class AbstractBOServerTask : AbstractBusinessObject
         {
-                public AbstractBOServerTask() : base()
+                public AbstractBOServerTask()
+                        : base()
                 {
                 }
 
@@ -83,5 +84,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f813a36afb4ab204ee53611167770ac4</Hash>
+    <Hash>febe26c64889db46406b85ab6f740fb0</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-        public class ApiEmployeeRequestModelValidator: AbstractApiEmployeeRequestModelValidator, IApiEmployeeRequestModelValidator
+        public class ApiEmployeeRequestModelValidator : AbstractApiEmployeeRequestModelValidator, IApiEmployeeRequestModelValidator
         {
                 public ApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
                         : base(employeeRepository)
@@ -33,11 +33,11 @@ namespace PetShippingNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b1dcafa9763d457a6470f5e1ddc5daa7</Hash>
+    <Hash>b63bdbd9a4fb25c0cfd7936038f2c1b8</Hash>
 </Codenesium>*/

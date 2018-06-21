@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var record = new Proxy();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ApiProxyResponseModel response = await service.Get(default (string));
+                        ApiProxyResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ApiProxyResponseModel response = await service.Get(default (string));
+                        ApiProxyResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var model = new ApiProxyRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Proxy>())).Returns(Task.FromResult(new Proxy()));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var model = new ApiProxyRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Proxy>())).Returns(Task.FromResult(new Proxy()));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProxyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProxyRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var model = new ApiProxyRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProxyRepository>();
                         var record = new Proxy();
-
                         mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProxyService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ApiProxyResponseModel response = await service.GetName(default (string));
+                        ApiProxyResponseModel response = await service.GetName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLProxyMapperMock,
                                                        mock.DALMapperMockFactory.DALProxyMapperMock);
 
-                        ApiProxyResponseModel response = await service.GetName(default (string));
+                        ApiProxyResponseModel response = await service.GetName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -172,5 +167,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e34a00724bd817681f21285e08da892c</Hash>
+    <Hash>f1c98ac05b4b93a96ff21f6db819a624</Hash>
 </Codenesium>*/

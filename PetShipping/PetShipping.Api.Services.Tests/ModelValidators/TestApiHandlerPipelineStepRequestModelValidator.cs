@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.Services.Tests
                         handlerPipelineStepRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
                         var validator = new ApiHandlerPipelineStepRequestModelValidator(handlerPipelineStepRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiHandlerPipelineStepRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
@@ -57,8 +56,7 @@ namespace PetShippingNS.Api.Services.Tests
                         handlerPipelineStepRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
                         var validator = new ApiHandlerPipelineStepRequestModelValidator(handlerPipelineStepRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiHandlerPipelineStepRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerPipelineStepRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
                 }
@@ -71,7 +69,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiHandlerPipelineStepRequestModelValidator(handlerPipelineStepRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiHandlerPipelineStepRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerPipelineStepRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.HandlerId, 1);
                 }
@@ -83,7 +81,6 @@ namespace PetShippingNS.Api.Services.Tests
                         handlerPipelineStepRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
                         var validator = new ApiHandlerPipelineStepRequestModelValidator(handlerPipelineStepRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiHandlerPipelineStepRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
@@ -109,8 +106,7 @@ namespace PetShippingNS.Api.Services.Tests
                         handlerPipelineStepRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
                         var validator = new ApiHandlerPipelineStepRequestModelValidator(handlerPipelineStepRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiHandlerPipelineStepRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerPipelineStepRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PipelineStepId, 1);
                 }
@@ -123,7 +119,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiHandlerPipelineStepRequestModelValidator(handlerPipelineStepRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiHandlerPipelineStepRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiHandlerPipelineStepRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PipelineStepId, 1);
                 }
@@ -131,5 +127,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>47c66feb09d8d895ea7b3ac52f5871ea</Hash>
+    <Hash>b99738dcb4f6ec4288c8185b2d201bb1</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ConcurrencyTag, new string('A', 101));
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ConcurrencyTag, new string('A', 101));
                 }
@@ -57,8 +55,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
                 }
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -135,7 +127,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
                 }
@@ -252,8 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -265,7 +247,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
@@ -278,8 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ServerNodeId, new string('A', 251));
                 }
@@ -291,8 +271,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -304,7 +283,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.State, null as string);
@@ -317,8 +295,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.State, null as string);
                 }
@@ -330,7 +307,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.State, new string('A', 51));
@@ -343,8 +319,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.State, new string('A', 51));
                 }
@@ -356,8 +331,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -369,7 +343,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
@@ -382,8 +355,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiServerTaskRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiServerTaskRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
@@ -395,8 +367,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         serverTaskRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ServerTask()));
 
                         var validator = new ApiServerTaskRequestModelValidator(serverTaskRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -404,5 +375,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>eaacd285a941af856b80a18a594bc135</Hash>
+    <Hash>b3a7d72be0f4bdd9c315347622a976ba</Hash>
 </Codenesium>*/

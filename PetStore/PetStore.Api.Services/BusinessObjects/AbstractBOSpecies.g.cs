@@ -3,9 +3,10 @@ using System;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractBOSpecies: AbstractBusinessObject
+        public abstract class AbstractBOSpecies : AbstractBusinessObject
         {
-                public AbstractBOSpecies() : base()
+                public AbstractBOSpecies()
+                        : base()
                 {
                 }
 
@@ -23,5 +24,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9bbc3e3717b0a9be549d63e3ff5a5854</Hash>
+    <Hash>f13b31cc2bce77329e5a6a2321f23156</Hash>
 </Codenesium>*/

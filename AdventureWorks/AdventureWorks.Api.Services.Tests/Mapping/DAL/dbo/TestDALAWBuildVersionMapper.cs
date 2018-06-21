@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "AWBuildVersion")]
         [Trait("Area", "DALMapper")]
-        public class TestDALAWBuildVersionActionMapper
+        public class TestDALAWBuildVersionMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALAWBuildVersionMapper();
-
                         var bo = new BOAWBuildVersion();
-
                         bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         AWBuildVersion response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALAWBuildVersionMapper();
-
                         AWBuildVersion entity = new AWBuildVersion();
-
                         entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
-                        BOAWBuildVersion  response = mapper.MapEFToBO(entity);
+                        BOAWBuildVersion response = mapper.MapEFToBO(entity);
 
                         response.Database_Version.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALAWBuildVersionMapper();
-
                         AWBuildVersion entity = new AWBuildVersion();
-
                         entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 
                         List<BOAWBuildVersion> response = mapper.MapEFToBO(new List<AWBuildVersion>() { entity });
@@ -63,5 +57,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c05ab0754e2a9896d1e788e0de1fca06</Hash>
+    <Hash>38d13073fb2d73a72c48be87171b4108</Hash>
 </Codenesium>*/

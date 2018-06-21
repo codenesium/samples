@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSalesOrderDetail boSalesOrderDetail = new BOSalesOrderDetail();
-
                         boSalesOrderDetail.SetProperties(
                                 salesOrderID,
                                 model.CarrierTrackingNumber,
@@ -55,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>460a585155171cc52fe593b5dab9c7b2</Hash>
+    <Hash>1267e8318c92ac3e97694292378bef5b</Hash>
 </Codenesium>*/

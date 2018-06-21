@@ -14,6 +14,5 @@ namespace FileServiceNS.Api.Web
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration();
-   
     }
 }

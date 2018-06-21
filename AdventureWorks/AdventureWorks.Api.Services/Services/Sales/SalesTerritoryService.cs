@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,56 +7,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class SalesTerritoryService: AbstractSalesTerritoryService, ISalesTerritoryService
+        public class SalesTerritoryService : AbstractSalesTerritoryService, ISalesTerritoryService
         {
                 public SalesTerritoryService(
                         ILogger<ISalesTerritoryRepository> logger,
                         ISalesTerritoryRepository salesTerritoryRepository,
                         IApiSalesTerritoryRequestModelValidator salesTerritoryModelValidator,
                         IBOLSalesTerritoryMapper bolsalesTerritoryMapper,
-                        IDALSalesTerritoryMapper dalsalesTerritoryMapper
-                        ,
+                        IDALSalesTerritoryMapper dalsalesTerritoryMapper,
                         IBOLCustomerMapper bolCustomerMapper,
-                        IDALCustomerMapper dalCustomerMapper
-                        ,
+                        IDALCustomerMapper dalCustomerMapper,
                         IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-                        ,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
                         IBOLSalesPersonMapper bolSalesPersonMapper,
-                        IDALSalesPersonMapper dalSalesPersonMapper
-                        ,
+                        IDALSalesPersonMapper dalSalesPersonMapper,
                         IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
                         IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
-
                         )
                         : base(logger,
                                salesTerritoryRepository,
                                salesTerritoryModelValidator,
                                bolsalesTerritoryMapper,
-                               dalsalesTerritoryMapper
-                               ,
+                               dalsalesTerritoryMapper,
                                bolCustomerMapper,
-                               dalCustomerMapper
-                               ,
+                               dalCustomerMapper,
                                bolSalesOrderHeaderMapper,
-                               dalSalesOrderHeaderMapper
-                               ,
+                               dalSalesOrderHeaderMapper,
                                bolSalesPersonMapper,
-                               dalSalesPersonMapper
-                               ,
+                               dalSalesPersonMapper,
                                bolSalesTerritoryHistoryMapper,
-                               dalSalesTerritoryHistoryMapper
-                               )
+                               dalSalesTerritoryHistoryMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>21b69c817b3ad40ec34a262fb3438f04</Hash>
+    <Hash>2695915f0f62bd0e3720391501ff5206</Hash>
 </Codenesium>*/

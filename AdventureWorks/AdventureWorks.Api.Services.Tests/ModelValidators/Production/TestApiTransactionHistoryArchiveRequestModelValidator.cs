@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         transactionHistoryArchiveRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 
                         var validator = new ApiTransactionHistoryArchiveRequestModelValidator(transactionHistoryArchiveRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTransactionHistoryArchiveRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TransactionType, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         transactionHistoryArchiveRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 
                         var validator = new ApiTransactionHistoryArchiveRequestModelValidator(transactionHistoryArchiveRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTransactionHistoryArchiveRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryArchiveRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TransactionType, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         transactionHistoryArchiveRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 
                         var validator = new ApiTransactionHistoryArchiveRequestModelValidator(transactionHistoryArchiveRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTransactionHistoryArchiveRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         transactionHistoryArchiveRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 
                         var validator = new ApiTransactionHistoryArchiveRequestModelValidator(transactionHistoryArchiveRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiTransactionHistoryArchiveRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiTransactionHistoryArchiveRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TransactionType, new string('A', 2));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         transactionHistoryArchiveRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new TransactionHistoryArchive()));
 
                         var validator = new ApiTransactionHistoryArchiveRequestModelValidator(transactionHistoryArchiveRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9bcd813ba2acd6f8ba62391fa23be0cc</Hash>
+    <Hash>c3c7768c5f8ff26c3fb30b7c0c64a37d</Hash>
 </Codenesium>*/

@@ -3,9 +3,10 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOShipMethod: AbstractBusinessObject
+        public abstract class AbstractBOShipMethod : AbstractBusinessObject
         {
-                public AbstractBOShipMethod() : base()
+                public AbstractBOShipMethod()
+                        : base()
                 {
                 }
 
@@ -39,5 +40,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31b645d3d6e224570fe3ff375a6e1c2b</Hash>
+    <Hash>66dbf67565a8ba923fe0878819b41fd7</Hash>
 </Codenesium>*/

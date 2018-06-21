@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiSaleRequestModelValidator: AbstractValidator<ApiSaleRequestModel>
+        public abstract class AbstractApiSaleRequestModelValidator : AbstractValidator<ApiSaleRequestModel>
         {
                 private int existingRecordId;
 
-                ISaleRepository saleRepository;
+                private ISaleRepository saleRepository;
 
                 public AbstractApiSaleRequestModelValidator(ISaleRepository saleRepository)
                 {
@@ -32,7 +32,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void ClientIdRules()
                 {
-                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x ?.ClientId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NoteRules()
@@ -43,7 +43,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void PetIdRules()
                 {
-                        this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x ?.PetId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x?.PetId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void SaleDateRules()
@@ -71,5 +71,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e5fa329a5034f5bd33e8ea36c87705f</Hash>
+    <Hash>720a34223e2909b03995bbb7db59c937</Hash>
 </Codenesium>*/

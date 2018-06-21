@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALSpaceXSpaceFeatureMapper: DALAbstractSpaceXSpaceFeatureMapper, IDALSpaceXSpaceFeatureMapper
+        public class DALSpaceXSpaceFeatureMapper : DALAbstractSpaceXSpaceFeatureMapper, IDALSpaceXSpaceFeatureMapper
         {
                 public DALSpaceXSpaceFeatureMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4d140a3d08ac4013c7e6874a540c67b</Hash>
+    <Hash>237fbbba1fa2bfbc0e24ac17952ec78d</Hash>
 </Codenesium>*/

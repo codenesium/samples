@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLUserRoleMapper: BOLAbstractUserRoleMapper, IBOLUserRoleMapper
+        public class BOLUserRoleMapper : BOLAbstractUserRoleMapper, IBOLUserRoleMapper
         {
                 public BOLUserRoleMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fff722306970ddaa830eca0c527c0eed</Hash>
+    <Hash>7eae60511ae6aa0ea8ad39c42257cb53</Hash>
 </Codenesium>*/

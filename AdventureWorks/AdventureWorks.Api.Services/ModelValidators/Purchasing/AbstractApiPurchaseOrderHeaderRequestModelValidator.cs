@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiPurchaseOrderHeaderRequestModelValidator: AbstractValidator<ApiPurchaseOrderHeaderRequestModel>
+        public abstract class AbstractApiPurchaseOrderHeaderRequestModelValidator : AbstractValidator<ApiPurchaseOrderHeaderRequestModel>
         {
                 private int existingRecordId;
 
-                IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
+                private IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
 
                 public AbstractApiPurchaseOrderHeaderRequestModelValidator(IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository)
                 {
@@ -77,5 +77,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79bef34cb263ff0f6250bfafbb8879e4</Hash>
+    <Hash>0d5d254d16d7d615b59513e1dbabc414</Hash>
 </Codenesium>*/

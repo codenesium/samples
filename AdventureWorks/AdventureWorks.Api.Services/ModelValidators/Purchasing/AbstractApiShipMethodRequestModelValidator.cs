@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiShipMethodRequestModelValidator: AbstractValidator<ApiShipMethodRequestModel>
+        public abstract class AbstractApiShipMethodRequestModelValidator : AbstractValidator<ApiShipMethodRequestModel>
         {
                 private int existingRecordId;
 
-                IShipMethodRepository shipMethodRepository;
+                private IShipMethodRepository shipMethodRepository;
 
                 public AbstractApiShipMethodRequestModelValidator(IShipMethodRepository shipMethodRepository)
                 {
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiShipMethodRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ShipMethod record = await this.shipMethodRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.ShipMethodID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.ShipMethodID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -66,5 +66,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2a2ee156906d80709455ce50119930ac</Hash>
+    <Hash>abb77eb8b5feac8a94bfa17360d02183</Hash>
 </Codenesium>*/

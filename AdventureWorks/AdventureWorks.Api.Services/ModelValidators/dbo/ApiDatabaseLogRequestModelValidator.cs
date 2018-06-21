@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiDatabaseLogRequestModelValidator: AbstractApiDatabaseLogRequestModelValidator, IApiDatabaseLogRequestModelValidator
+        public class ApiDatabaseLogRequestModelValidator : AbstractApiDatabaseLogRequestModelValidator, IApiDatabaseLogRequestModelValidator
         {
                 public ApiDatabaseLogRequestModelValidator(IDatabaseLogRepository databaseLogRepository)
                         : base(databaseLogRepository)
@@ -39,11 +39,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f477bad6e87aeeb92f395ec1e7aad12e</Hash>
+    <Hash>312f2eecaf4a02b455ea53b1a1e93385</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class ProjectTriggerRepository: AbstractProjectTriggerRepository, IProjectTriggerRepository
+        public class ProjectTriggerRepository : AbstractProjectTriggerRepository, IProjectTriggerRepository
         {
                 public ProjectTriggerRepository(
                         ILogger<ProjectTriggerRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e16b35e9610d720e6c84d50bbd1a50e3</Hash>
+    <Hash>19783f885de3c454ca198ff909fdb3c9</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSpecialOfferProductRepository: AbstractRepository
+        public abstract class AbstractSpecialOfferProductRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<List<SalesOrderDetail>> SalesOrderDetails(int specialOfferID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderDetail>().Where(x => x.SpecialOfferID == specialOfferID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
+                }
+
+                public async virtual Task<SpecialOffer> GetSpecialOffer(int specialOfferID)
+                {
+                        return await this.Context.Set<SpecialOffer>().SingleOrDefaultAsync(x => x.SpecialOfferID == specialOfferID);
+                }
+
                 protected async Task<List<SpecialOfferProduct>> Where(
                         Expression<Func<SpecialOfferProduct, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,19 +121,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SalesOrderDetail>> SalesOrderDetails(int specialOfferID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderDetail>().Where(x => x.SpecialOfferID == specialOfferID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
-                }
-
-                public async virtual Task<SpecialOffer> GetSpecialOffer(int specialOfferID)
-                {
-                        return await this.Context.Set<SpecialOffer>().SingleOrDefaultAsync(x => x.SpecialOfferID == specialOfferID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7392d80010d95e994c9d689e30ead966</Hash>
+    <Hash>4e1283f6a43597f0f570f953d8075965</Hash>
 </Codenesium>*/

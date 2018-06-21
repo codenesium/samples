@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOEmployeePayHistory bo)
                 {
                         EmployeePayHistory efEmployeePayHistory = new EmployeePayHistory();
-
                         efEmployeePayHistory.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.ModifiedDate,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>217c176c8ee803ab77ea3fee2ed59212</Hash>
+    <Hash>50e1e5d64f6ed20dc1a2cfc8bc7257f2</Hash>
 </Codenesium>*/

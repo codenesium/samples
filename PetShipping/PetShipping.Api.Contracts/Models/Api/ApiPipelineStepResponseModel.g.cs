@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiPipelineStepResponseModel: AbstractApiPipelineStepResponseModel
+        public partial class ApiPipelineStepResponseModel : AbstractApiPipelineStepResponseModel
         {
                 public ApiPipelineStepResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4a2626efc0ee82d777d14ec477cc8b34</Hash>
+    <Hash>21e99636db72db6c1829d5f79309fbef</Hash>
 </Codenesium>*/

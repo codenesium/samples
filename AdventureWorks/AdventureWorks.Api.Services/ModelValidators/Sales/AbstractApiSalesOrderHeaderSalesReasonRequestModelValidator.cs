@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator: AbstractValidator<ApiSalesOrderHeaderSalesReasonRequestModel>
+        public abstract class AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator : AbstractValidator<ApiSalesOrderHeaderSalesReasonRequestModel>
         {
                 private int existingRecordId;
 
-                ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
+                private ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository;
 
                 public AbstractApiSalesOrderHeaderSalesReasonRequestModelValidator(ISalesOrderHeaderSalesReasonRepository salesOrderHeaderSalesReasonRepository)
                 {
@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void SalesReasonIDRules()
                 {
-                        this.RuleFor(x => x.SalesReasonID).MustAsync(this.BeValidSalesReason).When(x => x ?.SalesReasonID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.SalesReasonID).MustAsync(this.BeValidSalesReason).When(x => x?.SalesReasonID != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6369d9aa9c1602d1b7694d075a5f2be7</Hash>
+    <Hash>639e32c5b7840441b24864dadb0f4d3d</Hash>
 </Codenesium>*/

@@ -10,7 +10,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class CustomerService: AbstractCustomerService, ICustomerService
+        public class CustomerService : AbstractCustomerService, ICustomerService
         {
                 public CustomerService(
                         ILogger<ICustomerRepository> logger,
@@ -18,19 +18,17 @@ namespace TicketingCRMNS.Api.Services
                         IApiCustomerRequestModelValidator customerModelValidator,
                         IBOLCustomerMapper bolcustomerMapper,
                         IDALCustomerMapper dalcustomerMapper
-
                         )
                         : base(logger,
                                customerRepository,
                                customerModelValidator,
                                bolcustomerMapper,
-                               dalcustomerMapper
-                               )
+                               dalcustomerMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>875e63513133daa3453bcb7bdaa8a10d</Hash>
+    <Hash>f8e475f479bd089e4205270af3948573</Hash>
 </Codenesium>*/

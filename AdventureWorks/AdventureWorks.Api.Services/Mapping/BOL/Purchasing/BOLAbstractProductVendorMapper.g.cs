@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductVendor boProductVendor = new BOProductVendor();
-
                         boProductVendor.SetProperties(
                                 productID,
                                 model.AverageLeadTime,
@@ -55,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b3f8c71c4aa3ac29a09f0e7db04e0142</Hash>
+    <Hash>be3e3c105eeb01f422f3605473e88afe</Hash>
 </Codenesium>*/

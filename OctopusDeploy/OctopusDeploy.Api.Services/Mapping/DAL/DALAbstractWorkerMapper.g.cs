@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOWorker bo)
                 {
                         Worker efWorker = new Worker();
-
                         efWorker.SetProperties(
                                 bo.CommunicationStyle,
                                 bo.Fingerprint,
@@ -62,5 +61,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>164a699391baeb4bd299e07d21aa0c5b</Hash>
+    <Hash>0f99d62d16397deff19a2226f7397d85</Hash>
 </Codenesium>*/

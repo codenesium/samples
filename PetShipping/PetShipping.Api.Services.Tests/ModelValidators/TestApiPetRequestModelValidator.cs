@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.GetBreed(It.IsAny<int>())).Returns(Task.FromResult<Breed>(new Breed()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPetRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.BreedId, 1);
@@ -57,8 +56,7 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.GetBreed(It.IsAny<int>())).Returns(Task.FromResult<Breed>(new Breed()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPetRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPetRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.BreedId, 1);
                 }
@@ -71,7 +69,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiPetRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.BreedId, 1);
                 }
@@ -83,7 +81,6 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPetRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
@@ -109,8 +106,7 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPetRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPetRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
                 }
@@ -123,7 +119,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiPetRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
                 }
@@ -135,7 +131,6 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pet()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -148,8 +143,7 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pet()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPetRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -161,7 +155,6 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pet()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -174,8 +167,7 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pet()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPetRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -187,8 +179,7 @@ namespace PetShippingNS.Api.Services.Tests
                         petRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pet()));
 
                         var validator = new ApiPetRequestModelValidator(petRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -196,5 +187,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b56249dc7c3e1851b089174a6802d35b</Hash>
+    <Hash>54401f99c62f3dd823f4356116c979a0</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiLibraryVariableSetRequestModelValidator: AbstractValidator<ApiLibraryVariableSetRequestModel>
+        public abstract class AbstractApiLibraryVariableSetRequestModelValidator : AbstractValidator<ApiLibraryVariableSetRequestModel>
         {
                 private string existingRecordId;
 
-                ILibraryVariableSetRepository libraryVariableSetRepository;
+                private ILibraryVariableSetRepository libraryVariableSetRepository;
 
                 public AbstractApiLibraryVariableSetRequestModelValidator(ILibraryVariableSetRepository libraryVariableSetRepository)
                 {
@@ -40,7 +40,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLibraryVariableSetRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLibraryVariableSetRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -53,7 +53,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         LibraryVariableSet record = await this.libraryVariableSetRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -66,5 +66,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab221bffbf87189f4713ed36d665eea0</Hash>
+    <Hash>36af12a6dcca2a2e593379ed5ec8b9a8</Hash>
 </Codenesium>*/

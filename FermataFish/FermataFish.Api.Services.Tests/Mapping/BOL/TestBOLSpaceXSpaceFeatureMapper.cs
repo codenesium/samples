@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SpaceXSpaceFeature")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSpaceXSpaceFeatureActionMapper
+        public class TestBOLSpaceXSpaceFeatureMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSpaceXSpaceFeatureMapper();
-
                         ApiSpaceXSpaceFeatureRequestModel model = new ApiSpaceXSpaceFeatureRequestModel();
-
                         model.SetProperties(1, 1);
                         BOSpaceXSpaceFeature response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSpaceXSpaceFeatureMapper();
-
                         BOSpaceXSpaceFeature bo = new BOSpaceXSpaceFeature();
-
                         bo.SetProperties(1, 1, 1);
                         ApiSpaceXSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSpaceXSpaceFeatureMapper();
-
                         BOSpaceXSpaceFeature bo = new BOSpaceXSpaceFeature();
-
                         bo.SetProperties(1, 1, 1);
                         List<ApiSpaceXSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceXSpaceFeature>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>26e1d4de10eeb3fa54ae93ff2d71439c</Hash>
+    <Hash>a9059a6f06ea6bd9f8aa92d3a5ee2f40</Hash>
 </Codenesium>*/

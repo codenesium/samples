@@ -3,9 +3,10 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOPersonCreditCard: AbstractBusinessObject
+        public abstract class AbstractBOPersonCreditCard : AbstractBusinessObject
         {
-                public AbstractBOPersonCreditCard() : base()
+                public AbstractBOPersonCreditCard()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e955477b80be13f8fe88e0890e851be9</Hash>
+    <Hash>cc0d6589ac9d55ff8ded823a87a81606</Hash>
 </Codenesium>*/

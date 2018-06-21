@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExtensionAuthor, new string('A', 1001));
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiExtensionConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExtensionAuthor, new string('A', 1001));
                 }
@@ -57,8 +55,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiExtensionConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiExtensionConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiExtensionConfigurationRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiExtensionConfigurationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 1001));
                 }
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         extensionConfigurationRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ExtensionConfiguration()));
 
                         var validator = new ApiExtensionConfigurationRequestModelValidator(extensionConfigurationRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -131,5 +123,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f8962db1890e73a7b58712b7bea1703b</Hash>
+    <Hash>e715f3e6a1ce68d7f9d4be7eca5cfb91</Hash>
 </Codenesium>*/

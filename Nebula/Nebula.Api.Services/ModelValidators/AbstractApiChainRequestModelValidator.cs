@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiChainRequestModelValidator: AbstractValidator<ApiChainRequestModel>
+        public abstract class AbstractApiChainRequestModelValidator : AbstractValidator<ApiChainRequestModel>
         {
                 private int existingRecordId;
 
-                IChainRepository chainRepository;
+                private IChainRepository chainRepository;
 
                 public AbstractApiChainRequestModelValidator(IChainRepository chainRepository)
                 {
@@ -28,7 +28,7 @@ namespace NebulaNS.Api.Services
 
                 public virtual void ChainStatusIdRules()
                 {
-                        this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatus).When(x => x ?.ChainStatusId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatus).When(x => x?.ChainStatusId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void ExternalIdRules()
@@ -43,7 +43,7 @@ namespace NebulaNS.Api.Services
 
                 public virtual void TeamIdRules()
                 {
-                        this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x?.TeamId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidChainStatus(int id,  CancellationToken cancellationToken)
@@ -63,5 +63,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb03d2635d98fb27dbc6f66f7616cdf7</Hash>
+    <Hash>22cbcf8540c581db4967c35198ad7179</Hash>
 </Codenesium>*/

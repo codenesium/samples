@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductVendor")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProductVendorActionMapper
+        public class TestDALProductVendorMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProductVendorMapper();
-
                         var bo = new BOProductVendor();
-
                         bo.SetProperties(1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 
                         ProductVendor response = mapper.MapBOToEF(bo);
@@ -40,12 +38,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProductVendorMapper();
-
                         ProductVendor entity = new ProductVendor();
-
                         entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, "A");
 
-                        BOProductVendor  response = mapper.MapEFToBO(entity);
+                        BOProductVendor response = mapper.MapEFToBO(entity);
 
                         response.AverageLeadTime.Should().Be(1);
                         response.BusinessEntityID.Should().Be(1);
@@ -64,9 +60,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProductVendorMapper();
-
                         ProductVendor entity = new ProductVendor();
-
                         entity.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, "A");
 
                         List<BOProductVendor> response = mapper.MapEFToBO(new List<ProductVendor>() { entity });
@@ -77,5 +71,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1d810b3c10e003bb4e6cb28d82a32fd6</Hash>
+    <Hash>4792bac56803ee9015e6b6da00c67327</Hash>
 </Codenesium>*/

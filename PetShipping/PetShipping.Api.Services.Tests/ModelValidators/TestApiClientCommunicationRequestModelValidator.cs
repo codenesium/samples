@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.Services.Tests
                         clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
@@ -57,8 +56,7 @@ namespace PetShippingNS.Api.Services.Tests
                         clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiClientCommunicationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ClientId, 1);
                 }
@@ -71,7 +69,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiClientCommunicationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
                 }
@@ -83,7 +81,6 @@ namespace PetShippingNS.Api.Services.Tests
                         clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, 1);
@@ -109,8 +106,7 @@ namespace PetShippingNS.Api.Services.Tests
                         clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiClientCommunicationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, 1);
                 }
@@ -123,7 +119,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiClientCommunicationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, 1);
                 }
@@ -135,7 +131,6 @@ namespace PetShippingNS.Api.Services.Tests
                         clientCommunicationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ClientCommunication()));
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Notes, null as string);
@@ -148,8 +143,7 @@ namespace PetShippingNS.Api.Services.Tests
                         clientCommunicationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ClientCommunication()));
 
                         var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiClientCommunicationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Notes, null as string);
                 }
@@ -157,5 +151,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e6682a42bb0c05b740e9b131f8acb0f2</Hash>
+    <Hash>c10a47f568651c631253f8e9252969ce</Hash>
 </Codenesium>*/

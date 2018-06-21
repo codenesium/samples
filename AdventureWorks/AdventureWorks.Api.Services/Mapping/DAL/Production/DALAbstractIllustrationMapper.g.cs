@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOIllustration bo)
                 {
                         Illustration efIllustration = new Illustration();
-
                         efIllustration.SetProperties(
                                 bo.Diagram,
                                 bo.IllustrationID,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe9f0c4415847def8f89369b0211c81e</Hash>
+    <Hash>7a3eb4330564512147561b8a147af188</Hash>
 </Codenesium>*/

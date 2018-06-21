@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new OtherTransportRepository(loggerMoc.Object, context);
 
                         OtherTransport entity = new OtherTransport();
-
                         context.Set<OtherTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new OtherTransportRepository(loggerMoc.Object, context);
 
                         OtherTransport entity = new OtherTransport();
-
                         context.Set<OtherTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new OtherTransportRepository(loggerMoc.Object, context);
 
                         var entity = new OtherTransport();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<OtherTransport>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<OtherTransportRepository>> loggerMoc = OtherTransportRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = OtherTransportRepositoryMoc.GetContext();
                         var repository = new OtherTransportRepository(loggerMoc.Object, context);
-
                         OtherTransport entity = new OtherTransport();
-
                         context.Set<OtherTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<OtherTransportRepository>> loggerMoc = OtherTransportRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = OtherTransportRepositoryMoc.GetContext();
                         var repository = new OtherTransportRepository(loggerMoc.Object, context);
-
                         OtherTransport entity = new OtherTransport();
-
                         context.Set<OtherTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<OtherTransportRepository>> loggerMoc = OtherTransportRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = OtherTransportRepositoryMoc.GetContext();
                         var repository = new OtherTransportRepository(loggerMoc.Object, context);
-
                         OtherTransport entity = new OtherTransport();
-
                         context.Set<OtherTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         OtherTransport modifiedRecord = await context.Set<OtherTransport>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e32ab545378a913bb7c5b4f1d2bc37a7</Hash>
+    <Hash>9ca782b9da645feaf6252f6f1019607d</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Rate")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLRateActionMapper
+        public class TestBOLRateMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLRateMapper();
-
                         ApiRateRequestModel model = new ApiRateRequestModel();
-
                         model.SetProperties(1, 1, 1);
                         BORate response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLRateMapper();
-
                         BORate bo = new BORate();
-
                         bo.SetProperties(1, 1, 1, 1);
                         ApiRateResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLRateMapper();
-
                         BORate bo = new BORate();
-
                         bo.SetProperties(1, 1, 1, 1);
                         List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b1861dd20ac4ce864d1bea1bded6facc</Hash>
+    <Hash>7d0713ea3a2747b0a0cb6460286906f3</Hash>
 </Codenesium>*/

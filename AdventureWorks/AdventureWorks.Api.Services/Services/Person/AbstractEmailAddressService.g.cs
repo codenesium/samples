@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractEmailAddressService: AbstractService
+        public abstract class AbstractEmailAddressService : AbstractService
         {
                 private IEmailAddressRepository emailAddressRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IEmailAddressRepository emailAddressRepository,
                         IApiEmailAddressRequestModelValidator emailAddressModelValidator,
                         IBOLEmailAddressMapper bolEmailAddressMapper,
-                        IDALEmailAddressMapper dalEmailAddressMapper
-
-                        )
+                        IDALEmailAddressMapper dalEmailAddressMapper)
                         : base()
-
                 {
                         this.emailAddressRepository = emailAddressRepository;
                         this.emailAddressModelValidator = emailAddressModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiEmailAddressResponseModel> response = new CreateResponse<ApiEmailAddressResponseModel>(await this.emailAddressModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolEmailAddressMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolEmailAddressMapper.MapModelToBO(default(int), model);
                                 var record = await this.emailAddressRepository.Create(this.dalEmailAddressMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiEmailAddressRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.emailAddressModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolEmailAddressMapper.MapModelToBO(businessEntityID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.emailAddressModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.emailAddressRepository.Delete(businessEntityID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aeb381ee7f765246d0417ab1bf0c5ec6</Hash>
+    <Hash>e09197a5b388ee7d8c9c29650d4566bc</Hash>
 </Codenesium>*/

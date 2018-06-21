@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractWorkOrderRoutingService: AbstractService
+        public abstract class AbstractWorkOrderRoutingService : AbstractService
         {
                 private IWorkOrderRoutingRepository workOrderRoutingRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IWorkOrderRoutingRepository workOrderRoutingRepository,
                         IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
                         IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
-                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
-
-                        )
+                        IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
                         : base()
-
                 {
                         this.workOrderRoutingRepository = workOrderRoutingRepository;
                         this.workOrderRoutingModelValidator = workOrderRoutingModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiWorkOrderRoutingResponseModel> response = new CreateResponse<ApiWorkOrderRoutingResponseModel>(await this.workOrderRoutingModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolWorkOrderRoutingMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolWorkOrderRoutingMapper.MapModelToBO(default(int), model);
                                 var record = await this.workOrderRoutingRepository.Create(this.dalWorkOrderRoutingMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiWorkOrderRoutingRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.workOrderRoutingModelValidator.ValidateUpdateAsync(workOrderID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolWorkOrderRoutingMapper.MapModelToBO(workOrderID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int workOrderID)
                 {
                         ActionResponse response = new ActionResponse(await this.workOrderRoutingModelValidator.ValidateDeleteAsync(workOrderID));
-
                         if (response.Success)
                         {
                                 await this.workOrderRoutingRepository.Delete(workOrderID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bccf260ea0ba49ae6f975d088971ee76</Hash>
+    <Hash>c547e80ac9ed22d8c28c200c138e2a02</Hash>
 </Codenesium>*/

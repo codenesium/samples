@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOInterruption bo)
                 {
                         Interruption efInterruption = new Interruption();
-
                         efInterruption.SetProperties(
                                 bo.Created,
                                 bo.EnvironmentId,
@@ -64,5 +63,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ab6814ae33573cb1cbf5be9bdd9f146b</Hash>
+    <Hash>d37d570ed52cf294843e5c53ba0cb47f</Hash>
 </Codenesium>*/

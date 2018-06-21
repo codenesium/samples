@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOCulture boCulture = new BOCulture();
-
                         boCulture.SetProperties(
                                 cultureID,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d5f66966a1e4935cc8f8cd71294cfdf</Hash>
+    <Hash>e3a0ef0d69d8b55d9d02bc99c0845679</Hash>
 </Codenesium>*/

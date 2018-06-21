@@ -1,25 +1,23 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TransactionStatus")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTransactionStatusActionMapper
+        public class TestBOLTransactionStatusMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTransactionStatusMapper();
-
                         ApiTransactionStatusRequestModel model = new ApiTransactionStatusRequestModel();
-
                         model.SetProperties("A");
                         BOTransactionStatus response = mapper.MapModelToBO(1, model);
 
@@ -30,9 +28,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTransactionStatusMapper();
-
                         BOTransactionStatus bo = new BOTransactionStatus();
-
                         bo.SetProperties(1, "A");
                         ApiTransactionStatusResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTransactionStatusMapper();
-
                         BOTransactionStatus bo = new BOTransactionStatus();
-
                         bo.SetProperties(1, "A");
                         List<ApiTransactionStatusResponseModel> response = mapper.MapBOToModel(new List<BOTransactionStatus>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>111b5261adf0f9caec350a3bd53ef46c</Hash>
+    <Hash>4f5ccabf59ce81a4a10f4d10e4a12985</Hash>
 </Codenesium>*/

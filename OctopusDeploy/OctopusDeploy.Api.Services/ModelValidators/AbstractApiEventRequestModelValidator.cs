@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiEventRequestModelValidator: AbstractValidator<ApiEventRequestModel>
+        public abstract class AbstractApiEventRequestModelValidator : AbstractValidator<ApiEventRequestModel>
         {
                 private string existingRecordId;
 
-                IEventRepository eventRepository;
+                private IEventRepository eventRepository;
 
                 public AbstractApiEventRequestModelValidator(IEventRepository eventRepository)
                 {
@@ -85,5 +85,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>390e58684777ec7c1e0a278ea61b6705</Hash>
+    <Hash>3e72e492d437df9f391498a28f363462</Hash>
 </Codenesium>*/

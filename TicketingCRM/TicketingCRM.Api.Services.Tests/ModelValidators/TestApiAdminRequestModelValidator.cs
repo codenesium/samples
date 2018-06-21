@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
@@ -44,8 +43,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
                 }
@@ -57,7 +55,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
@@ -70,8 +67,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
@@ -109,8 +103,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
@@ -122,7 +115,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
@@ -135,8 +127,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 129));
                 }
@@ -148,8 +139,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
@@ -174,8 +163,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
                 }
@@ -187,7 +175,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
@@ -200,8 +187,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
                 }
@@ -213,8 +199,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Password, null as string);
@@ -239,8 +223,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Password, null as string);
                 }
@@ -252,7 +235,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Password, new string('A', 129));
@@ -265,8 +247,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Password, new string('A', 129));
                 }
@@ -278,8 +259,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -291,7 +271,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
@@ -304,8 +283,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
                 }
@@ -317,7 +295,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
@@ -330,8 +307,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
                 }
@@ -343,8 +319,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -356,7 +331,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
@@ -369,8 +343,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
                 }
@@ -382,7 +355,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 129));
@@ -395,8 +367,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAdminRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Username, new string('A', 129));
                 }
@@ -408,8 +379,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
 
                         var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -417,5 +387,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19bf3689cd0f7f60090081a91b3cc455</Hash>
+    <Hash>6e5ed21e2c19ff0321201d73f409246a</Hash>
 </Codenesium>*/

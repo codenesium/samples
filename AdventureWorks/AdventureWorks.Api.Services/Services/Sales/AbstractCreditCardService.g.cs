@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCreditCardService: AbstractService
+        public abstract class AbstractCreditCardService : AbstractService
         {
                 private ICreditCardRepository creditCardRepository;
 
@@ -36,18 +36,12 @@ namespace AdventureWorksNS.Api.Services
                         ICreditCardRepository creditCardRepository,
                         IApiCreditCardRequestModelValidator creditCardModelValidator,
                         IBOLCreditCardMapper bolCreditCardMapper,
-                        IDALCreditCardMapper dalCreditCardMapper
-
-                        ,
+                        IDALCreditCardMapper dalCreditCardMapper,
                         IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
-                        IDALPersonCreditCardMapper dalPersonCreditCardMapper
-                        ,
+                        IDALPersonCreditCardMapper dalPersonCreditCardMapper,
                         IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-
-                        )
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
                         : base()
-
                 {
                         this.creditCardRepository = creditCardRepository;
                         this.creditCardModelValidator = creditCardModelValidator;
@@ -87,7 +81,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.creditCardModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCreditCardMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCreditCardMapper.MapModelToBO(default(int), model);
                                 var record = await this.creditCardRepository.Create(this.dalCreditCardMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiCreditCardRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateUpdateAsync(creditCardID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCreditCardMapper.MapModelToBO(creditCardID, model);
@@ -115,7 +108,6 @@ namespace AdventureWorksNS.Api.Services
                         int creditCardID)
                 {
                         ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateDeleteAsync(creditCardID));
-
                         if (response.Success)
                         {
                                 await this.creditCardRepository.Delete(creditCardID);
@@ -144,6 +136,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<SalesOrderHeader> records = await this.creditCardRepository.SalesOrderHeaders(creditCardID, limit, offset);
@@ -154,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>77b5bc20f2a91d12c9f04d444ae1c445</Hash>
+    <Hash>c4409cbae8546f9f595483bd781c0eba</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBillOfMaterialsService: AbstractService
+        public abstract class AbstractBillOfMaterialsService : AbstractService
         {
                 private IBillOfMaterialsRepository billOfMaterialsRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IBillOfMaterialsRepository billOfMaterialsRepository,
                         IApiBillOfMaterialsRequestModelValidator billOfMaterialsModelValidator,
                         IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
-
-                        )
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper)
                         : base()
-
                 {
                         this.billOfMaterialsRepository = billOfMaterialsRepository;
                         this.billOfMaterialsModelValidator = billOfMaterialsModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiBillOfMaterialsResponseModel> response = new CreateResponse<ApiBillOfMaterialsResponseModel>(await this.billOfMaterialsModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolBillOfMaterialsMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolBillOfMaterialsMapper.MapModelToBO(default(int), model);
                                 var record = await this.billOfMaterialsRepository.Create(this.dalBillOfMaterialsMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiBillOfMaterialsRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.billOfMaterialsModelValidator.ValidateUpdateAsync(billOfMaterialsID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolBillOfMaterialsMapper.MapModelToBO(billOfMaterialsID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int billOfMaterialsID)
                 {
                         ActionResponse response = new ActionResponse(await this.billOfMaterialsModelValidator.ValidateDeleteAsync(billOfMaterialsID));
-
                         if (response.Success)
                         {
                                 await this.billOfMaterialsRepository.Delete(billOfMaterialsID);
@@ -119,6 +114,7 @@ namespace AdventureWorksNS.Api.Services
                                 return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiBillOfMaterialsResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
                 {
                         List<BillOfMaterials> records = await this.billOfMaterialsRepository.ByUnitMeasureCode(unitMeasureCode);
@@ -129,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>370bcd184a5b13d7d2db8919cc716d86</Hash>
+    <Hash>0fe639acc6def2e4376fea03269367fd</Hash>
 </Codenesium>*/

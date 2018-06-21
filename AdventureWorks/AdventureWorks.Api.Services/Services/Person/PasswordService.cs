@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class PasswordService: AbstractPasswordService, IPasswordService
+        public class PasswordService : AbstractPasswordService, IPasswordService
         {
                 public PasswordService(
                         ILogger<IPasswordRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiPasswordRequestModelValidator passwordModelValidator,
                         IBOLPasswordMapper bolpasswordMapper,
                         IDALPasswordMapper dalpasswordMapper
-
                         )
                         : base(logger,
                                passwordRepository,
                                passwordModelValidator,
                                bolpasswordMapper,
-                               dalpasswordMapper
-                               )
+                               dalpasswordMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b7775b77482c79e7bb331785dda9b8ce</Hash>
+    <Hash>7a60f6d6c74e85aaee4e5042c69cef81</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class ScrapReasonRepository: AbstractScrapReasonRepository, IScrapReasonRepository
+        public class ScrapReasonRepository : AbstractScrapReasonRepository, IScrapReasonRepository
         {
                 public ScrapReasonRepository(
                         ILogger<ScrapReasonRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>11b8aecaabc47737b8a7059a3dfee741</Hash>
+    <Hash>72e87849fab82b2d6c3338c5432ca172</Hash>
 </Codenesium>*/

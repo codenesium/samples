@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public class VersionInfoService: AbstractVersionInfoService, IVersionInfoService
+        public class VersionInfoService : AbstractVersionInfoService, IVersionInfoService
         {
                 public VersionInfoService(
                         ILogger<IVersionInfoRepository> logger,
@@ -18,19 +18,17 @@ namespace FileServiceNS.Api.Services
                         IApiVersionInfoRequestModelValidator versionInfoModelValidator,
                         IBOLVersionInfoMapper bolversionInfoMapper,
                         IDALVersionInfoMapper dalversionInfoMapper
-
                         )
                         : base(logger,
                                versionInfoRepository,
                                versionInfoModelValidator,
                                bolversionInfoMapper,
-                               dalversionInfoMapper
-                               )
+                               dalversionInfoMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4d3218376d34ec41bf5d15d726b1241b</Hash>
+    <Hash>d88c5bc6f2a762021929c46c5f3a59f9</Hash>
 </Codenesium>*/

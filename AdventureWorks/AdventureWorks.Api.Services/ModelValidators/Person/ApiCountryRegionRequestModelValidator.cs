@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiCountryRegionRequestModelValidator: AbstractApiCountryRegionRequestModelValidator, IApiCountryRegionRequestModelValidator
+        public class ApiCountryRegionRequestModelValidator : AbstractApiCountryRegionRequestModelValidator, IApiCountryRegionRequestModelValidator
         {
                 public ApiCountryRegionRequestModelValidator(ICountryRegionRepository countryRegionRepository)
                         : base(countryRegionRepository)
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>273c1322c01b3748cbb9957f3e5cd61f</Hash>
+    <Hash>089d5d186868d9274b587b7acb183390</Hash>
 </Codenesium>*/

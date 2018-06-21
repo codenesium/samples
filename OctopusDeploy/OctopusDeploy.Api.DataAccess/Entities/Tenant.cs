@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Tenant", Schema="dbo")]
-        public partial class Tenant:AbstractEntity
+        public partial class Tenant : AbstractEntity
         {
                 public Tenant()
                 {
@@ -28,27 +28,27 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.TenantTags = tenantTags;
                 }
 
-                [Column("DataVersion", TypeName="timestamp")]
+                [Column("DataVersion")]
                 public byte[] DataVersion { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("ProjectIds", TypeName="nvarchar(-1)")]
+                [Column("ProjectIds")]
                 public string ProjectIds { get; private set; }
 
-                [Column("TenantTags", TypeName="nvarchar(-1)")]
+                [Column("TenantTags")]
                 public string TenantTags { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d50e5e5fc1f218b123f3355ebd69677</Hash>
+    <Hash>4ee5b31693636595baf6417a50745994</Hash>
 </Codenesium>*/

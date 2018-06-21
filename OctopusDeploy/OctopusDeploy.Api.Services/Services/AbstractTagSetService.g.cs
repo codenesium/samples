@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractTagSetService: AbstractService
+        public abstract class AbstractTagSetService : AbstractService
         {
                 private ITagSetRepository tagSetRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ITagSetRepository tagSetRepository,
                         IApiTagSetRequestModelValidator tagSetModelValidator,
                         IBOLTagSetMapper bolTagSetMapper,
-                        IDALTagSetMapper dalTagSetMapper
-
-                        )
+                        IDALTagSetMapper dalTagSetMapper)
                         : base()
-
                 {
                         this.tagSetRepository = tagSetRepository;
                         this.tagSetModelValidator = tagSetModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiTagSetResponseModel> response = new CreateResponse<ApiTagSetResponseModel>(await this.tagSetModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTagSetMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolTagSetMapper.MapModelToBO(default(string), model);
                                 var record = await this.tagSetRepository.Create(this.dalTagSetMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiTagSetRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.tagSetModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTagSetMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.tagSetModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.tagSetRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiTagSetResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<TagSet> records = await this.tagSetRepository.GetDataVersion(dataVersion);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7ed15e9afe26190c611ea87761ae9ad</Hash>
+    <Hash>b5a6c1c2ad396a093593fbb1d8b2956d</Hash>
 </Codenesium>*/

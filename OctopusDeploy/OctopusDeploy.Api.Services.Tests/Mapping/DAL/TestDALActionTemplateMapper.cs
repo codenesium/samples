@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ActionTemplate")]
         [Trait("Area", "DALMapper")]
-        public class TestDALActionTemplateActionMapper
+        public class TestDALActionTemplateMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALActionTemplateMapper();
-
                         var bo = new BOActionTemplate();
-
                         bo.SetProperties("A", "A", "A", "A", "A", 1);
 
                         ActionTemplate response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALActionTemplateMapper();
-
                         ActionTemplate entity = new ActionTemplate();
-
                         entity.SetProperties("A", "A", "A", "A", "A", 1);
 
-                        BOActionTemplate  response = mapper.MapEFToBO(entity);
+                        BOActionTemplate response = mapper.MapEFToBO(entity);
 
                         response.ActionType.Should().Be("A");
                         response.CommunityActionTemplateId.Should().Be("A");
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALActionTemplateMapper();
-
                         ActionTemplate entity = new ActionTemplate();
-
                         entity.SetProperties("A", "A", "A", "A", "A", 1);
 
                         List<BOActionTemplate> response = mapper.MapEFToBO(new List<ActionTemplate>() { entity });
@@ -67,5 +61,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3a1bb73e59a7dd56c9ec10ff8b7ba838</Hash>
+    <Hash>2b9f4bf61039dd222c0420430c403562</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -435,5 +435,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>34fc27b7db54415683f0de349d159bf9</Hash>
+    <Hash>f737b2572e6d1bbde40e2504a1e0bac9</Hash>
 </Codenesium>*/

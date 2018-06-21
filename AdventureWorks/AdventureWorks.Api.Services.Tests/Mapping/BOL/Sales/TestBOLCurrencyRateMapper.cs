@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CurrencyRate")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCurrencyRateActionMapper
+        public class TestBOLCurrencyRateMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCurrencyRateMapper();
-
                         ApiCurrencyRateRequestModel model = new ApiCurrencyRateRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOCurrencyRate response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCurrencyRateMapper();
-
                         BOCurrencyRate bo = new BOCurrencyRate();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiCurrencyRateResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCurrencyRateMapper();
-
                         BOCurrencyRate bo = new BOCurrencyRate();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiCurrencyRateResponseModel> response = mapper.MapBOToModel(new List<BOCurrencyRate>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>300a32bbc43c487f94ad99e2f7ed6445</Hash>
+    <Hash>2cf761457fc962ddcd52bcbcbe77a9fa</Hash>
 </Codenesium>*/

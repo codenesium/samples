@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class WorkOrderRoutingRepository: AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
+        public class WorkOrderRoutingRepository : AbstractWorkOrderRoutingRepository, IWorkOrderRoutingRepository
         {
                 public WorkOrderRoutingRepository(
                         ILogger<WorkOrderRoutingRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0ef6ceaa4665f795f885c95c0ac25674</Hash>
+    <Hash>de74293552c3108b8540a9f824c8f631</Hash>
 </Codenesium>*/

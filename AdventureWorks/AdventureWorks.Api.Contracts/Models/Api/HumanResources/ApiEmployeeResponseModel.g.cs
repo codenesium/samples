@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiEmployeeResponseModel: AbstractApiEmployeeResponseModel
+        public partial class ApiEmployeeResponseModel : AbstractApiEmployeeResponseModel
         {
                 public ApiEmployeeResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f749a7c57318b85c8a15b2bddac42498</Hash>
+    <Hash>82beb7571e70970bcd1b80cac5983fcb</Hash>
 </Codenesium>*/

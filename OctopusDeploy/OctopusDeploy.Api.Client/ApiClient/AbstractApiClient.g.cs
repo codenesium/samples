@@ -1,12 +1,12 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
+using OctopusDeployNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
 
 namespace OctopusDeployNS.Api.Client
 {
@@ -29,10 +29,12 @@ namespace OctopusDeployNS.Api.Client
                         {
                                 throw new ArgumentException("apiUrl is not set");
                         }
+
                         if (apiUri[apiUri.Length - 1] != '/')
                         {
                                 throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
+
                         if (string.IsNullOrWhiteSpace(apiVersion))
                         {
                                 throw new ArgumentException("apiVersion is not set");
@@ -41,9 +43,7 @@ namespace OctopusDeployNS.Api.Client
                         this.ApiUrl = apiUri;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-
                         this.client.BaseAddress = new Uri(apiUri);
-
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -710,6 +710,14 @@ namespace OctopusDeployNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiDeploymentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiDeploymentRelatedMachineResponseModel>> DeploymentRelatedMachines(string deploymentId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Deployments/DeploymentRelatedMachines/{deploymentId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiDeploymentRelatedMachineResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiDeploymentEnvironmentResponseModel> DeploymentEnvironmentCreateAsync(ApiDeploymentEnvironmentRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeploymentEnvironments", item);
@@ -1015,6 +1023,14 @@ namespace OctopusDeployNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> EventRelatedDocuments(string eventId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/EventRelatedDocuments/{eventId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiEventRelatedDocumentResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiEventRelatedDocumentResponseModel> EventRelatedDocumentCreateAsync(ApiEventRelatedDocumentRequestModel item)
@@ -2821,5 +2837,5 @@ namespace OctopusDeployNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a6521a2c444b5fab48d7c1628173b56a</Hash>
+    <Hash>4e503e42dfdd0d3bf51e8ee773c8ba2b</Hash>
 </Codenesium>*/

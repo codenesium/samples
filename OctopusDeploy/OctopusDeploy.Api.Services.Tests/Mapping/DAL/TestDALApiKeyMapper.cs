@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ApiKey")]
         [Trait("Area", "DALMapper")]
-        public class TestDALApiKeyActionMapper
+        public class TestDALApiKeyMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALApiKeyMapper();
-
                         var bo = new BOApiKey();
-
                         bo.SetProperties("A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
                         ApiKey response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALApiKeyMapper();
-
                         ApiKey entity = new ApiKey();
-
                         entity.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
-                        BOApiKey  response = mapper.MapEFToBO(entity);
+                        BOApiKey response = mapper.MapEFToBO(entity);
 
                         response.ApiKeyHashed.Should().Be("A");
                         response.Created.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALApiKeyMapper();
-
                         ApiKey entity = new ApiKey();
-
                         entity.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A");
 
                         List<BOApiKey> response = mapper.MapEFToBO(new List<ApiKey>() { entity });
@@ -65,5 +59,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fa8c12756cecd8c78309539fedc6fc57</Hash>
+    <Hash>696de9838597ccc1bf6e251e1bb99ce4</Hash>
 </Codenesium>*/

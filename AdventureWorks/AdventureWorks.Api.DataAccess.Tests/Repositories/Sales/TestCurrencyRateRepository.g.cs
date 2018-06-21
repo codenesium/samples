@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
                         CurrencyRate entity = new CurrencyRate();
-
                         context.Set<CurrencyRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
                         CurrencyRate entity = new CurrencyRate();
-
                         context.Set<CurrencyRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CurrencyRateRepository(loggerMoc.Object, context);
 
                         var entity = new CurrencyRate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<CurrencyRate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
                         var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-
                         CurrencyRate entity = new CurrencyRate();
-
                         context.Set<CurrencyRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
                         var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-
                         CurrencyRate entity = new CurrencyRate();
-
                         context.Set<CurrencyRate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CurrencyRateRepository>> loggerMoc = CurrencyRateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CurrencyRateRepositoryMoc.GetContext();
                         var repository = new CurrencyRateRepository(loggerMoc.Object, context);
-
                         CurrencyRate entity = new CurrencyRate();
-
                         context.Set<CurrencyRate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.CurrencyRateID);
 
                         CurrencyRate modifiedRecord = await context.Set<CurrencyRate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d7cc2416e95b100535f0c872de17652</Hash>
+    <Hash>b55c3601e4bf83ff70c63b861f042e2a</Hash>
 </Codenesium>*/

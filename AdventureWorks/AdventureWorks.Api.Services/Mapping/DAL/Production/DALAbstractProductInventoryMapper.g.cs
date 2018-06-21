@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductInventory bo)
                 {
                         ProductInventory efProductInventory = new ProductInventory();
-
                         efProductInventory.SetProperties(
                                 bo.Bin,
                                 bo.LocationID,
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7913cf0c387b25c4dace73834460510f</Hash>
+    <Hash>705680216cf89032a4e63909ddae98ef</Hash>
 </Codenesium>*/

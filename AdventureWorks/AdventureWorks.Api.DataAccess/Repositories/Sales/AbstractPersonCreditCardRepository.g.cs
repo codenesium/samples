@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractPersonCreditCardRepository: AbstractRepository
+        public abstract class AbstractPersonCreditCardRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<CreditCard> GetCreditCard(int creditCardID)
+                {
+                        return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
+                }
+
                 protected async Task<List<PersonCreditCard>> Where(
                         Expression<Func<PersonCreditCard, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<CreditCard> GetCreditCard(int creditCardID)
-                {
-                        return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>85d6806860b0c13c009270155bfdf32d</Hash>
+    <Hash>8f208dd3feab3ba9b619b416c0e52020</Hash>
 </Codenesium>*/

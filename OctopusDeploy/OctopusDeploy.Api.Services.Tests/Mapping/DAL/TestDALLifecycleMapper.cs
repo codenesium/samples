@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Lifecycle")]
         [Trait("Area", "DALMapper")]
-        public class TestDALLifecycleActionMapper
+        public class TestDALLifecycleMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALLifecycleMapper();
-
                         var bo = new BOLifecycle();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A");
 
                         Lifecycle response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALLifecycleMapper();
-
                         Lifecycle entity = new Lifecycle();
-
                         entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A");
 
-                        BOLifecycle  response = mapper.MapEFToBO(entity);
+                        BOLifecycle response = mapper.MapEFToBO(entity);
 
                         response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
                         response.Id.Should().Be("A");
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALLifecycleMapper();
-
                         Lifecycle entity = new Lifecycle();
-
                         entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A");
 
                         List<BOLifecycle> response = mapper.MapEFToBO(new List<Lifecycle>() { entity });
@@ -63,5 +57,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>30406945b74fa98a15b0476cd755a200</Hash>
+    <Hash>6c5a1ed385beb67bd49becdefbdf4f1f</Hash>
 </Codenesium>*/

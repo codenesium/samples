@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Chain")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLChainActionMapper
+        public class TestBOLChainMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLChainMapper();
-
                         ApiChainRequestModel model = new ApiChainRequestModel();
-
                         model.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
                         BOChain response = mapper.MapModelToBO(1, model);
 
@@ -33,9 +31,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLChainMapper();
-
                         BOChain bo = new BOChain();
-
                         bo.SetProperties(1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
                         ApiChainResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLChainMapper();
-
                         BOChain bo = new BOChain();
-
                         bo.SetProperties(1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
                         List<ApiChainResponseModel> response = mapper.MapBOToModel(new List<BOChain>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>82d985c1f8cc29022f20d2d9cc0e9304</Hash>
+    <Hash>c4e0eb6fbb8749c783848b4e2d1187c2</Hash>
 </Codenesium>*/

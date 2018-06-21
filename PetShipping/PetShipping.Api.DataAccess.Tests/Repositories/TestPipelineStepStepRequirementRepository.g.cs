@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 
                         PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-
                         context.Set<PipelineStepStepRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 
                         PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-
                         context.Set<PipelineStepStepRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
 
                         var entity = new PipelineStepStepRequirement();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<PipelineStepStepRequirement>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<PipelineStepStepRequirementRepository>> loggerMoc = PipelineStepStepRequirementRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
                         var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
-
                         PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-
                         context.Set<PipelineStepStepRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<PipelineStepStepRequirementRepository>> loggerMoc = PipelineStepStepRequirementRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
                         var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
-
                         PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-
                         context.Set<PipelineStepStepRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<PipelineStepStepRequirementRepository>> loggerMoc = PipelineStepStepRequirementRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PipelineStepStepRequirementRepositoryMoc.GetContext();
                         var repository = new PipelineStepStepRequirementRepository(loggerMoc.Object, context);
-
                         PipelineStepStepRequirement entity = new PipelineStepStepRequirement();
-
                         context.Set<PipelineStepStepRequirement>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         PipelineStepStepRequirement modifiedRecord = await context.Set<PipelineStepStepRequirement>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>97b215817f626cd7119c3a9598258582</Hash>
+    <Hash>c05ef2b3dfcd4a57824e7ed228b85e3a</Hash>
 </Codenesium>*/

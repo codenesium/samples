@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOProject boProject = new BOProject();
-
                         boProject.SetProperties(
                                 id,
                                 model.AutoCreateRelease,
@@ -57,5 +56,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5da719c41029491e228a61dce3436a15</Hash>
+    <Hash>89668ed7e8392c8b4bdbdcd93c965f1b</Hash>
 </Codenesium>*/

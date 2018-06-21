@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
@@ -44,8 +43,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
                 }
@@ -57,7 +55,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 91));
@@ -70,8 +67,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FirstName, new string('A', 91));
                 }
@@ -83,8 +79,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
@@ -109,8 +103,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
                 }
@@ -122,7 +115,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 91));
@@ -135,8 +127,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 91));
                 }
@@ -148,8 +139,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.GetPaymentType(It.IsAny<int>())).Returns(Task.FromResult<PaymentType>(new PaymentType()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PaymentTypeId, 1);
@@ -187,8 +176,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.GetPaymentType(It.IsAny<int>())).Returns(Task.FromResult<PaymentType>(new PaymentType()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PaymentTypeId, 1);
                 }
@@ -201,7 +189,7 @@ namespace PetStoreNS.Api.Services.Tests
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PaymentTypeId, 1);
                 }
@@ -213,7 +201,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.GetPet(It.IsAny<int>())).Returns(Task.FromResult<Pet>(new Pet()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PetId, 1);
@@ -239,8 +226,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.GetPet(It.IsAny<int>())).Returns(Task.FromResult<Pet>(new Pet()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.PetId, 1);
                 }
@@ -253,7 +239,7 @@ namespace PetStoreNS.Api.Services.Tests
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PetId, 1);
                 }
@@ -265,7 +251,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
@@ -278,8 +263,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
                 }
@@ -291,7 +275,6 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 11));
@@ -304,8 +287,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSaleRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 11));
                 }
@@ -317,8 +299,7 @@ namespace PetStoreNS.Api.Services.Tests
                         saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
 
                         var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -326,5 +307,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1a261f0d1c50903b0fd489b1251857d4</Hash>
+    <Hash>1c4a95f7462b14eeadd06dc388e9ce96</Hash>
 </Codenesium>*/

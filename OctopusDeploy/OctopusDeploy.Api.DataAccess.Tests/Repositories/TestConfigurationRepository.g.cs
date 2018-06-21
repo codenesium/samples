@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ConfigurationRepository(loggerMoc.Object, context);
 
                         Configuration entity = new Configuration();
-
                         context.Set<Configuration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ConfigurationRepository(loggerMoc.Object, context);
 
                         Configuration entity = new Configuration();
-
                         context.Set<Configuration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ConfigurationRepository(loggerMoc.Object, context);
 
                         var entity = new Configuration();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Configuration>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ConfigurationRepository>> loggerMoc = ConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ConfigurationRepositoryMoc.GetContext();
                         var repository = new ConfigurationRepository(loggerMoc.Object, context);
-
                         Configuration entity = new Configuration();
-
                         context.Set<Configuration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ConfigurationRepository>> loggerMoc = ConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ConfigurationRepositoryMoc.GetContext();
                         var repository = new ConfigurationRepository(loggerMoc.Object, context);
-
                         Configuration entity = new Configuration();
-
                         context.Set<Configuration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ConfigurationRepository>> loggerMoc = ConfigurationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ConfigurationRepositoryMoc.GetContext();
                         var repository = new ConfigurationRepository(loggerMoc.Object, context);
-
                         Configuration entity = new Configuration();
-
                         context.Set<Configuration>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Configuration modifiedRecord = await context.Set<Configuration>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d150dd220be7c9b771d936c3fc8d8675</Hash>
+    <Hash>6595b029a9d74151f90be6ffaa057696</Hash>
 </Codenesium>*/

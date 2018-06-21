@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOCountryRegion bo)
                 {
                         CountryRegion efCountryRegion = new CountryRegion();
-
                         efCountryRegion.SetProperties(
                                 bo.CountryRegionCode,
                                 bo.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2adeb102c4f67aa23bcab03522600176</Hash>
+    <Hash>a5500b363d6ba2fc6702b3603896907f</Hash>
 </Codenesium>*/

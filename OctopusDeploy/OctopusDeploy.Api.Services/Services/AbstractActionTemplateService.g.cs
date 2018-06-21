@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractActionTemplateService: AbstractService
+        public abstract class AbstractActionTemplateService : AbstractService
         {
                 private IActionTemplateRepository actionTemplateRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IActionTemplateRepository actionTemplateRepository,
                         IApiActionTemplateRequestModelValidator actionTemplateModelValidator,
                         IBOLActionTemplateMapper bolActionTemplateMapper,
-                        IDALActionTemplateMapper dalActionTemplateMapper
-
-                        )
+                        IDALActionTemplateMapper dalActionTemplateMapper)
                         : base()
-
                 {
                         this.actionTemplateRepository = actionTemplateRepository;
                         this.actionTemplateModelValidator = actionTemplateModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiActionTemplateResponseModel> response = new CreateResponse<ApiActionTemplateResponseModel>(await this.actionTemplateModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolActionTemplateMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolActionTemplateMapper.MapModelToBO(default(string), model);
                                 var record = await this.actionTemplateRepository.Create(this.dalActionTemplateMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolActionTemplateMapper.MapBOToModel(this.dalActionTemplateMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiActionTemplateRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.actionTemplateModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolActionTemplateMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.actionTemplateModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.actionTemplateRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>efb60ec9b45199035033048c6aa85ac2</Hash>
+    <Hash>3a70c5bdb6c5c01301b5ac995b47e3bf</Hash>
 </Codenesium>*/

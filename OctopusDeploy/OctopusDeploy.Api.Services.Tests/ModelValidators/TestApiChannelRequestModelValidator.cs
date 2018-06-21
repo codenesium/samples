@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LifecycleId, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Channel()));
 
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -250,7 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(new Channel()));
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -262,7 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         channelRepository.Setup(x => x.GetNameProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Channel>(null));
                         var validator = new ApiChannelRequestModelValidator(channelRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiChannelRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiChannelRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -270,5 +255,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>97e609a954cc08afb26efb13b8cd9791</Hash>
+    <Hash>c3911686de955d45e550ba7b0234d207</Hash>
 </Codenesium>*/

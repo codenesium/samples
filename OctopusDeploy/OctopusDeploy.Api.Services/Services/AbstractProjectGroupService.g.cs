@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractProjectGroupService: AbstractService
+        public abstract class AbstractProjectGroupService : AbstractService
         {
                 private IProjectGroupRepository projectGroupRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IProjectGroupRepository projectGroupRepository,
                         IApiProjectGroupRequestModelValidator projectGroupModelValidator,
                         IBOLProjectGroupMapper bolProjectGroupMapper,
-                        IDALProjectGroupMapper dalProjectGroupMapper
-
-                        )
+                        IDALProjectGroupMapper dalProjectGroupMapper)
                         : base()
-
                 {
                         this.projectGroupRepository = projectGroupRepository;
                         this.projectGroupModelValidator = projectGroupModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiProjectGroupResponseModel> response = new CreateResponse<ApiProjectGroupResponseModel>(await this.projectGroupModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProjectGroupMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolProjectGroupMapper.MapModelToBO(default(string), model);
                                 var record = await this.projectGroupRepository.Create(this.dalProjectGroupMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiProjectGroupRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.projectGroupModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProjectGroupMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.projectGroupModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.projectGroupRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiProjectGroupResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<ProjectGroup> records = await this.projectGroupRepository.GetDataVersion(dataVersion);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72ca581f8cc7f772398309719c2a6440</Hash>
+    <Hash>b81d959a291ceec22e96e46740047df4</Hash>
 </Codenesium>*/

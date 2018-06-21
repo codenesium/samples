@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
 {
-        public class DeviceActionService: AbstractDeviceActionService, IDeviceActionService
+        public class DeviceActionService : AbstractDeviceActionService, IDeviceActionService
         {
                 public DeviceActionService(
                         ILogger<IDeviceActionRepository> logger,
@@ -18,19 +18,17 @@ namespace ESPIOTNS.Api.Services
                         IApiDeviceActionRequestModelValidator deviceActionModelValidator,
                         IBOLDeviceActionMapper boldeviceActionMapper,
                         IDALDeviceActionMapper daldeviceActionMapper
-
                         )
                         : base(logger,
                                deviceActionRepository,
                                deviceActionModelValidator,
                                boldeviceActionMapper,
-                               daldeviceActionMapper
-                               )
+                               daldeviceActionMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3613aaf950b1aa8fc6b291d4e25c8fb4</Hash>
+    <Hash>03a2ba943c2a7b4828573e9e763de738</Hash>
 </Codenesium>*/

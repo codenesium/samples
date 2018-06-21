@@ -38,7 +38,6 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
 
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
 
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
 
                         var entity = new VersionInfo();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<VersionInfo>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<VersionInfoRepository>> loggerMoc = VersionInfoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VersionInfoRepositoryMoc.GetContext();
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
-
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<VersionInfoRepository>> loggerMoc = VersionInfoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VersionInfoRepositoryMoc.GetContext();
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
-
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<VersionInfoRepository>> loggerMoc = VersionInfoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VersionInfoRepositoryMoc.GetContext();
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
-
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Version);
 
                         VersionInfo modifiedRecord = await context.Set<VersionInfo>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8979b1daa660fb71851bc8897a36cd43</Hash>
+    <Hash>f27f03ab1214b8e9d841cef019c6cdbe</Hash>
 </Codenesium>*/

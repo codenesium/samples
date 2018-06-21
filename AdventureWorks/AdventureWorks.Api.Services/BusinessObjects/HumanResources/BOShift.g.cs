@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOShift: AbstractBOShift
+        public partial class BOShift : AbstractBOShift
         {
-                public BOShift() : base()
+                public BOShift()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>989776443f617e1cb2d9be616555337d</Hash>
+    <Hash>09fb593bac7c4d6b3f05689b598dd4ff</Hash>
 </Codenesium>*/

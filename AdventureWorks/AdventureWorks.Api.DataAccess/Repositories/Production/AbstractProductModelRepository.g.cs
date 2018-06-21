@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractProductModelRepository: AbstractRepository
+        public abstract class AbstractProductModelRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,17 +82,34 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<ProductModel>> ByCatalogDescription(string catalogDescription)
                 {
                         var records = await this.Where(x => x.CatalogDescription == catalogDescription);
 
                         return records;
                 }
+
                 public async Task<List<ProductModel>> ByInstructions(string instructions)
                 {
                         var records = await this.Where(x => x.Instructions == instructions);
 
                         return records;
+                }
+
+                public async virtual Task<List<Product>> Products(int productModelID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Product>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+                }
+
+                public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductModelIllustration>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
+                }
+
+                public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
                 }
 
                 protected async Task<List<ProductModel>> Where(
@@ -123,22 +140,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Product>> Products(int productModelID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Product>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
-                }
-                public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ProductModelIllustration>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
-                }
-                public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f8d9a22cda5f80ff6cd130650cf705de</Hash>
+    <Hash>1b7504492d013cf10c991f4ca37ed966</Hash>
 </Codenesium>*/

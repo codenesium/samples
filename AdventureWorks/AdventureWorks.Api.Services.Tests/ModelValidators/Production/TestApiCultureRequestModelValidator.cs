@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Culture()));
 
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCultureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Culture()));
 
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCultureRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCultureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Culture()));
 
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCultureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Culture()));
 
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCultureRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCultureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Culture()));
 
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -120,7 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Culture>(new Culture()));
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiCultureRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCultureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -132,7 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         cultureRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Culture>(null));
                         var validator = new ApiCultureRequestModelValidator(cultureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiCultureRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCultureRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -140,5 +135,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>129f0da7db97b2a364c1374109be6f03</Hash>
+    <Hash>dc5c8eef40b3e0b443a5f101adf9ab03</Hash>
 </Codenesium>*/

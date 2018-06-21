@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/userRoles")]
         [ApiVersion("1.0")]
-        public class UserRoleController: AbstractUserRoleController
+        public class UserRoleController : AbstractUserRoleController
         {
                 public UserRoleController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>288e3ac5e24f74828eb1ddd2cfd8dd7a</Hash>
+    <Hash>084996805899c8eeab9ebd27f3682cf0</Hash>
 </Codenesium>*/

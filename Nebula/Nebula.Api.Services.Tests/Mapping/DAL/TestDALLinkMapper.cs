@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Link")]
         [Trait("Area", "DALMapper")]
-        public class TestDALLinkActionMapper
+        public class TestDALLinkMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALLinkMapper();
-
                         var bo = new BOLink();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, "A", "A", 1);
 
                         Link response = mapper.MapBOToEF(bo);
@@ -42,12 +40,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALLinkMapper();
-
                         Link entity = new Link();
-
                         entity.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", 1, "A", "A", 1);
 
-                        BOLink  response = mapper.MapEFToBO(entity);
+                        BOLink response = mapper.MapEFToBO(entity);
 
                         response.AssignedMachineId.Should().Be(1);
                         response.ChainId.Should().Be(1);
@@ -68,9 +64,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALLinkMapper();
-
                         Link entity = new Link();
-
                         entity.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", 1, "A", "A", 1);
 
                         List<BOLink> response = mapper.MapEFToBO(new List<Link>() { entity });
@@ -81,5 +75,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>853e263b889aaabaee358babe0683971</Hash>
+    <Hash>9b8f7d0b9d561147b55419e00c3bcb6a</Hash>
 </Codenesium>*/

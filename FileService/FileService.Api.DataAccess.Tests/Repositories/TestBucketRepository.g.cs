@@ -38,7 +38,6 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new BucketRepository(loggerMoc.Object, context);
 
                         Bucket entity = new Bucket();
-
                         context.Set<Bucket>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new BucketRepository(loggerMoc.Object, context);
 
                         Bucket entity = new Bucket();
-
                         context.Set<Bucket>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FileServiceNS.Api.DataAccess
                         var repository = new BucketRepository(loggerMoc.Object, context);
 
                         var entity = new Bucket();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Bucket>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BucketRepositoryMoc.GetContext();
                         var repository = new BucketRepository(loggerMoc.Object, context);
-
                         Bucket entity = new Bucket();
-
                         context.Set<Bucket>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BucketRepositoryMoc.GetContext();
                         var repository = new BucketRepository(loggerMoc.Object, context);
-
                         Bucket entity = new Bucket();
-
                         context.Set<Bucket>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FileServiceNS.Api.DataAccess
                         Mock<ILogger<BucketRepository>> loggerMoc = BucketRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BucketRepositoryMoc.GetContext();
                         var repository = new BucketRepository(loggerMoc.Object, context);
-
                         Bucket entity = new Bucket();
-
                         context.Set<Bucket>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Bucket modifiedRecord = await context.Set<Bucket>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b8abfe9661f121c198b336684d5b1ab0</Hash>
+    <Hash>0c50fa9105ca748d6b9b7eefd53dc1f0</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ServerTaskRepository(loggerMoc.Object, context);
 
                         ServerTask entity = new ServerTask();
-
                         context.Set<ServerTask>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ServerTaskRepository(loggerMoc.Object, context);
 
                         ServerTask entity = new ServerTask();
-
                         context.Set<ServerTask>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ServerTaskRepository(loggerMoc.Object, context);
 
                         var entity = new ServerTask();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ServerTask>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ServerTaskRepository>> loggerMoc = ServerTaskRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ServerTaskRepositoryMoc.GetContext();
                         var repository = new ServerTaskRepository(loggerMoc.Object, context);
-
                         ServerTask entity = new ServerTask();
-
                         context.Set<ServerTask>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ServerTaskRepository>> loggerMoc = ServerTaskRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ServerTaskRepositoryMoc.GetContext();
                         var repository = new ServerTaskRepository(loggerMoc.Object, context);
-
                         ServerTask entity = new ServerTask();
-
                         context.Set<ServerTask>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ServerTaskRepository>> loggerMoc = ServerTaskRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ServerTaskRepositoryMoc.GetContext();
                         var repository = new ServerTaskRepository(loggerMoc.Object, context);
-
                         ServerTask entity = new ServerTask();
-
                         context.Set<ServerTask>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ServerTask modifiedRecord = await context.Set<ServerTask>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a503ce1958b87b5d3227747bad5de630</Hash>
+    <Hash>b9aff179124acdc40950e26d1242065d</Hash>
 </Codenesium>*/

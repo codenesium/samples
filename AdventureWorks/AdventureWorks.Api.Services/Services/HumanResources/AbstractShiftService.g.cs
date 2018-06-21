@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractShiftService: AbstractService
+        public abstract class AbstractShiftService : AbstractService
         {
                 private IShiftRepository shiftRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IShiftRepository shiftRepository,
                         IApiShiftRequestModelValidator shiftModelValidator,
                         IBOLShiftMapper bolShiftMapper,
-                        IDALShiftMapper dalShiftMapper
-
-                        ,
+                        IDALShiftMapper dalShiftMapper,
                         IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-
-                        )
+                        IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
                         : base()
-
                 {
                         this.shiftRepository = shiftRepository;
                         this.shiftModelValidator = shiftModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiShiftResponseModel> response = new CreateResponse<ApiShiftResponseModel>(await this.shiftModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolShiftMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolShiftMapper.MapModelToBO(default(int), model);
                                 var record = await this.shiftRepository.Create(this.dalShiftMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiShiftRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateUpdateAsync(shiftID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolShiftMapper.MapModelToBO(shiftID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int shiftID)
                 {
                         ActionResponse response = new ActionResponse(await this.shiftModelValidator.ValidateDeleteAsync(shiftID));
-
                         if (response.Success)
                         {
                                 await this.shiftRepository.Delete(shiftID);
@@ -129,6 +122,7 @@ namespace AdventureWorksNS.Api.Services
                                 return this.bolShiftMapper.MapBOToModel(this.dalShiftMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<ApiShiftResponseModel> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
                 {
                         Shift record = await this.shiftRepository.ByStartTimeEndTime(startTime, endTime);
@@ -153,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef9bcb413bc9515cdec44b47e4c6977b</Hash>
+    <Hash>a58411ec6532bfbb59b20ba17e167085</Hash>
 </Codenesium>*/

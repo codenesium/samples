@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ActionType, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ActionType, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ActionType, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ActionType, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CommunityActionTemplateId, new string('A', 51));
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CommunityActionTemplateId, new string('A', 51));
                 }
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -135,7 +127,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ActionTemplate()));
 
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -250,7 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ActionTemplate>(new ActionTemplate()));
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -262,7 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         actionTemplateRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<ActionTemplate>(null));
                         var validator = new ApiActionTemplateRequestModelValidator(actionTemplateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiActionTemplateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -270,5 +255,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>230a8d6f44db51ff73d42c67fbbe130d</Hash>
+    <Hash>0766caa7d909ba7e87a7bab6aff057bd</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SpaceXSpaceFeature")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSpaceXSpaceFeatureActionMapper
+        public class TestDALSpaceXSpaceFeatureMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSpaceXSpaceFeatureMapper();
-
                         var bo = new BOSpaceXSpaceFeature();
-
                         bo.SetProperties(1, 1, 1);
 
                         SpaceXSpaceFeature response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSpaceXSpaceFeatureMapper();
-
                         SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-
                         entity.SetProperties(1, 1, 1);
 
-                        BOSpaceXSpaceFeature  response = mapper.MapEFToBO(entity);
+                        BOSpaceXSpaceFeature response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.SpaceFeatureId.Should().Be(1);
@@ -48,9 +44,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSpaceXSpaceFeatureMapper();
-
                         SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-
                         entity.SetProperties(1, 1, 1);
 
                         List<BOSpaceXSpaceFeature> response = mapper.MapEFToBO(new List<SpaceXSpaceFeature>() { entity });
@@ -61,5 +55,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>89c7d568382a70650032a44d30b2bf26</Hash>
+    <Hash>12c014a20f45f1af2886c36b8913b4a3</Hash>
 </Codenesium>*/

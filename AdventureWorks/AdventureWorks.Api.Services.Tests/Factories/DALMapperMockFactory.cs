@@ -1,8 +1,8 @@
+using AdventureWorksNS.Api.DataAccess;
+using AdventureWorksNS.Api.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
-using AdventureWorksNS.Api.DataAccess;
-using AdventureWorksNS.Api.Services;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -155,5 +155,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>458dc6d758bdb48d7e151d7fb4e4377a</Hash>
+    <Hash>3f34e13e8d3b8a5ce8c6bd805d6a09f7</Hash>
 </Codenesium>*/

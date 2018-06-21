@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractDatabaseLogService: AbstractService
+        public abstract class AbstractDatabaseLogService : AbstractService
         {
                 private IDatabaseLogRepository databaseLogRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IDatabaseLogRepository databaseLogRepository,
                         IApiDatabaseLogRequestModelValidator databaseLogModelValidator,
                         IBOLDatabaseLogMapper bolDatabaseLogMapper,
-                        IDALDatabaseLogMapper dalDatabaseLogMapper
-
-                        )
+                        IDALDatabaseLogMapper dalDatabaseLogMapper)
                         : base()
-
                 {
                         this.databaseLogRepository = databaseLogRepository;
                         this.databaseLogModelValidator = databaseLogModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiDatabaseLogResponseModel> response = new CreateResponse<ApiDatabaseLogResponseModel>(await this.databaseLogModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDatabaseLogMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolDatabaseLogMapper.MapModelToBO(default(int), model);
                                 var record = await this.databaseLogRepository.Create(this.dalDatabaseLogMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDatabaseLogMapper.MapBOToModel(this.dalDatabaseLogMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiDatabaseLogRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.databaseLogModelValidator.ValidateUpdateAsync(databaseLogID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDatabaseLogMapper.MapModelToBO(databaseLogID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int databaseLogID)
                 {
                         ActionResponse response = new ActionResponse(await this.databaseLogModelValidator.ValidateDeleteAsync(databaseLogID));
-
                         if (response.Success)
                         {
                                 await this.databaseLogRepository.Delete(databaseLogID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d71cee8e77fec63ee558015b62fe7325</Hash>
+    <Hash>698c354b24278f68bf4d36181f74992c</Hash>
 </Codenesium>*/

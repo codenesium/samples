@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractClaspService: AbstractService
+        public abstract class AbstractClaspService : AbstractService
         {
                 private IClaspRepository claspRepository;
 
@@ -29,11 +29,8 @@ namespace NebulaNS.Api.Services
                         IClaspRepository claspRepository,
                         IApiClaspRequestModelValidator claspModelValidator,
                         IBOLClaspMapper bolClaspMapper,
-                        IDALClaspMapper dalClaspMapper
-
-                        )
+                        IDALClaspMapper dalClaspMapper)
                         : base()
-
                 {
                         this.claspRepository = claspRepository;
                         this.claspModelValidator = claspModelValidator;
@@ -69,7 +66,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiClaspResponseModel> response = new CreateResponse<ApiClaspResponseModel>(await this.claspModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolClaspMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolClaspMapper.MapModelToBO(default(int), model);
                                 var record = await this.claspRepository.Create(this.dalClaspMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace NebulaNS.Api.Services
                         ApiClaspRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.claspModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolClaspMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.claspModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.claspRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc0e825d3bf9516ba52479e234e9951a</Hash>
+    <Hash>4f9d39966376050a3458667909a25853</Hash>
 </Codenesium>*/

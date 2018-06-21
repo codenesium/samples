@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOTenant: AbstractBOTenant
+        public partial class BOTenant : AbstractBOTenant
         {
-                public BOTenant() : base()
+                public BOTenant()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b4db2c4f147868523f2feeba49b7e1c7</Hash>
+    <Hash>c2ad3080935075779425acfb8c8d692c</Hash>
 </Codenesium>*/

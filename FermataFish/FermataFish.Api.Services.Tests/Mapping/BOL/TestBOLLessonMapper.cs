@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Lesson")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLLessonActionMapper
+        public class TestBOLLessonMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLLessonMapper();
-
                         ApiLessonRequestModel model = new ApiLessonRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
                         BOLesson response = mapper.MapModelToBO(1, model);
 
@@ -38,9 +36,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLLessonMapper();
-
                         BOLesson bo = new BOLesson();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
                         ApiLessonResponseModel response = mapper.MapBOToModel(bo);
 
@@ -60,9 +56,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLLessonMapper();
-
                         BOLesson bo = new BOLesson();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
                         List<ApiLessonResponseModel> response = mapper.MapBOToModel(new List<BOLesson>() { { bo } });
 
@@ -72,5 +66,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1c6a2899d99355f0dbb9a82d187bad49</Hash>
+    <Hash>b1892f0fa4fc9fdae5392d9a3cdc47a4</Hash>
 </Codenesium>*/

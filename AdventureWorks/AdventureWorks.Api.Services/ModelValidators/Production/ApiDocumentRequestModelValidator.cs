@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiDocumentRequestModelValidator: AbstractApiDocumentRequestModelValidator, IApiDocumentRequestModelValidator
+        public class ApiDocumentRequestModelValidator : AbstractApiDocumentRequestModelValidator, IApiDocumentRequestModelValidator
         {
                 public ApiDocumentRequestModelValidator(IDocumentRepository documentRepository)
                         : base(documentRepository)
@@ -49,11 +49,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(Guid id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e32c257eb1fc7ab1f8dcada5dbaa5244</Hash>
+    <Hash>81daac28f530b2f03c29fa141e9baa55</Hash>
 </Codenesium>*/

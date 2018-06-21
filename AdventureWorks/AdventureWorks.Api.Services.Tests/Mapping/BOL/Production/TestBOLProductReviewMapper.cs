@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductReview")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProductReviewActionMapper
+        public class TestBOLProductReviewMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProductReviewMapper();
-
                         ApiProductReviewRequestModel model = new ApiProductReviewRequestModel();
-
                         model.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOProductReview response = mapper.MapModelToBO(1, model);
 
@@ -36,9 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProductReviewMapper();
-
                         BOProductReview bo = new BOProductReview();
-
                         bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiProductReviewResponseModel response = mapper.MapBOToModel(bo);
 
@@ -56,9 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProductReviewMapper();
-
                         BOProductReview bo = new BOProductReview();
-
                         bo.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiProductReviewResponseModel> response = mapper.MapBOToModel(new List<BOProductReview>() { { bo } });
 
@@ -68,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>52f8ba567f9cf82b57a0abe86bd8ed9f</Hash>
+    <Hash>0278f69baff41c897d431c2489b50cb1</Hash>
 </Codenesium>*/

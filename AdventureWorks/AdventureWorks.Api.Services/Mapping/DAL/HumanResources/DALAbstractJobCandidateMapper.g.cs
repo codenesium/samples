@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOJobCandidate bo)
                 {
                         JobCandidate efJobCandidate = new JobCandidate();
-
                         efJobCandidate.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.JobCandidateID,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>19bf3a55e40dc89c8ade993f2bfce599</Hash>
+    <Hash>9ec549df186e5f30ce3ed56ef06b2a6b</Hash>
 </Codenesium>*/

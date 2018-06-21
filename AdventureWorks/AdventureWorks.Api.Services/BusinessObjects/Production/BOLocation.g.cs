@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOLocation: AbstractBOLocation
+        public partial class BOLocation : AbstractBOLocation
         {
-                public BOLocation() : base()
+                public BOLocation()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0148fa9767ab5dd2a9ca843d00d77d45</Hash>
+    <Hash>548c4dd12315845586309e23cbb7a1d8</Hash>
 </Codenesium>*/

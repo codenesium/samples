@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmailAddressRepository(loggerMoc.Object, context);
 
                         EmailAddress entity = new EmailAddress();
-
                         context.Set<EmailAddress>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmailAddressRepository(loggerMoc.Object, context);
 
                         EmailAddress entity = new EmailAddress();
-
                         context.Set<EmailAddress>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmailAddressRepository(loggerMoc.Object, context);
 
                         var entity = new EmailAddress();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<EmailAddress>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmailAddressRepository>> loggerMoc = EmailAddressRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmailAddressRepositoryMoc.GetContext();
                         var repository = new EmailAddressRepository(loggerMoc.Object, context);
-
                         EmailAddress entity = new EmailAddress();
-
                         context.Set<EmailAddress>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmailAddressRepository>> loggerMoc = EmailAddressRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmailAddressRepositoryMoc.GetContext();
                         var repository = new EmailAddressRepository(loggerMoc.Object, context);
-
                         EmailAddress entity = new EmailAddress();
-
                         context.Set<EmailAddress>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmailAddressRepository>> loggerMoc = EmailAddressRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmailAddressRepositoryMoc.GetContext();
                         var repository = new EmailAddressRepository(loggerMoc.Object, context);
-
                         EmailAddress entity = new EmailAddress();
-
                         context.Set<EmailAddress>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         EmailAddress modifiedRecord = await context.Set<EmailAddress>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3b8f9f494622420ff76e9abe8f0a7a77</Hash>
+    <Hash>afa0bfb0486a5bec97a8b0e90eede50b</Hash>
 </Codenesium>*/

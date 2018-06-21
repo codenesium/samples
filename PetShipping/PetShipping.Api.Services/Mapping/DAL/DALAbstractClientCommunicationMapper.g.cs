@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOClientCommunication bo)
                 {
                         ClientCommunication efClientCommunication = new ClientCommunication();
-
                         efClientCommunication.SetProperties(
                                 bo.ClientId,
                                 bo.DateCreated,
@@ -52,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f5477c18f202df4bd25e63cca4e16365</Hash>
+    <Hash>135356c5b5e2385f504d296af68838e3</Hash>
 </Codenesium>*/

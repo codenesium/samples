@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOUserRole bo)
                 {
                         UserRole efUserRole = new UserRole();
-
                         efUserRole.SetProperties(
                                 bo.Id,
                                 bo.JSON,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8eff2dfd8e64e383eafdbacf54376240</Hash>
+    <Hash>3d4ef319eb3da9517859f31c40eebca9</Hash>
 </Codenesium>*/

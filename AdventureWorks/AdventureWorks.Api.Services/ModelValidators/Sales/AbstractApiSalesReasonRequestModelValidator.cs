@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesReasonRequestModelValidator: AbstractValidator<ApiSalesReasonRequestModel>
+        public abstract class AbstractApiSalesReasonRequestModelValidator : AbstractValidator<ApiSalesReasonRequestModel>
         {
                 private int existingRecordId;
 
-                ISalesReasonRepository salesReasonRepository;
+                private ISalesReasonRepository salesReasonRepository;
 
                 public AbstractApiSalesReasonRequestModelValidator(ISalesReasonRepository salesReasonRepository)
                 {
@@ -45,5 +45,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b990f12ef53cf0228b8a82d19e29667c</Hash>
+    <Hash>8b9e022b3d1699ad969c2d616e5b204a</Hash>
 </Codenesium>*/

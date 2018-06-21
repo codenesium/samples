@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class ShiftRepository: AbstractShiftRepository, IShiftRepository
+        public class ShiftRepository : AbstractShiftRepository, IShiftRepository
         {
                 public ShiftRepository(
                         ILogger<ShiftRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>79622df8898669fd86862d6d6b901443</Hash>
+    <Hash>73f0bf9274f5481bee98378563697c10</Hash>
 </Codenesium>*/

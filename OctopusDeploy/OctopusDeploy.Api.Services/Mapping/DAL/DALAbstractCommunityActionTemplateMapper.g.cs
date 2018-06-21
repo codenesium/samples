@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOCommunityActionTemplate bo)
                 {
                         CommunityActionTemplate efCommunityActionTemplate = new CommunityActionTemplate();
-
                         efCommunityActionTemplate.SetProperties(
                                 bo.ExternalId,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a743fe74475231f6b1597b25174b2533</Hash>
+    <Hash>9c0e588d55cf9c8923997e4cea38a192</Hash>
 </Codenesium>*/

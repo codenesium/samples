@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
@@ -20,10 +20,11 @@ namespace TicketingCRMNS.Api.DataAccess
                 Task<List<SaleTickets>> GetTicketId(int ticketId);
 
                 Task<Sale> GetSale(int saleId);
+
                 Task<Ticket> GetTicket(int ticketId);
         }
 }
 
 /*<Codenesium>
-    <Hash>77cc5de656dbd86391c2ea41f708d4b7</Hash>
+    <Hash>139a76ceeedbc64343af7ed917249d41</Hash>
 </Codenesium>*/

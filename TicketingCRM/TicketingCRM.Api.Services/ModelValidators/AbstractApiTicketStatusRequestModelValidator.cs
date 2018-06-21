@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiTicketStatusRequestModelValidator: AbstractValidator<ApiTicketStatusRequestModel>
+        public abstract class AbstractApiTicketStatusRequestModelValidator : AbstractValidator<ApiTicketStatusRequestModel>
         {
                 private int existingRecordId;
 
-                ITicketStatusRepository ticketStatusRepository;
+                private ITicketStatusRepository ticketStatusRepository;
 
                 public AbstractApiTicketStatusRequestModelValidator(ITicketStatusRepository ticketStatusRepository)
                 {
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0a51e372d5eda281ba4fcce70bee409</Hash>
+    <Hash>7fe188b3f8080b8ea28635a9de7477ff</Hash>
 </Codenesium>*/

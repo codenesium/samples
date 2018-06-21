@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLVariableSetMapper: BOLAbstractVariableSetMapper, IBOLVariableSetMapper
+        public class BOLVariableSetMapper : BOLAbstractVariableSetMapper, IBOLVariableSetMapper
         {
                 public BOLVariableSetMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2489f581667ba181769e00c5c5252e3c</Hash>
+    <Hash>425033afef8d55d44c59fc154572ceee</Hash>
 </Codenesium>*/

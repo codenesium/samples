@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALStateProvinceMapper: DALAbstractStateProvinceMapper, IDALStateProvinceMapper
+        public class DALStateProvinceMapper : DALAbstractStateProvinceMapper, IDALStateProvinceMapper
         {
                 public DALStateProvinceMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d352fdeca2dcecc36d86b4a91c834f83</Hash>
+    <Hash>8c19c56e9c67c4cbb62de931b8ff0596</Hash>
 </Codenesium>*/

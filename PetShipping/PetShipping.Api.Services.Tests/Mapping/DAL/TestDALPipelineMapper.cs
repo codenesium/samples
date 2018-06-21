@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Pipeline")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPipelineActionMapper
+        public class TestDALPipelineMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPipelineMapper();
-
                         var bo = new BOPipeline();
-
                         bo.SetProperties(1, 1, 1);
 
                         Pipeline response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPipelineMapper();
-
                         Pipeline entity = new Pipeline();
-
                         entity.SetProperties(1, 1, 1);
 
-                        BOPipeline  response = mapper.MapEFToBO(entity);
+                        BOPipeline response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.PipelineStatusId.Should().Be(1);
@@ -48,9 +44,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPipelineMapper();
-
                         Pipeline entity = new Pipeline();
-
                         entity.SetProperties(1, 1, 1);
 
                         List<BOPipeline> response = mapper.MapEFToBO(new List<Pipeline>() { entity });
@@ -61,5 +55,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cb1eb98f591b2598ef90a13b43fccc1c</Hash>
+    <Hash>2bac5f10dea6a0b51964ab97a3d88a78</Hash>
 </Codenesium>*/

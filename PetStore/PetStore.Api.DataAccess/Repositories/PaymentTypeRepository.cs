@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.DataAccess
 {
-        public class PaymentTypeRepository: AbstractPaymentTypeRepository, IPaymentTypeRepository
+        public class PaymentTypeRepository : AbstractPaymentTypeRepository, IPaymentTypeRepository
         {
                 public PaymentTypeRepository(
                         ILogger<PaymentTypeRepository> logger,
@@ -20,5 +20,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f69cacfe4223523245ef0986270247d8</Hash>
+    <Hash>07354337628befa24ec37391b3170a74</Hash>
 </Codenesium>*/

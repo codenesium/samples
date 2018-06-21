@@ -1,57 +1,77 @@
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using FluentValidation.Results;
 
 namespace AdventureWorksNS.Api.Services
 {
-    public class ValidationError
-    {
-        public ValidationError(string errorCode, string errorMessage, string propertyName)
+        public class ValidationError
         {
-            this.ErrorCode = errorCode;
-            this.ErrorMessage = errorMessage;
-            this.PropertyName = propertyName;
+                public ValidationError(string errorCode, string errorMessage, string propertyName)
+                {
+                        this.ErrorCode = errorCode;
+                        this.ErrorMessage = errorMessage;
+                        this.PropertyName = propertyName;
+                }
+
+                public string ErrorMessage { get; set; } = string.Empty;
+
+                public string PropertyName { get; set; } = string.Empty;
+
+                public string ErrorCode { get; set; } = string.Empty;
         }
 
-        public string ErrorMessage { get; set; } = string.Empty;
+        public class CreateResponse<T> : ActionResponse
+        {
+                public virtual T Record { get; private set; }
 
-        public string PropertyName { get; set; } = string.Empty;
+                public CreateResponse(FluentValidation.Results.ValidationResult result)
+                        : base(result)
+                {
+                }
 
-        public string ErrorCode { get; set; } = string.Empty;
-    }
+                public virtual void SetRecord(T record)
+                {
+                        this.Record = record;
+                }
+        }
 
-    public class CreateResponse<T> : ActionResponse
-    {
-        public T Record { get; private set; }
+        public interface IActionResponse
+        {
+                bool Success { get; }
 
-        public CreateResponse (FluentValidation.Results.ValidationResult result)
-            : base(result)
+                List<ValidationError> ValidationErrors { get; }
+        }
+
+        public class ActionResponse : IActionResponse
+        {
+                public virtual bool Success { get; private set; }
+
+                public virtual List<ValidationError> ValidationErrors { get; private set; } = new List<ValidationError>();
+
+                public ActionResponse()
+                {
+                }
+
+                public ActionResponse(ValidationResult result)
+                {
+                        this.Success = result.IsValid;
+                        foreach (ValidationFailure error in result.Errors)
+                        {
+                                this.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
+                        }
+                }
+        }
+
+        public abstract class AbstractService
         {
         }
 
-        public void SetRecord(T record)
+        public abstract class AbstractBusinessObject
         {
-            this.Record = record;
         }
-    }
-
-
-    public class ActionResponse
-    {
-        public bool Success { get; private set; }
-
-        public List<ValidationError> ValidationErrors { get; private set; } = new List<ValidationError>();
-
-        private FluentValidation.Results.ValidationResult result;
-
-        public ActionResponse(ValidationResult result)
-        {
-            this.Success = result.IsValid;
-            foreach (ValidationFailure error in result.Errors)
-            {
-                this.ValidationErrors.Add(new ValidationError(error.ErrorCode, error.ErrorMessage, error.PropertyName));
-            }
-        }
-    }
 }
+
+/*<Codenesium>
+    <Hash>cad756f5e980efa1546d552941d449ca</Hash>
+</Codenesium>*/

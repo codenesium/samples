@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiProjectGroupRequestModelValidator: AbstractValidator<ApiProjectGroupRequestModel>
+        public abstract class AbstractApiProjectGroupRequestModelValidator : AbstractValidator<ApiProjectGroupRequestModel>
         {
                 private string existingRecordId;
 
-                IProjectGroupRepository projectGroupRepository;
+                private IProjectGroupRepository projectGroupRepository;
 
                 public AbstractApiProjectGroupRequestModelValidator(IProjectGroupRepository projectGroupRepository)
                 {
@@ -38,7 +38,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectGroupRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectGroupRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -46,7 +46,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ProjectGroup record = await this.projectGroupRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de3d608ce519c243cf84fdcaf20998d6</Hash>
+    <Hash>36d447d019b379a9cb757c595c904cfb</Hash>
 </Codenesium>*/

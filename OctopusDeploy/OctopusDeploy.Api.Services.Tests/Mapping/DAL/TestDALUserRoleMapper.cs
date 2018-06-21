@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "UserRole")]
         [Trait("Area", "DALMapper")]
-        public class TestDALUserRoleActionMapper
+        public class TestDALUserRoleMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALUserRoleMapper();
-
                         var bo = new BOUserRole();
-
                         bo.SetProperties("A", "A", "A");
 
                         UserRole response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALUserRoleMapper();
-
                         UserRole entity = new UserRole();
-
                         entity.SetProperties("A", "A", "A");
 
-                        BOUserRole  response = mapper.MapEFToBO(entity);
+                        BOUserRole response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.JSON.Should().Be("A");
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALUserRoleMapper();
-
                         UserRole entity = new UserRole();
-
                         entity.SetProperties("A", "A", "A");
 
                         List<BOUserRole> response = mapper.MapEFToBO(new List<UserRole>() { entity });
@@ -61,5 +55,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>566062761ad8df01ebfd01d876128a76</Hash>
+    <Hash>7ed09556c9503345e0fd02197851c915</Hash>
 </Codenesium>*/

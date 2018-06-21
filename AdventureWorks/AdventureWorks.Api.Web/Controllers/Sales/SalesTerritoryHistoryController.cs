@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/salesTerritoryHistories")]
         [ApiVersion("1.0")]
-        public class SalesTerritoryHistoryController: AbstractSalesTerritoryHistoryController
+        public class SalesTerritoryHistoryController : AbstractSalesTerritoryHistoryController
         {
                 public SalesTerritoryHistoryController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4a3f2cf3792e41bfa96626a028525930</Hash>
+    <Hash>ca04dc426aef64cc2ee50f40ee1ce87a</Hash>
 </Codenesium>*/

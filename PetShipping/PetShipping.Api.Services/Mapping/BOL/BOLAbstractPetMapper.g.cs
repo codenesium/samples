@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOPet boPet = new BOPet();
-
                         boPet.SetProperties(
                                 id,
                                 model.BreedId,
@@ -49,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d121c174df5adf8ee304023bce78b24</Hash>
+    <Hash>bc3934b562c84350cacb44fe65251bda</Hash>
 </Codenesium>*/

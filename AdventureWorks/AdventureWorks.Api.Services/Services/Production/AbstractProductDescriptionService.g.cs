@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductDescriptionService: AbstractService
+        public abstract class AbstractProductDescriptionService : AbstractService
         {
                 private IProductDescriptionRepository productDescriptionRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IProductDescriptionRepository productDescriptionRepository,
                         IApiProductDescriptionRequestModelValidator productDescriptionModelValidator,
                         IBOLProductDescriptionMapper bolProductDescriptionMapper,
-                        IDALProductDescriptionMapper dalProductDescriptionMapper
-
-                        ,
+                        IDALProductDescriptionMapper dalProductDescriptionMapper,
                         IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-
-                        )
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
                         : base()
-
                 {
                         this.productDescriptionRepository = productDescriptionRepository;
                         this.productDescriptionModelValidator = productDescriptionModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductDescriptionResponseModel> response = new CreateResponse<ApiProductDescriptionResponseModel>(await this.productDescriptionModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductDescriptionMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductDescriptionMapper.MapModelToBO(default(int), model);
                                 var record = await this.productDescriptionRepository.Create(this.dalProductDescriptionMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductDescriptionMapper.MapBOToModel(this.dalProductDescriptionMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductDescriptionRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productDescriptionModelValidator.ValidateUpdateAsync(productDescriptionID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductDescriptionMapper.MapModelToBO(productDescriptionID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int productDescriptionID)
                 {
                         ActionResponse response = new ActionResponse(await this.productDescriptionModelValidator.ValidateDeleteAsync(productDescriptionID));
-
                         if (response.Success)
                         {
                                 await this.productDescriptionRepository.Delete(productDescriptionID);
@@ -126,5 +119,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6c8b095c84b69989ca4538633eb121a7</Hash>
+    <Hash>252531191fd0906d5506f1a497b0246b</Hash>
 </Codenesium>*/

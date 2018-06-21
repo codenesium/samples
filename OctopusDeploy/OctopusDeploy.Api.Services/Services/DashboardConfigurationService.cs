@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DashboardConfigurationService: AbstractDashboardConfigurationService, IDashboardConfigurationService
+        public class DashboardConfigurationService : AbstractDashboardConfigurationService, IDashboardConfigurationService
         {
                 public DashboardConfigurationService(
                         ILogger<IDashboardConfigurationRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
                         IBOLDashboardConfigurationMapper boldashboardConfigurationMapper,
                         IDALDashboardConfigurationMapper daldashboardConfigurationMapper
-
                         )
                         : base(logger,
                                dashboardConfigurationRepository,
                                dashboardConfigurationModelValidator,
                                boldashboardConfigurationMapper,
-                               daldashboardConfigurationMapper
-                               )
+                               daldashboardConfigurationMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2ced9b4f555bd66f91446db578e72f21</Hash>
+    <Hash>512bdab88809d2472f53e1496a89a9a7</Hash>
 </Codenesium>*/

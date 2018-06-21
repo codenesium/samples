@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLLessonStatusMapper: BOLAbstractLessonStatusMapper, IBOLLessonStatusMapper
+        public class BOLLessonStatusMapper : BOLAbstractLessonStatusMapper, IBOLLessonStatusMapper
         {
                 public BOLLessonStatusMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98d60e618d9f07a8ba685a2c675d72fd</Hash>
+    <Hash>c96f8ea1766bd64a4a0c94478d512610</Hash>
 </Codenesium>*/

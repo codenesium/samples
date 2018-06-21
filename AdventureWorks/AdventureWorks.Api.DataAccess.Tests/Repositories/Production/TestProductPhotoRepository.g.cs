@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 
                         ProductPhoto entity = new ProductPhoto();
-
                         context.Set<ProductPhoto>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 
                         ProductPhoto entity = new ProductPhoto();
-
                         context.Set<ProductPhoto>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductPhotoRepository(loggerMoc.Object, context);
 
                         var entity = new ProductPhoto();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProductPhoto>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductPhotoRepository>> loggerMoc = ProductPhotoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
                         var repository = new ProductPhotoRepository(loggerMoc.Object, context);
-
                         ProductPhoto entity = new ProductPhoto();
-
                         context.Set<ProductPhoto>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductPhotoRepository>> loggerMoc = ProductPhotoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
                         var repository = new ProductPhotoRepository(loggerMoc.Object, context);
-
                         ProductPhoto entity = new ProductPhoto();
-
                         context.Set<ProductPhoto>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductPhotoRepository>> loggerMoc = ProductPhotoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductPhotoRepositoryMoc.GetContext();
                         var repository = new ProductPhotoRepository(loggerMoc.Object, context);
-
                         ProductPhoto entity = new ProductPhoto();
-
                         context.Set<ProductPhoto>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ProductPhotoID);
 
                         ProductPhoto modifiedRecord = await context.Set<ProductPhoto>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2f8b7efc845ccdbf05e53f8067e39d67</Hash>
+    <Hash>be5cf1f420fa4f84690d79e91e571f5f</Hash>
 </Codenesium>*/

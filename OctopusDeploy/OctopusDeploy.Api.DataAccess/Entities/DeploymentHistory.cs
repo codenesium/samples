@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("DeploymentHistory", Schema="dbo")]
-        public partial class DeploymentHistory: AbstractEntity
+        public partial class DeploymentHistory : AbstractEntity
         {
                 public DeploymentHistory()
                 {
@@ -58,72 +58,72 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.TenantName = tenantName;
                 }
 
-                [Column("ChannelId", TypeName="nvarchar(50)")]
+                [Column("ChannelId")]
                 public string ChannelId { get; private set; }
 
-                [Column("ChannelName", TypeName="nvarchar(200)")]
+                [Column("ChannelName")]
                 public string ChannelName { get; private set; }
 
-                [Column("CompletedTime", TypeName="datetimeoffset")]
+                [Column("CompletedTime")]
                 public Nullable<DateTimeOffset> CompletedTime { get; private set; }
 
-                [Column("Created", TypeName="datetimeoffset")]
+                [Column("Created")]
                 public DateTimeOffset Created { get; private set; }
 
-                [Column("DeployedBy", TypeName="nvarchar(200)")]
+                [Column("DeployedBy")]
                 public string DeployedBy { get; private set; }
 
                 [Key]
-                [Column("DeploymentId", TypeName="nvarchar(50)")]
+                [Column("DeploymentId")]
                 public string DeploymentId { get; private set; }
 
-                [Column("DeploymentName", TypeName="nvarchar(200)")]
+                [Column("DeploymentName")]
                 public string DeploymentName { get; private set; }
 
-                [Column("DurationSeconds", TypeName="int")]
+                [Column("DurationSeconds")]
                 public Nullable<int> DurationSeconds { get; private set; }
 
-                [Column("EnvironmentId", TypeName="nvarchar(50)")]
+                [Column("EnvironmentId")]
                 public string EnvironmentId { get; private set; }
 
-                [Column("EnvironmentName", TypeName="nvarchar(200)")]
+                [Column("EnvironmentName")]
                 public string EnvironmentName { get; private set; }
 
-                [Column("ProjectId", TypeName="nvarchar(50)")]
+                [Column("ProjectId")]
                 public string ProjectId { get; private set; }
 
-                [Column("ProjectName", TypeName="nvarchar(200)")]
+                [Column("ProjectName")]
                 public string ProjectName { get; private set; }
 
-                [Column("ProjectSlug", TypeName="nvarchar(210)")]
+                [Column("ProjectSlug")]
                 public string ProjectSlug { get; private set; }
 
-                [Column("QueueTime", TypeName="datetimeoffset")]
+                [Column("QueueTime")]
                 public DateTimeOffset QueueTime { get; private set; }
 
-                [Column("ReleaseId", TypeName="nvarchar(150)")]
+                [Column("ReleaseId")]
                 public string ReleaseId { get; private set; }
 
-                [Column("ReleaseVersion", TypeName="nvarchar(100)")]
+                [Column("ReleaseVersion")]
                 public string ReleaseVersion { get; private set; }
 
-                [Column("StartTime", TypeName="datetimeoffset")]
+                [Column("StartTime")]
                 public Nullable<DateTimeOffset> StartTime { get; private set; }
 
-                [Column("TaskId", TypeName="nvarchar(50)")]
+                [Column("TaskId")]
                 public string TaskId { get; private set; }
 
-                [Column("TaskState", TypeName="nvarchar(50)")]
+                [Column("TaskState")]
                 public string TaskState { get; private set; }
 
-                [Column("TenantId", TypeName="nvarchar(50)")]
+                [Column("TenantId")]
                 public string TenantId { get; private set; }
 
-                [Column("TenantName", TypeName="nvarchar(200)")]
+                [Column("TenantName")]
                 public string TenantName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>580fda5526a9a2b9e8e7c0eada04f294</Hash>
+    <Hash>ed00cf79b140d06ee672e9993a5b144d</Hash>
 </Codenesium>*/

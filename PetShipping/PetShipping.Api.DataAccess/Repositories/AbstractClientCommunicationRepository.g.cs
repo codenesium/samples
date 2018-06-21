@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractClientCommunicationRepository: AbstractRepository
+        public abstract class AbstractClientCommunicationRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Client> GetClient(int clientId)
+                {
+                        return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
+                }
+
+                public async virtual Task<Employee> GetEmployee(int employeeId)
+                {
+                        return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
+                }
+
                 protected async Task<List<ClientCommunication>> Where(
                         Expression<Func<ClientCommunication, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Client> GetClient(int clientId)
-                {
-                        return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
-                }
-                public async virtual Task<Employee> GetEmployee(int employeeId)
-                {
-                        return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>52f27c9e2c28ac6f0db60c65eb53c448</Hash>
+    <Hash>c8ab6fcf212b3bdbf3e50b1a39804bb2</Hash>
 </Codenesium>*/

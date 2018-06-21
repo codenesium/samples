@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLJobCandidateMapper: BOLAbstractJobCandidateMapper, IBOLJobCandidateMapper
+        public class BOLJobCandidateMapper : BOLAbstractJobCandidateMapper, IBOLJobCandidateMapper
         {
                 public BOLJobCandidateMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73fe568299164e645382896cafa6bf7b</Hash>
+    <Hash>23d5e3e6e6a2751d920d45de5a8de904</Hash>
 </Codenesium>*/

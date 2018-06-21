@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOEvent boEvent = new BOEvent();
-
                         boEvent.SetProperties(
                                 id,
                                 model.Address1,
@@ -55,5 +54,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e675370d937d4d6252c615d7bfeb605</Hash>
+    <Hash>5a411997809ed78cb233032531d6848c</Hash>
 </Codenesium>*/

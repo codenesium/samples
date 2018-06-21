@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractTeacherSkillRepository: AbstractRepository
+        public abstract class AbstractTeacherSkillRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,21 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Rate>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Rate>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
+                }
+
+                public async virtual Task<List<TeacherXTeacherSkill>> TeacherXTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<TeacherXTeacherSkill>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherXTeacherSkill>();
+                }
+
+                public async virtual Task<Studio> GetStudio(int studioId)
+                {
+                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
+                }
+
                 protected async Task<List<TeacherSkill>> Where(
                         Expression<Func<TeacherSkill, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,23 +119,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Rate>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Rate>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
-                }
-                public async virtual Task<List<TeacherXTeacherSkill>> TeacherXTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<TeacherXTeacherSkill>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherXTeacherSkill>();
-                }
-
-                public async virtual Task<Studio> GetStudio(int studioId)
-                {
-                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>babacb5e899b7ecbbe4dabefafa213f6</Hash>
+    <Hash>811fbc1821bb66688e6ad226d8e7daf1</Hash>
 </Codenesium>*/

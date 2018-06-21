@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractLessonXTeacherService: AbstractService
+        public abstract class AbstractLessonXTeacherService : AbstractService
         {
                 private ILessonXTeacherRepository lessonXTeacherRepository;
 
@@ -29,11 +29,8 @@ namespace FermataFishNS.Api.Services
                         ILessonXTeacherRepository lessonXTeacherRepository,
                         IApiLessonXTeacherRequestModelValidator lessonXTeacherModelValidator,
                         IBOLLessonXTeacherMapper bolLessonXTeacherMapper,
-                        IDALLessonXTeacherMapper dalLessonXTeacherMapper
-
-                        )
+                        IDALLessonXTeacherMapper dalLessonXTeacherMapper)
                         : base()
-
                 {
                         this.lessonXTeacherRepository = lessonXTeacherRepository;
                         this.lessonXTeacherModelValidator = lessonXTeacherModelValidator;
@@ -69,7 +66,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiLessonXTeacherResponseModel> response = new CreateResponse<ApiLessonXTeacherResponseModel>(await this.lessonXTeacherModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolLessonXTeacherMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolLessonXTeacherMapper.MapModelToBO(default(int), model);
                                 var record = await this.lessonXTeacherRepository.Create(this.dalLessonXTeacherMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace FermataFishNS.Api.Services
                         ApiLessonXTeacherRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolLessonXTeacherMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.lessonXTeacherModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.lessonXTeacherRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>674fed3b70471145005f2f268f3d8044</Hash>
+    <Hash>e1844c82a2793de3d267d8818f36890d</Hash>
 </Codenesium>*/

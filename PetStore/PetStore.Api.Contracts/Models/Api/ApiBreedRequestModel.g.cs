@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public partial class ApiBreedRequestModel: AbstractApiRequestModel
+        public partial class ApiBreedRequestModel : AbstractApiRequestModel
         {
-                public ApiBreedRequestModel() : base()
+                public ApiBreedRequestModel()
+                        : base()
                 {
                 }
 
@@ -37,5 +38,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>32b327d998614308db0a4484bc0e05ce</Hash>
+    <Hash>4f0d316e40e779c2bf09c8beca5f9663</Hash>
 </Codenesium>*/

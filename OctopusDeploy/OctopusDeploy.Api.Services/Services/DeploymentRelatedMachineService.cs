@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DeploymentRelatedMachineService: AbstractDeploymentRelatedMachineService, IDeploymentRelatedMachineService
+        public class DeploymentRelatedMachineService : AbstractDeploymentRelatedMachineService, IDeploymentRelatedMachineService
         {
                 public DeploymentRelatedMachineService(
                         ILogger<IDeploymentRelatedMachineRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiDeploymentRelatedMachineRequestModelValidator deploymentRelatedMachineModelValidator,
                         IBOLDeploymentRelatedMachineMapper boldeploymentRelatedMachineMapper,
                         IDALDeploymentRelatedMachineMapper daldeploymentRelatedMachineMapper
-
                         )
                         : base(logger,
                                deploymentRelatedMachineRepository,
                                deploymentRelatedMachineModelValidator,
                                boldeploymentRelatedMachineMapper,
-                               daldeploymentRelatedMachineMapper
-                               )
+                               daldeploymentRelatedMachineMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>995b7392a87b643258a13544bf359992</Hash>
+    <Hash>fd1341cb8536899c49f46a8cd54fd723</Hash>
 </Codenesium>*/

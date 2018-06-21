@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALKeyAllocationMapper: DALAbstractKeyAllocationMapper, IDALKeyAllocationMapper
+        public class DALKeyAllocationMapper : DALAbstractKeyAllocationMapper, IDALKeyAllocationMapper
         {
                 public DALKeyAllocationMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>71af32cef2bfb5234877585459bd02a4</Hash>
+    <Hash>d8f0033a08374e99524e4b1893f1c043</Hash>
 </Codenesium>*/

@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/projectTriggers")]
         [ApiVersion("1.0")]
-        public class ProjectTriggerController: AbstractProjectTriggerController
+        public class ProjectTriggerController : AbstractProjectTriggerController
         {
                 public ProjectTriggerController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d1205f70ead71f572f8ffe0f3f5ca87a</Hash>
+    <Hash>7cbd31b3c4768156a68c6f0e297abd22</Hash>
 </Codenesium>*/

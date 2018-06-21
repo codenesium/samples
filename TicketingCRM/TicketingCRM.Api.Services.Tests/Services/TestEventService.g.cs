@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var record = new Event();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        ApiEventResponseModel response = await service.Get(default (int));
+                        ApiEventResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        ApiEventResponseModel response = await service.Get(default (int));
+                        ApiEventResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Event>())).Returns(Task.FromResult(new Event()));
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.EventModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventRequestModel>()));
@@ -118,7 +115,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IEventRepository>();
                         var model = new ApiEventRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new EventService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -146,7 +142,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetCityId(default (int));
+                        List<ApiEventResponseModel> response = await service.GetCityId(default(int));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetCityId(It.IsAny<int>()));
@@ -163,7 +159,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLEventMapperMock,
                                                        mock.DALMapperMockFactory.DALEventMapperMock);
 
-                        List<ApiEventResponseModel> response = await service.GetCityId(default (int));
+                        List<ApiEventResponseModel> response = await service.GetCityId(default(int));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetCityId(It.IsAny<int>()));
@@ -172,5 +168,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4a14a3b9ce8712fc299c4624b6b1232f</Hash>
+    <Hash>00467ec59521c1c072de44c31382417b</Hash>
 </Codenesium>*/

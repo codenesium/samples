@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("SalesPerson", Schema="Sales")]
-        public partial class SalesPerson: AbstractEntity
+        public partial class SalesPerson : AbstractEntity
         {
                 public SalesPerson()
                 {
@@ -34,32 +34,32 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.TerritoryID = territoryID;
                 }
 
-                [Column("Bonus", TypeName="money")]
+                [Column("Bonus")]
                 public decimal Bonus { get; private set; }
 
                 [Key]
-                [Column("BusinessEntityID", TypeName="int")]
+                [Column("BusinessEntityID")]
                 public int BusinessEntityID { get; private set; }
 
-                [Column("CommissionPct", TypeName="smallmoney")]
+                [Column("CommissionPct")]
                 public decimal CommissionPct { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("SalesLastYear", TypeName="money")]
+                [Column("SalesLastYear")]
                 public decimal SalesLastYear { get; private set; }
 
-                [Column("SalesQuota", TypeName="money")]
+                [Column("SalesQuota")]
                 public Nullable<decimal> SalesQuota { get; private set; }
 
-                [Column("SalesYTD", TypeName="money")]
+                [Column("SalesYTD")]
                 public decimal SalesYTD { get; private set; }
 
-                [Column("TerritoryID", TypeName="int")]
+                [Column("TerritoryID")]
                 public Nullable<int> TerritoryID { get; private set; }
 
                 [ForeignKey("TerritoryID")]
@@ -68,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cb6be11055126de73836abd43762432</Hash>
+    <Hash>0d61146c251914675e3b832ac0af0d36</Hash>
 </Codenesium>*/

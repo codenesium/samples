@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new CountryRepository(loggerMoc.Object, context);
 
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new CountryRepository(loggerMoc.Object, context);
 
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new CountryRepository(loggerMoc.Object, context);
 
                         var entity = new Country();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Country>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRepositoryMoc.GetContext();
                         var repository = new CountryRepository(loggerMoc.Object, context);
-
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRepositoryMoc.GetContext();
                         var repository = new CountryRepository(loggerMoc.Object, context);
-
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<CountryRepository>> loggerMoc = CountryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CountryRepositoryMoc.GetContext();
                         var repository = new CountryRepository(loggerMoc.Object, context);
-
                         Country entity = new Country();
-
                         context.Set<Country>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Country modifiedRecord = await context.Set<Country>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fb211a6a3d8659cdd75d1be8db3028ce</Hash>
+    <Hash>918084a383cc9e6da103f455425fe831</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FileServiceNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Bucket")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLBucketActionMapper
+        public class TestBOLBucketMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLBucketMapper();
-
                         ApiBucketRequestModel model = new ApiBucketRequestModel();
-
                         model.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
                         BOBucket response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLBucketMapper();
-
                         BOBucket bo = new BOBucket();
-
                         bo.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
                         ApiBucketResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLBucketMapper();
-
                         BOBucket bo = new BOBucket();
-
                         bo.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
                         List<ApiBucketResponseModel> response = mapper.MapBOToModel(new List<BOBucket>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f26e0caf25e33ba7867faf0ca081346f</Hash>
+    <Hash>f09a11005ae3bbd3a8cd653544072f9d</Hash>
 </Codenesium>*/

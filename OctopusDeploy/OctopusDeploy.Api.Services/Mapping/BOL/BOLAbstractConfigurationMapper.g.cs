@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOConfiguration boConfiguration = new BOConfiguration();
-
                         boConfiguration.SetProperties(
                                 id,
                                 model.JSON);
@@ -46,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e7991e7a116eda173f2089586ad337c</Hash>
+    <Hash>ab792c79a89c5421e9d0803a6d2c1519</Hash>
 </Codenesium>*/

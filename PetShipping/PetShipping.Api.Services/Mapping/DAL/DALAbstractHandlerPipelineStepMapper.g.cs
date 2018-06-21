@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetShippingNS.Api.Services
                         BOHandlerPipelineStep bo)
                 {
                         HandlerPipelineStep efHandlerPipelineStep = new HandlerPipelineStep();
-
                         efHandlerPipelineStep.SetProperties(
                                 bo.HandlerId,
                                 bo.Id,
@@ -48,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2ab40e63f0c78f64f9338efd1f03528</Hash>
+    <Hash>f9e5d3c5f478414b3fcd0134b9c8bdf3</Hash>
 </Codenesium>*/

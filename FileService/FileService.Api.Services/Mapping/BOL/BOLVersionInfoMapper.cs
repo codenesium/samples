@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-        public class BOLVersionInfoMapper: BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
+        public class BOLVersionInfoMapper : BOLAbstractVersionInfoMapper, IBOLVersionInfoMapper
         {
                 public BOLVersionInfoMapper()
                 {
@@ -14,5 +14,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>852e97a49f16a49316ab810934376e98</Hash>
+    <Hash>a1be1e50d9da41d0a05675f007a36ea1</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Event", Schema="dbo")]
-        public partial class Event:AbstractEntity
+        public partial class Event : AbstractEntity
         {
                 public Event()
                 {
@@ -40,45 +40,45 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Username = username;
                 }
 
-                [Column("AutoId", TypeName="bigint")]
+                [Column("AutoId")]
                 public long AutoId { get; private set; }
 
-                [Column("Category", TypeName="nvarchar(50)")]
+                [Column("Category")]
                 public string Category { get; private set; }
 
-                [Column("EnvironmentId", TypeName="nvarchar(50)")]
+                [Column("EnvironmentId")]
                 public string EnvironmentId { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Message", TypeName="nvarchar(-1)")]
+                [Column("Message")]
                 public string Message { get; private set; }
 
-                [Column("Occurred", TypeName="datetimeoffset")]
+                [Column("Occurred")]
                 public DateTimeOffset Occurred { get; private set; }
 
-                [Column("ProjectId", TypeName="nvarchar(50)")]
+                [Column("ProjectId")]
                 public string ProjectId { get; private set; }
 
-                [Column("RelatedDocumentIds", TypeName="nvarchar(-1)")]
+                [Column("RelatedDocumentIds")]
                 public string RelatedDocumentIds { get; private set; }
 
-                [Column("TenantId", TypeName="nvarchar(50)")]
+                [Column("TenantId")]
                 public string TenantId { get; private set; }
 
-                [Column("UserId", TypeName="nvarchar(50)")]
+                [Column("UserId")]
                 public string UserId { get; private set; }
 
-                [Column("Username", TypeName="nvarchar(200)")]
+                [Column("Username")]
                 public string Username { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>1866810e494efcb2f9284b18c22356ef</Hash>
+    <Hash>03cb8447c725aefb0ab8aca0bcdd4cd2</Hash>
 </Codenesium>*/

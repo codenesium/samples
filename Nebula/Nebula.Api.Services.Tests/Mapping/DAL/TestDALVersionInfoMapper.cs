@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "VersionInfo")]
         [Trait("Area", "DALMapper")]
-        public class TestDALVersionInfoActionMapper
+        public class TestDALVersionInfoMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALVersionInfoMapper();
-
                         var bo = new BOVersionInfo();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         VersionInfo response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALVersionInfoMapper();
-
                         VersionInfo entity = new VersionInfo();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
-                        BOVersionInfo  response = mapper.MapEFToBO(entity);
+                        BOVersionInfo response = mapper.MapEFToBO(entity);
 
                         response.AppliedOn.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Description.Should().Be("A");
@@ -48,9 +44,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALVersionInfoMapper();
-
                         VersionInfo entity = new VersionInfo();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
                         List<BOVersionInfo> response = mapper.MapEFToBO(new List<VersionInfo>() { entity });
@@ -61,5 +55,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7a61081aa77ed8f5f933ff99be031d65</Hash>
+    <Hash>adf04bc5e8d443109cccf4c740c1cebc</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace PetShippingNS.Api.DataAccess
                 Task<List<ClientCommunication>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Client> GetClient(int clientId);
+
                 Task<Employee> GetEmployee(int employeeId);
         }
 }
 
 /*<Codenesium>
-    <Hash>fded0ef0710f7a0aecf77be2e9c66678</Hash>
+    <Hash>9e9be679b76f80b663b4118df4a63666</Hash>
 </Codenesium>*/

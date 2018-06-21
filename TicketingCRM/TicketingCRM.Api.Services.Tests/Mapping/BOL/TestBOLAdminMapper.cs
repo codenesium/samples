@@ -1,25 +1,23 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Admin")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLAdminActionMapper
+        public class TestBOLAdminMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLAdminMapper();
-
                         ApiAdminRequestModel model = new ApiAdminRequestModel();
-
                         model.SetProperties("A", "A", "A", "A", "A", "A");
                         BOAdmin response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLAdminMapper();
-
                         BOAdmin bo = new BOAdmin();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A", "A");
                         ApiAdminResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLAdminMapper();
-
                         BOAdmin bo = new BOAdmin();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A", "A");
                         List<ApiAdminResponseModel> response = mapper.MapBOToModel(new List<BOAdmin>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4c801ce2858abf83910400b9998d52a0</Hash>
+    <Hash>25393806e3e44a2ceb7d101c9fd941d5</Hash>
 </Codenesium>*/

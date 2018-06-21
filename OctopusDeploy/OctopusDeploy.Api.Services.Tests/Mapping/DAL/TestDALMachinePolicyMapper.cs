@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "MachinePolicy")]
         [Trait("Area", "DALMapper")]
-        public class TestDALMachinePolicyActionMapper
+        public class TestDALMachinePolicyMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALMachinePolicyMapper();
-
                         var bo = new BOMachinePolicy();
-
                         bo.SetProperties("A", true, "A", "A");
 
                         MachinePolicy response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALMachinePolicyMapper();
-
                         MachinePolicy entity = new MachinePolicy();
-
                         entity.SetProperties("A", true, "A", "A");
 
-                        BOMachinePolicy  response = mapper.MapEFToBO(entity);
+                        BOMachinePolicy response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.IsDefault.Should().Be(true);
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALMachinePolicyMapper();
-
                         MachinePolicy entity = new MachinePolicy();
-
                         entity.SetProperties("A", true, "A", "A");
 
                         List<BOMachinePolicy> response = mapper.MapEFToBO(new List<MachinePolicy>() { entity });
@@ -63,5 +57,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e711898a5796ccb53229a72d73b0d23e</Hash>
+    <Hash>71233e61e03222e40b5a0bcbc7bb2c95</Hash>
 </Codenesium>*/

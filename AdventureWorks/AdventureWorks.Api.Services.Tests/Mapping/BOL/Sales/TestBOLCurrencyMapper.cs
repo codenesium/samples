@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Currency")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCurrencyActionMapper
+        public class TestBOLCurrencyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCurrencyMapper();
-
                         ApiCurrencyRequestModel model = new ApiCurrencyRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOCurrency response = mapper.MapModelToBO("A", model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCurrencyMapper();
-
                         BOCurrency bo = new BOCurrency();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiCurrencyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCurrencyMapper();
-
                         BOCurrency bo = new BOCurrency();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiCurrencyResponseModel> response = mapper.MapBOToModel(new List<BOCurrency>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4af8375ebdabc5570de945c00348e348</Hash>
+    <Hash>2ec3f33cce02f2bcde05c71afb0fb57f</Hash>
 </Codenesium>*/

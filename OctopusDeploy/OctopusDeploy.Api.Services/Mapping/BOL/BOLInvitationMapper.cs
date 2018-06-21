@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLInvitationMapper: BOLAbstractInvitationMapper, IBOLInvitationMapper
+        public class BOLInvitationMapper : BOLAbstractInvitationMapper, IBOLInvitationMapper
         {
                 public BOLInvitationMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db5afc06f1fef9fdbbdcc3cfc7aa3382</Hash>
+    <Hash>78552c72fe44a9247707a6d1a1dfa23e</Hash>
 </Codenesium>*/

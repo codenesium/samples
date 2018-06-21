@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOTransaction bo)
                 {
                         Transaction efTransaction = new Transaction();
-
                         efTransaction.SetProperties(
                                 bo.Amount,
                                 bo.GatewayConfirmationNumber,
@@ -50,5 +49,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2611f92f5c050fd55c5bb8aaaa74cbe8</Hash>
+    <Hash>0a811d386dc4277187045063eea17fdc</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Team")]
         [Trait("Area", "DALMapper")]
-        public class TestDALTeamActionMapper
+        public class TestDALTeamMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALTeamMapper();
-
                         var bo = new BOTeam();
-
                         bo.SetProperties(1, "A", 1);
 
                         Team response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALTeamMapper();
-
                         Team entity = new Team();
-
                         entity.SetProperties(1, "A", 1);
 
-                        BOTeam  response = mapper.MapEFToBO(entity);
+                        BOTeam response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -48,9 +44,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALTeamMapper();
-
                         Team entity = new Team();
-
                         entity.SetProperties(1, "A", 1);
 
                         List<BOTeam> response = mapper.MapEFToBO(new List<Team>() { entity });
@@ -61,5 +55,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>24ca22bdca05a639687d91fbeee7cae7</Hash>
+    <Hash>9ecce8254fcbeacff489c008ed32a9bd</Hash>
 </Codenesium>*/

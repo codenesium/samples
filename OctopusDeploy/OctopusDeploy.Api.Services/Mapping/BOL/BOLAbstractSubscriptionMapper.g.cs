@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOSubscription boSubscription = new BOSubscription();
-
                         boSubscription.SetProperties(
                                 id,
                                 model.IsDisabled,
@@ -49,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d55d8189aa48a71ffb5e728dc272f3b</Hash>
+    <Hash>ff6e81652e57f3d11851aa17f27c8f31</Hash>
 </Codenesium>*/

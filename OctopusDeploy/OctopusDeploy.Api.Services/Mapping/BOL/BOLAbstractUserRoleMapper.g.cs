@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOUserRole boUserRole = new BOUserRole();
-
                         boUserRole.SetProperties(
                                 id,
                                 model.JSON,
@@ -47,5 +46,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c1e637940c29f2efc07445d9a01095d</Hash>
+    <Hash>620a797024b8fac1a08e3013e808bcf3</Hash>
 </Codenesium>*/

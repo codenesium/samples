@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class SchemaVersionsRepository: AbstractSchemaVersionsRepository, ISchemaVersionsRepository
+        public class SchemaVersionsRepository : AbstractSchemaVersionsRepository, ISchemaVersionsRepository
         {
                 public SchemaVersionsRepository(
                         ILogger<SchemaVersionsRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>efe53d348e515defa69da97131227721</Hash>
+    <Hash>918f894c28b18c1f55f513b785f30eb2</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractUnitMeasureService: AbstractService
+        public abstract class AbstractUnitMeasureService : AbstractService
         {
                 private IUnitMeasureRepository unitMeasureRepository;
 
@@ -36,18 +36,12 @@ namespace AdventureWorksNS.Api.Services
                         IUnitMeasureRepository unitMeasureRepository,
                         IApiUnitMeasureRequestModelValidator unitMeasureModelValidator,
                         IBOLUnitMeasureMapper bolUnitMeasureMapper,
-                        IDALUnitMeasureMapper dalUnitMeasureMapper
-
-                        ,
+                        IDALUnitMeasureMapper dalUnitMeasureMapper,
                         IBOLBillOfMaterialsMapper bolBillOfMaterialsMapper,
-                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper
-                        ,
+                        IDALBillOfMaterialsMapper dalBillOfMaterialsMapper,
                         IBOLProductMapper bolProductMapper,
-                        IDALProductMapper dalProductMapper
-
-                        )
+                        IDALProductMapper dalProductMapper)
                         : base()
-
                 {
                         this.unitMeasureRepository = unitMeasureRepository;
                         this.unitMeasureModelValidator = unitMeasureModelValidator;
@@ -87,7 +81,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiUnitMeasureResponseModel> response = new CreateResponse<ApiUnitMeasureResponseModel>(await this.unitMeasureModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolUnitMeasureMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolUnitMeasureMapper.MapModelToBO(default(string), model);
                                 var record = await this.unitMeasureRepository.Create(this.dalUnitMeasureMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolUnitMeasureMapper.MapBOToModel(this.dalUnitMeasureMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiUnitMeasureRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateUpdateAsync(unitMeasureCode, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolUnitMeasureMapper.MapModelToBO(unitMeasureCode, model);
@@ -115,7 +108,6 @@ namespace AdventureWorksNS.Api.Services
                         string unitMeasureCode)
                 {
                         ActionResponse response = new ActionResponse(await this.unitMeasureModelValidator.ValidateDeleteAsync(unitMeasureCode));
-
                         if (response.Success)
                         {
                                 await this.unitMeasureRepository.Delete(unitMeasureCode);
@@ -144,6 +136,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolBillOfMaterialsMapper.MapBOToModel(this.dalBillOfMaterialsMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Product> records = await this.unitMeasureRepository.Products(sizeUnitMeasureCode, limit, offset);
@@ -154,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfb356100664b4e1fc233c31cc6b0f66</Hash>
+    <Hash>21f4d3708dd872eed500156fbcbe8442</Hash>
 </Codenesium>*/

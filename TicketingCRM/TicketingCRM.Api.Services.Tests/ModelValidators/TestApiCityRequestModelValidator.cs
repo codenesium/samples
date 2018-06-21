@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCityRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCityRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCityRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -70,8 +67,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCityRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCityRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
@@ -122,8 +116,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiCityRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ProvinceId, 1);
                 }
@@ -136,7 +129,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiCityRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProvinceId, 1);
                 }
@@ -144,5 +137,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>335ae5c733e6284da13fa931d6203b9a</Hash>
+    <Hash>28db78a3bf9ba619f4ef739412465eed</Hash>
 </Codenesium>*/

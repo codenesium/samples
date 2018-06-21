@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new InvitationRepository(loggerMoc.Object, context);
 
                         Invitation entity = new Invitation();
-
                         context.Set<Invitation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new InvitationRepository(loggerMoc.Object, context);
 
                         Invitation entity = new Invitation();
-
                         context.Set<Invitation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new InvitationRepository(loggerMoc.Object, context);
 
                         var entity = new Invitation();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Invitation>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<InvitationRepository>> loggerMoc = InvitationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = InvitationRepositoryMoc.GetContext();
                         var repository = new InvitationRepository(loggerMoc.Object, context);
-
                         Invitation entity = new Invitation();
-
                         context.Set<Invitation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<InvitationRepository>> loggerMoc = InvitationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = InvitationRepositoryMoc.GetContext();
                         var repository = new InvitationRepository(loggerMoc.Object, context);
-
                         Invitation entity = new Invitation();
-
                         context.Set<Invitation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<InvitationRepository>> loggerMoc = InvitationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = InvitationRepositoryMoc.GetContext();
                         var repository = new InvitationRepository(loggerMoc.Object, context);
-
                         Invitation entity = new Invitation();
-
                         context.Set<Invitation>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Invitation modifiedRecord = await context.Set<Invitation>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>330c71e141587ae1e3c6e0e3040366b7</Hash>
+    <Hash>d58b18f148f8b2da63b933c2bf599857</Hash>
 </Codenesium>*/

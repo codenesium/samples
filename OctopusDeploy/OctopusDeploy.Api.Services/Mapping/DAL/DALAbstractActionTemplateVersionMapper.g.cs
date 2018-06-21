@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOActionTemplateVersion bo)
                 {
                         ActionTemplateVersion efActionTemplateVersion = new ActionTemplateVersion();
-
                         efActionTemplateVersion.SetProperties(
                                 bo.ActionType,
                                 bo.Id,
@@ -54,5 +53,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7fb7a6fcb9a0044635670b5254ed53fe</Hash>
+    <Hash>7655b29e082afccaa6cbfee954233f12</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiCurrencyRateResponseModel: AbstractApiCurrencyRateResponseModel
+        public partial class ApiCurrencyRateResponseModel : AbstractApiCurrencyRateResponseModel
         {
                 public ApiCurrencyRateResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c45721bf53f181b0def8ece90d3a2d80</Hash>
+    <Hash>dde956a5d6d3dbe7ea2c10029c8ebdfe</Hash>
 </Codenesium>*/

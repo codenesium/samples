@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiPasswordRequestModelValidator: AbstractApiPasswordRequestModelValidator, IApiPasswordRequestModelValidator
+        public class ApiPasswordRequestModelValidator : AbstractApiPasswordRequestModelValidator, IApiPasswordRequestModelValidator
         {
                 public ApiPasswordRequestModelValidator(IPasswordRepository passwordRepository)
                         : base(passwordRepository)
@@ -33,11 +33,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>276afa9d6b3e61f63c13b73555b1cbef</Hash>
+    <Hash>1039584c6e780d7c332a0a3e5a19ebf6</Hash>
 </Codenesium>*/

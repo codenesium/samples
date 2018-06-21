@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var record = new ActionTemplateVersion();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ApiActionTemplateVersionResponseModel response = await service.Get(default (string));
+                        ApiActionTemplateVersionResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ApiActionTemplateVersionResponseModel response = await service.Get(default (string));
+                        ApiActionTemplateVersionResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var model = new ApiActionTemplateVersionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ActionTemplateVersion>())).Returns(Task.FromResult(new ActionTemplateVersion()));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var model = new ApiActionTemplateVersionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ActionTemplateVersion>())).Returns(Task.FromResult(new ActionTemplateVersion()));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiActionTemplateVersionRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var model = new ApiActionTemplateVersionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
                         var record = new ActionTemplateVersion();
-
                         mock.RepositoryMock.Setup(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
                                                                        mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ApiActionTemplateVersionResponseModel response = await service.GetNameVersion(default (string), default (int));
+                        ApiActionTemplateVersionResponseModel response = await service.GetNameVersion(default(string), default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        ApiActionTemplateVersionResponseModel response = await service.GetNameVersion(default (string), default (int));
+                        ApiActionTemplateVersionResponseModel response = await service.GetNameVersion(default(string), default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetNameVersion(It.IsAny<string>(), It.IsAny<int>()));
@@ -182,7 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        List<ApiActionTemplateVersionResponseModel> response = await service.GetLatestActionTemplateId(default (string));
+                        List<ApiActionTemplateVersionResponseModel> response = await service.GetLatestActionTemplateId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetLatestActionTemplateId(It.IsAny<string>()));
@@ -199,7 +194,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                        mock.BOLMapperMockFactory.BOLActionTemplateVersionMapperMock,
                                                                        mock.DALMapperMockFactory.DALActionTemplateVersionMapperMock);
 
-                        List<ApiActionTemplateVersionResponseModel> response = await service.GetLatestActionTemplateId(default (string));
+                        List<ApiActionTemplateVersionResponseModel> response = await service.GetLatestActionTemplateId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetLatestActionTemplateId(It.IsAny<string>()));
@@ -208,5 +203,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f7a4fe61e9730e028051a551c888fe54</Hash>
+    <Hash>3153fe2b24cf1d0c950f13970528243e</Hash>
 </Codenesium>*/

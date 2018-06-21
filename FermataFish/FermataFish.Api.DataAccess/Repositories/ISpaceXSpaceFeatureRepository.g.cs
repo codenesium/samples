@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace FermataFishNS.Api.DataAccess
                 Task<List<SpaceXSpaceFeature>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<SpaceFeature> GetSpaceFeature(int spaceFeatureId);
+
                 Task<Space> GetSpace(int spaceId);
         }
 }
 
 /*<Codenesium>
-    <Hash>31b18d798d50b7bc7cacc59e05aa78c0</Hash>
+    <Hash>1953c2ca02fd9d1322eae46904d4b7c9</Hash>
 </Codenesium>*/

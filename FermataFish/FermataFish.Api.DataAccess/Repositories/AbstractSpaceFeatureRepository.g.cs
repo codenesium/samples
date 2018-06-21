@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractSpaceFeatureRepository: AbstractRepository
+        public abstract class AbstractSpaceFeatureRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SpaceXSpaceFeature>().Where(x => x.SpaceFeatureId == spaceFeatureId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
+                }
+
+                public async virtual Task<Studio> GetStudio(int studioId)
+                {
+                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
+                }
+
                 protected async Task<List<SpaceFeature>> Where(
                         Expression<Func<SpaceFeature, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,19 +114,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SpaceXSpaceFeature>().Where(x => x.SpaceFeatureId == spaceFeatureId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
-                }
-
-                public async virtual Task<Studio> GetStudio(int studioId)
-                {
-                        return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>117a2b0ce930dc5ae8b9fd703483d69c</Hash>
+    <Hash>56d073a1da7c28a8ad9d2219a4f66e09</Hash>
 </Codenesium>*/

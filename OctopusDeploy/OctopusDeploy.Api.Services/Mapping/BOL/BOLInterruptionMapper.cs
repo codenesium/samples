@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLInterruptionMapper: BOLAbstractInterruptionMapper, IBOLInterruptionMapper
+        public class BOLInterruptionMapper : BOLAbstractInterruptionMapper, IBOLInterruptionMapper
         {
                 public BOLInterruptionMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8d0c06c883829904dddfbde67fbb59c7</Hash>
+    <Hash>02699b78b2b8cfc2b60d7fd9e824357b</Hash>
 </Codenesium>*/

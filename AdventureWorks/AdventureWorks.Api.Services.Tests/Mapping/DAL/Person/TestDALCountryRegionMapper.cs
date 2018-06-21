@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CountryRegion")]
         [Trait("Area", "DALMapper")]
-        public class TestDALCountryRegionActionMapper
+        public class TestDALCountryRegionMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALCountryRegionMapper();
-
                         var bo = new BOCountryRegion();
-
                         bo.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         CountryRegion response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALCountryRegionMapper();
-
                         CountryRegion entity = new CountryRegion();
-
                         entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        BOCountryRegion  response = mapper.MapEFToBO(entity);
+                        BOCountryRegion response = mapper.MapEFToBO(entity);
 
                         response.CountryRegionCode.Should().Be("A");
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALCountryRegionMapper();
-
                         CountryRegion entity = new CountryRegion();
-
                         entity.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOCountryRegion> response = mapper.MapEFToBO(new List<CountryRegion>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a5479b533d9091266d723418d3ce2aaf</Hash>
+    <Hash>5efa9f546403cbca89ee2a5e8726f95d</Hash>
 </Codenesium>*/

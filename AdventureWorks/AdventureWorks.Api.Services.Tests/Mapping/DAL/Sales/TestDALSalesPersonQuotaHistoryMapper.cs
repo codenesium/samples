@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesPersonQuotaHistory")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSalesPersonQuotaHistoryActionMapper
+        public class TestDALSalesPersonQuotaHistoryMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSalesPersonQuotaHistoryMapper();
-
                         var bo = new BOSalesPersonQuotaHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 
                         SalesPersonQuotaHistory response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSalesPersonQuotaHistoryMapper();
-
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 
-                        BOSalesPersonQuotaHistory  response = mapper.MapEFToBO(entity);
+                        BOSalesPersonQuotaHistory response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSalesPersonQuotaHistoryMapper();
-
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 
                         List<BOSalesPersonQuotaHistory> response = mapper.MapEFToBO(new List<SalesPersonQuotaHistory>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>af1269be372356a3d180d5403ba189ab</Hash>
+    <Hash>8419de6198590827bd426a8b74bb3b1b</Hash>
 </Codenesium>*/

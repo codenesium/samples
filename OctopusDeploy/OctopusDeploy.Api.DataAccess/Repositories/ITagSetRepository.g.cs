@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<TagSet>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<TagSet> GetName(string name);
+
                 Task<List<TagSet>> GetDataVersion(byte[] dataVersion);
         }
 }
 
 /*<Codenesium>
-    <Hash>dae2265c1ac585fef49525b9f470d493</Hash>
+    <Hash>80dea5362ecd997347e34aa183e222ab</Hash>
 </Codenesium>*/

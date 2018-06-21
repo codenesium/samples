@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PipelineStepDestination")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLPipelineStepDestinationActionMapper
+        public class TestBOLPipelineStepDestinationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLPipelineStepDestinationMapper();
-
                         ApiPipelineStepDestinationRequestModel model = new ApiPipelineStepDestinationRequestModel();
-
                         model.SetProperties(1, 1);
                         BOPipelineStepDestination response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLPipelineStepDestinationMapper();
-
                         BOPipelineStepDestination bo = new BOPipelineStepDestination();
-
                         bo.SetProperties(1, 1, 1);
                         ApiPipelineStepDestinationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLPipelineStepDestinationMapper();
-
                         BOPipelineStepDestination bo = new BOPipelineStepDestination();
-
                         bo.SetProperties(1, 1, 1);
                         List<ApiPipelineStepDestinationResponseModel> response = mapper.MapBOToModel(new List<BOPipelineStepDestination>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7bb03024e723173be264e312b08ad7a9</Hash>
+    <Hash>651549bd3281c5d980e7c55bd2525249</Hash>
 </Codenesium>*/

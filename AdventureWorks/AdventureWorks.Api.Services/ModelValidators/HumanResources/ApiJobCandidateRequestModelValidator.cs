@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiJobCandidateRequestModelValidator: AbstractApiJobCandidateRequestModelValidator, IApiJobCandidateRequestModelValidator
+        public class ApiJobCandidateRequestModelValidator : AbstractApiJobCandidateRequestModelValidator, IApiJobCandidateRequestModelValidator
         {
                 public ApiJobCandidateRequestModelValidator(IJobCandidateRepository jobCandidateRepository)
                         : base(jobCandidateRepository)
@@ -31,11 +31,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>72c7c2271e5339181d459aa7ce98de21</Hash>
+    <Hash>d0f2f16cb0d12674c482c2027aabb8fc</Hash>
 </Codenesium>*/

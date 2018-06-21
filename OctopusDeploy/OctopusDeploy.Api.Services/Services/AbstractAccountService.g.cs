@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractAccountService: AbstractService
+        public abstract class AbstractAccountService : AbstractService
         {
                 private IAccountRepository accountRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IAccountRepository accountRepository,
                         IApiAccountRequestModelValidator accountModelValidator,
                         IBOLAccountMapper bolAccountMapper,
-                        IDALAccountMapper dalAccountMapper
-
-                        )
+                        IDALAccountMapper dalAccountMapper)
                         : base()
-
                 {
                         this.accountRepository = accountRepository;
                         this.accountModelValidator = accountModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiAccountResponseModel> response = new CreateResponse<ApiAccountResponseModel>(await this.accountModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolAccountMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolAccountMapper.MapModelToBO(default(string), model);
                                 var record = await this.accountRepository.Create(this.dalAccountMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiAccountRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.accountModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolAccountMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.accountModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.accountRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>276c0a999d0875ddb999b7b4654522a8</Hash>
+    <Hash>a639a7490edbcdbcfdd49b470df3f9ab</Hash>
 </Codenesium>*/

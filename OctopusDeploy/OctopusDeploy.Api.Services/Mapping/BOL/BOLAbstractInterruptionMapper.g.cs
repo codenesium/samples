@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOInterruption boInterruption = new BOInterruption();
-
                         boInterruption.SetProperties(
                                 id,
                                 model.Created,
@@ -55,5 +54,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df2f8f0d2acf1812fbb2169a16ce4760</Hash>
+    <Hash>556a3320006a9ba20958f7a59639e0ea</Hash>
 </Codenesium>*/

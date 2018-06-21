@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Invitation")]
         [Trait("Area", "DALMapper")]
-        public class TestDALInvitationActionMapper
+        public class TestDALInvitationMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALInvitationMapper();
-
                         var bo = new BOInvitation();
-
                         bo.SetProperties("A", "A", "A");
 
                         Invitation response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALInvitationMapper();
-
                         Invitation entity = new Invitation();
-
                         entity.SetProperties("A", "A", "A");
 
-                        BOInvitation  response = mapper.MapEFToBO(entity);
+                        BOInvitation response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.InvitationCode.Should().Be("A");
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALInvitationMapper();
-
                         Invitation entity = new Invitation();
-
                         entity.SetProperties("A", "A", "A");
 
                         List<BOInvitation> response = mapper.MapEFToBO(new List<Invitation>() { entity });
@@ -61,5 +55,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a43751931d499a5d2f38077a79081e99</Hash>
+    <Hash>529a35d775a7611101e9c27f2b68ac38</Hash>
 </Codenesium>*/

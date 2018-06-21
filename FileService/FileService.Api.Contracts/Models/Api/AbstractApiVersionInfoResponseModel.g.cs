@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public abstract class AbstractApiVersionInfoResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiVersionInfoResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         Nullable<DateTime> appliedOn,
@@ -59,5 +59,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e8649f9985777a60165ac622315b8535</Hash>
+    <Hash>584a86ac548c75c196dffe52c856e7dd</Hash>
 </Codenesium>*/

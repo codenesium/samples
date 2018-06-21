@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/octopusServerNodes")]
         [ApiVersion("1.0")]
-        public class OctopusServerNodeController: AbstractOctopusServerNodeController
+        public class OctopusServerNodeController : AbstractOctopusServerNodeController
         {
                 public OctopusServerNodeController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c95d8f93dcdc70c683ab802b13fee4f8</Hash>
+    <Hash>9a7965d5a007b90a49fc06865a386179</Hash>
 </Codenesium>*/

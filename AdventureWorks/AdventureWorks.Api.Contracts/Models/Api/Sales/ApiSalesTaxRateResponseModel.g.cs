@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiSalesTaxRateResponseModel: AbstractApiSalesTaxRateResponseModel
+        public partial class ApiSalesTaxRateResponseModel : AbstractApiSalesTaxRateResponseModel
         {
                 public ApiSalesTaxRateResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5f7c32ad0a7f5ce040f14e042c93f719</Hash>
+    <Hash>0302ea7d0af1258c9e406766c4bd3902</Hash>
 </Codenesium>*/

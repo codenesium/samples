@@ -38,7 +38,6 @@ namespace ESPIOTNS.Api.DataAccess
                         var repository = new DeviceActionRepository(loggerMoc.Object, context);
 
                         DeviceAction entity = new DeviceAction();
-
                         context.Set<DeviceAction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace ESPIOTNS.Api.DataAccess
                         var repository = new DeviceActionRepository(loggerMoc.Object, context);
 
                         DeviceAction entity = new DeviceAction();
-
                         context.Set<DeviceAction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace ESPIOTNS.Api.DataAccess
                         var repository = new DeviceActionRepository(loggerMoc.Object, context);
 
                         var entity = new DeviceAction();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<DeviceAction>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace ESPIOTNS.Api.DataAccess
                         Mock<ILogger<DeviceActionRepository>> loggerMoc = DeviceActionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeviceActionRepositoryMoc.GetContext();
                         var repository = new DeviceActionRepository(loggerMoc.Object, context);
-
                         DeviceAction entity = new DeviceAction();
-
                         context.Set<DeviceAction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace ESPIOTNS.Api.DataAccess
                         Mock<ILogger<DeviceActionRepository>> loggerMoc = DeviceActionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeviceActionRepositoryMoc.GetContext();
                         var repository = new DeviceActionRepository(loggerMoc.Object, context);
-
                         DeviceAction entity = new DeviceAction();
-
                         context.Set<DeviceAction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace ESPIOTNS.Api.DataAccess
                         Mock<ILogger<DeviceActionRepository>> loggerMoc = DeviceActionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DeviceActionRepositoryMoc.GetContext();
                         var repository = new DeviceActionRepository(loggerMoc.Object, context);
-
                         DeviceAction entity = new DeviceAction();
-
                         context.Set<DeviceAction>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         DeviceAction modifiedRecord = await context.Set<DeviceAction>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>47a705439faa6a37850e2fa1dd08dee4</Hash>
+    <Hash>2c1c2a6cfff4b6493ec906bbcd5535db</Hash>
 </Codenesium>*/

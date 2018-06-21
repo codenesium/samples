@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOProvince bo)
                 {
                         Province efProvince = new Province();
-
                         efProvince.SetProperties(
                                 bo.CountryId,
                                 bo.Id,
@@ -48,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6aeb0917c9cce4be71f069dca72d8dbb</Hash>
+    <Hash>c4ed2e5804e734458edf4fec037fc4d8</Hash>
 </Codenesium>*/

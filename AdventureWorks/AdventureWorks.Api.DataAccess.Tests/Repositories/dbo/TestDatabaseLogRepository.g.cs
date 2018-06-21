@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 
                         DatabaseLog entity = new DatabaseLog();
-
                         context.Set<DatabaseLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 
                         DatabaseLog entity = new DatabaseLog();
-
                         context.Set<DatabaseLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new DatabaseLogRepository(loggerMoc.Object, context);
 
                         var entity = new DatabaseLog();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<DatabaseLog>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<DatabaseLogRepository>> loggerMoc = DatabaseLogRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
                         var repository = new DatabaseLogRepository(loggerMoc.Object, context);
-
                         DatabaseLog entity = new DatabaseLog();
-
                         context.Set<DatabaseLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<DatabaseLogRepository>> loggerMoc = DatabaseLogRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
                         var repository = new DatabaseLogRepository(loggerMoc.Object, context);
-
                         DatabaseLog entity = new DatabaseLog();
-
                         context.Set<DatabaseLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<DatabaseLogRepository>> loggerMoc = DatabaseLogRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DatabaseLogRepositoryMoc.GetContext();
                         var repository = new DatabaseLogRepository(loggerMoc.Object, context);
-
                         DatabaseLog entity = new DatabaseLog();
-
                         context.Set<DatabaseLog>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.DatabaseLogID);
 
                         DatabaseLog modifiedRecord = await context.Set<DatabaseLog>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1e96e72d1de7da0c2f168ad5ce44cc44</Hash>
+    <Hash>9885532f5a7a7da499688f35ee60e73b</Hash>
 </Codenesium>*/

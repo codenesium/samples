@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Project")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProjectActionMapper
+        public class TestBOLProjectMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProjectMapper();
-
                         ApiProjectRequestModel model = new ApiProjectRequestModel();
-
                         model.SetProperties(true, BitConverter.GetBytes(1), "A", true, "A", true, "A", "A", "A", "A", "A", "A");
                         BOProject response = mapper.MapModelToBO("A", model);
 
@@ -41,9 +39,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProjectMapper();
-
                         BOProject bo = new BOProject();
-
                         bo.SetProperties("A", true, BitConverter.GetBytes(1), "A", true, "A", true, "A", "A", "A", "A", "A", "A");
                         ApiProjectResponseModel response = mapper.MapBOToModel(bo);
 
@@ -66,9 +62,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProjectMapper();
-
                         BOProject bo = new BOProject();
-
                         bo.SetProperties("A", true, BitConverter.GetBytes(1), "A", true, "A", true, "A", "A", "A", "A", "A", "A");
                         List<ApiProjectResponseModel> response = mapper.MapBOToModel(new List<BOProject>() { { bo } });
 
@@ -78,5 +72,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f4fd6bc5a30d74968c3c67879a5bfa53</Hash>
+    <Hash>edd5a2832abc599acddf0a4f45fdbc74</Hash>
 </Codenesium>*/

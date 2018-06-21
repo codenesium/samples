@@ -1,24 +1,22 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Event")]
         [Trait("Area", "DALMapper")]
-        public class TestDALEventActionMapper
+        public class TestDALEventMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALEventMapper();
-
                         var bo = new BOEvent();
-
                         bo.SetProperties(1, "A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         Event response = mapper.MapBOToEF(bo);
@@ -40,12 +38,10 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALEventMapper();
-
                         Event entity = new Event();
-
                         entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
-                        BOEvent  response = mapper.MapEFToBO(entity);
+                        BOEvent response = mapper.MapEFToBO(entity);
 
                         response.Address1.Should().Be("A");
                         response.Address2.Should().Be("A");
@@ -64,9 +60,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALEventMapper();
-
                         Event entity = new Event();
-
                         entity.SetProperties("A", "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         List<BOEvent> response = mapper.MapEFToBO(new List<Event>() { entity });
@@ -77,5 +71,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3abd9d1d938026f55791a8c68ad6c531</Hash>
+    <Hash>1f553ad9303cf450ebfbbfc78e2922b3</Hash>
 </Codenesium>*/

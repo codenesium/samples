@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractPipelineRepository: AbstractRepository
+        public abstract class AbstractPipelineRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<PipelineStatus> GetPipelineStatus(int pipelineStatusId)
+                {
+                        return await this.Context.Set<PipelineStatus>().SingleOrDefaultAsync(x => x.Id == pipelineStatusId);
+                }
+
                 protected async Task<List<Pipeline>> Where(
                         Expression<Func<Pipeline, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<PipelineStatus> GetPipelineStatus(int pipelineStatusId)
-                {
-                        return await this.Context.Set<PipelineStatus>().SingleOrDefaultAsync(x => x.Id == pipelineStatusId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>4d027660cc64ad334a659ca0f888f7a4</Hash>
+    <Hash>b917b51ece0f16c2d8cd9130b8265934</Hash>
 </Codenesium>*/

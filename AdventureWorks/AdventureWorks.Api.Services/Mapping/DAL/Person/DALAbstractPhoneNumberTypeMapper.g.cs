@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOPhoneNumberType bo)
                 {
                         PhoneNumberType efPhoneNumberType = new PhoneNumberType();
-
                         efPhoneNumberType.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>051236b9d5be71073a00390e68d734ec</Hash>
+    <Hash>c8e00d601e9bba7f9ff0fb77bce0329d</Hash>
 </Codenesium>*/

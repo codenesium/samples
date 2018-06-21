@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractApiSaleRequestModelValidator: AbstractValidator<ApiSaleRequestModel>
+        public abstract class AbstractApiSaleRequestModelValidator : AbstractValidator<ApiSaleRequestModel>
         {
                 private int existingRecordId;
 
-                ISaleRepository saleRepository;
+                private ISaleRepository saleRepository;
 
                 public AbstractApiSaleRequestModelValidator(ISaleRepository saleRepository)
                 {
@@ -44,12 +44,12 @@ namespace PetStoreNS.Api.Services
 
                 public virtual void PaymentTypeIdRules()
                 {
-                        this.RuleFor(x => x.PaymentTypeId).MustAsync(this.BeValidPaymentType).When(x => x ?.PaymentTypeId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PaymentTypeId).MustAsync(this.BeValidPaymentType).When(x => x?.PaymentTypeId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PetIdRules()
                 {
-                        this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x ?.PetId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x?.PetId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PhoneRules()
@@ -75,5 +75,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6428eed7d7eaddc49d8abcb7bc017295</Hash>
+    <Hash>1535ad3658c210fd917f927de9f37891</Hash>
 </Codenesium>*/

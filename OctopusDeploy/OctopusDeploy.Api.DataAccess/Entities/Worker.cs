@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Worker", Schema="dbo")]
-        public partial class Worker:AbstractEntity
+        public partial class Worker : AbstractEntity
         {
                 public Worker()
                 {
@@ -36,39 +36,39 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.WorkerPoolIds = workerPoolIds;
                 }
 
-                [Column("CommunicationStyle", TypeName="nvarchar(50)")]
+                [Column("CommunicationStyle")]
                 public string CommunicationStyle { get; private set; }
 
-                [Column("Fingerprint", TypeName="nvarchar(50)")]
+                [Column("Fingerprint")]
                 public string Fingerprint { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IsDisabled", TypeName="bit")]
+                [Column("IsDisabled")]
                 public bool IsDisabled { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("MachinePolicyId", TypeName="nvarchar(50)")]
+                [Column("MachinePolicyId")]
                 public string MachinePolicyId { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("RelatedDocumentIds", TypeName="nvarchar(-1)")]
+                [Column("RelatedDocumentIds")]
                 public string RelatedDocumentIds { get; private set; }
 
-                [Column("Thumbprint", TypeName="nvarchar(50)")]
+                [Column("Thumbprint")]
                 public string Thumbprint { get; private set; }
 
-                [Column("WorkerPoolIds", TypeName="nvarchar(-1)")]
+                [Column("WorkerPoolIds")]
                 public string WorkerPoolIds { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>899513c7b4efaa13448ce8ee96533414</Hash>
+    <Hash>f642301e03cffebf7344305aa90d41bb</Hash>
 </Codenesium>*/

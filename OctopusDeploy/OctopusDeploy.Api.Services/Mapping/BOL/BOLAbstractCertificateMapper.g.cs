@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOCertificate boCertificate = new BOCertificate();
-
                         boCertificate.SetProperties(
                                 id,
                                 model.Archived,
@@ -56,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>38f1eaa66e0aab21f858463d35213790</Hash>
+    <Hash>f18318b3fe6784e404b0b6fd8c3771bf</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractCertificateRepository: AbstractRepository
+        public abstract class AbstractCertificateRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,18 +82,21 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<Certificate>> GetDataVersion(byte[] dataVersion)
                 {
                         var records = await this.Where(x => x.DataVersion == dataVersion);
 
                         return records;
                 }
+
                 public async Task<List<Certificate>> GetNotAfter(DateTimeOffset notAfter)
                 {
                         var records = await this.Where(x => x.NotAfter == notAfter);
 
                         return records;
                 }
+
                 public async Task<List<Certificate>> GetThumbprint(string thumbprint)
                 {
                         var records = await this.Where(x => x.Thumbprint == thumbprint);
@@ -133,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9af7a6bcc2a3a09440cf860d0f87be80</Hash>
+    <Hash>1a99c38aee63fa49b074640e49f4e249</Hash>
 </Codenesium>*/

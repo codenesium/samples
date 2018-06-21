@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 
                         SalesTerritory entity = new SalesTerritory();
-
                         context.Set<SalesTerritory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 
                         SalesTerritory entity = new SalesTerritory();
-
                         context.Set<SalesTerritory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
 
                         var entity = new SalesTerritory();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SalesTerritory>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesTerritoryRepository>> loggerMoc = SalesTerritoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
                         var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
-
                         SalesTerritory entity = new SalesTerritory();
-
                         context.Set<SalesTerritory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesTerritoryRepository>> loggerMoc = SalesTerritoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
                         var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
-
                         SalesTerritory entity = new SalesTerritory();
-
                         context.Set<SalesTerritory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesTerritoryRepository>> loggerMoc = SalesTerritoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesTerritoryRepositoryMoc.GetContext();
                         var repository = new SalesTerritoryRepository(loggerMoc.Object, context);
-
                         SalesTerritory entity = new SalesTerritory();
-
                         context.Set<SalesTerritory>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.TerritoryID);
 
                         SalesTerritory modifiedRecord = await context.Set<SalesTerritory>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>12dc7b5cc8a38bee9c3440eb82fde425</Hash>
+    <Hash>bdd1d67def2356675a4f00a47a8be04e</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractTeacherXTeacherSkillService: AbstractService
+        public abstract class AbstractTeacherXTeacherSkillService : AbstractService
         {
                 private ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository;
 
@@ -29,11 +29,8 @@ namespace FermataFishNS.Api.Services
                         ITeacherXTeacherSkillRepository teacherXTeacherSkillRepository,
                         IApiTeacherXTeacherSkillRequestModelValidator teacherXTeacherSkillModelValidator,
                         IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
-                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
-
-                        )
+                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper)
                         : base()
-
                 {
                         this.teacherXTeacherSkillRepository = teacherXTeacherSkillRepository;
                         this.teacherXTeacherSkillModelValidator = teacherXTeacherSkillModelValidator;
@@ -69,7 +66,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiTeacherXTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherXTeacherSkillResponseModel>(await this.teacherXTeacherSkillModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(default(int), model);
                                 var record = await this.teacherXTeacherSkillRepository.Create(this.dalTeacherXTeacherSkillMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace FermataFishNS.Api.Services
                         ApiTeacherXTeacherSkillRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.teacherXTeacherSkillModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTeacherXTeacherSkillMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.teacherXTeacherSkillModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.teacherXTeacherSkillRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0740c2adb5902a150b8409b8e0c5797</Hash>
+    <Hash>a3220c14a15b810fe02a3629be7beae8</Hash>
 </Codenesium>*/

@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FermataFishNS.Api.Services
 {
-        public class DALLessonXStudentMapper: DALAbstractLessonXStudentMapper, IDALLessonXStudentMapper
+        public class DALLessonXStudentMapper : DALAbstractLessonXStudentMapper, IDALLessonXStudentMapper
         {
                 public DALLessonXStudentMapper()
                 {
@@ -13,5 +13,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6d94736ed800eb0f26b5acf8b85eebd</Hash>
+    <Hash>0fb939d56f79c5fb8b8376d6493b3319</Hash>
 </Codenesium>*/

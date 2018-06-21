@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PurchaseOrderDetail")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPurchaseOrderDetailActionMapper
+        public class TestDALPurchaseOrderDetailMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPurchaseOrderDetailMapper();
-
                         var bo = new BOPurchaseOrderDetail();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1);
 
                         PurchaseOrderDetail response = mapper.MapBOToEF(bo);
@@ -40,12 +38,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPurchaseOrderDetailMapper();
-
                         PurchaseOrderDetail entity = new PurchaseOrderDetail();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1, 1);
 
-                        BOPurchaseOrderDetail  response = mapper.MapEFToBO(entity);
+                        BOPurchaseOrderDetail response = mapper.MapEFToBO(entity);
 
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.LineTotal.Should().Be(1);
@@ -64,9 +60,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPurchaseOrderDetailMapper();
-
                         PurchaseOrderDetail entity = new PurchaseOrderDetail();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, 1, 1, 1, 1);
 
                         List<BOPurchaseOrderDetail> response = mapper.MapEFToBO(new List<PurchaseOrderDetail>() { entity });
@@ -77,5 +71,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0b7bcd6786a839c7d0a3320efc512b94</Hash>
+    <Hash>424aa73d0a04b76d0ee67f3e17dd8269</Hash>
 </Codenesium>*/

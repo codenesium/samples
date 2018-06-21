@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Interruption", Schema="dbo")]
-        public partial class Interruption: AbstractEntity
+        public partial class Interruption : AbstractEntity
         {
                 public Interruption()
                 {
@@ -38,42 +38,42 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Title = title;
                 }
 
-                [Column("Created", TypeName="datetimeoffset")]
+                [Column("Created")]
                 public DateTimeOffset Created { get; private set; }
 
-                [Column("EnvironmentId", TypeName="nvarchar(50)")]
+                [Column("EnvironmentId")]
                 public string EnvironmentId { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("ProjectId", TypeName="nvarchar(50)")]
+                [Column("ProjectId")]
                 public string ProjectId { get; private set; }
 
-                [Column("RelatedDocumentIds", TypeName="nvarchar(-1)")]
+                [Column("RelatedDocumentIds")]
                 public string RelatedDocumentIds { get; private set; }
 
-                [Column("ResponsibleTeamIds", TypeName="nvarchar(-1)")]
+                [Column("ResponsibleTeamIds")]
                 public string ResponsibleTeamIds { get; private set; }
 
-                [Column("Status", TypeName="nvarchar(50)")]
+                [Column("Status")]
                 public string Status { get; private set; }
 
-                [Column("TaskId", TypeName="nvarchar(50)")]
+                [Column("TaskId")]
                 public string TaskId { get; private set; }
 
-                [Column("TenantId", TypeName="nvarchar(50)")]
+                [Column("TenantId")]
                 public string TenantId { get; private set; }
 
-                [Column("Title", TypeName="nvarchar(200)")]
+                [Column("Title")]
                 public string Title { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>8ce79e2d731231e553ee9098aa9e6726</Hash>
+    <Hash>72a7a5eb4487ce606b3ba4e9c86c13bc</Hash>
 </Codenesium>*/

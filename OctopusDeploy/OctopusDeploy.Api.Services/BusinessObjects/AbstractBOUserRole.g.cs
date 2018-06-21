@@ -3,9 +3,10 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractBOUserRole: AbstractBusinessObject
+        public abstract class AbstractBOUserRole : AbstractBusinessObject
         {
-                public AbstractBOUserRole() : base()
+                public AbstractBOUserRole()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aaa9ab1cdfddbe6d30cae5e234e2bbbc</Hash>
+    <Hash>63cee78836044066d058743e1408ead1</Hash>
 </Codenesium>*/

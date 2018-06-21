@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class EmployeeDepartmentHistoryService: AbstractEmployeeDepartmentHistoryService, IEmployeeDepartmentHistoryService
+        public class EmployeeDepartmentHistoryService : AbstractEmployeeDepartmentHistoryService, IEmployeeDepartmentHistoryService
         {
                 public EmployeeDepartmentHistoryService(
                         ILogger<IEmployeeDepartmentHistoryRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator,
                         IBOLEmployeeDepartmentHistoryMapper bolemployeeDepartmentHistoryMapper,
                         IDALEmployeeDepartmentHistoryMapper dalemployeeDepartmentHistoryMapper
-
                         )
                         : base(logger,
                                employeeDepartmentHistoryRepository,
                                employeeDepartmentHistoryModelValidator,
                                bolemployeeDepartmentHistoryMapper,
-                               dalemployeeDepartmentHistoryMapper
-                               )
+                               dalemployeeDepartmentHistoryMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>de603e43e1c07cc1a8b60d92e6743fc1</Hash>
+    <Hash>315ba562b73db64dcf5d82c65c1b9e99</Hash>
 </Codenesium>*/

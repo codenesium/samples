@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
         [Route("api/airTransports")]
         [ApiVersion("1.0")]
-        public class AirTransportController: AbstractAirTransportController
+        public class AirTransportController : AbstractAirTransportController
         {
                 public AirTransportController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>17a6d5c507dac886d7cb022877c4f8ab</Hash>
+    <Hash>9a12ac726f2ed5a0a24cc6083c67202f</Hash>
 </Codenesium>*/

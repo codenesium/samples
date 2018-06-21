@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Web
 {
-        public abstract class AbstractPenController: AbstractApiController
+        public abstract class AbstractPenController : AbstractApiController
         {
                 protected IPenService PenService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace PetStoreNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiPenResponseModel> response = await this.PenService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace PetStoreNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPenResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiPenResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiPenRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace PetStoreNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Pens/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Pens/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -178,5 +175,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>166a53e25187a293925f3bb5e7aefd1f</Hash>
+    <Hash>d382db33339927f58463d8367ff63d99</Hash>
 </Codenesium>*/

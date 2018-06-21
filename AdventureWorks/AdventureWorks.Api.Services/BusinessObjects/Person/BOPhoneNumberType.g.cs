@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOPhoneNumberType: AbstractBOPhoneNumberType
+        public partial class BOPhoneNumberType : AbstractBOPhoneNumberType
         {
-                public BOPhoneNumberType() : base()
+                public BOPhoneNumberType()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c7675bbaf6b55fdc0c5976aa5c5e0cff</Hash>
+    <Hash>d9968832d8506d323a8d861811a0fd72</Hash>
 </Codenesium>*/

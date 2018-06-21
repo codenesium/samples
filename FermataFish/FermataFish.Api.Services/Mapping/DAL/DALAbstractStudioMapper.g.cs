@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOStudio bo)
                 {
                         Studio efStudio = new Studio();
-
                         efStudio.SetProperties(
                                 bo.Address1,
                                 bo.Address2,
@@ -58,5 +57,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e4b4c2cd7a4a1a6d125f5fdaf06e5ff</Hash>
+    <Hash>9479a1c7c101c429acb06cd00bf772f4</Hash>
 </Codenesium>*/

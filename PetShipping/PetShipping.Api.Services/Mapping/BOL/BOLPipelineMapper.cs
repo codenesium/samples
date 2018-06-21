@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLPipelineMapper: BOLAbstractPipelineMapper, IBOLPipelineMapper
+        public class BOLPipelineMapper : BOLAbstractPipelineMapper, IBOLPipelineMapper
         {
                 public BOLPipelineMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61f45763fe53b18afaf1584d16c1780f</Hash>
+    <Hash>7f56c28dafaa59a560d54d5d9ad58f47</Hash>
 </Codenesium>*/

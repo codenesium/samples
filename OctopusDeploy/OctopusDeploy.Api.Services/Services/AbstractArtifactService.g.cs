@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractArtifactService: AbstractService
+        public abstract class AbstractArtifactService : AbstractService
         {
                 private IArtifactRepository artifactRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IArtifactRepository artifactRepository,
                         IApiArtifactRequestModelValidator artifactModelValidator,
                         IBOLArtifactMapper bolArtifactMapper,
-                        IDALArtifactMapper dalArtifactMapper
-
-                        )
+                        IDALArtifactMapper dalArtifactMapper)
                         : base()
-
                 {
                         this.artifactRepository = artifactRepository;
                         this.artifactModelValidator = artifactModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiArtifactResponseModel> response = new CreateResponse<ApiArtifactResponseModel>(await this.artifactModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolArtifactMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolArtifactMapper.MapModelToBO(default(string), model);
                                 var record = await this.artifactRepository.Create(this.dalArtifactMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiArtifactRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.artifactModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolArtifactMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.artifactModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.artifactRepository.Delete(id);
@@ -116,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f3a5c15e05ab9b8104768c19a48f5f7</Hash>
+    <Hash>6325df2e0a2a386c15fefe6fc27dc35c</Hash>
 </Codenesium>*/

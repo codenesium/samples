@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLWorkOrderRoutingMapper: BOLAbstractWorkOrderRoutingMapper, IBOLWorkOrderRoutingMapper
+        public class BOLWorkOrderRoutingMapper : BOLAbstractWorkOrderRoutingMapper, IBOLWorkOrderRoutingMapper
         {
                 public BOLWorkOrderRoutingMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59e3f1209c14879cd6e0319401c39381</Hash>
+    <Hash>21ff6f502ac98793fc0d4d9af4e7acf8</Hash>
 </Codenesium>*/

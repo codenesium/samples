@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractStudioService: AbstractService
+        public abstract class AbstractStudioService : AbstractService
         {
                 private IStudioRepository studioRepository;
 
@@ -57,39 +57,26 @@ namespace FermataFishNS.Api.Services
                         IStudioRepository studioRepository,
                         IApiStudioRequestModelValidator studioModelValidator,
                         IBOLStudioMapper bolStudioMapper,
-                        IDALStudioMapper dalStudioMapper
-
-                        ,
+                        IDALStudioMapper dalStudioMapper,
                         IBOLAdminMapper bolAdminMapper,
-                        IDALAdminMapper dalAdminMapper
-                        ,
+                        IDALAdminMapper dalAdminMapper,
                         IBOLFamilyMapper bolFamilyMapper,
-                        IDALFamilyMapper dalFamilyMapper
-                        ,
+                        IDALFamilyMapper dalFamilyMapper,
                         IBOLLessonMapper bolLessonMapper,
-                        IDALLessonMapper dalLessonMapper
-                        ,
+                        IDALLessonMapper dalLessonMapper,
                         IBOLLessonStatusMapper bolLessonStatusMapper,
-                        IDALLessonStatusMapper dalLessonStatusMapper
-                        ,
+                        IDALLessonStatusMapper dalLessonStatusMapper,
                         IBOLSpaceMapper bolSpaceMapper,
-                        IDALSpaceMapper dalSpaceMapper
-                        ,
+                        IDALSpaceMapper dalSpaceMapper,
                         IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
-                        IDALSpaceFeatureMapper dalSpaceFeatureMapper
-                        ,
+                        IDALSpaceFeatureMapper dalSpaceFeatureMapper,
                         IBOLStudentMapper bolStudentMapper,
-                        IDALStudentMapper dalStudentMapper
-                        ,
+                        IDALStudentMapper dalStudentMapper,
                         IBOLTeacherMapper bolTeacherMapper,
-                        IDALTeacherMapper dalTeacherMapper
-                        ,
+                        IDALTeacherMapper dalTeacherMapper,
                         IBOLTeacherSkillMapper bolTeacherSkillMapper,
-                        IDALTeacherSkillMapper dalTeacherSkillMapper
-
-                        )
+                        IDALTeacherSkillMapper dalTeacherSkillMapper)
                         : base()
-
                 {
                         this.studioRepository = studioRepository;
                         this.studioModelValidator = studioModelValidator;
@@ -143,7 +130,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiStudioResponseModel> response = new CreateResponse<ApiStudioResponseModel>(await this.studioModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolStudioMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolStudioMapper.MapModelToBO(default(int), model);
                                 var record = await this.studioRepository.Create(this.dalStudioMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(record)));
@@ -157,7 +144,6 @@ namespace FermataFishNS.Api.Services
                         ApiStudioRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.studioModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolStudioMapper.MapModelToBO(id, model);
@@ -171,7 +157,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.studioModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.studioRepository.Delete(id);
@@ -186,48 +171,56 @@ namespace FermataFishNS.Api.Services
 
                         return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiFamilyResponseModel>> Families(int id, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Family> records = await this.studioRepository.Families(id, limit, offset);
 
                         return this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiLessonResponseModel>> Lessons(int studioId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Lesson> records = await this.studioRepository.Lessons(studioId, limit, offset);
 
                         return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiLessonStatusResponseModel>> LessonStatus(int id, int limit = int.MaxValue, int offset = 0)
                 {
                         List<LessonStatus> records = await this.studioRepository.LessonStatus(id, limit, offset);
 
                         return this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiSpaceResponseModel>> Spaces(int studioId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Space> records = await this.studioRepository.Spaces(studioId, limit, offset);
 
                         return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatures(int studioId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<SpaceFeature> records = await this.studioRepository.SpaceFeatures(studioId, limit, offset);
 
                         return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiStudentResponseModel>> Students(int studioId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Student> records = await this.studioRepository.Students(studioId, limit, offset);
 
                         return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiTeacherResponseModel>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Teacher> records = await this.studioRepository.Teachers(studioId, limit, offset);
 
                         return this.bolTeacherMapper.MapBOToModel(this.dalTeacherMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<TeacherSkill> records = await this.studioRepository.TeacherSkills(studioId, limit, offset);
@@ -238,5 +231,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea6e9eaecf0d96b18aca2cdf2d3a781f</Hash>
+    <Hash>09e60154e2cdd6bb2d06def141eb9136</Hash>
 </Codenesium>*/

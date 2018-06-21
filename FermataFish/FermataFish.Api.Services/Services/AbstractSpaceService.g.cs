@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractSpaceService: AbstractService
+        public abstract class AbstractSpaceService : AbstractService
         {
                 private ISpaceRepository spaceRepository;
 
@@ -33,15 +33,10 @@ namespace FermataFishNS.Api.Services
                         ISpaceRepository spaceRepository,
                         IApiSpaceRequestModelValidator spaceModelValidator,
                         IBOLSpaceMapper bolSpaceMapper,
-                        IDALSpaceMapper dalSpaceMapper
-
-                        ,
+                        IDALSpaceMapper dalSpaceMapper,
                         IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper,
-                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper
-
-                        )
+                        IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper)
                         : base()
-
                 {
                         this.spaceRepository = spaceRepository;
                         this.spaceModelValidator = spaceModelValidator;
@@ -79,7 +74,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiSpaceResponseModel> response = new CreateResponse<ApiSpaceResponseModel>(await this.spaceModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSpaceMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSpaceMapper.MapModelToBO(default(int), model);
                                 var record = await this.spaceRepository.Create(this.dalSpaceMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace FermataFishNS.Api.Services
                         ApiSpaceRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSpaceMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.spaceModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.spaceRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53434cfd8ac2f8e2410fcf7ee9e18d92</Hash>
+    <Hash>f29406cdb787c66ce2a824c463959dfe</Hash>
 </Codenesium>*/

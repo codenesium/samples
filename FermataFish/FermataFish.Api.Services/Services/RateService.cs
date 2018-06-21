@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public class RateService: AbstractRateService, IRateService
+        public class RateService : AbstractRateService, IRateService
         {
                 public RateService(
                         ILogger<IRateRepository> logger,
@@ -18,19 +18,17 @@ namespace FermataFishNS.Api.Services
                         IApiRateRequestModelValidator rateModelValidator,
                         IBOLRateMapper bolrateMapper,
                         IDALRateMapper dalrateMapper
-
                         )
                         : base(logger,
                                rateRepository,
                                rateModelValidator,
                                bolrateMapper,
-                               dalrateMapper
-                               )
+                               dalrateMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6ae8b8b1124c92f6ed47a93674d620e7</Hash>
+    <Hash>9c65b2cf69476fd92c76d024502e419f</Hash>
 </Codenesium>*/

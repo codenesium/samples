@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.Services;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Web
 {
-        public abstract class AbstractDeviceActionController: AbstractApiController
+        public abstract class AbstractDeviceActionController : AbstractApiController
         {
                 protected IDeviceActionService DeviceActionService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace ESPIOTNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiDeviceActionResponseModel> response = await this.DeviceActionService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace ESPIOTNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeviceActionResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiDeviceActionResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeviceActionRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace ESPIOTNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -175,5 +172,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>982c884724befabd15677f70882274f2</Hash>
+    <Hash>2507b4ac10685a997b4cc5f2b0a8927d</Hash>
 </Codenesium>*/

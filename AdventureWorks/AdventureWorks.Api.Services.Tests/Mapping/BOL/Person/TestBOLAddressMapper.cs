@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Address")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLAddressActionMapper
+        public class TestBOLAddressMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLAddressMapper();
-
                         ApiAddressRequestModel model = new ApiAddressRequestModel();
-
                         model.SetProperties("A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
                         BOAddress response = mapper.MapModelToBO(1, model);
 
@@ -36,9 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLAddressMapper();
-
                         BOAddress bo = new BOAddress();
-
                         bo.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
                         ApiAddressResponseModel response = mapper.MapBOToModel(bo);
 
@@ -56,9 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLAddressMapper();
-
                         BOAddress bo = new BOAddress();
-
                         bo.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
                         List<ApiAddressResponseModel> response = mapper.MapBOToModel(new List<BOAddress>() { { bo } });
 
@@ -68,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2c6235a71b3a91a0180612e47f12d236</Hash>
+    <Hash>3f5ade85db256d4d428532a01d1139f2</Hash>
 </Codenesium>*/

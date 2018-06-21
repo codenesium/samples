@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ContentType, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ContentType, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ContentType, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ContentType, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VariableSetId, new string('A', 151));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VariableSetId, new string('A', 151));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new LibraryVariableSet()));
 
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -250,7 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<LibraryVariableSet>(new LibraryVariableSet()));
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -262,7 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         libraryVariableSetRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<LibraryVariableSet>(null));
                         var validator = new ApiLibraryVariableSetRequestModelValidator(libraryVariableSetRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiLibraryVariableSetRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiLibraryVariableSetRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -270,5 +255,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>51e94c825b3adf1d3bc433bce50a5138</Hash>
+    <Hash>18bdb89e5665e843fc86d3fae601db6a</Hash>
 </Codenesium>*/

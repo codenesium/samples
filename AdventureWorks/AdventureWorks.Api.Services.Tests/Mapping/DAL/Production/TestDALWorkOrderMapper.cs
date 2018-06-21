@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkOrder")]
         [Trait("Area", "DALMapper")]
-        public class TestDALWorkOrderActionMapper
+        public class TestDALWorkOrderMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALWorkOrderMapper();
-
                         var bo = new BOWorkOrder();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 
                         WorkOrder response = mapper.MapBOToEF(bo);
@@ -39,12 +37,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALWorkOrderMapper();
-
                         WorkOrder entity = new WorkOrder();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 
-                        BOWorkOrder  response = mapper.MapEFToBO(entity);
+                        BOWorkOrder response = mapper.MapEFToBO(entity);
 
                         response.DueDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.EndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -62,9 +58,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALWorkOrderMapper();
-
                         WorkOrder entity = new WorkOrder();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 
                         List<BOWorkOrder> response = mapper.MapEFToBO(new List<WorkOrder>() { entity });
@@ -75,5 +69,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bf93fa44c997ecf9e7a6700680f7f52e</Hash>
+    <Hash>08bffa10729f974a8d45c1edba1e9336</Hash>
 </Codenesium>*/

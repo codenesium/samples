@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class ShoppingCartItemRepository: AbstractShoppingCartItemRepository, IShoppingCartItemRepository
+        public class ShoppingCartItemRepository : AbstractShoppingCartItemRepository, IShoppingCartItemRepository
         {
                 public ShoppingCartItemRepository(
                         ILogger<ShoppingCartItemRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d0af2bc78012a94d2b9b3a378713ae0f</Hash>
+    <Hash>522318c741a6f3c7c800e05e579edf1b</Hash>
 </Codenesium>*/

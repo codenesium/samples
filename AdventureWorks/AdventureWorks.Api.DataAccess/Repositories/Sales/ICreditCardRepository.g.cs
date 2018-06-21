@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -20,10 +20,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<CreditCard> ByCardNumber(string cardNumber);
 
                 Task<List<PersonCreditCard>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<SalesOrderHeader>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>8b43c8998ca2eecb980e80cd937d23f4</Hash>
+    <Hash>66b0fa318579fec7f1c514670bef5d5b</Hash>
 </Codenesium>*/

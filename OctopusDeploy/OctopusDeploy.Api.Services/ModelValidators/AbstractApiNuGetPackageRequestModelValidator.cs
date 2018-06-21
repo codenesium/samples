@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiNuGetPackageRequestModelValidator: AbstractValidator<ApiNuGetPackageRequestModel>
+        public abstract class AbstractApiNuGetPackageRequestModelValidator : AbstractValidator<ApiNuGetPackageRequestModel>
         {
                 private string existingRecordId;
 
-                INuGetPackageRepository nuGetPackageRepository;
+                private INuGetPackageRepository nuGetPackageRepository;
 
                 public AbstractApiNuGetPackageRequestModelValidator(INuGetPackageRepository nuGetPackageRepository)
                 {
@@ -67,5 +67,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3c036041a72d6a2fd4c30c31fab5545</Hash>
+    <Hash>72eb564edfce5646d60f64cc63f2cbfc</Hash>
 </Codenesium>*/

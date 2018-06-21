@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PersonPhone")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPersonPhoneActionMapper
+        public class TestDALPersonPhoneMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPersonPhoneMapper();
-
                         var bo = new BOPersonPhone();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
                         PersonPhone response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPersonPhoneMapper();
-
                         PersonPhone entity = new PersonPhone();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
-                        BOPersonPhone  response = mapper.MapEFToBO(entity);
+                        BOPersonPhone response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPersonPhoneMapper();
-
                         PersonPhone entity = new PersonPhone();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 
                         List<BOPersonPhone> response = mapper.MapEFToBO(new List<PersonPhone>() { entity });
@@ -63,5 +57,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ff245e642e1c87069034543f20e2af51</Hash>
+    <Hash>190e581a25f58f21117ee511f8b7d0dc</Hash>
 </Codenesium>*/

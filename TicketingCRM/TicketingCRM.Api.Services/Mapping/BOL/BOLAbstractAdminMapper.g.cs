@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOAdmin boAdmin = new BOAdmin();
-
                         boAdmin.SetProperties(
                                 id,
                                 model.Email,
@@ -51,5 +50,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee743db2bff6d1e22351d872dc326f4a</Hash>
+    <Hash>dd88ff5ec1b6c3dbc3d954edc921b210</Hash>
 </Codenesium>*/

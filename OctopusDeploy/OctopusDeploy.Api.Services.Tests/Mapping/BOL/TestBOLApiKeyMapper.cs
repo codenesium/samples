@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ApiKey")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLApiKeyActionMapper
+        public class TestBOLApiKeyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLApiKeyMapper();
-
                         ApiApiKeyRequestModel model = new ApiApiKeyRequestModel();
-
                         model.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
                         BOApiKey response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLApiKeyMapper();
-
                         BOApiKey bo = new BOApiKey();
-
                         bo.SetProperties("A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
                         ApiApiKeyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLApiKeyMapper();
-
                         BOApiKey bo = new BOApiKey();
-
                         bo.SetProperties("A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
                         List<ApiApiKeyResponseModel> response = mapper.MapBOToModel(new List<BOApiKey>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0bc22bb7c3cdf056bf32d66968c6b513</Hash>
+    <Hash>846f423b8580abf4588e2c000a70a051</Hash>
 </Codenesium>*/

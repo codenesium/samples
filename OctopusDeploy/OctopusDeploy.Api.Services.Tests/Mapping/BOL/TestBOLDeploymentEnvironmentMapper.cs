@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentEnvironment")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDeploymentEnvironmentActionMapper
+        public class TestBOLDeploymentEnvironmentMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDeploymentEnvironmentMapper();
-
                         ApiDeploymentEnvironmentRequestModel model = new ApiDeploymentEnvironmentRequestModel();
-
                         model.SetProperties(BitConverter.GetBytes(1), "A", "A", 1);
                         BODeploymentEnvironment response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDeploymentEnvironmentMapper();
-
                         BODeploymentEnvironment bo = new BODeploymentEnvironment();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
                         ApiDeploymentEnvironmentResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDeploymentEnvironmentMapper();
-
                         BODeploymentEnvironment bo = new BODeploymentEnvironment();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
                         List<ApiDeploymentEnvironmentResponseModel> response = mapper.MapBOToModel(new List<BODeploymentEnvironment>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f01ec399a4ef9a65fd77b8d6041e89d</Hash>
+    <Hash>f677345b051fcbd9735a0e4dd97d1d27</Hash>
 </Codenesium>*/

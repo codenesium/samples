@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractDepartmentRepository: AbstractRepository
+        public abstract class AbstractDepartmentRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.DepartmentID == departmentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
+                }
+
                 protected async Task<List<Department>> Where(
                         Expression<Func<Department, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.DepartmentID == departmentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6778cb7b7d383038af8818ef98f38106</Hash>
+    <Hash>103e6d1623bf973497e4c0932a789f11</Hash>
 </Codenesium>*/

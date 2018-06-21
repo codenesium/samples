@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
                         UnitMeasure entity = new UnitMeasure();
-
                         context.Set<UnitMeasure>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
                         UnitMeasure entity = new UnitMeasure();
-
                         context.Set<UnitMeasure>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new UnitMeasureRepository(loggerMoc.Object, context);
 
                         var entity = new UnitMeasure();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<UnitMeasure>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
                         var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-
                         UnitMeasure entity = new UnitMeasure();
-
                         context.Set<UnitMeasure>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
                         var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-
                         UnitMeasure entity = new UnitMeasure();
-
                         context.Set<UnitMeasure>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<UnitMeasureRepository>> loggerMoc = UnitMeasureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UnitMeasureRepositoryMoc.GetContext();
                         var repository = new UnitMeasureRepository(loggerMoc.Object, context);
-
                         UnitMeasure entity = new UnitMeasure();
-
                         context.Set<UnitMeasure>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.UnitMeasureCode);
 
                         UnitMeasure modifiedRecord = await context.Set<UnitMeasure>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ab27f157c646d0380e96b22c76ddcd3c</Hash>
+    <Hash>deb1275007843d6ab3578397a9f405b7</Hash>
 </Codenesium>*/

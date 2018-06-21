@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOPipeline boPipeline = new BOPipeline();
-
                         boPipeline.SetProperties(
                                 id,
                                 model.PipelineStatusId,
@@ -47,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>44807ed49fb53e879d041495e4d01e09</Hash>
+    <Hash>6472b27df99c5ac93df5c5779a50ee21</Hash>
 </Codenesium>*/

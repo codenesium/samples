@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALCountryRegionMapper: DALAbstractCountryRegionMapper, IDALCountryRegionMapper
+        public class DALCountryRegionMapper : DALAbstractCountryRegionMapper, IDALCountryRegionMapper
         {
                 public DALCountryRegionMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4fafc25ddc6a7117dbd4937f45c904fe</Hash>
+    <Hash>f5cabb1699fca38d36c94f40ddc5fc78</Hash>
 </Codenesium>*/

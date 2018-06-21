@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/workOrderRoutings")]
         [ApiVersion("1.0")]
-        public class WorkOrderRoutingController: AbstractWorkOrderRoutingController
+        public class WorkOrderRoutingController : AbstractWorkOrderRoutingController
         {
                 public WorkOrderRoutingController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>04db38ed4b8167018fc3b0f865e83eeb</Hash>
+    <Hash>dc50bdf7e4d4e324c04f71229398b41c</Hash>
 </Codenesium>*/

@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.Services;
 
 namespace TicketingCRMNS.Api.Web
 {
-        public abstract class AbstractProvinceController: AbstractApiController
+        public abstract class AbstractProvinceController : AbstractApiController
         {
                 protected IProvinceService ProvinceService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace TicketingCRMNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiProvinceResponseModel> response = await this.ProvinceService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace TicketingCRMNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProvinceResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiProvinceResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<int>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiProvinceRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace TicketingCRMNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.Id.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/Provinces/{result.Record.Id.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/Provinces/{result.Record.Id}", result.Record);
                         }
                         else
                         {
@@ -185,6 +182,7 @@ namespace TicketingCRMNS.Api.Web
 
                         return this.Ok(response);
                 }
+
                 [HttpGet]
                 [Route("{provinceId}/Venues")]
                 [ReadOnly]
@@ -202,5 +200,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9466d57f9131462d40677572ee69f28c</Hash>
+    <Hash>296f0b26fe957dfa339e2cc881896614</Hash>
 </Codenesium>*/

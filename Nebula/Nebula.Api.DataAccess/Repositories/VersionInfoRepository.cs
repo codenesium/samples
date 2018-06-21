@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public class VersionInfoRepository: AbstractVersionInfoRepository, IVersionInfoRepository
+        public class VersionInfoRepository : AbstractVersionInfoRepository, IVersionInfoRepository
         {
                 public VersionInfoRepository(
                         ILogger<VersionInfoRepository> logger,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c577e472e733d1a52383ec1663b8b57b</Hash>
+    <Hash>c989371db34389a85dba6c6e396b1106</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new MutexRepository(loggerMoc.Object, context);
 
                         Mutex entity = new Mutex();
-
                         context.Set<Mutex>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new MutexRepository(loggerMoc.Object, context);
 
                         Mutex entity = new Mutex();
-
                         context.Set<Mutex>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new MutexRepository(loggerMoc.Object, context);
 
                         var entity = new Mutex();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Mutex>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<MutexRepository>> loggerMoc = MutexRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MutexRepositoryMoc.GetContext();
                         var repository = new MutexRepository(loggerMoc.Object, context);
-
                         Mutex entity = new Mutex();
-
                         context.Set<Mutex>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<MutexRepository>> loggerMoc = MutexRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MutexRepositoryMoc.GetContext();
                         var repository = new MutexRepository(loggerMoc.Object, context);
-
                         Mutex entity = new Mutex();
-
                         context.Set<Mutex>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<MutexRepository>> loggerMoc = MutexRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MutexRepositoryMoc.GetContext();
                         var repository = new MutexRepository(loggerMoc.Object, context);
-
                         Mutex entity = new Mutex();
-
                         context.Set<Mutex>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Mutex modifiedRecord = await context.Set<Mutex>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>906f73266a378d44dc63bc9512bcb2e9</Hash>
+    <Hash>37b1468f06baa5ebacfa24fb5d5dbbb5</Hash>
 </Codenesium>*/

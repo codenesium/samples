@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesPersonQuotaHistory")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSalesPersonQuotaHistoryActionMapper
+        public class TestBOLSalesPersonQuotaHistoryMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSalesPersonQuotaHistoryMapper();
-
                         ApiSalesPersonQuotaHistoryRequestModel model = new ApiSalesPersonQuotaHistoryRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
                         BOSalesPersonQuotaHistory response = mapper.MapModelToBO(1, model);
 
@@ -33,9 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSalesPersonQuotaHistoryMapper();
-
                         BOSalesPersonQuotaHistory bo = new BOSalesPersonQuotaHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
                         ApiSalesPersonQuotaHistoryResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSalesPersonQuotaHistoryMapper();
-
                         BOSalesPersonQuotaHistory bo = new BOSalesPersonQuotaHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
                         List<ApiSalesPersonQuotaHistoryResponseModel> response = mapper.MapBOToModel(new List<BOSalesPersonQuotaHistory>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9632f815c8992371996473a0ea513ec7</Hash>
+    <Hash>57bc69d0ce08c5bed998c873f1957d24</Hash>
 </Codenesium>*/

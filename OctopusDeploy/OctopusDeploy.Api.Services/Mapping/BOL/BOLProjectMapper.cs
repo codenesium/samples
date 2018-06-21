@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLProjectMapper: BOLAbstractProjectMapper, IBOLProjectMapper
+        public class BOLProjectMapper : BOLAbstractProjectMapper, IBOLProjectMapper
         {
                 public BOLProjectMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b3d391b145bba5bc274a2f8a832123c</Hash>
+    <Hash>9fc86d20ddb7b97fadf1470b78b0a520</Hash>
 </Codenesium>*/

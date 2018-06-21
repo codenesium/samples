@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ProxyService: AbstractProxyService, IProxyService
+        public class ProxyService : AbstractProxyService, IProxyService
         {
                 public ProxyService(
                         ILogger<IProxyRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiProxyRequestModelValidator proxyModelValidator,
                         IBOLProxyMapper bolproxyMapper,
                         IDALProxyMapper dalproxyMapper
-
                         )
                         : base(logger,
                                proxyRepository,
                                proxyModelValidator,
                                bolproxyMapper,
-                               dalproxyMapper
-                               )
+                               dalproxyMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>334b6d58d015925b7fff310765942eef</Hash>
+    <Hash>05ffa5cc98ea81eb901a100923f339ba</Hash>
 </Codenesium>*/

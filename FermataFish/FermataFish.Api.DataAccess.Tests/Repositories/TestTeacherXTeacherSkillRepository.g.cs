@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new TeacherXTeacherSkillRepository(loggerMoc.Object, context);
 
                         TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-
                         context.Set<TeacherXTeacherSkill>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new TeacherXTeacherSkillRepository(loggerMoc.Object, context);
 
                         TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-
                         context.Set<TeacherXTeacherSkill>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new TeacherXTeacherSkillRepository(loggerMoc.Object, context);
 
                         var entity = new TeacherXTeacherSkill();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<TeacherXTeacherSkill>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<TeacherXTeacherSkillRepository>> loggerMoc = TeacherXTeacherSkillRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TeacherXTeacherSkillRepositoryMoc.GetContext();
                         var repository = new TeacherXTeacherSkillRepository(loggerMoc.Object, context);
-
                         TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-
                         context.Set<TeacherXTeacherSkill>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<TeacherXTeacherSkillRepository>> loggerMoc = TeacherXTeacherSkillRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TeacherXTeacherSkillRepositoryMoc.GetContext();
                         var repository = new TeacherXTeacherSkillRepository(loggerMoc.Object, context);
-
                         TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-
                         context.Set<TeacherXTeacherSkill>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<TeacherXTeacherSkillRepository>> loggerMoc = TeacherXTeacherSkillRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TeacherXTeacherSkillRepositoryMoc.GetContext();
                         var repository = new TeacherXTeacherSkillRepository(loggerMoc.Object, context);
-
                         TeacherXTeacherSkill entity = new TeacherXTeacherSkill();
-
                         context.Set<TeacherXTeacherSkill>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         TeacherXTeacherSkill modifiedRecord = await context.Set<TeacherXTeacherSkill>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5cbaf9d2a311a7d6bc51eb6e3c7518e4</Hash>
+    <Hash>9e022ecb9ced18d7bf6d73de36e36b50</Hash>
 </Codenesium>*/

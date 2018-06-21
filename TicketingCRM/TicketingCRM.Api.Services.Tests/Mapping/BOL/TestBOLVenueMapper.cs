@@ -1,25 +1,23 @@
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 using TicketingCRMNS.Api.Services;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Venue")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLVenueActionMapper
+        public class TestBOLVenueMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLVenueMapper();
-
                         ApiVenueRequestModel model = new ApiVenueRequestModel();
-
                         model.SetProperties("A", "A", 1, "A", "A", "A", "A", 1, "A");
                         BOVenue response = mapper.MapModelToBO(1, model);
 
@@ -38,9 +36,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLVenueMapper();
-
                         BOVenue bo = new BOVenue();
-
                         bo.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
                         ApiVenueResponseModel response = mapper.MapBOToModel(bo);
 
@@ -60,9 +56,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLVenueMapper();
-
                         BOVenue bo = new BOVenue();
-
                         bo.SetProperties(1, "A", "A", 1, "A", "A", "A", "A", 1, "A");
                         List<ApiVenueResponseModel> response = mapper.MapBOToModel(new List<BOVenue>() { { bo } });
 
@@ -72,5 +66,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d95917034c5b1b6ed739b8d8e1b4d485</Hash>
+    <Hash>6b952c0bf9ebd98660b029596ee6d118</Hash>
 </Codenesium>*/

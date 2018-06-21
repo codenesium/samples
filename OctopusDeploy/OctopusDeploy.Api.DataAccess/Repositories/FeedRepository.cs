@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class FeedRepository: AbstractFeedRepository, IFeedRepository
+        public class FeedRepository : AbstractFeedRepository, IFeedRepository
         {
                 public FeedRepository(
                         ILogger<FeedRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c741b1cb79e140caa63c475e81ee8c28</Hash>
+    <Hash>c7ab8ddb87c439fd25684e67ba0ece2f</Hash>
 </Codenesium>*/

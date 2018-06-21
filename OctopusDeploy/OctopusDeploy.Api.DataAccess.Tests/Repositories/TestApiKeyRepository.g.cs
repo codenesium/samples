@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ApiKeyRepository(loggerMoc.Object, context);
 
                         ApiKey entity = new ApiKey();
-
                         context.Set<ApiKey>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ApiKeyRepository(loggerMoc.Object, context);
 
                         ApiKey entity = new ApiKey();
-
                         context.Set<ApiKey>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ApiKeyRepository(loggerMoc.Object, context);
 
                         var entity = new ApiKey();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ApiKey>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ApiKeyRepository>> loggerMoc = ApiKeyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ApiKeyRepositoryMoc.GetContext();
                         var repository = new ApiKeyRepository(loggerMoc.Object, context);
-
                         ApiKey entity = new ApiKey();
-
                         context.Set<ApiKey>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ApiKeyRepository>> loggerMoc = ApiKeyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ApiKeyRepositoryMoc.GetContext();
                         var repository = new ApiKeyRepository(loggerMoc.Object, context);
-
                         ApiKey entity = new ApiKey();
-
                         context.Set<ApiKey>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ApiKeyRepository>> loggerMoc = ApiKeyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ApiKeyRepositoryMoc.GetContext();
                         var repository = new ApiKeyRepository(loggerMoc.Object, context);
-
                         ApiKey entity = new ApiKey();
-
                         context.Set<ApiKey>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ApiKey modifiedRecord = await context.Set<ApiKey>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>410ea1d0b1e10440f4712b2b5e6b85ea</Hash>
+    <Hash>816076da51b5a595811d76d689d7e34e</Hash>
 </Codenesium>*/

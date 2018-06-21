@@ -3,14 +3,15 @@ using System;
 
 namespace FileServiceNS.Api.Services
 {
-        public partial class BOBucket: AbstractBOBucket
+        public partial class BOBucket : AbstractBOBucket
         {
-                public BOBucket() : base()
+                public BOBucket()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7ee0f33d7e347e1c8eeaa6f236da8a96</Hash>
+    <Hash>d54d7cbad66be0fc142cb85b39dde84d</Hash>
 </Codenesium>*/

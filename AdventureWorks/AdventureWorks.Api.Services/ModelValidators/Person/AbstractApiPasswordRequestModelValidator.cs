@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiPasswordRequestModelValidator: AbstractValidator<ApiPasswordRequestModel>
+        public abstract class AbstractApiPasswordRequestModelValidator : AbstractValidator<ApiPasswordRequestModel>
         {
                 private int existingRecordId;
 
-                IPasswordRepository passwordRepository;
+                private IPasswordRepository passwordRepository;
 
                 public AbstractApiPasswordRequestModelValidator(IPasswordRepository passwordRepository)
                 {
@@ -49,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9dbfc102081846726123e45117f7861</Hash>
+    <Hash>ba0881993e0d2260c13106a1b96b6506</Hash>
 </Codenesium>*/

@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/unitMeasures")]
         [ApiVersion("1.0")]
-        public class UnitMeasureController: AbstractUnitMeasureController
+        public class UnitMeasureController : AbstractUnitMeasureController
         {
                 public UnitMeasureController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1cbec24fd762b15ea4e626ef3d8b39b1</Hash>
+    <Hash>c2e32baa7338c68964abc09ea031894b</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Customer")]
         [Trait("Area", "DALMapper")]
-        public class TestDALCustomerActionMapper
+        public class TestDALCustomerMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALCustomerMapper();
-
                         var bo = new BOCustomer();
-
                         bo.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
 
                         Customer response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALCustomerMapper();
-
                         Customer entity = new Customer();
-
                         entity.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
 
-                        BOCustomer  response = mapper.MapEFToBO(entity);
+                        BOCustomer response = mapper.MapEFToBO(entity);
 
                         response.AccountNumber.Should().Be("A");
                         response.CustomerID.Should().Be(1);
@@ -56,9 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALCustomerMapper();
-
                         Customer entity = new Customer();
-
                         entity.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
 
                         List<BOCustomer> response = mapper.MapEFToBO(new List<Customer>() { entity });
@@ -69,5 +63,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>243428aba7d67fbcd5c7d1b7d81cad10</Hash>
+    <Hash>b2a138b6ea400f9704c5533dc650af4d</Hash>
 </Codenesium>*/

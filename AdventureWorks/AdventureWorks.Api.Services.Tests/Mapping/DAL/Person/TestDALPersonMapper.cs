@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Person")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPersonActionMapper
+        public class TestDALPersonMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPersonMapper();
-
                         var bo = new BOPerson();
-
                         bo.SetProperties(1, "A", "A", 1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
 
                         Person response = mapper.MapBOToEF(bo);
@@ -42,12 +40,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPersonMapper();
-
                         Person entity = new Person();
-
                         entity.SetProperties("A", 1, "A", 1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
 
-                        BOPerson  response = mapper.MapEFToBO(entity);
+                        BOPerson response = mapper.MapEFToBO(entity);
 
                         response.AdditionalContactInfo.Should().Be("A");
                         response.BusinessEntityID.Should().Be(1);
@@ -68,9 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPersonMapper();
-
                         Person entity = new Person();
-
                         entity.SetProperties("A", 1, "A", 1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), true, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", "A");
 
                         List<BOPerson> response = mapper.MapEFToBO(new List<Person>() { entity });
@@ -81,5 +75,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2478096b1a38687bd2bf5910c1e5a0eb</Hash>
+    <Hash>06c17a7d4f8b4c1b38ac19aaed832717</Hash>
 </Codenesium>*/

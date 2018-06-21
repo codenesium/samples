@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractPipelineService: AbstractService
+        public abstract class AbstractPipelineService : AbstractService
         {
                 private IPipelineRepository pipelineRepository;
 
@@ -29,11 +29,8 @@ namespace PetShippingNS.Api.Services
                         IPipelineRepository pipelineRepository,
                         IApiPipelineRequestModelValidator pipelineModelValidator,
                         IBOLPipelineMapper bolPipelineMapper,
-                        IDALPipelineMapper dalPipelineMapper
-
-                        )
+                        IDALPipelineMapper dalPipelineMapper)
                         : base()
-
                 {
                         this.pipelineRepository = pipelineRepository;
                         this.pipelineModelValidator = pipelineModelValidator;
@@ -69,7 +66,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiPipelineResponseModel> response = new CreateResponse<ApiPipelineResponseModel>(await this.pipelineModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPipelineMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPipelineMapper.MapModelToBO(default(int), model);
                                 var record = await this.pipelineRepository.Create(this.dalPipelineMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace PetShippingNS.Api.Services
                         ApiPipelineRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPipelineMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.pipelineModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.pipelineRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1aeea59b9fc401fc2bb26a7dd2759c66</Hash>
+    <Hash>a3b7ed8056a1a2dc4ba9434087e4df04</Hash>
 </Codenesium>*/

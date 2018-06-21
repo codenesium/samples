@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "TeacherSkill")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTeacherSkillActionMapper
+        public class TestBOLTeacherSkillMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTeacherSkillMapper();
-
                         ApiTeacherSkillRequestModel model = new ApiTeacherSkillRequestModel();
-
                         model.SetProperties("A", 1);
                         BOTeacherSkill response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTeacherSkillMapper();
-
                         BOTeacherSkill bo = new BOTeacherSkill();
-
                         bo.SetProperties(1, "A", 1);
                         ApiTeacherSkillResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTeacherSkillMapper();
-
                         BOTeacherSkill bo = new BOTeacherSkill();
-
                         bo.SetProperties(1, "A", 1);
                         List<ApiTeacherSkillResponseModel> response = mapper.MapBOToModel(new List<BOTeacherSkill>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4766155705a9cf746e3a3f333b1e89a2</Hash>
+    <Hash>6d355c5bf7a95f5ee56bcf059bb77ea2</Hash>
 </Codenesium>*/

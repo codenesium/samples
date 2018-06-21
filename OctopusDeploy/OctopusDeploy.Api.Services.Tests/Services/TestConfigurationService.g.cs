@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IConfigurationRepository>();
                         var record = new Configuration();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ConfigurationService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLConfigurationMapperMock,
                                                                mock.DALMapperMockFactory.DALConfigurationMapperMock);
 
-                        ApiConfigurationResponseModel response = await service.Get(default (string));
+                        ApiConfigurationResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLConfigurationMapperMock,
                                                                mock.DALMapperMockFactory.DALConfigurationMapperMock);
 
-                        ApiConfigurationResponseModel response = await service.Get(default (string));
+                        ApiConfigurationResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IConfigurationRepository>();
                         var model = new ApiConfigurationRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Configuration>())).Returns(Task.FromResult(new Configuration()));
                         var service = new ConfigurationService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IConfigurationRepository>();
                         var model = new ApiConfigurationRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Configuration>())).Returns(Task.FromResult(new Configuration()));
                         var service = new ConfigurationService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLConfigurationMapperMock,
                                                                mock.DALMapperMockFactory.DALConfigurationMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ConfigurationModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiConfigurationRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IConfigurationRepository>();
                         var model = new ApiConfigurationRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ConfigurationService(mock.LoggerMock.Object,
                                                                mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                mock.BOLMapperMockFactory.BOLConfigurationMapperMock,
                                                                mock.DALMapperMockFactory.DALConfigurationMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -136,5 +132,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>62a9a7a08e2bbef2b89fbd7f5f11ce28</Hash>
+    <Hash>3d84d4c950d546f2c99235f21d217b74</Hash>
 </Codenesium>*/

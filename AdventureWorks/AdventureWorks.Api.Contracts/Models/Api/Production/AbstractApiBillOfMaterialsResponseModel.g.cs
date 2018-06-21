@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiBillOfMaterialsResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiBillOfMaterialsResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int billOfMaterialsID,
@@ -137,5 +137,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f1ce7b676dbaa75f7fe79b690325e1ca</Hash>
+    <Hash>f8eee671e3912e779139b5201b5c9d9f</Hash>
 </Codenesium>*/

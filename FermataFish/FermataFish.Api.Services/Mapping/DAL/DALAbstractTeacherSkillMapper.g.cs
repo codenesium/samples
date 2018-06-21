@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOTeacherSkill bo)
                 {
                         TeacherSkill efTeacherSkill = new TeacherSkill();
-
                         efTeacherSkill.SetProperties(
                                 bo.Id,
                                 bo.Name,
@@ -48,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec7bf5cc185c9c85e806346ac2ac3ca3</Hash>
+    <Hash>a1fea65c5631a6b9e751387750be7ae9</Hash>
 </Codenesium>*/

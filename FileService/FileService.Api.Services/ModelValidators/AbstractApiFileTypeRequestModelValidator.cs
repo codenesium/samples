@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class AbstractApiFileTypeRequestModelValidator: AbstractValidator<ApiFileTypeRequestModel>
+        public abstract class AbstractApiFileTypeRequestModelValidator : AbstractValidator<ApiFileTypeRequestModel>
         {
                 private int existingRecordId;
 
-                IFileTypeRepository fileTypeRepository;
+                private IFileTypeRepository fileTypeRepository;
 
                 public AbstractApiFileTypeRequestModelValidator(IFileTypeRepository fileTypeRepository)
                 {
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d805ad9bedb0a5b22c4e49ab430caae8</Hash>
+    <Hash>7f927b067c99a296826b1b44734d22f2</Hash>
 </Codenesium>*/

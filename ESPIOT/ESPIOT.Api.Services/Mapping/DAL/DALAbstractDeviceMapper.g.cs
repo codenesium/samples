@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace ESPIOTNS.Api.Services
                         BODevice bo)
                 {
                         Device efDevice = new Device();
-
                         efDevice.SetProperties(
                                 bo.Id,
                                 bo.Name,
@@ -48,5 +47,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>688ac6baaaedf1de296e50f44865ac4d</Hash>
+    <Hash>ec1542dade50e3ae0c4ca201582cc9f9</Hash>
 </Codenesium>*/

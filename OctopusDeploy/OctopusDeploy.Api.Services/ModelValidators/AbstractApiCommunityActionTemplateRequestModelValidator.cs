@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiCommunityActionTemplateRequestModelValidator: AbstractValidator<ApiCommunityActionTemplateRequestModel>
+        public abstract class AbstractApiCommunityActionTemplateRequestModelValidator : AbstractValidator<ApiCommunityActionTemplateRequestModel>
         {
                 private string existingRecordId;
 
-                ICommunityActionTemplateRepository communityActionTemplateRepository;
+                private ICommunityActionTemplateRepository communityActionTemplateRepository;
 
                 public AbstractApiCommunityActionTemplateRequestModelValidator(ICommunityActionTemplateRepository communityActionTemplateRepository)
                 {
@@ -28,7 +28,7 @@ namespace OctopusDeployNS.Api.Services
 
                 public virtual void ExternalIdRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x ?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.ExternalId));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.ExternalId));
                 }
 
                 public virtual void JSONRules()
@@ -39,7 +39,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCommunityActionTemplateRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -47,7 +47,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         CommunityActionTemplate record = await this.communityActionTemplateRepository.GetExternalId(model.ExternalId);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -56,11 +56,12 @@ namespace OctopusDeployNS.Api.Services
                                 return false;
                         }
                 }
+
                 private async Task<bool> BeUniqueGetName(ApiCommunityActionTemplateRequestModel model,  CancellationToken cancellationToken)
                 {
                         CommunityActionTemplate record = await this.communityActionTemplateRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -73,5 +74,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d00c9a5941571db5e096fb66196c834</Hash>
+    <Hash>21d84230cd073f51c80b53285bc80a3b</Hash>
 </Codenesium>*/

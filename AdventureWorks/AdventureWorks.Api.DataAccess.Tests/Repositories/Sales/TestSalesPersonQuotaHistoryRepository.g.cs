@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
 
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         context.Set<SalesPersonQuotaHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
 
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         context.Set<SalesPersonQuotaHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
 
                         var entity = new SalesPersonQuotaHistory();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
                         var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
-
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         context.Set<SalesPersonQuotaHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
                         var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
-
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         context.Set<SalesPersonQuotaHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesPersonQuotaHistoryRepository>> loggerMoc = SalesPersonQuotaHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesPersonQuotaHistoryRepositoryMoc.GetContext();
                         var repository = new SalesPersonQuotaHistoryRepository(loggerMoc.Object, context);
-
                         SalesPersonQuotaHistory entity = new SalesPersonQuotaHistory();
-
                         context.Set<SalesPersonQuotaHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         SalesPersonQuotaHistory modifiedRecord = await context.Set<SalesPersonQuotaHistory>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d680bfb521b899356165c5fc877c5532</Hash>
+    <Hash>402edbaba7c6ebf0ef195062a87cc78e</Hash>
 </Codenesium>*/

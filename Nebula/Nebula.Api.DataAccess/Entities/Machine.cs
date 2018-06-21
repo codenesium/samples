@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("Machine", Schema="dbo")]
-        public partial class Machine: AbstractEntity
+        public partial class Machine : AbstractEntity
         {
                 public Machine()
                 {
@@ -28,27 +28,27 @@ namespace NebulaNS.Api.DataAccess
                         this.Name = name;
                 }
 
-                [Column("description", TypeName="text(2147483647)")]
+                [Column("description")]
                 public string Description { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("jwtKey", TypeName="varchar(128)")]
+                [Column("jwtKey")]
                 public string JwtKey { get; private set; }
 
-                [Column("lastIpAddress", TypeName="varchar(128)")]
+                [Column("lastIpAddress")]
                 public string LastIpAddress { get; private set; }
 
-                [Column("machineGuid", TypeName="uniqueidentifier")]
+                [Column("machineGuid")]
                 public Guid MachineGuid { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>df3db9a88830b67fe8714fb3a5d82ffa</Hash>
+    <Hash>ac42458f3418b6283f41145d21474cf8</Hash>
 </Codenesium>*/

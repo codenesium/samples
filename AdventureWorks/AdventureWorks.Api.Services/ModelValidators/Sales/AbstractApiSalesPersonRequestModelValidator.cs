@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSalesPersonRequestModelValidator: AbstractValidator<ApiSalesPersonRequestModel>
+        public abstract class AbstractApiSalesPersonRequestModelValidator : AbstractValidator<ApiSalesPersonRequestModel>
         {
                 private int existingRecordId;
 
-                ISalesPersonRepository salesPersonRepository;
+                private ISalesPersonRepository salesPersonRepository;
 
                 public AbstractApiSalesPersonRequestModelValidator(ISalesPersonRepository salesPersonRepository)
                 {
@@ -56,7 +56,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void TerritoryIDRules()
                 {
-                        this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidSalesTerritory(Nullable<int> id,  CancellationToken cancellationToken)
@@ -69,5 +69,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5287fa368c938b7187949f1dc802de2</Hash>
+    <Hash>9e5e8ed02063051c1c1b171cc4726a68</Hash>
 </Codenesium>*/

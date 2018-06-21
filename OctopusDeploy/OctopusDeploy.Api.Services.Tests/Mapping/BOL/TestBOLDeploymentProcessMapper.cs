@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentProcess")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDeploymentProcessActionMapper
+        public class TestBOLDeploymentProcessMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDeploymentProcessMapper();
-
                         ApiDeploymentProcessRequestModel model = new ApiDeploymentProcessRequestModel();
-
                         model.SetProperties(true, "A", "A", "A", 1);
                         BODeploymentProcess response = mapper.MapModelToBO("A", model);
 
@@ -34,9 +32,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDeploymentProcessMapper();
-
                         BODeploymentProcess bo = new BODeploymentProcess();
-
                         bo.SetProperties("A", true, "A", "A", "A", 1);
                         ApiDeploymentProcessResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDeploymentProcessMapper();
-
                         BODeploymentProcess bo = new BODeploymentProcess();
-
                         bo.SetProperties("A", true, "A", "A", "A", 1);
                         List<ApiDeploymentProcessResponseModel> response = mapper.MapBOToModel(new List<BODeploymentProcess>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>40ab8216c0c7e2e6d3b4854a8cf4fcf8</Hash>
+    <Hash>eceb2aa981af64d94fc350f7590ad0c7</Hash>
 </Codenesium>*/

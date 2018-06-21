@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiKeyService: AbstractService
+        public abstract class AbstractApiKeyService : AbstractService
         {
                 private IApiKeyRepository apiKeyRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IApiKeyRepository apiKeyRepository,
                         IApiApiKeyRequestModelValidator apiKeyModelValidator,
                         IBOLApiKeyMapper bolApiKeyMapper,
-                        IDALApiKeyMapper dalApiKeyMapper
-
-                        )
+                        IDALApiKeyMapper dalApiKeyMapper)
                         : base()
-
                 {
                         this.apiKeyRepository = apiKeyRepository;
                         this.apiKeyModelValidator = apiKeyModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiApiKeyResponseModel> response = new CreateResponse<ApiApiKeyResponseModel>(await this.apiKeyModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolApiKeyMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolApiKeyMapper.MapModelToBO(default(string), model);
                                 var record = await this.apiKeyRepository.Create(this.dalApiKeyMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiApiKeyRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.apiKeyModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolApiKeyMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.apiKeyModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.apiKeyRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31cc54d57bfd5655a7cad36d45c7aa6b</Hash>
+    <Hash>283d6a72f08eb28d457c6f5617fc5a18</Hash>
 </Codenesium>*/

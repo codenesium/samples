@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractChainStatusRepository: AbstractRepository
+        public abstract class AbstractChainStatusRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Chain>> Chains(int chainStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Chain>().Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
+                }
+
                 protected async Task<List<ChainStatus>> Where(
                         Expression<Func<ChainStatus, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Chain>> Chains(int chainStatusId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Chain>().Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6f0a32814fc7d6a117cb48244c60a070</Hash>
+    <Hash>3a1c340d51227e08102be7bc4c339c0b</Hash>
 </Codenesium>*/

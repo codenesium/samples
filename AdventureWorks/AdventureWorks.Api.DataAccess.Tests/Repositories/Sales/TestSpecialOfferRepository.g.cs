@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SpecialOfferRepository(loggerMoc.Object, context);
 
                         SpecialOffer entity = new SpecialOffer();
-
                         context.Set<SpecialOffer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SpecialOfferRepository(loggerMoc.Object, context);
 
                         SpecialOffer entity = new SpecialOffer();
-
                         context.Set<SpecialOffer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SpecialOfferRepository(loggerMoc.Object, context);
 
                         var entity = new SpecialOffer();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SpecialOffer>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SpecialOfferRepository>> loggerMoc = SpecialOfferRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SpecialOfferRepositoryMoc.GetContext();
                         var repository = new SpecialOfferRepository(loggerMoc.Object, context);
-
                         SpecialOffer entity = new SpecialOffer();
-
                         context.Set<SpecialOffer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SpecialOfferRepository>> loggerMoc = SpecialOfferRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SpecialOfferRepositoryMoc.GetContext();
                         var repository = new SpecialOfferRepository(loggerMoc.Object, context);
-
                         SpecialOffer entity = new SpecialOffer();
-
                         context.Set<SpecialOffer>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SpecialOfferRepository>> loggerMoc = SpecialOfferRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SpecialOfferRepositoryMoc.GetContext();
                         var repository = new SpecialOfferRepository(loggerMoc.Object, context);
-
                         SpecialOffer entity = new SpecialOffer();
-
                         context.Set<SpecialOffer>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.SpecialOfferID);
 
                         SpecialOffer modifiedRecord = await context.Set<SpecialOffer>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4101a500c991661e96e26b695a952bef</Hash>
+    <Hash>c059b03e873d673ae675a1b7df4b7ff2</Hash>
 </Codenesium>*/

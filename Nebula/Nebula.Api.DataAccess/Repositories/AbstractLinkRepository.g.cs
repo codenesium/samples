@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractLinkRepository: AbstractRepository
+        public abstract class AbstractLinkRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,26 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<LinkLog>().Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
+                }
+
+                public async virtual Task<Machine> GetMachine(int assignedMachineId)
+                {
+                        return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == assignedMachineId);
+                }
+
+                public async virtual Task<Chain> GetChain(int chainId)
+                {
+                        return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == chainId);
+                }
+
+                public async virtual Task<LinkStatus> GetLinkStatus(int linkStatusId)
+                {
+                        return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
+                }
+
                 protected async Task<List<Link>> Where(
                         Expression<Func<Link, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,27 +124,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<LinkLog>().Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
-                }
-
-                public async virtual Task<Machine> GetMachine(int assignedMachineId)
-                {
-                        return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.Id == assignedMachineId);
-                }
-                public async virtual Task<Chain> GetChain(int chainId)
-                {
-                        return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == chainId);
-                }
-                public async virtual Task<LinkStatus> GetLinkStatus(int linkStatusId)
-                {
-                        return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b9484b216689538f60046402f39e832b</Hash>
+    <Hash>2770b5a504b0d9532b343e9779772acc</Hash>
 </Codenesium>*/

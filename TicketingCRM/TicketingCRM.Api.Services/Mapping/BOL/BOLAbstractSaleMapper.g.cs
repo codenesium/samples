@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOSale boSale = new BOSale();
-
                         boSale.SetProperties(
                                 id,
                                 model.IpAddress,
@@ -49,5 +48,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>328ad9a5d340caf99fef1f271d0c245b</Hash>
+    <Hash>adbdb3f3d92bc95ac0e8f0e010ef2531</Hash>
 </Codenesium>*/

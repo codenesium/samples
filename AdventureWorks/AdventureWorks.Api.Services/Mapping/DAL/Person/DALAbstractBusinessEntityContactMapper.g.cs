@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOBusinessEntityContact bo)
                 {
                         BusinessEntityContact efBusinessEntityContact = new BusinessEntityContact();
-
                         efBusinessEntityContact.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.ContactTypeID,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2343f9e8e74d33bbd824d8f020b9b04f</Hash>
+    <Hash>a68d2ad8802c9a88a73b3244393f6e76</Hash>
 </Codenesium>*/

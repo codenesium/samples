@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiTeamResponseModel: AbstractApiTeamResponseModel
+        public partial class ApiTeamResponseModel : AbstractApiTeamResponseModel
         {
                 public ApiTeamResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>57fca85b2adc7dc990d69062f73ec5b9</Hash>
+    <Hash>a237f6dfc14dad143b6ab3a351050e01</Hash>
 </Codenesium>*/

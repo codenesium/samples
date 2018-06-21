@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOOrganization boOrganization = new BOOrganization();
-
                         boOrganization.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>49e9a125a737d5fa1015b8952e8532bd</Hash>
+    <Hash>e576169153c34604acd78e51fbf36415</Hash>
 </Codenesium>*/

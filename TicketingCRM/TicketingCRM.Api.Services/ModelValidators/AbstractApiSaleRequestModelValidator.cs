@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiSaleRequestModelValidator: AbstractValidator<ApiSaleRequestModel>
+        public abstract class AbstractApiSaleRequestModelValidator : AbstractValidator<ApiSaleRequestModel>
         {
                 private int existingRecordId;
 
-                ISaleRepository saleRepository;
+                private ISaleRepository saleRepository;
 
                 public AbstractApiSaleRequestModelValidator(ISaleRepository saleRepository)
                 {
@@ -44,7 +44,7 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void TransactionIdRules()
                 {
-                        this.RuleFor(x => x.TransactionId).MustAsync(this.BeValidTransaction).When(x => x ?.TransactionId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TransactionId).MustAsync(this.BeValidTransaction).When(x => x?.TransactionId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidTransaction(int id,  CancellationToken cancellationToken)
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bff93c0b6a13ebb3a0caf006b880549d</Hash>
+    <Hash>ae5088644a2e299e58d38e9e7a129606</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiTransactionHistoryArchiveRequestModelValidator: AbstractApiTransactionHistoryArchiveRequestModelValidator, IApiTransactionHistoryArchiveRequestModelValidator
+        public class ApiTransactionHistoryArchiveRequestModelValidator : AbstractApiTransactionHistoryArchiveRequestModelValidator, IApiTransactionHistoryArchiveRequestModelValidator
         {
                 public ApiTransactionHistoryArchiveRequestModelValidator(ITransactionHistoryArchiveRepository transactionHistoryArchiveRepository)
                         : base(transactionHistoryArchiveRepository)
@@ -41,11 +41,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9ed01c06779023e04b5d27ed77c24c8e</Hash>
+    <Hash>31fcc289506b27ebf5c124a7e8fd21ea</Hash>
 </Codenesium>*/

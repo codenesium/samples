@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.Services;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
         [Route("api/rates")]
         [ApiVersion("1.0")]
-        public class RateController: AbstractRateController
+        public class RateController : AbstractRateController
         {
                 public RateController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d26726116c2f62e989b2920766d98c0c</Hash>
+    <Hash>2acd24e16d4c83dedaceb3f0cf10e5db</Hash>
 </Codenesium>*/

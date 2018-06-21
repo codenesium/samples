@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractEventService: AbstractService
+        public abstract class AbstractEventService : AbstractService
         {
                 private IEventRepository eventRepository;
 
@@ -33,15 +33,10 @@ namespace OctopusDeployNS.Api.Services
                         IEventRepository eventRepository,
                         IApiEventRequestModelValidator eventModelValidator,
                         IBOLEventMapper bolEventMapper,
-                        IDALEventMapper dalEventMapper
-
-                        ,
+                        IDALEventMapper dalEventMapper,
                         IBOLEventRelatedDocumentMapper bolEventRelatedDocumentMapper,
-                        IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper
-
-                        )
+                        IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper)
                         : base()
-
                 {
                         this.eventRepository = eventRepository;
                         this.eventModelValidator = eventModelValidator;
@@ -79,7 +74,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiEventResponseModel> response = new CreateResponse<ApiEventResponseModel>(await this.eventModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolEventMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolEventMapper.MapModelToBO(default(string), model);
                                 var record = await this.eventRepository.Create(this.dalEventMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiEventRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.eventModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolEventMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.eventModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.eventRepository.Delete(id);
@@ -122,18 +115,21 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
                 {
                         List<Event> records = await this.eventRepository.GetIdRelatedDocumentIdsOccurredCategoryAutoId(id, relatedDocumentIds, occurred, category, autoId);
 
                         return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiEventResponseModel>> GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
                 {
                         List<Event> records = await this.eventRepository.GetIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(id, relatedDocumentIds, projectId, environmentId, category, userId, occurred, tenantId);
 
                         return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiEventResponseModel>> GetIdOccurred(string id, DateTimeOffset occurred)
                 {
                         List<Event> records = await this.eventRepository.GetIdOccurred(id, occurred);
@@ -151,5 +147,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70a2922e5d7406b020e600b0e6b2211d</Hash>
+    <Hash>6b7d904f297a8ed7f39c283796e8c9a7</Hash>
 </Codenesium>*/

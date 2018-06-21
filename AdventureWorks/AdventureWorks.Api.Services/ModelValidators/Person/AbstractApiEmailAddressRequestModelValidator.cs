@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiEmailAddressRequestModelValidator: AbstractValidator<ApiEmailAddressRequestModel>
+        public abstract class AbstractApiEmailAddressRequestModelValidator : AbstractValidator<ApiEmailAddressRequestModel>
         {
                 private int existingRecordId;
 
-                IEmailAddressRepository emailAddressRepository;
+                private IEmailAddressRepository emailAddressRepository;
 
                 public AbstractApiEmailAddressRequestModelValidator(IEmailAddressRepository emailAddressRepository)
                 {
@@ -46,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a702aaadcbb66419f7567c8b3f6be2dd</Hash>
+    <Hash>b6addaead83b0caaf3c525fb9efea97e</Hash>
 </Codenesium>*/

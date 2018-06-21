@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractStateRepository: AbstractRepository
+        public abstract class AbstractStateRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Studio>> Studios(int stateId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Studio>().Where(x => x.StateId == stateId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Studio>();
+                }
+
                 protected async Task<List<State>> Where(
                         Expression<Func<State, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Studio>> Studios(int stateId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Studio>().Where(x => x.StateId == stateId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Studio>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ff85ba8df125d11b7b52be375f27e621</Hash>
+    <Hash>40d55a21e89e0708da0a9e13b8180a6b</Hash>
 </Codenesium>*/

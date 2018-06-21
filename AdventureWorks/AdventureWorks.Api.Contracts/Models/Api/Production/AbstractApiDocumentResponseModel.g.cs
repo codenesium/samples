@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiDocumentResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiDocumentResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int changeNumber,
@@ -189,5 +189,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4b9047d37ca0f40d653f41a5d2e75b40</Hash>
+    <Hash>639b14f35d8e145aa08600abfc71ee90</Hash>
 </Codenesium>*/

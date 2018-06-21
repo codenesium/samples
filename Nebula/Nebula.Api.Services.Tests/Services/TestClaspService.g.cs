@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClaspRepository>();
                         var record = new Clasp();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ClaspService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLClaspMapperMock,
                                                        mock.DALMapperMockFactory.DALClaspMapperMock);
 
-                        ApiClaspResponseModel response = await service.Get(default (int));
+                        ApiClaspResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLClaspMapperMock,
                                                        mock.DALMapperMockFactory.DALClaspMapperMock);
 
-                        ApiClaspResponseModel response = await service.Get(default (int));
+                        ApiClaspResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClaspRepository>();
                         var model = new ApiClaspRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Clasp>())).Returns(Task.FromResult(new Clasp()));
                         var service = new ClaspService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClaspRepository>();
                         var model = new ApiClaspRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Clasp>())).Returns(Task.FromResult(new Clasp()));
                         var service = new ClaspService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLClaspMapperMock,
                                                        mock.DALMapperMockFactory.DALClaspMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ClaspModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClaspRequestModel>()));
@@ -118,7 +115,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClaspRepository>();
                         var model = new ApiClaspRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ClaspService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace NebulaNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLClaspMapperMock,
                                                        mock.DALMapperMockFactory.DALClaspMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cf75a7b6d95f5d6f94efff0cdd4e8224</Hash>
+    <Hash>4190b7ef4bca94a1c837fae2a5e7f693</Hash>
 </Codenesium>*/

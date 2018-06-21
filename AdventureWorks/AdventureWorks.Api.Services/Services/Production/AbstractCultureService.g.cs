@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractCultureService: AbstractService
+        public abstract class AbstractCultureService : AbstractService
         {
                 private ICultureRepository cultureRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         ICultureRepository cultureRepository,
                         IApiCultureRequestModelValidator cultureModelValidator,
                         IBOLCultureMapper bolCultureMapper,
-                        IDALCultureMapper dalCultureMapper
-
-                        ,
+                        IDALCultureMapper dalCultureMapper,
                         IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-
-                        )
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
                         : base()
-
                 {
                         this.cultureRepository = cultureRepository;
                         this.cultureModelValidator = cultureModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiCultureResponseModel> response = new CreateResponse<ApiCultureResponseModel>(await this.cultureModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCultureMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolCultureMapper.MapModelToBO(default(string), model);
                                 var record = await this.cultureRepository.Create(this.dalCultureMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCultureMapper.MapBOToModel(this.dalCultureMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiCultureRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.cultureModelValidator.ValidateUpdateAsync(cultureID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCultureMapper.MapModelToBO(cultureID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         string cultureID)
                 {
                         ActionResponse response = new ActionResponse(await this.cultureModelValidator.ValidateDeleteAsync(cultureID));
-
                         if (response.Success)
                         {
                                 await this.cultureRepository.Delete(cultureID);
@@ -140,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52a521276303af8e45043f5e14085fa3</Hash>
+    <Hash>cae175efab915828649f32c98019156c</Hash>
 </Codenesium>*/

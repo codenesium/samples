@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOTicket boTicket = new BOTicket();
-
                         boTicket.SetProperties(
                                 id,
                                 model.PublicId,
@@ -47,5 +46,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2a121b0984fe595b96c19d32f177909</Hash>
+    <Hash>24cbebf8c978a80456d695f64d82740e</Hash>
 </Codenesium>*/

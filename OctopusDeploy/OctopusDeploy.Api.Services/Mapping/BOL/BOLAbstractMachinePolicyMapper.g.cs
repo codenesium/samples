@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOMachinePolicy boMachinePolicy = new BOMachinePolicy();
-
                         boMachinePolicy.SetProperties(
                                 id,
                                 model.IsDefault,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>020394fd9772f3e3f0d7800fc2e4b5a9</Hash>
+    <Hash>240e0985413cf80251a56e2090f5ebed</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public abstract class AbstractFileTypeRepository: AbstractRepository
+        public abstract class AbstractFileTypeRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace FileServiceNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<File>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<File>().Where(x => x.FileTypeId == fileTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
+                }
+
                 protected async Task<List<FileType>> Where(
                         Expression<Func<FileType, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace FileServiceNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<File>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<File>().Where(x => x.FileTypeId == fileTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f5f0ec7addb37d363f4f50b565fb76be</Hash>
+    <Hash>862c45fd11a497be16ca7b28eb27ce9a</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Moq;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.Services;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -297,5 +297,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ae4c165f1ae43c31c643e3fda2b72ebb</Hash>
+    <Hash>08da4107bfccff6700f264072e2d8415</Hash>
 </Codenesium>*/

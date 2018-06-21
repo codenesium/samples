@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesTaxRate")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSalesTaxRateActionMapper
+        public class TestDALSalesTaxRateMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSalesTaxRateMapper();
-
                         var bo = new BOSalesTaxRate();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
 
                         SalesTaxRate response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSalesTaxRateMapper();
-
                         SalesTaxRate entity = new SalesTaxRate();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
 
-                        BOSalesTaxRate  response = mapper.MapEFToBO(entity);
+                        BOSalesTaxRate response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
@@ -56,9 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSalesTaxRateMapper();
-
                         SalesTaxRate entity = new SalesTaxRate();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1);
 
                         List<BOSalesTaxRate> response = mapper.MapEFToBO(new List<SalesTaxRate>() { entity });
@@ -69,5 +63,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cc0b04ff24c4cad0c56dd048cf2d4c7c</Hash>
+    <Hash>f75c2f9694d507a871eaaf19e6ad193f</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiAWBuildVersionRequestModelValidator: AbstractApiAWBuildVersionRequestModelValidator, IApiAWBuildVersionRequestModelValidator
+        public class ApiAWBuildVersionRequestModelValidator : AbstractApiAWBuildVersionRequestModelValidator, IApiAWBuildVersionRequestModelValidator
         {
                 public ApiAWBuildVersionRequestModelValidator(IAWBuildVersionRepository aWBuildVersionRepository)
                         : base(aWBuildVersionRepository)
@@ -31,11 +31,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>85baeffd1a74e8b703797852247c8474</Hash>
+    <Hash>95d0a1819a65cef544cacfe44e5145b6</Hash>
 </Codenesium>*/

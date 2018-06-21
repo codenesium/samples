@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("DeploymentRelatedMachine", Schema="dbo")]
-        public partial class DeploymentRelatedMachine: AbstractEntity
+        public partial class DeploymentRelatedMachine : AbstractEntity
         {
                 public DeploymentRelatedMachine()
                 {
@@ -22,14 +22,14 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.MachineId = machineId;
                 }
 
-                [Column("DeploymentId", TypeName="nvarchar(50)")]
+                [Column("DeploymentId")]
                 public string DeploymentId { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="int")]
+                [Column("Id")]
                 public int Id { get; private set; }
 
-                [Column("MachineId", TypeName="nvarchar(50)")]
+                [Column("MachineId")]
                 public string MachineId { get; private set; }
 
                 [ForeignKey("DeploymentId")]
@@ -38,5 +38,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d3d43510b0bae8b038624b4c0bdc5ecb</Hash>
+    <Hash>f0bb6977f5c88cf331f3c8e0cdca543b</Hash>
 </Codenesium>*/

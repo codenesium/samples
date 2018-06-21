@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductProductPhoto")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProductProductPhotoActionMapper
+        public class TestDALProductProductPhotoMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProductProductPhotoMapper();
-
                         var bo = new BOProductProductPhoto();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1);
 
                         ProductProductPhoto response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProductProductPhotoMapper();
-
                         ProductProductPhoto entity = new ProductProductPhoto();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, 1);
 
-                        BOProductProductPhoto  response = mapper.MapEFToBO(entity);
+                        BOProductProductPhoto response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Primary.Should().Be(true);
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProductProductPhotoMapper();
-
                         ProductProductPhoto entity = new ProductProductPhoto();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), true, 1, 1);
 
                         List<BOProductProductPhoto> response = mapper.MapEFToBO(new List<ProductProductPhoto>() { entity });
@@ -63,5 +57,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>07a5f6d09ed36bf511cdc5e8f925f8dd</Hash>
+    <Hash>c33b9b7fd7f72b90c5245cc43d85b6ac</Hash>
 </Codenesium>*/

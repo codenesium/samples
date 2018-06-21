@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class InterruptionRepository: AbstractInterruptionRepository, IInterruptionRepository
+        public class InterruptionRepository : AbstractInterruptionRepository, IInterruptionRepository
         {
                 public InterruptionRepository(
                         ILogger<InterruptionRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d07d17bbf561be46d048b58d67995d4f</Hash>
+    <Hash>e0a5fec85c6766b37b94f50f41a1431e</Hash>
 </Codenesium>*/

@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOTransaction boTransaction = new BOTransaction();
-
                         boTransaction.SetProperties(
                                 id,
                                 model.Amount,
@@ -48,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7a661a9b7ab38f88cc038e289fcf9b8</Hash>
+    <Hash>a7c02b419be4cfbe848196add5c05ff3</Hash>
 </Codenesium>*/

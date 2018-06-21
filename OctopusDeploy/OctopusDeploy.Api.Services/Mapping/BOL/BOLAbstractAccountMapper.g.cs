@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOAccount boAccount = new BOAccount();
-
                         boAccount.SetProperties(
                                 id,
                                 model.AccountType,
@@ -51,5 +50,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b6ad964f25c5cdd8fbcf1b25dac7fcc</Hash>
+    <Hash>974235aba558764c9b74cf48eb03807f</Hash>
 </Codenesium>*/

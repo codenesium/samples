@@ -1,15 +1,15 @@
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateRepository>();
                         var record = new State();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        ApiStateResponseModel response = await service.Get(default (int));
+                        ApiStateResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        ApiStateResponseModel response = await service.Get(default (int));
+                        ApiStateResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateRepository>();
                         var model = new ApiStateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<State>())).Returns(Task.FromResult(new State()));
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateRepository>();
                         var model = new ApiStateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<State>())).Returns(Task.FromResult(new State()));
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.StateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateRequestModel>()));
@@ -128,7 +125,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStateRepository>();
                         var model = new ApiStateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -151,7 +147,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IStateRepository>();
                         var records = new List<Studio>();
                         records.Add(new Studio());
-                        mock.RepositoryMock.Setup(x => x.Studios(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Studios(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StateModelValidatorMock.Object,
@@ -160,17 +156,17 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        List<ApiStudioResponseModel> response = await service.Studios(default (int));
+                        List<ApiStudioResponseModel> response = await service.Studios(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Studios(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Studios(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Studios_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IStateRepository>();
-                        mock.RepositoryMock.Setup(x => x.Studios(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Studio>>(new List<Studio>()));
+                        mock.RepositoryMock.Setup(x => x.Studios(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Studio>>(new List<Studio>()));
                         var service = new StateService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
                                                        mock.ModelValidatorMockFactory.StateModelValidatorMock.Object,
@@ -179,14 +175,14 @@ namespace FermataFishNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLStudioMapperMock,
                                                        mock.DALMapperMockFactory.DALStudioMapperMock);
 
-                        List<ApiStudioResponseModel> response = await service.Studios(default (int));
+                        List<ApiStudioResponseModel> response = await service.Studios(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Studios(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Studios(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5eb7872edbe58b6fc99b83cbb68ff6fa</Hash>
+    <Hash>5a80e41c009325e69f24ccfb4e71b9a3</Hash>
 </Codenesium>*/

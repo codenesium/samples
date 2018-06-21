@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiVersionInfoResponseModel: AbstractApiVersionInfoResponseModel
+        public partial class ApiVersionInfoResponseModel : AbstractApiVersionInfoResponseModel
         {
                 public ApiVersionInfoResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2f82684f0099e5efd991a45a74f02360</Hash>
+    <Hash>49b7ae0be3992bad5b413122f295fb7e</Hash>
 </Codenesium>*/

@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALAWBuildVersionMapper: DALAbstractAWBuildVersionMapper, IDALAWBuildVersionMapper
+        public class DALAWBuildVersionMapper : DALAbstractAWBuildVersionMapper, IDALAWBuildVersionMapper
         {
                 public DALAWBuildVersionMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0aea4a90583fde53992fbae7f22f73f9</Hash>
+    <Hash>f6b823e2bd80bf04be322280e7b1efd5</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOTransactionHistory boTransactionHistory = new BOTransactionHistory();
-
                         boTransactionHistory.SetProperties(
                                 transactionID,
                                 model.ActualCost,
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>143033f85166aca245e0f88c75641aa6</Hash>
+    <Hash>22a685496cbbedef250d52c9e07333f7</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractDeploymentEnvironmentService: AbstractService
+        public abstract class AbstractDeploymentEnvironmentService : AbstractService
         {
                 private IDeploymentEnvironmentRepository deploymentEnvironmentRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentEnvironmentRepository deploymentEnvironmentRepository,
                         IApiDeploymentEnvironmentRequestModelValidator deploymentEnvironmentModelValidator,
                         IBOLDeploymentEnvironmentMapper bolDeploymentEnvironmentMapper,
-                        IDALDeploymentEnvironmentMapper dalDeploymentEnvironmentMapper
-
-                        )
+                        IDALDeploymentEnvironmentMapper dalDeploymentEnvironmentMapper)
                         : base()
-
                 {
                         this.deploymentEnvironmentRepository = deploymentEnvironmentRepository;
                         this.deploymentEnvironmentModelValidator = deploymentEnvironmentModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiDeploymentEnvironmentResponseModel> response = new CreateResponse<ApiDeploymentEnvironmentResponseModel>(await this.deploymentEnvironmentModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDeploymentEnvironmentMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolDeploymentEnvironmentMapper.MapModelToBO(default(string), model);
                                 var record = await this.deploymentEnvironmentRepository.Create(this.dalDeploymentEnvironmentMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiDeploymentEnvironmentRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentEnvironmentModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDeploymentEnvironmentMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentEnvironmentModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.deploymentEnvironmentRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiDeploymentEnvironmentResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<DeploymentEnvironment> records = await this.deploymentEnvironmentRepository.GetDataVersion(dataVersion);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d28b0b28da5bcca7975e898223ccec8</Hash>
+    <Hash>002ce2cff3850ab547b96ed3cc39b06f</Hash>
 </Codenesium>*/

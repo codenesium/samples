@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("OctopusServerNode", Schema="dbo")]
-        public partial class OctopusServerNode: AbstractEntity
+        public partial class OctopusServerNode : AbstractEntity
         {
                 public OctopusServerNode()
                 {
@@ -31,29 +31,29 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(250)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IsInMaintenanceMode", TypeName="bit")]
+                [Column("IsInMaintenanceMode")]
                 public bool IsInMaintenanceMode { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("LastSeen", TypeName="datetimeoffset")]
+                [Column("LastSeen")]
                 public DateTimeOffset LastSeen { get; private set; }
 
-                [Column("MaxConcurrentTasks", TypeName="int")]
+                [Column("MaxConcurrentTasks")]
                 public int MaxConcurrentTasks { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("Rank", TypeName="nvarchar(50)")]
+                [Column("Rank")]
                 public string Rank { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d258dba3e3a0c9470e24cbaaa6ddf3ed</Hash>
+    <Hash>d6ff2bf2235d5938413683245c0dcce4</Hash>
 </Codenesium>*/

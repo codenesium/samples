@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSalesTerritory bo)
                 {
                         SalesTerritory efSalesTerritory = new SalesTerritory();
-
                         efSalesTerritory.SetProperties(
                                 bo.CostLastYear,
                                 bo.CostYTD,
@@ -62,5 +61,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4f453ffee06f3b04076dab44d980892b</Hash>
+    <Hash>a42645aa0aa47ba0630d12b0ff4f653e</Hash>
 </Codenesium>*/

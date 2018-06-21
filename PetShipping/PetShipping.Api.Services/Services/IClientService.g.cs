@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
@@ -22,11 +22,13 @@ namespace PetShippingNS.Api.Services
                 Task<List<ApiClientResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ApiPetResponseModel>> Pets(int clientId, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ApiSaleResponseModel>> Sales(int clientId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>08fd94dda97299413165a5a6fe63d599</Hash>
+    <Hash>f5432766edc0e38d22f7cf6eda78e003</Hash>
 </Codenesium>*/

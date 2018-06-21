@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiLifecycleRequestModelValidator: AbstractValidator<ApiLifecycleRequestModel>
+        public abstract class AbstractApiLifecycleRequestModelValidator : AbstractValidator<ApiLifecycleRequestModel>
         {
                 private string existingRecordId;
 
-                ILifecycleRepository lifecycleRepository;
+                private ILifecycleRepository lifecycleRepository;
 
                 public AbstractApiLifecycleRequestModelValidator(ILifecycleRepository lifecycleRepository)
                 {
@@ -38,7 +38,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLifecycleRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLifecycleRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -46,7 +46,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Lifecycle record = await this.lifecycleRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -59,5 +59,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d970c2b955c619917069078f504d2834</Hash>
+    <Hash>51aa82ab7d2df6ce3d6184b9718286b1</Hash>
 </Codenesium>*/

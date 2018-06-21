@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ActionTemplateRepository(loggerMoc.Object, context);
 
                         ActionTemplate entity = new ActionTemplate();
-
                         context.Set<ActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ActionTemplateRepository(loggerMoc.Object, context);
 
                         ActionTemplate entity = new ActionTemplate();
-
                         context.Set<ActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ActionTemplateRepository(loggerMoc.Object, context);
 
                         var entity = new ActionTemplate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ActionTemplate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ActionTemplateRepository>> loggerMoc = ActionTemplateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ActionTemplateRepositoryMoc.GetContext();
                         var repository = new ActionTemplateRepository(loggerMoc.Object, context);
-
                         ActionTemplate entity = new ActionTemplate();
-
                         context.Set<ActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ActionTemplateRepository>> loggerMoc = ActionTemplateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ActionTemplateRepositoryMoc.GetContext();
                         var repository = new ActionTemplateRepository(loggerMoc.Object, context);
-
                         ActionTemplate entity = new ActionTemplate();
-
                         context.Set<ActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ActionTemplateRepository>> loggerMoc = ActionTemplateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ActionTemplateRepositoryMoc.GetContext();
                         var repository = new ActionTemplateRepository(loggerMoc.Object, context);
-
                         ActionTemplate entity = new ActionTemplate();
-
                         context.Set<ActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ActionTemplate modifiedRecord = await context.Set<ActionTemplate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b637c9917f5aa4f0957f48e68e799f87</Hash>
+    <Hash>2c1b50c72c0a3e253db714753c5e9086</Hash>
 </Codenesium>*/

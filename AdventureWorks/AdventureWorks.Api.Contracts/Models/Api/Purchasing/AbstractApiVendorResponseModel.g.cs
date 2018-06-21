@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiVendorResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiVendorResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string accountNumber,
@@ -124,5 +124,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fa8e201c4263a96685508a52aa307913</Hash>
+    <Hash>b222e7d5a1fe2333a0d3214abdb34d5f</Hash>
 </Codenesium>*/

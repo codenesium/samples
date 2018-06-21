@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "StateProvince")]
         [Trait("Area", "DALMapper")]
-        public class TestDALStateProvinceActionMapper
+        public class TestDALStateProvinceMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALStateProvinceMapper();
-
                         var bo = new BOStateProvince();
-
                         bo.SetProperties(1, "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1);
 
                         StateProvince response = mapper.MapBOToEF(bo);
@@ -37,12 +35,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALStateProvinceMapper();
-
                         StateProvince entity = new StateProvince();
-
                         entity.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, 1);
 
-                        BOStateProvince  response = mapper.MapEFToBO(entity);
+                        BOStateProvince response = mapper.MapEFToBO(entity);
 
                         response.CountryRegionCode.Should().Be("A");
                         response.IsOnlyStateProvinceFlag.Should().Be(true);
@@ -58,9 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALStateProvinceMapper();
-
                         StateProvince entity = new StateProvince();
-
                         entity.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, 1);
 
                         List<BOStateProvince> response = mapper.MapEFToBO(new List<StateProvince>() { entity });
@@ -71,5 +65,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>834b93e5942044c5f4823ff668c666af</Hash>
+    <Hash>a5c5dd8ae6b450f707927453444cbac6</Hash>
 </Codenesium>*/

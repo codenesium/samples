@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class SalesPersonQuotaHistoryService: AbstractSalesPersonQuotaHistoryService, ISalesPersonQuotaHistoryService
+        public class SalesPersonQuotaHistoryService : AbstractSalesPersonQuotaHistoryService, ISalesPersonQuotaHistoryService
         {
                 public SalesPersonQuotaHistoryService(
                         ILogger<ISalesPersonQuotaHistoryRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
                         IBOLSalesPersonQuotaHistoryMapper bolsalesPersonQuotaHistoryMapper,
                         IDALSalesPersonQuotaHistoryMapper dalsalesPersonQuotaHistoryMapper
-
                         )
                         : base(logger,
                                salesPersonQuotaHistoryRepository,
                                salesPersonQuotaHistoryModelValidator,
                                bolsalesPersonQuotaHistoryMapper,
-                               dalsalesPersonQuotaHistoryMapper
-                               )
+                               dalsalesPersonQuotaHistoryMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1b3866a7362b35b6d74e7c37226678b0</Hash>
+    <Hash>7d250cfb370cca7f22878a6168512b26</Hash>
 </Codenesium>*/

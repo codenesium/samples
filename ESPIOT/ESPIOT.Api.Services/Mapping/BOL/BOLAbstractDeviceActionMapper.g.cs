@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace ESPIOTNS.Api.Services
                         )
                 {
                         BODeviceAction boDeviceAction = new BODeviceAction();
-
                         boDeviceAction.SetProperties(
                                 id,
                                 model.DeviceId,
@@ -48,5 +47,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>446c61709745988d3597e64e8d29e8a6</Hash>
+    <Hash>0cc70e50dc60fc9936050c8f9248bc10</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOClient boClient = new BOClient();
-
                         boClient.SetProperties(
                                 id,
                                 model.Email,
@@ -50,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f3ce5d565cef9728b9a3560ffe74ced</Hash>
+    <Hash>48141433926ce1a4ca93083876f3aa9a</Hash>
 </Codenesium>*/

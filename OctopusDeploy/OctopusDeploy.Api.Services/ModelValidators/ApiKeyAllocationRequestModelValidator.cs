@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiKeyAllocationRequestModelValidator: AbstractApiKeyAllocationRequestModelValidator, IApiKeyAllocationRequestModelValidator
+        public class ApiKeyAllocationRequestModelValidator : AbstractApiKeyAllocationRequestModelValidator, IApiKeyAllocationRequestModelValidator
         {
                 public ApiKeyAllocationRequestModelValidator(IKeyAllocationRepository keyAllocationRepository)
                         : base(keyAllocationRepository)
@@ -27,11 +27,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d9a8517a1518766f48128cb189d987a1</Hash>
+    <Hash>f1058c41925b774124d000af33361ba8</Hash>
 </Codenesium>*/

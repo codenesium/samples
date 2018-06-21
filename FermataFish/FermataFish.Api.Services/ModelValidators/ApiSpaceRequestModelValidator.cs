@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiSpaceRequestModelValidator: AbstractApiSpaceRequestModelValidator, IApiSpaceRequestModelValidator
+        public class ApiSpaceRequestModelValidator : AbstractApiSpaceRequestModelValidator, IApiSpaceRequestModelValidator
         {
                 public ApiSpaceRequestModelValidator(ISpaceRepository spaceRepository)
                         : base(spaceRepository)
@@ -31,11 +31,11 @@ namespace FermataFishNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>76f0e804106a1b4e639e82a3f183aff5</Hash>
+    <Hash>f8a3945229ec6254d145797cf79c01f2</Hash>
 </Codenesium>*/

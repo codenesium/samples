@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOLinkLog bo)
                 {
                         LinkLog efLinkLog = new LinkLog();
-
                         efLinkLog.SetProperties(
                                 bo.DateEntered,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cbff70bb1ef0e0d17bf95ac80916efca</Hash>
+    <Hash>426a585fe84eccb3e4d11f18daeb6b47</Hash>
 </Codenesium>*/

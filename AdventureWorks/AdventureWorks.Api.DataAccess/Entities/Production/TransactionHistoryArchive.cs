@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("TransactionHistoryArchive", Schema="Production")]
-        public partial class TransactionHistoryArchive: AbstractEntity
+        public partial class TransactionHistoryArchive : AbstractEntity
         {
                 public TransactionHistoryArchive()
                 {
@@ -34,36 +34,36 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.TransactionType = transactionType;
                 }
 
-                [Column("ActualCost", TypeName="money")]
+                [Column("ActualCost")]
                 public decimal ActualCost { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
-                [Column("Quantity", TypeName="int")]
+                [Column("Quantity")]
                 public int Quantity { get; private set; }
 
-                [Column("ReferenceOrderID", TypeName="int")]
+                [Column("ReferenceOrderID")]
                 public int ReferenceOrderID { get; private set; }
 
-                [Column("ReferenceOrderLineID", TypeName="int")]
+                [Column("ReferenceOrderLineID")]
                 public int ReferenceOrderLineID { get; private set; }
 
-                [Column("TransactionDate", TypeName="datetime")]
+                [Column("TransactionDate")]
                 public DateTime TransactionDate { get; private set; }
 
                 [Key]
-                [Column("TransactionID", TypeName="int")]
+                [Column("TransactionID")]
                 public int TransactionID { get; private set; }
 
-                [Column("TransactionType", TypeName="nchar(1)")]
+                [Column("TransactionType")]
                 public string TransactionType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>ac7c5ac1a180895a94dd28fe1c48420b</Hash>
+    <Hash>b820f22647b94f299856c54f62411e78</Hash>
 </Codenesium>*/

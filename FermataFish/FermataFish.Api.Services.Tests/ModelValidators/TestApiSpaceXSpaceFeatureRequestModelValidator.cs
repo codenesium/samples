@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FermataFishNS.Api.Services.Tests
                         spaceXSpaceFeatureRepository.Setup(x => x.GetSpaceFeature(It.IsAny<int>())).Returns(Task.FromResult<SpaceFeature>(new SpaceFeature()));
 
                         var validator = new ApiSpaceXSpaceFeatureRequestModelValidator(spaceXSpaceFeatureRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSpaceXSpaceFeatureRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SpaceFeatureId, 1);
@@ -57,8 +56,7 @@ namespace FermataFishNS.Api.Services.Tests
                         spaceXSpaceFeatureRepository.Setup(x => x.GetSpaceFeature(It.IsAny<int>())).Returns(Task.FromResult<SpaceFeature>(new SpaceFeature()));
 
                         var validator = new ApiSpaceXSpaceFeatureRequestModelValidator(spaceXSpaceFeatureRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSpaceXSpaceFeatureRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceXSpaceFeatureRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SpaceFeatureId, 1);
                 }
@@ -71,7 +69,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiSpaceXSpaceFeatureRequestModelValidator(spaceXSpaceFeatureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSpaceXSpaceFeatureRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceXSpaceFeatureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SpaceFeatureId, 1);
                 }
@@ -83,7 +81,6 @@ namespace FermataFishNS.Api.Services.Tests
                         spaceXSpaceFeatureRepository.Setup(x => x.GetSpace(It.IsAny<int>())).Returns(Task.FromResult<Space>(new Space()));
 
                         var validator = new ApiSpaceXSpaceFeatureRequestModelValidator(spaceXSpaceFeatureRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSpaceXSpaceFeatureRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SpaceId, 1);
@@ -109,8 +106,7 @@ namespace FermataFishNS.Api.Services.Tests
                         spaceXSpaceFeatureRepository.Setup(x => x.GetSpace(It.IsAny<int>())).Returns(Task.FromResult<Space>(new Space()));
 
                         var validator = new ApiSpaceXSpaceFeatureRequestModelValidator(spaceXSpaceFeatureRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSpaceXSpaceFeatureRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceXSpaceFeatureRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.SpaceId, 1);
                 }
@@ -123,7 +119,7 @@ namespace FermataFishNS.Api.Services.Tests
 
                         var validator = new ApiSpaceXSpaceFeatureRequestModelValidator(spaceXSpaceFeatureRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSpaceXSpaceFeatureRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSpaceXSpaceFeatureRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.SpaceId, 1);
                 }
@@ -131,5 +127,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a088068a0e151fb20816d1dc0d1057cf</Hash>
+    <Hash>5c282e44db7776f4ae70603b81de72fc</Hash>
 </Codenesium>*/

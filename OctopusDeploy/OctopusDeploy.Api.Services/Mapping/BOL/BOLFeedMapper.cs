@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLFeedMapper: BOLAbstractFeedMapper, IBOLFeedMapper
+        public class BOLFeedMapper : BOLAbstractFeedMapper, IBOLFeedMapper
         {
                 public BOLFeedMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d188423decf34927b8620199996f948</Hash>
+    <Hash>99ca8d703d5ac57ba1bc541a3af2cd8a</Hash>
 </Codenesium>*/

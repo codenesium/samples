@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-        public class ApiStateRequestModelValidator: AbstractApiStateRequestModelValidator, IApiStateRequestModelValidator
+        public class ApiStateRequestModelValidator : AbstractApiStateRequestModelValidator, IApiStateRequestModelValidator
         {
                 public ApiStateRequestModelValidator(IStateRepository stateRepository)
                         : base(stateRepository)
@@ -27,11 +27,11 @@ namespace FermataFishNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fc65b25846ac101acd9aa0edd185d3cb</Hash>
+    <Hash>aa75b973d2eb42f415f78874a9bb47f6</Hash>
 </Codenesium>*/

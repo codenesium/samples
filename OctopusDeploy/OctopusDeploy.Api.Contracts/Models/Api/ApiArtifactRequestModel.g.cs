@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiArtifactRequestModel: AbstractApiRequestModel
+        public partial class ApiArtifactRequestModel : AbstractApiRequestModel
         {
-                public ApiArtifactRequestModel() : base()
+                public ApiArtifactRequestModel()
+                        : base()
                 {
                 }
 
@@ -142,5 +143,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1a036f8c8be407242af97b5694044c45</Hash>
+    <Hash>baed9e62897c0cc744d96cca5e353159</Hash>
 </Codenesium>*/

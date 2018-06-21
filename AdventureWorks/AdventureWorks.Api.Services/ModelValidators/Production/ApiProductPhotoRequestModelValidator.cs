@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiProductPhotoRequestModelValidator: AbstractApiProductPhotoRequestModelValidator, IApiProductPhotoRequestModelValidator
+        public class ApiProductPhotoRequestModelValidator : AbstractApiProductPhotoRequestModelValidator, IApiProductPhotoRequestModelValidator
         {
                 public ApiProductPhotoRequestModelValidator(IProductPhotoRepository productPhotoRepository)
                         : base(productPhotoRepository)
@@ -35,11 +35,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0e4c9345511257aa140b92230371dcb1</Hash>
+    <Hash>156533fb08d0577d41fd3c9220e32a59</Hash>
 </Codenesium>*/

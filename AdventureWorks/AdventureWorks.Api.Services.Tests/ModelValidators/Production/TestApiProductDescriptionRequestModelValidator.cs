@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
                         var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductDescriptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
                         var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductDescriptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductDescriptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
                         var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProductDescriptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
                         var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProductDescriptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProductDescriptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 401));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         productDescriptionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ProductDescription()));
 
                         var validator = new ApiProductDescriptionRequestModelValidator(productDescriptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e2d2a0326c5f5cc4fb991f7b9a1d7e41</Hash>
+    <Hash>509f10ebf098089e53b12ee378ea455e</Hash>
 </Codenesium>*/

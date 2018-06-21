@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new DestinationRepository(loggerMoc.Object, context);
 
                         Destination entity = new Destination();
-
                         context.Set<Destination>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new DestinationRepository(loggerMoc.Object, context);
 
                         Destination entity = new Destination();
-
                         context.Set<Destination>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new DestinationRepository(loggerMoc.Object, context);
 
                         var entity = new Destination();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Destination>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<DestinationRepository>> loggerMoc = DestinationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
                         var repository = new DestinationRepository(loggerMoc.Object, context);
-
                         Destination entity = new Destination();
-
                         context.Set<Destination>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<DestinationRepository>> loggerMoc = DestinationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
                         var repository = new DestinationRepository(loggerMoc.Object, context);
-
                         Destination entity = new Destination();
-
                         context.Set<Destination>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<DestinationRepository>> loggerMoc = DestinationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = DestinationRepositoryMoc.GetContext();
                         var repository = new DestinationRepository(loggerMoc.Object, context);
-
                         Destination entity = new Destination();
-
                         context.Set<Destination>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Destination modifiedRecord = await context.Set<Destination>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2530aff00d777bd98cc10f389a097858</Hash>
+    <Hash>78cbacbb6b1b954ff3a7c1e3af234873</Hash>
 </Codenesium>*/

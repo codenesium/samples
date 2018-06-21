@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOCustomer bo)
                 {
                         Customer efCustomer = new Customer();
-
                         efCustomer.SetProperties(
                                 bo.Email,
                                 bo.FirstName,
@@ -52,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c011d9ef879756b30905b3d3a5b3c7bc</Hash>
+    <Hash>1c09b1e4d44aa83ed68583be2cc0f8f0</Hash>
 </Codenesium>*/

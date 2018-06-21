@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractVariableSetService: AbstractService
+        public abstract class AbstractVariableSetService : AbstractService
         {
                 private IVariableSetRepository variableSetRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IVariableSetRepository variableSetRepository,
                         IApiVariableSetRequestModelValidator variableSetModelValidator,
                         IBOLVariableSetMapper bolVariableSetMapper,
-                        IDALVariableSetMapper dalVariableSetMapper
-
-                        )
+                        IDALVariableSetMapper dalVariableSetMapper)
                         : base()
-
                 {
                         this.variableSetRepository = variableSetRepository;
                         this.variableSetModelValidator = variableSetModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiVariableSetResponseModel> response = new CreateResponse<ApiVariableSetResponseModel>(await this.variableSetModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolVariableSetMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolVariableSetMapper.MapModelToBO(default(string), model);
                                 var record = await this.variableSetRepository.Create(this.dalVariableSetMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolVariableSetMapper.MapBOToModel(this.dalVariableSetMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiVariableSetRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.variableSetModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolVariableSetMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.variableSetModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.variableSetRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61925aec6e18dcf7c143e2267767b166</Hash>
+    <Hash>db6e9077f88adedfea4005fd8c722898</Hash>
 </Codenesium>*/

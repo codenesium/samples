@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOShift boShift = new BOShift();
-
                         boShift.SetProperties(
                                 shiftID,
                                 model.EndTime,
@@ -49,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>804e9f4b628df70872085d8aa8fbfba5</Hash>
+    <Hash>a91fe8d7f6399c5a6f2d9a7317f2306c</Hash>
 </Codenesium>*/

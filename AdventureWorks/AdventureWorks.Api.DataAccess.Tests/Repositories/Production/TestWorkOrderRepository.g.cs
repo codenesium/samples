@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new WorkOrderRepository(loggerMoc.Object, context);
 
                         WorkOrder entity = new WorkOrder();
-
                         context.Set<WorkOrder>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new WorkOrderRepository(loggerMoc.Object, context);
 
                         WorkOrder entity = new WorkOrder();
-
                         context.Set<WorkOrder>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new WorkOrderRepository(loggerMoc.Object, context);
 
                         var entity = new WorkOrder();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<WorkOrder>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
                         var repository = new WorkOrderRepository(loggerMoc.Object, context);
-
                         WorkOrder entity = new WorkOrder();
-
                         context.Set<WorkOrder>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
                         var repository = new WorkOrderRepository(loggerMoc.Object, context);
-
                         WorkOrder entity = new WorkOrder();
-
                         context.Set<WorkOrder>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<WorkOrderRepository>> loggerMoc = WorkOrderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkOrderRepositoryMoc.GetContext();
                         var repository = new WorkOrderRepository(loggerMoc.Object, context);
-
                         WorkOrder entity = new WorkOrder();
-
                         context.Set<WorkOrder>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.WorkOrderID);
 
                         WorkOrder modifiedRecord = await context.Set<WorkOrder>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7378c191e7725848190f8e598702cd46</Hash>
+    <Hash>fb61df57b159e856ff215324e67944b9</Hash>
 </Codenesium>*/

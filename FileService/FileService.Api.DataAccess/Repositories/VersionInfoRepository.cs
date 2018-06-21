@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public class VersionInfoRepository: AbstractVersionInfoRepository, IVersionInfoRepository
+        public class VersionInfoRepository : AbstractVersionInfoRepository, IVersionInfoRepository
         {
                 public VersionInfoRepository(
                         ILogger<VersionInfoRepository> logger,
@@ -20,5 +20,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fc2e30ae6f17cb5c2d1cd768fc4b0973</Hash>
+    <Hash>92172e9e3212c2ce74125c3fd150a6cb</Hash>
 </Codenesium>*/

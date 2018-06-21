@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALScrapReasonMapper: DALAbstractScrapReasonMapper, IDALScrapReasonMapper
+        public class DALScrapReasonMapper : DALAbstractScrapReasonMapper, IDALScrapReasonMapper
         {
                 public DALScrapReasonMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>743b43d2c5dd27c8b74a92afa59e7dc0</Hash>
+    <Hash>3ebc1127aed9ece9b7273817dd49c2ed</Hash>
 </Codenesium>*/

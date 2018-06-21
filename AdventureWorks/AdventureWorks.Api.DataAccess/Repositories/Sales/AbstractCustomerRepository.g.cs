@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractCustomerRepository: AbstractRepository
+        public abstract class AbstractCustomerRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,27 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<Customer>> ByTerritoryID(Nullable<int> territoryID)
                 {
                         var records = await this.Where(x => x.TerritoryID == territoryID);
 
                         return records;
+                }
+
+                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.CustomerID == customerID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                }
+
+                public async virtual Task<Store> GetStore(int storeID)
+                {
+                        return await this.Context.Set<Store>().SingleOrDefaultAsync(x => x.BusinessEntityID == storeID);
+                }
+
+                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
+                {
+                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
                 }
 
                 protected async Task<List<Customer>> Where(
@@ -117,23 +133,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.CustomerID == customerID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
-                }
-
-                public async virtual Task<Store> GetStore(int storeID)
-                {
-                        return await this.Context.Set<Store>().SingleOrDefaultAsync(x => x.BusinessEntityID == storeID);
-                }
-                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
-                {
-                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>181edb6ff746da102fc723e7161b29b8</Hash>
+    <Hash>4b9346cf3bee02b3093ebfde3c8cb46c</Hash>
 </Codenesium>*/

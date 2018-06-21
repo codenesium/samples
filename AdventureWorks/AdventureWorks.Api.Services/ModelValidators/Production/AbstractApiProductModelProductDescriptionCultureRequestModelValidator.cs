@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiProductModelProductDescriptionCultureRequestModelValidator: AbstractValidator<ApiProductModelProductDescriptionCultureRequestModel>
+        public abstract class AbstractApiProductModelProductDescriptionCultureRequestModelValidator : AbstractValidator<ApiProductModelProductDescriptionCultureRequestModel>
         {
                 private int existingRecordId;
 
-                IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
+                private IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
 
                 public AbstractApiProductModelProductDescriptionCultureRequestModelValidator(IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository)
                 {
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7cf984b4f7516efe5857de071e13df1</Hash>
+    <Hash>2150b3dadebdae8e26fb90b9a6ea875d</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetStoreNS.Api.Services.Tests
                         speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
                         var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSpeciesRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace PetStoreNS.Api.Services.Tests
                         speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
                         var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSpeciesRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSpeciesRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace PetStoreNS.Api.Services.Tests
                         speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
                         var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSpeciesRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -70,8 +67,7 @@ namespace PetStoreNS.Api.Services.Tests
                         speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
                         var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSpeciesRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSpeciesRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace PetStoreNS.Api.Services.Tests
                         speciesRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Species()));
 
                         var validator = new ApiSpeciesRequestModelValidator(speciesRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>267c2a902934f1dba3c01907c9b5e41c</Hash>
+    <Hash>88de280dc6123d84bd2f5eb2d1d1a21b</Hash>
 </Codenesium>*/

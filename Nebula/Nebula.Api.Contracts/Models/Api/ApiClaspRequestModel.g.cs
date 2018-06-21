@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiClaspRequestModel: AbstractApiRequestModel
+        public partial class ApiClaspRequestModel : AbstractApiRequestModel
         {
-                public ApiClaspRequestModel() : base()
+                public ApiClaspRequestModel()
+                        : base()
                 {
                 }
 
@@ -55,5 +56,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>360c16bb5e1014c94b4fad54fc1d6220</Hash>
+    <Hash>6b33efa35b5e2bd1f51db8befda5fb6e</Hash>
 </Codenesium>*/

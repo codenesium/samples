@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class MachinePolicyService: AbstractMachinePolicyService, IMachinePolicyService
+        public class MachinePolicyService : AbstractMachinePolicyService, IMachinePolicyService
         {
                 public MachinePolicyService(
                         ILogger<IMachinePolicyRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiMachinePolicyRequestModelValidator machinePolicyModelValidator,
                         IBOLMachinePolicyMapper bolmachinePolicyMapper,
                         IDALMachinePolicyMapper dalmachinePolicyMapper
-
                         )
                         : base(logger,
                                machinePolicyRepository,
                                machinePolicyModelValidator,
                                bolmachinePolicyMapper,
-                               dalmachinePolicyMapper
-                               )
+                               dalmachinePolicyMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9ea239edc024548321ca322bc3c3ec18</Hash>
+    <Hash>1520f6ea14788bc6315dca2173e6f370</Hash>
 </Codenesium>*/

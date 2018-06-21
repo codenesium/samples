@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-        public class ApiTeamRequestModelValidator: AbstractApiTeamRequestModelValidator, IApiTeamRequestModelValidator
+        public class ApiTeamRequestModelValidator : AbstractApiTeamRequestModelValidator, IApiTeamRequestModelValidator
         {
                 public ApiTeamRequestModelValidator(ITeamRepository teamRepository)
                         : base(teamRepository)
@@ -29,11 +29,11 @@ namespace NebulaNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>04cd979a3e67b9df6dd7518e72037ef9</Hash>
+    <Hash>745f21d4856d4f7ff5c20880d4c4821d</Hash>
 </Codenesium>*/

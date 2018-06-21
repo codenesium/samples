@@ -13,7 +13,6 @@ namespace TicketingCRMNS.Api.Services
                         )
                 {
                         BOVenue boVenue = new BOVenue();
-
                         boVenue.SetProperties(
                                 id,
                                 model.Address1,
@@ -54,5 +53,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5fb0f6c7aeadf516cfed68a48d4bf32c</Hash>
+    <Hash>ae893e7f549e9bc73902772f3b0dd2eb</Hash>
 </Codenesium>*/

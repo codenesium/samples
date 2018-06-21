@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "NuGetPackage")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLNuGetPackageActionMapper
+        public class TestBOLNuGetPackageMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLNuGetPackageMapper();
-
                         ApiNuGetPackageRequestModel model = new ApiNuGetPackageRequestModel();
-
                         model.SetProperties("A", "A", "A", 1, 1, 1, 1, "A");
                         BONuGetPackage response = mapper.MapModelToBO("A", model);
 
@@ -37,9 +35,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLNuGetPackageMapper();
-
                         BONuGetPackage bo = new BONuGetPackage();
-
                         bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
                         ApiNuGetPackageResponseModel response = mapper.MapBOToModel(bo);
 
@@ -58,9 +54,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLNuGetPackageMapper();
-
                         BONuGetPackage bo = new BONuGetPackage();
-
                         bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
                         List<ApiNuGetPackageResponseModel> response = mapper.MapBOToModel(new List<BONuGetPackage>() { { bo } });
 
@@ -70,5 +64,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>99afcbeb87ff4801b0e4008411693580</Hash>
+    <Hash>a12aa979c0aaf924b00d0afcf5c4b68e</Hash>
 </Codenesium>*/

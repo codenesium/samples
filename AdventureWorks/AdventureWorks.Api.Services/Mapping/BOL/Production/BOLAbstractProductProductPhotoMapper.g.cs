@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductProductPhoto boProductProductPhoto = new BOProductProductPhoto();
-
                         boProductProductPhoto.SetProperties(
                                 productID,
                                 model.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>634f6d24609cd879bf4b9268eedf4740</Hash>
+    <Hash>caab3b7d337d03179db2f153530949c0</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractServerTaskService: AbstractService
+        public abstract class AbstractServerTaskService : AbstractService
         {
                 private IServerTaskRepository serverTaskRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IServerTaskRepository serverTaskRepository,
                         IApiServerTaskRequestModelValidator serverTaskModelValidator,
                         IBOLServerTaskMapper bolServerTaskMapper,
-                        IDALServerTaskMapper dalServerTaskMapper
-
-                        )
+                        IDALServerTaskMapper dalServerTaskMapper)
                         : base()
-
                 {
                         this.serverTaskRepository = serverTaskRepository;
                         this.serverTaskModelValidator = serverTaskModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiServerTaskResponseModel> response = new CreateResponse<ApiServerTaskResponseModel>(await this.serverTaskModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolServerTaskMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolServerTaskMapper.MapModelToBO(default(string), model);
                                 var record = await this.serverTaskRepository.Create(this.dalServerTaskMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiServerTaskRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.serverTaskModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolServerTaskMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.serverTaskModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.serverTaskRepository.Delete(id);
@@ -112,12 +107,14 @@ namespace OctopusDeployNS.Api.Services
 
                         return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiServerTaskResponseModel>> GetStateConcurrencyTag(string state, string concurrencyTag)
                 {
                         List<ServerTask> records = await this.serverTaskRepository.GetStateConcurrencyTag(state, concurrencyTag);
 
                         return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiServerTaskResponseModel>> GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
                 {
                         List<ServerTask> records = await this.serverTaskRepository.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(name, description, startTime, completedTime, errorMessage, hasWarningsOrErrors, projectId, environmentId, tenantId, durationSeconds, jSON, queueTime, state, concurrencyTag, hasPendingInterruptions, serverNodeId);
@@ -128,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ecf7babcebdc7909b6f9fc4dd8046d4</Hash>
+    <Hash>71e95219cb39a38c95e535fec68e7a22</Hash>
 </Codenesium>*/

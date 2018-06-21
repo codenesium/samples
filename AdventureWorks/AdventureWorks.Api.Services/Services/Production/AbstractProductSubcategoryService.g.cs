@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductSubcategoryService: AbstractService
+        public abstract class AbstractProductSubcategoryService : AbstractService
         {
                 private IProductSubcategoryRepository productSubcategoryRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IProductSubcategoryRepository productSubcategoryRepository,
                         IApiProductSubcategoryRequestModelValidator productSubcategoryModelValidator,
                         IBOLProductSubcategoryMapper bolProductSubcategoryMapper,
-                        IDALProductSubcategoryMapper dalProductSubcategoryMapper
-
-                        ,
+                        IDALProductSubcategoryMapper dalProductSubcategoryMapper,
                         IBOLProductMapper bolProductMapper,
-                        IDALProductMapper dalProductMapper
-
-                        )
+                        IDALProductMapper dalProductMapper)
                         : base()
-
                 {
                         this.productSubcategoryRepository = productSubcategoryRepository;
                         this.productSubcategoryModelValidator = productSubcategoryModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductSubcategoryResponseModel> response = new CreateResponse<ApiProductSubcategoryResponseModel>(await this.productSubcategoryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductSubcategoryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductSubcategoryMapper.MapModelToBO(default(int), model);
                                 var record = await this.productSubcategoryRepository.Create(this.dalProductSubcategoryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductSubcategoryMapper.MapBOToModel(this.dalProductSubcategoryMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductSubcategoryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateUpdateAsync(productSubcategoryID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductSubcategoryMapper.MapModelToBO(productSubcategoryID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int productSubcategoryID)
                 {
                         ActionResponse response = new ActionResponse(await this.productSubcategoryModelValidator.ValidateDeleteAsync(productSubcategoryID));
-
                         if (response.Success)
                         {
                                 await this.productSubcategoryRepository.Delete(productSubcategoryID);
@@ -140,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f37eddac8d8414163925ae4e3e99426a</Hash>
+    <Hash>14af25d8b22babb1a9df0db1e286c75d</Hash>
 </Codenesium>*/

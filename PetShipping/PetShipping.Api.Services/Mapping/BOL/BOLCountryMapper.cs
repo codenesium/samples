@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLCountryMapper: BOLAbstractCountryMapper, IBOLCountryMapper
+        public class BOLCountryMapper : BOLAbstractCountryMapper, IBOLCountryMapper
         {
                 public BOLCountryMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bfe879394c636fab7cc3a4fc875b0be</Hash>
+    <Hash>f58492d55cf98dfed440cad2133f39e2</Hash>
 </Codenesium>*/

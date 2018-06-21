@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
                         PurchaseOrderHeader entity = new PurchaseOrderHeader();
-
                         context.Set<PurchaseOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
                         PurchaseOrderHeader entity = new PurchaseOrderHeader();
-
                         context.Set<PurchaseOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
 
                         var entity = new PurchaseOrderHeader();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<PurchaseOrderHeader>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PurchaseOrderHeaderRepository>> loggerMoc = PurchaseOrderHeaderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
                         var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
-
                         PurchaseOrderHeader entity = new PurchaseOrderHeader();
-
                         context.Set<PurchaseOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PurchaseOrderHeaderRepository>> loggerMoc = PurchaseOrderHeaderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
                         var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
-
                         PurchaseOrderHeader entity = new PurchaseOrderHeader();
-
                         context.Set<PurchaseOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PurchaseOrderHeaderRepository>> loggerMoc = PurchaseOrderHeaderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PurchaseOrderHeaderRepositoryMoc.GetContext();
                         var repository = new PurchaseOrderHeaderRepository(loggerMoc.Object, context);
-
                         PurchaseOrderHeader entity = new PurchaseOrderHeader();
-
                         context.Set<PurchaseOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.PurchaseOrderID);
 
                         PurchaseOrderHeader modifiedRecord = await context.Set<PurchaseOrderHeader>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ba0ed4be94287bf68ec02bdf1a1eb385</Hash>
+    <Hash>5ccaaec717afa4a63896eedae9cea3d4</Hash>
 </Codenesium>*/

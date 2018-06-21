@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Client")]
         [Trait("Area", "DALMapper")]
-        public class TestDALClientActionMapper
+        public class TestDALClientMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALClientMapper();
-
                         var bo = new BOClient();
-
                         bo.SetProperties(1, "A", "A", "A", "A", "A");
 
                         Client response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALClientMapper();
-
                         Client entity = new Client();
-
                         entity.SetProperties("A", "A", 1, "A", "A", "A");
 
-                        BOClient  response = mapper.MapEFToBO(entity);
+                        BOClient response = mapper.MapEFToBO(entity);
 
                         response.Email.Should().Be("A");
                         response.FirstName.Should().Be("A");
@@ -54,9 +50,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALClientMapper();
-
                         Client entity = new Client();
-
                         entity.SetProperties("A", "A", 1, "A", "A", "A");
 
                         List<BOClient> response = mapper.MapEFToBO(new List<Client>() { entity });
@@ -67,5 +61,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>adb15f7295349835d20c050cf142c629</Hash>
+    <Hash>d96356105093614453b53cf74f0eadd1</Hash>
 </Codenesium>*/

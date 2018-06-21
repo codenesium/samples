@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
                 }
@@ -57,8 +55,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Filename, null as string);
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Filename, null as string);
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Filename, new string('A', 201));
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Filename, new string('A', 201));
                 }
@@ -122,8 +115,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -135,7 +127,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
                 }
@@ -187,8 +175,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -200,7 +187,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
                 }
@@ -226,7 +211,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiArtifactRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiArtifactRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
@@ -252,8 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         artifactRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Artifact()));
 
                         var validator = new ApiArtifactRequestModelValidator(artifactRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -261,5 +243,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e38bf3255266b49a7abb00ca9d7419ba</Hash>
+    <Hash>91264d1ba2d95261982868128401c96f</Hash>
 </Codenesium>*/

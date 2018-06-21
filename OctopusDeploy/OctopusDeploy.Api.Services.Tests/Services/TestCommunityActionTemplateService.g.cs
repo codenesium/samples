@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var record = new CommunityActionTemplate();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.Get(default (string));
+                        ApiCommunityActionTemplateResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.Get(default (string));
+                        ApiCommunityActionTemplateResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var model = new ApiCommunityActionTemplateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CommunityActionTemplate>())).Returns(Task.FromResult(new CommunityActionTemplate()));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var model = new ApiCommunityActionTemplateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<CommunityActionTemplate>())).Returns(Task.FromResult(new CommunityActionTemplate()));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.CommunityActionTemplateModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCommunityActionTemplateRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var model = new ApiCommunityActionTemplateRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var record = new CommunityActionTemplate();
-
                         mock.RepositoryMock.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetExternalId(default (Guid));
+                        ApiCommunityActionTemplateResponseModel response = await service.GetExternalId(default(Guid));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<Guid>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetExternalId(default (Guid));
+                        ApiCommunityActionTemplateResponseModel response = await service.GetExternalId(default(Guid));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetExternalId(It.IsAny<Guid>()));
@@ -174,7 +169,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ICommunityActionTemplateRepository>();
                         var record = new CommunityActionTemplate();
-
                         mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new CommunityActionTemplateService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -182,7 +176,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetName(default (string));
+                        ApiCommunityActionTemplateResponseModel response = await service.GetName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -199,7 +193,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLCommunityActionTemplateMapperMock,
                                                                          mock.DALMapperMockFactory.DALCommunityActionTemplateMapperMock);
 
-                        ApiCommunityActionTemplateResponseModel response = await service.GetName(default (string));
+                        ApiCommunityActionTemplateResponseModel response = await service.GetName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -208,5 +202,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b2a7f7aed089c5a3a5c05f3716cc4079</Hash>
+    <Hash>47d62d7caed3f76b8284dcff153738ea</Hash>
 </Codenesium>*/

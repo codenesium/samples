@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ErrorLogRepository(loggerMoc.Object, context);
 
                         ErrorLog entity = new ErrorLog();
-
                         context.Set<ErrorLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ErrorLogRepository(loggerMoc.Object, context);
 
                         ErrorLog entity = new ErrorLog();
-
                         context.Set<ErrorLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ErrorLogRepository(loggerMoc.Object, context);
 
                         var entity = new ErrorLog();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ErrorLog>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
                         var repository = new ErrorLogRepository(loggerMoc.Object, context);
-
                         ErrorLog entity = new ErrorLog();
-
                         context.Set<ErrorLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
                         var repository = new ErrorLogRepository(loggerMoc.Object, context);
-
                         ErrorLog entity = new ErrorLog();
-
                         context.Set<ErrorLog>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ErrorLogRepository>> loggerMoc = ErrorLogRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ErrorLogRepositoryMoc.GetContext();
                         var repository = new ErrorLogRepository(loggerMoc.Object, context);
-
                         ErrorLog entity = new ErrorLog();
-
                         context.Set<ErrorLog>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ErrorLogID);
 
                         ErrorLog modifiedRecord = await context.Set<ErrorLog>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>047dd35bbd4a7bb1e8ab6fade557d999</Hash>
+    <Hash>ed3b29c5f83f1afd4ea05d2904337a94</Hash>
 </Codenesium>*/

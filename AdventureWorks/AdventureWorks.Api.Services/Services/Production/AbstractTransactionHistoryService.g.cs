@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractTransactionHistoryService: AbstractService
+        public abstract class AbstractTransactionHistoryService : AbstractService
         {
                 private ITransactionHistoryRepository transactionHistoryRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         ITransactionHistoryRepository transactionHistoryRepository,
                         IApiTransactionHistoryRequestModelValidator transactionHistoryModelValidator,
                         IBOLTransactionHistoryMapper bolTransactionHistoryMapper,
-                        IDALTransactionHistoryMapper dalTransactionHistoryMapper
-
-                        )
+                        IDALTransactionHistoryMapper dalTransactionHistoryMapper)
                         : base()
-
                 {
                         this.transactionHistoryRepository = transactionHistoryRepository;
                         this.transactionHistoryModelValidator = transactionHistoryModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiTransactionHistoryResponseModel> response = new CreateResponse<ApiTransactionHistoryResponseModel>(await this.transactionHistoryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTransactionHistoryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTransactionHistoryMapper.MapModelToBO(default(int), model);
                                 var record = await this.transactionHistoryRepository.Create(this.dalTransactionHistoryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiTransactionHistoryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.transactionHistoryModelValidator.ValidateUpdateAsync(transactionID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTransactionHistoryMapper.MapModelToBO(transactionID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int transactionID)
                 {
                         ActionResponse response = new ActionResponse(await this.transactionHistoryModelValidator.ValidateDeleteAsync(transactionID));
-
                         if (response.Success)
                         {
                                 await this.transactionHistoryRepository.Delete(transactionID);
@@ -112,6 +107,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiTransactionHistoryResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
                 {
                         List<TransactionHistory> records = await this.transactionHistoryRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a858e9df2b9d6cbc9a2dc62ce1864293</Hash>
+    <Hash>93530b92ad88aa96db83f85629b1679c</Hash>
 </Codenesium>*/

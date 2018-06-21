@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FileServiceNS.Api.Services
 {
-        public class DALFileMapper: DALAbstractFileMapper, IDALFileMapper
+        public class DALFileMapper : DALAbstractFileMapper, IDALFileMapper
         {
                 public DALFileMapper()
                 {
@@ -13,5 +13,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7e5f6179f17953b8302a4273ae53600</Hash>
+    <Hash>88a24c16966b8625ab18e0025b22453f</Hash>
 </Codenesium>*/

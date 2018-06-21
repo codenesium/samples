@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductModelIllustration")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProductModelIllustrationActionMapper
+        public class TestBOLProductModelIllustrationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProductModelIllustrationMapper();
-
                         ApiProductModelIllustrationRequestModel model = new ApiProductModelIllustrationRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOProductModelIllustration response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProductModelIllustrationMapper();
-
                         BOProductModelIllustration bo = new BOProductModelIllustration();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiProductModelIllustrationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProductModelIllustrationMapper();
-
                         BOProductModelIllustration bo = new BOProductModelIllustration();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiProductModelIllustrationResponseModel> response = mapper.MapBOToModel(new List<BOProductModelIllustration>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8479d2a6fb2f5f7e5a1bcb1ba7112beb</Hash>
+    <Hash>32bca51a1b2cb937e2286451454823c7</Hash>
 </Codenesium>*/

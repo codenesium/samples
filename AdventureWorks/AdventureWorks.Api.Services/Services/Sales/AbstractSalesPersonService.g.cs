@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSalesPersonService: AbstractService
+        public abstract class AbstractSalesPersonService : AbstractService
         {
                 private ISalesPersonRepository salesPersonRepository;
 
@@ -42,24 +42,16 @@ namespace AdventureWorksNS.Api.Services
                         ISalesPersonRepository salesPersonRepository,
                         IApiSalesPersonRequestModelValidator salesPersonModelValidator,
                         IBOLSalesPersonMapper bolSalesPersonMapper,
-                        IDALSalesPersonMapper dalSalesPersonMapper
-
-                        ,
+                        IDALSalesPersonMapper dalSalesPersonMapper,
                         IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-                        ,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
                         IBOLSalesPersonQuotaHistoryMapper bolSalesPersonQuotaHistoryMapper,
-                        IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper
-                        ,
+                        IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper,
                         IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
-                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
-                        ,
+                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper,
                         IBOLStoreMapper bolStoreMapper,
-                        IDALStoreMapper dalStoreMapper
-
-                        )
+                        IDALStoreMapper dalStoreMapper)
                         : base()
-
                 {
                         this.salesPersonRepository = salesPersonRepository;
                         this.salesPersonModelValidator = salesPersonModelValidator;
@@ -103,7 +95,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiSalesPersonResponseModel> response = new CreateResponse<ApiSalesPersonResponseModel>(await this.salesPersonModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSalesPersonMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSalesPersonMapper.MapModelToBO(default(int), model);
                                 var record = await this.salesPersonRepository.Create(this.dalSalesPersonMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSalesPersonMapper.MapBOToModel(this.dalSalesPersonMapper.MapEFToBO(record)));
@@ -117,7 +109,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiSalesPersonRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSalesPersonMapper.MapModelToBO(businessEntityID, model);
@@ -131,7 +122,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.salesPersonModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.salesPersonRepository.Delete(businessEntityID);
@@ -146,18 +136,21 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<SalesPersonQuotaHistory> records = await this.salesPersonRepository.SalesPersonQuotaHistories(businessEntityID, limit, offset);
 
                         return this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<SalesTerritoryHistory> records = await this.salesPersonRepository.SalesTerritoryHistories(businessEntityID, limit, offset);
 
                         return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiStoreResponseModel>> Stores(int salesPersonID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Store> records = await this.salesPersonRepository.Stores(salesPersonID, limit, offset);
@@ -168,5 +161,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>291b5197944558fef8702bfa1617adbc</Hash>
+    <Hash>26c32e933d4f9f95339081e5e19bf2db</Hash>
 </Codenesium>*/

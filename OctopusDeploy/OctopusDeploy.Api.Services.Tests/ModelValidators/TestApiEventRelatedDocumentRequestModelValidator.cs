@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EventId, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRelatedDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EventId, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EventId, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRelatedDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EventId, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(new Event()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.EventId, "A");
@@ -122,8 +116,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.GetEvent(It.IsAny<string>())).Returns(Task.FromResult<Event>(new Event()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRelatedDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.EventId, "A");
                 }
@@ -136,7 +129,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRelatedDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EventId, "A");
                 }
@@ -148,7 +141,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, null as string);
@@ -161,8 +153,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRelatedDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, null as string);
                 }
@@ -174,7 +165,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
@@ -187,8 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEventRelatedDocumentRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEventRelatedDocumentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentId, new string('A', 251));
                 }
@@ -200,8 +189,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         eventRelatedDocumentRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new EventRelatedDocument()));
 
                         var validator = new ApiEventRelatedDocumentRequestModelValidator(eventRelatedDocumentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -209,5 +197,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7c8283f7d89e902b102826cc3488e47e</Hash>
+    <Hash>5bec8104c5a78b46f7901c42f00e1139</Hash>
 </Codenesium>*/

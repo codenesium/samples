@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FermataFishNS.Api.Services.Tests
                         stateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
 
                         var validator = new ApiStateRequestModelValidator(stateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace FermataFishNS.Api.Services.Tests
                         stateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
 
                         var validator = new ApiStateRequestModelValidator(stateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace FermataFishNS.Api.Services.Tests
                         stateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
 
                         var validator = new ApiStateRequestModelValidator(stateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiStateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 3));
@@ -70,8 +67,7 @@ namespace FermataFishNS.Api.Services.Tests
                         stateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
 
                         var validator = new ApiStateRequestModelValidator(stateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiStateRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiStateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 3));
                 }
@@ -83,8 +79,7 @@ namespace FermataFishNS.Api.Services.Tests
                         stateRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new State()));
 
                         var validator = new ApiStateRequestModelValidator(stateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>624c6a25a17d5cacdc6b946e11ef90bd</Hash>
+    <Hash>7fcca0f7795481dfad63f70d8a055101</Hash>
 </Codenesium>*/

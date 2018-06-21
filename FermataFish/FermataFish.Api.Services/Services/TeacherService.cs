@@ -1,48 +1,42 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public class TeacherService: AbstractTeacherService, ITeacherService
+        public class TeacherService : AbstractTeacherService, ITeacherService
         {
                 public TeacherService(
                         ILogger<ITeacherRepository> logger,
                         ITeacherRepository teacherRepository,
                         IApiTeacherRequestModelValidator teacherModelValidator,
                         IBOLTeacherMapper bolteacherMapper,
-                        IDALTeacherMapper dalteacherMapper
-                        ,
+                        IDALTeacherMapper dalteacherMapper,
                         IBOLRateMapper bolRateMapper,
-                        IDALRateMapper dalRateMapper
-                        ,
+                        IDALRateMapper dalRateMapper,
                         IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
                         IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
-
                         )
                         : base(logger,
                                teacherRepository,
                                teacherModelValidator,
                                bolteacherMapper,
-                               dalteacherMapper
-                               ,
+                               dalteacherMapper,
                                bolRateMapper,
-                               dalRateMapper
-                               ,
+                               dalRateMapper,
                                bolTeacherXTeacherSkillMapper,
-                               dalTeacherXTeacherSkillMapper
-                               )
+                               dalTeacherXTeacherSkillMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f399445f8ca66177984418a4acda8cec</Hash>
+    <Hash>b18526b4ed6098489fd4de64de9c78c7</Hash>
 </Codenesium>*/

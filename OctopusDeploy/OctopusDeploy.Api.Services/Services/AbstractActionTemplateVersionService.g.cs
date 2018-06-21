@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractActionTemplateVersionService: AbstractService
+        public abstract class AbstractActionTemplateVersionService : AbstractService
         {
                 private IActionTemplateVersionRepository actionTemplateVersionRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IActionTemplateVersionRepository actionTemplateVersionRepository,
                         IApiActionTemplateVersionRequestModelValidator actionTemplateVersionModelValidator,
                         IBOLActionTemplateVersionMapper bolActionTemplateVersionMapper,
-                        IDALActionTemplateVersionMapper dalActionTemplateVersionMapper
-
-                        )
+                        IDALActionTemplateVersionMapper dalActionTemplateVersionMapper)
                         : base()
-
                 {
                         this.actionTemplateVersionRepository = actionTemplateVersionRepository;
                         this.actionTemplateVersionModelValidator = actionTemplateVersionModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiActionTemplateVersionResponseModel> response = new CreateResponse<ApiActionTemplateVersionResponseModel>(await this.actionTemplateVersionModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolActionTemplateVersionMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolActionTemplateVersionMapper.MapModelToBO(default(string), model);
                                 var record = await this.actionTemplateVersionRepository.Create(this.dalActionTemplateVersionMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiActionTemplateVersionRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.actionTemplateVersionModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolActionTemplateVersionMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.actionTemplateVersionModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.actionTemplateVersionRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiActionTemplateVersionResponseModel>> GetLatestActionTemplateId(string latestActionTemplateId)
                 {
                         List<ActionTemplateVersion> records = await this.actionTemplateVersionRepository.GetLatestActionTemplateId(latestActionTemplateId);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b36d4180118b2f40e64da6377ffdd720</Hash>
+    <Hash>35ac6d9074c6a7fc7c89d2cab64787f4</Hash>
 </Codenesium>*/

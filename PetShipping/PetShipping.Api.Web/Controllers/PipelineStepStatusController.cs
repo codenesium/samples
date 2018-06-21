@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
         [Route("api/pipelineStepStatus")]
         [ApiVersion("1.0")]
-        public class PipelineStepStatusController: AbstractPipelineStepStatusController
+        public class PipelineStepStatusController : AbstractPipelineStepStatusController
         {
                 public PipelineStepStatusController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>34dc53d3d33394f0db9616f7ec72283b</Hash>
+    <Hash>009949739c8dc7fcbbcb748c244e3a80</Hash>
 </Codenesium>*/

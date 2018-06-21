@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/businessEntityContacts")]
         [ApiVersion("1.0")]
-        public class BusinessEntityContactController: AbstractBusinessEntityContactController
+        public class BusinessEntityContactController : AbstractBusinessEntityContactController
         {
                 public BusinessEntityContactController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8f28750122a64a41cea9be06783d46f5</Hash>
+    <Hash>8ee1e142a5d903e3c6d61740cbe1a424</Hash>
 </Codenesium>*/

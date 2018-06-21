@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public partial class ApiDeviceResponseModel: AbstractApiDeviceResponseModel
+        public partial class ApiDeviceResponseModel : AbstractApiDeviceResponseModel
         {
                 public ApiDeviceResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bb8884522c3b84c98d380add6f51f3ec</Hash>
+    <Hash>8efb45f64a64ff31b19b6463f107e61b</Hash>
 </Codenesium>*/

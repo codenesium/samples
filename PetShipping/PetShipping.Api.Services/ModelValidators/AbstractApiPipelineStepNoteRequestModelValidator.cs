@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiPipelineStepNoteRequestModelValidator: AbstractValidator<ApiPipelineStepNoteRequestModel>
+        public abstract class AbstractApiPipelineStepNoteRequestModelValidator : AbstractValidator<ApiPipelineStepNoteRequestModel>
         {
                 private int existingRecordId;
 
-                IPipelineStepNoteRepository pipelineStepNoteRepository;
+                private IPipelineStepNoteRepository pipelineStepNoteRepository;
 
                 public AbstractApiPipelineStepNoteRequestModelValidator(IPipelineStepNoteRepository pipelineStepNoteRepository)
                 {
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void EmployeeIdRules()
                 {
-                        this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x ?.EmployeeId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NoteRules()
@@ -39,7 +39,7 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x ?.PipelineStepId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fb713060a5dacf96d019ee8c3c830442</Hash>
+    <Hash>c558d4c39f13c50bcc1e817128d98239</Hash>
 </Codenesium>*/

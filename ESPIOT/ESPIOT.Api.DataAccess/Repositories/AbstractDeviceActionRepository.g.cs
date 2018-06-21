@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-        public abstract class AbstractDeviceActionRepository: AbstractRepository
+        public abstract class AbstractDeviceActionRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace ESPIOTNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<Device> GetDevice(int deviceId)
+                {
+                        return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.Id == deviceId);
+                }
+
                 protected async Task<List<DeviceAction>> Where(
                         Expression<Func<DeviceAction, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace ESPIOTNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Device> GetDevice(int deviceId)
-                {
-                        return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.Id == deviceId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>145b7680463c564bfa6f95ae185321ca</Hash>
+    <Hash>f7eb590999ff2d794188cc48d0ce4930</Hash>
 </Codenesium>*/

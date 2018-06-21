@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BOLHandlerPipelineStepMapper: BOLAbstractHandlerPipelineStepMapper, IBOLHandlerPipelineStepMapper
+        public class BOLHandlerPipelineStepMapper : BOLAbstractHandlerPipelineStepMapper, IBOLHandlerPipelineStepMapper
         {
                 public BOLHandlerPipelineStepMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a12a57b43ebe47cdbc1a99795a26f51b</Hash>
+    <Hash>2eea61167f290e4ad2ef8e0f9bbc725c</Hash>
 </Codenesium>*/

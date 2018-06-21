@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new TransactionRepository(loggerMoc.Object, context);
 
                         Transaction entity = new Transaction();
-
                         context.Set<Transaction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new TransactionRepository(loggerMoc.Object, context);
 
                         Transaction entity = new Transaction();
-
                         context.Set<Transaction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new TransactionRepository(loggerMoc.Object, context);
 
                         var entity = new Transaction();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Transaction>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<TransactionRepository>> loggerMoc = TransactionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TransactionRepositoryMoc.GetContext();
                         var repository = new TransactionRepository(loggerMoc.Object, context);
-
                         Transaction entity = new Transaction();
-
                         context.Set<Transaction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<TransactionRepository>> loggerMoc = TransactionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TransactionRepositoryMoc.GetContext();
                         var repository = new TransactionRepository(loggerMoc.Object, context);
-
                         Transaction entity = new Transaction();
-
                         context.Set<Transaction>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<TransactionRepository>> loggerMoc = TransactionRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TransactionRepositoryMoc.GetContext();
                         var repository = new TransactionRepository(loggerMoc.Object, context);
-
                         Transaction entity = new Transaction();
-
                         context.Set<Transaction>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Transaction modifiedRecord = await context.Set<Transaction>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>55c82e04a7819e26af2a480fe7bddbda</Hash>
+    <Hash>3e94c2d7a0a2dabb23021d9428dedcdd</Hash>
 </Codenesium>*/

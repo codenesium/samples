@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractCountryService: AbstractService
+        public abstract class AbstractCountryService : AbstractService
         {
                 private ICountryRepository countryRepository;
 
@@ -36,18 +36,12 @@ namespace PetShippingNS.Api.Services
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
                         IBOLCountryMapper bolCountryMapper,
-                        IDALCountryMapper dalCountryMapper
-
-                        ,
+                        IDALCountryMapper dalCountryMapper,
                         IBOLCountryRequirementMapper bolCountryRequirementMapper,
-                        IDALCountryRequirementMapper dalCountryRequirementMapper
-                        ,
+                        IDALCountryRequirementMapper dalCountryRequirementMapper,
                         IBOLDestinationMapper bolDestinationMapper,
-                        IDALDestinationMapper dalDestinationMapper
-
-                        )
+                        IDALDestinationMapper dalDestinationMapper)
                         : base()
-
                 {
                         this.countryRepository = countryRepository;
                         this.countryModelValidator = countryModelValidator;
@@ -87,7 +81,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.countryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCountryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCountryMapper.MapModelToBO(default(int), model);
                                 var record = await this.countryRepository.Create(this.dalCountryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace PetShippingNS.Api.Services
                         ApiCountryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCountryMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.countryRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace PetShippingNS.Api.Services
 
                         return this.bolCountryRequirementMapper.MapBOToModel(this.dalCountryRequirementMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiDestinationResponseModel>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Destination> records = await this.countryRepository.Destinations(countryId, limit, offset);
@@ -140,5 +133,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ecf95702c3af6ac5b939b1c5a02f3d94</Hash>
+    <Hash>781ee68a1f338d5c7f13d49abbbb1bdd</Hash>
 </Codenesium>*/

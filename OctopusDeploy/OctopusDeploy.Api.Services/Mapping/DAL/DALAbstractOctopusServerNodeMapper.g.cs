@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOOctopusServerNode bo)
                 {
                         OctopusServerNode efOctopusServerNode = new OctopusServerNode();
-
                         efOctopusServerNode.SetProperties(
                                 bo.Id,
                                 bo.IsInMaintenanceMode,
@@ -56,5 +55,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b3cb9d052bed4e93e09bc3c3bc23bf46</Hash>
+    <Hash>2eaaad838d8779d381eb284b6a04b0c1</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FermataFishNS.Api.DataAccess
 {
         [Table("Lesson", Schema="dbo")]
-        public partial class Lesson:AbstractEntity
+        public partial class Lesson : AbstractEntity
         {
                 public Lesson()
                 {
@@ -36,35 +36,35 @@ namespace FermataFishNS.Api.DataAccess
                         this.TeacherNotes = teacherNotes;
                 }
 
-                [Column("actualEndDate", TypeName="datetime")]
+                [Column("actualEndDate")]
                 public Nullable<DateTime> ActualEndDate { get; private set; }
 
-                [Column("actualStartDate", TypeName="date")]
+                [Column("actualStartDate")]
                 public Nullable<DateTime> ActualStartDate { get; private set; }
 
-                [Column("billAmount", TypeName="money")]
+                [Column("billAmount")]
                 public Nullable<decimal> BillAmount { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("lessonStatusId", TypeName="int")]
+                [Column("lessonStatusId")]
                 public int LessonStatusId { get; private set; }
 
-                [Column("scheduledEndDate", TypeName="datetime")]
+                [Column("scheduledEndDate")]
                 public Nullable<DateTime> ScheduledEndDate { get; private set; }
 
-                [Column("scheduledStartDate", TypeName="datetime")]
+                [Column("scheduledStartDate")]
                 public Nullable<DateTime> ScheduledStartDate { get; private set; }
 
-                [Column("studentNotes", TypeName="text(2147483647)")]
+                [Column("studentNotes")]
                 public string StudentNotes { get; private set; }
 
-                [Column("studioId", TypeName="int")]
+                [Column("studioId")]
                 public int StudioId { get; private set; }
 
-                [Column("teacherNotes", TypeName="text(2147483647)")]
+                [Column("teacherNotes")]
                 public string TeacherNotes { get; private set; }
 
                 [ForeignKey("LessonStatusId")]
@@ -76,5 +76,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b2e4333562dad0d2bdc9dda18ffb017</Hash>
+    <Hash>00b2fde6484dc823ff7c85cd423cb761</Hash>
 </Codenesium>*/

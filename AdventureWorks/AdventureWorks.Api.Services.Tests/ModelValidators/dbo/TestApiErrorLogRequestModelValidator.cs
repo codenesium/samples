@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiErrorLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, new string('A', 4001));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiErrorLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorMessage, new string('A', 4001));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiErrorLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ErrorProcedure, new string('A', 127));
                 }
@@ -122,8 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -135,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserName, null as string);
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiErrorLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserName, null as string);
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiErrorLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiErrorLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserName, new string('A', 129));
                 }
@@ -187,8 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         errorLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ErrorLog()));
 
                         var validator = new ApiErrorLogRequestModelValidator(errorLogRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -196,5 +183,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>227de79db5622a08efdcdf6f1cb514e2</Hash>
+    <Hash>2bcce4b712efb1714ab39de82c678d48</Hash>
 </Codenesium>*/

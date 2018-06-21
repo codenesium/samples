@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiShoppingCartItemRequestModelValidator: AbstractValidator<ApiShoppingCartItemRequestModel>
+        public abstract class AbstractApiShoppingCartItemRequestModelValidator : AbstractValidator<ApiShoppingCartItemRequestModel>
         {
                 private int existingRecordId;
 
-                IShoppingCartItemRepository shoppingCartItemRepository;
+                private IShoppingCartItemRepository shoppingCartItemRepository;
 
                 public AbstractApiShoppingCartItemRequestModelValidator(IShoppingCartItemRepository shoppingCartItemRepository)
                 {
@@ -51,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c8d5a3a87294dfab24d2e5df65ab10ca</Hash>
+    <Hash>24b9475a4d6f262702524d6a794f5da4</Hash>
 </Codenesium>*/

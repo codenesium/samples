@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("JobCandidate", Schema="HumanResources")]
-        public partial class JobCandidate: AbstractEntity
+        public partial class JobCandidate : AbstractEntity
         {
                 public JobCandidate()
                 {
@@ -24,21 +24,21 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.Resume = resume;
                 }
 
-                [Column("BusinessEntityID", TypeName="int")]
+                [Column("BusinessEntityID")]
                 public Nullable<int> BusinessEntityID { get; private set; }
 
                 [Key]
-                [Column("JobCandidateID", TypeName="int")]
+                [Column("JobCandidateID")]
                 public int JobCandidateID { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Resume", TypeName="xml(-1)")]
+                [Column("Resume")]
                 public string Resume { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>23b9d34e58d635153b170cc54886539b</Hash>
+    <Hash>91fb6f42ddf2bcaae7478b1b6c46010f</Hash>
 </Codenesium>*/

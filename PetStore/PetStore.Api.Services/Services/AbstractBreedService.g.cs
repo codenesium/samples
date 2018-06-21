@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractBreedService: AbstractService
+        public abstract class AbstractBreedService : AbstractService
         {
                 private IBreedRepository breedRepository;
 
@@ -33,15 +33,10 @@ namespace PetStoreNS.Api.Services
                         IBreedRepository breedRepository,
                         IApiBreedRequestModelValidator breedModelValidator,
                         IBOLBreedMapper bolBreedMapper,
-                        IDALBreedMapper dalBreedMapper
-
-                        ,
+                        IDALBreedMapper dalBreedMapper,
                         IBOLPetMapper bolPetMapper,
-                        IDALPetMapper dalPetMapper
-
-                        )
+                        IDALPetMapper dalPetMapper)
                         : base()
-
                 {
                         this.breedRepository = breedRepository;
                         this.breedModelValidator = breedModelValidator;
@@ -79,7 +74,7 @@ namespace PetStoreNS.Api.Services
                         CreateResponse<ApiBreedResponseModel> response = new CreateResponse<ApiBreedResponseModel>(await this.breedModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolBreedMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolBreedMapper.MapModelToBO(default(int), model);
                                 var record = await this.breedRepository.Create(this.dalBreedMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace PetStoreNS.Api.Services
                         ApiBreedRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.breedModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolBreedMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace PetStoreNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.breedModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.breedRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3a9a9a447841d43bfc781bea4e56f56</Hash>
+    <Hash>ed484a878ce7992386afd6ca493ffade</Hash>
 </Codenesium>*/

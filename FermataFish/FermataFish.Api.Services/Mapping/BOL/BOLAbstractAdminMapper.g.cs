@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FermataFishNS.Api.Services
                         )
                 {
                         BOAdmin boAdmin = new BOAdmin();
-
                         boAdmin.SetProperties(
                                 id,
                                 model.Birthday,
@@ -51,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ac255af57f16e0ee5c2dd85808458e3</Hash>
+    <Hash>e99e00787ea3e24f7e99fe96f80cb16b</Hash>
 </Codenesium>*/

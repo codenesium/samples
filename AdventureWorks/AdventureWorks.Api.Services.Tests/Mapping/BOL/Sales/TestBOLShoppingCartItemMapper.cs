@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ShoppingCartItem")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLShoppingCartItemActionMapper
+        public class TestBOLShoppingCartItemMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLShoppingCartItemMapper();
-
                         ApiShoppingCartItemRequestModel model = new ApiShoppingCartItemRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
                         BOShoppingCartItem response = mapper.MapModelToBO(1, model);
 
@@ -34,9 +32,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLShoppingCartItemMapper();
-
                         BOShoppingCartItem bo = new BOShoppingCartItem();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
                         ApiShoppingCartItemResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLShoppingCartItemMapper();
-
                         BOShoppingCartItem bo = new BOShoppingCartItem();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
                         List<ApiShoppingCartItemResponseModel> response = mapper.MapBOToModel(new List<BOShoppingCartItem>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d4cd722e4f1734983d4aef9df693748c</Hash>
+    <Hash>0c559045c8cdaf83e8a38393f18195e8</Hash>
 </Codenesium>*/

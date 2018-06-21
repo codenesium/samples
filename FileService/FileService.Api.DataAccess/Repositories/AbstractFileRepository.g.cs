@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public abstract class AbstractFileRepository: AbstractRepository
+        public abstract class AbstractFileRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace FileServiceNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Bucket> GetBucket(int bucketId)
+                {
+                        return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Id == bucketId);
+                }
+
+                public async virtual Task<FileType> GetFileType(int fileTypeId)
+                {
+                        return await this.Context.Set<FileType>().SingleOrDefaultAsync(x => x.Id == fileTypeId);
+                }
+
                 protected async Task<List<File>> Where(
                         Expression<Func<File, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace FileServiceNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Bucket> GetBucket(int bucketId)
-                {
-                        return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Id == bucketId);
-                }
-                public async virtual Task<FileType> GetFileType(int fileTypeId)
-                {
-                        return await this.Context.Set<FileType>().SingleOrDefaultAsync(x => x.Id == fileTypeId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fdaa8bbb1be1c3c71af2d4826ac924e3</Hash>
+    <Hash>4e3b70443f0ef560ebd267f5c29f5431</Hash>
 </Codenesium>*/

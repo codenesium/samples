@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiSpeciesRequestModel: AbstractApiRequestModel
+        public partial class ApiSpeciesRequestModel : AbstractApiRequestModel
         {
-                public ApiSpeciesRequestModel() : base()
+                public ApiSpeciesRequestModel()
+                        : base()
                 {
                 }
 
@@ -37,5 +38,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d01e4d41b707a04ce59448945350e767</Hash>
+    <Hash>f8fff07aa5b19077893e7524fc8e6cf0</Hash>
 </Codenesium>*/

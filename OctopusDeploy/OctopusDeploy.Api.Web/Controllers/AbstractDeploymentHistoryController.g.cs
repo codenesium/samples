@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Web
 {
-        public abstract class AbstractDeploymentHistoryController: AbstractApiController
+        public abstract class AbstractDeploymentHistoryController : AbstractApiController
         {
                 protected IDeploymentHistoryService DeploymentHistoryService { get; private set; }
 
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Web
                 public async virtual Task<IActionResult> All(int? limit, int? offset)
                 {
                         SearchQuery query = new SearchQuery();
-
                         query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
                         List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.All(query.Limit, query.Offset);
 
@@ -71,7 +70,7 @@ namespace OctopusDeployNS.Api.Web
                 [HttpPost]
                 [Route("")]
                 [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(ApiDeploymentHistoryResponseModel), 201)]
                 [ProducesResponseType(typeof(CreateResponse<string>), 422)]
                 public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentHistoryRequestModel model)
                 {
@@ -79,9 +78,7 @@ namespace OctopusDeployNS.Api.Web
 
                         if (result.Success)
                         {
-                                this.Request.HttpContext.Response.Headers.Add("x-record-id", result.Record.DeploymentId.ToString());
-                                this.Request.HttpContext.Response.Headers.Add("Location", $"{this.Settings.ExternalBaseUrl}/api/DeploymentHistories/{result.Record.DeploymentId.ToString()}");
-                                return this.Ok(result.Record);
+                                return this.Created ($"{this.Settings.ExternalBaseUrl}/api/DeploymentHistories/{result.Record.DeploymentId}", result.Record);
                         }
                         else
                         {
@@ -175,5 +172,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>00681330eadb93e317b964cad61d9084</Hash>
+    <Hash>6d2bcdd9e50bf891432f8f7714283797</Hash>
 </Codenesium>*/

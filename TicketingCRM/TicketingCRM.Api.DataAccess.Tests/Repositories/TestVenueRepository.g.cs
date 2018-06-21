@@ -38,7 +38,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new VenueRepository(loggerMoc.Object, context);
 
                         Venue entity = new Venue();
-
                         context.Set<Venue>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new VenueRepository(loggerMoc.Object, context);
 
                         Venue entity = new Venue();
-
                         context.Set<Venue>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace TicketingCRMNS.Api.DataAccess
                         var repository = new VenueRepository(loggerMoc.Object, context);
 
                         var entity = new Venue();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Venue>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VenueRepositoryMoc.GetContext();
                         var repository = new VenueRepository(loggerMoc.Object, context);
-
                         Venue entity = new Venue();
-
                         context.Set<Venue>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VenueRepositoryMoc.GetContext();
                         var repository = new VenueRepository(loggerMoc.Object, context);
-
                         Venue entity = new Venue();
-
                         context.Set<Venue>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace TicketingCRMNS.Api.DataAccess
                         Mock<ILogger<VenueRepository>> loggerMoc = VenueRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VenueRepositoryMoc.GetContext();
                         var repository = new VenueRepository(loggerMoc.Object, context);
-
                         Venue entity = new Venue();
-
                         context.Set<Venue>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Venue modifiedRecord = await context.Set<Venue>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f96d22fbc85f690790095ba05d75f0ed</Hash>
+    <Hash>bcb5f900a0b8d2a0725e53707e310cea</Hash>
 </Codenesium>*/

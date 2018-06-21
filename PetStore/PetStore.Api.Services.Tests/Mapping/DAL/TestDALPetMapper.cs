@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetStoreNS.Api.DataAccess;
 using PetStoreNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Pet")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPetActionMapper
+        public class TestDALPetMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPetMapper();
-
                         var bo = new BOPet();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1);
 
                         Pet response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace PetStoreNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPetMapper();
-
                         Pet entity = new Pet();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1, 1);
 
-                        BOPet  response = mapper.MapEFToBO(entity);
+                        BOPet response = mapper.MapEFToBO(entity);
 
                         response.AcquiredDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.BreedId.Should().Be(1);
@@ -56,9 +52,7 @@ namespace PetStoreNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPetMapper();
-
                         Pet entity = new Pet();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, 1, 1, 1);
 
                         List<BOPet> response = mapper.MapEFToBO(new List<Pet>() { entity });
@@ -69,5 +63,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3f6c19568a235724d884073fecf822c9</Hash>
+    <Hash>f06780d8a350f89b45be6d11c1f96f18</Hash>
 </Codenesium>*/

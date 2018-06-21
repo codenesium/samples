@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -48,7 +48,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var record = new Client();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -62,7 +61,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        ApiClientResponseModel response = await service.Get(default (int));
+                        ApiClientResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -85,7 +84,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        ApiClientResponseModel response = await service.Get(default (int));
+                        ApiClientResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -96,7 +95,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var model = new ApiClientRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Client>())).Returns(Task.FromResult(new Client()));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -122,7 +120,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var model = new ApiClientRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Client>())).Returns(Task.FromResult(new Client()));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -136,7 +133,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClientRequestModel>()));
@@ -148,7 +145,6 @@ namespace PetShippingNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var model = new ApiClientRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
@@ -162,7 +158,7 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -175,7 +171,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var records = new List<ClientCommunication>();
                         records.Add(new ClientCommunication());
-                        mock.RepositoryMock.Setup(x => x.ClientCommunications(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -188,17 +184,17 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        List<ApiClientCommunicationResponseModel> response = await service.ClientCommunications(default (int));
+                        List<ApiClientCommunicationResponseModel> response = await service.ClientCommunications(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ClientCommunications(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void ClientCommunications_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
-                        mock.RepositoryMock.Setup(x => x.ClientCommunications(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ClientCommunication>>(new List<ClientCommunication>()));
+                        mock.RepositoryMock.Setup(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ClientCommunication>>(new List<ClientCommunication>()));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -211,10 +207,10 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        List<ApiClientCommunicationResponseModel> response = await service.ClientCommunications(default (int));
+                        List<ApiClientCommunicationResponseModel> response = await service.ClientCommunications(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.ClientCommunications(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -223,7 +219,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var records = new List<Pet>();
                         records.Add(new Pet());
-                        mock.RepositoryMock.Setup(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -236,17 +232,17 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        List<ApiPetResponseModel> response = await service.Pets(default (int));
+                        List<ApiPetResponseModel> response = await service.Pets(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Pets_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
-                        mock.RepositoryMock.Setup(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
+                        mock.RepositoryMock.Setup(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -259,10 +255,10 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        List<ApiPetResponseModel> response = await service.Pets(default (int));
+                        List<ApiPetResponseModel> response = await service.Pets(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -271,7 +267,7 @@ namespace PetShippingNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IClientRepository>();
                         var records = new List<Sale>();
                         records.Add(new Sale());
-                        mock.RepositoryMock.Setup(x => x.Sales(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -284,17 +280,17 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        List<ApiSaleResponseModel> response = await service.Sales(default (int));
+                        List<ApiSaleResponseModel> response = await service.Sales(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Sales(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Sales_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IClientRepository>();
-                        mock.RepositoryMock.Setup(x => x.Sales(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
+                        mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
                         var service = new ClientService(mock.LoggerMock.Object,
                                                         mock.RepositoryMock.Object,
                                                         mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -307,14 +303,14 @@ namespace PetShippingNS.Api.Services.Tests
                                                         mock.BOLMapperMockFactory.BOLSaleMapperMock,
                                                         mock.DALMapperMockFactory.DALSaleMapperMock);
 
-                        List<ApiSaleResponseModel> response = await service.Sales(default (int));
+                        List<ApiSaleResponseModel> response = await service.Sales(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Sales(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>d64796c7bcd29cb0533d23da96e3e2be</Hash>
+    <Hash>b80efca0a77639a08c8eb95c17e14770</Hash>
 </Codenesium>*/

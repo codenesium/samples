@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var record = new Project();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.Get(default (string));
+                        ApiProjectResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.Get(default (string));
+                        ApiProjectResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var model = new ApiProjectRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Project>())).Returns(Task.FromResult(new Project()));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var model = new ApiProjectRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Project>())).Returns(Task.FromResult(new Project()));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiProjectRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var model = new ApiProjectRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var record = new Project();
-
                         mock.RepositoryMock.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetName(default (string));
+                        ApiProjectResponseModel response = await service.GetName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetName(default (string));
+                        ApiProjectResponseModel response = await service.GetName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetName(It.IsAny<string>()));
@@ -174,7 +169,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProjectRepository>();
                         var record = new Project();
-
                         mock.RepositoryMock.Setup(x => x.GetSlug(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ProjectService(mock.LoggerMock.Object,
                                                          mock.RepositoryMock.Object,
@@ -182,7 +176,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetSlug(default (string));
+                        ApiProjectResponseModel response = await service.GetSlug(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetSlug(It.IsAny<string>()));
@@ -199,7 +193,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        ApiProjectResponseModel response = await service.GetSlug(default (string));
+                        ApiProjectResponseModel response = await service.GetSlug(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetSlug(It.IsAny<string>()));
@@ -218,7 +212,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiProjectResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -235,7 +229,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDataVersion(default (byte[]));
+                        List<ApiProjectResponseModel> response = await service.GetDataVersion(default(byte[]));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDataVersion(It.IsAny<byte[]>()));
@@ -254,7 +248,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDiscreteChannelReleaseId(default (bool), default (string));
+                        List<ApiProjectResponseModel> response = await service.GetDiscreteChannelReleaseId(default(bool), default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
@@ -271,7 +265,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                          mock.BOLMapperMockFactory.BOLProjectMapperMock,
                                                          mock.DALMapperMockFactory.DALProjectMapperMock);
 
-                        List<ApiProjectResponseModel> response = await service.GetDiscreteChannelReleaseId(default (bool), default (string));
+                        List<ApiProjectResponseModel> response = await service.GetDiscreteChannelReleaseId(default(bool), default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
@@ -280,5 +274,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>756c725aa3e4aaa01b998ac0b9939484</Hash>
+    <Hash>0935084ec970a7b2f9a5773f81dad7a3</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractEventRepository: AbstractRepository
+        public abstract class AbstractEventRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace TicketingCRMNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<City> GetCity(int cityId)
+                {
+                        return await this.Context.Set<City>().SingleOrDefaultAsync(x => x.Id == cityId);
+                }
+
                 protected async Task<List<Event>> Where(
                         Expression<Func<Event, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<City> GetCity(int cityId)
-                {
-                        return await this.Context.Set<City>().SingleOrDefaultAsync(x => x.Id == cityId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ddbb18c8bf0710064d0536dcb9d2436c</Hash>
+    <Hash>256f29b1dda9173b190e5f34786cfb52</Hash>
 </Codenesium>*/

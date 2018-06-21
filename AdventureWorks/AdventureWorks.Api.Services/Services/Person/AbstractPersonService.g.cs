@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractPersonService: AbstractService
+        public abstract class AbstractPersonService : AbstractService
         {
                 private IPersonRepository personRepository;
 
@@ -42,24 +42,16 @@ namespace AdventureWorksNS.Api.Services
                         IPersonRepository personRepository,
                         IApiPersonRequestModelValidator personModelValidator,
                         IBOLPersonMapper bolPersonMapper,
-                        IDALPersonMapper dalPersonMapper
-
-                        ,
+                        IDALPersonMapper dalPersonMapper,
                         IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
-                        ,
+                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
                         IBOLEmailAddressMapper bolEmailAddressMapper,
-                        IDALEmailAddressMapper dalEmailAddressMapper
-                        ,
+                        IDALEmailAddressMapper dalEmailAddressMapper,
                         IBOLPasswordMapper bolPasswordMapper,
-                        IDALPasswordMapper dalPasswordMapper
-                        ,
+                        IDALPasswordMapper dalPasswordMapper,
                         IBOLPersonPhoneMapper bolPersonPhoneMapper,
-                        IDALPersonPhoneMapper dalPersonPhoneMapper
-
-                        )
+                        IDALPersonPhoneMapper dalPersonPhoneMapper)
                         : base()
-
                 {
                         this.personRepository = personRepository;
                         this.personModelValidator = personModelValidator;
@@ -103,7 +95,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.personModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPersonMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPersonMapper.MapModelToBO(default(int), model);
                                 var record = await this.personRepository.Create(this.dalPersonMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record)));
@@ -117,7 +109,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiPersonRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPersonMapper.MapModelToBO(businessEntityID, model);
@@ -131,7 +122,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.personRepository.Delete(businessEntityID);
@@ -146,12 +136,14 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiPersonResponseModel>> ByAdditionalContactInfo(string additionalContactInfo)
                 {
                         List<Person> records = await this.personRepository.ByAdditionalContactInfo(additionalContactInfo);
 
                         return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiPersonResponseModel>> ByDemographics(string demographics)
                 {
                         List<Person> records = await this.personRepository.ByDemographics(demographics);
@@ -165,18 +157,21 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolBusinessEntityContactMapper.MapBOToModel(this.dalBusinessEntityContactMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiEmailAddressResponseModel>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<EmailAddress> records = await this.personRepository.EmailAddresses(businessEntityID, limit, offset);
 
                         return this.bolEmailAddressMapper.MapBOToModel(this.dalEmailAddressMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiPasswordResponseModel>> Passwords(int businessEntityID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<Password> records = await this.personRepository.Passwords(businessEntityID, limit, offset);
 
                         return this.bolPasswordMapper.MapBOToModel(this.dalPasswordMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiPersonPhoneResponseModel>> PersonPhones(int businessEntityID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<PersonPhone> records = await this.personRepository.PersonPhones(businessEntityID, limit, offset);
@@ -187,5 +182,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d2340cfd77bc10221607f24a3a4afff9</Hash>
+    <Hash>81d548db18459dbc5f5b953ceb9b8a65</Hash>
 </Codenesium>*/

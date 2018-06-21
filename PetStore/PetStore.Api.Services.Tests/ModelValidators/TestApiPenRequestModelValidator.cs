@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetStoreNS.Api.Services.Tests
                         penRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 
                         var validator = new ApiPenRequestModelValidator(penRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPenRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace PetStoreNS.Api.Services.Tests
                         penRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 
                         var validator = new ApiPenRequestModelValidator(penRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPenRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPenRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace PetStoreNS.Api.Services.Tests
                         penRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 
                         var validator = new ApiPenRequestModelValidator(penRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiPenRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -70,8 +67,7 @@ namespace PetStoreNS.Api.Services.Tests
                         penRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 
                         var validator = new ApiPenRequestModelValidator(penRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiPenRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiPenRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -83,8 +79,7 @@ namespace PetStoreNS.Api.Services.Tests
                         penRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Pen()));
 
                         var validator = new ApiPenRequestModelValidator(penRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1c557ac7a24d7481f2a6e28e76e7b679</Hash>
+    <Hash>ddeb6acf61485a1e51d81e2f81c9a654</Hash>
 </Codenesium>*/

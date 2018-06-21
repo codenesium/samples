@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-        public class BOLPenMapper: BOLAbstractPenMapper, IBOLPenMapper
+        public class BOLPenMapper : BOLAbstractPenMapper, IBOLPenMapper
         {
                 public BOLPenMapper()
                 {
@@ -14,5 +14,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70961d720a917fee5f6e95eaac5ed440</Hash>
+    <Hash>bb77e4c2f2d5f36849d034f89bf8ba51</Hash>
 </Codenesium>*/

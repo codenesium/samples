@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ExtensionConfiguration")]
         [Trait("Area", "DALMapper")]
-        public class TestDALExtensionConfigurationActionMapper
+        public class TestDALExtensionConfigurationMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALExtensionConfigurationMapper();
-
                         var bo = new BOExtensionConfiguration();
-
                         bo.SetProperties("A", "A", "A", "A");
 
                         ExtensionConfiguration response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALExtensionConfigurationMapper();
-
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         entity.SetProperties("A", "A", "A", "A");
 
-                        BOExtensionConfiguration  response = mapper.MapEFToBO(entity);
+                        BOExtensionConfiguration response = mapper.MapEFToBO(entity);
 
                         response.ExtensionAuthor.Should().Be("A");
                         response.Id.Should().Be("A");
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALExtensionConfigurationMapper();
-
                         ExtensionConfiguration entity = new ExtensionConfiguration();
-
                         entity.SetProperties("A", "A", "A", "A");
 
                         List<BOExtensionConfiguration> response = mapper.MapEFToBO(new List<ExtensionConfiguration>() { entity });
@@ -63,5 +57,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7f5c75fb34c3cf076a8298f80dac9c94</Hash>
+    <Hash>deef83a5712387f9d6c891d05900a5ba</Hash>
 </Codenesium>*/

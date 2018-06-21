@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLCultureMapper: BOLAbstractCultureMapper, IBOLCultureMapper
+        public class BOLCultureMapper : BOLAbstractCultureMapper, IBOLCultureMapper
         {
                 public BOLCultureMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee32c4a86b0e91a7539864b555dd29ef</Hash>
+    <Hash>2cfe44400260de66255741eaf66fcc04</Hash>
 </Codenesium>*/

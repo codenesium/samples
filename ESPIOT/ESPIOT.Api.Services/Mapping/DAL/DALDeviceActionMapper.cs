@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace ESPIOTNS.Api.Services
 {
-        public class DALDeviceActionMapper: DALAbstractDeviceActionMapper, IDALDeviceActionMapper
+        public class DALDeviceActionMapper : DALAbstractDeviceActionMapper, IDALDeviceActionMapper
         {
                 public DALDeviceActionMapper()
                 {
@@ -13,5 +13,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29c511208c0fc20eca06b2447171b130</Hash>
+    <Hash>3ab526364a530e51eed03d5658571aa8</Hash>
 </Codenesium>*/

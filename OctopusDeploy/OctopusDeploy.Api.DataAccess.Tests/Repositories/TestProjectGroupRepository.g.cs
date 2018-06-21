@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProjectGroupRepository(loggerMoc.Object, context);
 
                         ProjectGroup entity = new ProjectGroup();
-
                         context.Set<ProjectGroup>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProjectGroupRepository(loggerMoc.Object, context);
 
                         ProjectGroup entity = new ProjectGroup();
-
                         context.Set<ProjectGroup>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProjectGroupRepository(loggerMoc.Object, context);
 
                         var entity = new ProjectGroup();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProjectGroup>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProjectGroupRepository>> loggerMoc = ProjectGroupRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProjectGroupRepositoryMoc.GetContext();
                         var repository = new ProjectGroupRepository(loggerMoc.Object, context);
-
                         ProjectGroup entity = new ProjectGroup();
-
                         context.Set<ProjectGroup>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProjectGroupRepository>> loggerMoc = ProjectGroupRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProjectGroupRepositoryMoc.GetContext();
                         var repository = new ProjectGroupRepository(loggerMoc.Object, context);
-
                         ProjectGroup entity = new ProjectGroup();
-
                         context.Set<ProjectGroup>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProjectGroupRepository>> loggerMoc = ProjectGroupRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProjectGroupRepositoryMoc.GetContext();
                         var repository = new ProjectGroupRepository(loggerMoc.Object, context);
-
                         ProjectGroup entity = new ProjectGroup();
-
                         context.Set<ProjectGroup>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         ProjectGroup modifiedRecord = await context.Set<ProjectGroup>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1dabc8e307f436f17cc3b7b2100d7621</Hash>
+    <Hash>5abed39832d0320183c3f792673f30fe</Hash>
 </Codenesium>*/

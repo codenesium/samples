@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiAWBuildVersionRequestModelValidator: AbstractValidator<ApiAWBuildVersionRequestModel>
+        public abstract class AbstractApiAWBuildVersionRequestModelValidator : AbstractValidator<ApiAWBuildVersionRequestModel>
         {
                 private int existingRecordId;
 
-                IAWBuildVersionRepository aWBuildVersionRepository;
+                private IAWBuildVersionRepository aWBuildVersionRepository;
 
                 public AbstractApiAWBuildVersionRequestModelValidator(IAWBuildVersionRepository aWBuildVersionRepository)
                 {
@@ -43,5 +43,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22a1ae2ecb8c99136823c1f3abaf46d5</Hash>
+    <Hash>fd11341e4bd8197615486393d6f2b128</Hash>
 </Codenesium>*/

@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMutexRepository>();
                         var record = new Mutex();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new MutexService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLMutexMapperMock,
                                                        mock.DALMapperMockFactory.DALMutexMapperMock);
 
-                        ApiMutexResponseModel response = await service.Get(default (string));
+                        ApiMutexResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLMutexMapperMock,
                                                        mock.DALMapperMockFactory.DALMutexMapperMock);
 
-                        ApiMutexResponseModel response = await service.Get(default (string));
+                        ApiMutexResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMutexRepository>();
                         var model = new ApiMutexRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Mutex>())).Returns(Task.FromResult(new Mutex()));
                         var service = new MutexService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMutexRepository>();
                         var model = new ApiMutexRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Mutex>())).Returns(Task.FromResult(new Mutex()));
                         var service = new MutexService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLMutexMapperMock,
                                                        mock.DALMapperMockFactory.DALMutexMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.MutexModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiMutexRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IMutexRepository>();
                         var model = new ApiMutexRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new MutexService(mock.LoggerMock.Object,
                                                        mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                        mock.BOLMapperMockFactory.BOLMutexMapperMock,
                                                        mock.DALMapperMockFactory.DALMutexMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -136,5 +132,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5886bfc558c20c83515492c70d01bcc9</Hash>
+    <Hash>b7f3d97ce2a5a5966d2c71987d92d078</Hash>
 </Codenesium>*/

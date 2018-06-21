@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDocumentRepository>();
                         var record = new Document();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult(record));
                         var service = new DocumentService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        ApiDocumentResponseModel response = await service.Get(default (Guid));
+                        ApiDocumentResponseModel response = await service.Get(default(Guid));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<Guid>()));
@@ -67,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        ApiDocumentResponseModel response = await service.Get(default (Guid));
+                        ApiDocumentResponseModel response = await service.Get(default(Guid));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<Guid>()));
@@ -78,7 +77,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDocumentRepository>();
                         var model = new ApiDocumentRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Document>())).Returns(Task.FromResult(new Document()));
                         var service = new DocumentService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDocumentRepository>();
                         var model = new ApiDocumentRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Document>())).Returns(Task.FromResult(new Document()));
                         var service = new DocumentService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        ActionResponse response = await service.Update(default (Guid), model);
+                        ActionResponse response = await service.Update(default(Guid), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DocumentModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()));
@@ -118,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDocumentRepository>();
                         var model = new ApiDocumentRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<Guid>())).Returns(Task.CompletedTask);
                         var service = new DocumentService(mock.LoggerMock.Object,
                                                           mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        ActionResponse response = await service.Delete(default (Guid));
+                        ActionResponse response = await service.Delete(default(Guid));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<Guid>()));
@@ -146,7 +142,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        List<ApiDocumentResponseModel> response = await service.ByFileNameRevision(default (string), default (string));
+                        List<ApiDocumentResponseModel> response = await service.ByFileNameRevision(default(string), default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>()));
@@ -163,7 +159,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                           mock.BOLMapperMockFactory.BOLDocumentMapperMock,
                                                           mock.DALMapperMockFactory.DALDocumentMapperMock);
 
-                        List<ApiDocumentResponseModel> response = await service.ByFileNameRevision(default (string), default (string));
+                        List<ApiDocumentResponseModel> response = await service.ByFileNameRevision(default(string), default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>()));
@@ -172,5 +168,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b0f6b4785419d21c246e159428c7237c</Hash>
+    <Hash>0f1c51552984b97baea5a29f6be4d097</Hash>
 </Codenesium>*/

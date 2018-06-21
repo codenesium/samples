@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class UserService: AbstractUserService, IUserService
+        public class UserService : AbstractUserService, IUserService
         {
                 public UserService(
                         ILogger<IUserRepository> logger,
@@ -18,19 +18,17 @@ namespace OctopusDeployNS.Api.Services
                         IApiUserRequestModelValidator userModelValidator,
                         IBOLUserMapper boluserMapper,
                         IDALUserMapper daluserMapper
-
                         )
                         : base(logger,
                                userRepository,
                                userModelValidator,
                                boluserMapper,
-                               daluserMapper
-                               )
+                               daluserMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6754a7dc0332af07f4a525eedcccff1a</Hash>
+    <Hash>5ded2b7b981722d81513386cfad76639</Hash>
 </Codenesium>*/

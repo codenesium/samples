@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "KeyAllocation")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLKeyAllocationActionMapper
+        public class TestBOLKeyAllocationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLKeyAllocationMapper();
-
                         ApiKeyAllocationRequestModel model = new ApiKeyAllocationRequestModel();
-
                         model.SetProperties(1);
                         BOKeyAllocation response = mapper.MapModelToBO("A", model);
 
@@ -30,9 +28,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLKeyAllocationMapper();
-
                         BOKeyAllocation bo = new BOKeyAllocation();
-
                         bo.SetProperties("A", 1);
                         ApiKeyAllocationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -44,9 +40,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLKeyAllocationMapper();
-
                         BOKeyAllocation bo = new BOKeyAllocation();
-
                         bo.SetProperties("A", 1);
                         List<ApiKeyAllocationResponseModel> response = mapper.MapBOToModel(new List<BOKeyAllocation>() { { bo } });
 
@@ -56,5 +50,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e0608783e21333968583b05188965a11</Hash>
+    <Hash>60efcdad0a4f7a501e24d985e4e75535</Hash>
 </Codenesium>*/

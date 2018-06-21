@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiShiftRequestModelValidator: AbstractApiShiftRequestModelValidator, IApiShiftRequestModelValidator
+        public class ApiShiftRequestModelValidator : AbstractApiShiftRequestModelValidator, IApiShiftRequestModelValidator
         {
                 public ApiShiftRequestModelValidator(IShiftRepository shiftRepository)
                         : base(shiftRepository)
@@ -33,11 +33,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0c2fb5c5b6d625bfc85a322c30fdcd33</Hash>
+    <Hash>6e1e0c6f6bab21e888b450efbd4088e6</Hash>
 </Codenesium>*/

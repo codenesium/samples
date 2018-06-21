@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCurrencyRateRequestModelValidator: AbstractValidator<ApiCurrencyRateRequestModel>
+        public abstract class AbstractApiCurrencyRateRequestModelValidator : AbstractValidator<ApiCurrencyRateRequestModel>
         {
                 private int existingRecordId;
 
-                ICurrencyRateRepository currencyRateRepository;
+                private ICurrencyRateRepository currencyRateRepository;
 
                 public AbstractApiCurrencyRateRequestModelValidator(ICurrencyRateRepository currencyRateRepository)
                 {
@@ -32,7 +32,7 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void CurrencyRateDateRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.CurrencyRateDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.CurrencyRateDate));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x?.CurrencyRateDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.CurrencyRateDate));
                 }
 
                 public virtual void EndOfDayRateRules()
@@ -42,8 +42,8 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void FromCurrencyCodeRules()
                 {
                         this.RuleFor(x => x.FromCurrencyCode).NotNull();
-                        this.RuleFor(x => x.FromCurrencyCode).MustAsync(this.BeValidCurrency).When(x => x ?.FromCurrencyCode != null).WithMessage("Invalid reference");
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.FromCurrencyCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.FromCurrencyCode));
+                        this.RuleFor(x => x.FromCurrencyCode).MustAsync(this.BeValidCurrency).When(x => x?.FromCurrencyCode != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x?.FromCurrencyCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.FromCurrencyCode));
                         this.RuleFor(x => x.FromCurrencyCode).Length(0, 3);
                 }
 
@@ -54,8 +54,8 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void ToCurrencyCodeRules()
                 {
                         this.RuleFor(x => x.ToCurrencyCode).NotNull();
-                        this.RuleFor(x => x.ToCurrencyCode).MustAsync(this.BeValidCurrency).When(x => x ?.ToCurrencyCode != null).WithMessage("Invalid reference");
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x ?.ToCurrencyCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.ToCurrencyCode));
+                        this.RuleFor(x => x.ToCurrencyCode).MustAsync(this.BeValidCurrency).When(x => x?.ToCurrencyCode != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByCurrencyRateDateFromCurrencyCodeToCurrencyCode).When(x => x?.ToCurrencyCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCurrencyRateRequestModel.ToCurrencyCode));
                         this.RuleFor(x => x.ToCurrencyCode).Length(0, 3);
                 }
 
@@ -70,7 +70,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         CurrencyRate record = await this.currencyRateRepository.ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(model.CurrencyRateDate, model.FromCurrencyCode, model.ToCurrencyCode);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.CurrencyRateID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.CurrencyRateID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af67a372af5bac66abc8ff28deeb7d2c</Hash>
+    <Hash>c7bb9d5cd15349e5f0da2124e98372e1</Hash>
 </Codenesium>*/

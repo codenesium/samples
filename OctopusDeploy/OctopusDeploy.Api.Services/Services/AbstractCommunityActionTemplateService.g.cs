@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractCommunityActionTemplateService: AbstractService
+        public abstract class AbstractCommunityActionTemplateService : AbstractService
         {
                 private ICommunityActionTemplateRepository communityActionTemplateRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ICommunityActionTemplateRepository communityActionTemplateRepository,
                         IApiCommunityActionTemplateRequestModelValidator communityActionTemplateModelValidator,
                         IBOLCommunityActionTemplateMapper bolCommunityActionTemplateMapper,
-                        IDALCommunityActionTemplateMapper dalCommunityActionTemplateMapper
-
-                        )
+                        IDALCommunityActionTemplateMapper dalCommunityActionTemplateMapper)
                         : base()
-
                 {
                         this.communityActionTemplateRepository = communityActionTemplateRepository;
                         this.communityActionTemplateModelValidator = communityActionTemplateModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiCommunityActionTemplateResponseModel> response = new CreateResponse<ApiCommunityActionTemplateResponseModel>(await this.communityActionTemplateModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCommunityActionTemplateMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolCommunityActionTemplateMapper.MapModelToBO(default(string), model);
                                 var record = await this.communityActionTemplateRepository.Create(this.dalCommunityActionTemplateMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiCommunityActionTemplateRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.communityActionTemplateModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCommunityActionTemplateMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.communityActionTemplateModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.communityActionTemplateRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<ApiCommunityActionTemplateResponseModel> GetName(string name)
                 {
                         CommunityActionTemplate record = await this.communityActionTemplateRepository.GetName(name);
@@ -136,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>637b9a68d34d55e8f4f693cb6de5f334</Hash>
+    <Hash>ff07a3749a34ba26cd6713f468542fb9</Hash>
 </Codenesium>*/

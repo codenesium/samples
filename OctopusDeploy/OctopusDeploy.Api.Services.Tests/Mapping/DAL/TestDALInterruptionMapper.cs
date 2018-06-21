@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Interruption")]
         [Trait("Area", "DALMapper")]
-        public class TestDALInterruptionActionMapper
+        public class TestDALInterruptionMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALInterruptionMapper();
-
                         var bo = new BOInterruption();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A", "A", "A", "A");
 
                         Interruption response = mapper.MapBOToEF(bo);
@@ -40,12 +38,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALInterruptionMapper();
-
                         Interruption entity = new Interruption();
-
                         entity.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A", "A", "A", "A", "A");
 
-                        BOInterruption  response = mapper.MapEFToBO(entity);
+                        BOInterruption response = mapper.MapEFToBO(entity);
 
                         response.Created.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
                         response.EnvironmentId.Should().Be("A");
@@ -64,9 +60,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALInterruptionMapper();
-
                         Interruption entity = new Interruption();
-
                         entity.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", "A", "A", "A", "A", "A", "A");
 
                         List<BOInterruption> response = mapper.MapEFToBO(new List<Interruption>() { entity });
@@ -77,5 +71,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a38f3056c668536eb8352854ecbf569c</Hash>
+    <Hash>406abd3a648ca569cf547cf4ff0192dd</Hash>
 </Codenesium>*/

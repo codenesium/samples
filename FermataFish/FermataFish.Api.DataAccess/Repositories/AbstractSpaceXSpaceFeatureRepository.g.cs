@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-        public abstract class AbstractSpaceXSpaceFeatureRepository: AbstractRepository
+        public abstract class AbstractSpaceXSpaceFeatureRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace FermataFishNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<SpaceFeature> GetSpaceFeature(int spaceFeatureId)
+                {
+                        return await this.Context.Set<SpaceFeature>().SingleOrDefaultAsync(x => x.Id == spaceFeatureId);
+                }
+
+                public async virtual Task<Space> GetSpace(int spaceId)
+                {
+                        return await this.Context.Set<Space>().SingleOrDefaultAsync(x => x.Id == spaceId);
+                }
+
                 protected async Task<List<SpaceXSpaceFeature>> Where(
                         Expression<Func<SpaceXSpaceFeature, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace FermataFishNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<SpaceFeature> GetSpaceFeature(int spaceFeatureId)
-                {
-                        return await this.Context.Set<SpaceFeature>().SingleOrDefaultAsync(x => x.Id == spaceFeatureId);
-                }
-                public async virtual Task<Space> GetSpace(int spaceId)
-                {
-                        return await this.Context.Set<Space>().SingleOrDefaultAsync(x => x.Id == spaceId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7ef0521ae38882f6adb2845d88fc4eac</Hash>
+    <Hash>0422b05e1b7b6c1f2ae628d0989b0242</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BODashboardConfiguration boDashboardConfiguration = new BODashboardConfiguration();
-
                         boDashboardConfiguration.SetProperties(
                                 id,
                                 model.IncludedEnvironmentIds,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52d3a1df1103b6865f534b91937556df</Hash>
+    <Hash>0834da146fe340cf347b84dac87006e4</Hash>
 </Codenesium>*/

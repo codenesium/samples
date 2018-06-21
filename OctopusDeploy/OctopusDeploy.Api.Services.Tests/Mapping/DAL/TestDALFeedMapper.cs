@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Feed")]
         [Trait("Area", "DALMapper")]
-        public class TestDALFeedActionMapper
+        public class TestDALFeedMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALFeedMapper();
-
                         var bo = new BOFeed();
-
                         bo.SetProperties("A", "A", "A", "A", "A");
 
                         Feed response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALFeedMapper();
-
                         Feed entity = new Feed();
-
                         entity.SetProperties("A", "A", "A", "A", "A");
 
-                        BOFeed  response = mapper.MapEFToBO(entity);
+                        BOFeed response = mapper.MapEFToBO(entity);
 
                         response.FeedType.Should().Be("A");
                         response.FeedUri.Should().Be("A");
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALFeedMapper();
-
                         Feed entity = new Feed();
-
                         entity.SetProperties("A", "A", "A", "A", "A");
 
                         List<BOFeed> response = mapper.MapEFToBO(new List<Feed>() { entity });
@@ -65,5 +59,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e9c62bc2ea66f616ebf0889773fc3ac0</Hash>
+    <Hash>52c10a747590e4ab0355e081f5c1606b</Hash>
 </Codenesium>*/

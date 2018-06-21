@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiApiKeyRequestModelValidator: AbstractValidator<ApiApiKeyRequestModel>
+        public abstract class AbstractApiApiKeyRequestModelValidator : AbstractValidator<ApiApiKeyRequestModel>
         {
                 private string existingRecordId;
 
-                IApiKeyRepository apiKeyRepository;
+                private IApiKeyRepository apiKeyRepository;
 
                 public AbstractApiApiKeyRequestModelValidator(IApiKeyRepository apiKeyRepository)
                 {
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void ApiKeyHashedRules()
                 {
                         this.RuleFor(x => x.ApiKeyHashed).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetApiKeyHashed).When(x => x ?.ApiKeyHashed != null).WithMessage("Violates unique constraint").WithName(nameof(ApiApiKeyRequestModel.ApiKeyHashed));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetApiKeyHashed).When(x => x?.ApiKeyHashed != null).WithMessage("Violates unique constraint").WithName(nameof(ApiApiKeyRequestModel.ApiKeyHashed));
                         this.RuleFor(x => x.ApiKeyHashed).Length(0, 200);
                 }
 
@@ -52,7 +52,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         ApiKey record = await this.apiKeyRepository.GetApiKeyHashed(model.ApiKeyHashed);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -65,5 +65,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e271c230c0ab33d49f694158f5e75f2</Hash>
+    <Hash>94be46847f6560206799b08370d8e0cf</Hash>
 </Codenesium>*/

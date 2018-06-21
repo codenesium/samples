@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ServerTask")]
         [Trait("Area", "DALMapper")]
-        public class TestDALServerTaskActionMapper
+        public class TestDALServerTaskMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALServerTaskMapper();
-
                         var bo = new BOServerTask();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", true, true, "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
                         ServerTask response = mapper.MapBOToEF(bo);
@@ -46,12 +44,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALServerTaskMapper();
-
                         ServerTask entity = new ServerTask();
-
                         entity.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", true, true, "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
-                        BOServerTask  response = mapper.MapEFToBO(entity);
+                        BOServerTask response = mapper.MapEFToBO(entity);
 
                         response.CompletedTime.Should().Be(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"));
                         response.ConcurrencyTag.Should().Be("A");
@@ -76,9 +72,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALServerTaskMapper();
-
                         ServerTask entity = new ServerTask();
-
                         entity.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", true, true, "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
                         List<BOServerTask> response = mapper.MapEFToBO(new List<ServerTask>() { entity });
@@ -89,5 +83,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e4cfb4d3313af20c049fb62b547c0737</Hash>
+    <Hash>5551a12268a29facfc496170c27afe37</Hash>
 </Codenesium>*/

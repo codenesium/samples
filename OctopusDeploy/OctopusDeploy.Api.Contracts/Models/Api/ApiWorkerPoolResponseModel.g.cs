@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiWorkerPoolResponseModel: AbstractApiWorkerPoolResponseModel
+        public partial class ApiWorkerPoolResponseModel : AbstractApiWorkerPoolResponseModel
         {
                 public ApiWorkerPoolResponseModel()
                         : base()
@@ -17,5 +17,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>71f6ca821dc54af47ff565a142cfc77f</Hash>
+    <Hash>2bc2ae6dc94005710bb856dce36046cf</Hash>
 </Codenesium>*/

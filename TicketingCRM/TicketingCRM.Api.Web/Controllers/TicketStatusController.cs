@@ -1,12 +1,12 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.Services;
 
@@ -14,7 +14,7 @@ namespace TicketingCRMNS.Api.Web
 {
         [Route("api/ticketStatus")]
         [ApiVersion("1.0")]
-        public class TicketStatusController: AbstractTicketStatusController
+        public class TicketStatusController : AbstractTicketStatusController
         {
                 public TicketStatusController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a5d9e6babedfc6cf004fb412b914d31a</Hash>
+    <Hash>bfbd9832fe3efe452a1dc73022a13164</Hash>
 </Codenesium>*/

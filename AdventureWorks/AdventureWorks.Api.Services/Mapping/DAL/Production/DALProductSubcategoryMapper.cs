@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALProductSubcategoryMapper: DALAbstractProductSubcategoryMapper, IDALProductSubcategoryMapper
+        public class DALProductSubcategoryMapper : DALAbstractProductSubcategoryMapper, IDALProductSubcategoryMapper
         {
                 public DALProductSubcategoryMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db6e9c1a024aaba6ca170cb6a6649c1b</Hash>
+    <Hash>4a3ee2d2a4948f4fd24302f3f922f58f</Hash>
 </Codenesium>*/

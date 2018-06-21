@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOContactType: AbstractBOContactType
+        public partial class BOContactType : AbstractBOContactType
         {
-                public BOContactType() : base()
+                public BOContactType()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>46cba76fa31f17c2a74a5cda286e3b47</Hash>
+    <Hash>4d3148081ff0f9a7d4d0ad215c58c56f</Hash>
 </Codenesium>*/

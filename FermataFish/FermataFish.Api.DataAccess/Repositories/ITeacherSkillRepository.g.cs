@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
@@ -18,6 +18,7 @@ namespace FermataFishNS.Api.DataAccess
                 Task<List<TeacherSkill>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<Rate>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<TeacherXTeacherSkill>> TeacherXTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 
                 Task<Studio> GetStudio(int studioId);
@@ -25,5 +26,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8ee394f6c1991a413d39bad9e47f5ee</Hash>
+    <Hash>b0aaec6b05057724fb26e3cb6b1155eb</Hash>
 </Codenesium>*/

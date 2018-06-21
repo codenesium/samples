@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOClasp boClasp = new BOClasp();
-
                         boClasp.SetProperties(
                                 id,
                                 model.NextChainId,
@@ -47,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62e965541466a633828f858aa81d0d19</Hash>
+    <Hash>7f786ef6f4d2399389fa9bbbe6a7684f</Hash>
 </Codenesium>*/

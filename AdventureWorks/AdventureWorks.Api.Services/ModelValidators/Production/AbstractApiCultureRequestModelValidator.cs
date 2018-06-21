@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCultureRequestModelValidator: AbstractValidator<ApiCultureRequestModel>
+        public abstract class AbstractApiCultureRequestModelValidator : AbstractValidator<ApiCultureRequestModel>
         {
                 private string existingRecordId;
 
-                ICultureRepository cultureRepository;
+                private ICultureRepository cultureRepository;
 
                 public AbstractApiCultureRequestModelValidator(ICultureRepository cultureRepository)
                 {
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCultureRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Culture record = await this.cultureRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.CultureID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.CultureID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>322da4d1b19bcedf4604eca37048797b</Hash>
+    <Hash>d367e04bf5d75c846aa1b2e560b85e6b</Hash>
 </Codenesium>*/

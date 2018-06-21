@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PasswordRepository(loggerMoc.Object, context);
 
                         Password entity = new Password();
-
                         context.Set<Password>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PasswordRepository(loggerMoc.Object, context);
 
                         Password entity = new Password();
-
                         context.Set<Password>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PasswordRepository(loggerMoc.Object, context);
 
                         var entity = new Password();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Password>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PasswordRepository>> loggerMoc = PasswordRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
                         var repository = new PasswordRepository(loggerMoc.Object, context);
-
                         Password entity = new Password();
-
                         context.Set<Password>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PasswordRepository>> loggerMoc = PasswordRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
                         var repository = new PasswordRepository(loggerMoc.Object, context);
-
                         Password entity = new Password();
-
                         context.Set<Password>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PasswordRepository>> loggerMoc = PasswordRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PasswordRepositoryMoc.GetContext();
                         var repository = new PasswordRepository(loggerMoc.Object, context);
-
                         Password entity = new Password();
-
                         context.Set<Password>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         Password modifiedRecord = await context.Set<Password>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>1e2c496a18310d300de4024833c86c0b</Hash>
+    <Hash>a81a8ce8796a3b5b5111caa54034fe86</Hash>
 </Codenesium>*/

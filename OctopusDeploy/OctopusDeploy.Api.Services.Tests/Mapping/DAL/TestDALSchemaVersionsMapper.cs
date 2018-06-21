@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SchemaVersions")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSchemaVersionsActionMapper
+        public class TestDALSchemaVersionsMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSchemaVersionsMapper();
-
                         var bo = new BOSchemaVersions();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 
                         SchemaVersions response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSchemaVersionsMapper();
-
                         SchemaVersions entity = new SchemaVersions();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 
-                        BOSchemaVersions  response = mapper.MapEFToBO(entity);
+                        BOSchemaVersions response = mapper.MapEFToBO(entity);
 
                         response.Applied.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Id.Should().Be(1);
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSchemaVersionsMapper();
-
                         SchemaVersions entity = new SchemaVersions();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 
                         List<BOSchemaVersions> response = mapper.MapEFToBO(new List<SchemaVersions>() { entity });
@@ -61,5 +55,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>52b0cb7bd753b89b0ce30f0171fa3d21</Hash>
+    <Hash>3049e17d3a9725321fb01d2afa147a11</Hash>
 </Codenesium>*/

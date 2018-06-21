@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace NebulaNS.Api.DataAccess
                 Task<List<MachineRefTeam>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Machine> GetMachine(int machineId);
+
                 Task<Team> GetTeam(int teamId);
         }
 }
 
 /*<Codenesium>
-    <Hash>15dc8bb609125357c8b7ce9ea7bd9431</Hash>
+    <Hash>d70f9d9d93428a16a79ab12044a87bde</Hash>
 </Codenesium>*/

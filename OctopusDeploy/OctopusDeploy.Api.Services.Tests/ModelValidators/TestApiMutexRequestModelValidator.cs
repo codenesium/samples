@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         mutexRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Mutex()));
 
                         var validator = new ApiMutexRequestModelValidator(mutexRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiMutexRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         mutexRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Mutex()));
 
                         var validator = new ApiMutexRequestModelValidator(mutexRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiMutexRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiMutexRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -53,5 +51,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c90f720fe8a8d0d06abef9c3c2958271</Hash>
+    <Hash>53145a6a225e4348bbf852a7d7ea1d38</Hash>
 </Codenesium>*/

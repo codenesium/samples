@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FileServiceNS.Api.DataAccess
 {
         [Table("VersionInfo", Schema="dbo")]
-        public partial class VersionInfo: AbstractEntity
+        public partial class VersionInfo : AbstractEntity
         {
                 public VersionInfo()
                 {
@@ -22,18 +22,18 @@ namespace FileServiceNS.Api.DataAccess
                         this.Version = version;
                 }
 
-                [Column("AppliedOn", TypeName="datetime")]
+                [Column("AppliedOn")]
                 public Nullable<DateTime> AppliedOn { get; private set; }
 
-                [Column("Description", TypeName="nvarchar(1024)")]
+                [Column("Description")]
                 public string Description { get; private set; }
 
                 [Key]
-                [Column("Version", TypeName="bigint")]
+                [Column("Version")]
                 public long Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>51c7012582ea409f0bb16faa45bd0842</Hash>
+    <Hash>6920e2bc35f4e128aefdb37564a70aeb</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<ProjectTrigger>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ProjectTrigger> GetProjectIdName(string projectId, string name);
+
                 Task<List<ProjectTrigger>> GetProjectId(string projectId);
         }
 }
 
 /*<Codenesium>
-    <Hash>4fc895d9d100b9f403ffbdf3a86a87fc</Hash>
+    <Hash>3eeb94d9d363363f5992f88ca7ddf299</Hash>
 </Codenesium>*/

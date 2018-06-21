@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,12 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class WorkOrderRoutingService: AbstractWorkOrderRoutingService, IWorkOrderRoutingService
+        public class WorkOrderRoutingService : AbstractWorkOrderRoutingService, IWorkOrderRoutingService
         {
                 public WorkOrderRoutingService(
                         ILogger<IWorkOrderRoutingRepository> logger,
@@ -18,19 +18,17 @@ namespace AdventureWorksNS.Api.Services
                         IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
                         IBOLWorkOrderRoutingMapper bolworkOrderRoutingMapper,
                         IDALWorkOrderRoutingMapper dalworkOrderRoutingMapper
-
                         )
                         : base(logger,
                                workOrderRoutingRepository,
                                workOrderRoutingModelValidator,
                                bolworkOrderRoutingMapper,
-                               dalworkOrderRoutingMapper
-                               )
+                               dalworkOrderRoutingMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>bcfc2cd7c6d75fb24f03864d2c8e0116</Hash>
+    <Hash>55bcf778ef29761d82d19ecb078a02eb</Hash>
 </Codenesium>*/

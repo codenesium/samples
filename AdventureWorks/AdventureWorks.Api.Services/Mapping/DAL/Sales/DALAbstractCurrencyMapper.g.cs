@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOCurrency bo)
                 {
                         Currency efCurrency = new Currency();
-
                         efCurrency.SetProperties(
                                 bo.CurrencyCode,
                                 bo.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eaf5d03a0667908064ecaade9860f06c</Hash>
+    <Hash>f90760fc9a8877153b3bc645ee5846f0</Hash>
 </Codenesium>*/

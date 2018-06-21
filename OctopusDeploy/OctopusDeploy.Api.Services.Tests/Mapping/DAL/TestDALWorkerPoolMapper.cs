@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkerPool")]
         [Trait("Area", "DALMapper")]
-        public class TestDALWorkerPoolActionMapper
+        public class TestDALWorkerPoolMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALWorkerPoolMapper();
-
                         var bo = new BOWorkerPool();
-
                         bo.SetProperties("A", true, "A", "A", 1);
 
                         WorkerPool response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALWorkerPoolMapper();
-
                         WorkerPool entity = new WorkerPool();
-
                         entity.SetProperties("A", true, "A", "A", 1);
 
-                        BOWorkerPool  response = mapper.MapEFToBO(entity);
+                        BOWorkerPool response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.IsDefault.Should().Be(true);
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALWorkerPoolMapper();
-
                         WorkerPool entity = new WorkerPool();
-
                         entity.SetProperties("A", true, "A", "A", 1);
 
                         List<BOWorkerPool> response = mapper.MapEFToBO(new List<WorkerPool>() { entity });
@@ -65,5 +59,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a4850c58c8f41dd0d1db02720cde92f7</Hash>
+    <Hash>97a62b4a7094ddd74567ba3fa07a1d45</Hash>
 </Codenesium>*/

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLDocumentMapper: BOLAbstractDocumentMapper, IBOLDocumentMapper
+        public class BOLDocumentMapper : BOLAbstractDocumentMapper, IBOLDocumentMapper
         {
                 public BOLDocumentMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>304b5e753a8b08e10cb1179345f91efb</Hash>
+    <Hash>844d59ee781c9a3ad0b3af6b0b0cf9ad</Hash>
 </Codenesium>*/

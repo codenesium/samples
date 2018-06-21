@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductModelIllustration bo)
                 {
                         ProductModelIllustration efProductModelIllustration = new ProductModelIllustration();
-
                         efProductModelIllustration.SetProperties(
                                 bo.IllustrationID,
                                 bo.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>04ffe6308d3c28564143ba9429f74355</Hash>
+    <Hash>db5fcdaae11988ddefc7a3a258733036</Hash>
 </Codenesium>*/

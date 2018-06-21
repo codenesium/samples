@@ -1,9 +1,9 @@
 using Moq;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.Services;
 
 namespace PetStoreNS.Api.Services.Tests
 {
@@ -51,5 +51,5 @@ namespace PetStoreNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9aa43cea708fc2c3141ce8c2d32f4f06</Hash>
+    <Hash>5285ee520b9bb519b182a9edbab91e85</Hash>
 </Codenesium>*/

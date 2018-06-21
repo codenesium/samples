@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BORelease bo)
                 {
                         Release efRelease = new Release();
-
                         efRelease.SetProperties(
                                 bo.Assembled,
                                 bo.ChannelId,
@@ -58,5 +57,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>649c794302c769905844ab727e3ea04b</Hash>
+    <Hash>fe36a3ddb4e12fb68ef2b612d908c0e6</Hash>
 </Codenesium>*/

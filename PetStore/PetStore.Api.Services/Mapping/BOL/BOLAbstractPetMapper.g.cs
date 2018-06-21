@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetStoreNS.Api.Services
                         )
                 {
                         BOPet boPet = new BOPet();
-
                         boPet.SetProperties(
                                 id,
                                 model.AcquiredDate,
@@ -51,5 +50,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02f3ba6ea23cd45fd61f47830b6234af</Hash>
+    <Hash>9d65c91f820495af91f695e817c65307</Hash>
 </Codenesium>*/

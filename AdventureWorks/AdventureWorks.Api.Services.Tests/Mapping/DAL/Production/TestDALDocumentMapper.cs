@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Document")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDocumentActionMapper
+        public class TestDALDocumentMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDocumentMapper();
-
                         var bo = new BODocument();
-
                         bo.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1, "A");
 
                         Document response = mapper.MapBOToEF(bo);
@@ -42,12 +40,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDocumentMapper();
-
                         Document entity = new Document();
-
                         entity.SetProperties(1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
 
-                        BODocument  response = mapper.MapEFToBO(entity);
+                        BODocument response = mapper.MapEFToBO(entity);
 
                         response.ChangeNumber.Should().Be(1);
                         response.Document1.Should().BeEquivalentTo(BitConverter.GetBytes(1));
@@ -68,9 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDocumentMapper();
-
                         Document entity = new Document();
-
                         entity.SetProperties(1, BitConverter.GetBytes(1), 1, "A", "A", "A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
 
                         List<BODocument> response = mapper.MapEFToBO(new List<Document>() { entity });
@@ -81,5 +75,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>65b59bb3abd9706ab096eb8ee2b87a3a</Hash>
+    <Hash>55085c4f6e545331d1c77e5200ddcce8</Hash>
 </Codenesium>*/

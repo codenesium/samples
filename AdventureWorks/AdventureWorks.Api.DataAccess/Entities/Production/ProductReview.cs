@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("ProductReview", Schema="Production")]
-        public partial class ProductReview: AbstractEntity
+        public partial class ProductReview : AbstractEntity
         {
                 public ProductReview()
                 {
@@ -32,33 +32,33 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ReviewerName = reviewerName;
                 }
 
-                [Column("Comments", TypeName="nvarchar(3850)")]
+                [Column("Comments")]
                 public string Comments { get; private set; }
 
-                [Column("EmailAddress", TypeName="nvarchar(50)")]
+                [Column("EmailAddress")]
                 public string EmailAddress { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
                 [Key]
-                [Column("ProductReviewID", TypeName="int")]
+                [Column("ProductReviewID")]
                 public int ProductReviewID { get; private set; }
 
-                [Column("Rating", TypeName="int")]
+                [Column("Rating")]
                 public int Rating { get; private set; }
 
-                [Column("ReviewDate", TypeName="datetime")]
+                [Column("ReviewDate")]
                 public DateTime ReviewDate { get; private set; }
 
-                [Column("ReviewerName", TypeName="nvarchar(50)")]
+                [Column("ReviewerName")]
                 public string ReviewerName { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>b8c9163b782067b51118398532eefc28</Hash>
+    <Hash>4d11033ebd73668c0a4183ae84f6139f</Hash>
 </Codenesium>*/

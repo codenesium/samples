@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiAddressRequestModelValidator: AbstractValidator<ApiAddressRequestModel>
+        public abstract class AbstractApiAddressRequestModelValidator : AbstractValidator<ApiAddressRequestModel>
         {
                 private int existingRecordId;
 
-                IAddressRepository addressRepository;
+                private IAddressRepository addressRepository;
 
                 public AbstractApiAddressRequestModelValidator(IAddressRepository addressRepository)
                 {
@@ -29,20 +29,20 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void AddressLine1Rules()
                 {
                         this.RuleFor(x => x.AddressLine1).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x ?.AddressLine1 != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.AddressLine1));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x?.AddressLine1 != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.AddressLine1));
                         this.RuleFor(x => x.AddressLine1).Length(0, 60);
                 }
 
                 public virtual void AddressLine2Rules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x ?.AddressLine2 != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.AddressLine2));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x?.AddressLine2 != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.AddressLine2));
                         this.RuleFor(x => x.AddressLine2).Length(0, 60);
                 }
 
                 public virtual void CityRules()
                 {
                         this.RuleFor(x => x.City).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x ?.City != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.City));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x?.City != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.City));
                         this.RuleFor(x => x.City).Length(0, 30);
                 }
 
@@ -53,7 +53,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void PostalCodeRules()
                 {
                         this.RuleFor(x => x.PostalCode).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x ?.PostalCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.PostalCode));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x?.PostalCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.PostalCode));
                         this.RuleFor(x => x.PostalCode).Length(0, 15);
                 }
 
@@ -63,14 +63,14 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void StateProvinceIDRules()
                 {
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x ?.StateProvinceID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.StateProvinceID));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode).When(x => x?.StateProvinceID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiAddressRequestModel.StateProvinceID));
                 }
 
                 private async Task<bool> BeUniqueByAddressLine1AddressLine2CityStateProvinceIDPostalCode(ApiAddressRequestModel model,  CancellationToken cancellationToken)
                 {
                         Address record = await this.addressRepository.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(model.AddressLine1, model.AddressLine2, model.City, model.StateProvinceID, model.PostalCode);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.AddressID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.AddressID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -83,5 +83,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>876c56cf423e28add9d292c4f2ee5b76</Hash>
+    <Hash>cee5e147a4da3c8aad3130dd71ac3468</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractIllustrationService: AbstractService
+        public abstract class AbstractIllustrationService : AbstractService
         {
                 private IIllustrationRepository illustrationRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         IIllustrationRepository illustrationRepository,
                         IApiIllustrationRequestModelValidator illustrationModelValidator,
                         IBOLIllustrationMapper bolIllustrationMapper,
-                        IDALIllustrationMapper dalIllustrationMapper
-
-                        ,
+                        IDALIllustrationMapper dalIllustrationMapper,
                         IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
-
-                        )
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper)
                         : base()
-
                 {
                         this.illustrationRepository = illustrationRepository;
                         this.illustrationModelValidator = illustrationModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiIllustrationResponseModel> response = new CreateResponse<ApiIllustrationResponseModel>(await this.illustrationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolIllustrationMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolIllustrationMapper.MapModelToBO(default(int), model);
                                 var record = await this.illustrationRepository.Create(this.dalIllustrationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiIllustrationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.illustrationModelValidator.ValidateUpdateAsync(illustrationID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolIllustrationMapper.MapModelToBO(illustrationID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int illustrationID)
                 {
                         ActionResponse response = new ActionResponse(await this.illustrationModelValidator.ValidateDeleteAsync(illustrationID));
-
                         if (response.Success)
                         {
                                 await this.illustrationRepository.Delete(illustrationID);
@@ -126,5 +119,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>409e3c0a678529cbc4af8da662b16691</Hash>
+    <Hash>9f3432bb76264de08e2ba16b8481851d</Hash>
 </Codenesium>*/

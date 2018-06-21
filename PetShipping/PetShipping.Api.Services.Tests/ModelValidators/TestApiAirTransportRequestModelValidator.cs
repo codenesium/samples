@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAirTransportRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FlightNumber, null as string);
@@ -44,8 +43,7 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAirTransportRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAirTransportRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FlightNumber, null as string);
                 }
@@ -57,7 +55,6 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAirTransportRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FlightNumber, new string('A', 13));
@@ -70,8 +67,7 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAirTransportRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAirTransportRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.FlightNumber, new string('A', 13));
                 }
@@ -83,8 +79,7 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new AirTransport()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAirTransportRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
@@ -122,8 +116,7 @@ namespace PetShippingNS.Api.Services.Tests
                         airTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAirTransportRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAirTransportRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.HandlerId, 1);
                 }
@@ -136,7 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiAirTransportRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAirTransportRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.HandlerId, 1);
                 }
@@ -144,5 +137,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1069119c213f97d4a61630317fd84683</Hash>
+    <Hash>0a78387bdd2f95433f3490b85c9e1dcc</Hash>
 </Codenesium>*/

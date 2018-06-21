@@ -3,14 +3,15 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-        public partial class BOPipeline: AbstractBOPipeline
+        public partial class BOPipeline : AbstractBOPipeline
         {
-                public BOPipeline() : base()
+                public BOPipeline()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4fea5341007aabf433bd1d5f2cfd9a31</Hash>
+    <Hash>4dcdd14e39cdb987b611c6d99f35875c</Hash>
 </Codenesium>*/

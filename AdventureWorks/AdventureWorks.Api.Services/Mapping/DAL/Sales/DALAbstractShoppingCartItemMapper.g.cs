@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOShoppingCartItem bo)
                 {
                         ShoppingCartItem efShoppingCartItem = new ShoppingCartItem();
-
                         efShoppingCartItem.SetProperties(
                                 bo.DateCreated,
                                 bo.ModifiedDate,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1450eb8ab7994be09045d798636ded18</Hash>
+    <Hash>2969350917481ab13f487c7f941b6ecb</Hash>
 </Codenesium>*/

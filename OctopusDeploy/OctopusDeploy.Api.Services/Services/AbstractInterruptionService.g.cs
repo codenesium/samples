@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractInterruptionService: AbstractService
+        public abstract class AbstractInterruptionService : AbstractService
         {
                 private IInterruptionRepository interruptionRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IInterruptionRepository interruptionRepository,
                         IApiInterruptionRequestModelValidator interruptionModelValidator,
                         IBOLInterruptionMapper bolInterruptionMapper,
-                        IDALInterruptionMapper dalInterruptionMapper
-
-                        )
+                        IDALInterruptionMapper dalInterruptionMapper)
                         : base()
-
                 {
                         this.interruptionRepository = interruptionRepository;
                         this.interruptionModelValidator = interruptionModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiInterruptionResponseModel> response = new CreateResponse<ApiInterruptionResponseModel>(await this.interruptionModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolInterruptionMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolInterruptionMapper.MapModelToBO(default(string), model);
                                 var record = await this.interruptionRepository.Create(this.dalInterruptionMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiInterruptionRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.interruptionModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolInterruptionMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.interruptionModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.interruptionRepository.Delete(id);
@@ -116,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>59da9e3862711442633317c8cc357e96</Hash>
+    <Hash>9ab6165b5fb57d80f3ea6e904480254f</Hash>
 </Codenesium>*/

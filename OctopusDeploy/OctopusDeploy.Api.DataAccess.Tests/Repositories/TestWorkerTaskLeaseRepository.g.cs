@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new WorkerTaskLeaseRepository(loggerMoc.Object, context);
 
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         context.Set<WorkerTaskLease>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new WorkerTaskLeaseRepository(loggerMoc.Object, context);
 
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         context.Set<WorkerTaskLease>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new WorkerTaskLeaseRepository(loggerMoc.Object, context);
 
                         var entity = new WorkerTaskLease();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<WorkerTaskLease>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<WorkerTaskLeaseRepository>> loggerMoc = WorkerTaskLeaseRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkerTaskLeaseRepositoryMoc.GetContext();
                         var repository = new WorkerTaskLeaseRepository(loggerMoc.Object, context);
-
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         context.Set<WorkerTaskLease>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<WorkerTaskLeaseRepository>> loggerMoc = WorkerTaskLeaseRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkerTaskLeaseRepositoryMoc.GetContext();
                         var repository = new WorkerTaskLeaseRepository(loggerMoc.Object, context);
-
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         context.Set<WorkerTaskLease>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<WorkerTaskLeaseRepository>> loggerMoc = WorkerTaskLeaseRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkerTaskLeaseRepositoryMoc.GetContext();
                         var repository = new WorkerTaskLeaseRepository(loggerMoc.Object, context);
-
                         WorkerTaskLease entity = new WorkerTaskLease();
-
                         context.Set<WorkerTaskLease>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         WorkerTaskLease modifiedRecord = await context.Set<WorkerTaskLease>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ccac2f059149cf66bd86e07cb259afc4</Hash>
+    <Hash>1637e3d88ffd14e7e6665f87877f3582</Hash>
 </Codenesium>*/

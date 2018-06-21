@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractDocumentService: AbstractService
+        public abstract class AbstractDocumentService : AbstractService
         {
                 private IDocumentRepository documentRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IDocumentRepository documentRepository,
                         IApiDocumentRequestModelValidator documentModelValidator,
                         IBOLDocumentMapper bolDocumentMapper,
-                        IDALDocumentMapper dalDocumentMapper
-
-                        )
+                        IDALDocumentMapper dalDocumentMapper)
                         : base()
-
                 {
                         this.documentRepository = documentRepository;
                         this.documentModelValidator = documentModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiDocumentResponseModel> response = new CreateResponse<ApiDocumentResponseModel>(await this.documentModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDocumentMapper.MapModelToBO(default (Guid), model);
+                                var bo = this.bolDocumentMapper.MapModelToBO(default(Guid), model);
                                 var record = await this.documentRepository.Create(this.dalDocumentMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDocumentMapper.MapBOToModel(this.dalDocumentMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiDocumentRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateUpdateAsync(rowguid, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDocumentMapper.MapModelToBO(rowguid, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         Guid rowguid)
                 {
                         ActionResponse response = new ActionResponse(await this.documentModelValidator.ValidateDeleteAsync(rowguid));
-
                         if (response.Success)
                         {
                                 await this.documentRepository.Delete(rowguid);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5c9ac72358a2b6867b918d763b9927a</Hash>
+    <Hash>c2d79179c701dc7f953dc47f7c463064</Hash>
 </Codenesium>*/

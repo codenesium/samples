@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractCityService: AbstractService
+        public abstract class AbstractCityService : AbstractService
         {
                 private ICityRepository cityRepository;
 
@@ -33,15 +33,10 @@ namespace TicketingCRMNS.Api.Services
                         ICityRepository cityRepository,
                         IApiCityRequestModelValidator cityModelValidator,
                         IBOLCityMapper bolCityMapper,
-                        IDALCityMapper dalCityMapper
-
-                        ,
+                        IDALCityMapper dalCityMapper,
                         IBOLEventMapper bolEventMapper,
-                        IDALEventMapper dalEventMapper
-
-                        )
+                        IDALEventMapper dalEventMapper)
                         : base()
-
                 {
                         this.cityRepository = cityRepository;
                         this.cityModelValidator = cityModelValidator;
@@ -79,7 +74,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiCityResponseModel> response = new CreateResponse<ApiCityResponseModel>(await this.cityModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolCityMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolCityMapper.MapModelToBO(default(int), model);
                                 var record = await this.cityRepository.Create(this.dalCityMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolCityMapper.MapBOToModel(this.dalCityMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiCityRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.cityModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolCityMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.cityModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.cityRepository.Delete(id);
@@ -133,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a75b49329dab513f4fdb36031cee5de2</Hash>
+    <Hash>20927a254c9d2d86aff90c72d62987d6</Hash>
 </Codenesium>*/

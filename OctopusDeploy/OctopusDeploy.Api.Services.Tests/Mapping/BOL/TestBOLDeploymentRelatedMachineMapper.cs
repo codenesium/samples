@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentRelatedMachine")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDeploymentRelatedMachineActionMapper
+        public class TestBOLDeploymentRelatedMachineMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDeploymentRelatedMachineMapper();
-
                         ApiDeploymentRelatedMachineRequestModel model = new ApiDeploymentRelatedMachineRequestModel();
-
                         model.SetProperties("A", "A");
                         BODeploymentRelatedMachine response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDeploymentRelatedMachineMapper();
-
                         BODeploymentRelatedMachine bo = new BODeploymentRelatedMachine();
-
                         bo.SetProperties(1, "A", "A");
                         ApiDeploymentRelatedMachineResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDeploymentRelatedMachineMapper();
-
                         BODeploymentRelatedMachine bo = new BODeploymentRelatedMachine();
-
                         bo.SetProperties(1, "A", "A");
                         List<ApiDeploymentRelatedMachineResponseModel> response = mapper.MapBOToModel(new List<BODeploymentRelatedMachine>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3b2db287d0d3e53392171185065e989f</Hash>
+    <Hash>4618b4dd39f366002a6c2d1d2519b312</Hash>
 </Codenesium>*/

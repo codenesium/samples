@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCommunityActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCommunityActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCommunityActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CommunityActionTemplate()));
 
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -146,7 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(new CommunityActionTemplate()));
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiCommunityActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
@@ -158,7 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         communityActionTemplateRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<CommunityActionTemplate>(null));
                         var validator = new ApiCommunityActionTemplateRequestModelValidator(communityActionTemplateRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiCommunityActionTemplateRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCommunityActionTemplateRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
@@ -166,5 +159,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0375efc5327385c4d463bcdbd0f27bb8</Hash>
+    <Hash>1bd9ac53be8a25e4afb0ad6de8cfacee</Hash>
 </Codenesium>*/

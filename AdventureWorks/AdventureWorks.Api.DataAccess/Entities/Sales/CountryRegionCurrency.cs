@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("CountryRegionCurrency", Schema="Sales")]
-        public partial class CountryRegionCurrency: AbstractEntity
+        public partial class CountryRegionCurrency : AbstractEntity
         {
                 public CountryRegionCurrency()
                 {
@@ -23,13 +23,13 @@ namespace AdventureWorksNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("CountryRegionCode", TypeName="nvarchar(3)")]
+                [Column("CountryRegionCode")]
                 public string CountryRegionCode { get; private set; }
 
-                [Column("CurrencyCode", TypeName="nchar(3)")]
+                [Column("CurrencyCode")]
                 public string CurrencyCode { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
                 [ForeignKey("CurrencyCode")]
@@ -38,5 +38,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fbce1afbc386fe82c114210e7dbec5d8</Hash>
+    <Hash>d6a9f6c8db1ceacb6564f33ab86c0a6c</Hash>
 </Codenesium>*/

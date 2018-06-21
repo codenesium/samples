@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BODepartment boDepartment = new BODepartment();
-
                         boDepartment.SetProperties(
                                 departmentID,
                                 model.GroupName,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>739fd0799dda9a11a2811a3658dd4b1f</Hash>
+    <Hash>850e2ce179fac5291a4eca73e57a8336</Hash>
 </Codenesium>*/

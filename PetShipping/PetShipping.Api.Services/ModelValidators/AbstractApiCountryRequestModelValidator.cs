@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiCountryRequestModelValidator: AbstractValidator<ApiCountryRequestModel>
+        public abstract class AbstractApiCountryRequestModelValidator : AbstractValidator<ApiCountryRequestModel>
         {
                 private int existingRecordId;
 
-                ICountryRepository countryRepository;
+                private ICountryRepository countryRepository;
 
                 public AbstractApiCountryRequestModelValidator(ICountryRepository countryRepository)
                 {
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8eb0fd9609799a2163538aeabe416c38</Hash>
+    <Hash>cdf1a605fb71c8d84a6fd3b376567865</Hash>
 </Codenesium>*/

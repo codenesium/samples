@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiAccountRequestModelValidator: AbstractApiAccountRequestModelValidator, IApiAccountRequestModelValidator
+        public class ApiAccountRequestModelValidator : AbstractApiAccountRequestModelValidator, IApiAccountRequestModelValidator
         {
                 public ApiAccountRequestModelValidator(IAccountRepository accountRepository)
                         : base(accountRepository)
@@ -37,11 +37,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>20617b6b22227ce18d3a83002bc51ca5</Hash>
+    <Hash>f30dc15a8dc0a13a71809eef778ade53</Hash>
 </Codenesium>*/

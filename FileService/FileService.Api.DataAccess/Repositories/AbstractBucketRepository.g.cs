@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-        public abstract class AbstractBucketRepository: AbstractRepository
+        public abstract class AbstractBucketRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,17 @@ namespace FileServiceNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<Bucket> GetName(string name)
                 {
                         var records = await this.Where(x => x.Name == name);
 
                         return records.FirstOrDefault();
+                }
+
+                public async virtual Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<File>().Where(x => x.BucketId == bucketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
                 }
 
                 protected async Task<List<Bucket>> Where(
@@ -117,14 +123,9 @@ namespace FileServiceNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<File>().Where(x => x.BucketId == bucketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>6a73f609a19999e72a835c3f83dc4679</Hash>
+    <Hash>ebe4c9e0f35048ca7abaa9e8b8378761</Hash>
 </Codenesium>*/

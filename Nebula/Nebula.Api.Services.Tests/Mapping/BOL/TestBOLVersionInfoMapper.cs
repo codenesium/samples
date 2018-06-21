@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "VersionInfo")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLVersionInfoActionMapper
+        public class TestBOLVersionInfoMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLVersionInfoMapper();
-
                         ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         BOVersionInfo response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLVersionInfoMapper();
-
                         BOVersionInfo bo = new BOVersionInfo();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         ApiVersionInfoResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLVersionInfoMapper();
-
                         BOVersionInfo bo = new BOVersionInfo();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
                         List<ApiVersionInfoResponseModel> response = mapper.MapBOToModel(new List<BOVersionInfo>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7b05367be6d359f28d1dfb7eaf5f3877</Hash>
+    <Hash>cce92234ad433a998a98bf6b36cd0109</Hash>
 </Codenesium>*/

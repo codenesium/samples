@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new OrganizationRepository(loggerMoc.Object, context);
 
                         Organization entity = new Organization();
-
                         context.Set<Organization>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new OrganizationRepository(loggerMoc.Object, context);
 
                         Organization entity = new Organization();
-
                         context.Set<Organization>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new OrganizationRepository(loggerMoc.Object, context);
 
                         var entity = new Organization();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Organization>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<OrganizationRepository>> loggerMoc = OrganizationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = OrganizationRepositoryMoc.GetContext();
                         var repository = new OrganizationRepository(loggerMoc.Object, context);
-
                         Organization entity = new Organization();
-
                         context.Set<Organization>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<OrganizationRepository>> loggerMoc = OrganizationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = OrganizationRepositoryMoc.GetContext();
                         var repository = new OrganizationRepository(loggerMoc.Object, context);
-
                         Organization entity = new Organization();
-
                         context.Set<Organization>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<OrganizationRepository>> loggerMoc = OrganizationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = OrganizationRepositoryMoc.GetContext();
                         var repository = new OrganizationRepository(loggerMoc.Object, context);
-
                         Organization entity = new Organization();
-
                         context.Set<Organization>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Organization modifiedRecord = await context.Set<Organization>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>bc27928b29af7bc3b219a38ab4b6c74b</Hash>
+    <Hash>c86275d2d61834dfa51e06f1869aeed4</Hash>
 </Codenesium>*/

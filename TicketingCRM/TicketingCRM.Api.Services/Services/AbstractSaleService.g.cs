@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractSaleService: AbstractService
+        public abstract class AbstractSaleService : AbstractService
         {
                 private ISaleRepository saleRepository;
 
@@ -33,15 +33,10 @@ namespace TicketingCRMNS.Api.Services
                         ISaleRepository saleRepository,
                         IApiSaleRequestModelValidator saleModelValidator,
                         IBOLSaleMapper bolSaleMapper,
-                        IDALSaleMapper dalSaleMapper
-
-                        ,
+                        IDALSaleMapper dalSaleMapper,
                         IBOLSaleTicketsMapper bolSaleTicketsMapper,
-                        IDALSaleTicketsMapper dalSaleTicketsMapper
-
-                        )
+                        IDALSaleTicketsMapper dalSaleTicketsMapper)
                         : base()
-
                 {
                         this.saleRepository = saleRepository;
                         this.saleModelValidator = saleModelValidator;
@@ -79,7 +74,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSaleMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSaleMapper.MapModelToBO(default(int), model);
                                 var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiSaleRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSaleMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.saleRepository.Delete(id);
@@ -133,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>547d5de7ef32f2a4eab748794d3ebeda</Hash>
+    <Hash>23d2a907df37685137038306da15a996</Hash>
 </Codenesium>*/

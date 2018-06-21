@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,12 +18,15 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<Project>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Project> GetName(string name);
+
                 Task<Project> GetSlug(string slug);
+
                 Task<List<Project>> GetDataVersion(byte[] dataVersion);
+
                 Task<List<Project>> GetDiscreteChannelReleaseId(bool discreteChannelRelease, string id);
         }
 }
 
 /*<Codenesium>
-    <Hash>b39edaa1488e66bfdcbdba1eecdada99</Hash>
+    <Hash>0a8a6dc32d88404e8b8088fab56c4361</Hash>
 </Codenesium>*/

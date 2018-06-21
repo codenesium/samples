@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "StudentXFamily")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLStudentXFamilyActionMapper
+        public class TestBOLStudentXFamilyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLStudentXFamilyMapper();
-
                         ApiStudentXFamilyRequestModel model = new ApiStudentXFamilyRequestModel();
-
                         model.SetProperties(1, 1);
                         BOStudentXFamily response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLStudentXFamilyMapper();
-
                         BOStudentXFamily bo = new BOStudentXFamily();
-
                         bo.SetProperties(1, 1, 1);
                         ApiStudentXFamilyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLStudentXFamilyMapper();
-
                         BOStudentXFamily bo = new BOStudentXFamily();
-
                         bo.SetProperties(1, 1, 1);
                         List<ApiStudentXFamilyResponseModel> response = mapper.MapBOToModel(new List<BOStudentXFamily>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c0c699554329bf4e051a6c6b1f0d9157</Hash>
+    <Hash>081cbfdb8e70b33842781a4e0a6ee513</Hash>
 </Codenesium>*/

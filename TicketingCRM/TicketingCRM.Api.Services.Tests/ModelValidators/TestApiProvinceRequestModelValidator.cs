@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
+using Xunit;
 
 namespace TicketingCRMNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
@@ -57,8 +56,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProvinceRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
                 }
@@ -71,7 +69,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiProvinceRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
                 }
@@ -83,7 +81,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -96,8 +93,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProvinceRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -109,7 +105,6 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -122,8 +117,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiProvinceRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -135,8 +129,7 @@ namespace TicketingCRMNS.Api.Services.Tests
                         provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
 
                         var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -144,5 +137,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3d538f0addfae184a0d21431b5210a02</Hash>
+    <Hash>b76e5e0dbc5a77908a251ab198850e94</Hash>
 </Codenesium>*/

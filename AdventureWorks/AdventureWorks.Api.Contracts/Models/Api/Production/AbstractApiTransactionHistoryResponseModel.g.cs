@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiTransactionHistoryResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiTransactionHistoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal actualCost,
@@ -137,5 +137,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>dd03966f178944d121cffef2e61ffea9</Hash>
+    <Hash>3a3314f9b262542ec64aea425537a571</Hash>
 </Codenesium>*/

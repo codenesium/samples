@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOFeed boFeed = new BOFeed();
-
                         boFeed.SetProperties(
                                 id,
                                 model.FeedType,
@@ -49,5 +48,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>046cc1dad04e0133ae2b2709ebb66783</Hash>
+    <Hash>c33db6fcc93df87dea6ecf518ec94c7f</Hash>
 </Codenesium>*/

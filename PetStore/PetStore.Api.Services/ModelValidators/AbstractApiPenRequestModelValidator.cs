@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractApiPenRequestModelValidator: AbstractValidator<ApiPenRequestModel>
+        public abstract class AbstractApiPenRequestModelValidator : AbstractValidator<ApiPenRequestModel>
         {
                 private int existingRecordId;
 
-                IPenRepository penRepository;
+                private IPenRepository penRepository;
 
                 public AbstractApiPenRequestModelValidator(IPenRepository penRepository)
                 {
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bf724b1637b46e149b16166bfc64692</Hash>
+    <Hash>e5347b6636588ee259e6104dd850c685</Hash>
 </Codenesium>*/

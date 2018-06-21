@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiProductListPriceHistoryResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiProductListPriceHistoryResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         Nullable<DateTime> endDate,
@@ -85,5 +85,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9ecb01ebec65de5987944027591bbf14</Hash>
+    <Hash>76a025c231f26e0803ced430a67425ff</Hash>
 </Codenesium>*/

@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class ClientCommunicationService: AbstractClientCommunicationService, IClientCommunicationService
+        public class ClientCommunicationService : AbstractClientCommunicationService, IClientCommunicationService
         {
                 public ClientCommunicationService(
                         ILogger<IClientCommunicationRepository> logger,
@@ -18,19 +18,17 @@ namespace PetShippingNS.Api.Services
                         IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
                         IBOLClientCommunicationMapper bolclientCommunicationMapper,
                         IDALClientCommunicationMapper dalclientCommunicationMapper
-
                         )
                         : base(logger,
                                clientCommunicationRepository,
                                clientCommunicationModelValidator,
                                bolclientCommunicationMapper,
-                               dalclientCommunicationMapper
-                               )
+                               dalclientCommunicationMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b05ac323b51e66b999ce5684c6dba396</Hash>
+    <Hash>12612e7bd55b1b11319cec02d4c44752</Hash>
 </Codenesium>*/

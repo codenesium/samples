@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public class MachineRefTeamRepository: AbstractMachineRefTeamRepository, IMachineRefTeamRepository
+        public class MachineRefTeamRepository : AbstractMachineRefTeamRepository, IMachineRefTeamRepository
         {
                 public MachineRefTeamRepository(
                         ILogger<MachineRefTeamRepository> logger,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2ac5a5cdd277b7f42503557e65727c04</Hash>
+    <Hash>2f7f698192974980777c90bf0c6e1b2b</Hash>
 </Codenesium>*/

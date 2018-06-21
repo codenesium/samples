@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesTerritoryRepository: AbstractRepository
+        public abstract class AbstractSalesTerritoryRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,26 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<Customer>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Customer>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
+                }
+
+                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+                }
+
+                public async virtual Task<List<SalesPerson>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesPerson>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
+                }
+
+                public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
+                }
+
                 protected async Task<List<SalesTerritory>> Where(
                         Expression<Func<SalesTerritory, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,26 +131,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Customer>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Customer>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
-                }
-                public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderHeader>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
-                }
-                public async virtual Task<List<SalesPerson>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesPerson>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
-                }
-                public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>55f7bcdeb07ea2f8919cfcc600efe580</Hash>
+    <Hash>fa83ebaf496f32d4693fbedeef0a0b34</Hash>
 </Codenesium>*/

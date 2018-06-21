@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesReasonRepository: AbstractRepository
+        public abstract class AbstractSalesReasonRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesReasonID == salesReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
+                }
+
                 protected async Task<List<SalesReason>> Where(
                         Expression<Func<SalesReason, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesReasonID == salesReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>1cec7defe8e765a89133a820ee26f297</Hash>
+    <Hash>e29b57b0a536a28f4a57eaff6e9887db</Hash>
 </Codenesium>*/

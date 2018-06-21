@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("VariableSet", Schema="dbo")]
-        public partial class VariableSet: AbstractEntity
+        public partial class VariableSet : AbstractEntity
         {
                 public VariableSet()
                 {
@@ -29,26 +29,26 @@ namespace OctopusDeployNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(150)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IsFrozen", TypeName="bit")]
+                [Column("IsFrozen")]
                 public bool IsFrozen { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("OwnerId", TypeName="nvarchar(150)")]
+                [Column("OwnerId")]
                 public string OwnerId { get; private set; }
 
-                [Column("RelatedDocumentIds", TypeName="nvarchar(-1)")]
+                [Column("RelatedDocumentIds")]
                 public string RelatedDocumentIds { get; private set; }
 
-                [Column("Version", TypeName="int")]
+                [Column("Version")]
                 public int Version { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a4b91b256045df0958ff1f02405aa85b</Hash>
+    <Hash>d5256d43debd089cc9b9b0358d49720d</Hash>
 </Codenesium>*/

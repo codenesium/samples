@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,38 +7,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class StateProvinceService: AbstractStateProvinceService, IStateProvinceService
+        public class StateProvinceService : AbstractStateProvinceService, IStateProvinceService
         {
                 public StateProvinceService(
                         ILogger<IStateProvinceRepository> logger,
                         IStateProvinceRepository stateProvinceRepository,
                         IApiStateProvinceRequestModelValidator stateProvinceModelValidator,
                         IBOLStateProvinceMapper bolstateProvinceMapper,
-                        IDALStateProvinceMapper dalstateProvinceMapper
-                        ,
+                        IDALStateProvinceMapper dalstateProvinceMapper,
                         IBOLAddressMapper bolAddressMapper,
                         IDALAddressMapper dalAddressMapper
-
                         )
                         : base(logger,
                                stateProvinceRepository,
                                stateProvinceModelValidator,
                                bolstateProvinceMapper,
-                               dalstateProvinceMapper
-                               ,
+                               dalstateProvinceMapper,
                                bolAddressMapper,
-                               dalAddressMapper
-                               )
+                               dalAddressMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>55dabe04e0b894ff6dbdd168c89bc998</Hash>
+    <Hash>3e0e05aedf3b583a8c52c397b1e45cfb</Hash>
 </Codenesium>*/

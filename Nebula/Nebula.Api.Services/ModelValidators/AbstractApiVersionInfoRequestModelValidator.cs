@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiVersionInfoRequestModelValidator: AbstractValidator<ApiVersionInfoRequestModel>
+        public abstract class AbstractApiVersionInfoRequestModelValidator : AbstractValidator<ApiVersionInfoRequestModel>
         {
                 private long existingRecordId;
 
-                IVersionInfoRepository versionInfoRepository;
+                private IVersionInfoRepository versionInfoRepository;
 
                 public AbstractApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
                 {
@@ -38,5 +38,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>186995574edb1665d6734b6082cd6811</Hash>
+    <Hash>5a9d5ffafc1ec0b7b1181c5cce3aefb7</Hash>
 </Codenesium>*/

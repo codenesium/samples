@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOMutex boMutex = new BOMutex();
-
                         boMutex.SetProperties(
                                 id,
                                 model.JSON);
@@ -46,5 +45,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fde21cc813797e6ca34eb32bd0dc6d72</Hash>
+    <Hash>b079ec729a354c974cbe3f0427c5e5b0</Hash>
 </Codenesium>*/

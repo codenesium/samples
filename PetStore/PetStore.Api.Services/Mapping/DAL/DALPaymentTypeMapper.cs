@@ -4,7 +4,7 @@ using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public class DALPaymentTypeMapper: DALAbstractPaymentTypeMapper, IDALPaymentTypeMapper
+        public class DALPaymentTypeMapper : DALAbstractPaymentTypeMapper, IDALPaymentTypeMapper
         {
                 public DALPaymentTypeMapper()
                 {
@@ -13,5 +13,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7f5b4d28fcdbdc6ec8adc0cd2dba7cd5</Hash>
+    <Hash>da29424ffbac997814b87efb6bb367ea</Hash>
 </Codenesium>*/

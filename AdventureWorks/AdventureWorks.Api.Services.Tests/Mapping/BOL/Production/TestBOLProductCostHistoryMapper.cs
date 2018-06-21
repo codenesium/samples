@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductCostHistory")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProductCostHistoryActionMapper
+        public class TestBOLProductCostHistoryMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProductCostHistoryMapper();
-
                         ApiProductCostHistoryRequestModel model = new ApiProductCostHistoryRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOProductCostHistory response = mapper.MapModelToBO(1, model);
 
@@ -33,9 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProductCostHistoryMapper();
-
                         BOProductCostHistory bo = new BOProductCostHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiProductCostHistoryResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProductCostHistoryMapper();
-
                         BOProductCostHistory bo = new BOProductCostHistory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiProductCostHistoryResponseModel> response = mapper.MapBOToModel(new List<BOProductCostHistory>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>de1a55920195f63cfdcd8e84eadbc35a</Hash>
+    <Hash>ab3368f6af6afb037d128478a33edec9</Hash>
 </Codenesium>*/

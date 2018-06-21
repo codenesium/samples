@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDestinationRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
@@ -57,8 +56,7 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDestinationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDestinationRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CountryId, 1);
                 }
@@ -71,7 +69,7 @@ namespace PetShippingNS.Api.Services.Tests
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiDestinationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDestinationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryId, 1);
                 }
@@ -83,7 +81,6 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDestinationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -96,8 +93,7 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDestinationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDestinationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -109,7 +105,6 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDestinationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
@@ -122,8 +117,7 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDestinationRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDestinationRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
                 }
@@ -135,8 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
                         destinationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Destination()));
 
                         var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -144,5 +137,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa2eb6dd738d6bf87b961cbe25240c37</Hash>
+    <Hash>8957f7fd63385737783712cd637f5e27</Hash>
 </Codenesium>*/

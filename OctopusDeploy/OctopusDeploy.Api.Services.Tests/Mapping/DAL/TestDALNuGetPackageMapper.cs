@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "NuGetPackage")]
         [Trait("Area", "DALMapper")]
-        public class TestDALNuGetPackageActionMapper
+        public class TestDALNuGetPackageMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALNuGetPackageMapper();
-
                         var bo = new BONuGetPackage();
-
                         bo.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
 
                         NuGetPackage response = mapper.MapBOToEF(bo);
@@ -38,12 +36,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALNuGetPackageMapper();
-
                         NuGetPackage entity = new NuGetPackage();
-
                         entity.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
 
-                        BONuGetPackage  response = mapper.MapEFToBO(entity);
+                        BONuGetPackage response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.JSON.Should().Be("A");
@@ -60,9 +56,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALNuGetPackageMapper();
-
                         NuGetPackage entity = new NuGetPackage();
-
                         entity.SetProperties("A", "A", "A", "A", 1, 1, 1, 1, "A");
 
                         List<BONuGetPackage> response = mapper.MapEFToBO(new List<NuGetPackage>() { entity });
@@ -73,5 +67,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d0812d7d9b25f7a502e714c0d22b1ad7</Hash>
+    <Hash>2776f1f2f1768365b504239a46a0dec6</Hash>
 </Codenesium>*/

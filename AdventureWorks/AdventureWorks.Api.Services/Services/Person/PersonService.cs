@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,56 +7,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class PersonService: AbstractPersonService, IPersonService
+        public class PersonService : AbstractPersonService, IPersonService
         {
                 public PersonService(
                         ILogger<IPersonRepository> logger,
                         IPersonRepository personRepository,
                         IApiPersonRequestModelValidator personModelValidator,
                         IBOLPersonMapper bolpersonMapper,
-                        IDALPersonMapper dalpersonMapper
-                        ,
+                        IDALPersonMapper dalpersonMapper,
                         IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
-                        ,
+                        IDALBusinessEntityContactMapper dalBusinessEntityContactMapper,
                         IBOLEmailAddressMapper bolEmailAddressMapper,
-                        IDALEmailAddressMapper dalEmailAddressMapper
-                        ,
+                        IDALEmailAddressMapper dalEmailAddressMapper,
                         IBOLPasswordMapper bolPasswordMapper,
-                        IDALPasswordMapper dalPasswordMapper
-                        ,
+                        IDALPasswordMapper dalPasswordMapper,
                         IBOLPersonPhoneMapper bolPersonPhoneMapper,
                         IDALPersonPhoneMapper dalPersonPhoneMapper
-
                         )
                         : base(logger,
                                personRepository,
                                personModelValidator,
                                bolpersonMapper,
-                               dalpersonMapper
-                               ,
+                               dalpersonMapper,
                                bolBusinessEntityContactMapper,
-                               dalBusinessEntityContactMapper
-                               ,
+                               dalBusinessEntityContactMapper,
                                bolEmailAddressMapper,
-                               dalEmailAddressMapper
-                               ,
+                               dalEmailAddressMapper,
                                bolPasswordMapper,
-                               dalPasswordMapper
-                               ,
+                               dalPasswordMapper,
                                bolPersonPhoneMapper,
-                               dalPersonPhoneMapper
-                               )
+                               dalPersonPhoneMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9117a7e3e54fac1fe1c07554456463ef</Hash>
+    <Hash>b75d08feaea995326fbba037849b65e5</Hash>
 </Codenesium>*/

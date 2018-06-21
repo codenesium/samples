@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.Services;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FermataFishNS.Api.Web
 {
         [Route("api/spaceFeatures")]
         [ApiVersion("1.0")]
-        public class SpaceFeatureController: AbstractSpaceFeatureController
+        public class SpaceFeatureController : AbstractSpaceFeatureController
         {
                 public SpaceFeatureController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>01f64cf91afad55621b15e7931649aa5</Hash>
+    <Hash>dd7d8e75f93989108bb6892f18849088</Hash>
 </Codenesium>*/

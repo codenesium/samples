@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var record = new VersionInfo();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(record));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ApiVersionInfoResponseModel response = await service.Get(default (long));
+                        ApiVersionInfoResponseModel response = await service.Get(default(long));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<long>()));
@@ -67,7 +66,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ApiVersionInfoResponseModel response = await service.Get(default (long));
+                        ApiVersionInfoResponseModel response = await service.Get(default(long));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<long>()));
@@ -78,7 +77,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var model = new ApiVersionInfoRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VersionInfo>())).Returns(Task.FromResult(new VersionInfo()));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var model = new ApiVersionInfoRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VersionInfo>())).Returns(Task.FromResult(new VersionInfo()));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ActionResponse response = await service.Update(default (long), model);
+                        ActionResponse response = await service.Update(default(long), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>()));
@@ -118,7 +115,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var model = new ApiVersionInfoRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<long>())).Returns(Task.CompletedTask);
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ActionResponse response = await service.Delete(default (long));
+                        ActionResponse response = await service.Delete(default(long));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<long>()));
@@ -138,7 +134,6 @@ namespace NebulaNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IVersionInfoRepository>();
                         var record = new VersionInfo();
-
                         mock.RepositoryMock.Setup(x => x.GetVersion(It.IsAny<long>())).Returns(Task.FromResult(record));
                         var service = new VersionInfoService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ApiVersionInfoResponseModel response = await service.GetVersion(default (long));
+                        ApiVersionInfoResponseModel response = await service.GetVersion(default(long));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetVersion(It.IsAny<long>()));
@@ -163,7 +158,7 @@ namespace NebulaNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
                                                              mock.DALMapperMockFactory.DALVersionInfoMapperMock);
 
-                        ApiVersionInfoResponseModel response = await service.GetVersion(default (long));
+                        ApiVersionInfoResponseModel response = await service.GetVersion(default(long));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetVersion(It.IsAny<long>()));
@@ -172,5 +167,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0db0df7b28d33bd64cffd7d229f449f8</Hash>
+    <Hash>992af9b885584054e4e879e03e8d2f19</Hash>
 </Codenesium>*/

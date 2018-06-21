@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractTicketRepository: AbstractRepository
+        public abstract class AbstractTicketRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace TicketingCRMNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<List<SaleTickets>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<SaleTickets>().Where(x => x.TicketId == ticketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTickets>();
+                }
+
+                public async virtual Task<TicketStatus> GetTicketStatus(int ticketStatusId)
+                {
+                        return await this.Context.Set<TicketStatus>().SingleOrDefaultAsync(x => x.Id == ticketStatusId);
+                }
+
                 protected async Task<List<Ticket>> Where(
                         Expression<Func<Ticket, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,19 +121,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<SaleTickets>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<SaleTickets>().Where(x => x.TicketId == ticketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTickets>();
-                }
-
-                public async virtual Task<TicketStatus> GetTicketStatus(int ticketStatusId)
-                {
-                        return await this.Context.Set<TicketStatus>().SingleOrDefaultAsync(x => x.Id == ticketStatusId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f3cb779497c6df31d8987afc11226305</Hash>
+    <Hash>04c7b7252e55bfa9083b3370e1ebe1e7</Hash>
 </Codenesium>*/

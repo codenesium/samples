@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductModelIllustrationService: AbstractService
+        public abstract class AbstractProductModelIllustrationService : AbstractService
         {
                 private IProductModelIllustrationRepository productModelIllustrationRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductModelIllustrationRepository productModelIllustrationRepository,
                         IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator,
                         IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
-
-                        )
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper)
                         : base()
-
                 {
                         this.productModelIllustrationRepository = productModelIllustrationRepository;
                         this.productModelIllustrationModelValidator = productModelIllustrationModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductModelIllustrationResponseModel> response = new CreateResponse<ApiProductModelIllustrationResponseModel>(await this.productModelIllustrationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductModelIllustrationMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductModelIllustrationMapper.MapModelToBO(default(int), model);
                                 var record = await this.productModelIllustrationRepository.Create(this.dalProductModelIllustrationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductModelIllustrationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productModelIllustrationModelValidator.ValidateUpdateAsync(productModelID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductModelIllustrationMapper.MapModelToBO(productModelID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productModelID)
                 {
                         ActionResponse response = new ActionResponse(await this.productModelIllustrationModelValidator.ValidateDeleteAsync(productModelID));
-
                         if (response.Success)
                         {
                                 await this.productModelIllustrationRepository.Delete(productModelID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ffac730275da621e920b21795514ba20</Hash>
+    <Hash>cd65ec39a905f6bb78d609787caedb52</Hash>
 </Codenesium>*/

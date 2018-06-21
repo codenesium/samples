@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOAdmin bo)
                 {
                         Admin efAdmin = new Admin();
-
                         efAdmin.SetProperties(
                                 bo.Email,
                                 bo.FirstName,
@@ -56,5 +55,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0eb478cb0ee9c4a244cba085d312bab6</Hash>
+    <Hash>4cbaafc5aa9416ffd621db57ea10af01</Hash>
 </Codenesium>*/

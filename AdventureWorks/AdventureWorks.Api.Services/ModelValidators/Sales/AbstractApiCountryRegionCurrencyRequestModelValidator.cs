@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCountryRegionCurrencyRequestModelValidator: AbstractValidator<ApiCountryRegionCurrencyRequestModel>
+        public abstract class AbstractApiCountryRegionCurrencyRequestModelValidator : AbstractValidator<ApiCountryRegionCurrencyRequestModel>
         {
                 private string existingRecordId;
 
-                ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
+                private ICountryRegionCurrencyRepository countryRegionCurrencyRepository;
 
                 public AbstractApiCountryRegionCurrencyRequestModelValidator(ICountryRegionCurrencyRepository countryRegionCurrencyRepository)
                 {
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void CurrencyCodeRules()
                 {
                         this.RuleFor(x => x.CurrencyCode).NotNull();
-                        this.RuleFor(x => x.CurrencyCode).MustAsync(this.BeValidCurrency).When(x => x ?.CurrencyCode != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.CurrencyCode).MustAsync(this.BeValidCurrency).When(x => x?.CurrencyCode != null).WithMessage("Invalid reference");
                         this.RuleFor(x => x.CurrencyCode).Length(0, 3);
                 }
 
@@ -47,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d615baf8edda35dc6629280c5ac1bc7e</Hash>
+    <Hash>764fde6579caea617abda195c6e96418</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOSpace bo)
                 {
                         Space efSpace = new Space();
-
                         efSpace.SetProperties(
                                 bo.Description,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cec22e91b4aa0e42da0ff5180b0c8e59</Hash>
+    <Hash>436b3c193bab3b21efe6d0e0e9cb7446</Hash>
 </Codenesium>*/

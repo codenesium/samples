@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "AddressType")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLAddressTypeActionMapper
+        public class TestBOLAddressTypeMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLAddressTypeMapper();
-
                         ApiAddressTypeRequestModel model = new ApiAddressTypeRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         BOAddressType response = mapper.MapModelToBO(1, model);
 
@@ -32,9 +30,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLAddressTypeMapper();
-
                         BOAddressType bo = new BOAddressType();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         ApiAddressTypeResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLAddressTypeMapper();
-
                         BOAddressType bo = new BOAddressType();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         List<ApiAddressTypeResponseModel> response = mapper.MapBOToModel(new List<BOAddressType>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c1281a10b6fe6f102c5cd66a5d83bd31</Hash>
+    <Hash>9b92c4c16421f9ff98a7255f0a683208</Hash>
 </Codenesium>*/

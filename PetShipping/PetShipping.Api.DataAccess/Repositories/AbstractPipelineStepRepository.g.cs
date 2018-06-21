@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractPipelineStepRepository: AbstractRepository
+        public abstract class AbstractPipelineStepRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,41 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<HandlerPipelineStep>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
+                }
+
+                public async virtual Task<List<OtherTransport>> OtherTransports(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<OtherTransport>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
+                }
+
+                public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinations(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PipelineStepDestination>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
+                }
+
+                public async virtual Task<List<PipelineStepNote>> PipelineStepNotes(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PipelineStepNote>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
+                }
+
+                public async virtual Task<List<PipelineStepStepRequirement>> PipelineStepStepRequirements(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PipelineStepStepRequirement>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
+                }
+
+                public async virtual Task<PipelineStepStatus> GetPipelineStepStatus(int pipelineStepStatusId)
+                {
+                        return await this.Context.Set<PipelineStepStatus>().SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
+                }
+
+                public async virtual Task<Employee> GetEmployee(int shipperId)
+                {
+                        return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == shipperId);
+                }
+
                 protected async Task<List<PipelineStep>> Where(
                         Expression<Func<PipelineStep, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,39 +139,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<HandlerPipelineStep>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
-                }
-                public async virtual Task<List<OtherTransport>> OtherTransports(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<OtherTransport>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
-                }
-                public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinations(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PipelineStepDestination>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
-                }
-                public async virtual Task<List<PipelineStepNote>> PipelineStepNotes(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PipelineStepNote>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
-                }
-                public async virtual Task<List<PipelineStepStepRequirement>> PipelineStepStepRequirements(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PipelineStepStepRequirement>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
-                }
-
-                public async virtual Task<PipelineStepStatus> GetPipelineStepStatus(int pipelineStepStatusId)
-                {
-                        return await this.Context.Set<PipelineStepStatus>().SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
-                }
-                public async virtual Task<Employee> GetEmployee(int shipperId)
-                {
-                        return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == shipperId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>a0d8dec46f0f5abca220dd30574dfaa4</Hash>
+    <Hash>b728250136ce7e2d10e0d83f4e827ba3</Hash>
 </Codenesium>*/

@@ -1,25 +1,10 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public class ReferenceEntity<T>
-        {
-                [JsonProperty(PropertyName = "Value")]
-                public T Value { get; private set; }
-
-                [JsonProperty(PropertyName = "Object")]
-                public string ReferenceObjectName { get; set; }
-
-                public ReferenceEntity(T value, string referenceObjectName)
-                {
-                        this.Value = value;
-                        this.ReferenceObjectName = referenceObjectName;
-                }
-        }
-
         public partial class ApiResponse
         {
                 public ApiResponse()
@@ -1716,5 +1701,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>34bf88cf3fd476035c9cfaca0596e82b</Hash>
+    <Hash>5122835a31449b59c4cf1707176bd645</Hash>
 </Codenesium>*/

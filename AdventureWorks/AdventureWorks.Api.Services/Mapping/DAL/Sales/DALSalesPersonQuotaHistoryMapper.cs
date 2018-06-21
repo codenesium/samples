@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALSalesPersonQuotaHistoryMapper: DALAbstractSalesPersonQuotaHistoryMapper, IDALSalesPersonQuotaHistoryMapper
+        public class DALSalesPersonQuotaHistoryMapper : DALAbstractSalesPersonQuotaHistoryMapper, IDALSalesPersonQuotaHistoryMapper
         {
                 public DALSalesPersonQuotaHistoryMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>396851aa6c21b197d5a1d0a54d01eb59</Hash>
+    <Hash>68a0e1d3fd50270754da755a76528f3f</Hash>
 </Codenesium>*/

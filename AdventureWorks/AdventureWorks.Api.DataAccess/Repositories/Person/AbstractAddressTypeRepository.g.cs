@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractAddressTypeRepository: AbstractRepository
+        public abstract class AbstractAddressTypeRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressTypeID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressTypeID == addressTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
+                }
+
                 protected async Task<List<AddressType>> Where(
                         Expression<Func<AddressType, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressTypeID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressTypeID == addressTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>065f3ae77222c883c318e9259e3f89c9</Hash>
+    <Hash>7837af3696e5d32275c43c77700e6b38</Hash>
 </Codenesium>*/

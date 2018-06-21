@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public abstract class AbstractApiSaleResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiSaleResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal amount,
@@ -118,5 +118,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1c69a86171208497e3e9cb3e0220cdd0</Hash>
+    <Hash>b1d6c46e8e3becab266a5f1ecf375518</Hash>
 </Codenesium>*/

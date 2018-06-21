@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiScrapReasonRequestModelValidator: AbstractValidator<ApiScrapReasonRequestModel>
+        public abstract class AbstractApiScrapReasonRequestModelValidator : AbstractValidator<ApiScrapReasonRequestModel>
         {
                 private short existingRecordId;
 
-                IScrapReasonRepository scrapReasonRepository;
+                private IScrapReasonRepository scrapReasonRepository;
 
                 public AbstractApiScrapReasonRequestModelValidator(IScrapReasonRepository scrapReasonRepository)
                 {
@@ -33,7 +33,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiScrapReasonRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiScrapReasonRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -41,7 +41,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         ScrapReason record = await this.scrapReasonRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (short) && record.ScrapReasonID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(short) && record.ScrapReasonID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -54,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b2398c21b773b6a311627c3792faa9e</Hash>
+    <Hash>e67fb96d53de3d9686af8ed2b09755f7</Hash>
 </Codenesium>*/

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLShipMethodMapper: BOLAbstractShipMethodMapper, IBOLShipMethodMapper
+        public class BOLShipMethodMapper : BOLAbstractShipMethodMapper, IBOLShipMethodMapper
         {
                 public BOLShipMethodMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>514f2f116a074e40b6aa2ab828c2497e</Hash>
+    <Hash>0955031e6a869c37433d283187f30f07</Hash>
 </Codenesium>*/

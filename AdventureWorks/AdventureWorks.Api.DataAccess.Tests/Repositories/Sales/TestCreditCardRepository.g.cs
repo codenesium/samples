@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CreditCardRepository(loggerMoc.Object, context);
 
                         CreditCard entity = new CreditCard();
-
                         context.Set<CreditCard>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CreditCardRepository(loggerMoc.Object, context);
 
                         CreditCard entity = new CreditCard();
-
                         context.Set<CreditCard>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CreditCardRepository(loggerMoc.Object, context);
 
                         var entity = new CreditCard();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<CreditCard>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CreditCardRepository>> loggerMoc = CreditCardRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
                         var repository = new CreditCardRepository(loggerMoc.Object, context);
-
                         CreditCard entity = new CreditCard();
-
                         context.Set<CreditCard>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CreditCardRepository>> loggerMoc = CreditCardRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
                         var repository = new CreditCardRepository(loggerMoc.Object, context);
-
                         CreditCard entity = new CreditCard();
-
                         context.Set<CreditCard>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CreditCardRepository>> loggerMoc = CreditCardRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CreditCardRepositoryMoc.GetContext();
                         var repository = new CreditCardRepository(loggerMoc.Object, context);
-
                         CreditCard entity = new CreditCard();
-
                         context.Set<CreditCard>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.CreditCardID);
 
                         CreditCard modifiedRecord = await context.Set<CreditCard>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>839e1dd4e379e2a5a6995fde02aef1d2</Hash>
+    <Hash>8f72a14d798fcd420682ec9f53a2e888</Hash>
 </Codenesium>*/

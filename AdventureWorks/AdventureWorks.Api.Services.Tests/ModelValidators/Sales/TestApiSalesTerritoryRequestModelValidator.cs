@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, new string('A', 4));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CountryRegionCode, new string('A', 4));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Group, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.@Group, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -187,7 +175,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
@@ -200,8 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
                 }
@@ -213,8 +199,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -250,7 +235,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -262,7 +247,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<SalesTerritory>(null));
                         var validator = new ApiSalesTerritoryRequestModelValidator(salesTerritoryRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -270,5 +255,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f40d80cee416c01aa61cdabe67c11101</Hash>
+    <Hash>14858ae580d3276f86105307ee030eb7</Hash>
 </Codenesium>*/

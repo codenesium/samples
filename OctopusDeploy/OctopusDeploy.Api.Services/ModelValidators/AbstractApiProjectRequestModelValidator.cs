@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiProjectRequestModelValidator: AbstractValidator<ApiProjectRequestModel>
+        public abstract class AbstractApiProjectRequestModelValidator : AbstractValidator<ApiProjectRequestModel>
         {
                 private string existingRecordId;
 
-                IProjectRepository projectRepository;
+                private IProjectRepository projectRepository;
 
                 public AbstractApiProjectRequestModelValidator(IProjectRepository projectRepository)
                 {
@@ -65,7 +65,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -78,7 +78,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void SlugRules()
                 {
                         this.RuleFor(x => x.Slug).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetSlug).When(x => x ?.Slug != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Slug));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetSlug).When(x => x?.Slug != null).WithMessage("Violates unique constraint").WithName(nameof(ApiProjectRequestModel.Slug));
                         this.RuleFor(x => x.Slug).Length(0, 210);
                 }
 
@@ -91,7 +91,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Project record = await this.projectRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -100,11 +100,12 @@ namespace OctopusDeployNS.Api.Services
                                 return false;
                         }
                 }
+
                 private async Task<bool> BeUniqueGetSlug(ApiProjectRequestModel model,  CancellationToken cancellationToken)
                 {
                         Project record = await this.projectRepository.GetSlug(model.Slug);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -117,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0d325a9cadc9d8c96aaabbbc7424fc46</Hash>
+    <Hash>16115050f0e8e8de3d8d8d23b2492858</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractAdminRepository: AbstractRepository
+        public abstract class AbstractAdminRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Venue>> Venues(int adminId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Venue>().Where(x => x.AdminId == adminId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
+                }
+
                 protected async Task<List<Admin>> Where(
                         Expression<Func<Admin, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Venue>> Venues(int adminId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Venue>().Where(x => x.AdminId == adminId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ebc4ee8428f4da5d52a43bc37e94e270</Hash>
+    <Hash>4dde02586c878f17df383cc8de85d13b</Hash>
 </Codenesium>*/

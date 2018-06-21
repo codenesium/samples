@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractTeamService: AbstractService
+        public abstract class AbstractTeamService : AbstractService
         {
                 private ITeamRepository teamRepository;
 
@@ -36,18 +36,12 @@ namespace NebulaNS.Api.Services
                         ITeamRepository teamRepository,
                         IApiTeamRequestModelValidator teamModelValidator,
                         IBOLTeamMapper bolTeamMapper,
-                        IDALTeamMapper dalTeamMapper
-
-                        ,
+                        IDALTeamMapper dalTeamMapper,
                         IBOLChainMapper bolChainMapper,
-                        IDALChainMapper dalChainMapper
-                        ,
+                        IDALChainMapper dalChainMapper,
                         IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-                        IDALMachineRefTeamMapper dalMachineRefTeamMapper
-
-                        )
+                        IDALMachineRefTeamMapper dalMachineRefTeamMapper)
                         : base()
-
                 {
                         this.teamRepository = teamRepository;
                         this.teamModelValidator = teamModelValidator;
@@ -87,7 +81,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.teamModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTeamMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTeamMapper.MapModelToBO(default(int), model);
                                 var record = await this.teamRepository.Create(this.dalTeamMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace NebulaNS.Api.Services
                         ApiTeamRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTeamMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.teamRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace NebulaNS.Api.Services
 
                         return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<MachineRefTeam> records = await this.teamRepository.MachineRefTeams(teamId, limit, offset);
@@ -140,5 +133,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e090a967f2663db10b5d4ccc7001f495</Hash>
+    <Hash>7e5c81df8e989f81717a7c1d832f8a3f</Hash>
 </Codenesium>*/

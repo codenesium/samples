@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOVersionInfo boVersionInfo = new BOVersionInfo();
-
                         boVersionInfo.SetProperties(
                                 version,
                                 model.AppliedOn,
@@ -47,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>758b077341f46b0a7b3aa4e96abdfbde</Hash>
+    <Hash>33403e611fc21d4516cf1f038a2dbf3b</Hash>
 </Codenesium>*/

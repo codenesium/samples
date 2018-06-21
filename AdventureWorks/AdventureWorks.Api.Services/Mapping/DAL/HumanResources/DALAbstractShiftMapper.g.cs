@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOShift bo)
                 {
                         Shift efShift = new Shift();
-
                         efShift.SetProperties(
                                 bo.EndTime,
                                 bo.ModifiedDate,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da3c6e0277a7fc217b081201a20bee30</Hash>
+    <Hash>6ec890fe635e0a0330a5d18e8185279c</Hash>
 </Codenesium>*/

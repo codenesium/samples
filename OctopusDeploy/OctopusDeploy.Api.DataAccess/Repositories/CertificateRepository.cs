@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class CertificateRepository: AbstractCertificateRepository, ICertificateRepository
+        public class CertificateRepository : AbstractCertificateRepository, ICertificateRepository
         {
                 public CertificateRepository(
                         ILogger<CertificateRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3cd09e9b1c058ea6f442307122fb218b</Hash>
+    <Hash>51063991857ea9fe6fe4c585d65fc742</Hash>
 </Codenesium>*/

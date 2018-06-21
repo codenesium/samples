@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLReleaseMapper: BOLAbstractReleaseMapper, IBOLReleaseMapper
+        public class BOLReleaseMapper : BOLAbstractReleaseMapper, IBOLReleaseMapper
         {
                 public BOLReleaseMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bf53e304bc82e7b00eef173bfe6db637</Hash>
+    <Hash>a1cc1335c9a2e79163d020c80cfe0bf4</Hash>
 </Codenesium>*/

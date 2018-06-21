@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
                         var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiShoppingCartItemRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
                         var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiShoppingCartItemRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiShoppingCartItemRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
                         var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiShoppingCartItemRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
                         var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiShoppingCartItemRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiShoppingCartItemRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ShoppingCartID, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         shoppingCartItemRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ShoppingCartItem()));
 
                         var validator = new ApiShoppingCartItemRequestModelValidator(shoppingCartItemRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -92,5 +87,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0941ea87cb7a6ea41453e94aaf72aa31</Hash>
+    <Hash>b2f545a12df248ed8081278eb062aa5c</Hash>
 </Codenesium>*/

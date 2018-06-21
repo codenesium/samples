@@ -1,15 +1,15 @@
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStudentXFamilyRepository>();
                         var record = new StudentXFamily();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new StudentXFamilyService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
                                                                 mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
 
-                        ApiStudentXFamilyResponseModel response = await service.Get(default (int));
+                        ApiStudentXFamilyResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
                                                                 mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
 
-                        ApiStudentXFamilyResponseModel response = await service.Get(default (int));
+                        ApiStudentXFamilyResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStudentXFamilyRepository>();
                         var model = new ApiStudentXFamilyRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<StudentXFamily>())).Returns(Task.FromResult(new StudentXFamily()));
                         var service = new StudentXFamilyService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStudentXFamilyRepository>();
                         var model = new ApiStudentXFamilyRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<StudentXFamily>())).Returns(Task.FromResult(new StudentXFamily()));
                         var service = new StudentXFamilyService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
                                                                 mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.StudentXFamilyModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudentXFamilyRequestModel>()));
@@ -118,7 +115,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IStudentXFamilyRepository>();
                         var model = new ApiStudentXFamilyRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new StudentXFamilyService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
                                                                 mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>97230deeea59e0f7a30f802c56d10c44</Hash>
+    <Hash>d6691fb10ac9b25e39e45606d5c32db9</Hash>
 </Codenesium>*/

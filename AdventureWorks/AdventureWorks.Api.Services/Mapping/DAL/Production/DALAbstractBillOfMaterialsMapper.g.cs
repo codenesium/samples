@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOBillOfMaterials bo)
                 {
                         BillOfMaterials efBillOfMaterials = new BillOfMaterials();
-
                         efBillOfMaterials.SetProperties(
                                 bo.BillOfMaterialsID,
                                 bo.BOMLevel,
@@ -60,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7476698243599740a7c2bdde437181b</Hash>
+    <Hash>a6af8e30e0bced43aaa470522848b1cf</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using ESPIOTNS.Api.Contracts;
+using ESPIOTNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ESPIOTNS.Api.Contracts;
-using ESPIOTNS.Api.DataAccess;
 
 namespace ESPIOTNS.Api.Services
 {
-        public abstract class AbstractApiDeviceActionRequestModelValidator: AbstractValidator<ApiDeviceActionRequestModel>
+        public abstract class AbstractApiDeviceActionRequestModelValidator : AbstractValidator<ApiDeviceActionRequestModel>
         {
                 private int existingRecordId;
 
-                IDeviceActionRepository deviceActionRepository;
+                private IDeviceActionRepository deviceActionRepository;
 
                 public AbstractApiDeviceActionRequestModelValidator(IDeviceActionRepository deviceActionRepository)
                 {
@@ -28,7 +28,7 @@ namespace ESPIOTNS.Api.Services
 
                 public virtual void DeviceIdRules()
                 {
-                        this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDevice).When(x => x ?.DeviceId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDevice).When(x => x?.DeviceId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void NameRules()
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8d09ed412b3ce8d7a0f8cd77cbbf3a9</Hash>
+    <Hash>f07f212d811745a73f91121d9a6fb1a4</Hash>
 </Codenesium>*/

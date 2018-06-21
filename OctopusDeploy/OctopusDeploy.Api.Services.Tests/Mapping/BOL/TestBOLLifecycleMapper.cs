@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Lifecycle")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLLifecycleActionMapper
+        public class TestBOLLifecycleMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLLifecycleMapper();
-
                         ApiLifecycleRequestModel model = new ApiLifecycleRequestModel();
-
                         model.SetProperties(BitConverter.GetBytes(1), "A", "A");
                         BOLifecycle response = mapper.MapModelToBO("A", model);
 
@@ -32,9 +30,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLLifecycleMapper();
-
                         BOLifecycle bo = new BOLifecycle();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A");
                         ApiLifecycleResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLLifecycleMapper();
-
                         BOLifecycle bo = new BOLifecycle();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A");
                         List<ApiLifecycleResponseModel> response = mapper.MapBOToModel(new List<BOLifecycle>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2df7b0e3145ff8f6a7a8f79a0301cc14</Hash>
+    <Hash>974abcabe81914e97387ec2a3af39936</Hash>
 </Codenesium>*/

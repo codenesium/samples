@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FermataFishNS.Api.Services
                         )
                 {
                         BOStudio boStudio = new BOStudio();
-
                         boStudio.SetProperties(
                                 id,
                                 model.Address1,
@@ -52,5 +51,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3cb6adc7caabce19b6342dd8fbdac59a</Hash>
+    <Hash>a8752bb4e5186cf39060792e4af1d387</Hash>
 </Codenesium>*/

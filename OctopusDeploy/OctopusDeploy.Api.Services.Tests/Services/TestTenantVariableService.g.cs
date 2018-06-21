@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var record = new TenantVariable();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ApiTenantVariableResponseModel response = await service.Get(default (string));
+                        ApiTenantVariableResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ApiTenantVariableResponseModel response = await service.Get(default (string));
+                        ApiTenantVariableResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var model = new ApiTenantVariableRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TenantVariable>())).Returns(Task.FromResult(new TenantVariable()));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var model = new ApiTenantVariableRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TenantVariable>())).Returns(Task.FromResult(new TenantVariable()));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TenantVariableModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var model = new ApiTenantVariableRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -138,7 +134,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITenantVariableRepository>();
                         var record = new TenantVariable();
-
                         mock.RepositoryMock.Setup(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new TenantVariableService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -146,7 +141,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ApiTenantVariableResponseModel response = await service.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(default (string), default (string), default (string), default (string));
+                        ApiTenantVariableResponseModel response = await service.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(default(string), default(string), default(string), default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
@@ -163,7 +158,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        ApiTenantVariableResponseModel response = await service.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(default (string), default (string), default (string), default (string));
+                        ApiTenantVariableResponseModel response = await service.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(default(string), default(string), default(string), default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
@@ -182,7 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        List<ApiTenantVariableResponseModel> response = await service.GetTenantId(default (string));
+                        List<ApiTenantVariableResponseModel> response = await service.GetTenantId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
@@ -199,7 +194,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLTenantVariableMapperMock,
                                                                 mock.DALMapperMockFactory.DALTenantVariableMapperMock);
 
-                        List<ApiTenantVariableResponseModel> response = await service.GetTenantId(default (string));
+                        List<ApiTenantVariableResponseModel> response = await service.GetTenantId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
@@ -208,5 +203,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>80e1c364419461237f2441f6058700f7</Hash>
+    <Hash>1609fd4516743f6c73796452474d7712</Hash>
 </Codenesium>*/

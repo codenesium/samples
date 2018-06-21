@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiWorkerTaskLeaseRequestModelValidator: AbstractValidator<ApiWorkerTaskLeaseRequestModel>
+        public abstract class AbstractApiWorkerTaskLeaseRequestModelValidator : AbstractValidator<ApiWorkerTaskLeaseRequestModel>
         {
                 private string existingRecordId;
 
-                IWorkerTaskLeaseRepository workerTaskLeaseRepository;
+                private IWorkerTaskLeaseRepository workerTaskLeaseRepository;
 
                 public AbstractApiWorkerTaskLeaseRequestModelValidator(IWorkerTaskLeaseRepository workerTaskLeaseRepository)
                 {
@@ -56,5 +56,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29b97e8851c42d9734ecfe6c5f5283bb</Hash>
+    <Hash>5160b61c71832c0f66a4b1ec37a32389</Hash>
 </Codenesium>*/

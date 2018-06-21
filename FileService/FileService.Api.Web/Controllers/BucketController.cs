@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.Services;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FileServiceNS.Api.Web
 {
         [Route("api/buckets")]
         [ApiVersion("1.0")]
-        public class BucketController: AbstractBucketController
+        public class BucketController : AbstractBucketController
         {
                 public BucketController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f81e1938c96b4af6eb09eae487ad2de7</Hash>
+    <Hash>cde30d0354f7d3b87864a3aa4ced659c</Hash>
 </Codenesium>*/

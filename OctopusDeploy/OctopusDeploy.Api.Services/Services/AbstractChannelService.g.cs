@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractChannelService: AbstractService
+        public abstract class AbstractChannelService : AbstractService
         {
                 private IChannelRepository channelRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IChannelRepository channelRepository,
                         IApiChannelRequestModelValidator channelModelValidator,
                         IBOLChannelMapper bolChannelMapper,
-                        IDALChannelMapper dalChannelMapper
-
-                        )
+                        IDALChannelMapper dalChannelMapper)
                         : base()
-
                 {
                         this.channelRepository = channelRepository;
                         this.channelModelValidator = channelModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiChannelResponseModel> response = new CreateResponse<ApiChannelResponseModel>(await this.channelModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolChannelMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolChannelMapper.MapModelToBO(default(string), model);
                                 var record = await this.channelRepository.Create(this.dalChannelMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiChannelRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.channelModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolChannelMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.channelModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.channelRepository.Delete(id);
@@ -119,12 +114,14 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiChannelResponseModel>> GetDataVersion(byte[] dataVersion)
                 {
                         List<Channel> records = await this.channelRepository.GetDataVersion(dataVersion);
 
                         return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiChannelResponseModel>> GetProjectId(string projectId)
                 {
                         List<Channel> records = await this.channelRepository.GetProjectId(projectId);
@@ -135,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75632fafa9c190ca517436105d0b0aeb</Hash>
+    <Hash>5da2b3ac508eef2079e904161cc4c71e</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public class AWBuildVersionRepository: AbstractAWBuildVersionRepository, IAWBuildVersionRepository
+        public class AWBuildVersionRepository : AbstractAWBuildVersionRepository, IAWBuildVersionRepository
         {
                 public AWBuildVersionRepository(
                         ILogger<AWBuildVersionRepository> logger,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>27cc95da460ec431263f148157134869</Hash>
+    <Hash>9642743ee247ad3e14f5a078cd42ff75</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Contracts
 {
-        public abstract class AbstractApiDeviceActionResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiDeviceActionResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int deviceId,
@@ -76,5 +76,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8b82ff0415e390a9bf6e2ea9d9e0d527</Hash>
+    <Hash>a13d91435c868f989dad0779247cc155</Hash>
 </Codenesium>*/

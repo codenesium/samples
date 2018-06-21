@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractClaspRepository: AbstractRepository
+        public abstract class AbstractClaspRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Chain> GetChain(int nextChainId)
+                {
+                        return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == nextChainId);
+                }
+
                 protected async Task<List<Clasp>> Where(
                         Expression<Func<Clasp, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Chain> GetChain(int nextChainId)
-                {
-                        return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == nextChainId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>d30350a89754395b9984ec1d4fd5ce4f</Hash>
+    <Hash>d1176fe6c81a3e851f758eb4d6496dcd</Hash>
 </Codenesium>*/

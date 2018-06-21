@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiCurrencyRateResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiCurrencyRateResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         decimal averageRate,
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>25c8872d0b1c91161b3f93e17eb182e9</Hash>
+    <Hash>7dd083f6f6ad21d5b93653d533cad9aa</Hash>
 </Codenesium>*/

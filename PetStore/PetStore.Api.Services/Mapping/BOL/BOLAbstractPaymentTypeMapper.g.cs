@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetStoreNS.Api.Services
                         )
                 {
                         BOPaymentType boPaymentType = new BOPaymentType();
-
                         boPaymentType.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ca37a936f2e3568f131471ce5e909e2</Hash>
+    <Hash>0941e9abd416543db08c6ad8db497aa5</Hash>
 </Codenesium>*/

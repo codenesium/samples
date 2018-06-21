@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSpecialOffer boSpecialOffer = new BOSpecialOffer();
-
                         boSpecialOffer.SetProperties(
                                 specialOfferID,
                                 model.Category,
@@ -55,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>03a016119c75301c1f3763c36dc8ff2f</Hash>
+    <Hash>3168b16003f15c0910a21c6fb0ae0add</Hash>
 </Codenesium>*/

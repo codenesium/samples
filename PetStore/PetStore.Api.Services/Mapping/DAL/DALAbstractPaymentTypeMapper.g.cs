@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetStoreNS.Api.Services
                         BOPaymentType bo)
                 {
                         PaymentType efPaymentType = new PaymentType();
-
                         efPaymentType.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>525bd408a794bb9a0e10a76b3c3e5f6f</Hash>
+    <Hash>0b5634e0e04a0256708c02b1ce85ea2c</Hash>
 </Codenesium>*/

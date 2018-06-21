@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryHistoryRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryHistoryRequestModelValidator(salesTerritoryHistoryRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiSalesTerritoryHistoryRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
@@ -57,8 +56,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         salesTerritoryHistoryRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
                         var validator = new ApiSalesTerritoryHistoryRequestModelValidator(salesTerritoryHistoryRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryHistoryRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.TerritoryID, 1);
                 }
@@ -71,7 +69,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiSalesTerritoryHistoryRequestModelValidator(salesTerritoryHistoryRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiSalesTerritoryHistoryRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiSalesTerritoryHistoryRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TerritoryID, 1);
                 }
@@ -79,5 +77,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6890765f64cbdc2a9cc42b69d2ebf34e</Hash>
+    <Hash>cf7c1191fc25a6130db8f2e2cef565ab</Hash>
 </Codenesium>*/

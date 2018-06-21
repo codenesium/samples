@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetStoreNS.Api.Services
                         BOSale bo)
                 {
                         Sale efSale = new Sale();
-
                         efSale.SetProperties(
                                 bo.Amount,
                                 bo.FirstName,
@@ -56,5 +55,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42d23e7df2c80c3ef6d42239d35bd4d2</Hash>
+    <Hash>f5880ca66a44a3a5d19c8558b71d50ee</Hash>
 </Codenesium>*/

@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -20,10 +20,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<Currency> ByName(string name);
 
                 Task<List<CountryRegionCurrency>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<CurrencyRate>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>b13a6167e3a48e366626e1a2c3b602b2</Hash>
+    <Hash>900f1944f7a2c50e7903a036479bd882</Hash>
 </Codenesium>*/

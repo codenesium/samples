@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Vendor")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLVendorActionMapper
+        public class TestBOLVendorMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLVendorMapper();
-
                         ApiVendorRequestModel model = new ApiVendorRequestModel();
-
                         model.SetProperties("A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
                         BOVendor response = mapper.MapModelToBO(1, model);
 
@@ -36,9 +34,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLVendorMapper();
-
                         BOVendor bo = new BOVendor();
-
                         bo.SetProperties(1, "A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
                         ApiVendorResponseModel response = mapper.MapBOToModel(bo);
 
@@ -56,9 +52,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLVendorMapper();
-
                         BOVendor bo = new BOVendor();
-
                         bo.SetProperties(1, "A", true, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
                         List<ApiVendorResponseModel> response = mapper.MapBOToModel(new List<BOVendor>() { { bo } });
 
@@ -68,5 +62,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7eeb02c2b556c57eb6d0ed0f405540b5</Hash>
+    <Hash>5e6e96fd799e68f0848fd3fc178a46c7</Hash>
 </Codenesium>*/

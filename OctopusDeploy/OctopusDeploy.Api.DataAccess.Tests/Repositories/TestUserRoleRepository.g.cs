@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new UserRoleRepository(loggerMoc.Object, context);
 
                         UserRole entity = new UserRole();
-
                         context.Set<UserRole>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new UserRoleRepository(loggerMoc.Object, context);
 
                         UserRole entity = new UserRole();
-
                         context.Set<UserRole>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new UserRoleRepository(loggerMoc.Object, context);
 
                         var entity = new UserRole();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<UserRole>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
                         var repository = new UserRoleRepository(loggerMoc.Object, context);
-
                         UserRole entity = new UserRole();
-
                         context.Set<UserRole>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
                         var repository = new UserRoleRepository(loggerMoc.Object, context);
-
                         UserRole entity = new UserRole();
-
                         context.Set<UserRole>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<UserRoleRepository>> loggerMoc = UserRoleRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = UserRoleRepositoryMoc.GetContext();
                         var repository = new UserRoleRepository(loggerMoc.Object, context);
-
                         UserRole entity = new UserRole();
-
                         context.Set<UserRole>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         UserRole modifiedRecord = await context.Set<UserRole>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>23ebc71fb93379a47a7f04b0a02ae835</Hash>
+    <Hash>9ffded836744c399260aa738042c8498</Hash>
 </Codenesium>*/

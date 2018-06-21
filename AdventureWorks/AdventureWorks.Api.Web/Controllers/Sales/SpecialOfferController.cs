@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/specialOffers")]
         [ApiVersion("1.0")]
-        public class SpecialOfferController: AbstractSpecialOfferController
+        public class SpecialOfferController : AbstractSpecialOfferController
         {
                 public SpecialOfferController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>07c36689a4161f1b1f937c52af1933d9</Hash>
+    <Hash>ff9d34c636fe0608c75a0c8c6705ef6e</Hash>
 </Codenesium>*/

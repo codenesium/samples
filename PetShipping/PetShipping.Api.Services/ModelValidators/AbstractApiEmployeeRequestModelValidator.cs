@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiEmployeeRequestModelValidator: AbstractValidator<ApiEmployeeRequestModel>
+        public abstract class AbstractApiEmployeeRequestModelValidator : AbstractValidator<ApiEmployeeRequestModel>
         {
                 private int existingRecordId;
 
-                IEmployeeRepository employeeRepository;
+                private IEmployeeRepository employeeRepository;
 
                 public AbstractApiEmployeeRequestModelValidator(IEmployeeRepository employeeRepository)
                 {
@@ -49,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>68dc5dc88839a5d539bd703fd169f3b9</Hash>
+    <Hash>c726d6d3cf07346bd09d811df9c67a3b</Hash>
 </Codenesium>*/

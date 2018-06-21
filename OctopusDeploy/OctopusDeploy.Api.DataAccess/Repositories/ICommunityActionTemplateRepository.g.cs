@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<CommunityActionTemplate>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<CommunityActionTemplate> GetExternalId(Guid externalId);
+
                 Task<CommunityActionTemplate> GetName(string name);
         }
 }
 
 /*<Codenesium>
-    <Hash>4ed918f99945f37e627d4b1e1e290f7e</Hash>
+    <Hash>11c59d370f70413aeb785013d2a1612c</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductListPriceHistoryService: AbstractService
+        public abstract class AbstractProductListPriceHistoryService : AbstractService
         {
                 private IProductListPriceHistoryRepository productListPriceHistoryRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductListPriceHistoryRepository productListPriceHistoryRepository,
                         IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator,
                         IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper,
-                        IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper
-
-                        )
+                        IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper)
                         : base()
-
                 {
                         this.productListPriceHistoryRepository = productListPriceHistoryRepository;
                         this.productListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductListPriceHistoryResponseModel> response = new CreateResponse<ApiProductListPriceHistoryResponseModel>(await this.productListPriceHistoryModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(default(int), model);
                                 var record = await this.productListPriceHistoryRepository.Create(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductListPriceHistoryRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(productID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productID)
                 {
                         ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateDeleteAsync(productID));
-
                         if (response.Success)
                         {
                                 await this.productListPriceHistoryRepository.Delete(productID);
@@ -109,5 +104,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a64da9b62a510b1d62ab855a0ad9282</Hash>
+    <Hash>ef12c06760d52a8226aa10ca3afb2238</Hash>
 </Codenesium>*/

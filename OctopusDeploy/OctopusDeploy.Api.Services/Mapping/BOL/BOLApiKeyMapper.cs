@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLApiKeyMapper: BOLAbstractApiKeyMapper, IBOLApiKeyMapper
+        public class BOLApiKeyMapper : BOLAbstractApiKeyMapper, IBOLApiKeyMapper
         {
                 public BOLApiKeyMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b19ed62f2fef2eaa4662e893f3f382b</Hash>
+    <Hash>53fbb218e4c5fb8755b93bca5bf2c8db</Hash>
 </Codenesium>*/

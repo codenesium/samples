@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new TagSetRepository(loggerMoc.Object, context);
 
                         TagSet entity = new TagSet();
-
                         context.Set<TagSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new TagSetRepository(loggerMoc.Object, context);
 
                         TagSet entity = new TagSet();
-
                         context.Set<TagSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new TagSetRepository(loggerMoc.Object, context);
 
                         var entity = new TagSet();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<TagSet>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<TagSetRepository>> loggerMoc = TagSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TagSetRepositoryMoc.GetContext();
                         var repository = new TagSetRepository(loggerMoc.Object, context);
-
                         TagSet entity = new TagSet();
-
                         context.Set<TagSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<TagSetRepository>> loggerMoc = TagSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TagSetRepositoryMoc.GetContext();
                         var repository = new TagSetRepository(loggerMoc.Object, context);
-
                         TagSet entity = new TagSet();
-
                         context.Set<TagSet>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<TagSetRepository>> loggerMoc = TagSetRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = TagSetRepositoryMoc.GetContext();
                         var repository = new TagSetRepository(loggerMoc.Object, context);
-
                         TagSet entity = new TagSet();
-
                         context.Set<TagSet>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         TagSet modifiedRecord = await context.Set<TagSet>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9f13c13530ea4948be342d440625cc3f</Hash>
+    <Hash>0e81f87f9138db2bcd29ef83a9951007</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProxyRepository(loggerMoc.Object, context);
 
                         Proxy entity = new Proxy();
-
                         context.Set<Proxy>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProxyRepository(loggerMoc.Object, context);
 
                         Proxy entity = new Proxy();
-
                         context.Set<Proxy>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ProxyRepository(loggerMoc.Object, context);
 
                         var entity = new Proxy();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Proxy>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProxyRepository>> loggerMoc = ProxyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProxyRepositoryMoc.GetContext();
                         var repository = new ProxyRepository(loggerMoc.Object, context);
-
                         Proxy entity = new Proxy();
-
                         context.Set<Proxy>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProxyRepository>> loggerMoc = ProxyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProxyRepositoryMoc.GetContext();
                         var repository = new ProxyRepository(loggerMoc.Object, context);
-
                         Proxy entity = new Proxy();
-
                         context.Set<Proxy>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ProxyRepository>> loggerMoc = ProxyRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProxyRepositoryMoc.GetContext();
                         var repository = new ProxyRepository(loggerMoc.Object, context);
-
                         Proxy entity = new Proxy();
-
                         context.Set<Proxy>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Proxy modifiedRecord = await context.Set<Proxy>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>929e0cc4610d76e5b5499b6aa1965fb8</Hash>
+    <Hash>6f968ff6019251e4349247677e185eac</Hash>
 </Codenesium>*/

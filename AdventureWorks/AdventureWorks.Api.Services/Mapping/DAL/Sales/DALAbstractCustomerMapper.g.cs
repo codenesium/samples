@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOCustomer bo)
                 {
                         Customer efCustomer = new Customer();
-
                         efCustomer.SetProperties(
                                 bo.AccountNumber,
                                 bo.CustomerID,
@@ -56,5 +55,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7b1ddbbd856ab5f1658100873f3870de</Hash>
+    <Hash>bc99c0dacb7c73a33e8e3e64485339a8</Hash>
 </Codenesium>*/

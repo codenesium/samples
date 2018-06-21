@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentEnvironment")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDeploymentEnvironmentActionMapper
+        public class TestDALDeploymentEnvironmentMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDeploymentEnvironmentMapper();
-
                         var bo = new BODeploymentEnvironment();
-
                         bo.SetProperties("A", BitConverter.GetBytes(1), "A", "A", 1);
 
                         DeploymentEnvironment response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDeploymentEnvironmentMapper();
-
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
 
-                        BODeploymentEnvironment  response = mapper.MapEFToBO(entity);
+                        BODeploymentEnvironment response = mapper.MapEFToBO(entity);
 
                         response.DataVersion.Should().BeEquivalentTo(BitConverter.GetBytes(1));
                         response.Id.Should().Be("A");
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDeploymentEnvironmentMapper();
-
                         DeploymentEnvironment entity = new DeploymentEnvironment();
-
                         entity.SetProperties(BitConverter.GetBytes(1), "A", "A", "A", 1);
 
                         List<BODeploymentEnvironment> response = mapper.MapEFToBO(new List<DeploymentEnvironment>() { entity });
@@ -65,5 +59,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a347b9c7ef097197f137bbc7cc6a9398</Hash>
+    <Hash>e55d44370de780051ab192e77cdff8ef</Hash>
 </Codenesium>*/

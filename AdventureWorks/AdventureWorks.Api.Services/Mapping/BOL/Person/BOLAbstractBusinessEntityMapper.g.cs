@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOBusinessEntity boBusinessEntity = new BOBusinessEntity();
-
                         boBusinessEntity.SetProperties(
                                 businessEntityID,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82d2bd52e04084d34ac5344c4b4a7144</Hash>
+    <Hash>4d4e5f3743ed15ee2ea3ea633c448b1f</Hash>
 </Codenesium>*/

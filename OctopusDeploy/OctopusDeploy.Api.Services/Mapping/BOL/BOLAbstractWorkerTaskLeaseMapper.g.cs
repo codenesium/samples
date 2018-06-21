@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOWorkerTaskLease boWorkerTaskLease = new BOWorkerTaskLease();
-
                         boWorkerTaskLease.SetProperties(
                                 id,
                                 model.Exclusive,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f4a0d0541901372a6e2724bdd92ff70</Hash>
+    <Hash>f0ab4dafd7c44a1f7dbf4fa3d0668dcd</Hash>
 </Codenesium>*/

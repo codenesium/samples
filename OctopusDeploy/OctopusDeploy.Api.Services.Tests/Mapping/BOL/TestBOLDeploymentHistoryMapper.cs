@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentHistory")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLDeploymentHistoryActionMapper
+        public class TestBOLDeploymentHistoryMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLDeploymentHistoryMapper();
-
                         ApiDeploymentHistoryRequestModel model = new ApiDeploymentHistoryRequestModel();
-
                         model.SetProperties("A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
                         BODeploymentHistory response = mapper.MapModelToBO("A", model);
 
@@ -49,9 +47,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLDeploymentHistoryMapper();
-
                         BODeploymentHistory bo = new BODeploymentHistory();
-
                         bo.SetProperties("A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
                         ApiDeploymentHistoryResponseModel response = mapper.MapBOToModel(bo);
 
@@ -82,9 +78,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLDeploymentHistoryMapper();
-
                         BODeploymentHistory bo = new BODeploymentHistory();
-
                         bo.SetProperties("A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
                         List<ApiDeploymentHistoryResponseModel> response = mapper.MapBOToModel(new List<BODeploymentHistory>() { { bo } });
 
@@ -94,5 +88,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6ef7c1d51a237df7f2b98bcad37e1320</Hash>
+    <Hash>61b07e417d3e4f322df018f9e95113de</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductReviewService: AbstractService
+        public abstract class AbstractProductReviewService : AbstractService
         {
                 private IProductReviewRepository productReviewRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IProductReviewRepository productReviewRepository,
                         IApiProductReviewRequestModelValidator productReviewModelValidator,
                         IBOLProductReviewMapper bolProductReviewMapper,
-                        IDALProductReviewMapper dalProductReviewMapper
-
-                        )
+                        IDALProductReviewMapper dalProductReviewMapper)
                         : base()
-
                 {
                         this.productReviewRepository = productReviewRepository;
                         this.productReviewModelValidator = productReviewModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductReviewResponseModel> response = new CreateResponse<ApiProductReviewResponseModel>(await this.productReviewModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductReviewMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductReviewMapper.MapModelToBO(default(int), model);
                                 var record = await this.productReviewRepository.Create(this.dalProductReviewMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductReviewRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateUpdateAsync(productReviewID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductReviewMapper.MapModelToBO(productReviewID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int productReviewID)
                 {
                         ActionResponse response = new ActionResponse(await this.productReviewModelValidator.ValidateDeleteAsync(productReviewID));
-
                         if (response.Success)
                         {
                                 await this.productReviewRepository.Delete(productReviewID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9afcae6ca07e8085740dc8c9e0104e67</Hash>
+    <Hash>11134d6a03b56db9dc291712a6d5cda6</Hash>
 </Codenesium>*/

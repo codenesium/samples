@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Logging.Debug;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
@@ -41,9 +43,83 @@ namespace PetStoreNS.Api.Web
             this.Configuration = builder.Build();
         }
 
-        public IContainer ApplicationApiContainer { get; private set; }
+	    public Startup()
+        {
+        }
 
-        public IConfigurationRoot Configuration { get; private set; }
+        public IContainer ApplicationApiContainer { get; protected set; }
+
+        public IConfigurationRoot Configuration { get; protected set; }
+
+		public static readonly LoggerFactory LoggerFactory
+            = new LoggerFactory(new List<ILoggerProvider>()
+            {
+                new ConsoleLoggerProvider((category, level)
+                => 
+                category == DbLoggerCategory.Database.Command.Name
+                   && level == LogLevel.Information, true),
+
+                 new DebugLoggerProvider((category, level)
+                => category == DbLoggerCategory.Database.Command.Name
+                   && level == LogLevel.Information)
+            });
+
+	    public virtual ApplicationDbContext SetupDatabase(IServiceCollection services)
+        {
+            DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+            options.UseLoggerFactory(Startup.LoggerFactory);
+            options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+            ApplicationDbContext context = new ApplicationDbContext(options.Options);
+			return context;
+        }
+
+		public virtual void MigrateDatabase(ApplicationDbContext context)
+        {
+            if (this.Configuration.GetValue<bool>("MigrateDatabase"))
+            {
+                context.Database.Migrate();
+            }
+        }
+
+		public virtual void SetupLogging(IServiceCollection services)
+		{
+			services.AddLogging(logBuilder => logBuilder
+                .AddConfiguration(this.Configuration.GetSection("Logging"))
+                .AddConsole()
+                .AddDebug());
+		}
+
+		public virtual void SetupSecurity(IServiceCollection services)
+		{
+			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+			{
+				var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
+				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(jwtBearerOptions =>
+				{
+					jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+					{
+						ClockSkew = TimeSpan.FromMinutes(5),
+						ValidateAudience = true,
+						ValidateIssuer = true,
+						ValidateLifetime = true,
+						RequireSignedTokens = true,
+						RequireExpirationTime = true,
+						ValidAudience = this.Configuration["JwtAudience"],
+						ValidIssuer = this.Configuration["JwtIssuer"],
+						IssuerSigningKey = new SymmetricSecurityKey(key)
+					};
+				});
+			}
+		}
+
+		public virtual void EnableSecurity(IApplicationBuilder app)
+        {
+            if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+			{
+				 app.UseAuthentication();
+		    }
+        }
 
         // ConfigureServices is where you register dependencies. This gets
         // called by the runtime before the Configure method, below.
@@ -53,7 +129,7 @@ namespace PetStoreNS.Api.Web
 
 			services.AddMvcCore(config =>
             {
-                if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+                if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 				{
 					 var policy = new AuthorizationPolicyBuilder()
 								  .RequireAuthenticatedUser()
@@ -62,7 +138,6 @@ namespace PetStoreNS.Api.Web
 				 }
 				 config.Filters.Add(new BenchmarkAttribute());
 				 config.Filters.Add(new NullModelValidaterAttribute());
-                 
             }).AddVersionedApiExplorer(
             o =>
             {
@@ -95,9 +170,9 @@ namespace PetStoreNS.Api.Web
 
                 // add a swagger document for each discovered API version
                 // note: you might choose to skip or document deprecated API versions differently
-                foreach ( var description in provider.ApiVersionDescriptions )
+                foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    o.SwaggerDoc( description.GroupName, CreateInfoForApiVersion( description ) );
+                    o.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
                 }
 
                 // add a custom operation filter which sets default values
@@ -105,7 +180,7 @@ namespace PetStoreNS.Api.Web
 
                 // integrate xml comments
                 // o.IncludeXmlComments( XmlCommentsFilePath );
-				if(this.Configuration.GetValue<bool>("SecurityEnabled"))
+				if (this.Configuration.GetValue<bool>("SecurityEnabled"))
 				{
 				   var security = new Dictionary<string, IEnumerable<string>>
 			       {
@@ -126,26 +201,9 @@ namespace PetStoreNS.Api.Web
                 config.AddPolicy("policy", policy);
             });
 
-			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-			{
-				var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
-				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddJwtBearer(jwtBearerOptions =>
-				{
-					jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
-					{
-						ClockSkew = TimeSpan.FromMinutes(5),
-						ValidateAudience = true,
-						ValidateIssuer = true,
-						ValidateLifetime = true,
-						RequireSignedTokens = true,
-						RequireExpirationTime = true,
-						ValidAudience = this.Configuration["JwtAudience"],
-						ValidIssuer = this.Configuration["JwtIssuer"],
-						IssuerSigningKey = new SymmetricSecurityKey(key)
-					};
-				});
-			}
+			this.SetupLogging(services);
+
+			this.SetupSecurity(services);
 
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -165,11 +223,10 @@ namespace PetStoreNS.Api.Web
 
             builder.Register(ctx => ctx.Resolve<IOptions<ApiSettings>>().Value);
 
-            // set up entity framework options
-			DbContextOptionsBuilder options = new DbContextOptionsBuilder();
-            options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
-            ApplicationDbContext context = new ApplicationDbContext(options.Options);
-            builder.RegisterInstance(context).As<ApplicationDbContext>();
+            ApplicationDbContext context = this.SetupDatabase(services);
+
+			builder.RegisterInstance(context).As<ApplicationDbContext>();
+
             builder.RegisterInstance(context).As<DbContext>();
 
             // Set up the transaction coordinator for Entity Framework
@@ -211,23 +268,15 @@ namespace PetStoreNS.Api.Web
 		  ApplicationDbContext context)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            
+			loggerFactory.AddDebug();
 
-			// enable this setting in the config to migrate the database on application startup
-		    if (this.Configuration.GetValue<bool>("MigrateDatabase"))
-            {
-                context.Database.Migrate();
-            }
+		    this.MigrateDatabase(context);
 
-			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-			{
-				 app.UseAuthentication();
-		    }
+			this.EnableSecurity(app);
 
-			// Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
 				// remove .. from this line to make the swagger endpoint work from a console app
@@ -247,7 +296,7 @@ namespace PetStoreNS.Api.Web
             appLifetime.ApplicationStopped.Register(() => this.ApplicationApiContainer.Dispose());
         }
 
-		static string XmlCommentsFilePath
+		private static string XmlCommentsFilePath
         {
             get
             {
@@ -257,7 +306,7 @@ namespace PetStoreNS.Api.Web
             }
         }
 
-        static Info CreateInfoForApiVersion(ApiVersionDescription description)
+        private static Info CreateInfoForApiVersion(ApiVersionDescription description)
         {
             var info = new Info()
             {
@@ -265,7 +314,7 @@ namespace PetStoreNS.Api.Web
                 Version = description.ApiVersion.ToString(),
                 Description = "Visit https://generator.swagger.io/ to generate a client for this API",
                 Contact = new Contact() { Name = "test", Email = "test@test.com" },
-                TermsOfService = "",
+                TermsOfService = string.Empty,
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
             };
 

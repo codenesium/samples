@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductInventoryRepository>();
                         var record = new ProductInventory();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ProductInventoryService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
                                                                   mock.DALMapperMockFactory.DALProductInventoryMapperMock);
 
-                        ApiProductInventoryResponseModel response = await service.Get(default (int));
+                        ApiProductInventoryResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
                                                                   mock.DALMapperMockFactory.DALProductInventoryMapperMock);
 
-                        ApiProductInventoryResponseModel response = await service.Get(default (int));
+                        ApiProductInventoryResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductInventoryRepository>();
                         var model = new ApiProductInventoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductInventory>())).Returns(Task.FromResult(new ProductInventory()));
                         var service = new ProductInventoryService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductInventoryRepository>();
                         var model = new ApiProductInventoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductInventory>())).Returns(Task.FromResult(new ProductInventory()));
                         var service = new ProductInventoryService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
                                                                   mock.DALMapperMockFactory.DALProductInventoryMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductInventoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductInventoryRequestModel>()));
@@ -118,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductInventoryRepository>();
                         var model = new ApiProductInventoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ProductInventoryService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLProductInventoryMapperMock,
                                                                   mock.DALMapperMockFactory.DALProductInventoryMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>251833eb5accf7da9b40a91ad2bd098d</Hash>
+    <Hash>e54cb2db363eca6eda1673806b444455</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class AbstractBucketService: AbstractService
+        public abstract class AbstractBucketService : AbstractService
         {
                 private IBucketRepository bucketRepository;
 
@@ -33,15 +33,10 @@ namespace FileServiceNS.Api.Services
                         IBucketRepository bucketRepository,
                         IApiBucketRequestModelValidator bucketModelValidator,
                         IBOLBucketMapper bolBucketMapper,
-                        IDALBucketMapper dalBucketMapper
-
-                        ,
+                        IDALBucketMapper dalBucketMapper,
                         IBOLFileMapper bolFileMapper,
-                        IDALFileMapper dalFileMapper
-
-                        )
+                        IDALFileMapper dalFileMapper)
                         : base()
-
                 {
                         this.bucketRepository = bucketRepository;
                         this.bucketModelValidator = bucketModelValidator;
@@ -79,7 +74,7 @@ namespace FileServiceNS.Api.Services
                         CreateResponse<ApiBucketResponseModel> response = new CreateResponse<ApiBucketResponseModel>(await this.bucketModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolBucketMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolBucketMapper.MapModelToBO(default(int), model);
                                 var record = await this.bucketRepository.Create(this.dalBucketMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace FileServiceNS.Api.Services
                         ApiBucketRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.bucketModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolBucketMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace FileServiceNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.bucketModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.bucketRepository.Delete(id);
@@ -129,6 +122,7 @@ namespace FileServiceNS.Api.Services
                                 return this.bolBucketMapper.MapBOToModel(this.dalBucketMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<ApiBucketResponseModel> GetName(string name)
                 {
                         Bucket record = await this.bucketRepository.GetName(name);
@@ -153,5 +147,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45c06b49da962e9a302287cd0a41730a</Hash>
+    <Hash>0e6d1efe7278958fc2c59a7e5df96e67</Hash>
 </Codenesium>*/

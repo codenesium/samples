@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractDeploymentProcessService: AbstractService
+        public abstract class AbstractDeploymentProcessService : AbstractService
         {
                 private IDeploymentProcessRepository deploymentProcessRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IDeploymentProcessRepository deploymentProcessRepository,
                         IApiDeploymentProcessRequestModelValidator deploymentProcessModelValidator,
                         IBOLDeploymentProcessMapper bolDeploymentProcessMapper,
-                        IDALDeploymentProcessMapper dalDeploymentProcessMapper
-
-                        )
+                        IDALDeploymentProcessMapper dalDeploymentProcessMapper)
                         : base()
-
                 {
                         this.deploymentProcessRepository = deploymentProcessRepository;
                         this.deploymentProcessModelValidator = deploymentProcessModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiDeploymentProcessResponseModel> response = new CreateResponse<ApiDeploymentProcessResponseModel>(await this.deploymentProcessModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDeploymentProcessMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolDeploymentProcessMapper.MapModelToBO(default(string), model);
                                 var record = await this.deploymentProcessRepository.Create(this.dalDeploymentProcessMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDeploymentProcessMapper.MapBOToModel(this.dalDeploymentProcessMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiDeploymentProcessRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentProcessModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDeploymentProcessMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.deploymentProcessModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.deploymentProcessRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>337f0ceca36f011ea7f12664baf851f6</Hash>
+    <Hash>ca25f77984630d6e31813fccc33210b7</Hash>
 </Codenesium>*/

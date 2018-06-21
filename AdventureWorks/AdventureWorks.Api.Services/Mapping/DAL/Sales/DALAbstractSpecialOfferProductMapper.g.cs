@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOSpecialOfferProduct bo)
                 {
                         SpecialOfferProduct efSpecialOfferProduct = new SpecialOfferProduct();
-
                         efSpecialOfferProduct.SetProperties(
                                 bo.ModifiedDate,
                                 bo.ProductID,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>29e1212183c7167f0533506a0280362a</Hash>
+    <Hash>e6c536ac0dff6f561d0a319dd2743440</Hash>
 </Codenesium>*/

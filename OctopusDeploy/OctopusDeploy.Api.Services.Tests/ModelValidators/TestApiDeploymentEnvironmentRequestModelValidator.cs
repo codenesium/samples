@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentEnvironmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentEnvironmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentEnvironmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 201));
                 }
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentEnvironment()));
 
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -146,7 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<DeploymentEnvironment>(new DeploymentEnvironment()));
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentEnvironmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -158,7 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentEnvironmentRepository.Setup(x => x.GetName(It.IsAny<string>())).Returns(Task.FromResult<DeploymentEnvironment>(null));
                         var validator = new ApiDeploymentEnvironmentRequestModelValidator(deploymentEnvironmentRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentEnvironmentRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentEnvironmentRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
                 }
@@ -166,5 +159,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>77bbd66acd010fbccdd66b1165f84b5d</Hash>
+    <Hash>16e4a1080b6a60a5505bec4eaa2493e9</Hash>
 </Codenesium>*/

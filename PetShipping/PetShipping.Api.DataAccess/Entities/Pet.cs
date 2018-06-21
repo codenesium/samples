@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetShippingNS.Api.DataAccess
 {
         [Table("Pet", Schema="dbo")]
-        public partial class Pet:AbstractEntity
+        public partial class Pet : AbstractEntity
         {
                 public Pet()
                 {
@@ -26,20 +26,20 @@ namespace PetShippingNS.Api.DataAccess
                         this.Weight = weight;
                 }
 
-                [Column("breedId", TypeName="int")]
+                [Column("breedId")]
                 public int BreedId { get; private set; }
 
-                [Column("clientId", TypeName="int")]
+                [Column("clientId")]
                 public int ClientId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("weight", TypeName="int")]
+                [Column("weight")]
                 public int Weight { get; private set; }
 
                 [ForeignKey("BreedId")]
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a795a1b2790c716a4e2301953ec59dcf</Hash>
+    <Hash>175dd2e89da8fce3d4557ff66644b7f6</Hash>
 </Codenesium>*/

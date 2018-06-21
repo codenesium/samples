@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "CountryRegionCurrency")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLCountryRegionCurrencyActionMapper
+        public class TestBOLCountryRegionCurrencyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLCountryRegionCurrencyMapper();
-
                         ApiCountryRegionCurrencyRequestModel model = new ApiCountryRegionCurrencyRequestModel();
-
                         model.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOCountryRegionCurrency response = mapper.MapModelToBO("A", model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLCountryRegionCurrencyMapper();
-
                         BOCountryRegionCurrency bo = new BOCountryRegionCurrency();
-
                         bo.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiCountryRegionCurrencyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLCountryRegionCurrencyMapper();
-
                         BOCountryRegionCurrency bo = new BOCountryRegionCurrency();
-
                         bo.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiCountryRegionCurrencyResponseModel> response = mapper.MapBOToModel(new List<BOCountryRegionCurrency>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bed4086193a32216e8398143e7cd3c4b</Hash>
+    <Hash>9f7fbfe928b8c5a51ecfa99af4932d8c</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PipelineStepNote")]
         [Trait("Area", "DALMapper")]
-        public class TestDALPipelineStepNoteActionMapper
+        public class TestDALPipelineStepNoteMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALPipelineStepNoteMapper();
-
                         var bo = new BOPipelineStepNote();
-
                         bo.SetProperties(1, 1, "A", 1);
 
                         PipelineStepNote response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALPipelineStepNoteMapper();
-
                         PipelineStepNote entity = new PipelineStepNote();
-
                         entity.SetProperties(1, 1, "A", 1);
 
-                        BOPipelineStepNote  response = mapper.MapEFToBO(entity);
+                        BOPipelineStepNote response = mapper.MapEFToBO(entity);
 
                         response.EmployeeId.Should().Be(1);
                         response.Id.Should().Be(1);
@@ -50,9 +46,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALPipelineStepNoteMapper();
-
                         PipelineStepNote entity = new PipelineStepNote();
-
                         entity.SetProperties(1, 1, "A", 1);
 
                         List<BOPipelineStepNote> response = mapper.MapEFToBO(new List<PipelineStepNote>() { entity });
@@ -63,5 +57,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c3dfe0986132adebeae44a5a9c465831</Hash>
+    <Hash>cf56053fdd73acc68cd02f4e39456af2</Hash>
 </Codenesium>*/

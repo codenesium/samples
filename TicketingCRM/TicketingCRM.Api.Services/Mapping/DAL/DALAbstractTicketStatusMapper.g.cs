@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOTicketStatus bo)
                 {
                         TicketStatus efTicketStatus = new TicketStatus();
-
                         efTicketStatus.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d5a2c63224a142dc45a0f80892acffd3</Hash>
+    <Hash>c3705c01a4b84ca185452c33ff77ae6e</Hash>
 </Codenesium>*/

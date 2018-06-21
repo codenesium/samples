@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetStoreNS.Api.DataAccess
 {
         [Table("Sale", Schema="dbo")]
-        public partial class Sale:AbstractEntity
+        public partial class Sale : AbstractEntity
         {
                 public Sale()
                 {
@@ -30,26 +30,26 @@ namespace PetStoreNS.Api.DataAccess
                         this.Phone = phone;
                 }
 
-                [Column("amount", TypeName="money")]
+                [Column("amount")]
                 public decimal Amount { get; private set; }
 
-                [Column("firstName", TypeName="varchar(90)")]
+                [Column("firstName")]
                 public string FirstName { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("lastName", TypeName="varchar(90)")]
+                [Column("lastName")]
                 public string LastName { get; private set; }
 
-                [Column("paymentTypeId", TypeName="int")]
+                [Column("paymentTypeId")]
                 public int PaymentTypeId { get; private set; }
 
-                [Column("petId", TypeName="int")]
+                [Column("petId")]
                 public int PetId { get; private set; }
 
-                [Column("phone", TypeName="varchar(10)")]
+                [Column("phone")]
                 public string Phone { get; private set; }
 
                 [ForeignKey("PaymentTypeId")]
@@ -61,5 +61,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da02ff2cb57350ea02e938a73fb10beb</Hash>
+    <Hash>97ef5804683a3e63f182923c475616e4</Hash>
 </Codenesium>*/

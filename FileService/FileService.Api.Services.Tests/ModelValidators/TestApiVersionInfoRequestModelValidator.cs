@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FileServiceNS.Api.Services.Tests
                         versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
 
                         var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiVersionInfoRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
@@ -44,8 +43,7 @@ namespace FileServiceNS.Api.Services.Tests
                         versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
 
                         var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (long), new ApiVersionInfoRequestModel());
+                        await validator.ValidateUpdateAsync(default(long), new ApiVersionInfoRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 1025));
                 }
@@ -57,8 +55,7 @@ namespace FileServiceNS.Api.Services.Tests
                         versionInfoRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(Task.FromResult(new VersionInfo()));
 
                         var validator = new ApiVersionInfoRequestModelValidator(versionInfoRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (long));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(long));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -66,5 +63,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>408638ede114d55543d1aeda740207d0</Hash>
+    <Hash>9f34348981bc6925e365f0c15e9197f6</Hash>
 </Codenesium>*/

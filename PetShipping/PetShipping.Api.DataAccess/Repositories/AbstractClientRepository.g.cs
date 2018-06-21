@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractClientRepository: AbstractRepository
+        public abstract class AbstractClientRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,21 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<ClientCommunication>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ClientCommunication>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
+                }
+
+                public async virtual Task<List<Pet>> Pets(int clientId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Pet>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
+                }
+
+                public async virtual Task<List<Sale>> Sales(int clientId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Sale>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
+                }
+
                 protected async Task<List<Client>> Where(
                         Expression<Func<Client, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,22 +119,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<ClientCommunication>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ClientCommunication>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
-                }
-                public async virtual Task<List<Pet>> Pets(int clientId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Pet>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
-                }
-                public async virtual Task<List<Sale>> Sales(int clientId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Sale>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>ba9d1fcf9101d8fb406bb8d71b60b497</Hash>
+    <Hash>5be043e4afdad49627fd02cd91faf0fd</Hash>
 </Codenesium>*/

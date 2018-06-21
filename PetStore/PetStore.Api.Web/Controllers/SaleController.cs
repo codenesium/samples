@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PetStoreNS.Api.Web
 {
         [Route("api/sales")]
         [ApiVersion("1.0")]
-        public class SaleController: AbstractSaleController
+        public class SaleController : AbstractSaleController
         {
                 public SaleController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f4cdabc8d6ffa3bc8f3d3440e78d1538</Hash>
+    <Hash>28e19f028beb353e8f197eebf1e2a14c</Hash>
 </Codenesium>*/

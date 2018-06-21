@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace ESPIOTNS.Api.DataAccess
 {
         [Table("DeviceAction", Schema="dbo")]
-        public partial class DeviceAction: AbstractEntity
+        public partial class DeviceAction : AbstractEntity
         {
                 public DeviceAction()
                 {
@@ -24,17 +24,17 @@ namespace ESPIOTNS.Api.DataAccess
                         this.@Value = @value;
                 }
 
-                [Column("deviceId", TypeName="int")]
+                [Column("deviceId")]
                 public int DeviceId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(90)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("value", TypeName="varchar(4000)")]
+                [Column("value")]
                 public string @Value { get; private set; }
 
                 [ForeignKey("DeviceId")]
@@ -43,5 +43,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>736bfd7622673d31cac270f5a41e33dc</Hash>
+    <Hash>1e8e7ff3c25c6835ef65e6aec6aa7975</Hash>
 </Codenesium>*/

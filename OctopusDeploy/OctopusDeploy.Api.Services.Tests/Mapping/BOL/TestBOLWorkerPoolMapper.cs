@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkerPool")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLWorkerPoolActionMapper
+        public class TestBOLWorkerPoolMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLWorkerPoolMapper();
-
                         ApiWorkerPoolRequestModel model = new ApiWorkerPoolRequestModel();
-
                         model.SetProperties(true, "A", "A", 1);
                         BOWorkerPool response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLWorkerPoolMapper();
-
                         BOWorkerPool bo = new BOWorkerPool();
-
                         bo.SetProperties("A", true, "A", "A", 1);
                         ApiWorkerPoolResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLWorkerPoolMapper();
-
                         BOWorkerPool bo = new BOWorkerPool();
-
                         bo.SetProperties("A", true, "A", "A", 1);
                         List<ApiWorkerPoolResponseModel> response = mapper.MapBOToModel(new List<BOWorkerPool>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dcf1a48d8b5224b2a7ee2db5ac3faae7</Hash>
+    <Hash>760677ba2227c8b02066e2f6a3f6380e</Hash>
 </Codenesium>*/

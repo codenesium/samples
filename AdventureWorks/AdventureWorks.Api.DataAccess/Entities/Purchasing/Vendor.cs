@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("Vendor", Schema="Purchasing")]
-        public partial class Vendor:AbstractEntity
+        public partial class Vendor : AbstractEntity
         {
                 public Vendor()
                 {
@@ -32,33 +32,33 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.PurchasingWebServiceURL = purchasingWebServiceURL;
                 }
 
-                [Column("AccountNumber", TypeName="nvarchar(15)")]
+                [Column("AccountNumber")]
                 public string AccountNumber { get; private set; }
 
-                [Column("ActiveFlag", TypeName="bit")]
+                [Column("ActiveFlag")]
                 public bool ActiveFlag { get; private set; }
 
                 [Key]
-                [Column("BusinessEntityID", TypeName="int")]
+                [Column("BusinessEntityID")]
                 public int BusinessEntityID { get; private set; }
 
-                [Column("CreditRating", TypeName="tinyint")]
+                [Column("CreditRating")]
                 public int CreditRating { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("PreferredVendorStatus", TypeName="bit")]
+                [Column("PreferredVendorStatus")]
                 public bool PreferredVendorStatus { get; private set; }
 
-                [Column("PurchasingWebServiceURL", TypeName="nvarchar(1024)")]
+                [Column("PurchasingWebServiceURL")]
                 public string PurchasingWebServiceURL { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>a6cc9f6f7f801c8d8f94f0d7c9d7121e</Hash>
+    <Hash>1bb6d0f6b6b650551e0a7537ba1158ad</Hash>
 </Codenesium>*/

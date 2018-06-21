@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractProvinceRepository: AbstractRepository
+        public abstract class AbstractProvinceRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,21 @@ namespace TicketingCRMNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<List<City>> Cities(int provinceId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<City>().Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<City>();
+                }
+
+                public async virtual Task<List<Venue>> Venues(int provinceId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Venue>().Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
+                }
+
+                public async virtual Task<Country> GetCountry(int countryId)
+                {
+                        return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
+                }
+
                 protected async Task<List<Province>> Where(
                         Expression<Func<Province, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,23 +126,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<City>> Cities(int provinceId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<City>().Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<City>();
-                }
-                public async virtual Task<List<Venue>> Venues(int provinceId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Venue>().Where(x => x.ProvinceId == provinceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
-                }
-
-                public async virtual Task<Country> GetCountry(int countryId)
-                {
-                        return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7d23760bbd82e623ad359984ffd91c13</Hash>
+    <Hash>78e30b88338baf95aa2e53a45ee11f93</Hash>
 </Codenesium>*/

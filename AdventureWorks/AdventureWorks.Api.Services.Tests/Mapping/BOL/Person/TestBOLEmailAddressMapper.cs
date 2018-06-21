@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "EmailAddress")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLEmailAddressActionMapper
+        public class TestBOLEmailAddressMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLEmailAddressMapper();
-
                         ApiEmailAddressRequestModel model = new ApiEmailAddressRequestModel();
-
                         model.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         BOEmailAddress response = mapper.MapModelToBO(1, model);
 
@@ -33,9 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLEmailAddressMapper();
-
                         BOEmailAddress bo = new BOEmailAddress();
-
                         bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         ApiEmailAddressResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLEmailAddressMapper();
-
                         BOEmailAddress bo = new BOEmailAddress();
-
                         bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                         List<ApiEmailAddressResponseModel> response = mapper.MapBOToModel(new List<BOEmailAddress>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d6d3433d69e5cff15a06e59c78366ce6</Hash>
+    <Hash>9d6e0c5375067b4b9033ced1d760f4a8</Hash>
 </Codenesium>*/

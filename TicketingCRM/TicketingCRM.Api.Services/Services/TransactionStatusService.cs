@@ -10,33 +10,29 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class TransactionStatusService: AbstractTransactionStatusService, ITransactionStatusService
+        public class TransactionStatusService : AbstractTransactionStatusService, ITransactionStatusService
         {
                 public TransactionStatusService(
                         ILogger<ITransactionStatusRepository> logger,
                         ITransactionStatusRepository transactionStatusRepository,
                         IApiTransactionStatusRequestModelValidator transactionStatusModelValidator,
                         IBOLTransactionStatusMapper boltransactionStatusMapper,
-                        IDALTransactionStatusMapper daltransactionStatusMapper
-                        ,
+                        IDALTransactionStatusMapper daltransactionStatusMapper,
                         IBOLTransactionMapper bolTransactionMapper,
                         IDALTransactionMapper dalTransactionMapper
-
                         )
                         : base(logger,
                                transactionStatusRepository,
                                transactionStatusModelValidator,
                                boltransactionStatusMapper,
-                               daltransactionStatusMapper
-                               ,
+                               daltransactionStatusMapper,
                                bolTransactionMapper,
-                               dalTransactionMapper
-                               )
+                               dalTransactionMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3456fa280f70d3a637c08f68be082ae2</Hash>
+    <Hash>1202878e21d8dec90d9c0e8aacc77a42</Hash>
 </Codenesium>*/

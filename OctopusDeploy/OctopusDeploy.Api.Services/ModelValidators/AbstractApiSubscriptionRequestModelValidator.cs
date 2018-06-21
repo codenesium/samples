@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiSubscriptionRequestModelValidator: AbstractValidator<ApiSubscriptionRequestModel>
+        public abstract class AbstractApiSubscriptionRequestModelValidator : AbstractValidator<ApiSubscriptionRequestModel>
         {
                 private string existingRecordId;
 
-                ISubscriptionRepository subscriptionRepository;
+                private ISubscriptionRepository subscriptionRepository;
 
                 public AbstractApiSubscriptionRequestModelValidator(ISubscriptionRepository subscriptionRepository)
                 {
@@ -38,7 +38,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSubscriptionRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueGetName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiSubscriptionRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 200);
                 }
 
@@ -51,7 +51,7 @@ namespace OctopusDeployNS.Api.Services
                 {
                         Subscription record = await this.subscriptionRepository.GetName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (string) && record.Id == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(string) && record.Id == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -64,5 +64,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b49d2bfbdc24622906260d2e245f6a4c</Hash>
+    <Hash>f3b137c66852391b159bd35cf0a31a20</Hash>
 </Codenesium>*/

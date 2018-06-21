@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiStudentRequestModelValidator: AbstractValidator<ApiStudentRequestModel>
+        public abstract class AbstractApiStudentRequestModelValidator : AbstractValidator<ApiStudentRequestModel>
         {
                 private int existingRecordId;
 
-                IStudentRepository studentRepository;
+                private IStudentRepository studentRepository;
 
                 public AbstractApiStudentRequestModelValidator(IStudentRepository studentRepository)
                 {
@@ -42,7 +42,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void FamilyIdRules()
                 {
-                        this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x ?.FamilyId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x?.FamilyId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void FirstNameRules()
@@ -73,7 +73,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
@@ -93,5 +93,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9cc0d7c0e903a4da8bfbe107ee17028f</Hash>
+    <Hash>964645b34e538e871e30be8a074a26ec</Hash>
 </Codenesium>*/

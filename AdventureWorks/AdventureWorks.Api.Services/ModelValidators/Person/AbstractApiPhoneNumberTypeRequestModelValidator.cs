@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiPhoneNumberTypeRequestModelValidator: AbstractValidator<ApiPhoneNumberTypeRequestModel>
+        public abstract class AbstractApiPhoneNumberTypeRequestModelValidator : AbstractValidator<ApiPhoneNumberTypeRequestModel>
         {
                 private int existingRecordId;
 
-                IPhoneNumberTypeRepository phoneNumberTypeRepository;
+                private IPhoneNumberTypeRepository phoneNumberTypeRepository;
 
                 public AbstractApiPhoneNumberTypeRequestModelValidator(IPhoneNumberTypeRepository phoneNumberTypeRepository)
                 {
@@ -39,5 +39,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01d7cbc7823303cc01300f555bb7487a</Hash>
+    <Hash>6b67648b8694afa5fd58d454e5832447</Hash>
 </Codenesium>*/

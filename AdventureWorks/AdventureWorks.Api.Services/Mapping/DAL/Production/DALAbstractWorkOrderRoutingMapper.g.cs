@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOWorkOrderRouting bo)
                 {
                         WorkOrderRouting efWorkOrderRouting = new WorkOrderRouting();
-
                         efWorkOrderRouting.SetProperties(
                                 bo.ActualCost,
                                 bo.ActualEndDate,
@@ -66,5 +65,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2228a30f2fd650e1b61f780860b65074</Hash>
+    <Hash>12d7be9b6fbcfd7fbeae39c8fa366664</Hash>
 </Codenesium>*/

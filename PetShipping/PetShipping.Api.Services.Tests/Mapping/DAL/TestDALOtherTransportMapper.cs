@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "OtherTransport")]
         [Trait("Area", "DALMapper")]
-        public class TestDALOtherTransportActionMapper
+        public class TestDALOtherTransportMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALOtherTransportMapper();
-
                         var bo = new BOOtherTransport();
-
                         bo.SetProperties(1, 1, 1);
 
                         OtherTransport response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALOtherTransportMapper();
-
                         OtherTransport entity = new OtherTransport();
-
                         entity.SetProperties(1, 1, 1);
 
-                        BOOtherTransport  response = mapper.MapEFToBO(entity);
+                        BOOtherTransport response = mapper.MapEFToBO(entity);
 
                         response.HandlerId.Should().Be(1);
                         response.Id.Should().Be(1);
@@ -48,9 +44,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALOtherTransportMapper();
-
                         OtherTransport entity = new OtherTransport();
-
                         entity.SetProperties(1, 1, 1);
 
                         List<BOOtherTransport> response = mapper.MapEFToBO(new List<OtherTransport>() { entity });
@@ -61,5 +55,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>54f06c66507a59d2e4fdbe97914564cd</Hash>
+    <Hash>3f3ffd2e964c64a6e1a5891b6491b83c</Hash>
 </Codenesium>*/

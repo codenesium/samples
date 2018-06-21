@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("SalesTaxRate", Schema="Sales")]
-        public partial class SalesTaxRate: AbstractEntity
+        public partial class SalesTaxRate : AbstractEntity
         {
                 public SalesTaxRate()
                 {
@@ -30,30 +30,30 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.TaxType = taxType;
                 }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
                 [Key]
-                [Column("SalesTaxRateID", TypeName="int")]
+                [Column("SalesTaxRateID")]
                 public int SalesTaxRateID { get; private set; }
 
-                [Column("StateProvinceID", TypeName="int")]
+                [Column("StateProvinceID")]
                 public int StateProvinceID { get; private set; }
 
-                [Column("TaxRate", TypeName="smallmoney")]
+                [Column("TaxRate")]
                 public decimal TaxRate { get; private set; }
 
-                [Column("TaxType", TypeName="tinyint")]
+                [Column("TaxType")]
                 public int TaxType { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>824c8b6a2386f3c4332c5c2f893506ad</Hash>
+    <Hash>8b9b5efb8c56c48b47eb4a6d46502100</Hash>
 </Codenesium>*/

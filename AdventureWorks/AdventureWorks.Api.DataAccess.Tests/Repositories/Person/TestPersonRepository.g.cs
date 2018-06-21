@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PersonRepository(loggerMoc.Object, context);
 
                         Person entity = new Person();
-
                         context.Set<Person>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PersonRepository(loggerMoc.Object, context);
 
                         Person entity = new Person();
-
                         context.Set<Person>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new PersonRepository(loggerMoc.Object, context);
 
                         var entity = new Person();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Person>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PersonRepositoryMoc.GetContext();
                         var repository = new PersonRepository(loggerMoc.Object, context);
-
                         Person entity = new Person();
-
                         context.Set<Person>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PersonRepositoryMoc.GetContext();
                         var repository = new PersonRepository(loggerMoc.Object, context);
-
                         Person entity = new Person();
-
                         context.Set<Person>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<PersonRepository>> loggerMoc = PersonRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = PersonRepositoryMoc.GetContext();
                         var repository = new PersonRepository(loggerMoc.Object, context);
-
                         Person entity = new Person();
-
                         context.Set<Person>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         Person modifiedRecord = await context.Set<Person>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f8d7cf35e051ae505ee759722c600a2a</Hash>
+    <Hash>5b4f42dc0d7c2b551e7f4df94a72913c</Hash>
 </Codenesium>*/

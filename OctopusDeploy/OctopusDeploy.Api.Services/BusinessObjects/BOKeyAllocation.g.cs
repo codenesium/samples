@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOKeyAllocation: AbstractBOKeyAllocation
+        public partial class BOKeyAllocation : AbstractBOKeyAllocation
         {
-                public BOKeyAllocation() : base()
+                public BOKeyAllocation()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>cf6b8c79e03af65639433f8becec42e6</Hash>
+    <Hash>7257f8cdb4a8d6e52d56e2ad8267d3b4</Hash>
 </Codenesium>*/

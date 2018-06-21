@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -50,7 +50,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var record = new SalesTerritory();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -66,7 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        ApiSalesTerritoryResponseModel response = await service.Get(default (int));
+                        ApiSalesTerritoryResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -91,7 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        ApiSalesTerritoryResponseModel response = await service.Get(default (int));
+                        ApiSalesTerritoryResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -102,7 +101,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var model = new ApiSalesTerritoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTerritory>())).Returns(Task.FromResult(new SalesTerritory()));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -130,7 +128,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var model = new ApiSalesTerritoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesTerritory>())).Returns(Task.FromResult(new SalesTerritory()));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -146,7 +143,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesTerritoryRequestModel>()));
@@ -158,7 +155,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var model = new ApiSalesTerritoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -174,7 +170,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -186,7 +182,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var record = new SalesTerritory();
-
                         mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
@@ -202,7 +197,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        ApiSalesTerritoryResponseModel response = await service.ByName(default (string));
+                        ApiSalesTerritoryResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -227,7 +222,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        ApiSalesTerritoryResponseModel response = await service.ByName(default (string));
+                        ApiSalesTerritoryResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -239,7 +234,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var records = new List<Customer>();
                         records.Add(new Customer());
-                        mock.RepositoryMock.Setup(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -254,17 +249,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiCustomerResponseModel> response = await service.Customers(default (int));
+                        List<ApiCustomerResponseModel> response = await service.Customers(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Customers_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
-                        mock.RepositoryMock.Setup(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
+                        mock.RepositoryMock.Setup(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -279,10 +274,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiCustomerResponseModel> response = await service.Customers(default (int));
+                        List<ApiCustomerResponseModel> response = await service.Customers(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Customers(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -291,7 +286,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var records = new List<SalesOrderHeader>();
                         records.Add(new SalesOrderHeader());
-                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -306,17 +301,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default (int));
+                        List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void SalesOrderHeaders_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
-                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
+                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -331,10 +326,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default (int));
+                        List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -343,7 +338,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var records = new List<SalesPerson>();
                         records.Add(new SalesPerson());
-                        mock.RepositoryMock.Setup(x => x.SalesPersons(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.SalesPersons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -358,17 +353,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiSalesPersonResponseModel> response = await service.SalesPersons(default (int));
+                        List<ApiSalesPersonResponseModel> response = await service.SalesPersons(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesPersons(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesPersons(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void SalesPersons_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
-                        mock.RepositoryMock.Setup(x => x.SalesPersons(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesPerson>>(new List<SalesPerson>()));
+                        mock.RepositoryMock.Setup(x => x.SalesPersons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesPerson>>(new List<SalesPerson>()));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -383,10 +378,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiSalesPersonResponseModel> response = await service.SalesPersons(default (int));
+                        List<ApiSalesPersonResponseModel> response = await service.SalesPersons(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesPersons(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesPersons(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -395,7 +390,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
                         var records = new List<SalesTerritoryHistory>();
                         records.Add(new SalesTerritoryHistory());
-                        mock.RepositoryMock.Setup(x => x.SalesTerritoryHistories(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -410,17 +405,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistories(default (int));
+                        List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistories(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesTerritoryHistories(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void SalesTerritoryHistories_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISalesTerritoryRepository>();
-                        mock.RepositoryMock.Setup(x => x.SalesTerritoryHistories(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesTerritoryHistory>>(new List<SalesTerritoryHistory>()));
+                        mock.RepositoryMock.Setup(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesTerritoryHistory>>(new List<SalesTerritoryHistory>()));
                         var service = new SalesTerritoryService(mock.LoggerMock.Object,
                                                                 mock.RepositoryMock.Object,
                                                                 mock.ModelValidatorMockFactory.SalesTerritoryModelValidatorMock.Object,
@@ -435,14 +430,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                 mock.BOLMapperMockFactory.BOLSalesTerritoryHistoryMapperMock,
                                                                 mock.DALMapperMockFactory.DALSalesTerritoryHistoryMapperMock);
 
-                        List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistories(default (int));
+                        List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistories(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesTerritoryHistories(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>024dee77e5831e7c2ad34bb1e5edf7bb</Hash>
+    <Hash>df089d16903b530fe525c97ef773c3df</Hash>
 </Codenesium>*/

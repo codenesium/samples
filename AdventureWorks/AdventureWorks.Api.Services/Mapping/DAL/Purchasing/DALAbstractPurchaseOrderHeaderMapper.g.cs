@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOPurchaseOrderHeader bo)
                 {
                         PurchaseOrderHeader efPurchaseOrderHeader = new PurchaseOrderHeader();
-
                         efPurchaseOrderHeader.SetProperties(
                                 bo.EmployeeID,
                                 bo.Freight,
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>99e215f7354bd42003a6ec275f88046b</Hash>
+    <Hash>5e173fd158ff16287b4c75c0476224c2</Hash>
 </Codenesium>*/

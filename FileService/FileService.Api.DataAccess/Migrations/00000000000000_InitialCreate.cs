@@ -108,7 +108,6 @@ GO
 
 		protected override void Down(MigrationBuilder migrationBuilder)
 		{
-          
 		}
 	}
-};
+}

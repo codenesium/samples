@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-        public abstract class AbstractPipelineStepDestinationRepository: AbstractRepository
+        public abstract class AbstractPipelineStepDestinationRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace PetShippingNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<Destination> GetDestination(int destinationId)
+                {
+                        return await this.Context.Set<Destination>().SingleOrDefaultAsync(x => x.Id == destinationId);
+                }
+
+                public async virtual Task<PipelineStep> GetPipelineStep(int pipelineStepId)
+                {
+                        return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
+                }
+
                 protected async Task<List<PipelineStepDestination>> Where(
                         Expression<Func<PipelineStepDestination, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace PetShippingNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Destination> GetDestination(int destinationId)
-                {
-                        return await this.Context.Set<Destination>().SingleOrDefaultAsync(x => x.Id == destinationId);
-                }
-                public async virtual Task<PipelineStep> GetPipelineStep(int pipelineStepId)
-                {
-                        return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>739deed6c2ed1e0f9b6d51d765bd77ed</Hash>
+    <Hash>026d6dc4d18832a1f606ee5fa9f9b547</Hash>
 </Codenesium>*/

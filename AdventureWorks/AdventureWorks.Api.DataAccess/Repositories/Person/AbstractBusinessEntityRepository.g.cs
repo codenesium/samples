@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractBusinessEntityRepository: AbstractRepository
+        public abstract class AbstractBusinessEntityRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,21 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
+                }
+
+                public async virtual Task<List<BusinessEntityContact>> BusinessEntityContacts(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<BusinessEntityContact>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
+                }
+
+                public async virtual Task<List<Person>> People(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Person>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Person>();
+                }
+
                 protected async Task<List<BusinessEntity>> Where(
                         Expression<Func<BusinessEntity, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,22 +119,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<BusinessEntityAddress>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
-                }
-                public async virtual Task<List<BusinessEntityContact>> BusinessEntityContacts(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<BusinessEntityContact>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
-                }
-                public async virtual Task<List<Person>> People(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Person>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Person>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>c2f4ede61c5bb1eef088b2b767a57cc0</Hash>
+    <Hash>ea39ed7a0603398d00b167032b0fe0d3</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FermataFishNS.Api.DataAccess
 {
         [Table("Family", Schema="dbo")]
-        public partial class Family:AbstractEntity
+        public partial class Family : AbstractEntity
         {
                 public Family()
                 {
@@ -31,25 +31,25 @@ namespace FermataFishNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("notes", TypeName="text(2147483647)")]
+                [Column("notes")]
                 public string Notes { get; private set; }
 
-                [Column("pcEmail", TypeName="varchar(128)")]
+                [Column("pcEmail")]
                 public string PcEmail { get; private set; }
 
-                [Column("pcFirstName", TypeName="varchar(128)")]
+                [Column("pcFirstName")]
                 public string PcFirstName { get; private set; }
 
-                [Column("pcLastName", TypeName="varchar(128)")]
+                [Column("pcLastName")]
                 public string PcLastName { get; private set; }
 
-                [Column("pcPhone", TypeName="varchar(128)")]
+                [Column("pcPhone")]
                 public string PcPhone { get; private set; }
 
-                [Column("studioId", TypeName="int")]
+                [Column("studioId")]
                 public int StudioId { get; private set; }
 
                 [ForeignKey("Id")]
@@ -61,5 +61,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>10c752d59f50d80dd90fe4b5cc6aa612</Hash>
+    <Hash>09e041b96f31a8cc434f4eb2a1a3bd16</Hash>
 </Codenesium>*/

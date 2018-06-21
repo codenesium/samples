@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace PetShippingNS.Api.DataAccess
 {
         [Table("ClientCommunication", Schema="dbo")]
-        public partial class ClientCommunication: AbstractEntity
+        public partial class ClientCommunication : AbstractEntity
         {
                 public ClientCommunication()
                 {
@@ -26,20 +26,20 @@ namespace PetShippingNS.Api.DataAccess
                         this.Notes = notes;
                 }
 
-                [Column("clientId", TypeName="int")]
+                [Column("clientId")]
                 public int ClientId { get; private set; }
 
-                [Column("dateCreated", TypeName="datetime")]
+                [Column("dateCreated")]
                 public DateTime DateCreated { get; private set; }
 
-                [Column("employeeId", TypeName="int")]
+                [Column("employeeId")]
                 public int EmployeeId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("notes", TypeName="text(2147483647)")]
+                [Column("notes")]
                 public string Notes { get; private set; }
 
                 [ForeignKey("ClientId")]
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23baa2b45e99f02c81ce3f4bea178f40</Hash>
+    <Hash>746972a93fbfde6dac6ce0ecaee3ee12</Hash>
 </Codenesium>*/

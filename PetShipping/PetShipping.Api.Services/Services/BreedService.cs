@@ -1,42 +1,38 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public class BreedService: AbstractBreedService, IBreedService
+        public class BreedService : AbstractBreedService, IBreedService
         {
                 public BreedService(
                         ILogger<IBreedRepository> logger,
                         IBreedRepository breedRepository,
                         IApiBreedRequestModelValidator breedModelValidator,
                         IBOLBreedMapper bolbreedMapper,
-                        IDALBreedMapper dalbreedMapper
-                        ,
+                        IDALBreedMapper dalbreedMapper,
                         IBOLPetMapper bolPetMapper,
                         IDALPetMapper dalPetMapper
-
                         )
                         : base(logger,
                                breedRepository,
                                breedModelValidator,
                                bolbreedMapper,
-                               dalbreedMapper
-                               ,
+                               dalbreedMapper,
                                bolPetMapper,
-                               dalPetMapper
-                               )
+                               dalPetMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>da9a2f673a52548ffbf80ae606140429</Hash>
+    <Hash>50cbc9d1da4963f1f8f9dbfab8fd9dc4</Hash>
 </Codenesium>*/

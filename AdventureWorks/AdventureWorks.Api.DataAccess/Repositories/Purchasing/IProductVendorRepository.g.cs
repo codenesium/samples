@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace AdventureWorksNS.Api.DataAccess
                 Task<List<ProductVendor>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ProductVendor>> ByBusinessEntityID(int businessEntityID);
+
                 Task<List<ProductVendor>> ByUnitMeasureCode(string unitMeasureCode);
         }
 }
 
 /*<Codenesium>
-    <Hash>86218f0b3cd0a0b63838e7bf8705aad7</Hash>
+    <Hash>64728c986d0c989b6f0ff72af0cb0246</Hash>
 </Codenesium>*/

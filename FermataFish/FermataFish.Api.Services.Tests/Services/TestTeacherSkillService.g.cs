@@ -1,15 +1,15 @@
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
@@ -46,7 +46,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
                         var record = new TeacherSkill();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -58,7 +57,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        ApiTeacherSkillResponseModel response = await service.Get(default (int));
+                        ApiTeacherSkillResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -79,7 +78,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        ApiTeacherSkillResponseModel response = await service.Get(default (int));
+                        ApiTeacherSkillResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -90,7 +89,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
                         var model = new ApiTeacherSkillRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TeacherSkill>())).Returns(Task.FromResult(new TeacherSkill()));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -114,7 +112,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
                         var model = new ApiTeacherSkillRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<TeacherSkill>())).Returns(Task.FromResult(new TeacherSkill()));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -126,7 +123,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherSkillRequestModel>()));
@@ -138,7 +135,6 @@ namespace FermataFishNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
                         var model = new ApiTeacherSkillRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -150,7 +146,7 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -163,7 +159,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
                         var records = new List<Rate>();
                         records.Add(new Rate());
-                        mock.RepositoryMock.Setup(x => x.Rates(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
@@ -174,17 +170,17 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        List<ApiRateResponseModel> response = await service.Rates(default (int));
+                        List<ApiRateResponseModel> response = await service.Rates(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Rates(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Rates_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
-                        mock.RepositoryMock.Setup(x => x.Rates(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
+                        mock.RepositoryMock.Setup(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
@@ -195,10 +191,10 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        List<ApiRateResponseModel> response = await service.Rates(default (int));
+                        List<ApiRateResponseModel> response = await service.Rates(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Rates(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
@@ -207,7 +203,7 @@ namespace FermataFishNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
                         var records = new List<TeacherXTeacherSkill>();
                         records.Add(new TeacherXTeacherSkill());
-                        mock.RepositoryMock.Setup(x => x.TeacherXTeacherSkills(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
@@ -218,17 +214,17 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        List<ApiTeacherXTeacherSkillResponseModel> response = await service.TeacherXTeacherSkills(default (int));
+                        List<ApiTeacherXTeacherSkillResponseModel> response = await service.TeacherXTeacherSkills(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.TeacherXTeacherSkills(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void TeacherXTeacherSkills_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ITeacherSkillRepository>();
-                        mock.RepositoryMock.Setup(x => x.TeacherXTeacherSkills(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherXTeacherSkill>>(new List<TeacherXTeacherSkill>()));
+                        mock.RepositoryMock.Setup(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherXTeacherSkill>>(new List<TeacherXTeacherSkill>()));
                         var service = new TeacherSkillService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
                                                               mock.ModelValidatorMockFactory.TeacherSkillModelValidatorMock.Object,
@@ -239,14 +235,14 @@ namespace FermataFishNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
                                                               mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-                        List<ApiTeacherXTeacherSkillResponseModel> response = await service.TeacherXTeacherSkills(default (int));
+                        List<ApiTeacherXTeacherSkillResponseModel> response = await service.TeacherXTeacherSkills(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.TeacherXTeacherSkills(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>74966f5e57701c0d51c3a29ce6d085ab</Hash>
+    <Hash>742995c55f22c4e060065a38fec89584</Hash>
 </Codenesium>*/

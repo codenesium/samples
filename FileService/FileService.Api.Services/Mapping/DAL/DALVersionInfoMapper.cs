@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace FileServiceNS.Api.Services
 {
-        public class DALVersionInfoMapper: DALAbstractVersionInfoMapper, IDALVersionInfoMapper
+        public class DALVersionInfoMapper : DALAbstractVersionInfoMapper, IDALVersionInfoMapper
         {
                 public DALVersionInfoMapper()
                 {
@@ -13,5 +13,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b45097319e1d5f4e543d7a4f007de77</Hash>
+    <Hash>c5732e33442312a7e9b21c22974de63b</Hash>
 </Codenesium>*/

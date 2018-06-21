@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOUnitMeasure bo)
                 {
                         UnitMeasure efUnitMeasure = new UnitMeasure();
-
                         efUnitMeasure.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a814cd857c339cf3de06a5519c7755df</Hash>
+    <Hash>be2de76a369fa878c12eeef9318ffa88</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractTransactionStatusService: AbstractService
+        public abstract class AbstractTransactionStatusService : AbstractService
         {
                 private ITransactionStatusRepository transactionStatusRepository;
 
@@ -33,15 +33,10 @@ namespace TicketingCRMNS.Api.Services
                         ITransactionStatusRepository transactionStatusRepository,
                         IApiTransactionStatusRequestModelValidator transactionStatusModelValidator,
                         IBOLTransactionStatusMapper bolTransactionStatusMapper,
-                        IDALTransactionStatusMapper dalTransactionStatusMapper
-
-                        ,
+                        IDALTransactionStatusMapper dalTransactionStatusMapper,
                         IBOLTransactionMapper bolTransactionMapper,
-                        IDALTransactionMapper dalTransactionMapper
-
-                        )
+                        IDALTransactionMapper dalTransactionMapper)
                         : base()
-
                 {
                         this.transactionStatusRepository = transactionStatusRepository;
                         this.transactionStatusModelValidator = transactionStatusModelValidator;
@@ -79,7 +74,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiTransactionStatusResponseModel> response = new CreateResponse<ApiTransactionStatusResponseModel>(await this.transactionStatusModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTransactionStatusMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTransactionStatusMapper.MapModelToBO(default(int), model);
                                 var record = await this.transactionStatusRepository.Create(this.dalTransactionStatusMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTransactionStatusMapper.MapBOToModel(this.dalTransactionStatusMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiTransactionStatusRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.transactionStatusModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTransactionStatusMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.transactionStatusModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.transactionStatusRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa80c7a554c06d5099877e1fde1c4c1c</Hash>
+    <Hash>fbfd288afb8289fa83a62c7112443ea7</Hash>
 </Codenesium>*/

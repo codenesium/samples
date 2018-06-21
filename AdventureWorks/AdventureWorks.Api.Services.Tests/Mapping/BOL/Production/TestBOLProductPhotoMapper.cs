@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductPhoto")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProductPhotoActionMapper
+        public class TestBOLProductPhotoMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProductPhotoMapper();
-
                         ApiProductPhotoRequestModel model = new ApiProductPhotoRequestModel();
-
                         model.SetProperties(BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
                         BOProductPhoto response = mapper.MapModelToBO(1, model);
 
@@ -34,9 +32,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProductPhotoMapper();
-
                         BOProductPhoto bo = new BOProductPhoto();
-
                         bo.SetProperties(1, BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
                         ApiProductPhotoResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProductPhotoMapper();
-
                         BOProductPhoto bo = new BOProductPhoto();
-
                         bo.SetProperties(1, BitConverter.GetBytes(1), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), BitConverter.GetBytes(1), "A");
                         List<ApiProductPhotoResponseModel> response = mapper.MapBOToModel(new List<BOProductPhoto>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9409dfa43e63a12714f3c73d2fc0f093</Hash>
+    <Hash>068cbca1900af5e4a2756fa152fc6450</Hash>
 </Codenesium>*/

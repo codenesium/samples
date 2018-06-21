@@ -10,33 +10,29 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class CountryService: AbstractCountryService, ICountryService
+        public class CountryService : AbstractCountryService, ICountryService
         {
                 public CountryService(
                         ILogger<ICountryRepository> logger,
                         ICountryRepository countryRepository,
                         IApiCountryRequestModelValidator countryModelValidator,
                         IBOLCountryMapper bolcountryMapper,
-                        IDALCountryMapper dalcountryMapper
-                        ,
+                        IDALCountryMapper dalcountryMapper,
                         IBOLProvinceMapper bolProvinceMapper,
                         IDALProvinceMapper dalProvinceMapper
-
                         )
                         : base(logger,
                                countryRepository,
                                countryModelValidator,
                                bolcountryMapper,
-                               dalcountryMapper
-                               ,
+                               dalcountryMapper,
                                bolProvinceMapper,
-                               dalProvinceMapper
-                               )
+                               dalProvinceMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5c221baba48b7b6b28ce1e36363012aa</Hash>
+    <Hash>e8068fecb5a4033dbddf08a042475d26</Hash>
 </Codenesium>*/

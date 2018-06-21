@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesTerritoryHistoryRepository: AbstractRepository
+        public abstract class AbstractSalesTerritoryHistoryRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<SalesPerson> GetSalesPerson(int businessEntityID)
+                {
+                        return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
+                }
+
+                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
+                {
+                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
+                }
+
                 protected async Task<List<SalesTerritoryHistory>> Where(
                         Expression<Func<SalesTerritoryHistory, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<SalesPerson> GetSalesPerson(int businessEntityID)
-                {
-                        return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
-                }
-                public async virtual Task<SalesTerritory> GetSalesTerritory(int territoryID)
-                {
-                        return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>7d4c6872f818b9a6f6554d6373199dde</Hash>
+    <Hash>2889dee2c06209727668b9b2f58e1cb9</Hash>
 </Codenesium>*/

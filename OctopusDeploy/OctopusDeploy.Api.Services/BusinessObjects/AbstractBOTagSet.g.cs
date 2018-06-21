@@ -3,9 +3,10 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractBOTagSet: AbstractBusinessObject
+        public abstract class AbstractBOTagSet : AbstractBusinessObject
         {
-                public AbstractBOTagSet() : base()
+                public AbstractBOTagSet()
+                        : base()
                 {
                 }
 
@@ -35,5 +36,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>056352217851717d9ac53a0ab8378dfe</Hash>
+    <Hash>f47d90d7e06e233d7a065848e0c6dedc</Hash>
 </Codenesium>*/

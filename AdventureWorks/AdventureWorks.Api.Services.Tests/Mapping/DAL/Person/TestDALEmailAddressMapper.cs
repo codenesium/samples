@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "EmailAddress")]
         [Trait("Area", "DALMapper")]
-        public class TestDALEmailAddressActionMapper
+        public class TestDALEmailAddressMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALEmailAddressMapper();
-
                         var bo = new BOEmailAddress();
-
                         bo.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         EmailAddress response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALEmailAddressMapper();
-
                         EmailAddress entity = new EmailAddress();
-
                         entity.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
-                        BOEmailAddress  response = mapper.MapEFToBO(entity);
+                        BOEmailAddress response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.EmailAddress1.Should().Be("A");
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALEmailAddressMapper();
-
                         EmailAddress entity = new EmailAddress();
-
                         entity.SetProperties(1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         List<BOEmailAddress> response = mapper.MapEFToBO(new List<EmailAddress>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>26eba68e319cb6240cfe58c72b26c9a2</Hash>
+    <Hash>5e32d08aa0e3b195e1a5263ef561ea9e</Hash>
 </Codenesium>*/

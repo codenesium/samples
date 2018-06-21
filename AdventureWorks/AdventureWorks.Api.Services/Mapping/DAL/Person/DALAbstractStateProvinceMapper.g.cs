@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOStateProvince bo)
                 {
                         StateProvince efStateProvince = new StateProvince();
-
                         efStateProvince.SetProperties(
                                 bo.CountryRegionCode,
                                 bo.IsOnlyStateProvinceFlag,
@@ -58,5 +57,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b6c1d2d3f386194d06dcb5350ed2e39a</Hash>
+    <Hash>1523511db05060bd86afc99931b3bc28</Hash>
 </Codenesium>*/

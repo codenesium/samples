@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BODatabaseLog: AbstractBODatabaseLog
+        public partial class BODatabaseLog : AbstractBODatabaseLog
         {
-                public BODatabaseLog() : base()
+                public BODatabaseLog()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4054513578c381e1b9a5bfcf5ee508da</Hash>
+    <Hash>f61155fa6b0d40ed4cc449d87e0c3ceb</Hash>
 </Codenesium>*/

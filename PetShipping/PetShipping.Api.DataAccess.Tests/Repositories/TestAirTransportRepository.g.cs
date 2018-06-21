@@ -38,7 +38,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new AirTransportRepository(loggerMoc.Object, context);
 
                         AirTransport entity = new AirTransport();
-
                         context.Set<AirTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new AirTransportRepository(loggerMoc.Object, context);
 
                         AirTransport entity = new AirTransport();
-
                         context.Set<AirTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace PetShippingNS.Api.DataAccess
                         var repository = new AirTransportRepository(loggerMoc.Object, context);
 
                         var entity = new AirTransport();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<AirTransport>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<AirTransportRepository>> loggerMoc = AirTransportRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
                         var repository = new AirTransportRepository(loggerMoc.Object, context);
-
                         AirTransport entity = new AirTransport();
-
                         context.Set<AirTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<AirTransportRepository>> loggerMoc = AirTransportRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
                         var repository = new AirTransportRepository(loggerMoc.Object, context);
-
                         AirTransport entity = new AirTransport();
-
                         context.Set<AirTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace PetShippingNS.Api.DataAccess
                         Mock<ILogger<AirTransportRepository>> loggerMoc = AirTransportRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AirTransportRepositoryMoc.GetContext();
                         var repository = new AirTransportRepository(loggerMoc.Object, context);
-
                         AirTransport entity = new AirTransport();
-
                         context.Set<AirTransport>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.AirlineId);
 
                         AirTransport modifiedRecord = await context.Set<AirTransport>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>320eeadb6573f51cd807b3987d960e2e</Hash>
+    <Hash>53e696448103081b91adebfc2d77c43d</Hash>
 </Codenesium>*/

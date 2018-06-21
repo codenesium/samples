@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductPhoto bo)
                 {
                         ProductPhoto efProductPhoto = new ProductPhoto();
-
                         efProductPhoto.SetProperties(
                                 bo.LargePhoto,
                                 bo.LargePhotoFileName,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6871ed8817b9e68252ef69bf0524a8f3</Hash>
+    <Hash>6048cdc7cc594f65eecf62b4f048ea54</Hash>
 </Codenesium>*/

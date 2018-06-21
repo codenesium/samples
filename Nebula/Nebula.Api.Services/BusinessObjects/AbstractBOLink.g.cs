@@ -3,9 +3,10 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractBOLink: AbstractBusinessObject
+        public abstract class AbstractBOLink : AbstractBusinessObject
         {
-                public AbstractBOLink() : base()
+                public AbstractBOLink()
+                        : base()
                 {
                 }
 
@@ -67,5 +68,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7049c2bb0928fb7cbf3a03ef64ea743a</Hash>
+    <Hash>ba0556be27e413cea9cfa24f5861df22</Hash>
 </Codenesium>*/

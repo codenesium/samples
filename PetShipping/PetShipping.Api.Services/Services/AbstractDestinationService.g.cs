@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractDestinationService: AbstractService
+        public abstract class AbstractDestinationService : AbstractService
         {
                 private IDestinationRepository destinationRepository;
 
@@ -33,15 +33,10 @@ namespace PetShippingNS.Api.Services
                         IDestinationRepository destinationRepository,
                         IApiDestinationRequestModelValidator destinationModelValidator,
                         IBOLDestinationMapper bolDestinationMapper,
-                        IDALDestinationMapper dalDestinationMapper
-
-                        ,
+                        IDALDestinationMapper dalDestinationMapper,
                         IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
-                        IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper
-
-                        )
+                        IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper)
                         : base()
-
                 {
                         this.destinationRepository = destinationRepository;
                         this.destinationModelValidator = destinationModelValidator;
@@ -79,7 +74,7 @@ namespace PetShippingNS.Api.Services
                         CreateResponse<ApiDestinationResponseModel> response = new CreateResponse<ApiDestinationResponseModel>(await this.destinationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDestinationMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolDestinationMapper.MapModelToBO(default(int), model);
                                 var record = await this.destinationRepository.Create(this.dalDestinationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDestinationMapper.MapBOToModel(this.dalDestinationMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace PetShippingNS.Api.Services
                         ApiDestinationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDestinationMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace PetShippingNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.destinationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.destinationRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd276d97d45d36e83462c0eec0ffe4a3</Hash>
+    <Hash>502dc037b38404c6e3735a9351c50c9a</Hash>
 </Codenesium>*/

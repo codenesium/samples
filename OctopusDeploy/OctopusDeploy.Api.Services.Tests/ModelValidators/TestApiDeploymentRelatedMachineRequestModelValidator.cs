@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeploymentRelatedMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeploymentRelatedMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.GetDeployment(It.IsAny<string>())).Returns(Task.FromResult<Deployment>(new Deployment()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.DeploymentId, "A");
@@ -122,8 +116,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.GetDeployment(It.IsAny<string>())).Returns(Task.FromResult<Deployment>(new Deployment()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeploymentRelatedMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.DeploymentId, "A");
                 }
@@ -136,7 +129,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeploymentRelatedMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.DeploymentId, "A");
                 }
@@ -148,7 +141,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MachineId, null as string);
@@ -161,8 +153,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeploymentRelatedMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MachineId, null as string);
                 }
@@ -174,7 +165,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MachineId, new string('A', 51));
@@ -187,8 +177,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiDeploymentRelatedMachineRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiDeploymentRelatedMachineRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MachineId, new string('A', 51));
                 }
@@ -200,8 +189,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentRelatedMachineRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
 
                         var validator = new ApiDeploymentRelatedMachineRequestModelValidator(deploymentRelatedMachineRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -209,5 +197,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bf6b2aa861b149d75fe8337d4edca201</Hash>
+    <Hash>35ec8c8b82d3e71922d8d257afbff7f2</Hash>
 </Codenesium>*/

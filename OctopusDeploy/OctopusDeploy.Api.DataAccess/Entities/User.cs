@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("User", Schema="dbo")]
-        public partial class User:AbstractEntity
+        public partial class User : AbstractEntity
         {
                 public User()
                 {
@@ -36,39 +36,39 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.Username = username;
                 }
 
-                [Column("DisplayName", TypeName="nvarchar(200)")]
+                [Column("DisplayName")]
                 public string DisplayName { get; private set; }
 
-                [Column("EmailAddress", TypeName="nvarchar(400)")]
+                [Column("EmailAddress")]
                 public string EmailAddress { get; private set; }
 
-                [Column("ExternalId", TypeName="nvarchar(400)")]
+                [Column("ExternalId")]
                 public string ExternalId { get; private set; }
 
-                [Column("ExternalIdentifiers", TypeName="nvarchar(-1)")]
+                [Column("ExternalIdentifiers")]
                 public string ExternalIdentifiers { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("IdentificationToken", TypeName="uniqueidentifier")]
+                [Column("IdentificationToken")]
                 public Guid IdentificationToken { get; private set; }
 
-                [Column("IsActive", TypeName="bit")]
+                [Column("IsActive")]
                 public bool IsActive { get; private set; }
 
-                [Column("IsService", TypeName="bit")]
+                [Column("IsService")]
                 public bool IsService { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Username", TypeName="nvarchar(200)")]
+                [Column("Username")]
                 public string Username { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>6ea4e6e3eb18ff6645d761472bfc92ef</Hash>
+    <Hash>e9647d0a387246715db3a150fd293df6</Hash>
 </Codenesium>*/

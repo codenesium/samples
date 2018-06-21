@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
@@ -12,7 +12,6 @@ namespace TicketingCRMNS.Api.Services
                         BOSale bo)
                 {
                         Sale efSale = new Sale();
-
                         efSale.SetProperties(
                                 bo.Id,
                                 bo.IpAddress,
@@ -52,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cbd7b009c7619f209e67fbd70eb4762f</Hash>
+    <Hash>e4556910fd33e32b3af6b99938422554</Hash>
 </Codenesium>*/

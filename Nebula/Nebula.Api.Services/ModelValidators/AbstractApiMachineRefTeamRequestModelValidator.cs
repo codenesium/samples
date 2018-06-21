@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiMachineRefTeamRequestModelValidator: AbstractValidator<ApiMachineRefTeamRequestModel>
+        public abstract class AbstractApiMachineRefTeamRequestModelValidator : AbstractValidator<ApiMachineRefTeamRequestModel>
         {
                 private int existingRecordId;
 
-                IMachineRefTeamRepository machineRefTeamRepository;
+                private IMachineRefTeamRepository machineRefTeamRepository;
 
                 public AbstractApiMachineRefTeamRequestModelValidator(IMachineRefTeamRepository machineRefTeamRepository)
                 {
@@ -28,12 +28,12 @@ namespace NebulaNS.Api.Services
 
                 public virtual void MachineIdRules()
                 {
-                        this.RuleFor(x => x.MachineId).MustAsync(this.BeValidMachine).When(x => x ?.MachineId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.MachineId).MustAsync(this.BeValidMachine).When(x => x?.MachineId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TeamIdRules()
                 {
-                        this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x ?.TeamId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x?.TeamId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidMachine(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ffd439a7791aa091e162824e5e7b4d07</Hash>
+    <Hash>fe2a6f86f464fcf102269b1b8cceb27e</Hash>
 </Codenesium>*/

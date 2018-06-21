@@ -4,7 +4,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class DALAdminMapper: DALAbstractAdminMapper, IDALAdminMapper
+        public class DALAdminMapper : DALAbstractAdminMapper, IDALAdminMapper
         {
                 public DALAdminMapper()
                 {
@@ -13,5 +13,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c1beb8629906d13d15bde9a3b4db639a</Hash>
+    <Hash>d244a09fe78cca84cfed3ac0792e9dc1</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ArtifactRepository(loggerMoc.Object, context);
 
                         Artifact entity = new Artifact();
-
                         context.Set<Artifact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ArtifactRepository(loggerMoc.Object, context);
 
                         Artifact entity = new Artifact();
-
                         context.Set<Artifact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new ArtifactRepository(loggerMoc.Object, context);
 
                         var entity = new Artifact();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Artifact>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ArtifactRepository>> loggerMoc = ArtifactRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ArtifactRepositoryMoc.GetContext();
                         var repository = new ArtifactRepository(loggerMoc.Object, context);
-
                         Artifact entity = new Artifact();
-
                         context.Set<Artifact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ArtifactRepository>> loggerMoc = ArtifactRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ArtifactRepositoryMoc.GetContext();
                         var repository = new ArtifactRepository(loggerMoc.Object, context);
-
                         Artifact entity = new Artifact();
-
                         context.Set<Artifact>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<ArtifactRepository>> loggerMoc = ArtifactRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ArtifactRepositoryMoc.GetContext();
                         var repository = new ArtifactRepository(loggerMoc.Object, context);
-
                         Artifact entity = new Artifact();
-
                         context.Set<Artifact>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Artifact modifiedRecord = await context.Set<Artifact>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f9fab3496aa14c7ce57377b1331ef26a</Hash>
+    <Hash>b686a81f7fbd95e87b8822c59230508f</Hash>
 </Codenesium>*/

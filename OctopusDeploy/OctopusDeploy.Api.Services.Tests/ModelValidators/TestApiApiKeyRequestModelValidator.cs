@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, new string('A', 201));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, new string('A', 201));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, null as string);
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, new string('A', 51));
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.UserId, new string('A', 51));
                 }
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new ApiKey()));
 
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -211,7 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(new ApiKey()));
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ApiKeyHashed, "A");
                 }
@@ -223,7 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         apiKeyRepository.Setup(x => x.GetApiKeyHashed(It.IsAny<string>())).Returns(Task.FromResult<ApiKey>(null));
                         var validator = new ApiApiKeyRequestModelValidator(apiKeyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiApiKeyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiApiKeyRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ApiKeyHashed, "A");
                 }
@@ -231,5 +219,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9cfbfdc4324251b942c13a0a8f338f31</Hash>
+    <Hash>1364fe73f078cc88fa0edccad9d4ca3e</Hash>
 </Codenesium>*/

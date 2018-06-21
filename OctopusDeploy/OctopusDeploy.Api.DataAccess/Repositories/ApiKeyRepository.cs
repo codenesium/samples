@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class ApiKeyRepository: AbstractApiKeyRepository, IApiKeyRepository
+        public class ApiKeyRepository : AbstractApiKeyRepository, IApiKeyRepository
         {
                 public ApiKeyRepository(
                         ILogger<ApiKeyRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>64cb4a37c942692c3167029e0dead507</Hash>
+    <Hash>aabe5f809ab81e927136cbb4ace7e08c</Hash>
 </Codenesium>*/

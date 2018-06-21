@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,10 +18,11 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<Machine>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<Machine> GetName(string name);
+
                 Task<List<Machine>> GetMachinePolicyId(string machinePolicyId);
         }
 }
 
 /*<Codenesium>
-    <Hash>f02bfae97b0c5bf71ad47f11da759bef</Hash>
+    <Hash>dfb40bd2b22a9d85f367e89621505ff1</Hash>
 </Codenesium>*/

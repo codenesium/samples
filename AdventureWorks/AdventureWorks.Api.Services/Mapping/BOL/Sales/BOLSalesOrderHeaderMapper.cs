@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLSalesOrderHeaderMapper: BOLAbstractSalesOrderHeaderMapper, IBOLSalesOrderHeaderMapper
+        public class BOLSalesOrderHeaderMapper : BOLAbstractSalesOrderHeaderMapper, IBOLSalesOrderHeaderMapper
         {
                 public BOLSalesOrderHeaderMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>56bb442e2f55f6b140913c827231fae3</Hash>
+    <Hash>17de6c6354a5fb5469d36dba4e253de6</Hash>
 </Codenesium>*/

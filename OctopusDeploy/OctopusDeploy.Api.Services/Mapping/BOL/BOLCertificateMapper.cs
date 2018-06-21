@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLCertificateMapper: BOLAbstractCertificateMapper, IBOLCertificateMapper
+        public class BOLCertificateMapper : BOLAbstractCertificateMapper, IBOLCertificateMapper
         {
                 public BOLCertificateMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1eefa5fd2e1578ddb1d804b42cdd9b27</Hash>
+    <Hash>6ef5b0cb155b7bc826c3c48860da25da</Hash>
 </Codenesium>*/

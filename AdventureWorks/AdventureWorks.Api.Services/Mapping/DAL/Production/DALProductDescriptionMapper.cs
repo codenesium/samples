@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALProductDescriptionMapper: DALAbstractProductDescriptionMapper, IDALProductDescriptionMapper
+        public class DALProductDescriptionMapper : DALAbstractProductDescriptionMapper, IDALProductDescriptionMapper
         {
                 public DALProductDescriptionMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bed29e08b7adb46eebf265dccdaee5d8</Hash>
+    <Hash>30dfa63e5b16fab6f7ca1e8124c98f90</Hash>
 </Codenesium>*/

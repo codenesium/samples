@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new IllustrationRepository(loggerMoc.Object, context);
 
                         Illustration entity = new Illustration();
-
                         context.Set<Illustration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new IllustrationRepository(loggerMoc.Object, context);
 
                         Illustration entity = new Illustration();
-
                         context.Set<Illustration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new IllustrationRepository(loggerMoc.Object, context);
 
                         var entity = new Illustration();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Illustration>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<IllustrationRepository>> loggerMoc = IllustrationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
                         var repository = new IllustrationRepository(loggerMoc.Object, context);
-
                         Illustration entity = new Illustration();
-
                         context.Set<Illustration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<IllustrationRepository>> loggerMoc = IllustrationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
                         var repository = new IllustrationRepository(loggerMoc.Object, context);
-
                         Illustration entity = new Illustration();
-
                         context.Set<Illustration>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<IllustrationRepository>> loggerMoc = IllustrationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = IllustrationRepositoryMoc.GetContext();
                         var repository = new IllustrationRepository(loggerMoc.Object, context);
-
                         Illustration entity = new Illustration();
-
                         context.Set<Illustration>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.IllustrationID);
 
                         Illustration modifiedRecord = await context.Set<Illustration>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>46707485a46e0beeade31daa12a93d26</Hash>
+    <Hash>f626afeb6a0001528389052dbfec85c2</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         context.Set<SalesOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         context.Set<SalesOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
 
                         var entity = new SalesOrderHeader();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
                         var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
-
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         context.Set<SalesOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
                         var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
-
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         context.Set<SalesOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<SalesOrderHeaderRepository>> loggerMoc = SalesOrderHeaderRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = SalesOrderHeaderRepositoryMoc.GetContext();
                         var repository = new SalesOrderHeaderRepository(loggerMoc.Object, context);
-
                         SalesOrderHeader entity = new SalesOrderHeader();
-
                         context.Set<SalesOrderHeader>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.SalesOrderID);
 
                         SalesOrderHeader modifiedRecord = await context.Set<SalesOrderHeader>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>77e6142fbfef0caec294a46e4148c4b9</Hash>
+    <Hash>f76ead9c7190ce8013600ad050bab22c</Hash>
 </Codenesium>*/

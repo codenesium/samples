@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOLinkStatus boLinkStatus = new BOLinkStatus();
-
                         boLinkStatus.SetProperties(
                                 id,
                                 model.Name);
@@ -46,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>338ca93a8463685b24d3c972e94701bb</Hash>
+    <Hash>87288927c29c8751b8dd8ab7476d99fe</Hash>
 </Codenesium>*/

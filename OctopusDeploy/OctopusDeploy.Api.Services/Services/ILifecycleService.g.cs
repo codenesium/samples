@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace OctopusDeployNS.Api.Services
                 Task<List<ApiLifecycleResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiLifecycleResponseModel> GetName(string name);
+
                 Task<List<ApiLifecycleResponseModel>> GetDataVersion(byte[] dataVersion);
         }
 }
 
 /*<Codenesium>
-    <Hash>d8ecda2833f781269e594e522d804aa6</Hash>
+    <Hash>fa5f1d2e179d560332974a575d449231</Hash>
 </Codenesium>*/

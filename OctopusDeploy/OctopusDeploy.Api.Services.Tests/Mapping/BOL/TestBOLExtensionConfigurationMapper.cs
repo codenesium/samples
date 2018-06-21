@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ExtensionConfiguration")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLExtensionConfigurationActionMapper
+        public class TestBOLExtensionConfigurationMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLExtensionConfigurationMapper();
-
                         ApiExtensionConfigurationRequestModel model = new ApiExtensionConfigurationRequestModel();
-
                         model.SetProperties("A", "A", "A");
                         BOExtensionConfiguration response = mapper.MapModelToBO("A", model);
 
@@ -32,9 +30,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLExtensionConfigurationMapper();
-
                         BOExtensionConfiguration bo = new BOExtensionConfiguration();
-
                         bo.SetProperties("A", "A", "A", "A");
                         ApiExtensionConfigurationResponseModel response = mapper.MapBOToModel(bo);
 
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLExtensionConfigurationMapper();
-
                         BOExtensionConfiguration bo = new BOExtensionConfiguration();
-
                         bo.SetProperties("A", "A", "A", "A");
                         List<ApiExtensionConfigurationResponseModel> response = mapper.MapBOToModel(new List<BOExtensionConfiguration>() { { bo } });
 
@@ -60,5 +54,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>deb3ea40a008271b0d64f2290efbefce</Hash>
+    <Hash>c8ecbd3fe07241c692c77664011186ba</Hash>
 </Codenesium>*/

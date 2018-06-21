@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractProxyService: AbstractService
+        public abstract class AbstractProxyService : AbstractService
         {
                 private IProxyRepository proxyRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IProxyRepository proxyRepository,
                         IApiProxyRequestModelValidator proxyModelValidator,
                         IBOLProxyMapper bolProxyMapper,
-                        IDALProxyMapper dalProxyMapper
-
-                        )
+                        IDALProxyMapper dalProxyMapper)
                         : base()
-
                 {
                         this.proxyRepository = proxyRepository;
                         this.proxyModelValidator = proxyModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiProxyResponseModel> response = new CreateResponse<ApiProxyResponseModel>(await this.proxyModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProxyMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolProxyMapper.MapModelToBO(default(string), model);
                                 var record = await this.proxyRepository.Create(this.dalProxyMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiProxyRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.proxyModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProxyMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.proxyModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.proxyRepository.Delete(id);
@@ -123,5 +118,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f996f8b64f9fc3c0c005be0568222739</Hash>
+    <Hash>12073f72932631a30493bc7466e00c6e</Hash>
 </Codenesium>*/

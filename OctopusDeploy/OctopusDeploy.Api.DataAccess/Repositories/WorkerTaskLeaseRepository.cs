@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public class WorkerTaskLeaseRepository: AbstractWorkerTaskLeaseRepository, IWorkerTaskLeaseRepository
+        public class WorkerTaskLeaseRepository : AbstractWorkerTaskLeaseRepository, IWorkerTaskLeaseRepository
         {
                 public WorkerTaskLeaseRepository(
                         ILogger<WorkerTaskLeaseRepository> logger,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>10b40d5931f5e7259147201786169805</Hash>
+    <Hash>e389e3cf8bf32d9bdb861d51c355a26a</Hash>
 </Codenesium>*/

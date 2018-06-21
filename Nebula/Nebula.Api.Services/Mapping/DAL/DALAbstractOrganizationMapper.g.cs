@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace NebulaNS.Api.Services
                         BOOrganization bo)
                 {
                         Organization efOrganization = new Organization();
-
                         efOrganization.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08864a7aa91f7099971f77c4d20a977c</Hash>
+    <Hash>5fb217363dd11347f4458d0d680c6ded</Hash>
 </Codenesium>*/

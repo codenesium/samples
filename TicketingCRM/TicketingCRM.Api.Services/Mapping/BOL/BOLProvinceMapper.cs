@@ -5,7 +5,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class BOLProvinceMapper: BOLAbstractProvinceMapper, IBOLProvinceMapper
+        public class BOLProvinceMapper : BOLAbstractProvinceMapper, IBOLProvinceMapper
         {
                 public BOLProvinceMapper()
                 {
@@ -14,5 +14,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ba555df38d05684a41165ed7fd68c51</Hash>
+    <Hash>b31a5e08199253516d792c4da5777ae9</Hash>
 </Codenesium>*/

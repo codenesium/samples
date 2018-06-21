@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiCustomerRequestModelValidator: AbstractValidator<ApiCustomerRequestModel>
+        public abstract class AbstractApiCustomerRequestModelValidator : AbstractValidator<ApiCustomerRequestModel>
         {
                 private int existingRecordId;
 
-                ICustomerRepository customerRepository;
+                private ICustomerRepository customerRepository;
 
                 public AbstractApiCustomerRequestModelValidator(ICustomerRepository customerRepository)
                 {
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void AccountNumberRules()
                 {
                         this.RuleFor(x => x.AccountNumber).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => x ?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCustomerRequestModel.AccountNumber));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByAccountNumber).When(x => x?.AccountNumber != null).WithMessage("Violates unique constraint").WithName(nameof(ApiCustomerRequestModel.AccountNumber));
                         this.RuleFor(x => x.AccountNumber).Length(0, 10);
                 }
 
@@ -47,12 +47,12 @@ namespace AdventureWorksNS.Api.Services
 
                 public virtual void StoreIDRules()
                 {
-                        this.RuleFor(x => x.StoreID).MustAsync(this.BeValidStore).When(x => x ?.StoreID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StoreID).MustAsync(this.BeValidStore).When(x => x?.StoreID != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TerritoryIDRules()
                 {
-                        this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x ?.TerritoryID != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidStore(Nullable<int> id,  CancellationToken cancellationToken)
@@ -73,7 +73,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         Customer record = await this.customerRepository.ByAccountNumber(model.AccountNumber);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.CustomerID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.CustomerID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>592cc8891673889103b20d78906e0901</Hash>
+    <Hash>7c86d8dbf8e42c11e9e02df96f246fc4</Hash>
 </Codenesium>*/

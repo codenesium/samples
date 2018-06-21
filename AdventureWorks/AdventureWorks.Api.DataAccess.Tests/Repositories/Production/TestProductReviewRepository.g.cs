@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
                         ProductReview entity = new ProductReview();
-
                         context.Set<ProductReview>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
                         ProductReview entity = new ProductReview();
-
                         context.Set<ProductReview>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ProductReviewRepository(loggerMoc.Object, context);
 
                         var entity = new ProductReview();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ProductReview>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
                         var repository = new ProductReviewRepository(loggerMoc.Object, context);
-
                         ProductReview entity = new ProductReview();
-
                         context.Set<ProductReview>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
                         var repository = new ProductReviewRepository(loggerMoc.Object, context);
-
                         ProductReview entity = new ProductReview();
-
                         context.Set<ProductReview>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ProductReviewRepository>> loggerMoc = ProductReviewRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ProductReviewRepositoryMoc.GetContext();
                         var repository = new ProductReviewRepository(loggerMoc.Object, context);
-
                         ProductReview entity = new ProductReview();
-
                         context.Set<ProductReview>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ProductReviewID);
 
                         ProductReview modifiedRecord = await context.Set<ProductReview>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4080e73a31ac9489be58d3b30c3d4396</Hash>
+    <Hash>333c4228bd953f2c0cac7f71879688b3</Hash>
 </Codenesium>*/

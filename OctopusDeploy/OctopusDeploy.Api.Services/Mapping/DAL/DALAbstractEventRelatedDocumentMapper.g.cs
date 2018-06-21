@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOEventRelatedDocument bo)
                 {
                         EventRelatedDocument efEventRelatedDocument = new EventRelatedDocument();
-
                         efEventRelatedDocument.SetProperties(
                                 bo.EventId,
                                 bo.Id,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cda4ca595fae74d37227bd497de50e15</Hash>
+    <Hash>e997eea6985a82735b298ed20dcc6afd</Hash>
 </Codenesium>*/

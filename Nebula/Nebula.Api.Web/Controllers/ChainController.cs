@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NebulaNS.Api.Web
 {
         [Route("api/chains")]
         [ApiVersion("1.0")]
-        public class ChainController: AbstractChainController
+        public class ChainController : AbstractChainController
         {
                 public ChainController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f0329edf112ff3c4350b7bb3d0553e1b</Hash>
+    <Hash>15daa50a7f348d0cd0e68e50ba298434</Hash>
 </Codenesium>*/

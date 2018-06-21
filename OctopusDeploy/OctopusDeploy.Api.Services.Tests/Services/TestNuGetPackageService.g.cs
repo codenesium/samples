@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<INuGetPackageRepository>();
                         var record = new NuGetPackage();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new NuGetPackageService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLNuGetPackageMapperMock,
                                                               mock.DALMapperMockFactory.DALNuGetPackageMapperMock);
 
-                        ApiNuGetPackageResponseModel response = await service.Get(default (string));
+                        ApiNuGetPackageResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLNuGetPackageMapperMock,
                                                               mock.DALMapperMockFactory.DALNuGetPackageMapperMock);
 
-                        ApiNuGetPackageResponseModel response = await service.Get(default (string));
+                        ApiNuGetPackageResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<INuGetPackageRepository>();
                         var model = new ApiNuGetPackageRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<NuGetPackage>())).Returns(Task.FromResult(new NuGetPackage()));
                         var service = new NuGetPackageService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<INuGetPackageRepository>();
                         var model = new ApiNuGetPackageRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<NuGetPackage>())).Returns(Task.FromResult(new NuGetPackage()));
                         var service = new NuGetPackageService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLNuGetPackageMapperMock,
                                                               mock.DALMapperMockFactory.DALNuGetPackageMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.NuGetPackageModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiNuGetPackageRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<INuGetPackageRepository>();
                         var model = new ApiNuGetPackageRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new NuGetPackageService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLNuGetPackageMapperMock,
                                                               mock.DALMapperMockFactory.DALNuGetPackageMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -136,5 +132,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0af511e5c15aebf7ad3d01d3e7b4a0ba</Hash>
+    <Hash>8269035b792a70d73d4eaf53ff74f5d6</Hash>
 </Codenesium>*/

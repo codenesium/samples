@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProjectTrigger")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProjectTriggerActionMapper
+        public class TestDALProjectTriggerMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProjectTriggerMapper();
-
                         var bo = new BOProjectTrigger();
-
                         bo.SetProperties("A", true, "A", "A", "A", "A");
 
                         ProjectTrigger response = mapper.MapBOToEF(bo);
@@ -35,12 +33,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProjectTriggerMapper();
-
                         ProjectTrigger entity = new ProjectTrigger();
-
                         entity.SetProperties("A", true, "A", "A", "A", "A");
 
-                        BOProjectTrigger  response = mapper.MapEFToBO(entity);
+                        BOProjectTrigger response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.IsDisabled.Should().Be(true);
@@ -54,9 +50,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProjectTriggerMapper();
-
                         ProjectTrigger entity = new ProjectTrigger();
-
                         entity.SetProperties("A", true, "A", "A", "A", "A");
 
                         List<BOProjectTrigger> response = mapper.MapEFToBO(new List<ProjectTrigger>() { entity });
@@ -67,5 +61,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>35c89fbeb24e64913b1899d635c34de4</Hash>
+    <Hash>9d2e7bd97d79208899d9b94e35b1b499</Hash>
 </Codenesium>*/

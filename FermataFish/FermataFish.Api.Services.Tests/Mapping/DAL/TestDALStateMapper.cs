@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "State")]
         [Trait("Area", "DALMapper")]
-        public class TestDALStateActionMapper
+        public class TestDALStateMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALStateMapper();
-
                         var bo = new BOState();
-
                         bo.SetProperties(1, "A");
 
                         State response = mapper.MapBOToEF(bo);
@@ -31,12 +29,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALStateMapper();
-
                         State entity = new State();
-
                         entity.SetProperties(1, "A");
 
-                        BOState  response = mapper.MapEFToBO(entity);
+                        BOState response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be(1);
                         response.Name.Should().Be("A");
@@ -46,9 +42,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALStateMapper();
-
                         State entity = new State();
-
                         entity.SetProperties(1, "A");
 
                         List<BOState> response = mapper.MapEFToBO(new List<State>() { entity });
@@ -59,5 +53,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9e0baf2576dba8bd061aa39c7c7fb3af</Hash>
+    <Hash>82f870817d3b52093729ee55b01d2cd1</Hash>
 </Codenesium>*/

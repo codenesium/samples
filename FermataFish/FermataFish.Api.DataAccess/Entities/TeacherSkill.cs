@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FermataFishNS.Api.DataAccess
 {
         [Table("TeacherSkill", Schema="dbo")]
-        public partial class TeacherSkill: AbstractEntity
+        public partial class TeacherSkill : AbstractEntity
         {
                 public TeacherSkill()
                 {
@@ -23,13 +23,13 @@ namespace FermataFishNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("name", TypeName="varchar(128)")]
+                [Column("name")]
                 public string Name { get; private set; }
 
-                [Column("studioId", TypeName="int")]
+                [Column("studioId")]
                 public int StudioId { get; private set; }
 
                 [ForeignKey("StudioId")]
@@ -38,5 +38,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>973fd0f81b6269f9c98fb92e16ad15e5</Hash>
+    <Hash>059942b854263af465de17a4ae4c14c3</Hash>
 </Codenesium>*/

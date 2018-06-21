@@ -4,7 +4,7 @@ using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class DALSubscriptionMapper: DALAbstractSubscriptionMapper, IDALSubscriptionMapper
+        public class DALSubscriptionMapper : DALAbstractSubscriptionMapper, IDALSubscriptionMapper
         {
                 public DALSubscriptionMapper()
                 {
@@ -13,5 +13,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6814fb292423c3eb526d2f7cf0f7dc6e</Hash>
+    <Hash>2a4f86e52bf95192456b5dd895062ebc</Hash>
 </Codenesium>*/

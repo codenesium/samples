@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLStateProvinceMapper: BOLAbstractStateProvinceMapper, IBOLStateProvinceMapper
+        public class BOLStateProvinceMapper : BOLAbstractStateProvinceMapper, IBOLStateProvinceMapper
         {
                 public BOLStateProvinceMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d2a817f37dd21923a9eafbf691f1144</Hash>
+    <Hash>ae821d8049978fceb75e5ee62aca52cb</Hash>
 </Codenesium>*/

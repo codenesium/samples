@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Worker")]
         [Trait("Area", "DALMapper")]
-        public class TestDALWorkerActionMapper
+        public class TestDALWorkerMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALWorkerMapper();
-
                         var bo = new BOWorker();
-
                         bo.SetProperties("A", "A", "A", true, "A", "A", "A", "A", "A", "A");
 
                         Worker response = mapper.MapBOToEF(bo);
@@ -39,12 +37,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALWorkerMapper();
-
                         Worker entity = new Worker();
-
                         entity.SetProperties("A", "A", "A", true, "A", "A", "A", "A", "A", "A");
 
-                        BOWorker  response = mapper.MapEFToBO(entity);
+                        BOWorker response = mapper.MapEFToBO(entity);
 
                         response.CommunicationStyle.Should().Be("A");
                         response.Fingerprint.Should().Be("A");
@@ -62,9 +58,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALWorkerMapper();
-
                         Worker entity = new Worker();
-
                         entity.SetProperties("A", "A", "A", true, "A", "A", "A", "A", "A", "A");
 
                         List<BOWorker> response = mapper.MapEFToBO(new List<Worker>() { entity });
@@ -75,5 +69,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9594f6a54242e0df6a12c72247292401</Hash>
+    <Hash>7ef81ed134c5f18a98aa66c754156d97</Hash>
 </Codenesium>*/

@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public abstract class AbstractApiFeedResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiFeedResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string feedType,
@@ -85,5 +85,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4200806871197e5ee264377f8f3501f2</Hash>
+    <Hash>71c98a06391cc036d9bb562e970031d3</Hash>
 </Codenesium>*/

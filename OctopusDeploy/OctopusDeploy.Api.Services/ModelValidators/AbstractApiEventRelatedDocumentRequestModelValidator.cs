@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiEventRelatedDocumentRequestModelValidator: AbstractValidator<ApiEventRelatedDocumentRequestModel>
+        public abstract class AbstractApiEventRelatedDocumentRequestModelValidator : AbstractValidator<ApiEventRelatedDocumentRequestModel>
         {
                 private int existingRecordId;
 
-                IEventRelatedDocumentRepository eventRelatedDocumentRepository;
+                private IEventRelatedDocumentRepository eventRelatedDocumentRepository;
 
                 public AbstractApiEventRelatedDocumentRequestModelValidator(IEventRelatedDocumentRepository eventRelatedDocumentRepository)
                 {
@@ -29,7 +29,7 @@ namespace OctopusDeployNS.Api.Services
                 public virtual void EventIdRules()
                 {
                         this.RuleFor(x => x.EventId).NotNull();
-                        this.RuleFor(x => x.EventId).MustAsync(this.BeValidEvent).When(x => x ?.EventId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.EventId).MustAsync(this.BeValidEvent).When(x => x?.EventId != null).WithMessage("Invalid reference");
                         this.RuleFor(x => x.EventId).Length(0, 50);
                 }
 
@@ -49,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0dea1a1cedcc61f0dc5a01cf4164829c</Hash>
+    <Hash>ae869cd9dd6e2e98f1281c77905c3f92</Hash>
 </Codenesium>*/

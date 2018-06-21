@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOPurchaseOrderDetail boPurchaseOrderDetail = new BOPurchaseOrderDetail();
-
                         boPurchaseOrderDetail.SetProperties(
                                 purchaseOrderID,
                                 model.DueDate,
@@ -55,5 +54,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8147090142e4eb2ccb739fd8e12172d</Hash>
+    <Hash>050d477a2959fd70e86092a376f1965e</Hash>
 </Codenesium>*/

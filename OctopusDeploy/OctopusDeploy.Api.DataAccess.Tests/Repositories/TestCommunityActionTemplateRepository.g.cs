@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new CommunityActionTemplateRepository(loggerMoc.Object, context);
 
                         CommunityActionTemplate entity = new CommunityActionTemplate();
-
                         context.Set<CommunityActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new CommunityActionTemplateRepository(loggerMoc.Object, context);
 
                         CommunityActionTemplate entity = new CommunityActionTemplate();
-
                         context.Set<CommunityActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new CommunityActionTemplateRepository(loggerMoc.Object, context);
 
                         var entity = new CommunityActionTemplate();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<CommunityActionTemplate>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<CommunityActionTemplateRepository>> loggerMoc = CommunityActionTemplateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CommunityActionTemplateRepositoryMoc.GetContext();
                         var repository = new CommunityActionTemplateRepository(loggerMoc.Object, context);
-
                         CommunityActionTemplate entity = new CommunityActionTemplate();
-
                         context.Set<CommunityActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<CommunityActionTemplateRepository>> loggerMoc = CommunityActionTemplateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CommunityActionTemplateRepositoryMoc.GetContext();
                         var repository = new CommunityActionTemplateRepository(loggerMoc.Object, context);
-
                         CommunityActionTemplate entity = new CommunityActionTemplate();
-
                         context.Set<CommunityActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<CommunityActionTemplateRepository>> loggerMoc = CommunityActionTemplateRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CommunityActionTemplateRepositoryMoc.GetContext();
                         var repository = new CommunityActionTemplateRepository(loggerMoc.Object, context);
-
                         CommunityActionTemplate entity = new CommunityActionTemplate();
-
                         context.Set<CommunityActionTemplate>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         CommunityActionTemplate modifiedRecord = await context.Set<CommunityActionTemplate>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>afd32cd158d46d9ec3d3516cf6be008a</Hash>
+    <Hash>d07e3d0559f410be743f599623ed6462</Hash>
 </Codenesium>*/

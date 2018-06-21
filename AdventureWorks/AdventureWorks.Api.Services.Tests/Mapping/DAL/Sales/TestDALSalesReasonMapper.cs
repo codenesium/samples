@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesReason")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSalesReasonActionMapper
+        public class TestDALSalesReasonMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSalesReasonMapper();
-
                         var bo = new BOSalesReason();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 
                         SalesReason response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSalesReasonMapper();
-
                         SalesReason entity = new SalesReason();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1);
 
-                        BOSalesReason  response = mapper.MapEFToBO(entity);
+                        BOSalesReason response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSalesReasonMapper();
-
                         SalesReason entity = new SalesReason();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1);
 
                         List<BOSalesReason> response = mapper.MapEFToBO(new List<SalesReason>() { entity });
@@ -63,5 +57,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ff545574e14c498a60ed3c46717aa65b</Hash>
+    <Hash>e4ef9fc0c0429b8185bffc5954d7d984</Hash>
 </Codenesium>*/

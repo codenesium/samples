@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOLessonXTeacher bo)
                 {
                         LessonXTeacher efLessonXTeacher = new LessonXTeacher();
-
                         efLessonXTeacher.SetProperties(
                                 bo.Id,
                                 bo.LessonId,
@@ -48,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d2f8a9b5548e7449280f4bdf5a761b2</Hash>
+    <Hash>89aba9656629f46eae27956615510877</Hash>
 </Codenesium>*/

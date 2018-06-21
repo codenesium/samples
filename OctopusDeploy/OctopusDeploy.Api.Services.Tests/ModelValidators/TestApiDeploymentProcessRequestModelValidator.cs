@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentProcessRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentProcessRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentProcessRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentProcessRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentProcessRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentProcessRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
                 }
@@ -83,7 +79,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiDeploymentProcessRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 151));
@@ -96,8 +91,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiDeploymentProcessRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiDeploymentProcessRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 151));
                 }
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         deploymentProcessRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new DeploymentProcess()));
 
                         var validator = new ApiDeploymentProcessRequestModelValidator(deploymentProcessRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -118,5 +111,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>70b68f4c2d47a45c083b52b261239ddd</Hash>
+    <Hash>7e012bfeb9849bcb6d3814d1e4c302d6</Hash>
 </Codenesium>*/

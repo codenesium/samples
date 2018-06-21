@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractTenantVariableService: AbstractService
+        public abstract class AbstractTenantVariableService : AbstractService
         {
                 private ITenantVariableRepository tenantVariableRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         ITenantVariableRepository tenantVariableRepository,
                         IApiTenantVariableRequestModelValidator tenantVariableModelValidator,
                         IBOLTenantVariableMapper bolTenantVariableMapper,
-                        IDALTenantVariableMapper dalTenantVariableMapper
-
-                        )
+                        IDALTenantVariableMapper dalTenantVariableMapper)
                         : base()
-
                 {
                         this.tenantVariableRepository = tenantVariableRepository;
                         this.tenantVariableModelValidator = tenantVariableModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiTenantVariableResponseModel> response = new CreateResponse<ApiTenantVariableResponseModel>(await this.tenantVariableModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTenantVariableMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolTenantVariableMapper.MapModelToBO(default(string), model);
                                 var record = await this.tenantVariableRepository.Create(this.dalTenantVariableMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiTenantVariableRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.tenantVariableModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTenantVariableMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.tenantVariableModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.tenantVariableRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiTenantVariableResponseModel>> GetTenantId(string tenantId)
                 {
                         List<TenantVariable> records = await this.tenantVariableRepository.GetTenantId(tenantId);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9964d0e0310fb1ca85605247795e4ec4</Hash>
+    <Hash>e97e1edacdc853e974e0ef8eb1b1cb3c</Hash>
 </Codenesium>*/

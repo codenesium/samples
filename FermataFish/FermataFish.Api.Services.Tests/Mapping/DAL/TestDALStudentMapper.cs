@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Student")]
         [Trait("Area", "DALMapper")]
-        public class TestDALStudentActionMapper
+        public class TestDALStudentMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALStudentMapper();
-
                         var bo = new BOStudent();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 
                         Student response = mapper.MapBOToEF(bo);
@@ -40,12 +38,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALStudentMapper();
-
                         Student entity = new Student();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
 
-                        BOStudent  response = mapper.MapEFToBO(entity);
+                        BOStudent response = mapper.MapEFToBO(entity);
 
                         response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Email.Should().Be("A");
@@ -64,9 +60,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALStudentMapper();
-
                         Student entity = new Student();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
 
                         List<BOStudent> response = mapper.MapEFToBO(new List<Student>() { entity });
@@ -77,5 +71,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f8b465dccf7cc6855682d770036a3ac6</Hash>
+    <Hash>2a2ce47e881c2f556a09d8d5956b5b81</Hash>
 </Codenesium>*/

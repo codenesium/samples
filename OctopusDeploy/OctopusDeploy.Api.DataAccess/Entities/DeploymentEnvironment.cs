@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("DeploymentEnvironment", Schema="dbo")]
-        public partial class DeploymentEnvironment: AbstractEntity
+        public partial class DeploymentEnvironment : AbstractEntity
         {
                 public DeploymentEnvironment()
                 {
@@ -26,24 +26,24 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.SortOrder = sortOrder;
                 }
 
-                [Column("DataVersion", TypeName="timestamp")]
+                [Column("DataVersion")]
                 public byte[] DataVersion { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("SortOrder", TypeName="int")]
+                [Column("SortOrder")]
                 public int SortOrder { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>2f97ee2a18e8c666334d772e55133fd8</Hash>
+    <Hash>a2664804740e295e1cd6c0c411e13476</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "PersonCreditCard")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLPersonCreditCardActionMapper
+        public class TestBOLPersonCreditCardMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLPersonCreditCardMapper();
-
                         ApiPersonCreditCardRequestModel model = new ApiPersonCreditCardRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         BOPersonCreditCard response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLPersonCreditCardMapper();
-
                         BOPersonCreditCard bo = new BOPersonCreditCard();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         ApiPersonCreditCardResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLPersonCreditCardMapper();
-
                         BOPersonCreditCard bo = new BOPersonCreditCard();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
                         List<ApiPersonCreditCardResponseModel> response = mapper.MapBOToModel(new List<BOPersonCreditCard>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>84d4133252eeb2fc3ebbde93a0c742f6</Hash>
+    <Hash>0e2702cdedc23f64b8baa2f2eefe5f41</Hash>
 </Codenesium>*/

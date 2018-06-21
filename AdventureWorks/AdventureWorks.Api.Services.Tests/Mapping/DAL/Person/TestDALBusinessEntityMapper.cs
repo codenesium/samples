@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "BusinessEntity")]
         [Trait("Area", "DALMapper")]
-        public class TestDALBusinessEntityActionMapper
+        public class TestDALBusinessEntityMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALBusinessEntityMapper();
-
                         var bo = new BOBusinessEntity();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         BusinessEntity response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALBusinessEntityMapper();
-
                         BusinessEntity entity = new BusinessEntity();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
-                        BOBusinessEntity  response = mapper.MapEFToBO(entity);
+                        BOBusinessEntity response = mapper.MapEFToBO(entity);
 
                         response.BusinessEntityID.Should().Be(1);
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,9 +44,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALBusinessEntityMapper();
-
                         BusinessEntity entity = new BusinessEntity();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         List<BOBusinessEntity> response = mapper.MapEFToBO(new List<BusinessEntity>() { entity });
@@ -61,5 +55,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4edbc89ca29d54db01c80712c6ff4c4e</Hash>
+    <Hash>8d80d5a0566020528440424f3416c565</Hash>
 </Codenesium>*/

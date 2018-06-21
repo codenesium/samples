@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BOWorkerPool: AbstractBOWorkerPool
+        public partial class BOWorkerPool : AbstractBOWorkerPool
         {
-                public BOWorkerPool() : base()
+                public BOWorkerPool()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>3ad38ca5a1c53ad004380774da99043e</Hash>
+    <Hash>b4016c594acdde65e17068450f774e26</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new LessonStatusRepository(loggerMoc.Object, context);
 
                         LessonStatus entity = new LessonStatus();
-
                         context.Set<LessonStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new LessonStatusRepository(loggerMoc.Object, context);
 
                         LessonStatus entity = new LessonStatus();
-
                         context.Set<LessonStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new LessonStatusRepository(loggerMoc.Object, context);
 
                         var entity = new LessonStatus();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<LessonStatus>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<LessonStatusRepository>> loggerMoc = LessonStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LessonStatusRepositoryMoc.GetContext();
                         var repository = new LessonStatusRepository(loggerMoc.Object, context);
-
                         LessonStatus entity = new LessonStatus();
-
                         context.Set<LessonStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<LessonStatusRepository>> loggerMoc = LessonStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LessonStatusRepositoryMoc.GetContext();
                         var repository = new LessonStatusRepository(loggerMoc.Object, context);
-
                         LessonStatus entity = new LessonStatus();
-
                         context.Set<LessonStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<LessonStatusRepository>> loggerMoc = LessonStatusRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = LessonStatusRepositoryMoc.GetContext();
                         var repository = new LessonStatusRepository(loggerMoc.Object, context);
-
                         LessonStatus entity = new LessonStatus();
-
                         context.Set<LessonStatus>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         LessonStatus modifiedRecord = await context.Set<LessonStatus>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b83067e55b9763eced0bca56d228f6c2</Hash>
+    <Hash>e2ef834aad5951b1bbce4cfcb52e66ee</Hash>
 </Codenesium>*/

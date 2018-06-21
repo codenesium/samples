@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace OctopusDeployNS.Api.Services
                 Task<List<ApiProjectTriggerResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiProjectTriggerResponseModel> GetProjectIdName(string projectId, string name);
+
                 Task<List<ApiProjectTriggerResponseModel>> GetProjectId(string projectId);
         }
 }
 
 /*<Codenesium>
-    <Hash>361ebc38ba27ec09bb737c85c8d3cc3d</Hash>
+    <Hash>6b72d1375d15204b71d5815b27f3ee07</Hash>
 </Codenesium>*/

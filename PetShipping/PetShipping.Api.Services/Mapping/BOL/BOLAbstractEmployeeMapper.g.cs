@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOEmployee boEmployee = new BOEmployee();
-
                         boEmployee.SetProperties(
                                 id,
                                 model.FirstName,
@@ -49,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0f12d5dbb9f1376a4ecb3482f17e283</Hash>
+    <Hash>ee9eb2d526e90149d98fffdc6a74d293</Hash>
 </Codenesium>*/

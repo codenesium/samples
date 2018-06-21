@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetShippingNS.Api.Contracts;
+using PetShippingNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetShippingNS.Api.Contracts;
-using PetShippingNS.Api.DataAccess;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractApiPipelineStepDestinationRequestModelValidator: AbstractValidator<ApiPipelineStepDestinationRequestModel>
+        public abstract class AbstractApiPipelineStepDestinationRequestModelValidator : AbstractValidator<ApiPipelineStepDestinationRequestModel>
         {
                 private int existingRecordId;
 
-                IPipelineStepDestinationRepository pipelineStepDestinationRepository;
+                private IPipelineStepDestinationRepository pipelineStepDestinationRepository;
 
                 public AbstractApiPipelineStepDestinationRequestModelValidator(IPipelineStepDestinationRepository pipelineStepDestinationRepository)
                 {
@@ -28,12 +28,12 @@ namespace PetShippingNS.Api.Services
 
                 public virtual void DestinationIdRules()
                 {
-                        this.RuleFor(x => x.DestinationId).MustAsync(this.BeValidDestination).When(x => x ?.DestinationId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.DestinationId).MustAsync(this.BeValidDestination).When(x => x?.DestinationId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void PipelineStepIdRules()
                 {
-                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x ?.PipelineStepId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidDestination(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1ea548a8100d286c8359cf1d3411836</Hash>
+    <Hash>998694d150440e03072a3ae3ab28504e</Hash>
 </Codenesium>*/

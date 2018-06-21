@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLShiftMapper: BOLAbstractShiftMapper, IBOLShiftMapper
+        public class BOLShiftMapper : BOLAbstractShiftMapper, IBOLShiftMapper
         {
                 public BOLShiftMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c75cac5b35ce1805daacb9b4d044866</Hash>
+    <Hash>5d06923269ea486ccb72cec9832fd55f</Hash>
 </Codenesium>*/

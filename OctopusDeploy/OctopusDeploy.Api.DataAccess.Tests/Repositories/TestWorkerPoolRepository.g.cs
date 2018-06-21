@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new WorkerPoolRepository(loggerMoc.Object, context);
 
                         WorkerPool entity = new WorkerPool();
-
                         context.Set<WorkerPool>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new WorkerPoolRepository(loggerMoc.Object, context);
 
                         WorkerPool entity = new WorkerPool();
-
                         context.Set<WorkerPool>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new WorkerPoolRepository(loggerMoc.Object, context);
 
                         var entity = new WorkerPool();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<WorkerPool>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
                         var repository = new WorkerPoolRepository(loggerMoc.Object, context);
-
                         WorkerPool entity = new WorkerPool();
-
                         context.Set<WorkerPool>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
                         var repository = new WorkerPoolRepository(loggerMoc.Object, context);
-
                         WorkerPool entity = new WorkerPool();
-
                         context.Set<WorkerPool>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<WorkerPoolRepository>> loggerMoc = WorkerPoolRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = WorkerPoolRepositoryMoc.GetContext();
                         var repository = new WorkerPoolRepository(loggerMoc.Object, context);
-
                         WorkerPool entity = new WorkerPool();
-
                         context.Set<WorkerPool>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         WorkerPool modifiedRecord = await context.Set<WorkerPool>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a311e9d891e8a039299c8340e170f3f9</Hash>
+    <Hash>05f7caa09ac489021dc5b1fc1cf006d3</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOShipMethod bo)
                 {
                         ShipMethod efShipMethod = new ShipMethod();
-
                         efShipMethod.SetProperties(
                                 bo.ModifiedDate,
                                 bo.Name,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>efdb0c0ceba0394830db554752397bbf</Hash>
+    <Hash>df7371f3ffb8a4b066d149126467ecb9</Hash>
 </Codenesium>*/

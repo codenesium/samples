@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/extensionConfigurations")]
         [ApiVersion("1.0")]
-        public class ExtensionConfigurationController: AbstractExtensionConfigurationController
+        public class ExtensionConfigurationController : AbstractExtensionConfigurationController
         {
                 public ExtensionConfigurationController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>600d63298bedb14532ae6f65de378815</Hash>
+    <Hash>e89d5532d27096eb1e332fdbac85030a</Hash>
 </Codenesium>*/

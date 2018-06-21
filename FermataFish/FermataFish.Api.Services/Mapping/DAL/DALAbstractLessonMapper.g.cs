@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FermataFishNS.Api.Services
                         BOLesson bo)
                 {
                         Lesson efLesson = new Lesson();
-
                         efLesson.SetProperties(
                                 bo.ActualEndDate,
                                 bo.ActualStartDate,
@@ -62,5 +61,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>294bad2796463ba9bd4feabc5405c27a</Hash>
+    <Hash>26a0cd5d7dce5014875d8594a5f7a8cc</Hash>
 </Codenesium>*/

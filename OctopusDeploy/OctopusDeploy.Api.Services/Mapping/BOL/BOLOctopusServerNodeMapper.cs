@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class BOLOctopusServerNodeMapper: BOLAbstractOctopusServerNodeMapper, IBOLOctopusServerNodeMapper
+        public class BOLOctopusServerNodeMapper : BOLAbstractOctopusServerNodeMapper, IBOLOctopusServerNodeMapper
         {
                 public BOLOctopusServerNodeMapper()
                 {
@@ -14,5 +14,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6b5462f3fe331e7876f8391bdb54d0b</Hash>
+    <Hash>a9a6e40c9bcf960904a50f1417690d58</Hash>
 </Codenesium>*/

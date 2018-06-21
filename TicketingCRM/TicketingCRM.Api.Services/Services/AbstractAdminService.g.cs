@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractAdminService: AbstractService
+        public abstract class AbstractAdminService : AbstractService
         {
                 private IAdminRepository adminRepository;
 
@@ -33,15 +33,10 @@ namespace TicketingCRMNS.Api.Services
                         IAdminRepository adminRepository,
                         IApiAdminRequestModelValidator adminModelValidator,
                         IBOLAdminMapper bolAdminMapper,
-                        IDALAdminMapper dalAdminMapper
-
-                        ,
+                        IDALAdminMapper dalAdminMapper,
                         IBOLVenueMapper bolVenueMapper,
-                        IDALVenueMapper dalVenueMapper
-
-                        )
+                        IDALVenueMapper dalVenueMapper)
                         : base()
-
                 {
                         this.adminRepository = adminRepository;
                         this.adminModelValidator = adminModelValidator;
@@ -79,7 +74,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolAdminMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolAdminMapper.MapModelToBO(default(int), model);
                                 var record = await this.adminRepository.Create(this.dalAdminMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiAdminRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolAdminMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.adminRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4ab3dd6c6865b8ffe3f84afae5eb579</Hash>
+    <Hash>f03dd49fc747b563bb68ca5a13d6da6f</Hash>
 </Codenesium>*/

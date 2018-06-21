@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOPerson bo)
                 {
                         Person efPerson = new Person();
-
                         efPerson.SetProperties(
                                 bo.AdditionalContactInfo,
                                 bo.BusinessEntityID,
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5dfad2e99f9b9edc91aa91fbd4c7c341</Hash>
+    <Hash>09e37079f9f3dce4c970cb43e03751cc</Hash>
 </Codenesium>*/

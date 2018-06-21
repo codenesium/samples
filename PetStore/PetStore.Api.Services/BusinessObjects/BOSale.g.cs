@@ -3,14 +3,15 @@ using System;
 
 namespace PetStoreNS.Api.Services
 {
-        public partial class BOSale:AbstractBOSale
+        public partial class BOSale : AbstractBOSale
         {
-                public BOSale() : base()
+                public BOSale()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a9fb624ac94c3d5be308bb7749dd9073</Hash>
+    <Hash>9684b21868062e102a8afd1cd70aea3d</Hash>
 </Codenesium>*/

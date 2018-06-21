@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
                         var record = new ShoppingCartItem();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ShoppingCartItemService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        ApiShoppingCartItemResponseModel response = await service.Get(default (int));
+                        ApiShoppingCartItemResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        ApiShoppingCartItemResponseModel response = await service.Get(default (int));
+                        ApiShoppingCartItemResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
                         var model = new ApiShoppingCartItemRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShoppingCartItem>())).Returns(Task.FromResult(new ShoppingCartItem()));
                         var service = new ShoppingCartItemService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
                         var model = new ApiShoppingCartItemRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShoppingCartItem>())).Returns(Task.FromResult(new ShoppingCartItem()));
                         var service = new ShoppingCartItemService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ShoppingCartItemModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShoppingCartItemRequestModel>()));
@@ -118,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShoppingCartItemRepository>();
                         var model = new ApiShoppingCartItemRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ShoppingCartItemService(mock.LoggerMock.Object,
                                                                   mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -146,7 +142,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        List<ApiShoppingCartItemResponseModel> response = await service.ByShoppingCartIDProductID(default (string), default (int));
+                        List<ApiShoppingCartItemResponseModel> response = await service.ByShoppingCartIDProductID(default(string), default(int));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.ByShoppingCartIDProductID(It.IsAny<string>(), It.IsAny<int>()));
@@ -163,7 +159,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                   mock.BOLMapperMockFactory.BOLShoppingCartItemMapperMock,
                                                                   mock.DALMapperMockFactory.DALShoppingCartItemMapperMock);
 
-                        List<ApiShoppingCartItemResponseModel> response = await service.ByShoppingCartIDProductID(default (string), default (int));
+                        List<ApiShoppingCartItemResponseModel> response = await service.ByShoppingCartIDProductID(default(string), default(int));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.ByShoppingCartIDProductID(It.IsAny<string>(), It.IsAny<int>()));
@@ -172,5 +168,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>61a7ef078b4f8b0ab1bc2f97e2e68a8c</Hash>
+    <Hash>21748f1df8e7682bc19f16bf9822d45b</Hash>
 </Codenesium>*/

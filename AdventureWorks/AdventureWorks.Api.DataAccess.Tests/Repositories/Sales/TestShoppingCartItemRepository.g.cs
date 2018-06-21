@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
                         ShoppingCartItem entity = new ShoppingCartItem();
-
                         context.Set<ShoppingCartItem>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
                         ShoppingCartItem entity = new ShoppingCartItem();
-
                         context.Set<ShoppingCartItem>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
 
                         var entity = new ShoppingCartItem();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
                         var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-
                         ShoppingCartItem entity = new ShoppingCartItem();
-
                         context.Set<ShoppingCartItem>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
                         var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-
                         ShoppingCartItem entity = new ShoppingCartItem();
-
                         context.Set<ShoppingCartItem>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShoppingCartItemRepository>> loggerMoc = ShoppingCartItemRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShoppingCartItemRepositoryMoc.GetContext();
                         var repository = new ShoppingCartItemRepository(loggerMoc.Object, context);
-
                         ShoppingCartItem entity = new ShoppingCartItem();
-
                         context.Set<ShoppingCartItem>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ShoppingCartItemID);
 
                         ShoppingCartItem modifiedRecord = await context.Set<ShoppingCartItem>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7182ae22ff360cd1f88a96fa26c74584</Hash>
+    <Hash>4d746fc1ad58c388b40e8ef8a2f88b0c</Hash>
 </Codenesium>*/

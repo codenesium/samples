@@ -3,9 +3,10 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractBOClasp: AbstractBusinessObject
+        public abstract class AbstractBOClasp : AbstractBusinessObject
         {
-                public AbstractBOClasp() : base()
+                public AbstractBOClasp()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33d36629126671e8103f5f49fe302f5d</Hash>
+    <Hash>938cf5c83bcc48d748f8839143adc91c</Hash>
 </Codenesium>*/

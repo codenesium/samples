@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/countryRegionCurrencies")]
         [ApiVersion("1.0")]
-        public class CountryRegionCurrencyController: AbstractCountryRegionCurrencyController
+        public class CountryRegionCurrencyController : AbstractCountryRegionCurrencyController
         {
                 public CountryRegionCurrencyController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4ab33f3f8ab0ef51ccfe2ab724fb0860</Hash>
+    <Hash>3fd3a626d93bce1cbefe8e111733f5e3</Hash>
 </Codenesium>*/

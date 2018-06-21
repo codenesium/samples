@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public abstract class AbstractApiChainResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiChainResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         int chainStatusId,
@@ -92,5 +92,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f1ba8cd0424c64954426ecb8a178f9c7</Hash>
+    <Hash>e5c9fe6999e3ae7477804c92d95f5203</Hash>
 </Codenesium>*/

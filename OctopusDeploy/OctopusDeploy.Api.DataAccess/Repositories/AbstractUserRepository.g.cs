@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractUserRepository: AbstractRepository
+        public abstract class AbstractUserRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,18 +82,21 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
+
                 public async Task<List<User>> GetDisplayName(string displayName)
                 {
                         var records = await this.Where(x => x.DisplayName == displayName);
 
                         return records;
                 }
+
                 public async Task<List<User>> GetEmailAddress(string emailAddress)
                 {
                         var records = await this.Where(x => x.EmailAddress == emailAddress);
 
                         return records;
                 }
+
                 public async Task<List<User>> GetExternalId(string externalId)
                 {
                         var records = await this.Where(x => x.ExternalId == externalId);
@@ -133,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>264a036902a65940ab675b79d0037831</Hash>
+    <Hash>ee22d257d41dba6b4203150309c61c2f</Hash>
 </Codenesium>*/

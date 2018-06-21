@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOTeam boTeam = new BOTeam();
-
                         boTeam.SetProperties(
                                 id,
                                 model.Name,
@@ -47,5 +46,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c54ab48b522c4238dc0be0aa84dde976</Hash>
+    <Hash>f06728398a7a297d1a9788693dacc770</Hash>
 </Codenesium>*/

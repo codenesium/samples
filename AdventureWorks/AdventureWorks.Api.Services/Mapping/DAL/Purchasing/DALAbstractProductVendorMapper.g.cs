@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOProductVendor bo)
                 {
                         ProductVendor efProductVendor = new ProductVendor();
-
                         efProductVendor.SetProperties(
                                 bo.AverageLeadTime,
                                 bo.BusinessEntityID,
@@ -64,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>00e07daefa8304a7f6cba0cb5af37a3e</Hash>
+    <Hash>d8c0ac0ce8a6a167435290225ca2b47e</Hash>
 </Codenesium>*/

@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
                         var record = new ShipMethod();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ApiShipMethodResponseModel response = await service.Get(default (int));
+                        ApiShipMethodResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ApiShipMethodResponseModel response = await service.Get(default (int));
+                        ApiShipMethodResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
                         var model = new ApiShipMethodRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShipMethod>())).Returns(Task.FromResult(new ShipMethod()));
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
                         var model = new ApiShipMethodRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ShipMethod>())).Returns(Task.FromResult(new ShipMethod()));
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiShipMethodRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
                         var model = new ApiShipMethodRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -150,7 +146,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
                         var record = new ShipMethod();
-
                         mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -160,7 +155,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ApiShipMethodResponseModel response = await service.ByName(default (string));
+                        ApiShipMethodResponseModel response = await service.ByName(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -179,7 +174,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        ApiShipMethodResponseModel response = await service.ByName(default (string));
+                        ApiShipMethodResponseModel response = await service.ByName(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
@@ -191,7 +186,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
                         var records = new List<PurchaseOrderHeader>();
                         records.Add(new PurchaseOrderHeader());
-                        mock.RepositoryMock.Setup(x => x.PurchaseOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
@@ -200,17 +195,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeaders(default (int));
+                        List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeaders(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.PurchaseOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void PurchaseOrderHeaders_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IShipMethodRepository>();
-                        mock.RepositoryMock.Setup(x => x.PurchaseOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
+                        mock.RepositoryMock.Setup(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
                         var service = new ShipMethodService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
                                                             mock.ModelValidatorMockFactory.ShipMethodModelValidatorMock.Object,
@@ -219,14 +214,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
                                                             mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-                        List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeaders(default (int));
+                        List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeaders(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.PurchaseOrderHeaders(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>037b27b2f6a992ba6fd6e8c03110f33f</Hash>
+    <Hash>44660bb89fcbdc499394002230d3b473</Hash>
 </Codenesium>*/

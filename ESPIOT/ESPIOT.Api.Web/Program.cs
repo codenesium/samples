@@ -14,6 +14,5 @@ namespace ESPIOTNS.Api.Web
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration();
-   
     }
 }

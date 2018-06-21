@@ -14,6 +14,5 @@ namespace OctopusDeployNS.Api.Web
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration();
-   
     }
 }

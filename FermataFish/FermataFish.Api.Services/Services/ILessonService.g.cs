@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
@@ -22,10 +22,11 @@ namespace FermataFishNS.Api.Services
                 Task<List<ApiLessonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiLessonXStudentResponseModel>> LessonXStudents(int lessonId, int limit = int.MaxValue, int offset = 0);
+
                 Task<List<ApiLessonXTeacherResponseModel>> LessonXTeachers(int lessonId, int limit = int.MaxValue, int offset = 0);
         }
 }
 
 /*<Codenesium>
-    <Hash>72e2b0d8a2ba79cab769bfa7132c9b5d</Hash>
+    <Hash>9c6d716ff622b659a5c78a1785a2c338</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractVendorService: AbstractService
+        public abstract class AbstractVendorService : AbstractService
         {
                 private IVendorRepository vendorRepository;
 
@@ -36,18 +36,12 @@ namespace AdventureWorksNS.Api.Services
                         IVendorRepository vendorRepository,
                         IApiVendorRequestModelValidator vendorModelValidator,
                         IBOLVendorMapper bolVendorMapper,
-                        IDALVendorMapper dalVendorMapper
-
-                        ,
+                        IDALVendorMapper dalVendorMapper,
                         IBOLProductVendorMapper bolProductVendorMapper,
-                        IDALProductVendorMapper dalProductVendorMapper
-                        ,
+                        IDALProductVendorMapper dalProductVendorMapper,
                         IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
-                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
-
-                        )
+                        IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
                         : base()
-
                 {
                         this.vendorRepository = vendorRepository;
                         this.vendorModelValidator = vendorModelValidator;
@@ -87,7 +81,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiVendorResponseModel> response = new CreateResponse<ApiVendorResponseModel>(await this.vendorModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolVendorMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolVendorMapper.MapModelToBO(default(int), model);
                                 var record = await this.vendorRepository.Create(this.dalVendorMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolVendorMapper.MapBOToModel(this.dalVendorMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiVendorRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateUpdateAsync(businessEntityID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolVendorMapper.MapModelToBO(businessEntityID, model);
@@ -115,7 +108,6 @@ namespace AdventureWorksNS.Api.Services
                         int businessEntityID)
                 {
                         ActionResponse response = new ActionResponse(await this.vendorModelValidator.ValidateDeleteAsync(businessEntityID));
-
                         if (response.Success)
                         {
                                 await this.vendorRepository.Delete(businessEntityID);
@@ -144,6 +136,7 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<PurchaseOrderHeader> records = await this.vendorRepository.PurchaseOrderHeaders(vendorID, limit, offset);
@@ -154,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9ae6bdbc610dfef67884ec991774be8</Hash>
+    <Hash>cc0cbe3adccdfbaafd42305a2bb6f27f</Hash>
 </Codenesium>*/

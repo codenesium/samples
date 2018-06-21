@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IWorkerTaskLeaseRepository>();
                         var record = new WorkerTaskLease();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new WorkerTaskLeaseService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLWorkerTaskLeaseMapperMock,
                                                                  mock.DALMapperMockFactory.DALWorkerTaskLeaseMapperMock);
 
-                        ApiWorkerTaskLeaseResponseModel response = await service.Get(default (string));
+                        ApiWorkerTaskLeaseResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLWorkerTaskLeaseMapperMock,
                                                                  mock.DALMapperMockFactory.DALWorkerTaskLeaseMapperMock);
 
-                        ApiWorkerTaskLeaseResponseModel response = await service.Get(default (string));
+                        ApiWorkerTaskLeaseResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IWorkerTaskLeaseRepository>();
                         var model = new ApiWorkerTaskLeaseRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkerTaskLease>())).Returns(Task.FromResult(new WorkerTaskLease()));
                         var service = new WorkerTaskLeaseService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IWorkerTaskLeaseRepository>();
                         var model = new ApiWorkerTaskLeaseRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<WorkerTaskLease>())).Returns(Task.FromResult(new WorkerTaskLease()));
                         var service = new WorkerTaskLeaseService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLWorkerTaskLeaseMapperMock,
                                                                  mock.DALMapperMockFactory.DALWorkerTaskLeaseMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.WorkerTaskLeaseModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiWorkerTaskLeaseRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IWorkerTaskLeaseRepository>();
                         var model = new ApiWorkerTaskLeaseRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new WorkerTaskLeaseService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLWorkerTaskLeaseMapperMock,
                                                                  mock.DALMapperMockFactory.DALWorkerTaskLeaseMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -136,5 +132,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8e965180200dd830606299e9534c990a</Hash>
+    <Hash>48a251eb6253f2fa548aa69d63c0a03d</Hash>
 </Codenesium>*/

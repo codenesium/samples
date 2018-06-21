@@ -1,12 +1,12 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
+using PetStoreNS.Api.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
 
 namespace PetStoreNS.Api.Client
 {
@@ -29,10 +29,12 @@ namespace PetStoreNS.Api.Client
                         {
                                 throw new ArgumentException("apiUrl is not set");
                         }
+
                         if (apiUri[apiUri.Length - 1] != '/')
                         {
                                 throw new ArgumentException("The apiUrl must end in a / for httpClient to work correctly");
                         }
+
                         if (string.IsNullOrWhiteSpace(apiVersion))
                         {
                                 throw new ArgumentException("apiVersion is not set");
@@ -41,9 +43,7 @@ namespace PetStoreNS.Api.Client
                         this.ApiUrl = apiUri;
                         this.ApiVersion = apiVersion;
                         this.client = new HttpClient();
-
                         this.client.BaseAddress = new Uri(apiUri);
-
                         this.client.DefaultRequestHeaders.Accept.Clear();
                         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
@@ -96,6 +96,14 @@ namespace PetStoreNS.Api.Client
                         return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
+                public virtual async Task<List<ApiPetResponseModel>> Pets(int breedId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds/Pets/{breedId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
                 public virtual async Task<ApiPaymentTypeResponseModel> PaymentTypeCreateAsync(ApiPaymentTypeRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PaymentTypes", item);
@@ -141,6 +149,14 @@ namespace PetStoreNS.Api.Client
 
                         httpResponse.EnsureSuccessStatusCode();
                         return JsonConvert.DeserializeObject<List<ApiPaymentTypeResponseModel>>(httpResponse.Content.ContentToString());
+                }
+
+                public virtual async Task<List<ApiSaleResponseModel>> Sales(int paymentTypeId)
+                {
+                        HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes/Sales/{paymentTypeId}");
+
+                        httpResponse.EnsureSuccessStatusCode();
+                        return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
                 }
 
                 public virtual async Task<ApiPenResponseModel> PenCreateAsync(ApiPenRequestModel item)
@@ -334,5 +350,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>91f750e9a421b2c14ebb34d92078bc3d</Hash>
+    <Hash>21a317312798a6233f9e62ac17fd847f</Hash>
 </Codenesium>*/

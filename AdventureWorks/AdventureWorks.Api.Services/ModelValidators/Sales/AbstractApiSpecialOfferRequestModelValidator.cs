@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiSpecialOfferRequestModelValidator: AbstractValidator<ApiSpecialOfferRequestModel>
+        public abstract class AbstractApiSpecialOfferRequestModelValidator : AbstractValidator<ApiSpecialOfferRequestModel>
         {
                 private int existingRecordId;
 
-                ISpecialOfferRepository specialOfferRepository;
+                private ISpecialOfferRepository specialOfferRepository;
 
                 public AbstractApiSpecialOfferRequestModelValidator(ISpecialOfferRepository specialOfferRepository)
                 {
@@ -75,5 +75,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>296d698ffb8f851b06157118efd9822d</Hash>
+    <Hash>aa562f52504524e2eaa56884f001edc5</Hash>
 </Codenesium>*/

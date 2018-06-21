@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new MachineRepository(loggerMoc.Object, context);
 
                         Machine entity = new Machine();
-
                         context.Set<Machine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new MachineRepository(loggerMoc.Object, context);
 
                         Machine entity = new Machine();
-
                         context.Set<Machine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new MachineRepository(loggerMoc.Object, context);
 
                         var entity = new Machine();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Machine>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MachineRepositoryMoc.GetContext();
                         var repository = new MachineRepository(loggerMoc.Object, context);
-
                         Machine entity = new Machine();
-
                         context.Set<Machine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MachineRepositoryMoc.GetContext();
                         var repository = new MachineRepository(loggerMoc.Object, context);
-
                         Machine entity = new Machine();
-
                         context.Set<Machine>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<MachineRepository>> loggerMoc = MachineRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = MachineRepositoryMoc.GetContext();
                         var repository = new MachineRepository(loggerMoc.Object, context);
-
                         Machine entity = new Machine();
-
                         context.Set<Machine>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Machine modifiedRecord = await context.Set<Machine>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a60a7e87950b23462985dd3529d18c4f</Hash>
+    <Hash>d2b5898f61dc5e3de4993f42fe0d0de8</Hash>
 </Codenesium>*/

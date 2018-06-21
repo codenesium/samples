@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractApiSpeciesRequestModelValidator: AbstractValidator<ApiSpeciesRequestModel>
+        public abstract class AbstractApiSpeciesRequestModelValidator : AbstractValidator<ApiSpeciesRequestModel>
         {
                 private int existingRecordId;
 
-                ISpeciesRepository speciesRepository;
+                private ISpeciesRepository speciesRepository;
 
                 public AbstractApiSpeciesRequestModelValidator(ISpeciesRepository speciesRepository)
                 {
@@ -35,5 +35,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d069566d1f1826a5073d1f80952297ae</Hash>
+    <Hash>8d6ddb86a5d2461c1094eb6a65e927b2</Hash>
 </Codenesium>*/

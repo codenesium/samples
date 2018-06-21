@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOPurchaseOrderDetail bo)
                 {
                         PurchaseOrderDetail efPurchaseOrderDetail = new PurchaseOrderDetail();
-
                         efPurchaseOrderDetail.SetProperties(
                                 bo.DueDate,
                                 bo.LineTotal,
@@ -64,5 +63,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>552200f8119a1ee3dffc0d3b327eacc2</Hash>
+    <Hash>11bd4973932e43c38167b3bd59e3b356</Hash>
 </Codenesium>*/

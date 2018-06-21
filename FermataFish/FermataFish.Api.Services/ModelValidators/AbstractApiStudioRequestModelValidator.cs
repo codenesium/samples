@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiStudioRequestModelValidator: AbstractValidator<ApiStudioRequestModel>
+        public abstract class AbstractApiStudioRequestModelValidator : AbstractValidator<ApiStudioRequestModel>
         {
                 private int existingRecordId;
 
-                IStudioRepository studioRepository;
+                private IStudioRepository studioRepository;
 
                 public AbstractApiStudioRequestModelValidator(IStudioRepository studioRepository)
                 {
@@ -52,7 +52,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StateIdRules()
                 {
-                        this.RuleFor(x => x.StateId).MustAsync(this.BeValidState).When(x => x ?.StateId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StateId).MustAsync(this.BeValidState).When(x => x?.StateId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void WebsiteRules()
@@ -77,5 +77,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a06495f301226c518b2f0dcd39bec792</Hash>
+    <Hash>e9b452b907c063c34606f8e891138746</Hash>
 </Codenesium>*/

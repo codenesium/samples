@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegionCurrency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyCode, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegionCurrency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCountryRegionCurrencyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyCode, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegionCurrency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyCode, new string('A', 4));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegionCurrency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCountryRegionCurrencyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyCode, new string('A', 4));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new CountryRegionCurrency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CurrencyCode, "A");
@@ -122,8 +116,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         countryRegionCurrencyRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiCountryRegionCurrencyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.CurrencyCode, "A");
                 }
@@ -136,7 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 
                         var validator = new ApiCountryRegionCurrencyRequestModelValidator(countryRegionCurrencyRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiCountryRegionCurrencyRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiCountryRegionCurrencyRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.CurrencyCode, "A");
                 }
@@ -144,5 +137,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8b515cc9da8d27d75fc42f6b3e666f4a</Hash>
+    <Hash>f9682dcaad749a4b3064b51e4fae6efe</Hash>
 </Codenesium>*/

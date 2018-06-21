@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using PetShippingNS.Api.DataAccess;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace PetShippingNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ClientCommunication")]
         [Trait("Area", "DALMapper")]
-        public class TestDALClientCommunicationActionMapper
+        public class TestDALClientCommunicationMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALClientCommunicationMapper();
-
                         var bo = new BOClientCommunication();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A");
 
                         ClientCommunication response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALClientCommunicationMapper();
-
                         ClientCommunication entity = new ClientCommunication();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 
-                        BOClientCommunication  response = mapper.MapEFToBO(entity);
+                        BOClientCommunication response = mapper.MapEFToBO(entity);
 
                         response.ClientId.Should().Be(1);
                         response.DateCreated.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -52,9 +48,7 @@ namespace PetShippingNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALClientCommunicationMapper();
-
                         ClientCommunication entity = new ClientCommunication();
-
                         entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 
                         List<BOClientCommunication> response = mapper.MapEFToBO(new List<ClientCommunication>() { entity });
@@ -65,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a4eca4ef86e151993a4393004fbb8c86</Hash>
+    <Hash>3b1a9cfdc27067ba7caf457076d4bba8</Hash>
 </Codenesium>*/

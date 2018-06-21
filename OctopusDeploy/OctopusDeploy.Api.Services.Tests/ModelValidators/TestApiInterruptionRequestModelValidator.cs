@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 51));
                 }
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.RelatedDocumentIds, null as string);
                 }
@@ -213,7 +199,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ResponsibleTeamIds, null as string);
@@ -226,8 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ResponsibleTeamIds, null as string);
                 }
@@ -239,7 +223,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Status, null as string);
@@ -252,8 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Status, null as string);
                 }
@@ -265,7 +247,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Status, new string('A', 51));
@@ -278,8 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Status, new string('A', 51));
                 }
@@ -291,8 +271,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -304,7 +283,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
@@ -317,8 +295,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, null as string);
                 }
@@ -330,7 +307,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
@@ -343,8 +319,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TaskId, new string('A', 51));
                 }
@@ -356,8 +331,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -369,7 +343,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
@@ -382,8 +355,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
@@ -395,8 +367,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -408,7 +379,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, null as string);
@@ -421,8 +391,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, null as string);
                 }
@@ -434,7 +403,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 201));
@@ -447,8 +415,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiInterruptionRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiInterruptionRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Title, new string('A', 201));
                 }
@@ -460,8 +427,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         interruptionRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Interruption()));
 
                         var validator = new ApiInterruptionRequestModelValidator(interruptionRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -469,5 +435,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>12cd145dc7d5e2d6b063dfd996dc51c6</Hash>
+    <Hash>a17b4e3d5913a477336acb7cc2c87a6d</Hash>
 </Codenesium>*/

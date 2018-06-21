@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, null as string);
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, null as string);
                 }
@@ -57,7 +55,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
@@ -70,8 +67,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ChannelId, new string('A', 51));
                 }
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, null as string);
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, null as string);
                 }
@@ -148,7 +139,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, new string('A', 151));
@@ -161,8 +151,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectDeploymentProcessSnapshotId, new string('A', 151));
                 }
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, null as string);
                 }
@@ -213,7 +199,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
@@ -226,8 +211,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, new string('A', 151));
                 }
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -252,7 +235,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, null as string);
@@ -265,8 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, null as string);
                 }
@@ -278,7 +259,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
@@ -291,8 +271,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectVariableSetSnapshotId, new string('A', 151));
                 }
@@ -304,8 +283,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -317,7 +295,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
@@ -330,8 +307,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, null as string);
                 }
@@ -343,7 +319,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 101));
@@ -356,8 +331,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Version, new string('A', 101));
                 }
@@ -369,8 +343,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new Release()));
 
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -406,7 +379,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(new Release()));
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ProjectId, "A");
                 }
@@ -418,7 +391,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         releaseRepository.Setup(x => x.GetVersionProjectId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<Release>(null));
                         var validator = new ApiReleaseRequestModelValidator(releaseRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiReleaseRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiReleaseRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ProjectId, "A");
                 }
@@ -426,5 +399,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aaae03caee1a43c08b97e8dc7cba3033</Hash>
+    <Hash>a17c593f2e4fa239a58d070a6c4181b8</Hash>
 </Codenesium>*/

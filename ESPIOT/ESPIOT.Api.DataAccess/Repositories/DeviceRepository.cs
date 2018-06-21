@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-        public class DeviceRepository: AbstractDeviceRepository, IDeviceRepository
+        public class DeviceRepository : AbstractDeviceRepository, IDeviceRepository
         {
                 public DeviceRepository(
                         ILogger<DeviceRepository> logger,
@@ -20,5 +20,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c90805e95440d5f67d79dc58c366ef7e</Hash>
+    <Hash>8458679cc552740b2623de7666209969</Hash>
 </Codenesium>*/

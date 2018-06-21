@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOCurrencyRate boCurrencyRate = new BOCurrencyRate();
-
                         boCurrencyRate.SetProperties(
                                 currencyRateID,
                                 model.AverageRate,
@@ -51,5 +50,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91dd98eb869c24e72462a783fee3914d</Hash>
+    <Hash>25396f14746f406fc9825b204fb59e26</Hash>
 </Codenesium>*/

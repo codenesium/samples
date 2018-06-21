@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractRateService: AbstractService
+        public abstract class AbstractRateService : AbstractService
         {
                 private IRateRepository rateRepository;
 
@@ -29,11 +29,8 @@ namespace FermataFishNS.Api.Services
                         IRateRepository rateRepository,
                         IApiRateRequestModelValidator rateModelValidator,
                         IBOLRateMapper bolRateMapper,
-                        IDALRateMapper dalRateMapper
-
-                        )
+                        IDALRateMapper dalRateMapper)
                         : base()
-
                 {
                         this.rateRepository = rateRepository;
                         this.rateModelValidator = rateModelValidator;
@@ -69,7 +66,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.rateModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolRateMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolRateMapper.MapModelToBO(default(int), model);
                                 var record = await this.rateRepository.Create(this.dalRateMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace FermataFishNS.Api.Services
                         ApiRateRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolRateMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.rateRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d90ea8e765a04c04789319457e1772b</Hash>
+    <Hash>e539fcbfaa3dfd229a9e0ed8fd86a204</Hash>
 </Codenesium>*/

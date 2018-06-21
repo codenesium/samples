@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLPersonCreditCardMapper: BOLAbstractPersonCreditCardMapper, IBOLPersonCreditCardMapper
+        public class BOLPersonCreditCardMapper : BOLAbstractPersonCreditCardMapper, IBOLPersonCreditCardMapper
         {
                 public BOLPersonCreditCardMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9faa7edc192a7d60e7d91efed03a614d</Hash>
+    <Hash>e51a7ed1e9ca9ac6af3b02062036565e</Hash>
 </Codenesium>*/

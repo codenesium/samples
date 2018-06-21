@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOScrapReason boScrapReason = new BOScrapReason();
-
                         boScrapReason.SetProperties(
                                 scrapReasonID,
                                 model.ModifiedDate,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c90313e67b0f354bd9aa5fbfa6df3a1</Hash>
+    <Hash>dc9977e33adac1cfd57633f4cce36ad1</Hash>
 </Codenesium>*/

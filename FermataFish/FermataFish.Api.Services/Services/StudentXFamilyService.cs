@@ -1,16 +1,16 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public class StudentXFamilyService: AbstractStudentXFamilyService, IStudentXFamilyService
+        public class StudentXFamilyService : AbstractStudentXFamilyService, IStudentXFamilyService
         {
                 public StudentXFamilyService(
                         ILogger<IStudentXFamilyRepository> logger,
@@ -18,19 +18,17 @@ namespace FermataFishNS.Api.Services
                         IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator,
                         IBOLStudentXFamilyMapper bolstudentXFamilyMapper,
                         IDALStudentXFamilyMapper dalstudentXFamilyMapper
-
                         )
                         : base(logger,
                                studentXFamilyRepository,
                                studentXFamilyModelValidator,
                                bolstudentXFamilyMapper,
-                               dalstudentXFamilyMapper
-                               )
+                               dalstudentXFamilyMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>aa64578b539251b14e4359e979b09a3b</Hash>
+    <Hash>8a8cbf4f8ebcc3663468d3b9800fe1b2</Hash>
 </Codenesium>*/

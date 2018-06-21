@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLSalesPersonQuotaHistoryMapper: BOLAbstractSalesPersonQuotaHistoryMapper, IBOLSalesPersonQuotaHistoryMapper
+        public class BOLSalesPersonQuotaHistoryMapper : BOLAbstractSalesPersonQuotaHistoryMapper, IBOLSalesPersonQuotaHistoryMapper
         {
                 public BOLSalesPersonQuotaHistoryMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c859b84bea053cb665e25004013db483</Hash>
+    <Hash>258f9f6321070b54c3df170871f39d45</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ContactTypeRepository(loggerMoc.Object, context);
 
                         ContactType entity = new ContactType();
-
                         context.Set<ContactType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ContactTypeRepository(loggerMoc.Object, context);
 
                         ContactType entity = new ContactType();
-
                         context.Set<ContactType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ContactTypeRepository(loggerMoc.Object, context);
 
                         var entity = new ContactType();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<ContactType>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ContactTypeRepository>> loggerMoc = ContactTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
                         var repository = new ContactTypeRepository(loggerMoc.Object, context);
-
                         ContactType entity = new ContactType();
-
                         context.Set<ContactType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ContactTypeRepository>> loggerMoc = ContactTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
                         var repository = new ContactTypeRepository(loggerMoc.Object, context);
-
                         ContactType entity = new ContactType();
-
                         context.Set<ContactType>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ContactTypeRepository>> loggerMoc = ContactTypeRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ContactTypeRepositoryMoc.GetContext();
                         var repository = new ContactTypeRepository(loggerMoc.Object, context);
-
                         ContactType entity = new ContactType();
-
                         context.Set<ContactType>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ContactTypeID);
 
                         ContactType modifiedRecord = await context.Set<ContactType>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>834eaf6b362ba7e568e14d9185a59898</Hash>
+    <Hash>3316b2a710af7b8b79ef04dbc46b137b</Hash>
 </Codenesium>*/

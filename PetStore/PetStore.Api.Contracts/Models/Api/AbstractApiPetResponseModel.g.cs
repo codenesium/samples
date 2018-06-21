@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public abstract class AbstractApiPetResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiPetResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         DateTime acquiredDate,
@@ -121,5 +121,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c0f576adee2476b333a849a83ae1d398</Hash>
+    <Hash>434ac56e9037200758b36f2c76ecd332</Hash>
 </Codenesium>*/

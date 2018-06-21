@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOCertificate bo)
                 {
                         Certificate efCertificate = new Certificate();
-
                         efCertificate.SetProperties(
                                 bo.Archived,
                                 bo.Created,
@@ -66,5 +65,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5daac5ccc2353dab062ada7272c6005</Hash>
+    <Hash>1a59b0f7d55cac499e1dfd724c5be3ca</Hash>
 </Codenesium>*/

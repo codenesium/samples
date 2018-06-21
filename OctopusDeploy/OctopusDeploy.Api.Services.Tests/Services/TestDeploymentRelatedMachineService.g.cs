@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
                         var record = new DeploymentRelatedMachine();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        ApiDeploymentRelatedMachineResponseModel response = await service.Get(default (int));
+                        ApiDeploymentRelatedMachineResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        ApiDeploymentRelatedMachineResponseModel response = await service.Get(default (int));
+                        ApiDeploymentRelatedMachineResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
                         var model = new ApiDeploymentRelatedMachineRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeploymentRelatedMachine>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
                         var model = new ApiDeploymentRelatedMachineRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<DeploymentRelatedMachine>())).Returns(Task.FromResult(new DeploymentRelatedMachine()));
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDeploymentRelatedMachineRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
                         var model = new ApiDeploymentRelatedMachineRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
                                                                           mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -146,7 +142,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetDeploymentId(default (string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetDeploymentId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDeploymentId(It.IsAny<string>()));
@@ -163,7 +159,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetDeploymentId(default (string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetDeploymentId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDeploymentId(It.IsAny<string>()));
@@ -182,7 +178,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetMachineId(default (string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetMachineId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetMachineId(It.IsAny<string>()));
@@ -199,7 +195,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                                           mock.BOLMapperMockFactory.BOLDeploymentRelatedMachineMapperMock,
                                                                           mock.DALMapperMockFactory.DALDeploymentRelatedMachineMapperMock);
 
-                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetMachineId(default (string));
+                        List<ApiDeploymentRelatedMachineResponseModel> response = await service.GetMachineId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetMachineId(It.IsAny<string>()));
@@ -208,5 +204,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dcf7e535a4f6fd09d1e0cc0306cc5ac1</Hash>
+    <Hash>9a55e8c8712329551279a83480bed03f</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BORelease boRelease = new BORelease();
-
                         boRelease.SetProperties(
                                 id,
                                 model.Assembled,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>99a41786e14f32fe812329b2e6622efc</Hash>
+    <Hash>da6caa975b3925e301693687276aea72</Hash>
 </Codenesium>*/

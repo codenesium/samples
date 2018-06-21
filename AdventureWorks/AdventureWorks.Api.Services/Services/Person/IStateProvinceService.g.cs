@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -22,6 +22,7 @@ namespace AdventureWorksNS.Api.Services
                 Task<List<ApiStateProvinceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<ApiStateProvinceResponseModel> ByName(string name);
+
                 Task<ApiStateProvinceResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode);
 
                 Task<List<ApiAddressResponseModel>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
@@ -29,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a3aca8e65335b624e76caf309f58bb1</Hash>
+    <Hash>de62111b6cf885403df7ee8dc17c5dfa</Hash>
 </Codenesium>*/

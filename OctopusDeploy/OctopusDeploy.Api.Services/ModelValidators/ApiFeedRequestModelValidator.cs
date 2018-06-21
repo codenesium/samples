@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
-using System.Threading.Tasks;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public class ApiFeedRequestModelValidator: AbstractApiFeedRequestModelValidator, IApiFeedRequestModelValidator
+        public class ApiFeedRequestModelValidator : AbstractApiFeedRequestModelValidator, IApiFeedRequestModelValidator
         {
                 public ApiFeedRequestModelValidator(IFeedRepository feedRepository)
                         : base(feedRepository)
@@ -33,11 +33,11 @@ namespace OctopusDeployNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(string id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>20149fa36e5ff542397be7951e206900</Hash>
+    <Hash>e2a5d0ea0a26917f4819674335580c4a</Hash>
 </Codenesium>*/

@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Space")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSpaceActionMapper
+        public class TestDALSpaceMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSpaceMapper();
-
                         var bo = new BOSpace();
-
                         bo.SetProperties(1, "A", "A", 1);
 
                         Space response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSpaceMapper();
-
                         Space entity = new Space();
-
                         entity.SetProperties("A", 1, "A", 1);
 
-                        BOSpace  response = mapper.MapEFToBO(entity);
+                        BOSpace response = mapper.MapEFToBO(entity);
 
                         response.Description.Should().Be("A");
                         response.Id.Should().Be(1);
@@ -50,9 +46,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSpaceMapper();
-
                         Space entity = new Space();
-
                         entity.SetProperties("A", 1, "A", 1);
 
                         List<BOSpace> response = mapper.MapEFToBO(new List<Space>() { entity });
@@ -63,5 +57,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0351e3e73de639d9bc05f48dedd72b84</Hash>
+    <Hash>0241410c27ac90cccb81a1aae4a09b0d</Hash>
 </Codenesium>*/

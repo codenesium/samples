@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractDeploymentRelatedMachineRepository: AbstractRepository
+        public abstract class AbstractDeploymentRelatedMachineRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,17 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<DeploymentRelatedMachine>> GetMachineId(string machineId)
                 {
                         var records = await this.Where(x => x.MachineId == machineId);
 
                         return records;
+                }
+
+                public async virtual Task<Deployment> GetDeployment(string deploymentId)
+                {
+                        return await this.Context.Set<Deployment>().SingleOrDefaultAsync(x => x.Id == deploymentId);
                 }
 
                 protected async Task<List<DeploymentRelatedMachine>> Where(
@@ -117,14 +123,9 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Deployment> GetDeployment(string deploymentId)
-                {
-                        return await this.Context.Set<Deployment>().SingleOrDefaultAsync(x => x.Id == deploymentId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1c9feb3880124d555c139a5f6ba66c8</Hash>
+    <Hash>b27ab0af1325e0dca400d4c411abb84f</Hash>
 </Codenesium>*/

@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,38 +7,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DepartmentService: AbstractDepartmentService, IDepartmentService
+        public class DepartmentService : AbstractDepartmentService, IDepartmentService
         {
                 public DepartmentService(
                         ILogger<IDepartmentRepository> logger,
                         IDepartmentRepository departmentRepository,
                         IApiDepartmentRequestModelValidator departmentModelValidator,
                         IBOLDepartmentMapper boldepartmentMapper,
-                        IDALDepartmentMapper daldepartmentMapper
-                        ,
+                        IDALDepartmentMapper daldepartmentMapper,
                         IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
                         IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-
                         )
                         : base(logger,
                                departmentRepository,
                                departmentModelValidator,
                                boldepartmentMapper,
-                               daldepartmentMapper
-                               ,
+                               daldepartmentMapper,
                                bolEmployeeDepartmentHistoryMapper,
-                               dalEmployeeDepartmentHistoryMapper
-                               )
+                               dalEmployeeDepartmentHistoryMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>51257b6af3a35f9fe8710c9bcbfe42c7</Hash>
+    <Hash>57df528e8dc0e17f76315e2d2589d6b1</Hash>
 </Codenesium>*/

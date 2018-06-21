@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOAddressType boAddressType = new BOAddressType();
-
                         boAddressType.SetProperties(
                                 addressTypeID,
                                 model.ModifiedDate,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df647a4e7e2aa676ae58d19a8c30305e</Hash>
+    <Hash>012bfc83be9188a9e91fd757d920e604</Hash>
 </Codenesium>*/

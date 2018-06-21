@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
 
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         context.Set<EmployeePayHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
 
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         context.Set<EmployeePayHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
 
                         var entity = new EmployeePayHistory();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
                         var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
-
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         context.Set<EmployeePayHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
                         var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
-
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         context.Set<EmployeePayHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<EmployeePayHistoryRepository>> loggerMoc = EmployeePayHistoryRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = EmployeePayHistoryRepositoryMoc.GetContext();
                         var repository = new EmployeePayHistoryRepository(loggerMoc.Object, context);
-
                         EmployeePayHistory entity = new EmployeePayHistory();
-
                         context.Set<EmployeePayHistory>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BusinessEntityID);
 
                         EmployeePayHistory modifiedRecord = await context.Set<EmployeePayHistory>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4e77f17306ae271a711dd863375a9476</Hash>
+    <Hash>2cb5fc20ab148cee7559f543365e8198</Hash>
 </Codenesium>*/

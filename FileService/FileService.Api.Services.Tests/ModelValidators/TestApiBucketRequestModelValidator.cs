@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiBucketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -44,8 +43,7 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiBucketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
                 }
@@ -57,7 +55,6 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiBucketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 256));
@@ -70,8 +67,7 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiBucketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 256));
                 }
@@ -83,8 +79,7 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Bucket()));
 
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -120,7 +115,7 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(new Bucket()));
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiBucketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
@@ -132,7 +127,7 @@ namespace FileServiceNS.Api.Services.Tests
                         bucketRepository.Setup(x => x.GetExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Bucket>(null));
                         var validator = new ApiBucketRequestModelValidator(bucketRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiBucketRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiBucketRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
                 }
@@ -140,5 +135,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>daa73ff3f4ad6d5175b8de40134c5b0a</Hash>
+    <Hash>67591dcde02b0cd06ce7bc319da59c8e</Hash>
 </Codenesium>*/

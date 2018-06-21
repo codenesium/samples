@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using PetStoreNS.Api.Contracts;
+using PetStoreNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using PetStoreNS.Api.Contracts;
-using PetStoreNS.Api.DataAccess;
 
 namespace PetStoreNS.Api.Services
 {
-        public abstract class AbstractPenService: AbstractService
+        public abstract class AbstractPenService : AbstractService
         {
                 private IPenRepository penRepository;
 
@@ -33,15 +33,10 @@ namespace PetStoreNS.Api.Services
                         IPenRepository penRepository,
                         IApiPenRequestModelValidator penModelValidator,
                         IBOLPenMapper bolPenMapper,
-                        IDALPenMapper dalPenMapper
-
-                        ,
+                        IDALPenMapper dalPenMapper,
                         IBOLPetMapper bolPetMapper,
-                        IDALPetMapper dalPetMapper
-
-                        )
+                        IDALPetMapper dalPetMapper)
                         : base()
-
                 {
                         this.penRepository = penRepository;
                         this.penModelValidator = penModelValidator;
@@ -79,7 +74,7 @@ namespace PetStoreNS.Api.Services
                         CreateResponse<ApiPenResponseModel> response = new CreateResponse<ApiPenResponseModel>(await this.penModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPenMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPenMapper.MapModelToBO(default(int), model);
                                 var record = await this.penRepository.Create(this.dalPenMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPenMapper.MapBOToModel(this.dalPenMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace PetStoreNS.Api.Services
                         ApiPenRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPenMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace PetStoreNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.penModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.penRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d0c6c7411b3ba6e94ff742989d84b4a</Hash>
+    <Hash>21eae1cee938f0ec7c462b1df81c834e</Hash>
 </Codenesium>*/

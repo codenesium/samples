@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOSalesPerson boSalesPerson = new BOSalesPerson();
-
                         boSalesPerson.SetProperties(
                                 businessEntityID,
                                 model.Bonus,
@@ -53,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e1dee1861718d22740520ae6537ba304</Hash>
+    <Hash>f76ac63f3117c6872a95d0989cfcff05</Hash>
 </Codenesium>*/

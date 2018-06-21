@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace FileServiceNS.Api.Services
                         BOBucket bo)
                 {
                         Bucket efBucket = new Bucket();
-
                         efBucket.SetProperties(
                                 bo.ExternalId,
                                 bo.Id,
@@ -48,5 +47,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea015706a83c11e022aa0595804d7f5b</Hash>
+    <Hash>4892b926124c27a034d00bf34625f7fe</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOProjectTrigger boProjectTrigger = new BOProjectTrigger();
-
                         boProjectTrigger.SetProperties(
                                 id,
                                 model.IsDisabled,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e750041501f894b84f9ccdbd3e61bc61</Hash>
+    <Hash>d3a421b5f7a7710849d53f455518c38d</Hash>
 </Codenesium>*/

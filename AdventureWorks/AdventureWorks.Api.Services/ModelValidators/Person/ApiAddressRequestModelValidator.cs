@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiAddressRequestModelValidator: AbstractApiAddressRequestModelValidator, IApiAddressRequestModelValidator
+        public class ApiAddressRequestModelValidator : AbstractApiAddressRequestModelValidator, IApiAddressRequestModelValidator
         {
                 public ApiAddressRequestModelValidator(IAddressRepository addressRepository)
                         : base(addressRepository)
@@ -39,11 +39,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7d3da16a859cb495fa62497f435503c6</Hash>
+    <Hash>1f63f116f17b497402c1b1f8f5cc9f28</Hash>
 </Codenesium>*/

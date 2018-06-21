@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractLinkStatusService: AbstractService
+        public abstract class AbstractLinkStatusService : AbstractService
         {
                 private ILinkStatusRepository linkStatusRepository;
 
@@ -33,15 +33,10 @@ namespace NebulaNS.Api.Services
                         ILinkStatusRepository linkStatusRepository,
                         IApiLinkStatusRequestModelValidator linkStatusModelValidator,
                         IBOLLinkStatusMapper bolLinkStatusMapper,
-                        IDALLinkStatusMapper dalLinkStatusMapper
-
-                        ,
+                        IDALLinkStatusMapper dalLinkStatusMapper,
                         IBOLLinkMapper bolLinkMapper,
-                        IDALLinkMapper dalLinkMapper
-
-                        )
+                        IDALLinkMapper dalLinkMapper)
                         : base()
-
                 {
                         this.linkStatusRepository = linkStatusRepository;
                         this.linkStatusModelValidator = linkStatusModelValidator;
@@ -79,7 +74,7 @@ namespace NebulaNS.Api.Services
                         CreateResponse<ApiLinkStatusResponseModel> response = new CreateResponse<ApiLinkStatusResponseModel>(await this.linkStatusModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolLinkStatusMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolLinkStatusMapper.MapModelToBO(default(int), model);
                                 var record = await this.linkStatusRepository.Create(this.dalLinkStatusMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolLinkStatusMapper.MapBOToModel(this.dalLinkStatusMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace NebulaNS.Api.Services
                         ApiLinkStatusRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.linkStatusModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolLinkStatusMapper.MapModelToBO(id, model);
@@ -107,7 +101,6 @@ namespace NebulaNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.linkStatusModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.linkStatusRepository.Delete(id);
@@ -126,5 +119,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>036684c6c23a5cce8422eff0f5434284</Hash>
+    <Hash>2b1db877c2ae977864bf0ee33de55057</Hash>
 </Codenesium>*/

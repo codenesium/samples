@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractSpecialOfferService: AbstractService
+        public abstract class AbstractSpecialOfferService : AbstractService
         {
                 private ISpecialOfferRepository specialOfferRepository;
 
@@ -33,15 +33,10 @@ namespace AdventureWorksNS.Api.Services
                         ISpecialOfferRepository specialOfferRepository,
                         IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
                         IBOLSpecialOfferMapper bolSpecialOfferMapper,
-                        IDALSpecialOfferMapper dalSpecialOfferMapper
-
-                        ,
+                        IDALSpecialOfferMapper dalSpecialOfferMapper,
                         IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
-                        IDALSpecialOfferProductMapper dalSpecialOfferProductMapper
-
-                        )
+                        IDALSpecialOfferProductMapper dalSpecialOfferProductMapper)
                         : base()
-
                 {
                         this.specialOfferRepository = specialOfferRepository;
                         this.specialOfferModelValidator = specialOfferModelValidator;
@@ -79,7 +74,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiSpecialOfferResponseModel> response = new CreateResponse<ApiSpecialOfferResponseModel>(await this.specialOfferModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolSpecialOfferMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolSpecialOfferMapper.MapModelToBO(default(int), model);
                                 var record = await this.specialOfferRepository.Create(this.dalSpecialOfferMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(record)));
@@ -93,7 +88,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiSpecialOfferRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.specialOfferModelValidator.ValidateUpdateAsync(specialOfferID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolSpecialOfferMapper.MapModelToBO(specialOfferID, model);
@@ -107,7 +101,6 @@ namespace AdventureWorksNS.Api.Services
                         int specialOfferID)
                 {
                         ActionResponse response = new ActionResponse(await this.specialOfferModelValidator.ValidateDeleteAsync(specialOfferID));
-
                         if (response.Success)
                         {
                                 await this.specialOfferRepository.Delete(specialOfferID);
@@ -126,5 +119,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9ece0ad6baa395111e3cdade9f81dc99</Hash>
+    <Hash>551d3732f6e0cf71bb2631faf0573e77</Hash>
 </Codenesium>*/

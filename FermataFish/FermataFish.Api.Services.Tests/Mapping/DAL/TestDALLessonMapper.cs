@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Lesson")]
         [Trait("Area", "DALMapper")]
-        public class TestDALLessonActionMapper
+        public class TestDALLessonMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALLessonMapper();
-
                         var bo = new BOLesson();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
 
                         Lesson response = mapper.MapBOToEF(bo);
@@ -39,12 +37,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALLessonMapper();
-
                         Lesson entity = new Lesson();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
 
-                        BOLesson  response = mapper.MapEFToBO(entity);
+                        BOLesson response = mapper.MapEFToBO(entity);
 
                         response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -62,9 +58,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALLessonMapper();
-
                         Lesson entity = new Lesson();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
 
                         List<BOLesson> response = mapper.MapEFToBO(new List<Lesson>() { entity });
@@ -75,5 +69,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ba0d4e925e913017e95dd6ef7be03dae</Hash>
+    <Hash>049ac060aa2d8a28ff8f923a7921dedc</Hash>
 </Codenesium>*/

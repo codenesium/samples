@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkerTaskLease")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLWorkerTaskLeaseActionMapper
+        public class TestBOLWorkerTaskLeaseMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLWorkerTaskLeaseMapper();
-
                         ApiWorkerTaskLeaseRequestModel model = new ApiWorkerTaskLeaseRequestModel();
-
                         model.SetProperties(true, "A", "A", "A", "A");
                         BOWorkerTaskLease response = mapper.MapModelToBO("A", model);
 
@@ -34,9 +32,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLWorkerTaskLeaseMapper();
-
                         BOWorkerTaskLease bo = new BOWorkerTaskLease();
-
                         bo.SetProperties("A", true, "A", "A", "A", "A");
                         ApiWorkerTaskLeaseResponseModel response = mapper.MapBOToModel(bo);
 
@@ -52,9 +48,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLWorkerTaskLeaseMapper();
-
                         BOWorkerTaskLease bo = new BOWorkerTaskLease();
-
                         bo.SetProperties("A", true, "A", "A", "A", "A");
                         List<ApiWorkerTaskLeaseResponseModel> response = mapper.MapBOToModel(new List<BOWorkerTaskLease>() { { bo } });
 
@@ -64,5 +58,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1a037a3ae741d3bf223792cb3b72afa6</Hash>
+    <Hash>82851e985c9690ef6bc9f7f7ba4f7696</Hash>
 </Codenesium>*/

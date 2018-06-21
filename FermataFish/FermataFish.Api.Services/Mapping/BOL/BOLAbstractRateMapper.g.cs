@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FermataFishNS.Api.Services
                         )
                 {
                         BORate boRate = new BORate();
-
                         boRate.SetProperties(
                                 id,
                                 model.AmountPerMinute,
@@ -48,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9cfabf099b973e7fc6cdbf4a32ea9c0</Hash>
+    <Hash>c088ff6577c8b4a24f89f234123b9089</Hash>
 </Codenesium>*/

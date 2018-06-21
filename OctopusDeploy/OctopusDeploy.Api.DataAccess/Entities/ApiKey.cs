@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("ApiKey", Schema="dbo")]
-        public partial class ApiKey:AbstractEntity
+        public partial class ApiKey : AbstractEntity
         {
                 public ApiKey()
                 {
@@ -26,24 +26,24 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.UserId = userId;
                 }
 
-                [Column("ApiKeyHashed", TypeName="nvarchar(200)")]
+                [Column("ApiKeyHashed")]
                 public string ApiKeyHashed { get; private set; }
 
-                [Column("Created", TypeName="datetimeoffset")]
+                [Column("Created")]
                 public DateTimeOffset Created { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(50)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("UserId", TypeName="nvarchar(50)")]
+                [Column("UserId")]
                 public string UserId { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>4040e9f2d62226352ff88fc2cea35976</Hash>
+    <Hash>bd0fb0a6f1946ec84b7821c02a337b1b</Hash>
 </Codenesium>*/

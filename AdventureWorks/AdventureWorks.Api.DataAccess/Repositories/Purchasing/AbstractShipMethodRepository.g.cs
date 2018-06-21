@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractShipMethodRepository: AbstractRepository
+        public abstract class AbstractShipMethodRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.ShipMethodID == shipMethodID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+                }
+
                 protected async Task<List<ShipMethod>> Where(
                         Expression<Func<ShipMethod, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.ShipMethodID == shipMethodID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>41b3c6f7e034ce6ae15a62bc86dd1074</Hash>
+    <Hash>a69aa46ceea1713283a475d667e35eb0</Hash>
 </Codenesium>*/

@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALProductModelProductDescriptionCultureMapper: DALAbstractProductModelProductDescriptionCultureMapper, IDALProductModelProductDescriptionCultureMapper
+        public class DALProductModelProductDescriptionCultureMapper : DALAbstractProductModelProductDescriptionCultureMapper, IDALProductModelProductDescriptionCultureMapper
         {
                 public DALProductModelProductDescriptionCultureMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e96734ce097687bcd80a25ffd0b5c608</Hash>
+    <Hash>a6367a97fd94116f023c18fab424c23b</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace FermataFishNS.Api.Services
                         )
                 {
                         BOFamily boFamily = new BOFamily();
-
                         boFamily.SetProperties(
                                 id,
                                 model.Notes,
@@ -51,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4b7d816d219aa55d440fa058f5bf728</Hash>
+    <Hash>0bb48ddf31c36364f5588c68bb2caa11</Hash>
 </Codenesium>*/

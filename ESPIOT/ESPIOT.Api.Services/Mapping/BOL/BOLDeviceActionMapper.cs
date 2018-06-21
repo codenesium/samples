@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-        public class BOLDeviceActionMapper: BOLAbstractDeviceActionMapper, IBOLDeviceActionMapper
+        public class BOLDeviceActionMapper : BOLAbstractDeviceActionMapper, IBOLDeviceActionMapper
         {
                 public BOLDeviceActionMapper()
                 {
@@ -14,5 +14,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aa3e203621702fd376a72def654c9f8b</Hash>
+    <Hash>9e518ddb328e96e7c49c33a5ba377c1c</Hash>
 </Codenesium>*/

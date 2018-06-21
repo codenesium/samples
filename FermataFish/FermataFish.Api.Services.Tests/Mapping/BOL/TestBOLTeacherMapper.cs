@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Teacher")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLTeacherActionMapper
+        public class TestBOLTeacherMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLTeacherMapper();
-
                         ApiTeacherRequestModel model = new ApiTeacherRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
                         BOTeacher response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLTeacherMapper();
-
                         BOTeacher bo = new BOTeacher();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
                         ApiTeacherResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLTeacherMapper();
-
                         BOTeacher bo = new BOTeacher();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
                         List<ApiTeacherResponseModel> response = mapper.MapBOToModel(new List<BOTeacher>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8211cc071801cb5aadf78e5aead38024</Hash>
+    <Hash>2c4b963dc99020e0622e4ba3a709b51f</Hash>
 </Codenesium>*/

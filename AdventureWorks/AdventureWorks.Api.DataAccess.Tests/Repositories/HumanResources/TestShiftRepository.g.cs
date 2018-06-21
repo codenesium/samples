@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShiftRepository(loggerMoc.Object, context);
 
                         Shift entity = new Shift();
-
                         context.Set<Shift>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShiftRepository(loggerMoc.Object, context);
 
                         Shift entity = new Shift();
-
                         context.Set<Shift>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new ShiftRepository(loggerMoc.Object, context);
 
                         var entity = new Shift();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Shift>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
                         var repository = new ShiftRepository(loggerMoc.Object, context);
-
                         Shift entity = new Shift();
-
                         context.Set<Shift>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
                         var repository = new ShiftRepository(loggerMoc.Object, context);
-
                         Shift entity = new Shift();
-
                         context.Set<Shift>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<ShiftRepository>> loggerMoc = ShiftRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = ShiftRepositoryMoc.GetContext();
                         var repository = new ShiftRepository(loggerMoc.Object, context);
-
                         Shift entity = new Shift();
-
                         context.Set<Shift>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.ShiftID);
 
                         Shift modifiedRecord = await context.Set<Shift>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>26d1181258478d87e7dcca9ae8d26991</Hash>
+    <Hash>e71be1736f2b0c2f1f01afd3bbb6e825</Hash>
 </Codenesium>*/

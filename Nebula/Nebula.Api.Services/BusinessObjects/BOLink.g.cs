@@ -3,14 +3,15 @@ using System;
 
 namespace NebulaNS.Api.Services
 {
-        public partial class BOLink:AbstractBOLink
+        public partial class BOLink : AbstractBOLink
         {
-                public BOLink() : base()
+                public BOLink()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c147858d3391004893b29365a7102d69</Hash>
+    <Hash>a1487260162fcf6deb6f3fc8df7bdf91</Hash>
 </Codenesium>*/

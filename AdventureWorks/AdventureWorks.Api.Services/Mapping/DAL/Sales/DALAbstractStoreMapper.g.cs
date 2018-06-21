@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOStore bo)
                 {
                         Store efStore = new Store();
-
                         efStore.SetProperties(
                                 bo.BusinessEntityID,
                                 bo.Demographics,
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>131ecea07b93c08b6846eab9395daff0</Hash>
+    <Hash>982905a435a464caebfbc2e7323432fd</Hash>
 </Codenesium>*/

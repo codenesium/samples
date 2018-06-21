@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductListPriceHistoryRepository>();
                         var record = new ProductListPriceHistory();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new ProductListPriceHistoryService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLProductListPriceHistoryMapperMock,
                                                                          mock.DALMapperMockFactory.DALProductListPriceHistoryMapperMock);
 
-                        ApiProductListPriceHistoryResponseModel response = await service.Get(default (int));
+                        ApiProductListPriceHistoryResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -67,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLProductListPriceHistoryMapperMock,
                                                                          mock.DALMapperMockFactory.DALProductListPriceHistoryMapperMock);
 
-                        ApiProductListPriceHistoryResponseModel response = await service.Get(default (int));
+                        ApiProductListPriceHistoryResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -78,7 +77,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductListPriceHistoryRepository>();
                         var model = new ApiProductListPriceHistoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductListPriceHistory>())).Returns(Task.FromResult(new ProductListPriceHistory()));
                         var service = new ProductListPriceHistoryService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductListPriceHistoryRepository>();
                         var model = new ApiProductListPriceHistoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ProductListPriceHistory>())).Returns(Task.FromResult(new ProductListPriceHistory()));
                         var service = new ProductListPriceHistoryService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLProductListPriceHistoryMapperMock,
                                                                          mock.DALMapperMockFactory.DALProductListPriceHistoryMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ProductListPriceHistoryModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductListPriceHistoryRequestModel>()));
@@ -118,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IProductListPriceHistoryRepository>();
                         var model = new ApiProductListPriceHistoryRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new ProductListPriceHistoryService(mock.LoggerMock.Object,
                                                                          mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                          mock.BOLMapperMockFactory.BOLProductListPriceHistoryMapperMock,
                                                                          mock.DALMapperMockFactory.DALProductListPriceHistoryMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -136,5 +132,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2f26c34e34485e5a93bc4564846fe9f7</Hash>
+    <Hash>935518ec268e6b21ce8be38bbabc8ab3</Hash>
 </Codenesium>*/

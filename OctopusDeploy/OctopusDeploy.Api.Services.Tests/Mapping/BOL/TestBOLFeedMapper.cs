@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Feed")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLFeedActionMapper
+        public class TestBOLFeedMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLFeedMapper();
-
                         ApiFeedRequestModel model = new ApiFeedRequestModel();
-
                         model.SetProperties("A", "A", "A", "A");
                         BOFeed response = mapper.MapModelToBO("A", model);
 
@@ -33,9 +31,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLFeedMapper();
-
                         BOFeed bo = new BOFeed();
-
                         bo.SetProperties("A", "A", "A", "A", "A");
                         ApiFeedResponseModel response = mapper.MapBOToModel(bo);
 
@@ -50,9 +46,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLFeedMapper();
-
                         BOFeed bo = new BOFeed();
-
                         bo.SetProperties("A", "A", "A", "A", "A");
                         List<ApiFeedResponseModel> response = mapper.MapBOToModel(new List<BOFeed>() { { bo } });
 
@@ -62,5 +56,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1831615e5ce24b912159870a70587134</Hash>
+    <Hash>b6f33722003fc4a830a2911f0efdcb27</Hash>
 </Codenesium>*/

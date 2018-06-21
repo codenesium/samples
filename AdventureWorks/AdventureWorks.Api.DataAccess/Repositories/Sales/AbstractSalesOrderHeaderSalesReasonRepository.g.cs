@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractSalesOrderHeaderSalesReasonRepository: AbstractRepository
+        public abstract class AbstractSalesOrderHeaderSalesReasonRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<SalesOrderHeader> GetSalesOrderHeader(int salesOrderID)
+                {
+                        return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderID == salesOrderID);
+                }
+
+                public async virtual Task<SalesReason> GetSalesReason(int salesReasonID)
+                {
+                        return await this.Context.Set<SalesReason>().SingleOrDefaultAsync(x => x.SalesReasonID == salesReasonID);
+                }
+
                 protected async Task<List<SalesOrderHeaderSalesReason>> Where(
                         Expression<Func<SalesOrderHeaderSalesReason, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,18 +114,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<SalesOrderHeader> GetSalesOrderHeader(int salesOrderID)
-                {
-                        return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderID == salesOrderID);
-                }
-                public async virtual Task<SalesReason> GetSalesReason(int salesReasonID)
-                {
-                        return await this.Context.Set<SalesReason>().SingleOrDefaultAsync(x => x.SalesReasonID == salesReasonID);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>b3b0950375467d9855ed258f4c7ef1a7</Hash>
+    <Hash>ecc8606b1220eece9e642d2027b62bf4</Hash>
 </Codenesium>*/

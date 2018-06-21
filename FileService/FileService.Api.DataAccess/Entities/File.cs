@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FileServiceNS.Api.DataAccess
 {
         [Table("File", Schema="dbo")]
-        public partial class File:AbstractEntity
+        public partial class File : AbstractEntity
         {
                 public File()
                 {
@@ -40,41 +40,41 @@ namespace FileServiceNS.Api.DataAccess
                         this.PublicKey = publicKey;
                 }
 
-                [Column("bucketId", TypeName="int")]
+                [Column("bucketId")]
                 public Nullable<int> BucketId { get; private set; }
 
-                [Column("dateCreated", TypeName="datetime")]
+                [Column("dateCreated")]
                 public DateTime DateCreated { get; private set; }
 
-                [Column("description", TypeName="nvarchar(255)")]
+                [Column("description")]
                 public string Description { get; private set; }
 
-                [Column("expiration", TypeName="datetime")]
+                [Column("expiration")]
                 public DateTime Expiration { get; private set; }
 
-                [Column("extension", TypeName="varchar(32)")]
+                [Column("extension")]
                 public string Extension { get; private set; }
 
-                [Column("externalId", TypeName="uniqueidentifier")]
+                [Column("externalId")]
                 public Guid ExternalId { get; private set; }
 
-                [Column("fileSizeInBytes", TypeName="decimal")]
+                [Column("fileSizeInBytes")]
                 public decimal FileSizeInBytes { get; private set; }
 
-                [Column("fileTypeId", TypeName="int")]
+                [Column("fileTypeId")]
                 public int FileTypeId { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("location", TypeName="varchar(255)")]
+                [Column("location")]
                 public string Location { get; private set; }
 
-                [Column("privateKey", TypeName="varchar(64)")]
+                [Column("privateKey")]
                 public string PrivateKey { get; private set; }
 
-                [Column("publicKey", TypeName="varchar(64)")]
+                [Column("publicKey")]
                 public string PublicKey { get; private set; }
 
                 [ForeignKey("BucketId")]
@@ -86,5 +86,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4721eb31882397050f212c8920add05f</Hash>
+    <Hash>9b054c9d28ca54dab5d95e877b248971</Hash>
 </Codenesium>*/

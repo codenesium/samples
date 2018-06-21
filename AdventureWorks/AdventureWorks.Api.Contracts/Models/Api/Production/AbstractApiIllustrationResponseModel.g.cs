@@ -2,12 +2,12 @@ using Codenesium.DataConversionExtensions.AspNetCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public abstract class AbstractApiIllustrationResponseModel: AbstractApiResponseModel
+        public abstract class AbstractApiIllustrationResponseModel : AbstractApiResponseModel
         {
                 public virtual void SetProperties(
                         string diagram,
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>520b266fefeb42c007adbf80077ddd03</Hash>
+    <Hash>d76272d07a3374dfdf01cc73965c181b</Hash>
 </Codenesium>*/

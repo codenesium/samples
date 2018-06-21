@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Proxy")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProxyActionMapper
+        public class TestBOLProxyMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProxyMapper();
-
                         ApiProxyRequestModel model = new ApiProxyRequestModel();
-
                         model.SetProperties("A", "A");
                         BOProxy response = mapper.MapModelToBO("A", model);
 
@@ -31,9 +29,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProxyMapper();
-
                         BOProxy bo = new BOProxy();
-
                         bo.SetProperties("A", "A", "A");
                         ApiProxyResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProxyMapper();
-
                         BOProxy bo = new BOProxy();
-
                         bo.SetProperties("A", "A", "A");
                         List<ApiProxyResponseModel> response = mapper.MapBOToModel(new List<BOProxy>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9252f8b886a1147d1ae1a2843b03b171</Hash>
+    <Hash>cdc7bd20c4534ab7943cfe485bc7e5ba</Hash>
 </Codenesium>*/

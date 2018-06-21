@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiBillOfMaterialsRequestModelValidator: AbstractApiBillOfMaterialsRequestModelValidator, IApiBillOfMaterialsRequestModelValidator
+        public class ApiBillOfMaterialsRequestModelValidator : AbstractApiBillOfMaterialsRequestModelValidator, IApiBillOfMaterialsRequestModelValidator
         {
                 public ApiBillOfMaterialsRequestModelValidator(IBillOfMaterialsRepository billOfMaterialsRepository)
                         : base(billOfMaterialsRepository)
@@ -41,11 +41,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>27d9d1687dbfa918a708be39f7fcf5d1</Hash>
+    <Hash>2351c4c88b6fb7da2f91cfa637a50580</Hash>
 </Codenesium>*/

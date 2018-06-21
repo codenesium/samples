@@ -3,9 +3,10 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractBOWorkOrderRouting: AbstractBusinessObject
+        public abstract class AbstractBOWorkOrderRouting : AbstractBusinessObject
         {
-                public AbstractBOWorkOrderRouting() : base()
+                public AbstractBOWorkOrderRouting()
+                        : base()
                 {
                 }
 
@@ -63,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c438b58c8447a9b1386aec3305ba0f1</Hash>
+    <Hash>4265eb4578e4b11640a46f57caa4bacf</Hash>
 </Codenesium>*/

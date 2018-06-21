@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace FermataFishNS.Api.DataAccess
 {
         [Table("SpaceXSpaceFeature", Schema="dbo")]
-        public partial class SpaceXSpaceFeature: AbstractEntity
+        public partial class SpaceXSpaceFeature : AbstractEntity
         {
                 public SpaceXSpaceFeature()
                 {
@@ -23,13 +23,13 @@ namespace FermataFishNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("spaceFeatureId", TypeName="int")]
+                [Column("spaceFeatureId")]
                 public int SpaceFeatureId { get; private set; }
 
-                [Column("spaceId", TypeName="int")]
+                [Column("spaceId")]
                 public int SpaceId { get; private set; }
 
                 [ForeignKey("SpaceFeatureId")]
@@ -41,5 +41,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2ad0491fd42f80958f59a43c2ba3c3c4</Hash>
+    <Hash>a1dbbcf3590435162d5a3a9246d660fc</Hash>
 </Codenesium>*/

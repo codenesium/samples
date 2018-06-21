@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALErrorLogMapper: DALAbstractErrorLogMapper, IDALErrorLogMapper
+        public class DALErrorLogMapper : DALAbstractErrorLogMapper, IDALErrorLogMapper
         {
                 public DALErrorLogMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5de81682b6acc57e6979320e18b2c844</Hash>
+    <Hash>86e8b0c76d9b52693b39a7a1cf8abc10</Hash>
 </Codenesium>*/

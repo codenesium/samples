@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new KeyAllocationRepository(loggerMoc.Object, context);
 
                         KeyAllocation entity = new KeyAllocation();
-
                         context.Set<KeyAllocation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new KeyAllocationRepository(loggerMoc.Object, context);
 
                         KeyAllocation entity = new KeyAllocation();
-
                         context.Set<KeyAllocation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new KeyAllocationRepository(loggerMoc.Object, context);
 
                         var entity = new KeyAllocation();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<KeyAllocation>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<KeyAllocationRepository>> loggerMoc = KeyAllocationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = KeyAllocationRepositoryMoc.GetContext();
                         var repository = new KeyAllocationRepository(loggerMoc.Object, context);
-
                         KeyAllocation entity = new KeyAllocation();
-
                         context.Set<KeyAllocation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<KeyAllocationRepository>> loggerMoc = KeyAllocationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = KeyAllocationRepositoryMoc.GetContext();
                         var repository = new KeyAllocationRepository(loggerMoc.Object, context);
-
                         KeyAllocation entity = new KeyAllocation();
-
                         context.Set<KeyAllocation>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<KeyAllocationRepository>> loggerMoc = KeyAllocationRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = KeyAllocationRepositoryMoc.GetContext();
                         var repository = new KeyAllocationRepository(loggerMoc.Object, context);
-
                         KeyAllocation entity = new KeyAllocation();
-
                         context.Set<KeyAllocation>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.CollectionName);
 
                         KeyAllocation modifiedRecord = await context.Set<KeyAllocation>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>b7ce7fa397376d5db0135736c9f8e1d8</Hash>
+    <Hash>222fc7b838584179006938bc6b9268b8</Hash>
 </Codenesium>*/

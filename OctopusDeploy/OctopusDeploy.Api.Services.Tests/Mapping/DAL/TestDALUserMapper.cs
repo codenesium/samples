@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "User")]
         [Trait("Area", "DALMapper")]
-        public class TestDALUserActionMapper
+        public class TestDALUserMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALUserMapper();
-
                         var bo = new BOUser();
-
                         bo.SetProperties("A", "A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
 
                         User response = mapper.MapBOToEF(bo);
@@ -39,12 +37,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALUserMapper();
-
                         User entity = new User();
-
                         entity.SetProperties("A", "A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
 
-                        BOUser  response = mapper.MapEFToBO(entity);
+                        BOUser response = mapper.MapEFToBO(entity);
 
                         response.DisplayName.Should().Be("A");
                         response.EmailAddress.Should().Be("A");
@@ -62,9 +58,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALUserMapper();
-
                         User entity = new User();
-
                         entity.SetProperties("A", "A", "A", "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), true, true, "A", "A");
 
                         List<BOUser> response = mapper.MapEFToBO(new List<User>() { entity });
@@ -75,5 +69,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>74de1e4f11cdc58eb5243dc364075397</Hash>
+    <Hash>394fc4fe0a11afd6667ae109ecbb12e3</Hash>
 </Codenesium>*/

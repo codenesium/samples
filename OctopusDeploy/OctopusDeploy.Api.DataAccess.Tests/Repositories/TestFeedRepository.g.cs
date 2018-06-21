@@ -38,7 +38,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new FeedRepository(loggerMoc.Object, context);
 
                         Feed entity = new Feed();
-
                         context.Set<Feed>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new FeedRepository(loggerMoc.Object, context);
 
                         Feed entity = new Feed();
-
                         context.Set<Feed>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace OctopusDeployNS.Api.DataAccess
                         var repository = new FeedRepository(loggerMoc.Object, context);
 
                         var entity = new Feed();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Feed>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<FeedRepository>> loggerMoc = FeedRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FeedRepositoryMoc.GetContext();
                         var repository = new FeedRepository(loggerMoc.Object, context);
-
                         Feed entity = new Feed();
-
                         context.Set<Feed>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<FeedRepository>> loggerMoc = FeedRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FeedRepositoryMoc.GetContext();
                         var repository = new FeedRepository(loggerMoc.Object, context);
-
                         Feed entity = new Feed();
-
                         context.Set<Feed>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace OctopusDeployNS.Api.DataAccess
                         Mock<ILogger<FeedRepository>> loggerMoc = FeedRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = FeedRepositoryMoc.GetContext();
                         var repository = new FeedRepository(loggerMoc.Object, context);
-
                         Feed entity = new Feed();
-
                         context.Set<Feed>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Feed modifiedRecord = await context.Set<Feed>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>afa3518d4162578d7706b96168300f57</Hash>
+    <Hash>198cf4c6e29005873631da4890401325</Hash>
 </Codenesium>*/

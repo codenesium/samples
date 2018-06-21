@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOTeam boTeam = new BOTeam();
-
                         boTeam.SetProperties(
                                 id,
                                 model.EnvironmentIds,
@@ -53,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>50b25765b6f26d1d6194a803bab708ce</Hash>
+    <Hash>08f7c2dbe9b248303c1bfdadb5fd153b</Hash>
 </Codenesium>*/

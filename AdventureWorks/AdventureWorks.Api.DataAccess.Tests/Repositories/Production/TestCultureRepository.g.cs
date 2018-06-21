@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CultureRepository(loggerMoc.Object, context);
 
                         Culture entity = new Culture();
-
                         context.Set<Culture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CultureRepository(loggerMoc.Object, context);
 
                         Culture entity = new Culture();
-
                         context.Set<Culture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new CultureRepository(loggerMoc.Object, context);
 
                         var entity = new Culture();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Culture>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CultureRepositoryMoc.GetContext();
                         var repository = new CultureRepository(loggerMoc.Object, context);
-
                         Culture entity = new Culture();
-
                         context.Set<Culture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CultureRepositoryMoc.GetContext();
                         var repository = new CultureRepository(loggerMoc.Object, context);
-
                         Culture entity = new Culture();
-
                         context.Set<Culture>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<CultureRepository>> loggerMoc = CultureRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = CultureRepositoryMoc.GetContext();
                         var repository = new CultureRepository(loggerMoc.Object, context);
-
                         Culture entity = new Culture();
-
                         context.Set<Culture>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.CultureID);
 
                         Culture modifiedRecord = await context.Set<Culture>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5bb3d0a162522551bbcbfcb1f72b6c86</Hash>
+    <Hash>cbd6d716aa03c7a094c48f281740d5d6</Hash>
 </Codenesium>*/

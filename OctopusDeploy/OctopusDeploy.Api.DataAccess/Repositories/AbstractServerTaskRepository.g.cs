@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractServerTaskRepository: AbstractRepository
+        public abstract class AbstractServerTaskRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,12 +82,14 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<ServerTask>> GetStateConcurrencyTag(string state, string concurrencyTag)
                 {
                         var records = await this.Where(x => x.State == state && x.ConcurrencyTag == concurrencyTag);
 
                         return records;
                 }
+
                 public async Task<List<ServerTask>> GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, Nullable<DateTimeOffset> startTime, Nullable<DateTimeOffset> completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
                 {
                         var records = await this.Where(x => x.Name == name && x.Description == description && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.HasWarningsOrErrors == hasWarningsOrErrors && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.QueueTime == queueTime && x.State == state && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.ServerNodeId == serverNodeId);
@@ -127,5 +129,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2642d1e486fee07808f727ba39ce26d0</Hash>
+    <Hash>e13f54e0bc0ed4360aba7d4e86a36316</Hash>
 </Codenesium>*/

@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
@@ -44,8 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, new string('A', 51));
                 }
@@ -57,8 +55,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -70,7 +67,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
@@ -83,8 +79,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JSON, null as string);
                 }
@@ -96,7 +91,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
@@ -109,8 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, null as string);
                 }
@@ -122,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 51));
@@ -135,8 +127,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.OwnerId, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, null as string);
@@ -174,8 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, null as string);
                 }
@@ -187,7 +175,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
@@ -200,8 +187,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.TenantId, new string('A', 51));
                 }
@@ -213,8 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, null as string);
@@ -239,8 +223,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, null as string);
                 }
@@ -252,7 +235,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, new string('A', 51));
@@ -265,8 +247,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.VariableTemplateId, new string('A', 51));
                 }
@@ -278,8 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(new TenantVariable()));
 
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (string));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(string));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -315,7 +295,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(new TenantVariable()));
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.EnvironmentId, "A");
                 }
@@ -327,7 +307,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                         tenantVariableRepository.Setup(x => x.GetTenantIdOwnerIdEnvironmentIdVariableTemplateId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<TenantVariable>(null));
                         var validator = new ApiTenantVariableRequestModelValidator(tenantVariableRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (string), new ApiTenantVariableRequestModel());
+                        await validator.ValidateUpdateAsync(default(string), new ApiTenantVariableRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.EnvironmentId, "A");
                 }
@@ -335,5 +315,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3ac85557fcede67707d41562f5355ada</Hash>
+    <Hash>cbb3bc730afa7b0110746f49ac0b8732</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
 using NebulaNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "MachineRefTeam")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLMachineRefTeamActionMapper
+        public class TestBOLMachineRefTeamMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLMachineRefTeamMapper();
-
                         ApiMachineRefTeamRequestModel model = new ApiMachineRefTeamRequestModel();
-
                         model.SetProperties(1, 1);
                         BOMachineRefTeam response = mapper.MapModelToBO(1, model);
 
@@ -31,9 +29,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLMachineRefTeamMapper();
-
                         BOMachineRefTeam bo = new BOMachineRefTeam();
-
                         bo.SetProperties(1, 1, 1);
                         ApiMachineRefTeamResponseModel response = mapper.MapBOToModel(bo);
 
@@ -46,9 +42,7 @@ namespace NebulaNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLMachineRefTeamMapper();
-
                         BOMachineRefTeam bo = new BOMachineRefTeam();
-
                         bo.SetProperties(1, 1, 1);
                         List<ApiMachineRefTeamResponseModel> response = mapper.MapBOToModel(new List<BOMachineRefTeam>() { { bo } });
 
@@ -58,5 +52,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>764bc1b996b4371d20e85f5fa2326f76</Hash>
+    <Hash>691e4edf5f07be1944533675800d3374</Hash>
 </Codenesium>*/

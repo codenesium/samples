@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractDashboardConfigurationService: AbstractService
+        public abstract class AbstractDashboardConfigurationService : AbstractService
         {
                 private IDashboardConfigurationRepository dashboardConfigurationRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IDashboardConfigurationRepository dashboardConfigurationRepository,
                         IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator,
                         IBOLDashboardConfigurationMapper bolDashboardConfigurationMapper,
-                        IDALDashboardConfigurationMapper dalDashboardConfigurationMapper
-
-                        )
+                        IDALDashboardConfigurationMapper dalDashboardConfigurationMapper)
                         : base()
-
                 {
                         this.dashboardConfigurationRepository = dashboardConfigurationRepository;
                         this.dashboardConfigurationModelValidator = dashboardConfigurationModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiDashboardConfigurationResponseModel> response = new CreateResponse<ApiDashboardConfigurationResponseModel>(await this.dashboardConfigurationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolDashboardConfigurationMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolDashboardConfigurationMapper.MapModelToBO(default(string), model);
                                 var record = await this.dashboardConfigurationRepository.Create(this.dalDashboardConfigurationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolDashboardConfigurationMapper.MapBOToModel(this.dalDashboardConfigurationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiDashboardConfigurationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.dashboardConfigurationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolDashboardConfigurationMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.dashboardConfigurationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.dashboardConfigurationRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>961528863c1323e75d0a182a1070b3b4</Hash>
+    <Hash>2b9d22793beefc35cb6253ad70264baf</Hash>
 </Codenesium>*/

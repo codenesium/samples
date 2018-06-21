@@ -1,12 +1,12 @@
-using System;
 using FluentValidation.Results;
+using System;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public class ApiTransactionStatusRequestModelValidator: AbstractApiTransactionStatusRequestModelValidator, IApiTransactionStatusRequestModelValidator
+        public class ApiTransactionStatusRequestModelValidator : AbstractApiTransactionStatusRequestModelValidator, IApiTransactionStatusRequestModelValidator
         {
                 public ApiTransactionStatusRequestModelValidator(ITransactionStatusRepository transactionStatusRepository)
                         : base(transactionStatusRepository)
@@ -27,11 +27,11 @@ namespace TicketingCRMNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>57a9f1c3c018b3f41904b8ab1880bf52</Hash>
+    <Hash>3c87d0b95ef3fb1ec87a097c87c8efb6</Hash>
 </Codenesium>*/

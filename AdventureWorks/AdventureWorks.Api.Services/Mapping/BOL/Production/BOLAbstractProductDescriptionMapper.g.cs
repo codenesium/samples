@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOProductDescription boProductDescription = new BOProductDescription();
-
                         boProductDescription.SetProperties(
                                 productDescriptionID,
                                 model.Description,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac3763d2cb4355032db29831a5846617</Hash>
+    <Hash>9107d35ce0a52e5365e946f8e1f3169f</Hash>
 </Codenesium>*/

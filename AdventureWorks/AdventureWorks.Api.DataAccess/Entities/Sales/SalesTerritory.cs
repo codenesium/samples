@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("SalesTerritory", Schema="Sales")]
-        public partial class SalesTerritory: AbstractEntity
+        public partial class SalesTerritory : AbstractEntity
         {
                 public SalesTerritory()
                 {
@@ -36,39 +36,39 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.TerritoryID = territoryID;
                 }
 
-                [Column("CostLastYear", TypeName="money")]
+                [Column("CostLastYear")]
                 public decimal CostLastYear { get; private set; }
 
-                [Column("CostYTD", TypeName="money")]
+                [Column("CostYTD")]
                 public decimal CostYTD { get; private set; }
 
-                [Column("CountryRegionCode", TypeName="nvarchar(3)")]
+                [Column("CountryRegionCode")]
                 public string CountryRegionCode { get; private set; }
 
-                [Column("Group", TypeName="nvarchar(50)")]
+                [Column("Group")]
                 public string @Group { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(50)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("rowguid", TypeName="uniqueidentifier")]
+                [Column("rowguid")]
                 public Guid Rowguid { get; private set; }
 
-                [Column("SalesLastYear", TypeName="money")]
+                [Column("SalesLastYear")]
                 public decimal SalesLastYear { get; private set; }
 
-                [Column("SalesYTD", TypeName="money")]
+                [Column("SalesYTD")]
                 public decimal SalesYTD { get; private set; }
 
                 [Key]
-                [Column("TerritoryID", TypeName="int")]
+                [Column("TerritoryID")]
                 public int TerritoryID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>d4aa9da76a434eb167f05106216e314b</Hash>
+    <Hash>9c8161ecca37723792f2bf076b42f23d</Hash>
 </Codenesium>*/

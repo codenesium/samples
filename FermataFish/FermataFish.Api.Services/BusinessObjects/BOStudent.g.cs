@@ -3,14 +3,15 @@ using System;
 
 namespace FermataFishNS.Api.Services
 {
-        public partial class BOStudent: AbstractBOStudent
+        public partial class BOStudent : AbstractBOStudent
         {
-                public BOStudent() : base()
+                public BOStudent()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>7f729e35382a10d2fc9fb82944fdfb36</Hash>
+    <Hash>2d7aea2eff6ffbad4a7a1c5b75ed3a48</Hash>
 </Codenesium>*/

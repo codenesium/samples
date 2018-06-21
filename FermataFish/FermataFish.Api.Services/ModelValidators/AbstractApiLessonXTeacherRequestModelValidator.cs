@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiLessonXTeacherRequestModelValidator: AbstractValidator<ApiLessonXTeacherRequestModel>
+        public abstract class AbstractApiLessonXTeacherRequestModelValidator : AbstractValidator<ApiLessonXTeacherRequestModel>
         {
                 private int existingRecordId;
 
-                ILessonXTeacherRepository lessonXTeacherRepository;
+                private ILessonXTeacherRepository lessonXTeacherRepository;
 
                 public AbstractApiLessonXTeacherRequestModelValidator(ILessonXTeacherRepository lessonXTeacherRepository)
                 {
@@ -28,12 +28,12 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void LessonIdRules()
                 {
-                        this.RuleFor(x => x.LessonId).MustAsync(this.BeValidLesson).When(x => x ?.LessonId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.LessonId).MustAsync(this.BeValidLesson).When(x => x?.LessonId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void StudentIdRules()
                 {
-                        this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x ?.StudentId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x?.StudentId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidLesson(int id,  CancellationToken cancellationToken)
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>927a5851d7f3e6529e39ffaabb45fd11</Hash>
+    <Hash>93a2f83ab03ffa01c415e53e89cc072c</Hash>
 </Codenesium>*/

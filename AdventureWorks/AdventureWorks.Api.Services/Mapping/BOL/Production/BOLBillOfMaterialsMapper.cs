@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class BOLBillOfMaterialsMapper: BOLAbstractBillOfMaterialsMapper, IBOLBillOfMaterialsMapper
+        public class BOLBillOfMaterialsMapper : BOLAbstractBillOfMaterialsMapper, IBOLBillOfMaterialsMapper
         {
                 public BOLBillOfMaterialsMapper()
                 {
@@ -14,5 +14,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e06ee3152a2889976af22b528fe5a2e</Hash>
+    <Hash>c38ca78c7b159834ad206ba8f3bdbafc</Hash>
 </Codenesium>*/

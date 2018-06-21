@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOShipMethod boShipMethod = new BOShipMethod();
-
                         boShipMethod.SetProperties(
                                 shipMethodID,
                                 model.ModifiedDate,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3e34285ddba330dc0d7a8e18956e9b57</Hash>
+    <Hash>cf64ee7924440611343b7c0fc053dd04</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -12,7 +12,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractEventService: AbstractService
+        public abstract class AbstractEventService : AbstractService
         {
                 private IEventRepository eventRepository;
 
@@ -29,11 +29,8 @@ namespace TicketingCRMNS.Api.Services
                         IEventRepository eventRepository,
                         IApiEventRequestModelValidator eventModelValidator,
                         IBOLEventMapper bolEventMapper,
-                        IDALEventMapper dalEventMapper
-
-                        )
+                        IDALEventMapper dalEventMapper)
                         : base()
-
                 {
                         this.eventRepository = eventRepository;
                         this.eventModelValidator = eventModelValidator;
@@ -69,7 +66,7 @@ namespace TicketingCRMNS.Api.Services
                         CreateResponse<ApiEventResponseModel> response = new CreateResponse<ApiEventResponseModel>(await this.eventModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolEventMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolEventMapper.MapModelToBO(default(int), model);
                                 var record = await this.eventRepository.Create(this.dalEventMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace TicketingCRMNS.Api.Services
                         ApiEventRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.eventModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolEventMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace TicketingCRMNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.eventModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.eventRepository.Delete(id);
@@ -116,5 +111,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0158f69b6ebc61c387470f1d4105be0</Hash>
+    <Hash>5debe3b1523dca82da291baf17b049c1</Hash>
 </Codenesium>*/

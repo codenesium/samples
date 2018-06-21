@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-        public abstract class AbstractOrganizationRepository: AbstractRepository
+        public abstract class AbstractOrganizationRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace NebulaNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Team>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Team>().Where(x => x.OrganizationId == organizationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Team>();
+                }
+
                 protected async Task<List<Organization>> Where(
                         Expression<Func<Organization, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace NebulaNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Team>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Team>().Where(x => x.OrganizationId == organizationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Team>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>0dc992367b2561c73d1e3a956037d0dd</Hash>
+    <Hash>1c0c9bc83c5f1bce44925c8c03c2821c</Hash>
 </Codenesium>*/

@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace NebulaNS.Api.Services
                         )
                 {
                         BOMachine boMachine = new BOMachine();
-
                         boMachine.SetProperties(
                                 id,
                                 model.Description,
@@ -50,5 +49,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95716a4d78270b2fe6c094d37ea0a50f</Hash>
+    <Hash>4681be9ac6cb1d32624922eff5e71e73</Hash>
 </Codenesium>*/

@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-        public abstract class AbstractTransactionStatusRepository: AbstractRepository
+        public abstract class AbstractTransactionStatusRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -76,6 +76,11 @@ namespace TicketingCRMNS.Api.DataAccess
                         }
                 }
 
+                public async virtual Task<List<Transaction>> Transactions(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<Transaction>().Where(x => x.TransactionStatusId == transactionStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Transaction>();
+                }
+
                 protected async Task<List<TransactionStatus>> Where(
                         Expression<Func<TransactionStatus, bool>> predicate,
                         int limit = int.MaxValue,
@@ -104,14 +109,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<Transaction>> Transactions(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<Transaction>().Where(x => x.TransactionStatusId == transactionStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Transaction>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>9b7d9830200ee100c1f1b253793c2936</Hash>
+    <Hash>950f0fb9d746137674956ae57322b0a5</Hash>
 </Codenesium>*/

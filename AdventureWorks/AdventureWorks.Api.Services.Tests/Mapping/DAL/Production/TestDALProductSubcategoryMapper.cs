@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductSubcategory")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProductSubcategoryActionMapper
+        public class TestDALProductSubcategoryMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProductSubcategoryMapper();
-
                         var bo = new BOProductSubcategory();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         ProductSubcategory response = mapper.MapBOToEF(bo);
@@ -34,12 +32,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProductSubcategoryMapper();
-
                         ProductSubcategory entity = new ProductSubcategory();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
-                        BOProductSubcategory  response = mapper.MapEFToBO(entity);
+                        BOProductSubcategory response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Name.Should().Be("A");
@@ -52,9 +48,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProductSubcategoryMapper();
-
                         ProductSubcategory entity = new ProductSubcategory();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         List<BOProductSubcategory> response = mapper.MapEFToBO(new List<ProductSubcategory>() { entity });
@@ -65,5 +59,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>915b7352e6d61527a8aa7000c6fcc8d5</Hash>
+    <Hash>be2ddfdc287b6944a39535efdbb69cf9</Hash>
 </Codenesium>*/

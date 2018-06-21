@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("ProductModelIllustration", Schema="Production")]
-        public partial class ProductModelIllustration: AbstractEntity
+        public partial class ProductModelIllustration : AbstractEntity
         {
                 public ProductModelIllustration()
                 {
@@ -22,18 +22,18 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ProductModelID = productModelID;
                 }
 
-                [Column("IllustrationID", TypeName="int")]
+                [Column("IllustrationID")]
                 public int IllustrationID { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
                 [Key]
-                [Column("ProductModelID", TypeName="int")]
+                [Column("ProductModelID")]
                 public int ProductModelID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>0faf5ecc2169158570f06bac7b1e36b5</Hash>
+    <Hash>4196bf79825eac8002844ba110d8b5cc</Hash>
 </Codenesium>*/

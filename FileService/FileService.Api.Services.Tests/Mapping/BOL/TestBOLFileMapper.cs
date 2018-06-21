@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
 using FileServiceNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FileServiceNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "File")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLFileActionMapper
+        public class TestBOLFileMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLFileMapper();
-
                         ApiFileRequestModel model = new ApiFileRequestModel();
-
                         model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
                         BOFile response = mapper.MapModelToBO(1, model);
 
@@ -40,9 +38,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLFileMapper();
-
                         BOFile bo = new BOFile();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
                         ApiFileResponseModel response = mapper.MapBOToModel(bo);
 
@@ -64,9 +60,7 @@ namespace FileServiceNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLFileMapper();
-
                         BOFile bo = new BOFile();
-
                         bo.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, "A", "A", "A");
                         List<ApiFileResponseModel> response = mapper.MapBOToModel(new List<BOFile>() { { bo } });
 
@@ -76,5 +70,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>35206d69096f5fb05af500cc4118aad9</Hash>
+    <Hash>0fb12c55bf11d7afd0e56b0e28f367bd</Hash>
 </Codenesium>*/

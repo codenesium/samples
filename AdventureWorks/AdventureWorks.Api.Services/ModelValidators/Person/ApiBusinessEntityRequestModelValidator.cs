@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiBusinessEntityRequestModelValidator: AbstractApiBusinessEntityRequestModelValidator, IApiBusinessEntityRequestModelValidator
+        public class ApiBusinessEntityRequestModelValidator : AbstractApiBusinessEntityRequestModelValidator, IApiBusinessEntityRequestModelValidator
         {
                 public ApiBusinessEntityRequestModelValidator(IBusinessEntityRepository businessEntityRepository)
                         : base(businessEntityRepository)
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(int id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a9bff5c4cf0513fdaa19ee59f7eac32d</Hash>
+    <Hash>10ddd00c68e8587588f0cbf73dd278cc</Hash>
 </Codenesium>*/

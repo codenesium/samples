@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SalesTaxRate")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLSalesTaxRateActionMapper
+        public class TestBOLSalesTaxRateMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLSalesTaxRateMapper();
-
                         ApiSalesTaxRateRequestModel model = new ApiSalesTaxRateRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
                         BOSalesTaxRate response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLSalesTaxRateMapper();
-
                         BOSalesTaxRate bo = new BOSalesTaxRate();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
                         ApiSalesTaxRateResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLSalesTaxRateMapper();
-
                         BOSalesTaxRate bo = new BOSalesTaxRate();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1);
                         List<ApiSalesTaxRateResponseModel> response = mapper.MapBOToModel(new List<BOSalesTaxRate>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0143d0922e23977eecad1d05e61f4033</Hash>
+    <Hash>802d4d4f5333cf040a7bdf5640342d30</Hash>
 </Codenesium>*/

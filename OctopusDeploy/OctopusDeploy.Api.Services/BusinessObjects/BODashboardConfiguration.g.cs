@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BODashboardConfiguration: AbstractBODashboardConfiguration
+        public partial class BODashboardConfiguration : AbstractBODashboardConfiguration
         {
-                public BODashboardConfiguration() : base()
+                public BODashboardConfiguration()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>f1b37861945a5f3c898f54a201d4f4c3</Hash>
+    <Hash>1d134909a05d06d263b780258151b218</Hash>
 </Codenesium>*/

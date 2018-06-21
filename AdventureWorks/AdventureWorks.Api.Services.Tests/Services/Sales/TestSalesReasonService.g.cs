@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesReasonRepository>();
                         var record = new SalesReason();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new SalesReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        ApiSalesReasonResponseModel response = await service.Get(default (int));
+                        ApiSalesReasonResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        ApiSalesReasonResponseModel response = await service.Get(default (int));
+                        ApiSalesReasonResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesReasonRepository>();
                         var model = new ApiSalesReasonRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesReason>())).Returns(Task.FromResult(new SalesReason()));
                         var service = new SalesReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesReasonRepository>();
                         var model = new ApiSalesReasonRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<SalesReason>())).Returns(Task.FromResult(new SalesReason()));
                         var service = new SalesReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.SalesReasonModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesReasonRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<ISalesReasonRepository>();
                         var model = new ApiSalesReasonRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new SalesReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -151,7 +147,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<ISalesReasonRepository>();
                         var records = new List<SalesOrderHeaderSalesReason>();
                         records.Add(new SalesOrderHeaderSalesReason());
-                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaderSalesReasons(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new SalesReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.SalesReasonModelValidatorMock.Object,
@@ -160,17 +156,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.SalesOrderHeaderSalesReasons(default (int));
+                        List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.SalesOrderHeaderSalesReasons(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaderSalesReasons(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void SalesOrderHeaderSalesReasons_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<ISalesReasonRepository>();
-                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaderSalesReasons(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeaderSalesReason>>(new List<SalesOrderHeaderSalesReason>()));
+                        mock.RepositoryMock.Setup(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeaderSalesReason>>(new List<SalesOrderHeaderSalesReason>()));
                         var service = new SalesReasonService(mock.LoggerMock.Object,
                                                              mock.RepositoryMock.Object,
                                                              mock.ModelValidatorMockFactory.SalesReasonModelValidatorMock.Object,
@@ -179,14 +175,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                              mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
                                                              mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
 
-                        List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.SalesOrderHeaderSalesReasons(default (int));
+                        List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.SalesOrderHeaderSalesReasons(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaderSalesReasons(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>a5ca9d6730479a05863b0f0bf98f8982</Hash>
+    <Hash>0ae7af4d3b95d84007ef70c4ef93feb5</Hash>
 </Codenesium>*/

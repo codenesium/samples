@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractCountryRegionCurrencyRepository: AbstractRepository
+        public abstract class AbstractCountryRegionCurrencyRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,11 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records;
                 }
 
+                public async virtual Task<Currency> GetCurrency(string currencyCode)
+                {
+                        return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == currencyCode);
+                }
+
                 protected async Task<List<CountryRegionCurrency>> Where(
                         Expression<Func<CountryRegionCurrency, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,14 +116,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Currency> GetCurrency(string currencyCode)
-                {
-                        return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.CurrencyCode == currencyCode);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>de89bf20610c02fc35af3e48c13f69d0</Hash>
+    <Hash>594cc95f84848313d9844f882c2f9f55</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiStateProvinceRequestModelValidator: AbstractValidator<ApiStateProvinceRequestModel>
+        public abstract class AbstractApiStateProvinceRequestModelValidator : AbstractValidator<ApiStateProvinceRequestModel>
         {
                 private int existingRecordId;
 
-                IStateProvinceRepository stateProvinceRepository;
+                private IStateProvinceRepository stateProvinceRepository;
 
                 public AbstractApiStateProvinceRequestModelValidator(IStateProvinceRepository stateProvinceRepository)
                 {
@@ -29,7 +29,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void CountryRegionCodeRules()
                 {
                         this.RuleFor(x => x.CountryRegionCode).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceCodeCountryRegionCode).When(x => x ?.CountryRegionCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceRequestModel.CountryRegionCode));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceCodeCountryRegionCode).When(x => x?.CountryRegionCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceRequestModel.CountryRegionCode));
                         this.RuleFor(x => x.CountryRegionCode).Length(0, 3);
                 }
 
@@ -44,7 +44,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void NameRules()
                 {
                         this.RuleFor(x => x.Name).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x ?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceRequestModel.Name));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceRequestModel.Name));
                         this.RuleFor(x => x.Name).Length(0, 50);
                 }
 
@@ -55,7 +55,7 @@ namespace AdventureWorksNS.Api.Services
                 public virtual void StateProvinceCodeRules()
                 {
                         this.RuleFor(x => x.StateProvinceCode).NotNull();
-                        this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceCodeCountryRegionCode).When(x => x ?.StateProvinceCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceRequestModel.StateProvinceCode));
+                        this.RuleFor(x => x).MustAsync(this.BeUniqueByStateProvinceCodeCountryRegionCode).When(x => x?.StateProvinceCode != null).WithMessage("Violates unique constraint").WithName(nameof(ApiStateProvinceRequestModel.StateProvinceCode));
                         this.RuleFor(x => x.StateProvinceCode).Length(0, 3);
                 }
 
@@ -67,7 +67,7 @@ namespace AdventureWorksNS.Api.Services
                 {
                         StateProvince record = await this.stateProvinceRepository.ByName(model.Name);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.StateProvinceID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.StateProvinceID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -76,11 +76,12 @@ namespace AdventureWorksNS.Api.Services
                                 return false;
                         }
                 }
+
                 private async Task<bool> BeUniqueByStateProvinceCodeCountryRegionCode(ApiStateProvinceRequestModel model,  CancellationToken cancellationToken)
                 {
                         StateProvince record = await this.stateProvinceRepository.ByStateProvinceCodeCountryRegionCode(model.StateProvinceCode, model.CountryRegionCode);
 
-                        if (record == null || (this.existingRecordId != default (int) && record.StateProvinceID == this.existingRecordId))
+                        if (record == null || (this.existingRecordId != default(int) && record.StateProvinceID == this.existingRecordId))
                         {
                                 return true;
                         }
@@ -93,5 +94,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a93a811a49909d5cd14fdee30e74f5e</Hash>
+    <Hash>4630ea8bd60a7da4e63591c671e17fa8</Hash>
 </Codenesium>*/

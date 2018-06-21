@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOProjectGroup bo)
                 {
                         ProjectGroup efProjectGroup = new ProjectGroup();
-
                         efProjectGroup.SetProperties(
                                 bo.DataVersion,
                                 bo.Id,
@@ -50,5 +49,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7607b3f97c6e7c13ceb890a4f2e4ec96</Hash>
+    <Hash>375550dca5c4f763b2d15b16c24f65f8</Hash>
 </Codenesium>*/

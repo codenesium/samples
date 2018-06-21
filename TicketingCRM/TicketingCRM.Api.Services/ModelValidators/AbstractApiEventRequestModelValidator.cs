@@ -9,11 +9,11 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-        public abstract class AbstractApiEventRequestModelValidator: AbstractValidator<ApiEventRequestModel>
+        public abstract class AbstractApiEventRequestModelValidator : AbstractValidator<ApiEventRequestModel>
         {
                 private int existingRecordId;
 
-                IEventRepository eventRepository;
+                private IEventRepository eventRepository;
 
                 public AbstractApiEventRequestModelValidator(IEventRepository eventRepository)
                 {
@@ -40,7 +40,7 @@ namespace TicketingCRMNS.Api.Services
 
                 public virtual void CityIdRules()
                 {
-                        this.RuleFor(x => x.CityId).MustAsync(this.BeValidCity).When(x => x ?.CityId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.CityId).MustAsync(this.BeValidCity).When(x => x?.CityId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void DateRules()
@@ -89,5 +89,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5bda5ad013df64244d304b90d218f658</Hash>
+    <Hash>df6f0d50573af6996b1b50639fe403bb</Hash>
 </Codenesium>*/

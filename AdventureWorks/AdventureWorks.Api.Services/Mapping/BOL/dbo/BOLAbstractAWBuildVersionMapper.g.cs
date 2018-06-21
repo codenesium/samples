@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOAWBuildVersion boAWBuildVersion = new BOAWBuildVersion();
-
                         boAWBuildVersion.SetProperties(
                                 systemInformationID,
                                 model.Database_Version,
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>12bc75e51f5c8691c57f7ea7902ee108</Hash>
+    <Hash>3d9babf915c7ad549e82b04d0dd243ac</Hash>
 </Codenesium>*/

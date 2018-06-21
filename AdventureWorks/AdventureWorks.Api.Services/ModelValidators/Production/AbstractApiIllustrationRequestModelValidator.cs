@@ -1,19 +1,19 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractApiIllustrationRequestModelValidator: AbstractValidator<ApiIllustrationRequestModel>
+        public abstract class AbstractApiIllustrationRequestModelValidator : AbstractValidator<ApiIllustrationRequestModel>
         {
                 private int existingRecordId;
 
-                IIllustrationRepository illustrationRepository;
+                private IIllustrationRepository illustrationRepository;
 
                 public AbstractApiIllustrationRequestModelValidator(IIllustrationRepository illustrationRepository)
                 {
@@ -37,5 +37,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0f84780f430f13d790282f5445d015f</Hash>
+    <Hash>733acfdb97e9e162d47f940b80aa0c5f</Hash>
 </Codenesium>*/

@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-        public class ApiVersionInfoRequestModelValidator: AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
+        public class ApiVersionInfoRequestModelValidator : AbstractApiVersionInfoRequestModelValidator, IApiVersionInfoRequestModelValidator
         {
                 public ApiVersionInfoRequestModelValidator(IVersionInfoRepository versionInfoRepository)
                         : base(versionInfoRepository)
@@ -29,11 +29,11 @@ namespace FileServiceNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(long id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>18f922fa5e91bf75f2f505d176c974ec</Hash>
+    <Hash>49f43e6da67f337241ec0ce860452eb2</Hash>
 </Codenesium>*/

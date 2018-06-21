@@ -1,15 +1,15 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
                         var record = new PhoneNumberType();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ApiPhoneNumberTypeResponseModel response = await service.Get(default (int));
+                        ApiPhoneNumberTypeResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ApiPhoneNumberTypeResponseModel response = await service.Get(default (int));
+                        ApiPhoneNumberTypeResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
                         var model = new ApiPhoneNumberTypeRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PhoneNumberType>())).Returns(Task.FromResult(new PhoneNumberType()));
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
                         var model = new ApiPhoneNumberTypeRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<PhoneNumberType>())).Returns(Task.FromResult(new PhoneNumberType()));
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPhoneNumberTypeRequestModel>()));
@@ -128,7 +125,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
                         var model = new ApiPhoneNumberTypeRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -151,7 +147,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
                         var records = new List<PersonPhone>();
                         records.Add(new PersonPhone());
-                        mock.RepositoryMock.Setup(x => x.PersonPhones(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.PersonPhones(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
@@ -160,17 +156,17 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        List<ApiPersonPhoneResponseModel> response = await service.PersonPhones(default (int));
+                        List<ApiPersonPhoneResponseModel> response = await service.PersonPhones(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.PersonPhones(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.PersonPhones(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void PersonPhones_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IPhoneNumberTypeRepository>();
-                        mock.RepositoryMock.Setup(x => x.PersonPhones(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PersonPhone>>(new List<PersonPhone>()));
+                        mock.RepositoryMock.Setup(x => x.PersonPhones(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PersonPhone>>(new List<PersonPhone>()));
                         var service = new PhoneNumberTypeService(mock.LoggerMock.Object,
                                                                  mock.RepositoryMock.Object,
                                                                  mock.ModelValidatorMockFactory.PhoneNumberTypeModelValidatorMock.Object,
@@ -179,14 +175,14 @@ namespace AdventureWorksNS.Api.Services.Tests
                                                                  mock.BOLMapperMockFactory.BOLPersonPhoneMapperMock,
                                                                  mock.DALMapperMockFactory.DALPersonPhoneMapperMock);
 
-                        List<ApiPersonPhoneResponseModel> response = await service.PersonPhones(default (int));
+                        List<ApiPersonPhoneResponseModel> response = await service.PersonPhones(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.PersonPhones(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.PersonPhones(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9e80b310b88112ca3b3e20e0ec15b211</Hash>
+    <Hash>c6d22f22d2fecc646423e6cadefd3f94</Hash>
 </Codenesium>*/

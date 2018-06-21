@@ -3,14 +3,15 @@ using System;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public partial class BOEmailAddress: AbstractBOEmailAddress
+        public partial class BOEmailAddress : AbstractBOEmailAddress
         {
-                public BOEmailAddress() : base()
+                public BOEmailAddress()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>389474d11d9c7abf0660191a7b55948f</Hash>
+    <Hash>abfc420b90bc48fdaaf395e4bf8dd9a1</Hash>
 </Codenesium>*/

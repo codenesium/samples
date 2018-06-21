@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractInvitationService: AbstractService
+        public abstract class AbstractInvitationService : AbstractService
         {
                 private IInvitationRepository invitationRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IInvitationRepository invitationRepository,
                         IApiInvitationRequestModelValidator invitationModelValidator,
                         IBOLInvitationMapper bolInvitationMapper,
-                        IDALInvitationMapper dalInvitationMapper
-
-                        )
+                        IDALInvitationMapper dalInvitationMapper)
                         : base()
-
                 {
                         this.invitationRepository = invitationRepository;
                         this.invitationModelValidator = invitationModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiInvitationResponseModel> response = new CreateResponse<ApiInvitationResponseModel>(await this.invitationModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolInvitationMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolInvitationMapper.MapModelToBO(default(string), model);
                                 var record = await this.invitationRepository.Create(this.dalInvitationMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolInvitationMapper.MapBOToModel(this.dalInvitationMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiInvitationRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.invitationModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolInvitationMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.invitationModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.invitationRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d02991c7f065b3a196ff92acc6286b08</Hash>
+    <Hash>905abbef49778fbed7ba29293fcd78a4</Hash>
 </Codenesium>*/

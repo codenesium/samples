@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "WorkOrder")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLWorkOrderActionMapper
+        public class TestBOLWorkOrderMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLWorkOrderMapper();
-
                         ApiWorkOrderRequestModel model = new ApiWorkOrderRequestModel();
-
                         model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         BOWorkOrder response = mapper.MapModelToBO(1, model);
 
@@ -38,9 +36,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLWorkOrderMapper();
-
                         BOWorkOrder bo = new BOWorkOrder();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         ApiWorkOrderResponseModel response = mapper.MapBOToModel(bo);
 
@@ -60,9 +56,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLWorkOrderMapper();
-
                         BOWorkOrder bo = new BOWorkOrder();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
                         List<ApiWorkOrderResponseModel> response = mapper.MapBOToModel(new List<BOWorkOrder>() { { bo } });
 
@@ -72,5 +66,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a9a4eb9538411e46046ece1eb0fce3e4</Hash>
+    <Hash>053fe0f6fffbfb74a1bdbab57b3bc649</Hash>
 </Codenesium>*/

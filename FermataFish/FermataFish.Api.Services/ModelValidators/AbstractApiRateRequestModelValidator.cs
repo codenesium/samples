@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiRateRequestModelValidator: AbstractValidator<ApiRateRequestModel>
+        public abstract class AbstractApiRateRequestModelValidator : AbstractValidator<ApiRateRequestModel>
         {
                 private int existingRecordId;
 
-                IRateRepository rateRepository;
+                private IRateRepository rateRepository;
 
                 public AbstractApiRateRequestModelValidator(IRateRepository rateRepository)
                 {
@@ -32,12 +32,12 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void TeacherIdRules()
                 {
-                        this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacher).When(x => x ?.TeacherId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacher).When(x => x?.TeacherId != null).WithMessage("Invalid reference");
                 }
 
                 public virtual void TeacherSkillIdRules()
                 {
-                        this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x ?.TeacherSkillId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x?.TeacherSkillId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidTeacher(int id,  CancellationToken cancellationToken)
@@ -57,5 +57,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>668cf406af35c57c61c066f7823756e7</Hash>
+    <Hash>2a858a08184f8ef6ea97419717f97b3d</Hash>
 </Codenesium>*/

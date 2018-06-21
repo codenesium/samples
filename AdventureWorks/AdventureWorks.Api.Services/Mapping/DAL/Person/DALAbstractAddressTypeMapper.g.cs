@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace AdventureWorksNS.Api.Services
                         BOAddressType bo)
                 {
                         AddressType efAddressType = new AddressType();
-
                         efAddressType.SetProperties(
                                 bo.AddressTypeID,
                                 bo.ModifiedDate,
@@ -50,5 +49,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cbc82856d9a8ae333824b1880ad404d4</Hash>
+    <Hash>8da88a49fb09e83a11051c024d91d5bd</Hash>
 </Codenesium>*/

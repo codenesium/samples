@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace AdventureWorksNS.Api.Services
                         )
                 {
                         BOVendor boVendor = new BOVendor();
-
                         boVendor.SetProperties(
                                 businessEntityID,
                                 model.AccountNumber,
@@ -52,5 +51,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>663d9739864c120cf306329c278af54e</Hash>
+    <Hash>b9d95da041584905c224f4a670074237</Hash>
 </Codenesium>*/

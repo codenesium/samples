@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
                         var record = new Interruption();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        ApiInterruptionResponseModel response = await service.Get(default (string));
+                        ApiInterruptionResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        ApiInterruptionResponseModel response = await service.Get(default (string));
+                        ApiInterruptionResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
                         var model = new ApiInterruptionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Interruption>())).Returns(Task.FromResult(new Interruption()));
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
                         var model = new ApiInterruptionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Interruption>())).Returns(Task.FromResult(new Interruption()));
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiInterruptionRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IInterruptionRepository>();
                         var model = new ApiInterruptionRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new InterruptionService(mock.LoggerMock.Object,
                                                               mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -146,7 +142,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        List<ApiInterruptionResponseModel> response = await service.GetTenantId(default (string));
+                        List<ApiInterruptionResponseModel> response = await service.GetTenantId(default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
@@ -163,7 +159,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                               mock.BOLMapperMockFactory.BOLInterruptionMapperMock,
                                                               mock.DALMapperMockFactory.DALInterruptionMapperMock);
 
-                        List<ApiInterruptionResponseModel> response = await service.GetTenantId(default (string));
+                        List<ApiInterruptionResponseModel> response = await service.GetTenantId(default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetTenantId(It.IsAny<string>()));
@@ -172,5 +168,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>01bde077c1d630a82cf7cc0d4c6f4179</Hash>
+    <Hash>54b7794f1b1bdfed2301d6286790db06</Hash>
 </Codenesium>*/

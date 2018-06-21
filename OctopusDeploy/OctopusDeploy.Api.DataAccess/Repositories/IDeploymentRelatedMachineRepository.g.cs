@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
@@ -18,6 +18,7 @@ namespace OctopusDeployNS.Api.DataAccess
                 Task<List<DeploymentRelatedMachine>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<DeploymentRelatedMachine>> GetDeploymentId(string deploymentId);
+
                 Task<List<DeploymentRelatedMachine>> GetMachineId(string machineId);
 
                 Task<Deployment> GetDeployment(string deploymentId);
@@ -25,5 +26,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b385a7d5ccf81839d8c73129b9b346ac</Hash>
+    <Hash>00ce7ad0fd5de5393c7bdbee199c5e61</Hash>
 </Codenesium>*/

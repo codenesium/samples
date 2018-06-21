@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, new string('A', 61));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, new string('A', 61));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine2, new string('A', 61));
                 }
@@ -122,8 +115,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -135,7 +127,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.City, null as string);
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 31));
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.City, new string('A', 31));
                 }
@@ -187,8 +175,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -200,7 +187,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PostalCode, null as string);
@@ -213,8 +199,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PostalCode, null as string);
                 }
@@ -226,7 +211,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
@@ -239,8 +223,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.PostalCode, new string('A', 16));
                 }
@@ -252,8 +235,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Address()));
 
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -289,7 +271,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(new Address()));
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.AddressLine1, "A");
                 }
@@ -301,7 +283,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         addressRepository.Setup(x => x.ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<Address>(null));
                         var validator = new ApiAddressRequestModelValidator(addressRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiAddressRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiAddressRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.AddressLine1, "A");
                 }
@@ -309,5 +291,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b6ad355a27075dbd22bc9c3686d54d49</Hash>
+    <Hash>8c909c4372f6431bc2a8e2f659ee480f</Hash>
 </Codenesium>*/

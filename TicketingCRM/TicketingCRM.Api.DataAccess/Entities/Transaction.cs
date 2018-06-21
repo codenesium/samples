@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
         [Table("Transaction", Schema="dbo")]
-        public partial class Transaction: AbstractEntity
+        public partial class Transaction : AbstractEntity
         {
                 public Transaction()
                 {
@@ -24,17 +24,17 @@ namespace TicketingCRMNS.Api.DataAccess
                         this.TransactionStatusId = transactionStatusId;
                 }
 
-                [Column("amount", TypeName="money")]
+                [Column("amount")]
                 public decimal Amount { get; private set; }
 
-                [Column("gatewayConfirmationNumber", TypeName="varchar(1)")]
+                [Column("gatewayConfirmationNumber")]
                 public string GatewayConfirmationNumber { get; private set; }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("transactionStatusId", TypeName="int")]
+                [Column("transactionStatusId")]
                 public int TransactionStatusId { get; private set; }
 
                 [ForeignKey("TransactionStatusId")]
@@ -43,5 +43,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b21d037600ce2a091c1be4359302cabb</Hash>
+    <Hash>8854c46668c75442114185e654fae49b</Hash>
 </Codenesium>*/

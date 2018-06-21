@@ -38,7 +38,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new AdminRepository(loggerMoc.Object, context);
 
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new AdminRepository(loggerMoc.Object, context);
 
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace FermataFishNS.Api.DataAccess
                         var repository = new AdminRepository(loggerMoc.Object, context);
 
                         var entity = new Admin();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<Admin>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AdminRepositoryMoc.GetContext();
                         var repository = new AdminRepository(loggerMoc.Object, context);
-
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AdminRepositoryMoc.GetContext();
                         var repository = new AdminRepository(loggerMoc.Object, context);
-
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace FermataFishNS.Api.DataAccess
                         Mock<ILogger<AdminRepository>> loggerMoc = AdminRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = AdminRepositoryMoc.GetContext();
                         var repository = new AdminRepository(loggerMoc.Object, context);
-
                         Admin entity = new Admin();
-
                         context.Set<Admin>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Id);
 
                         Admin modifiedRecord = await context.Set<Admin>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>c2a64fa33d7d28f85082ad5e8d23de0c</Hash>
+    <Hash>5e653ad49e1eb2adb8cb212cab5a141a</Hash>
 </Codenesium>*/

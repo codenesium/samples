@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using FermataFishNS.Api.DataAccess;
 using FermataFishNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace FermataFishNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Teacher")]
         [Trait("Area", "DALMapper")]
-        public class TestDALTeacherActionMapper
+        public class TestDALTeacherMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALTeacherMapper();
-
                         var bo = new BOTeacher();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 
                         Teacher response = mapper.MapBOToEF(bo);
@@ -36,12 +34,10 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALTeacherMapper();
-
                         Teacher entity = new Teacher();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
 
-                        BOTeacher  response = mapper.MapEFToBO(entity);
+                        BOTeacher response = mapper.MapEFToBO(entity);
 
                         response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.Email.Should().Be("A");
@@ -56,9 +52,7 @@ namespace FermataFishNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALTeacherMapper();
-
                         Teacher entity = new Teacher();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
 
                         List<BOTeacher> response = mapper.MapEFToBO(new List<Teacher>() { entity });
@@ -69,5 +63,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4b0294125dc7ac200e9afd379e0bf478</Hash>
+    <Hash>87a8e401932048a53ec9e5134595044e</Hash>
 </Codenesium>*/

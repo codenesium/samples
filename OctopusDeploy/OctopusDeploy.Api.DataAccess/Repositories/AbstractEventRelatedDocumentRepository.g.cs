@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-        public abstract class AbstractEventRelatedDocumentRepository: AbstractRepository
+        public abstract class AbstractEventRelatedDocumentRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -82,11 +82,17 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records;
                 }
+
                 public async Task<List<EventRelatedDocument>> GetEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
                 {
                         var records = await this.Where(x => x.EventId == eventId && x.RelatedDocumentId == relatedDocumentId);
 
                         return records;
+                }
+
+                public async virtual Task<Event> GetEvent(string eventId)
+                {
+                        return await this.Context.Set<Event>().SingleOrDefaultAsync(x => x.Id == eventId);
                 }
 
                 protected async Task<List<EventRelatedDocument>> Where(
@@ -117,14 +123,9 @@ namespace OctopusDeployNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<Event> GetEvent(string eventId)
-                {
-                        return await this.Context.Set<Event>().SingleOrDefaultAsync(x => x.Id == eventId);
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>fb5eb770ba05c5f8e93391bfdd07001d</Hash>
+    <Hash>342d2c1ef2d1d33ec40ff33aef7626aa</Hash>
 </Codenesium>*/

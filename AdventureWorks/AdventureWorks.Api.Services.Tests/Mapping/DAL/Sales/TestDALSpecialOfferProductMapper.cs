@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "SpecialOfferProduct")]
         [Trait("Area", "DALMapper")]
-        public class TestDALSpecialOfferProductActionMapper
+        public class TestDALSpecialOfferProductMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALSpecialOfferProductMapper();
-
                         var bo = new BOSpecialOfferProduct();
-
                         bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 
                         SpecialOfferProduct response = mapper.MapBOToEF(bo);
@@ -33,12 +31,10 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALSpecialOfferProductMapper();
-
                         SpecialOfferProduct entity = new SpecialOfferProduct();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 
-                        BOSpecialOfferProduct  response = mapper.MapEFToBO(entity);
+                        BOSpecialOfferProduct response = mapper.MapEFToBO(entity);
 
                         response.ModifiedDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
                         response.ProductID.Should().Be(1);
@@ -50,9 +46,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALSpecialOfferProductMapper();
-
                         SpecialOfferProduct entity = new SpecialOfferProduct();
-
                         entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 
                         List<BOSpecialOfferProduct> response = mapper.MapEFToBO(new List<SpecialOfferProduct>() { entity });
@@ -63,5 +57,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>dd50ed85b834cd98b5c4ce8e66ec9241</Hash>
+    <Hash>17806ea671e9eb206a734a58594088cb</Hash>
 </Codenesium>*/

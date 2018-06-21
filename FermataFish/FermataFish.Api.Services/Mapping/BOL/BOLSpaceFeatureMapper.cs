@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLSpaceFeatureMapper: BOLAbstractSpaceFeatureMapper, IBOLSpaceFeatureMapper
+        public class BOLSpaceFeatureMapper : BOLAbstractSpaceFeatureMapper, IBOLSpaceFeatureMapper
         {
                 public BOLSpaceFeatureMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6551f682e99fbe2c9bf496a9fade53bf</Hash>
+    <Hash>c4519151f83bc30fdfdaa6901debe64a</Hash>
 </Codenesium>*/

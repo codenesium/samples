@@ -1,3 +1,5 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -5,56 +7,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class SalesPersonService: AbstractSalesPersonService, ISalesPersonService
+        public class SalesPersonService : AbstractSalesPersonService, ISalesPersonService
         {
                 public SalesPersonService(
                         ILogger<ISalesPersonRepository> logger,
                         ISalesPersonRepository salesPersonRepository,
                         IApiSalesPersonRequestModelValidator salesPersonModelValidator,
                         IBOLSalesPersonMapper bolsalesPersonMapper,
-                        IDALSalesPersonMapper dalsalesPersonMapper
-                        ,
+                        IDALSalesPersonMapper dalsalesPersonMapper,
                         IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-                        ,
+                        IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper,
                         IBOLSalesPersonQuotaHistoryMapper bolSalesPersonQuotaHistoryMapper,
-                        IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper
-                        ,
+                        IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper,
                         IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
-                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper
-                        ,
+                        IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper,
                         IBOLStoreMapper bolStoreMapper,
                         IDALStoreMapper dalStoreMapper
-
                         )
                         : base(logger,
                                salesPersonRepository,
                                salesPersonModelValidator,
                                bolsalesPersonMapper,
-                               dalsalesPersonMapper
-                               ,
+                               dalsalesPersonMapper,
                                bolSalesOrderHeaderMapper,
-                               dalSalesOrderHeaderMapper
-                               ,
+                               dalSalesOrderHeaderMapper,
                                bolSalesPersonQuotaHistoryMapper,
-                               dalSalesPersonQuotaHistoryMapper
-                               ,
+                               dalSalesPersonQuotaHistoryMapper,
                                bolSalesTerritoryHistoryMapper,
-                               dalSalesTerritoryHistoryMapper
-                               ,
+                               dalSalesTerritoryHistoryMapper,
                                bolStoreMapper,
-                               dalStoreMapper
-                               )
+                               dalStoreMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>db29ae462b7565d084d17151251bb414</Hash>
+    <Hash>0e47b11d91de79db4368b1f84d23a1f3</Hash>
 </Codenesium>*/

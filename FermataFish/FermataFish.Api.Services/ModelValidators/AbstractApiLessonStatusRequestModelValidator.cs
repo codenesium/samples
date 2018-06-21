@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractApiLessonStatusRequestModelValidator: AbstractValidator<ApiLessonStatusRequestModel>
+        public abstract class AbstractApiLessonStatusRequestModelValidator : AbstractValidator<ApiLessonStatusRequestModel>
         {
                 private int existingRecordId;
 
-                ILessonStatusRepository lessonStatusRepository;
+                private ILessonStatusRepository lessonStatusRepository;
 
                 public AbstractApiLessonStatusRequestModelValidator(ILessonStatusRepository lessonStatusRepository)
                 {
@@ -34,7 +34,7 @@ namespace FermataFishNS.Api.Services
 
                 public virtual void StudioIdRules()
                 {
-                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x ?.StudioId != null).WithMessage("Invalid reference");
+                        this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
                 }
 
                 private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
@@ -47,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3699759ddf7dd271b1bab434c4e4ebe3</Hash>
+    <Hash>1fb7f4c60437b4c63603204265384c7e</Hash>
 </Codenesium>*/

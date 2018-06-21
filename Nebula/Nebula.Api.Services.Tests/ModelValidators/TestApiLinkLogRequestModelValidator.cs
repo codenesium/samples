@@ -1,17 +1,17 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using FluentValidation.Results;
 using FluentValidation.TestHelper;
-using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace NebulaNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkLogRepository.Setup(x => x.GetLink(It.IsAny<int>())).Returns(Task.FromResult<Link>(new Link()));
 
                         var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkLogRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LinkId, 1);
@@ -57,8 +56,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkLogRepository.Setup(x => x.GetLink(It.IsAny<int>())).Returns(Task.FromResult<Link>(new Link()));
 
                         var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkLogRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LinkId, 1);
                 }
@@ -71,7 +69,7 @@ namespace NebulaNS.Api.Services.Tests
 
                         var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LinkId, 1);
                 }
@@ -83,7 +81,6 @@ namespace NebulaNS.Api.Services.Tests
                         linkLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkLog()));
 
                         var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiLinkLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Log, null as string);
@@ -96,8 +93,7 @@ namespace NebulaNS.Api.Services.Tests
                         linkLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkLog()));
 
                         var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiLinkLogRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiLinkLogRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Log, null as string);
                 }
@@ -105,5 +101,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f4040651533a9e5b5f91e9f8702e6f2c</Hash>
+    <Hash>09c717dadfdd742588f3bab0a93be892</Hash>
 </Codenesium>*/

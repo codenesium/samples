@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
@@ -42,7 +42,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IServerTaskRepository>();
                         var record = new ServerTask();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult(record));
                         var service = new ServerTaskService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -50,7 +49,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        ApiServerTaskResponseModel response = await service.Get(default (string));
+                        ApiServerTaskResponseModel response = await service.Get(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -67,7 +66,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        ApiServerTaskResponseModel response = await service.Get(default (string));
+                        ApiServerTaskResponseModel response = await service.Get(default(string));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<string>()));
@@ -78,7 +77,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IServerTaskRepository>();
                         var model = new ApiServerTaskRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ServerTask>())).Returns(Task.FromResult(new ServerTask()));
                         var service = new ServerTaskService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -98,7 +96,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IServerTaskRepository>();
                         var model = new ApiServerTaskRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<ServerTask>())).Returns(Task.FromResult(new ServerTask()));
                         var service = new ServerTaskService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -106,7 +103,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        ActionResponse response = await service.Update(default (string), model);
+                        ActionResponse response = await service.Update(default(string), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.ServerTaskModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiServerTaskRequestModel>()));
@@ -118,7 +115,6 @@ namespace OctopusDeployNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IServerTaskRepository>();
                         var model = new ApiServerTaskRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<string>())).Returns(Task.CompletedTask);
                         var service = new ServerTaskService(mock.LoggerMock.Object,
                                                             mock.RepositoryMock.Object,
@@ -126,7 +122,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        ActionResponse response = await service.Delete(default (string));
+                        ActionResponse response = await service.Delete(default(string));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<string>()));
@@ -146,7 +142,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        List<ApiServerTaskResponseModel> response = await service.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(default (string), default (DateTimeOffset), default (Nullable<DateTimeOffset>), default (Nullable<DateTimeOffset>), default (string), default (string), default (bool), default (bool), default (int), default (string), default (string), default (string), default (string), default (string), default (string), default (string));
+                        List<ApiServerTaskResponseModel> response = await service.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(default(string), default(DateTimeOffset), default(Nullable<DateTimeOffset>), default(Nullable<DateTimeOffset>), default(string), default(string), default(bool), default(bool), default(int), default(string), default(string), default(string), default(string), default(string), default(string), default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
@@ -163,7 +159,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        List<ApiServerTaskResponseModel> response = await service.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(default (string), default (DateTimeOffset), default (Nullable<DateTimeOffset>), default (Nullable<DateTimeOffset>), default (string), default (string), default (bool), default (bool), default (int), default (string), default (string), default (string), default (string), default (string), default (string), default (string));
+                        List<ApiServerTaskResponseModel> response = await service.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(default(string), default(DateTimeOffset), default(Nullable<DateTimeOffset>), default(Nullable<DateTimeOffset>), default(string), default(string), default(bool), default(bool), default(int), default(string), default(string), default(string), default(string), default(string), default(string), default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
@@ -182,7 +178,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        List<ApiServerTaskResponseModel> response = await service.GetStateConcurrencyTag(default (string), default (string));
+                        List<ApiServerTaskResponseModel> response = await service.GetStateConcurrencyTag(default(string), default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetStateConcurrencyTag(It.IsAny<string>(), It.IsAny<string>()));
@@ -199,7 +195,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        List<ApiServerTaskResponseModel> response = await service.GetStateConcurrencyTag(default (string), default (string));
+                        List<ApiServerTaskResponseModel> response = await service.GetStateConcurrencyTag(default(string), default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetStateConcurrencyTag(It.IsAny<string>(), It.IsAny<string>()));
@@ -218,7 +214,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        List<ApiServerTaskResponseModel> response = await service.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(default (string), default (string), default (Nullable<DateTimeOffset>), default (Nullable<DateTimeOffset>), default (string), default (bool), default (string), default (string), default (string), default (int), default (string), default (DateTimeOffset), default (string), default (string), default (bool), default (string));
+                        List<ApiServerTaskResponseModel> response = await service.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(default(string), default(string), default(Nullable<DateTimeOffset>), default(Nullable<DateTimeOffset>), default(string), default(bool), default(string), default(string), default(string), default(int), default(string), default(DateTimeOffset), default(string), default(string), default(bool), default(string));
 
                         response.Should().NotBeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<string>()));
@@ -235,7 +231,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                                                             mock.BOLMapperMockFactory.BOLServerTaskMapperMock,
                                                             mock.DALMapperMockFactory.DALServerTaskMapperMock);
 
-                        List<ApiServerTaskResponseModel> response = await service.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(default (string), default (string), default (Nullable<DateTimeOffset>), default (Nullable<DateTimeOffset>), default (string), default (bool), default (string), default (string), default (string), default (int), default (string), default (DateTimeOffset), default (string), default (string), default (bool), default (string));
+                        List<ApiServerTaskResponseModel> response = await service.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(default(string), default(string), default(Nullable<DateTimeOffset>), default(Nullable<DateTimeOffset>), default(string), default(bool), default(string), default(string), default(string), default(int), default(string), default(DateTimeOffset), default(string), default(string), default(bool), default(string));
 
                         response.Should().BeEmpty();
                         mock.RepositoryMock.Verify(x => x.GetNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<Nullable<DateTimeOffset>>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<string>()));
@@ -244,5 +240,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ce4c501e09e8b892050503ecbc326d90</Hash>
+    <Hash>40b78cacd5901073346d908d98788bae</Hash>
 </Codenesium>*/

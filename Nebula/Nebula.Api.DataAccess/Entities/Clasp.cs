@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace NebulaNS.Api.DataAccess
 {
         [Table("Clasp", Schema="dbo")]
-        public partial class Clasp:AbstractEntity
+        public partial class Clasp : AbstractEntity
         {
                 public Clasp()
                 {
@@ -23,13 +23,13 @@ namespace NebulaNS.Api.DataAccess
                 }
 
                 [Key]
-                [Column("id", TypeName="int")]
+                [Column("id")]
                 public int Id { get; private set; }
 
-                [Column("nextChainId", TypeName="int")]
+                [Column("nextChainId")]
                 public int NextChainId { get; private set; }
 
-                [Column("previousChainId", TypeName="int")]
+                [Column("previousChainId")]
                 public int PreviousChainId { get; private set; }
 
                 [ForeignKey("NextChainId")]
@@ -41,5 +41,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3fc58a9cbe3ad205ac770a6d390e6a03</Hash>
+    <Hash>39ce4ce06756acbe537dacc35e7a8f13</Hash>
 </Codenesium>*/

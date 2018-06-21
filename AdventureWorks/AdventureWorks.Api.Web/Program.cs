@@ -14,6 +14,5 @@ namespace AdventureWorksNS.Api.Web
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseIISIntegration();
-   
     }
 }

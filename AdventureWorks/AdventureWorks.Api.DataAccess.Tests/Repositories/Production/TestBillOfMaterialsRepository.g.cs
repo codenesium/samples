@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new BillOfMaterialsRepository(loggerMoc.Object, context);
 
                         BillOfMaterials entity = new BillOfMaterials();
-
                         context.Set<BillOfMaterials>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new BillOfMaterialsRepository(loggerMoc.Object, context);
 
                         BillOfMaterials entity = new BillOfMaterials();
-
                         context.Set<BillOfMaterials>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace AdventureWorksNS.Api.DataAccess
                         var repository = new BillOfMaterialsRepository(loggerMoc.Object, context);
 
                         var entity = new BillOfMaterials();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<BillOfMaterials>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<BillOfMaterialsRepository>> loggerMoc = BillOfMaterialsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BillOfMaterialsRepositoryMoc.GetContext();
                         var repository = new BillOfMaterialsRepository(loggerMoc.Object, context);
-
                         BillOfMaterials entity = new BillOfMaterials();
-
                         context.Set<BillOfMaterials>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<BillOfMaterialsRepository>> loggerMoc = BillOfMaterialsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BillOfMaterialsRepositoryMoc.GetContext();
                         var repository = new BillOfMaterialsRepository(loggerMoc.Object, context);
-
                         BillOfMaterials entity = new BillOfMaterials();
-
                         context.Set<BillOfMaterials>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace AdventureWorksNS.Api.DataAccess
                         Mock<ILogger<BillOfMaterialsRepository>> loggerMoc = BillOfMaterialsRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = BillOfMaterialsRepositoryMoc.GetContext();
                         var repository = new BillOfMaterialsRepository(loggerMoc.Object, context);
-
                         BillOfMaterials entity = new BillOfMaterials();
-
                         context.Set<BillOfMaterials>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.BillOfMaterialsID);
 
                         BillOfMaterials modifiedRecord = await context.Set<BillOfMaterials>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ef1bb431e353cc35a1c605ff51d2e715</Hash>
+    <Hash>023648616e9f8f2bd4f6cbe5ba162d73</Hash>
 </Codenesium>*/

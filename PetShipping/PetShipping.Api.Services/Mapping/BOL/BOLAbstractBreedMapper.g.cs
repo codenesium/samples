@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace PetShippingNS.Api.Services
                         )
                 {
                         BOBreed boBreed = new BOBreed();
-
                         boBreed.SetProperties(
                                 id,
                                 model.Name,
@@ -47,5 +46,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da83a9f1a62f8981deb8f65d1312fece</Hash>
+    <Hash>046cbab51a0420bcec4b279dbd09aa3f</Hash>
 </Codenesium>*/

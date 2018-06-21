@@ -4,7 +4,7 @@ using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public class DALLinkStatusMapper: DALAbstractLinkStatusMapper, IDALLinkStatusMapper
+        public class DALLinkStatusMapper : DALAbstractLinkStatusMapper, IDALLinkStatusMapper
         {
                 public DALLinkStatusMapper()
                 {
@@ -13,5 +13,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f76f37b28ae23e9478e7635bdedad3ac</Hash>
+    <Hash>eff558e1bc044aea754ce999d8bb0fd6</Hash>
 </Codenesium>*/

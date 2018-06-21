@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALSalesOrderHeaderMapper: DALAbstractSalesOrderHeaderMapper, IDALSalesOrderHeaderMapper
+        public class DALSalesOrderHeaderMapper : DALAbstractSalesOrderHeaderMapper, IDALSalesOrderHeaderMapper
         {
                 public DALSalesOrderHeaderMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8922abe2c167bf49be17d496d66097f3</Hash>
+    <Hash>8410362e152856b93544da2e72effc7e</Hash>
 </Codenesium>*/

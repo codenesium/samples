@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "Proxy")]
         [Trait("Area", "DALMapper")]
-        public class TestDALProxyActionMapper
+        public class TestDALProxyMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALProxyMapper();
-
                         var bo = new BOProxy();
-
                         bo.SetProperties("A", "A", "A");
 
                         Proxy response = mapper.MapBOToEF(bo);
@@ -32,12 +30,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALProxyMapper();
-
                         Proxy entity = new Proxy();
-
                         entity.SetProperties("A", "A", "A");
 
-                        BOProxy  response = mapper.MapEFToBO(entity);
+                        BOProxy response = mapper.MapEFToBO(entity);
 
                         response.Id.Should().Be("A");
                         response.JSON.Should().Be("A");
@@ -48,9 +44,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALProxyMapper();
-
                         Proxy entity = new Proxy();
-
                         entity.SetProperties("A", "A", "A");
 
                         List<BOProxy> response = mapper.MapEFToBO(new List<Proxy>() { entity });
@@ -61,5 +55,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>de603699df03ff380ee2886205fd88d9</Hash>
+    <Hash>877ac4db6076735e4deb486605e5cc12</Hash>
 </Codenesium>*/

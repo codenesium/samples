@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
 using AdventureWorksNS.Api.Services;
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ProductInventory")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLProductInventoryActionMapper
+        public class TestBOLProductInventoryMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLProductInventoryMapper();
-
                         ApiProductInventoryRequestModel model = new ApiProductInventoryRequestModel();
-
                         model.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
                         BOProductInventory response = mapper.MapModelToBO(1, model);
 
@@ -35,9 +33,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLProductInventoryMapper();
-
                         BOProductInventory bo = new BOProductInventory();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
                         ApiProductInventoryResponseModel response = mapper.MapBOToModel(bo);
 
@@ -54,9 +50,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLProductInventoryMapper();
-
                         BOProductInventory bo = new BOProductInventory();
-
                         bo.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
                         List<ApiProductInventoryResponseModel> response = mapper.MapBOToModel(new List<BOProductInventory>() { { bo } });
 
@@ -66,5 +60,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f3f0234e20c5422af795505f3434cbd4</Hash>
+    <Hash>958442845b3a38ca86131148a0f3e77f</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FileServiceNS.Api.Contracts;
+using FileServiceNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FileServiceNS.Api.Contracts;
-using FileServiceNS.Api.DataAccess;
 
 namespace FileServiceNS.Api.Services
 {
-        public abstract class AbstractFileService: AbstractService
+        public abstract class AbstractFileService : AbstractService
         {
                 private IFileRepository fileRepository;
 
@@ -29,11 +29,8 @@ namespace FileServiceNS.Api.Services
                         IFileRepository fileRepository,
                         IApiFileRequestModelValidator fileModelValidator,
                         IBOLFileMapper bolFileMapper,
-                        IDALFileMapper dalFileMapper
-
-                        )
+                        IDALFileMapper dalFileMapper)
                         : base()
-
                 {
                         this.fileRepository = fileRepository;
                         this.fileModelValidator = fileModelValidator;
@@ -69,7 +66,7 @@ namespace FileServiceNS.Api.Services
                         CreateResponse<ApiFileResponseModel> response = new CreateResponse<ApiFileResponseModel>(await this.fileModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolFileMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolFileMapper.MapModelToBO(default(int), model);
                                 var record = await this.fileRepository.Create(this.dalFileMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace FileServiceNS.Api.Services
                         ApiFileRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolFileMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace FileServiceNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.fileRepository.Delete(id);
@@ -109,5 +104,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4585d3a6f5c34eb7a35cd31947dee23</Hash>
+    <Hash>47de3c2644760d34254dc4738cf45983</Hash>
 </Codenesium>*/

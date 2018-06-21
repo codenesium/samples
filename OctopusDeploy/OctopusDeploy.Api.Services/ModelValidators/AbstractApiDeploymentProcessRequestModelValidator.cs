@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractApiDeploymentProcessRequestModelValidator: AbstractValidator<ApiDeploymentProcessRequestModel>
+        public abstract class AbstractApiDeploymentProcessRequestModelValidator : AbstractValidator<ApiDeploymentProcessRequestModel>
         {
                 private string existingRecordId;
 
-                IDeploymentProcessRepository deploymentProcessRepository;
+                private IDeploymentProcessRepository deploymentProcessRepository;
 
                 public AbstractApiDeploymentProcessRequestModelValidator(IDeploymentProcessRepository deploymentProcessRepository)
                 {
@@ -52,5 +52,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a1c56c918ef9135bcb4f3958282dd2d</Hash>
+    <Hash>daf178fbe0bd34b29851e5df2373cedd</Hash>
 </Codenesium>*/

@@ -3,9 +3,10 @@ using System;
 
 namespace PetShippingNS.Api.Services
 {
-        public abstract class AbstractBOHandlerPipelineStep: AbstractBusinessObject
+        public abstract class AbstractBOHandlerPipelineStep : AbstractBusinessObject
         {
-                public AbstractBOHandlerPipelineStep() : base()
+                public AbstractBOHandlerPipelineStep()
+                        : base()
                 {
                 }
 
@@ -27,5 +28,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6436a0f3a6e359ba36aab58f41b0b6f2</Hash>
+    <Hash>74268370fdaf765dce22a698545f8d99</Hash>
 </Codenesium>*/

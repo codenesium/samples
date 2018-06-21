@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractProductModelService: AbstractService
+        public abstract class AbstractProductModelService : AbstractService
         {
                 private IProductModelRepository productModelRepository;
 
@@ -39,21 +39,14 @@ namespace AdventureWorksNS.Api.Services
                         IProductModelRepository productModelRepository,
                         IApiProductModelRequestModelValidator productModelModelValidator,
                         IBOLProductModelMapper bolProductModelMapper,
-                        IDALProductModelMapper dalProductModelMapper
-
-                        ,
+                        IDALProductModelMapper dalProductModelMapper,
                         IBOLProductMapper bolProductMapper,
-                        IDALProductMapper dalProductMapper
-                        ,
+                        IDALProductMapper dalProductMapper,
                         IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper
-                        ,
+                        IDALProductModelIllustrationMapper dalProductModelIllustrationMapper,
                         IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-
-                        )
+                        IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
                         : base()
-
                 {
                         this.productModelRepository = productModelRepository;
                         this.productModelModelValidator = productModelModelValidator;
@@ -95,7 +88,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiProductModelResponseModel> response = new CreateResponse<ApiProductModelResponseModel>(await this.productModelModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolProductModelMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolProductModelMapper.MapModelToBO(default(int), model);
                                 var record = await this.productModelRepository.Create(this.dalProductModelMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record)));
@@ -109,7 +102,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiProductModelRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateUpdateAsync(productModelID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolProductModelMapper.MapModelToBO(productModelID, model);
@@ -123,7 +115,6 @@ namespace AdventureWorksNS.Api.Services
                         int productModelID)
                 {
                         ActionResponse response = new ActionResponse(await this.productModelModelValidator.ValidateDeleteAsync(productModelID));
-
                         if (response.Success)
                         {
                                 await this.productModelRepository.Delete(productModelID);
@@ -145,12 +136,14 @@ namespace AdventureWorksNS.Api.Services
                                 return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription)
                 {
                         List<ProductModel> records = await this.productModelRepository.ByCatalogDescription(catalogDescription);
 
                         return this.bolProductModelMapper.MapBOToModel(this.dalProductModelMapper.MapEFToBO(records));
                 }
+
                 public async Task<List<ApiProductModelResponseModel>> ByInstructions(string instructions)
                 {
                         List<ProductModel> records = await this.productModelRepository.ByInstructions(instructions);
@@ -164,12 +157,14 @@ namespace AdventureWorksNS.Api.Services
 
                         return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<ProductModelIllustration> records = await this.productModelRepository.ProductModelIllustrations(productModelID, limit, offset);
 
                         return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
                 {
                         List<ProductModelProductDescriptionCulture> records = await this.productModelRepository.ProductModelProductDescriptionCultures(productModelID, limit, offset);
@@ -180,5 +175,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17d93d7131accfa25ae376a813d4d890</Hash>
+    <Hash>1083000fbbb86f63e9c0cd8cda528933</Hash>
 </Codenesium>*/

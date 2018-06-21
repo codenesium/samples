@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class DALContactTypeMapper: DALAbstractContactTypeMapper, IDALContactTypeMapper
+        public class DALContactTypeMapper : DALAbstractContactTypeMapper, IDALContactTypeMapper
         {
                 public DALContactTypeMapper()
                 {
@@ -13,5 +13,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>77b55b2cec51ce87e052572973d0de77</Hash>
+    <Hash>be3ed42213613fcbdab7b1c02b1b5c87</Hash>
 </Codenesium>*/

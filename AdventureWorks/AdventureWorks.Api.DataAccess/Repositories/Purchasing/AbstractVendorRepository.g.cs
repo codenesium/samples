@@ -1,9 +1,9 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-        public abstract class AbstractVendorRepository: AbstractRepository
+        public abstract class AbstractVendorRepository : AbstractRepository
         {
                 protected ApplicationDbContext Context { get; }
 
@@ -83,6 +83,16 @@ namespace AdventureWorksNS.Api.DataAccess
                         return records.FirstOrDefault();
                 }
 
+                public async virtual Task<List<ProductVendor>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<ProductVendor>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductVendor>();
+                }
+
+                public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
+                {
+                        return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
+                }
+
                 protected async Task<List<Vendor>> Where(
                         Expression<Func<Vendor, bool>> predicate,
                         int limit = int.MaxValue,
@@ -111,18 +121,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
                         return records.FirstOrDefault();
                 }
-
-                public async virtual Task<List<ProductVendor>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<ProductVendor>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductVendor>();
-                }
-                public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
-                {
-                        return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
-                }
         }
 }
 
 /*<Codenesium>
-    <Hash>5f467d7a31d5427dcb75038d554441ba</Hash>
+    <Hash>062ae9efdbb1458e7726ae7e1a02dbb1</Hash>
 </Codenesium>*/

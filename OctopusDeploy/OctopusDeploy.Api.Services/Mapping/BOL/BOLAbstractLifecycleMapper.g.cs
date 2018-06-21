@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -13,7 +13,6 @@ namespace OctopusDeployNS.Api.Services
                         )
                 {
                         BOLifecycle boLifecycle = new BOLifecycle();
-
                         boLifecycle.SetProperties(
                                 id,
                                 model.DataVersion,
@@ -48,5 +47,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8bbb6cb392c5ae7dea7846d394764ec0</Hash>
+    <Hash>c98c383ee64620e1b374a72ac15a68d6</Hash>
 </Codenesium>*/

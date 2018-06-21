@@ -1,14 +1,15 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiTeacherSkillRequestModel: AbstractApiRequestModel
+        public partial class ApiTeacherSkillRequestModel : AbstractApiRequestModel
         {
-                public ApiTeacherSkillRequestModel() : base()
+                public ApiTeacherSkillRequestModel()
+                        : base()
                 {
                 }
 
@@ -55,5 +56,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b06bacb79f004c236b41874f302318dd</Hash>
+    <Hash>1375d07039d70892934a197e2dc85b69</Hash>
 </Codenesium>*/

@@ -1,19 +1,19 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
 using FluentValidation;
 using FluentValidation.Results;
+using NebulaNS.Api.Contracts;
+using NebulaNS.Api.DataAccess;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NebulaNS.Api.Contracts;
-using NebulaNS.Api.DataAccess;
 
 namespace NebulaNS.Api.Services
 {
-        public abstract class AbstractApiLinkStatusRequestModelValidator: AbstractValidator<ApiLinkStatusRequestModel>
+        public abstract class AbstractApiLinkStatusRequestModelValidator : AbstractValidator<ApiLinkStatusRequestModel>
         {
                 private int existingRecordId;
 
-                ILinkStatusRepository linkStatusRepository;
+                private ILinkStatusRepository linkStatusRepository;
 
                 public AbstractApiLinkStatusRequestModelValidator(ILinkStatusRepository linkStatusRepository)
                 {
@@ -35,5 +35,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fcbe335354dfdd18e40fcc69c5dc5b81</Hash>
+    <Hash>968e13a56cc92adb9e81cde3e464d5ca</Hash>
 </Codenesium>*/

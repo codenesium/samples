@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-        public class BOLStudentMapper: BOLAbstractStudentMapper, IBOLStudentMapper
+        public class BOLStudentMapper : BOLAbstractStudentMapper, IBOLStudentMapper
         {
                 public BOLStudentMapper()
                 {
@@ -14,5 +14,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>edd69fe3e241027f5a6e05641647800b</Hash>
+    <Hash>1f431d57a38bcc351518a4291972bc52</Hash>
 </Codenesium>*/

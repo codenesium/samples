@@ -1,17 +1,17 @@
-using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using FluentValidation.Results;
-using FluentValidation.TestHelper;
-using System.Linq;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentAssertions;
+using FluentValidation.Results;
+using FluentValidation.TestHelper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace AdventureWorksNS.Api.Services.Tests
 {
@@ -31,7 +31,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Gender, null as string);
@@ -44,8 +43,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Gender, null as string);
                 }
@@ -57,7 +55,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Gender, new string('A', 2));
@@ -70,8 +67,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.Gender, new string('A', 2));
                 }
@@ -83,8 +79,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -96,7 +91,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JobTitle, null as string);
@@ -109,8 +103,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JobTitle, null as string);
                 }
@@ -122,7 +115,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JobTitle, new string('A', 51));
@@ -135,8 +127,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.JobTitle, new string('A', 51));
                 }
@@ -148,8 +139,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -161,7 +151,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LoginID, null as string);
@@ -174,8 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LoginID, null as string);
                 }
@@ -187,7 +175,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LoginID, new string('A', 257));
@@ -200,8 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LoginID, new string('A', 257));
                 }
@@ -213,8 +199,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -226,7 +211,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, null as string);
@@ -239,8 +223,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, null as string);
                 }
@@ -252,7 +235,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, new string('A', 2));
@@ -265,8 +247,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.MaritalStatus, new string('A', 2));
                 }
@@ -278,8 +259,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -291,7 +271,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.NationalIDNumber, null as string);
@@ -304,8 +283,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.NationalIDNumber, null as string);
                 }
@@ -317,7 +295,6 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
                         await validator.ValidateCreateAsync(new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.NationalIDNumber, new string('A', 16));
@@ -330,8 +307,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.NationalIDNumber, new string('A', 16));
                 }
@@ -343,8 +319,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Employee()));
 
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
-
-                        ValidationResult response = await validator.ValidateDeleteAsync(default (int));
+                        ValidationResult response = await validator.ValidateDeleteAsync(default(int));
 
                         response.Should().BeOfType(typeof(ValidationResult));
                 }
@@ -380,7 +355,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.ByLoginID(It.IsAny<string>())).Returns(Task.FromResult<Employee>(new Employee()));
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldHaveValidationErrorFor(x => x.LoginID, "A");
                 }
@@ -392,7 +367,7 @@ namespace AdventureWorksNS.Api.Services.Tests
                         employeeRepository.Setup(x => x.ByLoginID(It.IsAny<string>())).Returns(Task.FromResult<Employee>(null));
                         var validator = new ApiEmployeeRequestModelValidator(employeeRepository.Object);
 
-                        await validator.ValidateUpdateAsync(default (int), new ApiEmployeeRequestModel());
+                        await validator.ValidateUpdateAsync(default(int), new ApiEmployeeRequestModel());
 
                         validator.ShouldNotHaveValidationErrorFor(x => x.LoginID, "A");
                 }
@@ -400,5 +375,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8e81b2964de03ad219dae76987edc2e1</Hash>
+    <Hash>427007e77b01269967951d6ec943898f</Hash>
 </Codenesium>*/

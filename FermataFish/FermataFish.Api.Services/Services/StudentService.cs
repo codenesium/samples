@@ -1,54 +1,46 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public class StudentService: AbstractStudentService, IStudentService
+        public class StudentService : AbstractStudentService, IStudentService
         {
                 public StudentService(
                         ILogger<IStudentRepository> logger,
                         IStudentRepository studentRepository,
                         IApiStudentRequestModelValidator studentModelValidator,
                         IBOLStudentMapper bolstudentMapper,
-                        IDALStudentMapper dalstudentMapper
-                        ,
+                        IDALStudentMapper dalstudentMapper,
                         IBOLLessonXStudentMapper bolLessonXStudentMapper,
-                        IDALLessonXStudentMapper dalLessonXStudentMapper
-                        ,
+                        IDALLessonXStudentMapper dalLessonXStudentMapper,
                         IBOLLessonXTeacherMapper bolLessonXTeacherMapper,
-                        IDALLessonXTeacherMapper dalLessonXTeacherMapper
-                        ,
+                        IDALLessonXTeacherMapper dalLessonXTeacherMapper,
                         IBOLStudentXFamilyMapper bolStudentXFamilyMapper,
                         IDALStudentXFamilyMapper dalStudentXFamilyMapper
-
                         )
                         : base(logger,
                                studentRepository,
                                studentModelValidator,
                                bolstudentMapper,
-                               dalstudentMapper
-                               ,
+                               dalstudentMapper,
                                bolLessonXStudentMapper,
-                               dalLessonXStudentMapper
-                               ,
+                               dalLessonXStudentMapper,
                                bolLessonXTeacherMapper,
-                               dalLessonXTeacherMapper
-                               ,
+                               dalLessonXTeacherMapper,
                                bolStudentXFamilyMapper,
-                               dalStudentXFamilyMapper
-                               )
+                               dalStudentXFamilyMapper)
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6d0ff1d45c36e369d9884a025481bc48</Hash>
+    <Hash>ff5215a6834c5883d04327245a35fa4c</Hash>
 </Codenesium>*/

@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "ServerTask")]
         [Trait("Area", "BOLMapper")]
-        public class TestBOLServerTaskActionMapper
+        public class TestBOLServerTaskMapper
         {
                 [Fact]
                 public void MapModelToBO()
                 {
                         var mapper = new BOLServerTaskMapper();
-
                         ApiServerTaskRequestModel model = new ApiServerTaskRequestModel();
-
                         model.SetProperties(DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", true, true, "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
                         BOServerTask response = mapper.MapModelToBO("A", model);
 
@@ -45,9 +43,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModel()
                 {
                         var mapper = new BOLServerTaskMapper();
-
                         BOServerTask bo = new BOServerTask();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", true, true, "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
                         ApiServerTaskResponseModel response = mapper.MapBOToModel(bo);
 
@@ -74,9 +70,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapBOToModelList()
                 {
                         var mapper = new BOLServerTaskMapper();
-
                         BOServerTask bo = new BOServerTask();
-
                         bo.SetProperties("A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", true, true, "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A");
                         List<ApiServerTaskResponseModel> response = mapper.MapBOToModel(new List<BOServerTask>() { { bo } });
 
@@ -86,5 +80,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>510ac24ec1a5e2ac9bea7ea00056c87e</Hash>
+    <Hash>301a079804ce03a851329a7274b4a899</Hash>
 </Codenesium>*/

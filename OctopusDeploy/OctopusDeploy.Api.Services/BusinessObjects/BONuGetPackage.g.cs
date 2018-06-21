@@ -3,14 +3,15 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public partial class BONuGetPackage: AbstractBONuGetPackage
+        public partial class BONuGetPackage : AbstractBONuGetPackage
         {
-                public BONuGetPackage() : base()
+                public BONuGetPackage()
+                        : base()
                 {
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>30c7a8c093f1973139c4a8e07469aaee</Hash>
+    <Hash>0d1cf07cea96d65a9525cfe4f5e39298</Hash>
 </Codenesium>*/

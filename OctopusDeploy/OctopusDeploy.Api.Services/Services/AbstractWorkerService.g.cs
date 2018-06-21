@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using OctopusDeployNS.Api.Contracts;
+using OctopusDeployNS.Api.DataAccess;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using OctopusDeployNS.Api.Contracts;
-using OctopusDeployNS.Api.DataAccess;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractWorkerService: AbstractService
+        public abstract class AbstractWorkerService : AbstractService
         {
                 private IWorkerRepository workerRepository;
 
@@ -29,11 +29,8 @@ namespace OctopusDeployNS.Api.Services
                         IWorkerRepository workerRepository,
                         IApiWorkerRequestModelValidator workerModelValidator,
                         IBOLWorkerMapper bolWorkerMapper,
-                        IDALWorkerMapper dalWorkerMapper
-
-                        )
+                        IDALWorkerMapper dalWorkerMapper)
                         : base()
-
                 {
                         this.workerRepository = workerRepository;
                         this.workerModelValidator = workerModelValidator;
@@ -69,7 +66,7 @@ namespace OctopusDeployNS.Api.Services
                         CreateResponse<ApiWorkerResponseModel> response = new CreateResponse<ApiWorkerResponseModel>(await this.workerModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolWorkerMapper.MapModelToBO(default (string), model);
+                                var bo = this.bolWorkerMapper.MapModelToBO(default(string), model);
                                 var record = await this.workerRepository.Create(this.dalWorkerMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace OctopusDeployNS.Api.Services
                         ApiWorkerRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.workerModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolWorkerMapper.MapModelToBO(id, model);
@@ -97,7 +93,6 @@ namespace OctopusDeployNS.Api.Services
                         string id)
                 {
                         ActionResponse response = new ActionResponse(await this.workerModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.workerRepository.Delete(id);
@@ -119,6 +114,7 @@ namespace OctopusDeployNS.Api.Services
                                 return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
                         }
                 }
+
                 public async Task<List<ApiWorkerResponseModel>> GetMachinePolicyId(string machinePolicyId)
                 {
                         List<Worker> records = await this.workerRepository.GetMachinePolicyId(machinePolicyId);
@@ -129,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4e41e24d3f104796677c6cfdd50cb00</Hash>
+    <Hash>58a7190f673689e27c69453243ddf7b8</Hash>
 </Codenesium>*/

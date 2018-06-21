@@ -1,18 +1,18 @@
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.DataAccess;
 using Codenesium.DataConversionExtensions.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.DataAccess;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public abstract class AbstractPurchaseOrderDetailService: AbstractService
+        public abstract class AbstractPurchaseOrderDetailService : AbstractService
         {
                 private IPurchaseOrderDetailRepository purchaseOrderDetailRepository;
 
@@ -29,11 +29,8 @@ namespace AdventureWorksNS.Api.Services
                         IPurchaseOrderDetailRepository purchaseOrderDetailRepository,
                         IApiPurchaseOrderDetailRequestModelValidator purchaseOrderDetailModelValidator,
                         IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
-                        IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper
-
-                        )
+                        IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper)
                         : base()
-
                 {
                         this.purchaseOrderDetailRepository = purchaseOrderDetailRepository;
                         this.purchaseOrderDetailModelValidator = purchaseOrderDetailModelValidator;
@@ -69,7 +66,7 @@ namespace AdventureWorksNS.Api.Services
                         CreateResponse<ApiPurchaseOrderDetailResponseModel> response = new CreateResponse<ApiPurchaseOrderDetailResponseModel>(await this.purchaseOrderDetailModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolPurchaseOrderDetailMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolPurchaseOrderDetailMapper.MapModelToBO(default(int), model);
                                 var record = await this.purchaseOrderDetailRepository.Create(this.dalPurchaseOrderDetailMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolPurchaseOrderDetailMapper.MapBOToModel(this.dalPurchaseOrderDetailMapper.MapEFToBO(record)));
@@ -83,7 +80,6 @@ namespace AdventureWorksNS.Api.Services
                         ApiPurchaseOrderDetailRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.purchaseOrderDetailModelValidator.ValidateUpdateAsync(purchaseOrderID, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolPurchaseOrderDetailMapper.MapModelToBO(purchaseOrderID, model);
@@ -97,7 +93,6 @@ namespace AdventureWorksNS.Api.Services
                         int purchaseOrderID)
                 {
                         ActionResponse response = new ActionResponse(await this.purchaseOrderDetailModelValidator.ValidateDeleteAsync(purchaseOrderID));
-
                         if (response.Success)
                         {
                                 await this.purchaseOrderDetailRepository.Delete(purchaseOrderID);
@@ -116,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a92980f9eba31b7e900deffc2d4b8a1</Hash>
+    <Hash>68b015fda4ac4f43f7964ec125ba54c7</Hash>
 </Codenesium>*/

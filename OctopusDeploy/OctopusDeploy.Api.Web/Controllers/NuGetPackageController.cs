@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/nuGetPackages")]
         [ApiVersion("1.0")]
-        public class NuGetPackageController: AbstractNuGetPackageController
+        public class NuGetPackageController : AbstractNuGetPackageController
         {
                 public NuGetPackageController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>73dbe192445fc2f7bbda2c7cf05faa87</Hash>
+    <Hash>98f0bc6df53c5a4d4c02e9bd8889435b</Hash>
 </Codenesium>*/

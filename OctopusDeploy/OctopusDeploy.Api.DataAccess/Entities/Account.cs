@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
         [Table("Account", Schema="dbo")]
-        public partial class Account: AbstractEntity
+        public partial class Account : AbstractEntity
         {
                 public Account()
                 {
@@ -30,30 +30,30 @@ namespace OctopusDeployNS.Api.DataAccess
                         this.TenantTags = tenantTags;
                 }
 
-                [Column("AccountType", TypeName="nvarchar(50)")]
+                [Column("AccountType")]
                 public string AccountType { get; private set; }
 
-                [Column("EnvironmentIds", TypeName="nvarchar(-1)")]
+                [Column("EnvironmentIds")]
                 public string EnvironmentIds { get; private set; }
 
                 [Key]
-                [Column("Id", TypeName="nvarchar(210)")]
+                [Column("Id")]
                 public string Id { get; private set; }
 
-                [Column("JSON", TypeName="nvarchar(-1)")]
+                [Column("JSON")]
                 public string JSON { get; private set; }
 
-                [Column("Name", TypeName="nvarchar(200)")]
+                [Column("Name")]
                 public string Name { get; private set; }
 
-                [Column("TenantIds", TypeName="nvarchar(-1)")]
+                [Column("TenantIds")]
                 public string TenantIds { get; private set; }
 
-                [Column("TenantTags", TypeName="nvarchar(-1)")]
+                [Column("TenantTags")]
                 public string TenantTags { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>093d107545492b685f18a166e521eb51</Hash>
+    <Hash>3c5a1e4969b3af936b3c0cfc1545606e</Hash>
 </Codenesium>*/

@@ -1,18 +1,18 @@
 using Codenesium.DataConversionExtensions.AspNetCore;
+using FermataFishNS.Api.Contracts;
+using FermataFishNS.Api.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using FermataFishNS.Api.Contracts;
-using FermataFishNS.Api.DataAccess;
 
 namespace FermataFishNS.Api.Services
 {
-        public abstract class AbstractTeacherService: AbstractService
+        public abstract class AbstractTeacherService : AbstractService
         {
                 private ITeacherRepository teacherRepository;
 
@@ -36,18 +36,12 @@ namespace FermataFishNS.Api.Services
                         ITeacherRepository teacherRepository,
                         IApiTeacherRequestModelValidator teacherModelValidator,
                         IBOLTeacherMapper bolTeacherMapper,
-                        IDALTeacherMapper dalTeacherMapper
-
-                        ,
+                        IDALTeacherMapper dalTeacherMapper,
                         IBOLRateMapper bolRateMapper,
-                        IDALRateMapper dalRateMapper
-                        ,
+                        IDALRateMapper dalRateMapper,
                         IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper,
-                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper
-
-                        )
+                        IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper)
                         : base()
-
                 {
                         this.teacherRepository = teacherRepository;
                         this.teacherModelValidator = teacherModelValidator;
@@ -87,7 +81,7 @@ namespace FermataFishNS.Api.Services
                         CreateResponse<ApiTeacherResponseModel> response = new CreateResponse<ApiTeacherResponseModel>(await this.teacherModelValidator.ValidateCreateAsync(model));
                         if (response.Success)
                         {
-                                var bo = this.bolTeacherMapper.MapModelToBO(default (int), model);
+                                var bo = this.bolTeacherMapper.MapModelToBO(default(int), model);
                                 var record = await this.teacherRepository.Create(this.dalTeacherMapper.MapBOToEF(bo));
 
                                 response.SetRecord(this.bolTeacherMapper.MapBOToModel(this.dalTeacherMapper.MapEFToBO(record)));
@@ -101,7 +95,6 @@ namespace FermataFishNS.Api.Services
                         ApiTeacherRequestModel model)
                 {
                         ActionResponse response = new ActionResponse(await this.teacherModelValidator.ValidateUpdateAsync(id, model));
-
                         if (response.Success)
                         {
                                 var bo = this.bolTeacherMapper.MapModelToBO(id, model);
@@ -115,7 +108,6 @@ namespace FermataFishNS.Api.Services
                         int id)
                 {
                         ActionResponse response = new ActionResponse(await this.teacherModelValidator.ValidateDeleteAsync(id));
-
                         if (response.Success)
                         {
                                 await this.teacherRepository.Delete(id);
@@ -130,6 +122,7 @@ namespace FermataFishNS.Api.Services
 
                         return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
                 }
+
                 public async virtual Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkills(int teacherId, int limit = int.MaxValue, int offset = 0)
                 {
                         List<TeacherXTeacherSkill> records = await this.teacherRepository.TeacherXTeacherSkills(teacherId, limit, offset);
@@ -140,5 +133,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7e44c05133138ee0be380f6b5c270b79</Hash>
+    <Hash>21474a50fa74ec000d2864b808c59458</Hash>
 </Codenesium>*/

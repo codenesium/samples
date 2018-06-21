@@ -1,15 +1,15 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System;
-using Xunit;
-using Moq;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Moq;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PetStoreNS.Api.Services.Tests
 {
@@ -44,7 +44,6 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPenRepository>();
                         var record = new Pen();
-
                         mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(record));
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
@@ -54,7 +53,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ApiPenResponseModel response = await service.Get(default (int));
+                        ApiPenResponseModel response = await service.Get(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -73,7 +72,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ApiPenResponseModel response = await service.Get(default (int));
+                        ApiPenResponseModel response = await service.Get(default(int));
 
                         response.Should().BeNull();
                         mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
@@ -84,7 +83,6 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPenRepository>();
                         var model = new ApiPenRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Pen>())).Returns(Task.FromResult(new Pen()));
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
@@ -106,7 +104,6 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPenRepository>();
                         var model = new ApiPenRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Create(It.IsAny<Pen>())).Returns(Task.FromResult(new Pen()));
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
@@ -116,7 +113,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ActionResponse response = await service.Update(default (int), model);
+                        ActionResponse response = await service.Update(default(int), model);
 
                         response.Should().NotBeNull();
                         mock.ModelValidatorMockFactory.PenModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPenRequestModel>()));
@@ -128,7 +125,6 @@ namespace PetStoreNS.Api.Services.Tests
                 {
                         var mock = new ServiceMockFacade<IPenRepository>();
                         var model = new ApiPenRequestModel();
-
                         mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
@@ -138,7 +134,7 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        ActionResponse response = await service.Delete(default (int));
+                        ActionResponse response = await service.Delete(default(int));
 
                         response.Should().NotBeNull();
                         mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
@@ -151,7 +147,7 @@ namespace PetStoreNS.Api.Services.Tests
                         var mock = new ServiceMockFacade<IPenRepository>();
                         var records = new List<Pet>();
                         records.Add(new Pet());
-                        mock.RepositoryMock.Setup(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+                        mock.RepositoryMock.Setup(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
                                                      mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
@@ -160,17 +156,17 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        List<ApiPetResponseModel> response = await service.Pets(default (int));
+                        List<ApiPetResponseModel> response = await service.Pets(default(int));
 
                         response.Should().NotBeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
 
                 [Fact]
                 public async void Pets_Not_Exists()
                 {
                         var mock = new ServiceMockFacade<IPenRepository>();
-                        mock.RepositoryMock.Setup(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
+                        mock.RepositoryMock.Setup(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
                         var service = new PenService(mock.LoggerMock.Object,
                                                      mock.RepositoryMock.Object,
                                                      mock.ModelValidatorMockFactory.PenModelValidatorMock.Object,
@@ -179,14 +175,14 @@ namespace PetStoreNS.Api.Services.Tests
                                                      mock.BOLMapperMockFactory.BOLPetMapperMock,
                                                      mock.DALMapperMockFactory.DALPetMapperMock);
 
-                        List<ApiPetResponseModel> response = await service.Pets(default (int));
+                        List<ApiPetResponseModel> response = await service.Pets(default(int));
 
                         response.Should().BeEmpty();
-                        mock.RepositoryMock.Verify(x => x.Pets(default (int), It.IsAny<int>(), It.IsAny<int>()));
+                        mock.RepositoryMock.Verify(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>()));
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2fe48e3b7979370e60ebcad5277bf6c6</Hash>
+    <Hash>baaf6593df8cd55b345ec6e4ebe5c64b</Hash>
 </Codenesium>*/

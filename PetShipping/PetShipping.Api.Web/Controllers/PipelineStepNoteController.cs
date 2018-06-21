@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetShippingNS.Api.Contracts;
 using PetShippingNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PetShippingNS.Api.Web
 {
         [Route("api/pipelineStepNotes")]
         [ApiVersion("1.0")]
-        public class PipelineStepNoteController: AbstractPipelineStepNoteController
+        public class PipelineStepNoteController : AbstractPipelineStepNoteController
         {
                 public PipelineStepNoteController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b15d66d59637f2923959bfd1ca0c1135</Hash>
+    <Hash>5bd9bd7957983e71a72910162da56b8d</Hash>
 </Codenesium>*/

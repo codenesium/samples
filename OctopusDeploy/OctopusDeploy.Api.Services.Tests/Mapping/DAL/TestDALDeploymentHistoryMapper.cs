@@ -1,24 +1,22 @@
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
-using Xunit;
 using OctopusDeployNS.Api.DataAccess;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OctopusDeployNS.Api.Services.Tests
 {
         [Trait("Type", "Unit")]
         [Trait("Table", "DeploymentHistory")]
         [Trait("Area", "DALMapper")]
-        public class TestDALDeploymentHistoryActionMapper
+        public class TestDALDeploymentHistoryMapper
         {
                 [Fact]
                 public void MapBOToEF()
                 {
                         var mapper = new DALDeploymentHistoryMapper();
-
                         var bo = new BODeploymentHistory();
-
                         bo.SetProperties("A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
 
                         DeploymentHistory response = mapper.MapBOToEF(bo);
@@ -50,12 +48,10 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBO()
                 {
                         var mapper = new DALDeploymentHistoryMapper();
-
                         DeploymentHistory entity = new DeploymentHistory();
-
                         entity.SetProperties("A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", 1, "A", "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
 
-                        BODeploymentHistory  response = mapper.MapEFToBO(entity);
+                        BODeploymentHistory response = mapper.MapEFToBO(entity);
 
                         response.ChannelId.Should().Be("A");
                         response.ChannelName.Should().Be("A");
@@ -84,9 +80,7 @@ namespace OctopusDeployNS.Api.Services.Tests
                 public void MapEFToBOList()
                 {
                         var mapper = new DALDeploymentHistoryMapper();
-
                         DeploymentHistory entity = new DeploymentHistory();
-
                         entity.SetProperties("A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", 1, "A", "A", "A", "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", DateTimeOffset.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A");
 
                         List<BODeploymentHistory> response = mapper.MapEFToBO(new List<DeploymentHistory>() { entity });
@@ -97,5 +91,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f208ea6efeb39d8086eff69e73d74cb6</Hash>
+    <Hash>0a0bab3d48f067b6212be0dedf67e2e9</Hash>
 </Codenesium>*/

@@ -38,7 +38,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
 
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -55,7 +54,6 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
 
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -72,10 +70,10 @@ namespace NebulaNS.Api.DataAccess
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
 
                         var entity = new VersionInfo();
-
                         await repository.Create(entity);
 
                         var record = await context.Set<VersionInfo>().FirstOrDefaultAsync();
+
                         record.Should().NotBeNull();
                 }
 
@@ -85,9 +83,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<VersionInfoRepository>> loggerMoc = VersionInfoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VersionInfoRepositoryMoc.GetContext();
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
-
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -105,9 +101,7 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<VersionInfoRepository>> loggerMoc = VersionInfoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VersionInfoRepositoryMoc.GetContext();
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
-
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
@@ -123,20 +117,19 @@ namespace NebulaNS.Api.DataAccess
                         Mock<ILogger<VersionInfoRepository>> loggerMoc = VersionInfoRepositoryMoc.GetLoggerMoc();
                         ApplicationDbContext context = VersionInfoRepositoryMoc.GetContext();
                         var repository = new VersionInfoRepository(loggerMoc.Object, context);
-
                         VersionInfo entity = new VersionInfo();
-
                         context.Set<VersionInfo>().Add(entity);
                         await context.SaveChangesAsync();
 
                         await repository.Delete(entity.Version);
 
                         VersionInfo modifiedRecord = await context.Set<VersionInfo>().FirstOrDefaultAsync();
+
                         modifiedRecord.Should().BeNull();
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>4662e75835179dfab23a5e43cfd642c8</Hash>
+    <Hash>306410f918325f1dda87dc3f077fc5bc</Hash>
 </Codenesium>*/

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace OctopusDeployNS.Api.Services
                         BOApiKey bo)
                 {
                         ApiKey efApiKey = new ApiKey();
-
                         efApiKey.SetProperties(
                                 bo.ApiKeyHashed,
                                 bo.Created,
@@ -52,5 +51,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b16040ad2f76abdebeb8fea06d964d72</Hash>
+    <Hash>9296c44a8ccfaab950cff392485ff531</Hash>
 </Codenesium>*/

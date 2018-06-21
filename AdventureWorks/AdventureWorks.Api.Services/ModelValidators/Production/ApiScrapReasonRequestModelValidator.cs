@@ -1,12 +1,12 @@
-using System;
-using FluentValidation.Results;
-using System.Threading.Tasks;
 using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.DataAccess;
+using FluentValidation.Results;
+using System;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-        public class ApiScrapReasonRequestModelValidator: AbstractApiScrapReasonRequestModelValidator, IApiScrapReasonRequestModelValidator
+        public class ApiScrapReasonRequestModelValidator : AbstractApiScrapReasonRequestModelValidator, IApiScrapReasonRequestModelValidator
         {
                 public ApiScrapReasonRequestModelValidator(IScrapReasonRepository scrapReasonRepository)
                         : base(scrapReasonRepository)
@@ -29,11 +29,11 @@ namespace AdventureWorksNS.Api.Services
 
                 public async Task<ValidationResult> ValidateDeleteAsync(short id)
                 {
-                        return new ValidationResult();
+                        return await Task.FromResult<ValidationResult>(new ValidationResult());
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e9fb375b7848888d85f3ab3d006b1125</Hash>
+    <Hash>def0b00b5cd9742f892b12aca9f09f8a</Hash>
 </Codenesium>*/

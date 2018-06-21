@@ -1,20 +1,20 @@
-using System;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using OctopusDeployNS.Api.Contracts;
 using OctopusDeployNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OctopusDeployNS.Api.Web
 {
         [Route("api/eventRelatedDocuments")]
         [ApiVersion("1.0")]
-        public class EventRelatedDocumentController: AbstractEventRelatedDocumentController
+        public class EventRelatedDocumentController : AbstractEventRelatedDocumentController
         {
                 public EventRelatedDocumentController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dd7b20fe20a8c85dcc51628e59853457</Hash>
+    <Hash>0d8048ac7601e05e1160f9620f671632</Hash>
 </Codenesium>*/

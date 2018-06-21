@@ -1,12 +1,12 @@
+using Codenesium.DataConversionExtensions.AspNetCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Codenesium.DataConversionExtensions.AspNetCore;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
         [Table("ShoppingCartItem", Schema="Sales")]
-        public partial class ShoppingCartItem: AbstractEntity
+        public partial class ShoppingCartItem : AbstractEntity
         {
                 public ShoppingCartItem()
                 {
@@ -28,27 +28,27 @@ namespace AdventureWorksNS.Api.DataAccess
                         this.ShoppingCartItemID = shoppingCartItemID;
                 }
 
-                [Column("DateCreated", TypeName="datetime")]
+                [Column("DateCreated")]
                 public DateTime DateCreated { get; private set; }
 
-                [Column("ModifiedDate", TypeName="datetime")]
+                [Column("ModifiedDate")]
                 public DateTime ModifiedDate { get; private set; }
 
-                [Column("ProductID", TypeName="int")]
+                [Column("ProductID")]
                 public int ProductID { get; private set; }
 
-                [Column("Quantity", TypeName="int")]
+                [Column("Quantity")]
                 public int Quantity { get; private set; }
 
-                [Column("ShoppingCartID", TypeName="nvarchar(50)")]
+                [Column("ShoppingCartID")]
                 public string ShoppingCartID { get; private set; }
 
                 [Key]
-                [Column("ShoppingCartItemID", TypeName="int")]
+                [Column("ShoppingCartItemID")]
                 public int ShoppingCartItemID { get; private set; }
         }
 }
 
 /*<Codenesium>
-    <Hash>18a1f9979b6a75ad0e072b2dbebc5d3e</Hash>
+    <Hash>9dfc42cc9b608b6f3e504c17b362ff34</Hash>
 </Codenesium>*/

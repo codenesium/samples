@@ -1,6 +1,6 @@
 using System;
-using System.Linq.Expressions;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
 using TicketingCRMNS.Api.DataAccess;
@@ -22,10 +22,11 @@ namespace TicketingCRMNS.Api.Services
                 Task<List<ApiVenueResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
                 Task<List<ApiVenueResponseModel>> GetAdminId(int adminId);
+
                 Task<List<ApiVenueResponseModel>> GetProvinceId(int provinceId);
         }
 }
 
 /*<Codenesium>
-    <Hash>2ea000cb109561f9825f73f36e9ea338</Hash>
+    <Hash>28aae5529259db9bb64561508314ab9c</Hash>
 </Codenesium>*/

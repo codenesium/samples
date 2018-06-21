@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PetStoreNS.Api.Contracts;
 using PetStoreNS.Api.DataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
@@ -12,7 +12,6 @@ namespace PetStoreNS.Api.Services
                         BOSpecies bo)
                 {
                         Species efSpecies = new Species();
-
                         efSpecies.SetProperties(
                                 bo.Id,
                                 bo.Name);
@@ -46,5 +45,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ddd929260ae9d6fe6c201c903462c544</Hash>
+    <Hash>34cfebd03b3ddc2bb6c83f4e79987cce</Hash>
 </Codenesium>*/

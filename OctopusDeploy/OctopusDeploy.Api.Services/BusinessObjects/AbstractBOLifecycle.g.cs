@@ -3,9 +3,10 @@ using System;
 
 namespace OctopusDeployNS.Api.Services
 {
-        public abstract class AbstractBOLifecycle: AbstractBusinessObject
+        public abstract class AbstractBOLifecycle : AbstractBusinessObject
         {
-                public AbstractBOLifecycle() : base()
+                public AbstractBOLifecycle()
+                        : base()
                 {
                 }
 
@@ -31,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b1bb0b4ab014933f3b7f992bec9c9ed</Hash>
+    <Hash>e3d8ed9d8047550c931e707302346e8c</Hash>
 </Codenesium>*/

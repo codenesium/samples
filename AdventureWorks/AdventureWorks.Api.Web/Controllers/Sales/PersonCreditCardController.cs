@@ -1,20 +1,20 @@
-using System;
+using AdventureWorksNS.Api.Contracts;
+using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AdventureWorksNS.Api.Contracts;
-using AdventureWorksNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventureWorksNS.Api.Web
 {
         [Route("api/personCreditCards")]
         [ApiVersion("1.0")]
-        public class PersonCreditCardController: AbstractPersonCreditCardController
+        public class PersonCreditCardController : AbstractPersonCreditCardController
         {
                 public PersonCreditCardController(
                         ApiSettings settings,
@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cabe57033777ff05eca4045099977727</Hash>
+    <Hash>1576f30bc0e20b647c98cac178d6f1ae</Hash>
 </Codenesium>*/
