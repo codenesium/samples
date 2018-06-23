@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace OctopusDeployNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        SchemaVersionsControllerMockFacade mock = new SchemaVersionsControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaVersionsRequestModel>()))
+                        .Callback<int, ApiSchemaVersionsRequestModel>(
+                                (id, model) => model.Applied.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"))
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaVersionsResponseModel>(new ApiSchemaVersionsResponseModel()));
+                        SchemaVersionsController controller = new SchemaVersionsController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiSchemaVersionsRequestModel>();
+                        patch.Replace(x => x.Applied, DateTime.Parse("1/1/1987 12:00:00 AM"));
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiSchemaVersionsRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        SchemaVersionsControllerMockFacade mock = new SchemaVersionsControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiSchemaVersionsResponseModel>(null));
+                        SchemaVersionsController controller = new SchemaVersionsController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiSchemaVersionsRequestModel>();
+                        patch.Replace(x => x.Applied, DateTime.Parse("1/1/1987 12:00:00 AM"));
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         SchemaVersionsControllerMockFacade mock = new SchemaVersionsControllerMockFacade();
@@ -268,5 +316,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>de8f79f57a2b02f56e04e5c96f73cf16</Hash>
+    <Hash>e7b295deef86e8b1b4d7fbea2694dc70</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryRequestModel model)
-                {
-                        CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Record.BusinessEntityID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
@@ -115,6 +97,62 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiEmployeePayHistoryRequestModel model)
+                {
+                        CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.EmployeePayHistoryService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EmployeePayHistories/{result.Record.BusinessEntityID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiEmployeePayHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEmployeePayHistoryRequestModel> patch)
+                {
+                        ApiEmployeePayHistoryResponseModel record = await this.EmployeePayHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiEmployeePayHistoryRequestModel model = new ApiEmployeePayHistoryRequestModel();
+                                model.SetProperties(model.ModifiedDate,
+                                                    model.PayFrequency,
+                                                    model.Rate,
+                                                    model.RateChangeDate);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.EmployeePayHistoryService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiEmployeePayHistoryResponseModel response = await this.EmployeePayHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +199,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7945af199b444ecb1cc8295e2a892ece</Hash>
+    <Hash>029f3a5806d028af7dadbc9251f65d71</Hash>
 </Codenesium>*/

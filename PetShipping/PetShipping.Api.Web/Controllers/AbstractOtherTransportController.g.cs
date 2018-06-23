@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace PetShippingNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOtherTransportResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiOtherTransportRequestModel model)
-                {
-                        CreateResponse<ApiOtherTransportResponseModel> result = await this.OtherTransportService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OtherTransports/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiOtherTransportResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace PetShippingNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiOtherTransportResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiOtherTransportRequestModel model)
+                {
+                        CreateResponse<ApiOtherTransportResponseModel> result = await this.OtherTransportService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OtherTransports/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiOtherTransportResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiOtherTransportRequestModel> patch)
+                {
+                        ApiOtherTransportResponseModel record = await this.OtherTransportService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiOtherTransportRequestModel model = new ApiOtherTransportRequestModel();
+                                model.SetProperties(model.HandlerId,
+                                                    model.PipelineStepId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.OtherTransportService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiOtherTransportResponseModel response = await this.OtherTransportService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +197,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b65cde6c522af80de1509133432b47df</Hash>
+    <Hash>2750b7ef9fdf6b74e394beb9f46f15d8</Hash>
 </Codenesium>*/

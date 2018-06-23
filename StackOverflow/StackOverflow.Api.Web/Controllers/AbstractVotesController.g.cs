@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace StackOverflowNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVotesResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiVotesRequestModel model)
-                {
-                        CreateResponse<ApiVotesResponseModel> result = await this.VotesService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Votes/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiVotesResponseModel>), 200)]
@@ -115,6 +97,63 @@ namespace StackOverflowNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiVotesResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiVotesRequestModel model)
+                {
+                        CreateResponse<ApiVotesResponseModel> result = await this.VotesService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Votes/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiVotesResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVotesRequestModel> patch)
+                {
+                        ApiVotesResponseModel record = await this.VotesService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiVotesRequestModel model = new ApiVotesRequestModel();
+                                model.SetProperties(model.BountyAmount,
+                                                    model.CreationDate,
+                                                    model.PostId,
+                                                    model.UserId,
+                                                    model.VoteTypeId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.VotesService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiVotesResponseModel response = await this.VotesService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +200,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5eaabd4d67d10637fd688300c61d46d4</Hash>
+    <Hash>34103f9a023cc9a87a1e610d9bb9c45a</Hash>
 </Codenesium>*/

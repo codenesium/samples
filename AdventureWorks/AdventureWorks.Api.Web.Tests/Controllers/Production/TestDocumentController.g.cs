@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace AdventureWorksNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()))
+                        .Callback<Guid, ApiDocumentRequestModel>(
+                                (id, model) => model.ChangeNumber.Should().Be(1)
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentResponseModel>(new ApiDocumentResponseModel()));
+                        DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
+                        patch.Replace(x => x.ChangeNumber, 1);
+
+                        IActionResult response = await controller.Patch(default(Guid), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<Guid>(), It.IsAny<ApiDocumentRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<Guid>())).Returns(Task.FromResult<ApiDocumentResponseModel>(null));
+                        DocumentController controller = new DocumentController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiDocumentRequestModel>();
+                        patch.Replace(x => x.ChangeNumber, 1);
+
+                        IActionResult response = await controller.Patch(default(Guid), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<Guid>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         DocumentControllerMockFacade mock = new DocumentControllerMockFacade();
@@ -268,5 +316,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>842bee7254f9463baabdf88a47bc55ff</Hash>
+    <Hash>e70387bc5e0a2ca95b5ec5d00a81cf4d</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace AdventureWorksNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        ProductModelControllerMockFacade mock = new ProductModelControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductModelRequestModel>()))
+                        .Callback<int, ApiProductModelRequestModel>(
+                                (id, model) => model.CatalogDescription.Should().Be("A")
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductModelResponseModel>(new ApiProductModelResponseModel()));
+                        ProductModelController controller = new ProductModelController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiProductModelRequestModel>();
+                        patch.Replace(x => x.CatalogDescription, "A");
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiProductModelRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        ProductModelControllerMockFacade mock = new ProductModelControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiProductModelResponseModel>(null));
+                        ProductModelController controller = new ProductModelController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiProductModelRequestModel>();
+                        patch.Replace(x => x.CatalogDescription, "A");
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         ProductModelControllerMockFacade mock = new ProductModelControllerMockFacade();
@@ -268,5 +316,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>f889bc834d50f81c3ca084b0b557d122</Hash>
+    <Hash>f0e5c2fe152538680d1e089e9718da62</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCultureResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiCultureRequestModel model)
-                {
-                        CreateResponse<ApiCultureResponseModel> result = await this.CultureService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Record.CultureID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiCultureResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCultureResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiCultureRequestModel model)
+                {
+                        CreateResponse<ApiCultureResponseModel> result = await this.CultureService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Cultures/{result.Record.CultureID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCultureResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCultureRequestModel> patch)
+                {
+                        ApiCultureResponseModel record = await this.CultureService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiCultureRequestModel model = new ApiCultureRequestModel();
+                                model.SetProperties(model.ModifiedDate,
+                                                    model.Name);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.CultureService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiCultureResponseModel response = await this.CultureService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -194,5 +230,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>be589ab021c7ef1db9f4aeb118e73f91</Hash>
+    <Hash>7f51c65569ebbe4e4051e57d95d21b9d</Hash>
 </Codenesium>*/

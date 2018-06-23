@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace NebulaNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<long>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoRequestModel model)
-                {
-                        CreateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiVersionInfoResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace NebulaNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<long>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiVersionInfoRequestModel model)
+                {
+                        CreateResponse<ApiVersionInfoResponseModel> result = await this.VersionInfoService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/VersionInfoes/{result.Record.Version}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(long id, [FromBody] JsonPatchDocument<ApiVersionInfoRequestModel> patch)
+                {
+                        ApiVersionInfoResponseModel record = await this.VersionInfoService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiVersionInfoRequestModel model = new ApiVersionInfoRequestModel();
+                                model.SetProperties(model.AppliedOn,
+                                                    model.Description);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.VersionInfoService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiVersionInfoResponseModel response = await this.VersionInfoService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -180,5 +216,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a8976f77e306a61fcebd162c9bcc309b</Hash>
+    <Hash>37e051bfe7d76298bdc260c3af61ab6c</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace FermataFishNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLessonResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiLessonRequestModel model)
-                {
-                        CreateResponse<ApiLessonResponseModel> result = await this.LessonService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Lessons/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiLessonResponseModel>), 200)]
@@ -115,6 +97,67 @@ namespace FermataFishNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiLessonResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiLessonRequestModel model)
+                {
+                        CreateResponse<ApiLessonResponseModel> result = await this.LessonService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Lessons/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiLessonResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLessonRequestModel> patch)
+                {
+                        ApiLessonResponseModel record = await this.LessonService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiLessonRequestModel model = new ApiLessonRequestModel();
+                                model.SetProperties(model.ActualEndDate,
+                                                    model.ActualStartDate,
+                                                    model.BillAmount,
+                                                    model.LessonStatusId,
+                                                    model.ScheduledEndDate,
+                                                    model.ScheduledStartDate,
+                                                    model.StudentNotes,
+                                                    model.StudioId,
+                                                    model.TeacherNotes);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.LessonService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiLessonResponseModel response = await this.LessonService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -189,5 +232,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e75a65822f2ee7095ffc01a557035a40</Hash>
+    <Hash>f68dfd67ea4c45ef006514226181073a</Hash>
 </Codenesium>*/

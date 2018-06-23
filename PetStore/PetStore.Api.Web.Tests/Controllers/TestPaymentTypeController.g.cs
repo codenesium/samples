@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace PetStoreNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()))
+                        .Callback<int, ApiPaymentTypeRequestModel>(
+                                (id, model) => model.Name.Should().Be("A")
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeResponseModel>(new ApiPaymentTypeResponseModel()));
+                        PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiPaymentTypeRequestModel>();
+                        patch.Replace(x => x.Name, "A");
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiPaymentTypeRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiPaymentTypeResponseModel>(null));
+                        PaymentTypeController controller = new PaymentTypeController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiPaymentTypeRequestModel>();
+                        patch.Replace(x => x.Name, "A");
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         PaymentTypeControllerMockFacade mock = new PaymentTypeControllerMockFacade();
@@ -268,5 +316,5 @@ namespace PetStoreNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>fb14edfa43022e2acef28f179a553b7f</Hash>
+    <Hash>d58d56330eff6fd707828bf02f61a309</Hash>
 </Codenesium>*/

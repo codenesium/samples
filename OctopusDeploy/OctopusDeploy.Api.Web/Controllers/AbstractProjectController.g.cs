@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProjectResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiProjectRequestModel model)
-                {
-                        CreateResponse<ApiProjectResponseModel> result = await this.ProjectService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Projects/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiProjectResponseModel>), 200)]
@@ -115,6 +97,70 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProjectResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiProjectRequestModel model)
+                {
+                        CreateResponse<ApiProjectResponseModel> result = await this.ProjectService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Projects/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProjectResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiProjectRequestModel> patch)
+                {
+                        ApiProjectResponseModel record = await this.ProjectService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiProjectRequestModel model = new ApiProjectRequestModel();
+                                model.SetProperties(model.AutoCreateRelease,
+                                                    model.DataVersion,
+                                                    model.DeploymentProcessId,
+                                                    model.DiscreteChannelRelease,
+                                                    model.IncludedLibraryVariableSetIds,
+                                                    model.IsDisabled,
+                                                    model.JSON,
+                                                    model.LifecycleId,
+                                                    model.Name,
+                                                    model.ProjectGroupId,
+                                                    model.Slug,
+                                                    model.VariableSetId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ProjectService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiProjectResponseModel response = await this.ProjectService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -221,5 +267,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5916bae10ab3f860ca9851264cca6976</Hash>
+    <Hash>8e8fb736b2d5e445d3b3643021be13ea</Hash>
 </Codenesium>*/

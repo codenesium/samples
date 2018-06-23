@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTenantResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiTenantRequestModel model)
-                {
-                        CreateResponse<ApiTenantResponseModel> result = await this.TenantService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Tenants/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiTenantResponseModel>), 200)]
@@ -115,6 +97,63 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiTenantResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiTenantRequestModel model)
+                {
+                        CreateResponse<ApiTenantResponseModel> result = await this.TenantService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Tenants/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiTenantResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiTenantRequestModel> patch)
+                {
+                        ApiTenantResponseModel record = await this.TenantService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiTenantRequestModel model = new ApiTenantRequestModel();
+                                model.SetProperties(model.DataVersion,
+                                                    model.JSON,
+                                                    model.Name,
+                                                    model.ProjectIds,
+                                                    model.TenantTags);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.TenantService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiTenantResponseModel response = await this.TenantService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -191,5 +230,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>af6126db10b0016d1d0017ff35d49a65</Hash>
+    <Hash>8fc3a0bc09197a428f0d8e097d090943</Hash>
 </Codenesium>*/

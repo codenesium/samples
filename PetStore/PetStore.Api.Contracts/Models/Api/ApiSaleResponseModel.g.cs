@@ -6,15 +6,116 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public partial class ApiSaleResponseModel : AbstractApiSaleResponseModel
+        public class ApiSaleResponseModel : AbstractApiResponseModel
         {
-                public ApiSaleResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        decimal amount,
+                        string firstName,
+                        int id,
+                        string lastName,
+                        int paymentTypeId,
+                        int petId,
+                        string phone)
                 {
+                        this.Amount = amount;
+                        this.FirstName = firstName;
+                        this.Id = id;
+                        this.LastName = lastName;
+                        this.PaymentTypeId = paymentTypeId;
+                        this.PetId = petId;
+                        this.Phone = phone;
+
+                        this.PaymentTypeIdEntity = nameof(ApiResponse.PaymentTypes);
+                        this.PetIdEntity = nameof(ApiResponse.Pets);
+                }
+
+                public decimal Amount { get; private set; }
+
+                public string FirstName { get; private set; }
+
+                public int Id { get; private set; }
+
+                public string LastName { get; private set; }
+
+                public int PaymentTypeId { get; private set; }
+
+                public string PaymentTypeIdEntity { get; set; }
+
+                public int PetId { get; private set; }
+
+                public string PetIdEntity { get; set; }
+
+                public string Phone { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeAmountValue { get; set; } = true;
+
+                public bool ShouldSerializeAmount()
+                {
+                        return this.ShouldSerializeAmountValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeFirstNameValue { get; set; } = true;
+
+                public bool ShouldSerializeFirstName()
+                {
+                        return this.ShouldSerializeFirstNameValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeLastNameValue { get; set; } = true;
+
+                public bool ShouldSerializeLastName()
+                {
+                        return this.ShouldSerializeLastNameValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePaymentTypeIdValue { get; set; } = true;
+
+                public bool ShouldSerializePaymentTypeId()
+                {
+                        return this.ShouldSerializePaymentTypeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePetIdValue { get; set; } = true;
+
+                public bool ShouldSerializePetId()
+                {
+                        return this.ShouldSerializePetIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePhoneValue { get; set; } = true;
+
+                public bool ShouldSerializePhone()
+                {
+                        return this.ShouldSerializePhoneValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeAmountValue = false;
+                        this.ShouldSerializeFirstNameValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeLastNameValue = false;
+                        this.ShouldSerializePaymentTypeIdValue = false;
+                        this.ShouldSerializePetIdValue = false;
+                        this.ShouldSerializePhoneValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>5e3ec3c0d83db94e30106ad29ce9a055</Hash>
+    <Hash>4c5bf177f94610cda97042d0d4b8e8a4</Hash>
 </Codenesium>*/

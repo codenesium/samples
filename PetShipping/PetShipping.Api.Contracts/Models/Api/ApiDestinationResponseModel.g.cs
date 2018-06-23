@@ -6,15 +6,74 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiDestinationResponseModel : AbstractApiDestinationResponseModel
+        public class ApiDestinationResponseModel : AbstractApiResponseModel
         {
-                public ApiDestinationResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int countryId,
+                        int id,
+                        string name,
+                        int order)
                 {
+                        this.CountryId = countryId;
+                        this.Id = id;
+                        this.Name = name;
+                        this.Order = order;
+
+                        this.CountryIdEntity = nameof(ApiResponse.Countries);
+                }
+
+                public int CountryId { get; private set; }
+
+                public string CountryIdEntity { get; set; }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                public int Order { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeCountryIdValue { get; set; } = true;
+
+                public bool ShouldSerializeCountryId()
+                {
+                        return this.ShouldSerializeCountryIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeOrderValue { get; set; } = true;
+
+                public bool ShouldSerializeOrder()
+                {
+                        return this.ShouldSerializeOrderValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeCountryIdValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
+                        this.ShouldSerializeOrderValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>bcf15af5da55d0a730c21ed898c28c98</Hash>
+    <Hash>e5df4c212c54d3925fc94d58a135e687</Hash>
 </Codenesium>*/

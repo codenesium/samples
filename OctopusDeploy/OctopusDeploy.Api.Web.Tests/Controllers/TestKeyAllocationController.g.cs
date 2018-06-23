@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace OctopusDeployNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>()))
+                        .Callback<string, ApiKeyAllocationRequestModel>(
+                                (id, model) => model.Allocated.Should().Be(1)
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiKeyAllocationResponseModel>(new ApiKeyAllocationResponseModel()));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiKeyAllocationRequestModel>();
+                        patch.Replace(x => x.Allocated, 1);
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiKeyAllocationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiKeyAllocationResponseModel>(null));
+                        KeyAllocationController controller = new KeyAllocationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiKeyAllocationRequestModel>();
+                        patch.Replace(x => x.Allocated, 1);
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         KeyAllocationControllerMockFacade mock = new KeyAllocationControllerMockFacade();
@@ -268,5 +316,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>21b7f0ec3dbadbdc63d34f088317a7e4</Hash>
+    <Hash>a548b2b3f968bf659cf8fec71912dd68</Hash>
 </Codenesium>*/

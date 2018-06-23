@@ -6,15 +6,61 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiTicketResponseModel : AbstractApiTicketResponseModel
+        public class ApiTicketResponseModel : AbstractApiResponseModel
         {
-                public ApiTicketResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string publicId,
+                        int ticketStatusId)
                 {
+                        this.Id = id;
+                        this.PublicId = publicId;
+                        this.TicketStatusId = ticketStatusId;
+
+                        this.TicketStatusIdEntity = nameof(ApiResponse.TicketStatus);
+                }
+
+                public int Id { get; private set; }
+
+                public string PublicId { get; private set; }
+
+                public int TicketStatusId { get; private set; }
+
+                public string TicketStatusIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePublicIdValue { get; set; } = true;
+
+                public bool ShouldSerializePublicId()
+                {
+                        return this.ShouldSerializePublicIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeTicketStatusIdValue { get; set; } = true;
+
+                public bool ShouldSerializeTicketStatusId()
+                {
+                        return this.ShouldSerializeTicketStatusIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializePublicIdValue = false;
+                        this.ShouldSerializeTicketStatusIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>919f8ad8c0d4c60b0686475c1d773d26</Hash>
+    <Hash>c2a112a3a481a577a8194e925fd6612c</Hash>
 </Codenesium>*/

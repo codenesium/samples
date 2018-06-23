@@ -6,15 +6,44 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiCountryResponseModel : AbstractApiCountryResponseModel
+        public class ApiCountryResponseModel : AbstractApiResponseModel
         {
-                public ApiCountryResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string name)
                 {
+                        this.Id = id;
+                        this.Name = name;
+                }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>522ca8d89d89877a11897a549e9337fe</Hash>
+    <Hash>68879a7ff6d414b6bfd94ee9692b03d7</Hash>
 </Codenesium>*/

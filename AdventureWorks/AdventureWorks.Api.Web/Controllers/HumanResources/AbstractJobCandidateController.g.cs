@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiJobCandidateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateRequestModel model)
-                {
-                        CreateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/JobCandidates/{result.Record.JobCandidateID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
@@ -115,6 +97,61 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiJobCandidateResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiJobCandidateRequestModel model)
+                {
+                        CreateResponse<ApiJobCandidateResponseModel> result = await this.JobCandidateService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/JobCandidates/{result.Record.JobCandidateID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiJobCandidateResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiJobCandidateRequestModel> patch)
+                {
+                        ApiJobCandidateResponseModel record = await this.JobCandidateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiJobCandidateRequestModel model = new ApiJobCandidateRequestModel();
+                                model.SetProperties(model.BusinessEntityID,
+                                                    model.ModifiedDate,
+                                                    model.Resume);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.JobCandidateService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiJobCandidateResponseModel response = await this.JobCandidateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -172,5 +209,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>922857ec3f81b38d70ccbdd9e38c3f89</Hash>
+    <Hash>92b8479d8fc4414d755add8019cda69d</Hash>
 </Codenesium>*/

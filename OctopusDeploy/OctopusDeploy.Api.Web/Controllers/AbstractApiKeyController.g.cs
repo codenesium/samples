@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiApiKeyResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiApiKeyRequestModel model)
-                {
-                        CreateResponse<ApiApiKeyResponseModel> result = await this.ApiKeyService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ApiKeys/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiApiKeyResponseModel>), 200)]
@@ -115,6 +97,62 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiApiKeyResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiApiKeyRequestModel model)
+                {
+                        CreateResponse<ApiApiKeyResponseModel> result = await this.ApiKeyService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ApiKeys/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiApiKeyResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiApiKeyRequestModel> patch)
+                {
+                        ApiApiKeyResponseModel record = await this.ApiKeyService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiApiKeyRequestModel model = new ApiApiKeyRequestModel();
+                                model.SetProperties(model.ApiKeyHashed,
+                                                    model.Created,
+                                                    model.JSON,
+                                                    model.UserId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ApiKeyService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiApiKeyResponseModel response = await this.ApiKeyService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -180,5 +218,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bfa2b10037ce9ccc46f37aa981547114</Hash>
+    <Hash>6d9577569ed18b8da39539227fbbf3ac</Hash>
 </Codenesium>*/

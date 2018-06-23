@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUserResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiUserRequestModel model)
-                {
-                        CreateResponse<ApiUserResponseModel> result = await this.UserService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
@@ -115,6 +97,67 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiUserResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiUserRequestModel model)
+                {
+                        CreateResponse<ApiUserResponseModel> result = await this.UserService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiUserResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiUserRequestModel> patch)
+                {
+                        ApiUserResponseModel record = await this.UserService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiUserRequestModel model = new ApiUserRequestModel();
+                                model.SetProperties(model.DisplayName,
+                                                    model.EmailAddress,
+                                                    model.ExternalId,
+                                                    model.ExternalIdentifiers,
+                                                    model.IdentificationToken,
+                                                    model.IsActive,
+                                                    model.IsService,
+                                                    model.JSON,
+                                                    model.Username);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.UserService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiUserResponseModel response = await this.UserService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -213,5 +256,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ea4a7491aae74d58754c963e77f21a8e</Hash>
+    <Hash>b338160361c49b00b44f01bc3a748a28</Hash>
 </Codenesium>*/

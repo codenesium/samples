@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentProcessResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentProcessRequestModel model)
-                {
-                        CreateResponse<ApiDeploymentProcessResponseModel> result = await this.DeploymentProcessService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentProcesses/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiDeploymentProcessResponseModel>), 200)]
@@ -115,6 +97,63 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDeploymentProcessResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentProcessRequestModel model)
+                {
+                        CreateResponse<ApiDeploymentProcessResponseModel> result = await this.DeploymentProcessService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentProcesses/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDeploymentProcessResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiDeploymentProcessRequestModel> patch)
+                {
+                        ApiDeploymentProcessResponseModel record = await this.DeploymentProcessService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiDeploymentProcessRequestModel model = new ApiDeploymentProcessRequestModel();
+                                model.SetProperties(model.IsFrozen,
+                                                    model.JSON,
+                                                    model.OwnerId,
+                                                    model.RelatedDocumentIds,
+                                                    model.Version);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.DeploymentProcessService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiDeploymentProcessResponseModel response = await this.DeploymentProcessService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +200,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9321bed4a4c381855bc47e950350bff1</Hash>
+    <Hash>654d8b0ed529cb4a33879312cc5058e4</Hash>
 </Codenesium>*/

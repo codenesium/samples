@@ -6,15 +6,74 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiTransactionResponseModel : AbstractApiTransactionResponseModel
+        public class ApiTransactionResponseModel : AbstractApiResponseModel
         {
-                public ApiTransactionResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        decimal amount,
+                        string gatewayConfirmationNumber,
+                        int id,
+                        int transactionStatusId)
                 {
+                        this.Amount = amount;
+                        this.GatewayConfirmationNumber = gatewayConfirmationNumber;
+                        this.Id = id;
+                        this.TransactionStatusId = transactionStatusId;
+
+                        this.TransactionStatusIdEntity = nameof(ApiResponse.TransactionStatus);
+                }
+
+                public decimal Amount { get; private set; }
+
+                public string GatewayConfirmationNumber { get; private set; }
+
+                public int Id { get; private set; }
+
+                public int TransactionStatusId { get; private set; }
+
+                public string TransactionStatusIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeAmountValue { get; set; } = true;
+
+                public bool ShouldSerializeAmount()
+                {
+                        return this.ShouldSerializeAmountValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeGatewayConfirmationNumberValue { get; set; } = true;
+
+                public bool ShouldSerializeGatewayConfirmationNumber()
+                {
+                        return this.ShouldSerializeGatewayConfirmationNumberValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeTransactionStatusIdValue { get; set; } = true;
+
+                public bool ShouldSerializeTransactionStatusId()
+                {
+                        return this.ShouldSerializeTransactionStatusIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeAmountValue = false;
+                        this.ShouldSerializeGatewayConfirmationNumberValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeTransactionStatusIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>18174661a6d634bb87206e90502386b4</Hash>
+    <Hash>cfee9c6c9eda8aed64ec2acd4594f396</Hash>
 </Codenesium>*/

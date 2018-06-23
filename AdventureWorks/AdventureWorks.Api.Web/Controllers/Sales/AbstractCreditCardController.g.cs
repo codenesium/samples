@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCreditCardResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardRequestModel model)
-                {
-                        CreateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CreditCards/{result.Record.CreditCardID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiCreditCardResponseModel>), 200)]
@@ -115,6 +97,63 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCreditCardResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiCreditCardRequestModel model)
+                {
+                        CreateResponse<ApiCreditCardResponseModel> result = await this.CreditCardService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CreditCards/{result.Record.CreditCardID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCreditCardResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCreditCardRequestModel> patch)
+                {
+                        ApiCreditCardResponseModel record = await this.CreditCardService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiCreditCardRequestModel model = new ApiCreditCardRequestModel();
+                                model.SetProperties(model.CardNumber,
+                                                    model.CardType,
+                                                    model.ExpMonth,
+                                                    model.ExpYear,
+                                                    model.ModifiedDate);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.CreditCardService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiCreditCardResponseModel response = await this.CreditCardService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -208,5 +247,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3d0911301631fb8ad12f1eb3eb29faec</Hash>
+    <Hash>1c25a97791b22244f023f62c308227dc</Hash>
 </Codenesium>*/

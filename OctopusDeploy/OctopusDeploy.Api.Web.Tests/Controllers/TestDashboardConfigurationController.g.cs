@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace OctopusDeployNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        DashboardConfigurationControllerMockFacade mock = new DashboardConfigurationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDashboardConfigurationRequestModel>()))
+                        .Callback<string, ApiDashboardConfigurationRequestModel>(
+                                (id, model) => model.IncludedEnvironmentIds.Should().Be("A")
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiDashboardConfigurationResponseModel>(new ApiDashboardConfigurationResponseModel()));
+                        DashboardConfigurationController controller = new DashboardConfigurationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiDashboardConfigurationRequestModel>();
+                        patch.Replace(x => x.IncludedEnvironmentIds, "A");
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiDashboardConfigurationRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        DashboardConfigurationControllerMockFacade mock = new DashboardConfigurationControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiDashboardConfigurationResponseModel>(null));
+                        DashboardConfigurationController controller = new DashboardConfigurationController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiDashboardConfigurationRequestModel>();
+                        patch.Replace(x => x.IncludedEnvironmentIds, "A");
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         DashboardConfigurationControllerMockFacade mock = new DashboardConfigurationControllerMockFacade();
@@ -268,5 +316,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>4ebe740438b36c9b9c59e375f5ce05a2</Hash>
+    <Hash>d2b1de94e2cb9fd6949656a6c29a2cb5</Hash>
 </Codenesium>*/

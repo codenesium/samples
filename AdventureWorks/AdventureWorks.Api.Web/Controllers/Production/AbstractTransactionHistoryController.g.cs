@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryRequestModel model)
-                {
-                        CreateResponse<ApiTransactionHistoryResponseModel> result = await this.TransactionHistoryService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TransactionHistories/{result.Record.TransactionID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
@@ -115,6 +97,66 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiTransactionHistoryRequestModel model)
+                {
+                        CreateResponse<ApiTransactionHistoryResponseModel> result = await this.TransactionHistoryService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TransactionHistories/{result.Record.TransactionID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiTransactionHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTransactionHistoryRequestModel> patch)
+                {
+                        ApiTransactionHistoryResponseModel record = await this.TransactionHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiTransactionHistoryRequestModel model = new ApiTransactionHistoryRequestModel();
+                                model.SetProperties(model.ActualCost,
+                                                    model.ModifiedDate,
+                                                    model.ProductID,
+                                                    model.Quantity,
+                                                    model.ReferenceOrderID,
+                                                    model.ReferenceOrderLineID,
+                                                    model.TransactionDate,
+                                                    model.TransactionType);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.TransactionHistoryService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiTransactionHistoryResponseModel response = await this.TransactionHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -183,5 +225,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>84e69d78d5124d3abc0c9e7069c3811c</Hash>
+    <Hash>d1eb89f785b43a6c517288667fe93177</Hash>
 </Codenesium>*/

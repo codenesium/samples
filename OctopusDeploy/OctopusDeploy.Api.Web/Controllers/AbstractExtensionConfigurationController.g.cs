@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiExtensionConfigurationRequestModel model)
-                {
-                        CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ExtensionConfigurations/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiExtensionConfigurationResponseModel>), 200)]
@@ -115,6 +97,61 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiExtensionConfigurationRequestModel model)
+                {
+                        CreateResponse<ApiExtensionConfigurationResponseModel> result = await this.ExtensionConfigurationService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ExtensionConfigurations/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiExtensionConfigurationResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiExtensionConfigurationRequestModel> patch)
+                {
+                        ApiExtensionConfigurationResponseModel record = await this.ExtensionConfigurationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiExtensionConfigurationRequestModel model = new ApiExtensionConfigurationRequestModel();
+                                model.SetProperties(model.ExtensionAuthor,
+                                                    model.JSON,
+                                                    model.Name);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ExtensionConfigurationService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiExtensionConfigurationResponseModel response = await this.ExtensionConfigurationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +198,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c58d00168d78a7bed68a8c78b21f0d6e</Hash>
+    <Hash>216772c7711d1a917e5cd81ea0240f99</Hash>
 </Codenesium>*/

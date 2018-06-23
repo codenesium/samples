@@ -3,6 +3,7 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace FileServiceNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        FileControllerMockFacade mock = new FileControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()))
+                        .Callback<int, ApiFileRequestModel>(
+                                (id, model) => model.BucketId.Should().Be(1)
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileResponseModel>(new ApiFileResponseModel()));
+                        FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiFileRequestModel>();
+                        patch.Replace(x => x.BucketId, 1);
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFileRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        FileControllerMockFacade mock = new FileControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFileResponseModel>(null));
+                        FileController controller = new FileController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiFileRequestModel>();
+                        patch.Replace(x => x.BucketId, 1);
+
+                        IActionResult response = await controller.Patch(default(int), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<int>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         FileControllerMockFacade mock = new FileControllerMockFacade();
@@ -268,5 +316,5 @@ namespace FileServiceNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>e4fcd23da017384289671c88540a2f03</Hash>
+    <Hash>76759e54ea8032c641dd00a5db06aaa0</Hash>
 </Codenesium>*/

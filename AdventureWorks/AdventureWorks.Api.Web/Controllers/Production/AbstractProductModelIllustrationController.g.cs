@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelIllustrationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiProductModelIllustrationRequestModel model)
-                {
-                        CreateResponse<ApiProductModelIllustrationResponseModel> result = await this.ProductModelIllustrationService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModelIllustrations/{result.Record.ProductModelID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiProductModelIllustrationResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProductModelIllustrationResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiProductModelIllustrationRequestModel model)
+                {
+                        CreateResponse<ApiProductModelIllustrationResponseModel> result = await this.ProductModelIllustrationService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModelIllustrations/{result.Record.ProductModelID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProductModelIllustrationResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductModelIllustrationRequestModel> patch)
+                {
+                        ApiProductModelIllustrationResponseModel record = await this.ProductModelIllustrationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiProductModelIllustrationRequestModel model = new ApiProductModelIllustrationRequestModel();
+                                model.SetProperties(model.IllustrationID,
+                                                    model.ModifiedDate);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ProductModelIllustrationService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiProductModelIllustrationResponseModel response = await this.ProductModelIllustrationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +197,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8bc2ec183168f3852b69bc1117fd2c15</Hash>
+    <Hash>f2ece958dd3140664e0d1cf041976791</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPurchaseOrderHeaderResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderHeaderRequestModel model)
-                {
-                        CreateResponse<ApiPurchaseOrderHeaderResponseModel> result = await this.PurchaseOrderHeaderService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderHeaders/{result.Record.PurchaseOrderID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
@@ -115,6 +97,70 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPurchaseOrderHeaderResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiPurchaseOrderHeaderRequestModel model)
+                {
+                        CreateResponse<ApiPurchaseOrderHeaderResponseModel> result = await this.PurchaseOrderHeaderService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PurchaseOrderHeaders/{result.Record.PurchaseOrderID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPurchaseOrderHeaderResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPurchaseOrderHeaderRequestModel> patch)
+                {
+                        ApiPurchaseOrderHeaderResponseModel record = await this.PurchaseOrderHeaderService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiPurchaseOrderHeaderRequestModel model = new ApiPurchaseOrderHeaderRequestModel();
+                                model.SetProperties(model.EmployeeID,
+                                                    model.Freight,
+                                                    model.ModifiedDate,
+                                                    model.OrderDate,
+                                                    model.RevisionNumber,
+                                                    model.ShipDate,
+                                                    model.ShipMethodID,
+                                                    model.Status,
+                                                    model.SubTotal,
+                                                    model.TaxAmt,
+                                                    model.TotalDue,
+                                                    model.VendorID);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.PurchaseOrderHeaderService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiPurchaseOrderHeaderResponseModel response = await this.PurchaseOrderHeaderService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -197,5 +243,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f158493155269b48e408864a02d04b17</Hash>
+    <Hash>42ce60b82aa8b2eca7425e4166f6a9a8</Hash>
 </Codenesium>*/

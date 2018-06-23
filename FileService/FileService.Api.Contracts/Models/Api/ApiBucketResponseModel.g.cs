@@ -6,15 +6,57 @@ using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
 {
-        public partial class ApiBucketResponseModel : AbstractApiBucketResponseModel
+        public class ApiBucketResponseModel : AbstractApiResponseModel
         {
-                public ApiBucketResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        Guid externalId,
+                        int id,
+                        string name)
                 {
+                        this.ExternalId = externalId;
+                        this.Id = id;
+                        this.Name = name;
+                }
+
+                public Guid ExternalId { get; private set; }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeExternalIdValue { get; set; } = false;
+
+                public bool ShouldSerializeExternalId()
+                {
+                        return this.ShouldSerializeExternalIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = false;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = false;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeExternalIdValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>88f920e1342ec506975ba8c6502bced1</Hash>
+    <Hash>cea8641bf9022f9f8b8171aa36872c2a</Hash>
 </Codenesium>*/

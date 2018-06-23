@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace StackOverflowNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostHistoryResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiPostHistoryRequestModel model)
-                {
-                        CreateResponse<ApiPostHistoryResponseModel> result = await this.PostHistoryService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistories/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiPostHistoryResponseModel>), 200)]
@@ -115,6 +97,66 @@ namespace StackOverflowNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPostHistoryResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiPostHistoryRequestModel model)
+                {
+                        CreateResponse<ApiPostHistoryResponseModel> result = await this.PostHistoryService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/PostHistories/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPostHistoryResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostHistoryRequestModel> patch)
+                {
+                        ApiPostHistoryResponseModel record = await this.PostHistoryService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiPostHistoryRequestModel model = new ApiPostHistoryRequestModel();
+                                model.SetProperties(model.Comment,
+                                                    model.CreationDate,
+                                                    model.PostHistoryTypeId,
+                                                    model.PostId,
+                                                    model.RevisionGUID,
+                                                    model.Text,
+                                                    model.UserDisplayName,
+                                                    model.UserId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.PostHistoryService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiPostHistoryResponseModel response = await this.PostHistoryService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +203,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>83f124d984d020cbad920e546a51a92c</Hash>
+    <Hash>a8dd297267e4de8c9fdb6ae68d0a4414</Hash>
 </Codenesium>*/

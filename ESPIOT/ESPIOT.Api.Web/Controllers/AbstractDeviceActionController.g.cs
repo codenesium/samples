@@ -3,6 +3,7 @@ using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace ESPIOTNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeviceActionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiDeviceActionRequestModel model)
-                {
-                        CreateResponse<ApiDeviceActionResponseModel> result = await this.DeviceActionService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
@@ -115,6 +97,61 @@ namespace ESPIOTNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDeviceActionResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiDeviceActionRequestModel model)
+                {
+                        CreateResponse<ApiDeviceActionResponseModel> result = await this.DeviceActionService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeviceActions/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDeviceActionResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDeviceActionRequestModel> patch)
+                {
+                        ApiDeviceActionResponseModel record = await this.DeviceActionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiDeviceActionRequestModel model = new ApiDeviceActionRequestModel();
+                                model.SetProperties(model.DeviceId,
+                                                    model.Name,
+                                                    model.@Value);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.DeviceActionService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiDeviceActionResponseModel response = await this.DeviceActionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -172,5 +209,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>191582a6ca93e8f60dd425f6b3d0ba95</Hash>
+    <Hash>43154fb973087616ff9f0275005be86b</Hash>
 </Codenesium>*/

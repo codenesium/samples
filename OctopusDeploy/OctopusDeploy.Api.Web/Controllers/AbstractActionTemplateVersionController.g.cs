@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiActionTemplateVersionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiActionTemplateVersionRequestModel model)
-                {
-                        CreateResponse<ApiActionTemplateVersionResponseModel> result = await this.ActionTemplateVersionService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ActionTemplateVersions/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiActionTemplateVersionResponseModel>), 200)]
@@ -115,6 +97,63 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiActionTemplateVersionResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiActionTemplateVersionRequestModel model)
+                {
+                        CreateResponse<ApiActionTemplateVersionResponseModel> result = await this.ActionTemplateVersionService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ActionTemplateVersions/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiActionTemplateVersionResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiActionTemplateVersionRequestModel> patch)
+                {
+                        ApiActionTemplateVersionResponseModel record = await this.ActionTemplateVersionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiActionTemplateVersionRequestModel model = new ApiActionTemplateVersionRequestModel();
+                                model.SetProperties(model.ActionType,
+                                                    model.JSON,
+                                                    model.LatestActionTemplateId,
+                                                    model.Name,
+                                                    model.Version);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ActionTemplateVersionService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiActionTemplateVersionResponseModel response = await this.ActionTemplateVersionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -191,5 +230,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>13cbddd4b537a4646c3cdd7df57d285d</Hash>
+    <Hash>f253b6468bb57e5cf7df10bd0ed739b7</Hash>
 </Codenesium>*/

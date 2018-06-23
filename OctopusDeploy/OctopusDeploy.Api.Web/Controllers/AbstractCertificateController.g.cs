@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCertificateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiCertificateRequestModel model)
-                {
-                        CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Certificates/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
@@ -115,6 +97,69 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCertificateResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiCertificateRequestModel model)
+                {
+                        CreateResponse<ApiCertificateResponseModel> result = await this.CertificateService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Certificates/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCertificateResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiCertificateRequestModel> patch)
+                {
+                        ApiCertificateResponseModel record = await this.CertificateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiCertificateRequestModel model = new ApiCertificateRequestModel();
+                                model.SetProperties(model.Archived,
+                                                    model.Created,
+                                                    model.DataVersion,
+                                                    model.EnvironmentIds,
+                                                    model.JSON,
+                                                    model.Name,
+                                                    model.NotAfter,
+                                                    model.Subject,
+                                                    model.TenantIds,
+                                                    model.TenantTags,
+                                                    model.Thumbprint);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.CertificateService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiCertificateResponseModel response = await this.CertificateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -205,5 +250,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>381b6b75aecf4a333135f18d2a71693f</Hash>
+    <Hash>f7986d7b09071eb6b03df81dc9503183</Hash>
 </Codenesium>*/

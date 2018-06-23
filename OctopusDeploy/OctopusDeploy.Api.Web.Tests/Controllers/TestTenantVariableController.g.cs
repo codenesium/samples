@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace OctopusDeployNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>()))
+                        .Callback<string, ApiTenantVariableRequestModel>(
+                                (id, model) => model.EnvironmentId.Should().Be("A")
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiTenantVariableResponseModel>(new ApiTenantVariableResponseModel()));
+                        TenantVariableController controller = new TenantVariableController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiTenantVariableRequestModel>();
+                        patch.Replace(x => x.EnvironmentId, "A");
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiTenantVariableRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiTenantVariableResponseModel>(null));
+                        TenantVariableController controller = new TenantVariableController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiTenantVariableRequestModel>();
+                        patch.Replace(x => x.EnvironmentId, "A");
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         TenantVariableControllerMockFacade mock = new TenantVariableControllerMockFacade();
@@ -268,5 +316,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>2e81a12c3515a43d4cba64b40b436fc1</Hash>
+    <Hash>cf734ea5d02be9c9372ad8c3b7ad8f98</Hash>
 </Codenesium>*/

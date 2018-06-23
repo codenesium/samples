@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
-                {
-                        CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.ProductModelProductDescriptionCultureService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModelProductDescriptionCultures/{result.Record.ProductModelID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
@@ -115,6 +97,61 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiProductModelProductDescriptionCultureRequestModel model)
+                {
+                        CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.ProductModelProductDescriptionCultureService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ProductModelProductDescriptionCultures/{result.Record.ProductModelID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProductModelProductDescriptionCultureResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductModelProductDescriptionCultureRequestModel> patch)
+                {
+                        ApiProductModelProductDescriptionCultureResponseModel record = await this.ProductModelProductDescriptionCultureService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiProductModelProductDescriptionCultureRequestModel model = new ApiProductModelProductDescriptionCultureRequestModel();
+                                model.SetProperties(model.CultureID,
+                                                    model.ModifiedDate,
+                                                    model.ProductDescriptionID);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ProductModelProductDescriptionCultureService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiProductModelProductDescriptionCultureResponseModel response = await this.ProductModelProductDescriptionCultureService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +198,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cb9a4062c85c3cef6999b667fcb7ae38</Hash>
+    <Hash>ed9ef1fa37644ab3ad01c33bd168f67b</Hash>
 </Codenesium>*/

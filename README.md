@@ -41,10 +41,10 @@ http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feESPIOT/swagge
 Microsoft's demo database
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feAdventureWorks/swagger/
 
-#### OctopusDeploy
+#### Octopus Deploy
 Octopus deploy database
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feOctopusDeploy/swagger/
 
-#### StackOverflow
-Octopus deploy database
+#### StackO verflow
+Stack Overflow database
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feStackOverflow/swagger/

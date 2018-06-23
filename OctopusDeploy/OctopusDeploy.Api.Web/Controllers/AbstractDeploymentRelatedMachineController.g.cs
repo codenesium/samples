@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDeploymentRelatedMachineResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentRelatedMachineRequestModel model)
-                {
-                        CreateResponse<ApiDeploymentRelatedMachineResponseModel> result = await this.DeploymentRelatedMachineService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentRelatedMachines/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiDeploymentRelatedMachineResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDeploymentRelatedMachineResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiDeploymentRelatedMachineRequestModel model)
+                {
+                        CreateResponse<ApiDeploymentRelatedMachineResponseModel> result = await this.DeploymentRelatedMachineService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/DeploymentRelatedMachines/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDeploymentRelatedMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiDeploymentRelatedMachineRequestModel> patch)
+                {
+                        ApiDeploymentRelatedMachineResponseModel record = await this.DeploymentRelatedMachineService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiDeploymentRelatedMachineRequestModel model = new ApiDeploymentRelatedMachineRequestModel();
+                                model.SetProperties(model.DeploymentId,
+                                                    model.MachineId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.DeploymentRelatedMachineService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiDeploymentRelatedMachineResponseModel response = await this.DeploymentRelatedMachineService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -183,5 +219,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4c2e2f6f9f128e3e7c5de779eb19b1a4</Hash>
+    <Hash>305c541b7fe49a0bbda895af4575b6ef</Hash>
 </Codenesium>*/

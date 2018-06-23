@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace StackOverflowNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiUsersResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiUsersRequestModel model)
-                {
-                        CreateResponse<ApiUsersResponseModel> result = await this.UsersService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiUsersResponseModel>), 200)]
@@ -115,6 +97,71 @@ namespace StackOverflowNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiUsersResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiUsersRequestModel model)
+                {
+                        CreateResponse<ApiUsersResponseModel> result = await this.UsersService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Users/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiUsersResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiUsersRequestModel> patch)
+                {
+                        ApiUsersResponseModel record = await this.UsersService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiUsersRequestModel model = new ApiUsersRequestModel();
+                                model.SetProperties(model.AboutMe,
+                                                    model.AccountId,
+                                                    model.Age,
+                                                    model.CreationDate,
+                                                    model.DisplayName,
+                                                    model.DownVotes,
+                                                    model.EmailHash,
+                                                    model.LastAccessDate,
+                                                    model.Location,
+                                                    model.Reputation,
+                                                    model.UpVotes,
+                                                    model.Views,
+                                                    model.WebsiteUrl);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.UsersService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiUsersResponseModel response = await this.UsersService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +208,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>416209eaa0e6fb289a11524368aebf6a</Hash>
+    <Hash>c2ae6c2325839328d88e4c63423d5137</Hash>
 </Codenesium>*/

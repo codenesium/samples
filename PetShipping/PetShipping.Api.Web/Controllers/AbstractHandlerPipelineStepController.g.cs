@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace PetShippingNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiHandlerPipelineStepRequestModel model)
-                {
-                        CreateResponse<ApiHandlerPipelineStepResponseModel> result = await this.HandlerPipelineStepService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/HandlerPipelineSteps/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace PetShippingNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiHandlerPipelineStepRequestModel model)
+                {
+                        CreateResponse<ApiHandlerPipelineStepResponseModel> result = await this.HandlerPipelineStepService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/HandlerPipelineSteps/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiHandlerPipelineStepResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiHandlerPipelineStepRequestModel> patch)
+                {
+                        ApiHandlerPipelineStepResponseModel record = await this.HandlerPipelineStepService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiHandlerPipelineStepRequestModel model = new ApiHandlerPipelineStepRequestModel();
+                                model.SetProperties(model.HandlerId,
+                                                    model.PipelineStepId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.HandlerPipelineStepService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiHandlerPipelineStepResponseModel response = await this.HandlerPipelineStepService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +197,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>90be393acdc30a7ff1ee527b79a43c78</Hash>
+    <Hash>c7ee265bcaea1272e16e963e6205d438</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiProductResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiProductRequestModel model)
-                {
-                        CreateResponse<ApiProductResponseModel> result = await this.ProductService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Products/{result.Record.ProductID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
@@ -115,6 +97,82 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProductResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiProductRequestModel model)
+                {
+                        CreateResponse<ApiProductResponseModel> result = await this.ProductService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Products/{result.Record.ProductID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiProductResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiProductRequestModel> patch)
+                {
+                        ApiProductResponseModel record = await this.ProductService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiProductRequestModel model = new ApiProductRequestModel();
+                                model.SetProperties(model.@Class,
+                                                    model.Color,
+                                                    model.DaysToManufacture,
+                                                    model.DiscontinuedDate,
+                                                    model.FinishedGoodsFlag,
+                                                    model.ListPrice,
+                                                    model.MakeFlag,
+                                                    model.ModifiedDate,
+                                                    model.Name,
+                                                    model.ProductLine,
+                                                    model.ProductModelID,
+                                                    model.ProductNumber,
+                                                    model.ProductSubcategoryID,
+                                                    model.ReorderPoint,
+                                                    model.Rowguid,
+                                                    model.SafetyStockLevel,
+                                                    model.SellEndDate,
+                                                    model.SellStartDate,
+                                                    model.Size,
+                                                    model.SizeUnitMeasureCode,
+                                                    model.StandardCost,
+                                                    model.Style,
+                                                    model.Weight,
+                                                    model.WeightUnitMeasureCode);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ProductService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiProductResponseModel response = await this.ProductService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -311,5 +369,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2ecf103d7ebf4bb97a3de30fba51d99c</Hash>
+    <Hash>20396cf5091739eb44d93310bf0b1c0a</Hash>
 </Codenesium>*/

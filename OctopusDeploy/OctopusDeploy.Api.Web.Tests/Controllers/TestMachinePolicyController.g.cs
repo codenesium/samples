@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -183,6 +184,53 @@ namespace OctopusDeployNS.Api.Web.Tests
                 }
 
                 [Fact]
+                public async void Patch_No_Errors()
+                {
+                        MachinePolicyControllerMockFacade mock = new MachinePolicyControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mockResult.SetupGet(x => x.Success).Returns(true);
+                        mock.ServiceMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<ApiMachinePolicyRequestModel>()))
+                        .Callback<string, ApiMachinePolicyRequestModel>(
+                                (id, model) => model.IsDefault.Should().Be(true)
+                                )
+                        .Returns(Task.FromResult<ActionResponse>(mockResult.Object));
+
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiMachinePolicyResponseModel>(new ApiMachinePolicyResponseModel()));
+                        MachinePolicyController controller = new MachinePolicyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiMachinePolicyRequestModel>();
+                        patch.Replace(x => x.IsDefault, true);
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<OkObjectResult>();
+                        (response as OkObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
+                        mock.ServiceMock.Verify(x => x.Update(It.IsAny<string>(), It.IsAny<ApiMachinePolicyRequestModel>()));
+                }
+
+                [Fact]
+                public async void Patch_Record_Not_Found()
+                {
+                        MachinePolicyControllerMockFacade mock = new MachinePolicyControllerMockFacade();
+                        var mockResult = new Mock<ActionResponse>();
+                        mock.ServiceMock.Setup(x => x.Get(It.IsAny<string>())).Returns(Task.FromResult<ApiMachinePolicyResponseModel>(null));
+                        MachinePolicyController controller = new MachinePolicyController(mock.ApiSettingsMoc.Object, mock.LoggerMock.Object, mock.TransactionCoordinatorMock.Object, mock.ServiceMock.Object);
+                        controller.ControllerContext = new ControllerContext();
+                        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+                        var patch = new JsonPatchDocument<ApiMachinePolicyRequestModel>();
+                        patch.Replace(x => x.IsDefault, true);
+
+                        IActionResult response = await controller.Patch(default(string), patch);
+
+                        response.Should().BeOfType<StatusCodeResult>();
+                        (response as StatusCodeResult).StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+                        mock.ServiceMock.Verify(x => x.Get(It.IsAny<string>()));
+                }
+
+                [Fact]
                 public async void Update_No_Errors()
                 {
                         MachinePolicyControllerMockFacade mock = new MachinePolicyControllerMockFacade();
@@ -268,5 +316,5 @@ namespace OctopusDeployNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>5544aa32fe55e9f8b9b0b092b6fb8f86</Hash>
+    <Hash>54138f594d9fa66cdf2e549c5db57b67</Hash>
 </Codenesium>*/

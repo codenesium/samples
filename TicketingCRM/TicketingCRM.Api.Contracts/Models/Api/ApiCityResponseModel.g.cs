@@ -6,15 +6,61 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiCityResponseModel : AbstractApiCityResponseModel
+        public class ApiCityResponseModel : AbstractApiResponseModel
         {
-                public ApiCityResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string name,
+                        int provinceId)
                 {
+                        this.Id = id;
+                        this.Name = name;
+                        this.ProvinceId = provinceId;
+
+                        this.ProvinceIdEntity = nameof(ApiResponse.Provinces);
+                }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                public int ProvinceId { get; private set; }
+
+                public string ProvinceIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProvinceIdValue { get; set; } = true;
+
+                public bool ShouldSerializeProvinceId()
+                {
+                        return this.ShouldSerializeProvinceIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
+                        this.ShouldSerializeProvinceIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>477dcbd9124baff802afaea90ecd9eb0</Hash>
+    <Hash>e86e9081f05fccda5521b434fa25040f</Hash>
 </Codenesium>*/

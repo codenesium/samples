@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkerTaskLeaseResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiWorkerTaskLeaseRequestModel model)
-                {
-                        CreateResponse<ApiWorkerTaskLeaseResponseModel> result = await this.WorkerTaskLeaseService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkerTaskLeases/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiWorkerTaskLeaseResponseModel>), 200)]
@@ -115,6 +97,63 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiWorkerTaskLeaseResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiWorkerTaskLeaseRequestModel model)
+                {
+                        CreateResponse<ApiWorkerTaskLeaseResponseModel> result = await this.WorkerTaskLeaseService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkerTaskLeases/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiWorkerTaskLeaseResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiWorkerTaskLeaseRequestModel> patch)
+                {
+                        ApiWorkerTaskLeaseResponseModel record = await this.WorkerTaskLeaseService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiWorkerTaskLeaseRequestModel model = new ApiWorkerTaskLeaseRequestModel();
+                                model.SetProperties(model.Exclusive,
+                                                    model.JSON,
+                                                    model.Name,
+                                                    model.TaskId,
+                                                    model.WorkerId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.WorkerTaskLeaseService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiWorkerTaskLeaseResponseModel response = await this.WorkerTaskLeaseService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +200,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f3d94bfc3cd76862c7e9a5911ce76fb5</Hash>
+    <Hash>f9397fbef5ea82f60c292ba667db5568</Hash>
 </Codenesium>*/

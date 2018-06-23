@@ -49,6 +49,11 @@ namespace FileServiceNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiBucketResponseModel> BucketCreateAsync(ApiBucketRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item).ConfigureAwait(false);
@@ -272,5 +277,5 @@ namespace FileServiceNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>14abe9d8b9046832c0e59d3dd3695f18</Hash>
+    <Hash>c217ffd069e0ffb7aa494e50a253b708</Hash>
 </Codenesium>*/

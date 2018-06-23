@@ -6,15 +6,70 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiAWBuildVersionResponseModel : AbstractApiAWBuildVersionResponseModel
+        public class ApiAWBuildVersionResponseModel : AbstractApiResponseModel
         {
-                public ApiAWBuildVersionResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        string database_Version,
+                        DateTime modifiedDate,
+                        int systemInformationID,
+                        DateTime versionDate)
                 {
+                        this.Database_Version = database_Version;
+                        this.ModifiedDate = modifiedDate;
+                        this.SystemInformationID = systemInformationID;
+                        this.VersionDate = versionDate;
+                }
+
+                public string Database_Version { get; private set; }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public int SystemInformationID { get; private set; }
+
+                public DateTime VersionDate { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeDatabase_VersionValue { get; set; } = true;
+
+                public bool ShouldSerializeDatabase_Version()
+                {
+                        return this.ShouldSerializeDatabase_VersionValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSystemInformationIDValue { get; set; } = true;
+
+                public bool ShouldSerializeSystemInformationID()
+                {
+                        return this.ShouldSerializeSystemInformationIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeVersionDateValue { get; set; } = true;
+
+                public bool ShouldSerializeVersionDate()
+                {
+                        return this.ShouldSerializeVersionDateValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeDatabase_VersionValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeSystemInformationIDValue = false;
+                        this.ShouldSerializeVersionDateValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>04b8cf1ec8c4302c53ef0f7244293093</Hash>
+    <Hash>540f44dc623592f975ce9f9af70174f5</Hash>
 </Codenesium>*/

@@ -49,6 +49,11 @@ namespace ESPIOTNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiDeviceResponseModel> DeviceCreateAsync(ApiDeviceRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item).ConfigureAwait(false);
@@ -170,5 +175,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9dd7f07bf06f7101a21b6fc2ab54f597</Hash>
+    <Hash>8c8eb6669832c073359caf30749ab84a</Hash>
 </Codenesium>*/

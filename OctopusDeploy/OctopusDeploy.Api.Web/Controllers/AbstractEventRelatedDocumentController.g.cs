@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiEventRelatedDocumentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiEventRelatedDocumentRequestModel model)
-                {
-                        CreateResponse<ApiEventRelatedDocumentResponseModel> result = await this.EventRelatedDocumentService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventRelatedDocuments/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiEventRelatedDocumentResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiEventRelatedDocumentResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiEventRelatedDocumentRequestModel model)
+                {
+                        CreateResponse<ApiEventRelatedDocumentResponseModel> result = await this.EventRelatedDocumentService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventRelatedDocuments/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiEventRelatedDocumentResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiEventRelatedDocumentRequestModel> patch)
+                {
+                        ApiEventRelatedDocumentResponseModel record = await this.EventRelatedDocumentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiEventRelatedDocumentRequestModel model = new ApiEventRelatedDocumentRequestModel();
+                                model.SetProperties(model.EventId,
+                                                    model.RelatedDocumentId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.EventRelatedDocumentService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiEventRelatedDocumentResponseModel response = await this.EventRelatedDocumentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -183,5 +219,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>089bf68dedb39c3f2c1ce2d50ef0565c</Hash>
+    <Hash>54678fbeda8f059eac572d64db0968fa</Hash>
 </Codenesium>*/

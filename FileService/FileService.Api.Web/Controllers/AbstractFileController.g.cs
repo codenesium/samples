@@ -3,6 +3,7 @@ using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace FileServiceNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiFileResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiFileRequestModel model)
-                {
-                        CreateResponse<ApiFileResponseModel> result = await this.FileService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Files/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiFileResponseModel>), 200)]
@@ -115,6 +97,69 @@ namespace FileServiceNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiFileResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiFileRequestModel model)
+                {
+                        CreateResponse<ApiFileResponseModel> result = await this.FileService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Files/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiFileResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiFileRequestModel> patch)
+                {
+                        ApiFileResponseModel record = await this.FileService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiFileRequestModel model = new ApiFileRequestModel();
+                                model.SetProperties(model.BucketId,
+                                                    model.DateCreated,
+                                                    model.Description,
+                                                    model.Expiration,
+                                                    model.Extension,
+                                                    model.ExternalId,
+                                                    model.FileSizeInBytes,
+                                                    model.FileTypeId,
+                                                    model.Location,
+                                                    model.PrivateKey,
+                                                    model.PublicKey);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.FileService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiFileResponseModel response = await this.FileService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +206,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d6f5ba999526332b01127a6d8f9badb3</Hash>
+    <Hash>e22d260b64e3a46d4776b596e9b712d6</Hash>
 </Codenesium>*/

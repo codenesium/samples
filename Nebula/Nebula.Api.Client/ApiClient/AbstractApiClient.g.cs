@@ -49,6 +49,11 @@ namespace NebulaNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiChainResponseModel> ChainCreateAsync(ApiChainRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Chains", item).ConfigureAwait(false);
@@ -625,5 +630,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>b15a6f197cd9171cfb563a06deeac758</Hash>
+    <Hash>daa444b6b7c47b05f80bd78dc6aced8c</Hash>
 </Codenesium>*/

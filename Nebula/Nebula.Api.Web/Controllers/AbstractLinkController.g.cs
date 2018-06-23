@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace NebulaNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLinkResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiLinkRequestModel model)
-                {
-                        CreateResponse<ApiLinkResponseModel> result = await this.LinkService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Links/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
@@ -115,6 +97,70 @@ namespace NebulaNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiLinkResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiLinkRequestModel model)
+                {
+                        CreateResponse<ApiLinkResponseModel> result = await this.LinkService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Links/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiLinkResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiLinkRequestModel> patch)
+                {
+                        ApiLinkResponseModel record = await this.LinkService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiLinkRequestModel model = new ApiLinkRequestModel();
+                                model.SetProperties(model.AssignedMachineId,
+                                                    model.ChainId,
+                                                    model.DateCompleted,
+                                                    model.DateStarted,
+                                                    model.DynamicParameters,
+                                                    model.ExternalId,
+                                                    model.LinkStatusId,
+                                                    model.Name,
+                                                    model.Order,
+                                                    model.Response,
+                                                    model.StaticParameters,
+                                                    model.TimeoutInSeconds);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.LinkService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiLinkResponseModel response = await this.LinkService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -175,5 +221,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ca2308e16fb979325803414d10215843</Hash>
+    <Hash>0b008b1340704ed58a85006bc8ce7af0</Hash>
 </Codenesium>*/

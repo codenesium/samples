@@ -3,6 +3,7 @@ using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace FermataFishNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiTeacherXTeacherSkillResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiTeacherXTeacherSkillRequestModel model)
-                {
-                        CreateResponse<ApiTeacherXTeacherSkillResponseModel> result = await this.TeacherXTeacherSkillService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TeacherXTeacherSkills/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiTeacherXTeacherSkillResponseModel>), 200)]
@@ -115,6 +97,60 @@ namespace FermataFishNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiTeacherXTeacherSkillResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiTeacherXTeacherSkillRequestModel model)
+                {
+                        CreateResponse<ApiTeacherXTeacherSkillResponseModel> result = await this.TeacherXTeacherSkillService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/TeacherXTeacherSkills/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiTeacherXTeacherSkillResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiTeacherXTeacherSkillRequestModel> patch)
+                {
+                        ApiTeacherXTeacherSkillResponseModel record = await this.TeacherXTeacherSkillService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiTeacherXTeacherSkillRequestModel model = new ApiTeacherXTeacherSkillRequestModel();
+                                model.SetProperties(model.TeacherId,
+                                                    model.TeacherSkillId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.TeacherXTeacherSkillService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiTeacherXTeacherSkillResponseModel response = await this.TeacherXTeacherSkillService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +197,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ae9e60324055649e4cdb9e7da804587</Hash>
+    <Hash>bd0de791b844618789c425698223c119</Hash>
 </Codenesium>*/

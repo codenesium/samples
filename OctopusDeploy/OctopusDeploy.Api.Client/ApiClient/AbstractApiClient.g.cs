@@ -49,6 +49,11 @@ namespace OctopusDeployNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiAccountResponseModel> AccountCreateAsync(ApiAccountRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Accounts", item).ConfigureAwait(false);
@@ -2837,5 +2842,5 @@ namespace OctopusDeployNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>a2cedb0cf937891c8da3325d80688efb</Hash>
+    <Hash>9dfd80a08cef8c03761629aad7ca81c3</Hash>
 </Codenesium>*/

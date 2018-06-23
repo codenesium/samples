@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace StackOverflowNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiPostsResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiPostsRequestModel model)
-                {
-                        CreateResponse<ApiPostsResponseModel> result = await this.PostsService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Posts/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiPostsResponseModel>), 200)]
@@ -115,6 +97,77 @@ namespace StackOverflowNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPostsResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiPostsRequestModel model)
+                {
+                        CreateResponse<ApiPostsResponseModel> result = await this.PostsService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Posts/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiPostsResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiPostsRequestModel> patch)
+                {
+                        ApiPostsResponseModel record = await this.PostsService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiPostsRequestModel model = new ApiPostsRequestModel();
+                                model.SetProperties(model.AcceptedAnswerId,
+                                                    model.AnswerCount,
+                                                    model.Body,
+                                                    model.ClosedDate,
+                                                    model.CommentCount,
+                                                    model.CommunityOwnedDate,
+                                                    model.CreationDate,
+                                                    model.FavoriteCount,
+                                                    model.LastActivityDate,
+                                                    model.LastEditDate,
+                                                    model.LastEditorDisplayName,
+                                                    model.LastEditorUserId,
+                                                    model.OwnerUserId,
+                                                    model.ParentId,
+                                                    model.PostTypeId,
+                                                    model.Score,
+                                                    model.Tags,
+                                                    model.Title,
+                                                    model.ViewCount);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.PostsService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiPostsResponseModel response = await this.PostsService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +214,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>945f4209c34e9fae546b03698392d565</Hash>
+    <Hash>f3c75eeccf19e63a6a7b203cf7be1a04</Hash>
 </Codenesium>*/

@@ -49,6 +49,11 @@ namespace TicketingCRMNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiAdminResponseModel> AdminCreateAsync(ApiAdminRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Admins", item).ConfigureAwait(false);
@@ -799,5 +804,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>c941ba63b9918c665501f9b636650472</Hash>
+    <Hash>b1f8b4473ea959da281ecb5aef980d4f</Hash>
 </Codenesium>*/

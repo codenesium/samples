@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderDetailResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderDetailRequestModel model)
-                {
-                        CreateResponse<ApiSalesOrderDetailResponseModel> result = await this.SalesOrderDetailService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderDetails/{result.Record.SalesOrderID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiSalesOrderDetailResponseModel>), 200)]
@@ -115,6 +97,68 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiSalesOrderDetailResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderDetailRequestModel model)
+                {
+                        CreateResponse<ApiSalesOrderDetailResponseModel> result = await this.SalesOrderDetailService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderDetails/{result.Record.SalesOrderID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiSalesOrderDetailResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesOrderDetailRequestModel> patch)
+                {
+                        ApiSalesOrderDetailResponseModel record = await this.SalesOrderDetailService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiSalesOrderDetailRequestModel model = new ApiSalesOrderDetailRequestModel();
+                                model.SetProperties(model.CarrierTrackingNumber,
+                                                    model.LineTotal,
+                                                    model.ModifiedDate,
+                                                    model.OrderQty,
+                                                    model.ProductID,
+                                                    model.Rowguid,
+                                                    model.SalesOrderDetailID,
+                                                    model.SpecialOfferID,
+                                                    model.UnitPrice,
+                                                    model.UnitPriceDiscount);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.SalesOrderDetailService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesOrderDetailResponseModel response = await this.SalesOrderDetailService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -172,5 +216,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f709e3a70385faa373da4df46076450c</Hash>
+    <Hash>ad1ea70e1dba86bf601341d1183eb701</Hash>
 </Codenesium>*/

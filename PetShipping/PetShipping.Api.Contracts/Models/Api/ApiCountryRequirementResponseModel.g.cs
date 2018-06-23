@@ -6,15 +6,61 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiCountryRequirementResponseModel : AbstractApiCountryRequirementResponseModel
+        public class ApiCountryRequirementResponseModel : AbstractApiResponseModel
         {
-                public ApiCountryRequirementResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int countryId,
+                        string details,
+                        int id)
                 {
+                        this.CountryId = countryId;
+                        this.Details = details;
+                        this.Id = id;
+
+                        this.CountryIdEntity = nameof(ApiResponse.Countries);
+                }
+
+                public int CountryId { get; private set; }
+
+                public string CountryIdEntity { get; set; }
+
+                public string Details { get; private set; }
+
+                public int Id { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeCountryIdValue { get; set; } = true;
+
+                public bool ShouldSerializeCountryId()
+                {
+                        return this.ShouldSerializeCountryIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeDetailsValue { get; set; } = true;
+
+                public bool ShouldSerializeDetails()
+                {
+                        return this.ShouldSerializeDetailsValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeCountryIdValue = false;
+                        this.ShouldSerializeDetailsValue = false;
+                        this.ShouldSerializeIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ed035110ac292062cdcefb1c7a7c7469</Hash>
+    <Hash>f79a75a7856fb2138f0084af0f62739d</Hash>
 </Codenesium>*/

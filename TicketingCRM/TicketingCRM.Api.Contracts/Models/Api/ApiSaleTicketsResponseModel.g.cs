@@ -6,15 +6,64 @@ using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-        public partial class ApiSaleTicketsResponseModel : AbstractApiSaleTicketsResponseModel
+        public class ApiSaleTicketsResponseModel : AbstractApiResponseModel
         {
-                public ApiSaleTicketsResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        int saleId,
+                        int ticketId)
                 {
+                        this.Id = id;
+                        this.SaleId = saleId;
+                        this.TicketId = ticketId;
+
+                        this.SaleIdEntity = nameof(ApiResponse.Sales);
+                        this.TicketIdEntity = nameof(ApiResponse.Tickets);
+                }
+
+                public int Id { get; private set; }
+
+                public int SaleId { get; private set; }
+
+                public string SaleIdEntity { get; set; }
+
+                public int TicketId { get; private set; }
+
+                public string TicketIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSaleIdValue { get; set; } = true;
+
+                public bool ShouldSerializeSaleId()
+                {
+                        return this.ShouldSerializeSaleIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeTicketIdValue { get; set; } = true;
+
+                public bool ShouldSerializeTicketId()
+                {
+                        return this.ShouldSerializeTicketIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeSaleIdValue = false;
+                        this.ShouldSerializeTicketIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>fbe9acbe4b6badd2f23bd93b974722ed</Hash>
+    <Hash>94b2d3be78155b3d83b44b10707c0f98</Hash>
 </Codenesium>*/

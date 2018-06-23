@@ -6,15 +6,64 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiStudentXFamilyResponseModel : AbstractApiStudentXFamilyResponseModel
+        public class ApiStudentXFamilyResponseModel : AbstractApiResponseModel
         {
-                public ApiStudentXFamilyResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int familyId,
+                        int id,
+                        int studentId)
                 {
+                        this.FamilyId = familyId;
+                        this.Id = id;
+                        this.StudentId = studentId;
+
+                        this.FamilyIdEntity = nameof(ApiResponse.Families);
+                        this.StudentIdEntity = nameof(ApiResponse.Students);
+                }
+
+                public int FamilyId { get; private set; }
+
+                public string FamilyIdEntity { get; set; }
+
+                public int Id { get; private set; }
+
+                public int StudentId { get; private set; }
+
+                public string StudentIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeFamilyIdValue { get; set; } = true;
+
+                public bool ShouldSerializeFamilyId()
+                {
+                        return this.ShouldSerializeFamilyIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeStudentIdValue { get; set; } = true;
+
+                public bool ShouldSerializeStudentId()
+                {
+                        return this.ShouldSerializeStudentIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeFamilyIdValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeStudentIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>2e9ea8bbc4246e858f0aa4b4c3304d4d</Hash>
+    <Hash>a627842536c015d468c32281ff4e4317</Hash>
 </Codenesium>*/

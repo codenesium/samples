@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDocumentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<Guid>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiDocumentRequestModel model)
-                {
-                        CreateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Documents/{result.Record.Rowguid}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
@@ -115,6 +97,70 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDocumentResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<Guid>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiDocumentRequestModel model)
+                {
+                        CreateResponse<ApiDocumentResponseModel> result = await this.DocumentService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Documents/{result.Record.Rowguid}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDocumentResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(Guid id, [FromBody] JsonPatchDocument<ApiDocumentRequestModel> patch)
+                {
+                        ApiDocumentResponseModel record = await this.DocumentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiDocumentRequestModel model = new ApiDocumentRequestModel();
+                                model.SetProperties(model.ChangeNumber,
+                                                    model.Document1,
+                                                    model.DocumentLevel,
+                                                    model.DocumentSummary,
+                                                    model.FileExtension,
+                                                    model.FileName,
+                                                    model.FolderFlag,
+                                                    model.ModifiedDate,
+                                                    model.Owner,
+                                                    model.Revision,
+                                                    model.Status,
+                                                    model.Title);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.DocumentService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiDocumentResponseModel response = await this.DocumentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -172,5 +218,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>01b9627dd47f4b48274c835da38df8ee</Hash>
+    <Hash>b7cdba4608a815345a5bcc9a525f3b1c</Hash>
 </Codenesium>*/

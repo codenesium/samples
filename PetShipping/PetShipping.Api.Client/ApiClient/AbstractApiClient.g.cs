@@ -49,6 +49,11 @@ namespace PetShippingNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiAirlineResponseModel> AirlineCreateAsync(ApiAirlineRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Airlines", item).ConfigureAwait(false);
@@ -1198,5 +1203,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3bcc43a3fb1056e8bf7dcc0e301a53df</Hash>
+    <Hash>107a5d5315a71e2d6c71a84f93f5b1fa</Hash>
 </Codenesium>*/

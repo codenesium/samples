@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiInterruptionResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiInterruptionRequestModel model)
-                {
-                        CreateResponse<ApiInterruptionResponseModel> result = await this.InterruptionService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Interruptions/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiInterruptionResponseModel>), 200)]
@@ -115,6 +97,68 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiInterruptionResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiInterruptionRequestModel model)
+                {
+                        CreateResponse<ApiInterruptionResponseModel> result = await this.InterruptionService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Interruptions/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiInterruptionResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiInterruptionRequestModel> patch)
+                {
+                        ApiInterruptionResponseModel record = await this.InterruptionService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiInterruptionRequestModel model = new ApiInterruptionRequestModel();
+                                model.SetProperties(model.Created,
+                                                    model.EnvironmentId,
+                                                    model.JSON,
+                                                    model.ProjectId,
+                                                    model.RelatedDocumentIds,
+                                                    model.ResponsibleTeamIds,
+                                                    model.Status,
+                                                    model.TaskId,
+                                                    model.TenantId,
+                                                    model.Title);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.InterruptionService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiInterruptionResponseModel response = await this.InterruptionService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -172,5 +216,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ca5ea69855c8ab070e0e7c160ae6473e</Hash>
+    <Hash>783e686e26954b4dffd185b846862d66</Hash>
 </Codenesium>*/

@@ -6,15 +6,44 @@ using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
 {
-        public partial class ApiSpeciesResponseModel : AbstractApiSpeciesResponseModel
+        public class ApiSpeciesResponseModel : AbstractApiResponseModel
         {
-                public ApiSpeciesResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string name)
                 {
+                        this.Id = id;
+                        this.Name = name;
+                }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>95c878262ed01a680b5200ffaf755a52</Hash>
+    <Hash>3fd9c0b46ff84575b3434d21e97e870a</Hash>
 </Codenesium>*/

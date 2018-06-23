@@ -6,15 +6,44 @@ using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
 {
-        public partial class ApiLinkTypesResponseModel : AbstractApiLinkTypesResponseModel
+        public class ApiLinkTypesResponseModel : AbstractApiResponseModel
         {
-                public ApiLinkTypesResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string type)
                 {
+                        this.Id = id;
+                        this.Type = type;
+                }
+
+                public int Id { get; private set; }
+
+                public string Type { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeTypeValue { get; set; } = true;
+
+                public bool ShouldSerializeType()
+                {
+                        return this.ShouldSerializeTypeValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeTypeValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>ae25ef8caa04bde8200acce5f4103b9f</Hash>
+    <Hash>e78bb27fec13cc9da3032b5d52e18b13</Hash>
 </Codenesium>*/

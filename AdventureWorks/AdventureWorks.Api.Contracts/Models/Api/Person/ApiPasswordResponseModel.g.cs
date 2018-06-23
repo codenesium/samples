@@ -6,15 +6,83 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiPasswordResponseModel : AbstractApiPasswordResponseModel
+        public class ApiPasswordResponseModel : AbstractApiResponseModel
         {
-                public ApiPasswordResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int businessEntityID,
+                        DateTime modifiedDate,
+                        string passwordHash,
+                        string passwordSalt,
+                        Guid rowguid)
                 {
+                        this.BusinessEntityID = businessEntityID;
+                        this.ModifiedDate = modifiedDate;
+                        this.PasswordHash = passwordHash;
+                        this.PasswordSalt = passwordSalt;
+                        this.Rowguid = rowguid;
+                }
+
+                public int BusinessEntityID { get; private set; }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public string PasswordHash { get; private set; }
+
+                public string PasswordSalt { get; private set; }
+
+                public Guid Rowguid { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeBusinessEntityIDValue { get; set; } = true;
+
+                public bool ShouldSerializeBusinessEntityID()
+                {
+                        return this.ShouldSerializeBusinessEntityIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePasswordHashValue { get; set; } = true;
+
+                public bool ShouldSerializePasswordHash()
+                {
+                        return this.ShouldSerializePasswordHashValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePasswordSaltValue { get; set; } = true;
+
+                public bool ShouldSerializePasswordSalt()
+                {
+                        return this.ShouldSerializePasswordSaltValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeRowguidValue { get; set; } = true;
+
+                public bool ShouldSerializeRowguid()
+                {
+                        return this.ShouldSerializeRowguidValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeBusinessEntityIDValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializePasswordHashValue = false;
+                        this.ShouldSerializePasswordSaltValue = false;
+                        this.ShouldSerializeRowguidValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6bc3e14972133b3276cee2c4d4970be2</Hash>
+    <Hash>42f260283a464f97f7fa99c153c6582d</Hash>
 </Codenesium>*/

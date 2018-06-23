@@ -6,15 +6,61 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiPipelineResponseModel : AbstractApiPipelineResponseModel
+        public class ApiPipelineResponseModel : AbstractApiResponseModel
         {
-                public ApiPipelineResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        int pipelineStatusId,
+                        int saleId)
                 {
+                        this.Id = id;
+                        this.PipelineStatusId = pipelineStatusId;
+                        this.SaleId = saleId;
+
+                        this.PipelineStatusIdEntity = nameof(ApiResponse.PipelineStatus);
+                }
+
+                public int Id { get; private set; }
+
+                public int PipelineStatusId { get; private set; }
+
+                public string PipelineStatusIdEntity { get; set; }
+
+                public int SaleId { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePipelineStatusIdValue { get; set; } = true;
+
+                public bool ShouldSerializePipelineStatusId()
+                {
+                        return this.ShouldSerializePipelineStatusIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeSaleIdValue { get; set; } = true;
+
+                public bool ShouldSerializeSaleId()
+                {
+                        return this.ShouldSerializeSaleIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializePipelineStatusIdValue = false;
+                        this.ShouldSerializeSaleIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>460120194acc694b15a206064535efbc</Hash>
+    <Hash>7d6e566a8223c75c7d4e08c1220da315</Hash>
 </Codenesium>*/

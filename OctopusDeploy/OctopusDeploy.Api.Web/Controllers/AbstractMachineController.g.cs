@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiMachineResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
-                {
-                        CreateResponse<ApiMachineResponseModel> result = await this.MachineService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
@@ -115,6 +97,70 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiMachineResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiMachineRequestModel model)
+                {
+                        CreateResponse<ApiMachineResponseModel> result = await this.MachineService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Machines/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiMachineRequestModel> patch)
+                {
+                        ApiMachineResponseModel record = await this.MachineService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiMachineRequestModel model = new ApiMachineRequestModel();
+                                model.SetProperties(model.CommunicationStyle,
+                                                    model.EnvironmentIds,
+                                                    model.Fingerprint,
+                                                    model.IsDisabled,
+                                                    model.JSON,
+                                                    model.MachinePolicyId,
+                                                    model.Name,
+                                                    model.RelatedDocumentIds,
+                                                    model.Roles,
+                                                    model.TenantIds,
+                                                    model.TenantTags,
+                                                    model.Thumbprint);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.MachineService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiMachineResponseModel response = await this.MachineService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -191,5 +237,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3f45fb0aa31968870c0dc87f78ddd60f</Hash>
+    <Hash>64c04c25492a547538cf7c97c2157ef4</Hash>
 </Codenesium>*/

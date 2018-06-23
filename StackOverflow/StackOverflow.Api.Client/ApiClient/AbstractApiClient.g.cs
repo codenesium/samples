@@ -49,6 +49,11 @@ namespace StackOverflowNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiBadgesResponseModel> BadgesCreateAsync(ApiBadgesRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Badges", item).ConfigureAwait(false);
@@ -616,5 +621,5 @@ namespace StackOverflowNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>1ba76563c4f39840689b568ebfb3768a</Hash>
+    <Hash>a537f3300da6f8c4f99c7ccbd93a7417</Hash>
 </Codenesium>*/

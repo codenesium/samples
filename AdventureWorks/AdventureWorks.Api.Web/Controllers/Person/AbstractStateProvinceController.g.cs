@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiStateProvinceResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiStateProvinceRequestModel model)
-                {
-                        CreateResponse<ApiStateProvinceResponseModel> result = await this.StateProvinceService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/StateProvinces/{result.Record.StateProvinceID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiStateProvinceResponseModel>), 200)]
@@ -115,6 +97,65 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiStateProvinceResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiStateProvinceRequestModel model)
+                {
+                        CreateResponse<ApiStateProvinceResponseModel> result = await this.StateProvinceService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/StateProvinces/{result.Record.StateProvinceID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiStateProvinceResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiStateProvinceRequestModel> patch)
+                {
+                        ApiStateProvinceResponseModel record = await this.StateProvinceService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiStateProvinceRequestModel model = new ApiStateProvinceRequestModel();
+                                model.SetProperties(model.CountryRegionCode,
+                                                    model.IsOnlyStateProvinceFlag,
+                                                    model.ModifiedDate,
+                                                    model.Name,
+                                                    model.Rowguid,
+                                                    model.StateProvinceCode,
+                                                    model.TerritoryID);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.StateProvinceService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiStateProvinceResponseModel response = await this.StateProvinceService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -213,5 +254,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5a85f32d8becd98b99c7c7e43dd63a2c</Hash>
+    <Hash>33c6a766afe61ba2344fa53d2d8433a4</Hash>
 </Codenesium>*/

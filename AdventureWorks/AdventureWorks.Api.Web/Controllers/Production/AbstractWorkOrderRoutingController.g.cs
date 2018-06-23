@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRoutingRequestModel model)
-                {
-                        CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.WorkOrderRoutingService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrderRoutings/{result.Record.WorkOrderID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
@@ -115,6 +97,69 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRoutingRequestModel model)
+                {
+                        CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.WorkOrderRoutingService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrderRoutings/{result.Record.WorkOrderID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiWorkOrderRoutingResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiWorkOrderRoutingRequestModel> patch)
+                {
+                        ApiWorkOrderRoutingResponseModel record = await this.WorkOrderRoutingService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiWorkOrderRoutingRequestModel model = new ApiWorkOrderRoutingRequestModel();
+                                model.SetProperties(model.ActualCost,
+                                                    model.ActualEndDate,
+                                                    model.ActualResourceHrs,
+                                                    model.ActualStartDate,
+                                                    model.LocationID,
+                                                    model.ModifiedDate,
+                                                    model.OperationSequence,
+                                                    model.PlannedCost,
+                                                    model.ProductID,
+                                                    model.ScheduledEndDate,
+                                                    model.ScheduledStartDate);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.WorkOrderRoutingService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiWorkOrderRoutingResponseModel response = await this.WorkOrderRoutingService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -172,5 +217,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3ca4db3b1764950a356b1ee2d5e3da60</Hash>
+    <Hash>557d09fb94414241ef4b73145b0a2b35</Hash>
 </Codenesium>*/

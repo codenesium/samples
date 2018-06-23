@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiErrorLogResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogRequestModel model)
-                {
-                        CreateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ErrorLogs/{result.Record.ErrorLogID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiErrorLogResponseModel>), 200)]
@@ -115,6 +97,66 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiErrorLogResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiErrorLogRequestModel model)
+                {
+                        CreateResponse<ApiErrorLogResponseModel> result = await this.ErrorLogService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ErrorLogs/{result.Record.ErrorLogID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiErrorLogResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiErrorLogRequestModel> patch)
+                {
+                        ApiErrorLogResponseModel record = await this.ErrorLogService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiErrorLogRequestModel model = new ApiErrorLogRequestModel();
+                                model.SetProperties(model.ErrorLine,
+                                                    model.ErrorMessage,
+                                                    model.ErrorNumber,
+                                                    model.ErrorProcedure,
+                                                    model.ErrorSeverity,
+                                                    model.ErrorState,
+                                                    model.ErrorTime,
+                                                    model.UserName);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ErrorLogService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiErrorLogResponseModel response = await this.ErrorLogService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +203,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fa6d21b699554b8a6fc964813cc3f100</Hash>
+    <Hash>7af0c50d679193ca5f91df9a7a84e05c</Hash>
 </Codenesium>*/

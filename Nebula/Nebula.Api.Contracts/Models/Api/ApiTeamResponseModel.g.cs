@@ -6,15 +6,61 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiTeamResponseModel : AbstractApiTeamResponseModel
+        public class ApiTeamResponseModel : AbstractApiResponseModel
         {
-                public ApiTeamResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string name,
+                        int organizationId)
                 {
+                        this.Id = id;
+                        this.Name = name;
+                        this.OrganizationId = organizationId;
+
+                        this.OrganizationIdEntity = nameof(ApiResponse.Organizations);
+                }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                public int OrganizationId { get; private set; }
+
+                public string OrganizationIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeOrganizationIdValue { get; set; } = true;
+
+                public bool ShouldSerializeOrganizationId()
+                {
+                        return this.ShouldSerializeOrganizationIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
+                        this.ShouldSerializeOrganizationIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>225fe69c854a9a3282eb2df5f623394c</Hash>
+    <Hash>ac16fb9375d2d89e70b4bd5469905d4e</Hash>
 </Codenesium>*/

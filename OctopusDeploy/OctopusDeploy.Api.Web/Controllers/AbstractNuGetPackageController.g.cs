@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiNuGetPackageResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiNuGetPackageRequestModel model)
-                {
-                        CreateResponse<ApiNuGetPackageResponseModel> result = await this.NuGetPackageService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/NuGetPackages/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiNuGetPackageResponseModel>), 200)]
@@ -115,6 +97,66 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiNuGetPackageResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiNuGetPackageRequestModel model)
+                {
+                        CreateResponse<ApiNuGetPackageResponseModel> result = await this.NuGetPackageService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/NuGetPackages/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiNuGetPackageResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiNuGetPackageRequestModel> patch)
+                {
+                        ApiNuGetPackageResponseModel record = await this.NuGetPackageService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiNuGetPackageRequestModel model = new ApiNuGetPackageRequestModel();
+                                model.SetProperties(model.JSON,
+                                                    model.PackageId,
+                                                    model.Version,
+                                                    model.VersionBuild,
+                                                    model.VersionMajor,
+                                                    model.VersionMinor,
+                                                    model.VersionRevision,
+                                                    model.VersionSpecial);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.NuGetPackageService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiNuGetPackageResponseModel response = await this.NuGetPackageService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +203,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>20a499520c71b8154f895e0c21ff5020</Hash>
+    <Hash>fdd72a5065a545a5a17d71b786482c44</Hash>
 </Codenesium>*/

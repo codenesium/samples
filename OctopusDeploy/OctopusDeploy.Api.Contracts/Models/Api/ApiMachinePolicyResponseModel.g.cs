@@ -6,15 +6,70 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiMachinePolicyResponseModel : AbstractApiMachinePolicyResponseModel
+        public class ApiMachinePolicyResponseModel : AbstractApiResponseModel
         {
-                public ApiMachinePolicyResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        string id,
+                        bool isDefault,
+                        string jSON,
+                        string name)
                 {
+                        this.Id = id;
+                        this.IsDefault = isDefault;
+                        this.JSON = jSON;
+                        this.Name = name;
+                }
+
+                public string Id { get; private set; }
+
+                public bool IsDefault { get; private set; }
+
+                public string JSON { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIsDefaultValue { get; set; } = true;
+
+                public bool ShouldSerializeIsDefault()
+                {
+                        return this.ShouldSerializeIsDefaultValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeJSONValue { get; set; } = true;
+
+                public bool ShouldSerializeJSON()
+                {
+                        return this.ShouldSerializeJSONValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeIsDefaultValue = false;
+                        this.ShouldSerializeJSONValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0012f17291de52f72929a5dab33c31d5</Hash>
+    <Hash>35b828d26ade8e641c3ea40f0106f6b6</Hash>
 </Codenesium>*/

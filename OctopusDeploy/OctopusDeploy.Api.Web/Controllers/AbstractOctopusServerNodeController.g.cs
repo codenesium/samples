@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiOctopusServerNodeResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiOctopusServerNodeRequestModel model)
-                {
-                        CreateResponse<ApiOctopusServerNodeResponseModel> result = await this.OctopusServerNodeService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OctopusServerNodes/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiOctopusServerNodeResponseModel>), 200)]
@@ -115,6 +97,64 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiOctopusServerNodeResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiOctopusServerNodeRequestModel model)
+                {
+                        CreateResponse<ApiOctopusServerNodeResponseModel> result = await this.OctopusServerNodeService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/OctopusServerNodes/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiOctopusServerNodeResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiOctopusServerNodeRequestModel> patch)
+                {
+                        ApiOctopusServerNodeResponseModel record = await this.OctopusServerNodeService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiOctopusServerNodeRequestModel model = new ApiOctopusServerNodeRequestModel();
+                                model.SetProperties(model.IsInMaintenanceMode,
+                                                    model.JSON,
+                                                    model.LastSeen,
+                                                    model.MaxConcurrentTasks,
+                                                    model.Name,
+                                                    model.Rank);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.OctopusServerNodeService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiOctopusServerNodeResponseModel response = await this.OctopusServerNodeService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -161,5 +201,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>306be2bcb0a7a32e4524c91ba73060a9</Hash>
+    <Hash>177e839c10f8025251b01a136dd046d6</Hash>
 </Codenesium>*/

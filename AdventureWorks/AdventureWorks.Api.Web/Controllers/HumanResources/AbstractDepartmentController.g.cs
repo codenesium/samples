@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiDepartmentResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentRequestModel model)
-                {
-                        CreateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Departments/{result.Record.DepartmentID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiDepartmentResponseModel>), 200)]
@@ -115,6 +97,61 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDepartmentResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiDepartmentRequestModel model)
+                {
+                        CreateResponse<ApiDepartmentResponseModel> result = await this.DepartmentService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Departments/{result.Record.DepartmentID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiDepartmentResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiDepartmentRequestModel> patch)
+                {
+                        ApiDepartmentResponseModel record = await this.DepartmentService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiDepartmentRequestModel model = new ApiDepartmentRequestModel();
+                                model.SetProperties(model.GroupName,
+                                                    model.ModifiedDate,
+                                                    model.Name);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.DepartmentService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiDepartmentResponseModel response = await this.DepartmentService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -194,5 +231,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0925f26ec1935614d435bb0f7f8fb791</Hash>
+    <Hash>6c2c991a0431aded0ebb2a39d4061299</Hash>
 </Codenesium>*/

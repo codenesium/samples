@@ -1,6 +1,7 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace OctopusDeployNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiServerTaskResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiServerTaskRequestModel model)
-                {
-                        CreateResponse<ApiServerTaskResponseModel> result = await this.ServerTaskService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ServerTasks/{result.Record.Id}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiServerTaskResponseModel>), 200)]
@@ -115,6 +97,74 @@ namespace OctopusDeployNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiServerTaskResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<string>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiServerTaskRequestModel model)
+                {
+                        CreateResponse<ApiServerTaskResponseModel> result = await this.ServerTaskService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/ServerTasks/{result.Record.Id}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiServerTaskResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(string id, [FromBody] JsonPatchDocument<ApiServerTaskRequestModel> patch)
+                {
+                        ApiServerTaskResponseModel record = await this.ServerTaskService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiServerTaskRequestModel model = new ApiServerTaskRequestModel();
+                                model.SetProperties(model.CompletedTime,
+                                                    model.ConcurrencyTag,
+                                                    model.Description,
+                                                    model.DurationSeconds,
+                                                    model.EnvironmentId,
+                                                    model.ErrorMessage,
+                                                    model.HasPendingInterruptions,
+                                                    model.HasWarningsOrErrors,
+                                                    model.JSON,
+                                                    model.Name,
+                                                    model.ProjectId,
+                                                    model.QueueTime,
+                                                    model.ServerNodeId,
+                                                    model.StartTime,
+                                                    model.State,
+                                                    model.TenantId);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.ServerTaskService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiServerTaskResponseModel response = await this.ServerTaskService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -194,5 +244,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5bdf4fe2be29a40115e28fce44091fc3</Hash>
+    <Hash>5e812e421ebaa630a0dbc77e89d040c3</Hash>
 </Codenesium>*/

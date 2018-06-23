@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiWorkOrderResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRequestModel model)
-                {
-                        CreateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrders/{result.Record.WorkOrderID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
@@ -115,6 +97,67 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiWorkOrderResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiWorkOrderRequestModel model)
+                {
+                        CreateResponse<ApiWorkOrderResponseModel> result = await this.WorkOrderService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/WorkOrders/{result.Record.WorkOrderID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiWorkOrderResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiWorkOrderRequestModel> patch)
+                {
+                        ApiWorkOrderResponseModel record = await this.WorkOrderService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiWorkOrderRequestModel model = new ApiWorkOrderRequestModel();
+                                model.SetProperties(model.DueDate,
+                                                    model.EndDate,
+                                                    model.ModifiedDate,
+                                                    model.OrderQty,
+                                                    model.ProductID,
+                                                    model.ScrappedQty,
+                                                    model.ScrapReasonID,
+                                                    model.StartDate,
+                                                    model.StockedQty);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.WorkOrderService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiWorkOrderResponseModel response = await this.WorkOrderService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -197,5 +240,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2ea691b2710c8dd39d31d83a087855e5</Hash>
+    <Hash>676a6b288a005e0d5b5c8e765262f5e2</Hash>
 </Codenesium>*/

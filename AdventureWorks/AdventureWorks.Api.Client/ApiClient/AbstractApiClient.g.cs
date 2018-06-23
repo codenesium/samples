@@ -49,6 +49,11 @@ namespace AdventureWorksNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiAWBuildVersionResponseModel> AWBuildVersionCreateAsync(ApiAWBuildVersionRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/AWBuildVersions", item).ConfigureAwait(false);
@@ -4206,5 +4211,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>409403d7105161f3440b7f326f02e40a</Hash>
+    <Hash>990dc3344042138a26d275816af93279</Hash>
 </Codenesium>*/

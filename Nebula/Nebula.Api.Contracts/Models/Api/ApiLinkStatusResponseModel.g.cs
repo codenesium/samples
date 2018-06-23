@@ -6,15 +6,44 @@ using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
 {
-        public partial class ApiLinkStatusResponseModel : AbstractApiLinkStatusResponseModel
+        public class ApiLinkStatusResponseModel : AbstractApiResponseModel
         {
-                public ApiLinkStatusResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        string name)
                 {
+                        this.Id = id;
+                        this.Name = name;
+                }
+
+                public int Id { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>101b39de724788024c72a6c034791389</Hash>
+    <Hash>7083bb345b088196dfd0b2fb15d6a563</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderRequestModel model)
-                {
-                        CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.SalesOrderHeaderService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderHeaders/{result.Record.SalesOrderID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
@@ -115,6 +97,83 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiSalesOrderHeaderRequestModel model)
+                {
+                        CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.SalesOrderHeaderService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/SalesOrderHeaders/{result.Record.SalesOrderID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiSalesOrderHeaderResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiSalesOrderHeaderRequestModel> patch)
+                {
+                        ApiSalesOrderHeaderResponseModel record = await this.SalesOrderHeaderService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiSalesOrderHeaderRequestModel model = new ApiSalesOrderHeaderRequestModel();
+                                model.SetProperties(model.AccountNumber,
+                                                    model.BillToAddressID,
+                                                    model.Comment,
+                                                    model.CreditCardApprovalCode,
+                                                    model.CreditCardID,
+                                                    model.CurrencyRateID,
+                                                    model.CustomerID,
+                                                    model.DueDate,
+                                                    model.Freight,
+                                                    model.ModifiedDate,
+                                                    model.OnlineOrderFlag,
+                                                    model.OrderDate,
+                                                    model.PurchaseOrderNumber,
+                                                    model.RevisionNumber,
+                                                    model.Rowguid,
+                                                    model.SalesOrderNumber,
+                                                    model.SalesPersonID,
+                                                    model.ShipDate,
+                                                    model.ShipMethodID,
+                                                    model.ShipToAddressID,
+                                                    model.Status,
+                                                    model.SubTotal,
+                                                    model.TaxAmt,
+                                                    model.TerritoryID,
+                                                    model.TotalDue);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.SalesOrderHeaderService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiSalesOrderHeaderResponseModel response = await this.SalesOrderHeaderService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -230,5 +289,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>31c9ae4a979d0192e9d4bbc16b22e535</Hash>
+    <Hash>875863883e2e26516f9781299ba8359f</Hash>
 </Codenesium>*/

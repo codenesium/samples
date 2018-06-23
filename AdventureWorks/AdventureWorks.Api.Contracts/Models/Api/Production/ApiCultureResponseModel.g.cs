@@ -6,15 +6,57 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiCultureResponseModel : AbstractApiCultureResponseModel
+        public class ApiCultureResponseModel : AbstractApiResponseModel
         {
-                public ApiCultureResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        string cultureID,
+                        DateTime modifiedDate,
+                        string name)
                 {
+                        this.CultureID = cultureID;
+                        this.ModifiedDate = modifiedDate;
+                        this.Name = name;
+                }
+
+                public string CultureID { get; private set; }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeCultureIDValue { get; set; } = true;
+
+                public bool ShouldSerializeCultureID()
+                {
+                        return this.ShouldSerializeCultureIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeCultureIDValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>0c778a9080fe05cc3a7ece0641f695d4</Hash>
+    <Hash>6489bd4b04f0cdcf40d5e8c29527dad9</Hash>
 </Codenesium>*/

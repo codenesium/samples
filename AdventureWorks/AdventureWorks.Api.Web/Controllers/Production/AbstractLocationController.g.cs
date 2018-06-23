@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiLocationResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiLocationRequestModel model)
-                {
-                        CreateResponse<ApiLocationResponseModel> result = await this.LocationService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Locations/{result.Record.LocationID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiLocationResponseModel>), 200)]
@@ -115,6 +97,62 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiLocationResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<short>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiLocationRequestModel model)
+                {
+                        CreateResponse<ApiLocationResponseModel> result = await this.LocationService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/Locations/{result.Record.LocationID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiLocationResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(short id, [FromBody] JsonPatchDocument<ApiLocationRequestModel> patch)
+                {
+                        ApiLocationResponseModel record = await this.LocationService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiLocationRequestModel model = new ApiLocationRequestModel();
+                                model.SetProperties(model.Availability,
+                                                    model.CostRate,
+                                                    model.ModifiedDate,
+                                                    model.Name);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.LocationService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiLocationResponseModel response = await this.LocationService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -208,5 +246,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>11b46336b75b9e166cd9abf3dbbf0abc</Hash>
+    <Hash>9893c416b20066aec43ae754971ed109</Hash>
 </Codenesium>*/

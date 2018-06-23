@@ -6,15 +6,70 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiProductProductPhotoResponseModel : AbstractApiProductProductPhotoResponseModel
+        public class ApiProductProductPhotoResponseModel : AbstractApiResponseModel
         {
-                public ApiProductProductPhotoResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        DateTime modifiedDate,
+                        bool primary,
+                        int productID,
+                        int productPhotoID)
                 {
+                        this.ModifiedDate = modifiedDate;
+                        this.Primary = primary;
+                        this.ProductID = productID;
+                        this.ProductPhotoID = productPhotoID;
+                }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public bool Primary { get; private set; }
+
+                public int ProductID { get; private set; }
+
+                public int ProductPhotoID { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePrimaryValue { get; set; } = true;
+
+                public bool ShouldSerializePrimary()
+                {
+                        return this.ShouldSerializePrimaryValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProductPhotoIDValue { get; set; } = true;
+
+                public bool ShouldSerializeProductPhotoID()
+                {
+                        return this.ShouldSerializeProductPhotoIDValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializePrimaryValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializeProductPhotoIDValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>e8b4f16561c5b35608df70a1a2d6ddb9</Hash>
+    <Hash>2e9f978b402c8c96d805e639ae60c41a</Hash>
 </Codenesium>*/

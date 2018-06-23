@@ -6,15 +6,64 @@ using System.Linq.Expressions;
 
 namespace FermataFishNS.Api.Contracts
 {
-        public partial class ApiLessonXStudentResponseModel : AbstractApiLessonXStudentResponseModel
+        public class ApiLessonXStudentResponseModel : AbstractApiResponseModel
         {
-                public ApiLessonXStudentResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        int id,
+                        int lessonId,
+                        int studentId)
                 {
+                        this.Id = id;
+                        this.LessonId = lessonId;
+                        this.StudentId = studentId;
+
+                        this.LessonIdEntity = nameof(ApiResponse.Lessons);
+                        this.StudentIdEntity = nameof(ApiResponse.Students);
+                }
+
+                public int Id { get; private set; }
+
+                public int LessonId { get; private set; }
+
+                public string LessonIdEntity { get; set; }
+
+                public int StudentId { get; private set; }
+
+                public string StudentIdEntity { get; set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeLessonIdValue { get; set; } = true;
+
+                public bool ShouldSerializeLessonId()
+                {
+                        return this.ShouldSerializeLessonIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeStudentIdValue { get; set; } = true;
+
+                public bool ShouldSerializeStudentId()
+                {
+                        return this.ShouldSerializeStudentIdValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeLessonIdValue = false;
+                        this.ShouldSerializeStudentIdValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>9ad64cd3568feba6ad862139189de8d0</Hash>
+    <Hash>d07c7556d034c05c5e6300277fd6438a</Hash>
 </Codenesium>*/

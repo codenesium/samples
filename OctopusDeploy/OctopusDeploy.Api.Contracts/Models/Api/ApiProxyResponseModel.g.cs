@@ -6,15 +6,57 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiProxyResponseModel : AbstractApiProxyResponseModel
+        public class ApiProxyResponseModel : AbstractApiResponseModel
         {
-                public ApiProxyResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        string id,
+                        string jSON,
+                        string name)
                 {
+                        this.Id = id;
+                        this.JSON = jSON;
+                        this.Name = name;
+                }
+
+                public string Id { get; private set; }
+
+                public string JSON { get; private set; }
+
+                public string Name { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeJSONValue { get; set; } = true;
+
+                public bool ShouldSerializeJSON()
+                {
+                        return this.ShouldSerializeJSONValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeNameValue { get; set; } = true;
+
+                public bool ShouldSerializeName()
+                {
+                        return this.ShouldSerializeNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeJSONValue = false;
+                        this.ShouldSerializeNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>8fb253e3b8ad35baf5b86a95e30cbb2b</Hash>
+    <Hash>a620f0962daf3dbbbadf747480b86c16</Hash>
 </Codenesium>*/

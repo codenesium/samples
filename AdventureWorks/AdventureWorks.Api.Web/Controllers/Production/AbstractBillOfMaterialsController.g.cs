@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiBillOfMaterialsRequestModel model)
-                {
-                        CreateResponse<ApiBillOfMaterialsResponseModel> result = await this.BillOfMaterialsService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BillOfMaterials/{result.Record.BillOfMaterialsID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiBillOfMaterialsResponseModel>), 200)]
@@ -115,6 +97,66 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiBillOfMaterialsRequestModel model)
+                {
+                        CreateResponse<ApiBillOfMaterialsResponseModel> result = await this.BillOfMaterialsService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/BillOfMaterials/{result.Record.BillOfMaterialsID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiBillOfMaterialsResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiBillOfMaterialsRequestModel> patch)
+                {
+                        ApiBillOfMaterialsResponseModel record = await this.BillOfMaterialsService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiBillOfMaterialsRequestModel model = new ApiBillOfMaterialsRequestModel();
+                                model.SetProperties(model.BOMLevel,
+                                                    model.ComponentID,
+                                                    model.EndDate,
+                                                    model.ModifiedDate,
+                                                    model.PerAssemblyQty,
+                                                    model.ProductAssemblyID,
+                                                    model.StartDate,
+                                                    model.UnitMeasureCode);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.BillOfMaterialsService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiBillOfMaterialsResponseModel response = await this.BillOfMaterialsService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -191,5 +233,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5b6cfc757908b3dd4a7535ffde91665e</Hash>
+    <Hash>26e2f7d38b79f6aa31084a2b03f8d704</Hash>
 </Codenesium>*/

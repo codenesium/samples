@@ -3,6 +3,7 @@ using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -68,25 +69,6 @@ namespace AdventureWorksNS.Api.Web
                 }
 
                 [HttpPost]
-                [Route("")]
-                [UnitOfWork]
-                [ProducesResponseType(typeof(ApiCurrencyRateResponseModel), 201)]
-                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
-                public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRateRequestModel model)
-                {
-                        CreateResponse<ApiCurrencyRateResponseModel> result = await this.CurrencyRateService.Create(model);
-
-                        if (result.Success)
-                        {
-                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CurrencyRates/{result.Record.CurrencyRateID}", result.Record);
-                        }
-                        else
-                        {
-                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
-                        }
-                }
-
-                [HttpPost]
                 [Route("BulkInsert")]
                 [UnitOfWork]
                 [ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
@@ -115,6 +97,64 @@ namespace AdventureWorksNS.Api.Web
                         }
 
                         return this.Ok(records);
+                }
+
+                [HttpPost]
+                [Route("")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCurrencyRateResponseModel), 201)]
+                [ProducesResponseType(typeof(CreateResponse<int>), 422)]
+                public virtual async Task<IActionResult> Create([FromBody] ApiCurrencyRateRequestModel model)
+                {
+                        CreateResponse<ApiCurrencyRateResponseModel> result = await this.CurrencyRateService.Create(model);
+
+                        if (result.Success)
+                        {
+                                return this.Created($"{this.Settings.ExternalBaseUrl}/api/CurrencyRates/{result.Record.CurrencyRateID}", result.Record);
+                        }
+                        else
+                        {
+                                return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                        }
+                }
+
+                [HttpPatch]
+                [Route("{id}")]
+                [UnitOfWork]
+                [ProducesResponseType(typeof(ApiCurrencyRateResponseModel), 200)]
+                [ProducesResponseType(typeof(void), 404)]
+                [ProducesResponseType(typeof(ActionResponse), 422)]
+                public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiCurrencyRateRequestModel> patch)
+                {
+                        ApiCurrencyRateResponseModel record = await this.CurrencyRateService.Get(id);
+
+                        if (record == null)
+                        {
+                                return this.StatusCode(StatusCodes.Status404NotFound);
+                        }
+                        else
+                        {
+                                ApiCurrencyRateRequestModel model = new ApiCurrencyRateRequestModel();
+                                model.SetProperties(model.AverageRate,
+                                                    model.CurrencyRateDate,
+                                                    model.EndOfDayRate,
+                                                    model.FromCurrencyCode,
+                                                    model.ModifiedDate,
+                                                    model.ToCurrencyCode);
+                                patch.ApplyTo(model);
+                                ActionResponse result = await this.CurrencyRateService.Update(id, model);
+
+                                if (result.Success)
+                                {
+                                        ApiCurrencyRateResponseModel response = await this.CurrencyRateService.Get(id);
+
+                                        return this.Ok(response);
+                                }
+                                else
+                                {
+                                        return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+                                }
+                        }
                 }
 
                 [HttpPut]
@@ -194,5 +234,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1bed0156a42b8601d53a56731eda4736</Hash>
+    <Hash>a605660762155678a5cbff7f9d13854b</Hash>
 </Codenesium>*/

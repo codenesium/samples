@@ -49,6 +49,11 @@ namespace PetStoreNS.Api.Client
                         this.client.DefaultRequestHeaders.Add("api-version", this.ApiVersion);
                 }
 
+                public void SetBearerToken(string token)
+                {
+                        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
                 public virtual async Task<ApiBreedResponseModel> BreedCreateAsync(ApiBreedRequestModel item)
                 {
                         HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Breeds", item).ConfigureAwait(false);
@@ -350,5 +355,5 @@ namespace PetStoreNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>864848715628820ec846b14598cdbf67</Hash>
+    <Hash>f68cdd1fba68aee74a383a5480e9a0bb</Hash>
 </Codenesium>*/

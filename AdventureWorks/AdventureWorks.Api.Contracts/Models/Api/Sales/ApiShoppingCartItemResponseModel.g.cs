@@ -6,15 +6,96 @@ using System.Linq.Expressions;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-        public partial class ApiShoppingCartItemResponseModel : AbstractApiShoppingCartItemResponseModel
+        public class ApiShoppingCartItemResponseModel : AbstractApiResponseModel
         {
-                public ApiShoppingCartItemResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        DateTime dateCreated,
+                        DateTime modifiedDate,
+                        int productID,
+                        int quantity,
+                        string shoppingCartID,
+                        int shoppingCartItemID)
                 {
+                        this.DateCreated = dateCreated;
+                        this.ModifiedDate = modifiedDate;
+                        this.ProductID = productID;
+                        this.Quantity = quantity;
+                        this.ShoppingCartID = shoppingCartID;
+                        this.ShoppingCartItemID = shoppingCartItemID;
+                }
+
+                public DateTime DateCreated { get; private set; }
+
+                public DateTime ModifiedDate { get; private set; }
+
+                public int ProductID { get; private set; }
+
+                public int Quantity { get; private set; }
+
+                public string ShoppingCartID { get; private set; }
+
+                public int ShoppingCartItemID { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeDateCreatedValue { get; set; } = true;
+
+                public bool ShouldSerializeDateCreated()
+                {
+                        return this.ShouldSerializeDateCreatedValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeModifiedDateValue { get; set; } = true;
+
+                public bool ShouldSerializeModifiedDate()
+                {
+                        return this.ShouldSerializeModifiedDateValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeProductIDValue { get; set; } = true;
+
+                public bool ShouldSerializeProductID()
+                {
+                        return this.ShouldSerializeProductIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeQuantityValue { get; set; } = true;
+
+                public bool ShouldSerializeQuantity()
+                {
+                        return this.ShouldSerializeQuantityValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeShoppingCartIDValue { get; set; } = true;
+
+                public bool ShouldSerializeShoppingCartID()
+                {
+                        return this.ShouldSerializeShoppingCartIDValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeShoppingCartItemIDValue { get; set; } = true;
+
+                public bool ShouldSerializeShoppingCartItemID()
+                {
+                        return this.ShouldSerializeShoppingCartItemIDValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeDateCreatedValue = false;
+                        this.ShouldSerializeModifiedDateValue = false;
+                        this.ShouldSerializeProductIDValue = false;
+                        this.ShouldSerializeQuantityValue = false;
+                        this.ShouldSerializeShoppingCartIDValue = false;
+                        this.ShouldSerializeShoppingCartItemIDValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>acd12cf3dd8b5a6dc90462ad7e510cf9</Hash>
+    <Hash>ef7886a5952c910246d12e755e419037</Hash>
 </Codenesium>*/

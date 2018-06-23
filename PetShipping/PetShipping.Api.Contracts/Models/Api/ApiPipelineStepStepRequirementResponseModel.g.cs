@@ -6,15 +6,74 @@ using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
 {
-        public partial class ApiPipelineStepStepRequirementResponseModel : AbstractApiPipelineStepStepRequirementResponseModel
+        public class ApiPipelineStepStepRequirementResponseModel : AbstractApiResponseModel
         {
-                public ApiPipelineStepStepRequirementResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        string details,
+                        int id,
+                        int pipelineStepId,
+                        bool requirementMet)
                 {
+                        this.Details = details;
+                        this.Id = id;
+                        this.PipelineStepId = pipelineStepId;
+                        this.RequirementMet = requirementMet;
+
+                        this.PipelineStepIdEntity = nameof(ApiResponse.PipelineSteps);
+                }
+
+                public string Details { get; private set; }
+
+                public int Id { get; private set; }
+
+                public int PipelineStepId { get; private set; }
+
+                public string PipelineStepIdEntity { get; set; }
+
+                public bool RequirementMet { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeDetailsValue { get; set; } = true;
+
+                public bool ShouldSerializeDetails()
+                {
+                        return this.ShouldSerializeDetailsValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializePipelineStepIdValue { get; set; } = true;
+
+                public bool ShouldSerializePipelineStepId()
+                {
+                        return this.ShouldSerializePipelineStepIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeRequirementMetValue { get; set; } = true;
+
+                public bool ShouldSerializeRequirementMet()
+                {
+                        return this.ShouldSerializeRequirementMetValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeDetailsValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializePipelineStepIdValue = false;
+                        this.ShouldSerializeRequirementMetValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>6bcef9e8dd79ce4ea51e291b24c3f566</Hash>
+    <Hash>6e9c66b80124effacc692816300a3dcc</Hash>
 </Codenesium>*/

@@ -6,15 +6,57 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiInvitationResponseModel : AbstractApiInvitationResponseModel
+        public class ApiInvitationResponseModel : AbstractApiResponseModel
         {
-                public ApiInvitationResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        string id,
+                        string invitationCode,
+                        string jSON)
                 {
+                        this.Id = id;
+                        this.InvitationCode = invitationCode;
+                        this.JSON = jSON;
+                }
+
+                public string Id { get; private set; }
+
+                public string InvitationCode { get; private set; }
+
+                public string JSON { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeInvitationCodeValue { get; set; } = true;
+
+                public bool ShouldSerializeInvitationCode()
+                {
+                        return this.ShouldSerializeInvitationCodeValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeJSONValue { get; set; } = true;
+
+                public bool ShouldSerializeJSON()
+                {
+                        return this.ShouldSerializeJSONValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeInvitationCodeValue = false;
+                        this.ShouldSerializeJSONValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>39582ba281011d9ec0f86591512e1b01</Hash>
+    <Hash>99ed59eb0c51a56111e207bcb1f15c09</Hash>
 </Codenesium>*/

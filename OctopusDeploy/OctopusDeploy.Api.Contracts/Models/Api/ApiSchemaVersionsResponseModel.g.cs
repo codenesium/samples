@@ -6,15 +6,57 @@ using System.Linq.Expressions;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-        public partial class ApiSchemaVersionsResponseModel : AbstractApiSchemaVersionsResponseModel
+        public class ApiSchemaVersionsResponseModel : AbstractApiResponseModel
         {
-                public ApiSchemaVersionsResponseModel()
-                        : base()
+                public virtual void SetProperties(
+                        DateTime applied,
+                        int id,
+                        string scriptName)
                 {
+                        this.Applied = applied;
+                        this.Id = id;
+                        this.ScriptName = scriptName;
+                }
+
+                public DateTime Applied { get; private set; }
+
+                public int Id { get; private set; }
+
+                public string ScriptName { get; private set; }
+
+                [JsonIgnore]
+                public bool ShouldSerializeAppliedValue { get; set; } = true;
+
+                public bool ShouldSerializeApplied()
+                {
+                        return this.ShouldSerializeAppliedValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeIdValue { get; set; } = true;
+
+                public bool ShouldSerializeId()
+                {
+                        return this.ShouldSerializeIdValue;
+                }
+
+                [JsonIgnore]
+                public bool ShouldSerializeScriptNameValue { get; set; } = true;
+
+                public bool ShouldSerializeScriptName()
+                {
+                        return this.ShouldSerializeScriptNameValue;
+                }
+
+                public virtual void DisableAllFields()
+                {
+                        this.ShouldSerializeAppliedValue = false;
+                        this.ShouldSerializeIdValue = false;
+                        this.ShouldSerializeScriptNameValue = false;
                 }
         }
 }
 
 /*<Codenesium>
-    <Hash>09f73b164e21275c5a70a47c4e8d7363</Hash>
+    <Hash>0d29fb4c7105735eb846d7f00cce65f8</Hash>
 </Codenesium>*/
